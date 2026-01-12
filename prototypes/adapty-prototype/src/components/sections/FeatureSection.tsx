@@ -329,20 +329,47 @@ function FeatureSectionDefault({
 }
 
 // Helper to highlight code simply (regex based)
+// Helper to highlight code simply (regex based)
 function highlightCode(code: string) {
-  // Naive highlighter for demo purposes. 
-  // Replaces keywords with colored spans.
-  // Colors selected to match Polar's gradient aesthetic description roughly (Orange/Pink/Blue)
-  let html = code
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/\b(const|let|var|function|return|if|else|import|from|export|async|await)\b/g, '<span style="color: #c678dd; font-weight: bold;">$1</span>') // Purple/Pink
-    .replace(/\b(true|false|null|undefined)\b/g, '<span style="color: #d19a66;">$1</span>') // Orange
-    .replace(/'([^']*)'/g, '<span style="color: #98c379;">\'$1\'</span>') // Green
-    .replace(/"([^"]*)"/g, '<span style="color: #98c379;">"$1"</span>') // Green
-    .replace(/\b(\w+)\(/g, '<span style="color: #61afef;">$1</span>('); // Blue function calls
+  // 1. Escape HTML entities first
+  let clean = code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-  return html;
+  // 2. Extract strings to prevent keyword/tag collision
+  const strings: string[] = [];
+  const placeholder = (i: number) => `__STR_${i}__`;
+
+  // Replace double quotes
+  clean = clean.replace(/"([^"]*)"/g, (match) => {
+    strings.push(match);
+    return placeholder(strings.length - 1);
+  });
+
+  // Replace single quotes 
+  clean = clean.replace(/'([^']*)'/g, (match) => {
+    strings.push(match);
+    return placeholder(strings.length - 1);
+  });
+
+  // 3. Highlight Keywords (Purple/Pink)
+  clean = clean.replace(/\b(const|let|var|function|return|if|else|import|from|export|async|await|try|catch)\b/g,
+    '<span style="color: #c678dd; font-weight: bold;">$1</span>');
+
+  // 4. Highlight Literals/Types (Orange)
+  clean = clean.replace(/\b(true|false|null|undefined|number|string|boolean|void)\b/g,
+    '<span style="color: #d19a66;">$1</span>');
+
+  // 5. Highlight Functions (Blue) - careful with lookahead
+  clean = clean.replace(/\b(\w+)\(/g, '<span style="color: #61afef;">$1</span>(');
+
+  // 6. Highlight Comments (Gray) - naive, assumes // is not in a string (already extracted)
+  clean = clean.replace(/(\/\/.*$)/gm, '<span style="color: #5c6370; font-style: italic;">$1</span>');
+
+  // 7. Restore Strings (Green)
+  strings.forEach((str, i) => {
+    clean = clean.replace(placeholder(i), `<span style="color: #98c379;">${str}</span>`);
+  });
+
+  return clean;
 }
 
 function ButtonLink({ href, text, external }: { href: string; text: string; external?: boolean }) {
