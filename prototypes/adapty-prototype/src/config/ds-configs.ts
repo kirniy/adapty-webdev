@@ -143,17 +143,16 @@ export const ds3Config: DSConfig = {
     "Technical depth focus",
   ],
   sections: [
-    "hero", // Ultra-brief: headline, 1 sentence, 2 CTAs
-    "roleCards", // Quick 3-col minimal cards
-    "sdkCodeSnippet", // Prominent code early
-    "sdkGrid",
-    "stats",
-    "featurePaywallAB",
+    "hero", // "Monetize your software"
+    "roleCards", // 3-Col Feature Cards equivalent
+    "sdkCodeSnippet", // "Framework Adapters" - Code early!
+    "stats", // "Realtime Metrics"
+    "featurePaywallAB", // "Dashboard Preview" slot
+    "featureRefundSaver", // "Ingestion Strategies" slot
     "featureSubscriptionBI",
-    "integrationsMarquee",
-    "testimonials", // Single credible founder
-    "caseStudies", // Brief
-    "enterprise",
+    "sdkGrid",
+    "testimonials", // "Featured Testimonial" - Late
+    "g2Badges",
     "finalCta", // Minimal
     "footer",
   ],
