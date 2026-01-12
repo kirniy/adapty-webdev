@@ -5,6 +5,24 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'placehold.co',
+            },
+            {
+                protocol: 'https',
+                hostname: '*.placehold.co',
+            },
+            {
+                protocol: 'https',
+                hostname: 'adapty.io',
+            }
+        ],
+        dangerouslyAllowSVG: true,
+    },
+};
 
 export default config;
