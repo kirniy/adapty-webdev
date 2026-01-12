@@ -311,6 +311,14 @@ adapty.on("subscription_cancel_intent", async (user) => {
         "Funnel conversion analytics",
         "Cross-platform data aggregation"
       ] as const,
+      testimonial: {
+        quote: "Adapty's analytics provides invaluable insights into our app's performance. With detailed real-time metrics like revenue, ARPU, and churn rate, we make informed decisions to optimize our monetization strategy.",
+        author: {
+          name: "Nikolay Chebotarev",
+          role: "Head of UA at Moonly.app",
+          avatar: "/images/sections/nikolay.png"
+        }
+      },
     },
     noCodePaywall: {
       title: "No-code paywall builder",
