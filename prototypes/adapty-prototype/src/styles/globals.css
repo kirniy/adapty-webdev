@@ -101,12 +101,14 @@
  * Reference: linear.app
  * ============================================ */
 [data-theme="ds1"] {
-  /* Colors - Primary (Linear Blue-Purple) */
-  --color-primary: #5e6ad2;
-  --color-primary-hover: #6e7bdc;
-  --color-primary-active: #4e5ac2;
+  /* Colors - Primary (WHITE button like Linear CTA) */
+  --color-primary: #ffffff;
+  --color-primary-hover: #f0f0f0;
+  --color-primary-active: #e0e0e0;
   --color-primary-light: #18182f;
-  --color-accent: #7170ff;
+  /* Brand color for accents, links, badges (NOT buttons) */
+  --color-accent: #5e6ad2;
+  --color-brand: #5e6ad2;
 
   /* Colors - Backgrounds (Layered Dark) */
   --bg-primary: #08090a;
@@ -188,11 +190,12 @@
  * Reference: attio.com
  * ============================================ */
 [data-theme="ds2"] {
-  /* Colors - Primary (LAB color space, hex fallbacks) */
-  --color-primary: #4682F0;
-  --color-primary-hover: #3672D0;
-  --color-primary-active: #2862B0;
+  /* Colors - Primary (BLACK button like Attio CTA) */
+  --color-primary: #000000;
+  --color-primary-hover: #1a1a1a;
+  --color-primary-active: #333333;
   --color-primary-light: #EEF4FF;
+  /* Blue accent for links, interactive elements (NOT buttons) */
   --color-accent: #4682F0;
 
   /* Colors - Backgrounds (Pure White) */
@@ -203,9 +206,9 @@
   --bg-elevated: #ffffff;
   --bg-overlay: rgba(0, 0, 0, 0.5);
 
-  /* Colors - Text (Monochrome - Pure Black) */
-  --text-primary: #000000;
-  --text-secondary: #2B3544;
+  /* Colors - Text (Matching Attio exactly) */
+  --text-primary: #131316;
+  --text-secondary: #42434D;
   --text-tertiary: #5A6578;
   --text-muted: #8795A8;
   --text-inverse: #ffffff;
@@ -370,12 +373,18 @@
   --gradient-preview: linear-gradient(90deg, #7928CA, #FF0080);
   --gradient-ship: linear-gradient(90deg, #FF4D4D, #F9CB28);
 
-  /* Colors - Primary (Vercel Blue) */
-  --color-primary: #0070F3;
-  --color-primary-hover: #0060D0;
-  --color-primary-active: #0050B0;
+  /* Colors - Primary (WHITE button like Vercel CTA) */
+  --color-primary: #ffffff;
+  --color-primary-hover: #e5e5e5;
+  --color-primary-active: #cccccc;
   --color-primary-light: #0A2540;
+  /* Blue accent for links, gradients (NOT buttons) */
   --color-accent: #0070F3;
+
+  /* Secondary button (black bg, white text - for "Get a Demo" style) */
+  --color-secondary-button: #000000;
+  --color-secondary-button-hover: #1a1a1a;
+  --secondary-button-text-color: #ffffff;
 
   /* Colors - Backgrounds (TRUE BLACK) */
   --bg-primary: #000000;
