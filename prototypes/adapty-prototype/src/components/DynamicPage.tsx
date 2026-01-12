@@ -71,8 +71,12 @@ export function DynamicPage() {
             title={content.features.paywallABTesting.title}
             description={content.features.paywallABTesting.description}
             image={content.features.paywallABTesting.image}
+            features={content.features.paywallABTesting.features}
+            codeSnippet={content.features.paywallABTesting.codeSnippet}
             cta={content.features.paywallABTesting.cta}
             testimonial={content.features.paywallABTesting.testimonial}
+            variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"}
+            sectionNumber="01"
             flipped={true}
           />
         );
@@ -84,8 +88,12 @@ export function DynamicPage() {
             title={content.features.refundSaver.title}
             description={content.features.refundSaver.description}
             image={content.features.refundSaver.image}
+            features={content.features.refundSaver.features}
+            codeSnippet={content.features.refundSaver.codeSnippet}
             cta={content.features.refundSaver.cta}
             testimonial={content.features.refundSaver.testimonial}
+            variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"}
+            sectionNumber="02"
             className="bg-[#D1F2E8]/20"
           />
         );
@@ -97,8 +105,12 @@ export function DynamicPage() {
             title={content.features.subscriptionBI.title}
             description={content.features.subscriptionBI.description}
             image={content.features.subscriptionBI.image}
+            features={content.features.subscriptionBI.features}
+            // No code snippet for BI yet
             cta={content.features.subscriptionBI.cta}
             testimonial={content.features.subscriptionBI.testimonial}
+            variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"}
+            sectionNumber="03"
             flipped={true}
           />
         );
@@ -110,8 +122,11 @@ export function DynamicPage() {
             title={content.features.noCodePaywall.title}
             description={content.features.noCodePaywall.description}
             image={content.features.noCodePaywall.image}
+            features={content.features.noCodePaywall.features}
             cta={content.features.noCodePaywall.cta}
             testimonial={content.features.noCodePaywall.testimonial}
+            variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"}
+            sectionNumber="04"
             className="bg-[#FFD4CE]/20"
           />
         );
@@ -124,6 +139,8 @@ export function DynamicPage() {
             description={content.features.funnelFox.description}
             image={content.features.funnelFox.image}
             cta={content.features.funnelFox.cta}
+            variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"}
+            sectionNumber="05"
             flipped={true}
             className="bg-[var(--bg-secondary)]"
           />
@@ -142,6 +159,8 @@ export function DynamicPage() {
             }}
             cta={content.features.revenueSync.cta}
             testimonial={content.features.revenueSync.testimonial}
+            variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"}
+            sectionNumber="06"
           />
         );
 

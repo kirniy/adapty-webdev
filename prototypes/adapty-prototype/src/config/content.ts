@@ -224,6 +224,17 @@ export const content = {
         alt: "Paywall A/B Testing Interface",
         bgColor: "#2A594F",
       },
+      features: [
+        "Test paywalls, pricing, and offers",
+        "Statistical significance calculator",
+        "Audience segmentation",
+        "Automatic winner selection",
+      ],
+      codeSnippet: `// 1. Get paywall
+const paywall = await adapty.getPaywall("paywall_id");
+
+// 2. Log view (A/B test starts)
+await adapty.logShowPaywall(paywall);`,
       testimonial: {
         logo: "/images/sections/smartist-logo.png",
         quote:
@@ -245,6 +256,13 @@ export const content = {
         alt: "Refund Rate Chart",
         bgColor: "#D1F2E8",
       },
+      features: ["Save up to 40% of refund requests", "Automated customer recovery"],
+      codeSnippet: `// Check subscription status
+const profile = await adapty.getProfile();
+
+if (profile.accessLevels['premium'].isActive) {
+  // Grant access
+}`,
       testimonial: {
         quote:
           "I never thought that doing something about refunds could make such a difference. We just flipped the switch, set it up, and suddenly, it felt like we stopped letting money slip away.",
@@ -266,6 +284,7 @@ export const content = {
         alt: "Subscription Analytics Dashboard",
         bgColor: "#B4ABF9",
       },
+      features: ["MRR / ARR", "LTV by cohort", "Churn rate", "Trial conversion", "Refund rate"],
       testimonial: {
         quote:
           "Adapty's analytics provides invaluable insights into our app's performance. With detailed real-time metrics like revenue, ARPU, and churn rate, we make informed decisions to optimize our monetization strategy.",
@@ -287,6 +306,12 @@ export const content = {
         alt: "Paywall Builder Interface",
         bgColor: "transparent",
       },
+      features: [
+        "Drag-and-drop visual builder",
+        "Pre-built templates",
+        "Real-time preview on device",
+        "Instant updates without app release",
+      ],
       testimonial: {
         quote:
           "Adapty's Paywall Builder and A/B testing tools paired together are a game changer for anyone trying to do high-velocity testing and find quick wins.",

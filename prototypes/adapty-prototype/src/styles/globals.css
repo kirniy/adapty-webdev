@@ -18,27 +18,14 @@
  * ============================================ */
 :root,
 [data-theme="ds5"] {
-  /* Colors - Primary (Clerk Purple) */
+  /* Clerk-inspired theme */
   --color-primary: #6C47FF;
   --color-primary-hover: #5639CC;
   --color-primary-active: #4A2FB3;
   --color-primary-light: #F0EBFF;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #42434D;
   --color-accent: #6C47FF;
-
-  /* Colors - Backgrounds (Warm Gray) */
-  --bg-primary: #F7F7F8;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #EFEFF0;
-  --bg-muted: #E8E8EA;
-  --bg-elevated: #ffffff;
-  --bg-overlay: rgba(0, 0, 0, 0.5);
-
-  /* Colors - Text (Monochrome) */
-  --text-primary: #131316;
-  --text-secondary: #42434D;
-  --text-tertiary: #71717A;
-  --text-muted: #9394A1;
-  --text-inverse: #ffffff;
 
   /* Colors - Semantic */
   --color-success: #22c55e;
@@ -84,8 +71,8 @@
   --section-padding-y: 5rem;
   --section-padding-x: 1.5rem;
 
-  /* Component tokens (CLERK: PILL BUTTONS) */
-  --button-radius: var(--radius-pill);
+  /* Component tokens (CLERK: ROUNDED BUTTONS) */
+  --button-radius: 6px;
   --button-padding-x: 20px;
   --button-padding-y: 10px;
   --card-radius: var(--radius-lg);
@@ -472,7 +459,7 @@ body {
   color: var(--text-primary);
   font-family: var(--font-sans);
   transition: background-color var(--duration-normal) var(--ease-default),
-              color var(--duration-normal) var(--ease-default);
+    color var(--duration-normal) var(--ease-default);
 }
 
 /* Focus styles */
@@ -491,48 +478,100 @@ body {
  * KEYFRAME ANIMATIONS
  * ============================================ */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes slideInUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideInDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 /* Marquee animation for logo strips */
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* ============================================
