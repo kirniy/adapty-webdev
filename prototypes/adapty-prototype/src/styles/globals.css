@@ -71,8 +71,8 @@
   --section-padding-y: 5rem;
   --section-padding-x: 1.5rem;
 
-  /* Component tokens (CLERK: ROUNDED BUTTONS) */
-  --button-radius: 6px;
+  /* Component tokens (CLERK: 24px PILL BUTTONS) */
+  --button-radius: var(--radius-pill);
   --button-padding-x: 20px;
   --button-padding-y: 10px;
   --card-radius: var(--radius-lg);

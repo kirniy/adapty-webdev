@@ -1,3 +1,4 @@
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
@@ -175,7 +176,7 @@ function FeatureSectionAttio({
 }
 
 // ==========================================
-// DS3: POLAR (Code First, Syntax Highlighting)
+// DS3: POLAR (Code First, Tab Switcher, Gradient Code Blocks)
 // ==========================================
 function FeatureSectionPolar({
   title,
@@ -186,9 +187,82 @@ function FeatureSectionPolar({
   flipped,
   className,
 }: FeatureSectionProps) {
+  // Polar-style SDK tabs - frameworks for mobile subscription SDK
+  const sdkTabs = [
+    { id: "swift", label: "Swift", filename: "Adapty.swift" },
+    { id: "kotlin", label: "Kotlin", filename: "Adapty.kt" },
+    { id: "flutter", label: "Flutter", filename: "adapty.dart" },
+    { id: "rn", label: "React Native", filename: "adapty.ts" },
+  ];
+
+  const [activeTab, setActiveTab] = React.useState("swift");
+
+  // Get code based on active tab (for now, use the provided snippet)
+  const getCodeForTab = (tabId: string) => {
+    // In production, content.ts would provide per-tab code
+    // For now, we show the provided snippet with tab-specific comments
+    const tabSnippets: Record<string, string> = {
+      swift: `import Adapty
+
+// Initialize Adapty SDK
+Adapty.activate("YOUR_API_KEY")
+
+// Check subscription status
+let profile = try await Adapty.getProfile()
+let hasAccess = profile.accessLevels["premium"]?.isActive`,
+      kotlin: `import com.adapty.Adapty
+
+// Initialize Adapty SDK
+Adapty.activate(applicationContext, "YOUR_API_KEY")
+
+// Check subscription status
+Adapty.getProfile { result ->
+    val hasAccess = result.accessLevels["premium"]?.isActive
+}`,
+      flutter: `import 'package:adapty_flutter/adapty_flutter.dart';
+
+// Initialize Adapty SDK
+await Adapty().activate('YOUR_API_KEY');
+
+// Check subscription status
+final profile = await Adapty().getProfile();
+final hasAccess = profile.accessLevels['premium']?.isActive;`,
+      rn: `import { adapty } from 'react-native-adapty';
+
+// Initialize Adapty SDK
+await adapty.activate('YOUR_API_KEY');
+
+// Check subscription status
+const profile = await adapty.getProfile();
+const hasAccess = profile.accessLevels.premium?.isActive;`,
+    };
+    return tabSnippets[tabId] || codeSnippet || "// Select an SDK";
+  };
+
+  const activeTabData = sdkTabs.find(t => t.id === activeTab);
+
   return (
     <Section className={cn("border-b border-[var(--border-subtle)] bg-[var(--bg-primary)] py-24", className)}>
       <Container>
+        {/* Polar-style Tab Navigation */}
+        <div className="mb-8 flex flex-wrap items-center gap-2">
+          {sdkTabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={cn(
+                "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150",
+                activeTab === tab.id
+                  ? "bg-[var(--color-primary)] text-white"
+                  : "bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-muted)]"
+              )}
+            >
+              {tab.label}
+            </button>
+          ))}
+          <span className="ml-auto text-sm text-[var(--text-muted)]">All SDKs →</span>
+        </div>
+
         <div className={cn("grid gap-16 lg:grid-cols-2 items-start", flipped && "lg:[direction:rtl]")}>
 
           {/* Content Side */}
@@ -201,7 +275,8 @@ function FeatureSectionPolar({
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
               {features?.map((f, i) => (
-                <span key={i} className="px-3 py-1 rounded-full border border-[var(--border-default)] text-sm text-[var(--text-secondary)]">
+                <span key={i} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                  <Check className="h-4 w-4 text-[var(--color-success)]" />
                   {f}
                 </span>
               ))}
@@ -209,28 +284,31 @@ function FeatureSectionPolar({
             <ButtonLink href={cta.href} text={cta.text} external={cta.external} />
           </div>
 
-          {/* Authentic Code Window */}
+          {/* Polar-style Code Window with Gradient Background */}
           <div className="lg:[direction:ltr]">
-            <div className="overflow-hidden rounded-xl border border-[var(--border-default)] bg-[#0C0C0C] shadow-2xl">
-              {/* Window Controls */}
-              <div className="flex items-center gap-2 border-b border-white/5 bg-white/5 px-4 py-3">
-                <div className="h-3 w-3 rounded-full bg-[#FF5F56]" />
-                <div className="h-3 w-3 rounded-full bg-[#FFBD2E]" />
-                <div className="h-3 w-3 rounded-full bg-[#27C93F]" />
-                <div className="ml-auto font-mono text-xs text-white/30">usage.ts</div>
-              </div>
+            <div className="overflow-hidden rounded-xl border border-[var(--border-default)] shadow-2xl">
+              {/* Gradient background container */}
+              <div className="bg-gradient-to-br from-[#FF6B35]/20 via-[#E91E63]/20 to-[#3B82F6]/20 p-[1px]">
+                <div className="bg-[#0C0C0C] rounded-xl overflow-hidden">
+                  {/* Window Controls */}
+                  <div className="flex items-center gap-2 border-b border-white/5 bg-white/5 px-4 py-3">
+                    <div className="h-3 w-3 rounded-full bg-[#FF5F56]" />
+                    <div className="h-3 w-3 rounded-full bg-[#FFBD2E]" />
+                    <div className="h-3 w-3 rounded-full bg-[#27C93F]" />
+                    <div className="ml-auto font-mono text-xs text-white/30">
+                      {activeTabData?.filename || "code.ts"}
+                    </div>
+                  </div>
 
-              {/* Syntax Highlighted Code (Simulated with simple coloring logic for demo) 
-                  Real imp would use Shiki, but here we manually color nice spans 
-              */}
-              <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto">
-                <pre>
-                  {/* We assume codeSnippet is passed. If it's a raw string, we just display it. 
-                      Ideally content.ts passes a structure, but let's try to highlight keywords. */}
-                  <code className="bg-transparent text-[#abb2bf]" dangerouslySetInnerHTML={{
-                    __html: highlightCode(codeSnippet || "// No code provided")
-                  }} />
-                </pre>
+                  {/* Syntax Highlighted Code */}
+                  <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto min-h-[200px]">
+                    <pre>
+                      <code className="bg-transparent text-[#abb2bf]" dangerouslySetInnerHTML={{
+                        __html: highlightCode(getCodeForTab(activeTab))
+                      }} />
+                    </pre>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
