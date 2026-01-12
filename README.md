@@ -23,6 +23,7 @@ Systematic redesign of the ADAPTY marketing website using A/B testing methodolog
 
 ```
 adapty-webdev/
+├── kirills-testversion-adapty-pt2/  # Reference implementation (read-only)
 ├── design-systems/          # 5 DS variants (tokens.css, tailwind.config.ts)
 │   ├── ds-1-linear-inspired/
 │   ├── ds-2-attio-inspired/
