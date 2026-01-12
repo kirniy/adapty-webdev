@@ -63,7 +63,7 @@ export function FeatureSection({
           <div className={cn("lg:[direction:ltr]", flipped && "lg:order-2")}>
             <div
               className={cn(
-                "relative aspect-[4/3] overflow-hidden rounded-[var(--radius-xl)] p-4 md:p-8",
+                "relative aspect-[4/3] overflow-hidden rounded-[var(--card-radius)] p-4 md:p-8",
                 image.bgColor
                   ? `bg-[${image.bgColor}]`
                   : "bg-[var(--bg-secondary)]"
@@ -110,7 +110,7 @@ export function FeatureSection({
 
             {/* Testimonial */}
             {testimonial && (
-              <div className="mt-10 rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-6">
+              <div className="mt-10 rounded-[var(--card-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-6">
                 {testimonial.logo && (
                   <Image
                     src={testimonial.logo}

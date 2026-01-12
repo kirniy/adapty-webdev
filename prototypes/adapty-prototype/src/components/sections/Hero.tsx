@@ -80,13 +80,10 @@ function HeroDS1() {
             <Button size="lg" href={hero.cta.primary.href}>
               {hero.cta.primary.text}
             </Button>
-            <a
-              href={hero.cta.secondary.href}
-              className="group flex items-center gap-1 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
-            >
+            <Button variant="text" size="md" href={hero.cta.secondary.href}>
               {hero.cta.secondary.text}
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </div>
         </div>
 
@@ -273,13 +270,13 @@ function HeroDS3() {
             <span className="text-[var(--text-muted)]"> {hero.subheadline.secondary}</span>
           </p>
 
-          {/* Dual CTAs - Polar style: white primary, dark secondary */}
+          {/* Dual CTAs - Polar style: primary + secondary buttons (10px radius from tokens) */}
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Button size="lg" href={hero.cta.primary.href} className="rounded-full">
+            <Button size="lg" href={hero.cta.primary.href}>
               {hero.cta.primary.text}
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button variant="secondary" size="lg" href={hero.cta.secondary.href} className="rounded-full">
+            <Button variant="secondary" size="lg" href={hero.cta.secondary.href}>
               {hero.cta.secondary.text}
             </Button>
           </div>
@@ -402,13 +399,13 @@ function HeroDS5() {
             <span className="text-[var(--text-muted)]"> {hero.subheadline.secondary}</span>
           </p>
 
-          {/* CTAs - Pill shaped buttons (Clerk style) */}
+          {/* CTAs - Pill shaped buttons (Clerk style - 24px radius from tokens) */}
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Button size="lg" href={hero.cta.primary.href} className="rounded-full px-8">
+            <Button size="lg" href={hero.cta.primary.href}>
               {hero.cta.primary.text}
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button variant="outline" size="lg" href={hero.cta.secondary.href} className="rounded-full px-8">
+            <Button variant="outline" size="lg" href={hero.cta.secondary.href}>
               <Play className="h-4 w-4" />
               {hero.cta.secondary.text}
             </Button>

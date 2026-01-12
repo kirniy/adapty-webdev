@@ -39,7 +39,7 @@ export function CaseStudies({ variant = "default" }: CaseStudiesProps) {
               href={study.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex flex-col overflow-hidden rounded-[var(--radius-xl)] border border-transparent bg-[var(--bg-secondary)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-[var(--border-subtle)] hover:bg-[var(--bg-primary)] hover:shadow-[var(--shadow-xl)]"
+              className="group relative flex flex-col overflow-hidden rounded-[var(--card-radius)] border border-transparent bg-[var(--bg-secondary)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-[var(--border-subtle)] hover:bg-[var(--bg-primary)] hover:shadow-[var(--shadow-xl)]"
             >
               <div className="mb-6 flex items-center justify-between">
                 <Image

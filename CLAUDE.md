@@ -36,7 +36,7 @@ tags: [redesign, nextjs, tailwind, design-system, a-b-testing]
 
 ```yaml
 current_phase: "Phase A - Design System Testing"
-next_phase: "Build Phase A Prototypes"
+next_phase: "Deploy & Test Prototypes"
 blocking_tasks: []
 completed_today:
   - Repository structure created
@@ -49,21 +49,34 @@ completed_today:
   - ✅ Reference site extraction COMPLETE (5 sites via Chrome automation)
   - ✅ Synthesis documents created (patterns.md, differentiators.md, recommendations.md)
   - ✅ DS token files COMPLETE (all 5 variants filled)
-in_progress:
-  - Build Phase A prototypes (5 DS variants)
+  - ✅ SINGLE PROTOTYPE BUILT with 5-way theme switcher
+  - ✅ All CSS tokens consistent per DS (buttons, cards, radiuses)
+  - ✅ Build passes, deployed to Vercel
+in_progress: []
 pending:
-  - Deploy to Vercel for comparison
+  - Visual testing of all 5 DS variants
   - Gather feedback from Sergey
+prototype_status:
+  location: "/prototypes/adapty-prototype"
+  deployed: true
+  url: "adapty-prototype.vercel.app"
+  theme_switcher: "Top-right corner, persists via localStorage + URL ?ds=ds1-5"
 extraction_results:
   linear: "Dark theme, 67+ animations, Inter Variable, layered backgrounds"
   attio: "Light theme, LAB colors, 4-font system (Inter, Display, Tiempos, JetBrains)"
   polar: "Dark theme, Geist fonts, fast 150ms animations, minimal"
   vercel: "True black, bouncy easing, compound shadows, signature gradients"
   clerk: "Light warm gray (#F7F7F8), Suisse font, purple accent, pill buttons"
+ds_token_summary:
+  DS1_Linear: "8px buttons, 30px cards, #08090a bg, tight letter-spacing"
+  DS2_Attio: "10px buttons, 12px cards, #ffffff bg, ghost buttons"
+  DS3_Polar: "10px buttons, 10px cards, #171719 bg, ALL 150ms anims"
+  DS4_Vercel: "6px buttons, 8px cards, #000000 bg, compound shadows"
+  DS5_Clerk: "24px pill buttons, 12px cards, #F7F7F8 bg, purple accent"
 session_notes:
-  - claude-mem is ACTIVE - memories auto-saved via MCP hooks
-  - Recommendation: Light theme with warm gray, Inter font, bouncy easing
-  - T3 stack: Skip for prototypes, evaluate for production
+  - claude-mem is ACTIVE - 24+ memories captured today
+  - All components use --button-radius and --card-radius tokens
+  - Button component has 5 variants: primary, secondary, outline, ghost, text
 ```
 
 ---

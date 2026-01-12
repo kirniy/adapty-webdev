@@ -22,7 +22,7 @@ export function RoleCards() {
             <Link
               key={role.title}
               href={role.link}
-              className="group relative flex flex-col overflow-hidden rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-[var(--color-primary-light)] hover:shadow-[var(--shadow-xl)]"
+              className="group relative flex flex-col overflow-hidden rounded-[var(--card-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-[var(--color-primary-light)] hover:shadow-[var(--shadow-xl)]"
             >
               {/* Image */}
               <div className="relative h-[200px] overflow-hidden bg-gradient-to-b from-[var(--bg-tertiary)] to-[var(--bg-secondary)] p-4">

@@ -104,7 +104,7 @@ export function Testimonials({ variant = "carousel" }: TestimonialsProps) {
           </button>
 
           {/* Card */}
-          <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-[var(--border-default)] bg-[var(--bg-primary)] p-8 shadow-[var(--shadow-lg)] md:p-12">
+          <div className="relative overflow-hidden rounded-[var(--card-radius)] border border-[var(--border-default)] bg-[var(--bg-primary)] p-8 shadow-[var(--shadow-lg)] md:p-12">
             <Quote className="absolute right-8 top-8 h-24 w-24 text-[var(--color-primary)] opacity-5" />
 
             <div className="grid gap-8 md:grid-cols-2 md:items-center">

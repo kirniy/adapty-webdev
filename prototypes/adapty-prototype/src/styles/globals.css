@@ -12,64 +12,66 @@
 }
 
 /* ============================================
- * DS5: HYBRID PREMIUM (DEFAULT)
- * Light theme with warmth, recommended for Adapty
+ * DS5: CLERK-INSPIRED (DEFAULT)
+ * Warm gray light theme, pill buttons, purple accent
+ * Reference: clerk.com
  * ============================================ */
 :root,
 [data-theme="ds5"] {
-  /* Colors - Primary */
-  --color-primary: #6366f1;
-  --color-primary-hover: #818cf8;
-  --color-primary-active: #4f46e5;
-  --color-primary-light: #eef2ff;
-  --color-accent: rgb(108, 71, 255);
+  /* Colors - Primary (Clerk Purple) */
+  --color-primary: #6C47FF;
+  --color-primary-hover: #5639CC;
+  --color-primary-active: #4A2FB3;
+  --color-primary-light: #F0EBFF;
+  --color-accent: #6C47FF;
 
-  /* Colors - Backgrounds */
-  --bg-primary: #f7f7f8;
+  /* Colors - Backgrounds (Warm Gray) */
+  --bg-primary: #F7F7F8;
   --bg-secondary: #ffffff;
-  --bg-tertiary: #fafafa;
-  --bg-muted: #f1f1f3;
+  --bg-tertiary: #EFEFF0;
+  --bg-muted: #E8E8EA;
   --bg-elevated: #ffffff;
   --bg-overlay: rgba(0, 0, 0, 0.5);
 
-  /* Colors - Text */
+  /* Colors - Text (Monochrome) */
   --text-primary: #131316;
-  --text-secondary: #42434d;
-  --text-tertiary: #71717a;
-  --text-muted: #9394a1;
+  --text-secondary: #42434D;
+  --text-tertiary: #71717A;
+  --text-muted: #9394A1;
   --text-inverse: #ffffff;
 
   /* Colors - Semantic */
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
-  --color-info: #3b82f6;
+  --color-info: #6C47FF;
 
   /* Colors - Borders */
-  --border-default: #d9d9de;
-  --border-subtle: #eeeef0;
-  --border-strong: #a1a1aa;
+  --border-default: #D9D9DE;
+  --border-subtle: #EEEEF0;
+  --border-strong: #B8B9BD;
 
-  /* Typography */
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Typography (Suisse-like, fall back to Inter) */
+  --font-sans: "Suisse International", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Border Radius */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
+  /* Border Radius (CLERK: 24px PILL BUTTONS) */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-pill: 24px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
+  /* Shadows (Soft, light theme) */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 24px rgba(108, 71, 255, 0.2);
 
-  /* Animations */
+  /* Animations (Smooth) */
   --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-fast: 150ms;
@@ -78,24 +80,28 @@
 
   /* Layout */
   --header-height: 64px;
-  --page-max-width: 1400px;
+  --page-max-width: 1200px;
   --section-padding-y: 5rem;
   --section-padding-x: 1.5rem;
 
-  /* Component tokens */
-  --button-radius: var(--radius-md);
+  /* Component tokens (CLERK: PILL BUTTONS) */
+  --button-radius: var(--radius-pill);
+  --button-padding-x: 20px;
+  --button-padding-y: 10px;
   --card-radius: var(--radius-lg);
   --card-bg: var(--bg-secondary);
   --card-border: var(--border-subtle);
+  --input-radius: var(--radius-md);
   --nav-bg: var(--bg-primary);
 }
 
 /* ============================================
  * DS1: LINEAR-INSPIRED
- * Dark theme with premium micro-interactions
+ * Dark theme, premium micro-interactions, layered backgrounds
+ * Reference: linear.app
  * ============================================ */
 [data-theme="ds1"] {
-  /* Colors - Primary */
+  /* Colors - Primary (Linear Blue-Purple) */
   --color-primary: #5e6ad2;
   --color-primary-hover: #6e7bdc;
   --color-primary-active: #4e5ac2;
@@ -104,15 +110,15 @@
 
   /* Colors - Backgrounds (Layered Dark) */
   --bg-primary: #08090a;
-  --bg-secondary: #1c1c1f;
-  --bg-tertiary: #232326;
-  --bg-muted: #141516;
-  --bg-elevated: #141516;
+  --bg-secondary: #0f1011;
+  --bg-tertiary: #141516;
+  --bg-muted: #1c1c1f;
+  --bg-elevated: #232326;
   --bg-overlay: rgba(0, 0, 0, 0.9);
 
-  /* Colors - Text */
+  /* Colors - Text (Monochrome) */
   --text-primary: #f7f8f8;
-  --text-secondary: #d0d6e0;
+  --text-secondary: #b3b3b3;
   --text-tertiary: #8a8f98;
   --text-muted: #62666d;
   --text-inverse: #08090a;
@@ -128,28 +134,32 @@
   --border-subtle: rgba(255, 255, 255, 0.05);
   --border-strong: #34343a;
 
-  /* Typography */
-  --font-sans: "Inter Variable", -apple-system, sans-serif;
-  --font-mono: "Berkeley Mono", ui-monospace, monospace;
+  /* Typography (Inter Variable with tight letter-spacing) */
+  --font-sans: "Inter Variable", "Inter", -apple-system, sans-serif;
+  --font-mono: "Berkeley Mono", "JetBrains Mono", ui-monospace, monospace;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-heading: -0.025em;
 
-  /* Border Radius (Linear uses larger radii) */
+  /* Border Radius (LINEAR: 8px BUTTONS, 30px CARDS) */
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-xl: 12px;
   --radius-2xl: 16px;
+  --radius-card: 30px;
   --radius-full: 9999px;
 
-  /* Shadows (Dark theme - subtle) */
+  /* Shadows (Dark theme - layered) */
   --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-md: 0px 4px 24px rgba(0, 0, 0, 0.2);
   --shadow-lg: 0px 7px 32px rgba(0, 0, 0, 0.35);
   --shadow-xl: 0px 10px 40px rgba(0, 0, 0, 0.5);
   --shadow-glow: 0 0 20px rgba(94, 106, 210, 0.3);
 
-  /* Animations (67+ easings, premium) */
+  /* Animations (LINEAR: 67+ custom easings) */
   --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
   --ease-default: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 100ms;
   --duration-normal: 250ms;
   --duration-slow: 350ms;
@@ -158,74 +168,81 @@
   --header-height: 64px;
   --page-max-width: 1024px;
   --header-bg: rgba(11, 11, 11, 0.8);
+  --section-padding-y: 6rem;
+  --section-padding-x: 1.5rem;
 
-  /* Component tokens */
-  --button-radius: var(--radius-md);
-  --card-radius: 24px;
+  /* Component tokens (LINEAR: 8px BUTTON RADIUS, 30px CARD) */
+  --button-radius: var(--radius-lg);
+  --button-padding-x: 16px;
+  --button-padding-y: 8px;
+  --card-radius: var(--radius-card);
   --card-bg: var(--bg-elevated);
   --card-border: var(--border-subtle);
+  --input-radius: var(--radius-md);
   --nav-bg: var(--header-bg);
 }
 
 /* ============================================
  * DS2: ATTIO-INSPIRED
- * Light theme with editorial typography
+ * Light theme, editorial typography, ghost buttons, section numbering
+ * Reference: attio.com
  * ============================================ */
 [data-theme="ds2"] {
-  /* Colors - Primary (LAB to hex fallbacks) */
-  --color-primary: #4682f0;
-  --color-primary-hover: #3672d0;
-  --color-primary-active: #3672d0;
-  --color-primary-light: #eef4ff;
-  --color-accent: #4682f0;
+  /* Colors - Primary (LAB color space, hex fallbacks) */
+  --color-primary: #4682F0;
+  --color-primary-hover: #3672D0;
+  --color-primary-active: #2862B0;
+  --color-primary-light: #EEF4FF;
+  --color-accent: #4682F0;
 
-  /* Colors - Backgrounds (Light) */
+  /* Colors - Backgrounds (Pure White) */
   --bg-primary: #ffffff;
-  --bg-secondary: #fafbfc;
-  --bg-tertiary: #f0f2f5;
-  --bg-muted: #f0f2f5;
+  --bg-secondary: #FAFBFC;
+  --bg-tertiary: #F0F2F5;
+  --bg-muted: #E8EAED;
   --bg-elevated: #ffffff;
   --bg-overlay: rgba(0, 0, 0, 0.5);
 
-  /* Colors - Text */
+  /* Colors - Text (Monochrome - Pure Black) */
   --text-primary: #000000;
-  --text-secondary: #2b3544;
-  --text-tertiary: #5a6578;
-  --text-muted: #8795a8;
+  --text-secondary: #2B3544;
+  --text-tertiary: #5A6578;
+  --text-muted: #8795A8;
   --text-inverse: #ffffff;
 
   /* Colors - Semantic (LAB to hex) */
-  --color-success: #22a861;
-  --color-warning: #e5a20c;
-  --color-error: #e53e3e;
-  --color-info: #4682f0;
+  --color-success: #22A861;
+  --color-warning: #E5A20C;
+  --color-error: #E53E3E;
+  --color-info: #4682F0;
 
   /* Colors - Borders */
-  --border-default: #d8dce3;
-  --border-subtle: #e8ebef;
-  --border-strong: #a3adb8;
+  --border-default: #D8DCE3;
+  --border-subtle: #E8EBEF;
+  --border-strong: #A3ADB8;
 
-  /* Typography (4-font system) */
+  /* Typography (ATTIO: 4-font system) */
   --font-sans: "Inter", -apple-system, sans-serif;
   --font-display: "Inter Display", var(--font-sans);
+  --font-serif: "Tiempos Headline", Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Border Radius (Attio uses smaller radii) */
+  /* Border Radius (ATTIO: 10px BUTTONS) */
   --radius-sm: 4px;
   --radius-md: 6px;
-  --radius-lg: 8px;
+  --radius-lg: 10px;
   --radius-xl: 12px;
   --radius-2xl: 16px;
   --radius-full: 9999px;
 
   /* Shadows (Light theme - soft) */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.08);
   --shadow-glow: 0 0 20px rgba(70, 130, 240, 0.15);
 
-  /* Animations */
+  /* Animations (Smooth, not bouncy) */
   --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
   --ease-default: cubic-bezier(0.2, 0, 0, 1);
   --duration-fast: 150ms;
@@ -235,58 +252,71 @@
   /* Layout */
   --header-height: 68px;
   --page-max-width: 1280px;
+  --section-padding-y: 6rem;
+  --section-padding-x: 1.5rem;
 
-  /* Component tokens */
-  --button-radius: var(--radius-md);
+  /* Component tokens (ATTIO: 10px BUTTON RADIUS, GHOST BUTTONS) */
+  --button-radius: var(--radius-lg);
+  --button-padding-x: 16px;
+  --button-padding-y: 10px;
+  --button-ghost-bg: transparent;
+  --button-ghost-border: var(--border-default);
   --card-radius: var(--radius-xl);
   --card-bg: var(--bg-elevated);
   --card-border: var(--border-subtle);
+  --input-radius: var(--radius-md);
   --nav-bg: var(--bg-primary);
+
+  /* Section numbering (ATTIO signature) */
+  --section-number-color: var(--text-muted);
+  --section-number-size: 0.875rem;
 }
 
 /* ============================================
  * DS3: POLAR-INSPIRED
- * Dark, minimal, fast animations
+ * Dark, minimal, code-first, FAST 150ms animations
+ * Reference: polar.sh
  * ============================================ */
 [data-theme="ds3"] {
-  /* Colors - Primary */
-  --color-primary: #3b82f6;
-  --color-primary-hover: #60a5fa;
-  --color-primary-active: #2563eb;
-  --color-primary-light: #1e3a5f;
-  --color-accent: #3b82f6;
+  /* Colors - Primary (Blue) */
+  --color-primary: #3B82F6;
+  --color-primary-hover: #60A5FA;
+  --color-primary-active: #2563EB;
+  --color-primary-light: #1E3A5F;
+  --color-accent: #3B82F6;
 
-  /* Colors - Backgrounds (Dark minimal) */
+  /* Colors - Backgrounds (Dark Minimal) */
   --bg-primary: #171719;
   --bg-secondary: #101011;
-  --bg-tertiary: #1d1d20;
-  --bg-muted: #1d1d20;
-  --bg-elevated: #1d1d20;
+  --bg-tertiary: #1D1D20;
+  --bg-muted: #232326;
+  --bg-elevated: #1D1D20;
   --bg-overlay: rgba(0, 0, 0, 0.8);
 
-  /* Colors - Text */
-  --text-primary: #d7d7db;
-  --text-secondary: #6f717b;
-  --text-tertiary: #3a3b40;
-  --text-muted: #6f717b;
+  /* Colors - Text (Monochrome - Muted) */
+  --text-primary: #D7D7DB;
+  --text-secondary: #6F717B;
+  --text-tertiary: #4A4B52;
+  --text-muted: #3A3B40;
   --text-inverse: #171719;
 
   /* Colors - Semantic */
-  --color-success: #22c55e;
-  --color-warning: #eab308;
-  --color-error: #ef4444;
-  --color-info: #3b82f6;
+  --color-success: #22C55E;
+  --color-warning: #EAB308;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
 
-  /* Colors - Borders (Single color - minimal) */
-  --border-default: #1d1d20;
-  --border-subtle: #1d1d20;
-  --border-strong: #3a3b40;
+  /* Colors - Borders (POLAR: single color, minimal) */
+  --border-default: #1D1D20;
+  --border-subtle: #1D1D20;
+  --border-strong: #3A3B40;
 
-  /* Typography (Geist) */
-  --font-sans: "Geist Sans", -apple-system, sans-serif;
+  /* Typography (POLAR: Geist fonts) */
+  --font-sans: "Geist Sans", "Geist", -apple-system, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
 
-  /* Border Radius */
+  /* Border Radius (POLAR: 0.6rem BASE = 9.6px) */
+  --radius-base: 0.6rem;
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 10px;
@@ -294,81 +324,91 @@
   --radius-2xl: 16px;
   --radius-full: 9999px;
 
-  /* Shadows (Minimal) */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
-  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.3);
-  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+  /* Shadows (Minimal, no decorative shadows) */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.2);
 
-  /* Animations (FAST - Polar signature) */
+  /* Animations (POLAR: ALL 150ms - FAST) */
   --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-fast: 150ms;
   --duration-normal: 150ms;
-  --duration-slow: 200ms;
+  --duration-slow: 150ms;
 
   /* Layout */
   --header-height: 64px;
   --page-max-width: 1280px;
+  --section-padding-y: 5rem;
+  --section-padding-x: 1.5rem;
 
-  /* Component tokens */
+  /* Component tokens (POLAR: ~10px BUTTON RADIUS) */
   --button-radius: var(--radius-lg);
+  --button-padding-x: 14px;
+  --button-padding-y: 8px;
   --card-radius: var(--radius-lg);
   --card-bg: var(--bg-tertiary);
   --card-border: var(--border-default);
+  --input-radius: var(--radius-md);
   --nav-bg: var(--bg-primary);
+
+  /* Code-first tokens (POLAR signature) */
+  --code-bg: var(--bg-secondary);
+  --code-border: var(--border-default);
 }
 
 /* ============================================
  * DS4: VERCEL-INSPIRED
- * True black, bold visuals, bouncy animations
+ * TRUE BLACK, compound shadows, bouncy animations, bold typography
+ * Reference: vercel.com
  * ============================================ */
 [data-theme="ds4"] {
-  /* Signature gradients */
-  --gradient-develop: linear-gradient(90deg, #007cf0, #00dfd8);
-  --gradient-preview: linear-gradient(90deg, #7928ca, #ff0080);
-  --gradient-ship: linear-gradient(90deg, #ff4d4d, #f9cb28);
+  /* Signature gradients (VERCEL: subtle use, not on text) */
+  --gradient-develop: linear-gradient(90deg, #007CF0, #00DFD8);
+  --gradient-preview: linear-gradient(90deg, #7928CA, #FF0080);
+  --gradient-ship: linear-gradient(90deg, #FF4D4D, #F9CB28);
 
-  /* Colors - Primary */
-  --color-primary: #0070f3;
-  --color-primary-hover: #0060d0;
-  --color-primary-active: #0050b0;
-  --color-primary-light: #0a2540;
-  --color-accent: #0070f3;
+  /* Colors - Primary (Vercel Blue) */
+  --color-primary: #0070F3;
+  --color-primary-hover: #0060D0;
+  --color-primary-active: #0050B0;
+  --color-primary-light: #0A2540;
+  --color-accent: #0070F3;
 
   /* Colors - Backgrounds (TRUE BLACK) */
   --bg-primary: #000000;
-  --bg-secondary: #0a0a0a;
-  --bg-tertiary: #1a1a1a;
-  --bg-muted: #1a1a1a;
-  --bg-elevated: #1a1a1a;
+  --bg-secondary: #0A0A0A;
+  --bg-tertiary: #111111;
+  --bg-muted: #1A1A1A;
+  --bg-elevated: #1A1A1A;
   --bg-overlay: rgba(0, 0, 0, 0.9);
 
-  /* Colors - Text */
-  --text-primary: #ededed;
-  --text-secondary: #a1a1a1;
+  /* Colors - Text (Monochrome - High Contrast) */
+  --text-primary: #EDEDED;
+  --text-secondary: #A1A1A1;
   --text-tertiary: #888888;
-  --text-muted: #7d7d7d;
+  --text-muted: #666666;
   --text-inverse: #000000;
 
   /* Colors - Semantic */
-  --color-success: #0ca766;
-  --color-warning: #f5a623;
-  --color-error: #e5484d;
-  --color-info: #0070f3;
+  --color-success: #0CA766;
+  --color-warning: #F5A623;
+  --color-error: #E5484D;
+  --color-info: #0070F3;
 
-  /* Colors - Borders */
+  /* Colors - Borders (VERCEL: rgba white) */
   --border-default: rgba(255, 255, 255, 0.14);
   --border-subtle: rgba(255, 255, 255, 0.09);
   --border-strong: rgba(255, 255, 255, 0.24);
 
-  /* Typography */
-  --font-sans: "Geist", Arial, sans-serif;
+  /* Typography (VERCEL: Geist + Space Grotesk for display) */
+  --font-sans: "Geist", -apple-system, sans-serif;
   --font-display: "Space Grotesk", "Geist", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
 
-  /* Border Radius (Vercel uses smaller radii) */
+  /* Border Radius (VERCEL: 6px DEFAULT) */
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
@@ -376,30 +416,39 @@
   --radius-2xl: 16px;
   --radius-full: 9999px;
 
-  /* Shadows (Compound shadows - Vercel signature) */
+  /* Shadows (VERCEL: COMPOUND SHADOWS - border + shadow) */
   --shadow-sm: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.16);
-  --shadow-md: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 2px 2px rgba(0, 0, 0, 0.32);
+  --shadow-md: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 2px 4px rgba(0, 0, 0, 0.32);
   --shadow-lg: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 8px 16px -4px rgba(0, 0, 0, 0.16);
   --shadow-xl: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 24px 32px -8px rgba(0, 0, 0, 0.25);
-  --shadow-glow: 0 0 30px rgba(0, 124, 240, 0.3);
+  --shadow-glow: 0 0 30px rgba(0, 124, 240, 0.25);
 
-  /* Animations (BOUNCY - Vercel signature) */
+  /* Animations (VERCEL: BOUNCY EASING) */
   --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  --ease-bouncy: cubic-bezier(0.4, 0, 0.2, 1.2);
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-fast: 200ms;
-  --duration-normal: 200ms;
+  --duration-normal: 250ms;
   --duration-slow: 300ms;
 
   /* Layout */
   --header-height: 64px;
   --page-max-width: 1400px;
+  --section-padding-y: 6rem;
+  --section-padding-x: 1.5rem;
 
-  /* Component tokens */
+  /* Component tokens (VERCEL: 6px BUTTON RADIUS) */
   --button-radius: var(--radius-md);
+  --button-padding-x: 16px;
+  --button-padding-y: 10px;
   --card-radius: var(--radius-lg);
   --card-bg: var(--bg-elevated);
   --card-border: var(--border-subtle);
+  --input-radius: var(--radius-md);
   --nav-bg: var(--bg-primary);
+
+  /* Grid background (VERCEL signature) */
+  --grid-color: rgba(255, 255, 255, 0.03);
 }
 
 /* ============================================

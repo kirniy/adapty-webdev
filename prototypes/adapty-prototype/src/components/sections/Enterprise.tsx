@@ -76,7 +76,7 @@ export function Enterprise() {
               return (
                 <div
                   key={feature.title}
-                  className="rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:shadow-[var(--shadow-lg)]"
+                  className="rounded-[var(--card-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:shadow-[var(--shadow-lg)]"
                 >
                   <div className="flex gap-4">
                     <div

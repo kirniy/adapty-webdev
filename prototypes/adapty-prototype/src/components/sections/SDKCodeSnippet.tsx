@@ -47,7 +47,7 @@ export function SDKCodeSnippet() {
               </Link>
 
               {/* Testimonial */}
-              <div className="mt-10 rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-6">
+              <div className="mt-10 rounded-[var(--card-radius)] border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-6">
                 <Image
                   src={sdk.testimonial.logo}
                   alt="Company logo"
@@ -155,7 +155,7 @@ export function SDKCodeSnippet() {
               <Link
                 key={platform.name}
                 href={platform.link}
-                className="group flex flex-col items-center justify-center rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-transparent hover:shadow-[var(--shadow-xl)]"
+                className="group flex flex-col items-center justify-center rounded-[var(--card-radius)] border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-transparent hover:shadow-[var(--shadow-xl)]"
               >
                 <div className="relative mb-4 h-12 w-12 transition-transform group-hover:scale-110">
                   <Image

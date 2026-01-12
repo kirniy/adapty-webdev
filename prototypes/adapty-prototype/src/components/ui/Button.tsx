@@ -3,14 +3,26 @@ import Link from "next/link";
 
 interface ButtonProps {
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "outline" | "ghost";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "text";
   size?: "sm" | "md" | "lg";
   href?: string;
   className?: string;
   onClick?: () => void;
   external?: boolean;
+  disabled?: boolean;
 }
 
+/**
+ * Button component that uses CSS custom properties for consistent styling
+ * across all design systems.
+ *
+ * Key tokens used:
+ * - --button-radius: DS-specific border radius (6px-24px)
+ * - --button-padding-x/y: DS-specific padding
+ * - --color-primary: Primary action color
+ * - --duration-fast: Animation speed
+ * - --ease-default: Animation easing
+ */
 export function Button({
   children,
   variant = "primary",
@@ -19,25 +31,34 @@ export function Button({
   className,
   onClick,
   external,
+  disabled,
 }: ButtonProps) {
+  // Base styles using CSS custom properties for DS consistency
   const baseStyles =
-    "inline-flex items-center justify-center font-medium transition-all duration-[var(--duration-fast)] ease-[var(--ease-smooth)] rounded-[var(--radius-md)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2";
+    "inline-flex items-center justify-center font-medium transition-all duration-[var(--duration-fast)] ease-[var(--ease-default)] rounded-[var(--button-radius)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
 
   const variants = {
+    // Primary: Filled button with primary color
     primary:
-      "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]",
+      "bg-[var(--color-primary)] text-[var(--text-inverse)] hover:bg-[var(--color-primary-hover)] active:bg-[var(--color-primary-active)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]",
+    // Secondary: Subtle background with border
     secondary:
       "bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-default)]",
+    // Outline: Transparent with border (ghost button for DS2/Attio)
     outline:
       "border border-[var(--border-default)] bg-transparent text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:border-[var(--border-strong)]",
+    // Ghost: No background, subtle hover
     ghost:
-      "bg-transparent text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]",
+      "bg-transparent text-[var(--text-primary)] hover:bg-[var(--bg-muted)]",
+    // Text: Just text with hover underline (for DS1/Linear secondary actions)
+    text:
+      "bg-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] underline-offset-4 hover:underline",
   };
 
   const sizes = {
-    sm: "h-8 px-3 text-sm gap-1.5",
-    md: "h-10 px-4 text-sm gap-2",
-    lg: "h-12 px-6 text-base gap-2",
+    sm: "h-8 px-[var(--button-padding-x,12px)] py-[var(--button-padding-y,6px)] text-sm gap-1.5",
+    md: "h-10 px-[var(--button-padding-x,16px)] py-[var(--button-padding-y,8px)] text-sm gap-2",
+    lg: "h-12 px-[var(--button-padding-x,20px)] py-[var(--button-padding-y,10px)] text-base gap-2",
   };
 
   const classes = cn(baseStyles, variants[variant], sizes[size], className);
@@ -60,7 +81,7 @@ export function Button({
   }
 
   return (
-    <button type="button" onClick={onClick} className={classes}>
+    <button type="button" onClick={onClick} disabled={disabled} className={classes}>
       {children}
     </button>
   );
