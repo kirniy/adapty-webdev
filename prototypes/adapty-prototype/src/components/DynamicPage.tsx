@@ -106,7 +106,6 @@ export function DynamicPage() {
             testimonial={content.features.refundSaver.testimonial}
             variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"}
             sectionNumber="02"
-            className="bg-[#D1F2E8]/20"
           />
         );
 
@@ -139,7 +138,6 @@ export function DynamicPage() {
             testimonial={content.features.noCodePaywall.testimonial}
             variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"}
             sectionNumber="04"
-            className="bg-[#FFD4CE]/20"
           />
         );
 
