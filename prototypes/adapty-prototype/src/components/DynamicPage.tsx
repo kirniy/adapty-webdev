@@ -1,0 +1,167 @@
+"use client";
+
+import { useTheme } from "next-themes";
+import { getDSConfig, type SectionId } from "~/config/ds-configs";
+import { content } from "~/config/content";
+import {
+  Hero,
+  TrustedBy,
+  RoleCards,
+  Stats,
+  Testimonials,
+  CaseStudies,
+  Enterprise,
+  G2Badges,
+  IntegrationsMarquee,
+  SDKCodeSnippet,
+  FinalCTA,
+  FeatureSection,
+} from "~/components/sections";
+import { Header } from "~/components/layout/Header";
+import { Footer } from "~/components/layout/Footer";
+
+export function DynamicPage() {
+  const { theme } = useTheme();
+  const config = getDSConfig(theme ?? "ds5");
+
+  // Render a section by its ID
+  const renderSection = (sectionId: SectionId, index: number) => {
+    const key = `${sectionId}-${index}`;
+    const overrides = config.sectionOverrides?.[sectionId];
+
+    switch (sectionId) {
+      case "hero":
+        return <Hero key={key} variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
+
+      case "trustedBy":
+        return <TrustedBy key={key} />;
+
+      case "roleCards":
+        return <RoleCards key={key} />;
+
+      case "stats":
+        return <Stats key={key} variant={overrides?.variant as "default" | "bold"} />;
+
+      case "testimonials":
+        return <Testimonials key={key} variant={overrides?.variant as "carousel" | "single" | "grid"} />;
+
+      case "caseStudies":
+        return <CaseStudies key={key} variant={overrides?.variant as "default" | "compact"} />;
+
+      case "enterprise":
+        return <Enterprise key={key} />;
+
+      case "g2Badges":
+        return <G2Badges key={key} />;
+
+      case "integrationsMarquee":
+        return <IntegrationsMarquee key={key} />;
+
+      case "sdkCodeSnippet":
+        return <SDKCodeSnippet key={key} />;
+
+      case "sdkGrid":
+        // SDK Grid is part of SDKCodeSnippet, skip rendering separately
+        return null;
+
+      case "featurePaywallAB":
+        return (
+          <FeatureSection
+            key={key}
+            title={content.features.paywallABTesting.title}
+            description={content.features.paywallABTesting.description}
+            image={content.features.paywallABTesting.image}
+            cta={content.features.paywallABTesting.cta}
+            testimonial={content.features.paywallABTesting.testimonial}
+            flipped={true}
+          />
+        );
+
+      case "featureRefundSaver":
+        return (
+          <FeatureSection
+            key={key}
+            title={content.features.refundSaver.title}
+            description={content.features.refundSaver.description}
+            image={content.features.refundSaver.image}
+            cta={content.features.refundSaver.cta}
+            testimonial={content.features.refundSaver.testimonial}
+            className="bg-[#D1F2E8]/20"
+          />
+        );
+
+      case "featureSubscriptionBI":
+        return (
+          <FeatureSection
+            key={key}
+            title={content.features.subscriptionBI.title}
+            description={content.features.subscriptionBI.description}
+            image={content.features.subscriptionBI.image}
+            cta={content.features.subscriptionBI.cta}
+            testimonial={content.features.subscriptionBI.testimonial}
+            flipped={true}
+          />
+        );
+
+      case "featureNoCodePaywall":
+        return (
+          <FeatureSection
+            key={key}
+            title={content.features.noCodePaywall.title}
+            description={content.features.noCodePaywall.description}
+            image={content.features.noCodePaywall.image}
+            cta={content.features.noCodePaywall.cta}
+            testimonial={content.features.noCodePaywall.testimonial}
+            className="bg-[#FFD4CE]/20"
+          />
+        );
+
+      case "featureFunnelFox":
+        return (
+          <FeatureSection
+            key={key}
+            title={content.features.funnelFox.title}
+            description={content.features.funnelFox.description}
+            image={content.features.funnelFox.image}
+            cta={content.features.funnelFox.cta}
+            flipped={true}
+            className="bg-[var(--bg-secondary)]"
+          />
+        );
+
+      case "featureRevenueSync":
+        return (
+          <FeatureSection
+            key={key}
+            title={content.features.revenueSync.title}
+            description={content.features.revenueSync.description}
+            image={{
+              src: "/images/integrations/logo-amplitude.svg",
+              alt: "Integrations",
+              bgColor: "#00A3B5",
+            }}
+            cta={content.features.revenueSync.cta}
+            testimonial={content.features.revenueSync.testimonial}
+          />
+        );
+
+      case "finalCta":
+        return <FinalCTA key={key} variant={overrides?.variant as "default" | "enterprise"} />;
+
+      case "footer":
+        return <Footer key={key} />;
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[var(--bg-primary)]">
+      <Header />
+      <main>
+        {config.sections.map((sectionId, index) => renderSection(sectionId, index))}
+      </main>
+    </div>
+  );
+}

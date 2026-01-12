@@ -1,0 +1,517 @@
+@import "tailwindcss";
+
+/* ============================================
+ * ADAPTY Multi-Design-System Prototype
+ * Theme switching via data-theme attribute
+ * ============================================ */
+
+/* Base Tailwind Theme Extension */
+@theme {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+}
+
+/* ============================================
+ * DS5: HYBRID PREMIUM (DEFAULT)
+ * Light theme with warmth, recommended for Adapty
+ * ============================================ */
+:root,
+[data-theme="ds5"] {
+  /* Colors - Primary */
+  --color-primary: #6366f1;
+  --color-primary-hover: #818cf8;
+  --color-primary-active: #4f46e5;
+  --color-primary-light: #eef2ff;
+  --color-accent: rgb(108, 71, 255);
+
+  /* Colors - Backgrounds */
+  --bg-primary: #f7f7f8;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #fafafa;
+  --bg-muted: #f1f1f3;
+  --bg-elevated: #ffffff;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Colors - Text */
+  --text-primary: #131316;
+  --text-secondary: #42434d;
+  --text-tertiary: #71717a;
+  --text-muted: #9394a1;
+  --text-inverse: #ffffff;
+
+  /* Colors - Semantic */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* Colors - Borders */
+  --border-default: #d9d9de;
+  --border-subtle: #eeeef0;
+  --border-strong: #a1a1aa;
+
+  /* Typography */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
+
+  /* Animations */
+  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+
+  /* Layout */
+  --header-height: 64px;
+  --page-max-width: 1400px;
+  --section-padding-y: 5rem;
+  --section-padding-x: 1.5rem;
+
+  /* Component tokens */
+  --button-radius: var(--radius-md);
+  --card-radius: var(--radius-lg);
+  --card-bg: var(--bg-secondary);
+  --card-border: var(--border-subtle);
+  --nav-bg: var(--bg-primary);
+}
+
+/* ============================================
+ * DS1: LINEAR-INSPIRED
+ * Dark theme with premium micro-interactions
+ * ============================================ */
+[data-theme="ds1"] {
+  /* Colors - Primary */
+  --color-primary: #5e6ad2;
+  --color-primary-hover: #6e7bdc;
+  --color-primary-active: #4e5ac2;
+  --color-primary-light: #18182f;
+  --color-accent: #7170ff;
+
+  /* Colors - Backgrounds (Layered Dark) */
+  --bg-primary: #08090a;
+  --bg-secondary: #1c1c1f;
+  --bg-tertiary: #232326;
+  --bg-muted: #141516;
+  --bg-elevated: #141516;
+  --bg-overlay: rgba(0, 0, 0, 0.9);
+
+  /* Colors - Text */
+  --text-primary: #f7f8f8;
+  --text-secondary: #d0d6e0;
+  --text-tertiary: #8a8f98;
+  --text-muted: #62666d;
+  --text-inverse: #08090a;
+
+  /* Colors - Semantic */
+  --color-success: #4cb782;
+  --color-warning: #f2c94c;
+  --color-error: #eb5757;
+  --color-info: #4ea7fc;
+
+  /* Colors - Borders */
+  --border-default: #23252a;
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-strong: #34343a;
+
+  /* Typography */
+  --font-sans: "Inter Variable", -apple-system, sans-serif;
+  --font-mono: "Berkeley Mono", ui-monospace, monospace;
+
+  /* Border Radius (Linear uses larger radii) */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows (Dark theme - subtle) */
+  --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0px 4px 24px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0px 7px 32px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0px 10px 40px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(94, 106, 210, 0.3);
+
+  /* Animations (67+ easings, premium) */
+  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  --ease-default: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --duration-fast: 100ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+
+  /* Layout */
+  --header-height: 64px;
+  --page-max-width: 1024px;
+  --header-bg: rgba(11, 11, 11, 0.8);
+
+  /* Component tokens */
+  --button-radius: var(--radius-md);
+  --card-radius: 24px;
+  --card-bg: var(--bg-elevated);
+  --card-border: var(--border-subtle);
+  --nav-bg: var(--header-bg);
+}
+
+/* ============================================
+ * DS2: ATTIO-INSPIRED
+ * Light theme with editorial typography
+ * ============================================ */
+[data-theme="ds2"] {
+  /* Colors - Primary (LAB to hex fallbacks) */
+  --color-primary: #4682f0;
+  --color-primary-hover: #3672d0;
+  --color-primary-active: #3672d0;
+  --color-primary-light: #eef4ff;
+  --color-accent: #4682f0;
+
+  /* Colors - Backgrounds (Light) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafbfc;
+  --bg-tertiary: #f0f2f5;
+  --bg-muted: #f0f2f5;
+  --bg-elevated: #ffffff;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Colors - Text */
+  --text-primary: #000000;
+  --text-secondary: #2b3544;
+  --text-tertiary: #5a6578;
+  --text-muted: #8795a8;
+  --text-inverse: #ffffff;
+
+  /* Colors - Semantic (LAB to hex) */
+  --color-success: #22a861;
+  --color-warning: #e5a20c;
+  --color-error: #e53e3e;
+  --color-info: #4682f0;
+
+  /* Colors - Borders */
+  --border-default: #d8dce3;
+  --border-subtle: #e8ebef;
+  --border-strong: #a3adb8;
+
+  /* Typography (4-font system) */
+  --font-sans: "Inter", -apple-system, sans-serif;
+  --font-display: "Inter Display", var(--font-sans);
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Border Radius (Attio uses smaller radii) */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows (Light theme - soft) */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px rgba(70, 130, 240, 0.15);
+
+  /* Animations */
+  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  --ease-default: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+
+  /* Layout */
+  --header-height: 68px;
+  --page-max-width: 1280px;
+
+  /* Component tokens */
+  --button-radius: var(--radius-md);
+  --card-radius: var(--radius-xl);
+  --card-bg: var(--bg-elevated);
+  --card-border: var(--border-subtle);
+  --nav-bg: var(--bg-primary);
+}
+
+/* ============================================
+ * DS3: POLAR-INSPIRED
+ * Dark, minimal, fast animations
+ * ============================================ */
+[data-theme="ds3"] {
+  /* Colors - Primary */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #60a5fa;
+  --color-primary-active: #2563eb;
+  --color-primary-light: #1e3a5f;
+  --color-accent: #3b82f6;
+
+  /* Colors - Backgrounds (Dark minimal) */
+  --bg-primary: #171719;
+  --bg-secondary: #101011;
+  --bg-tertiary: #1d1d20;
+  --bg-muted: #1d1d20;
+  --bg-elevated: #1d1d20;
+  --bg-overlay: rgba(0, 0, 0, 0.8);
+
+  /* Colors - Text */
+  --text-primary: #d7d7db;
+  --text-secondary: #6f717b;
+  --text-tertiary: #3a3b40;
+  --text-muted: #6f717b;
+  --text-inverse: #171719;
+
+  /* Colors - Semantic */
+  --color-success: #22c55e;
+  --color-warning: #eab308;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* Colors - Borders (Single color - minimal) */
+  --border-default: #1d1d20;
+  --border-subtle: #1d1d20;
+  --border-strong: #3a3b40;
+
+  /* Typography (Geist) */
+  --font-sans: "Geist Sans", -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows (Minimal) */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+
+  /* Animations (FAST - Polar signature) */
+  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 150ms;
+  --duration-slow: 200ms;
+
+  /* Layout */
+  --header-height: 64px;
+  --page-max-width: 1280px;
+
+  /* Component tokens */
+  --button-radius: var(--radius-lg);
+  --card-radius: var(--radius-lg);
+  --card-bg: var(--bg-tertiary);
+  --card-border: var(--border-default);
+  --nav-bg: var(--bg-primary);
+}
+
+/* ============================================
+ * DS4: VERCEL-INSPIRED
+ * True black, bold visuals, bouncy animations
+ * ============================================ */
+[data-theme="ds4"] {
+  /* Signature gradients */
+  --gradient-develop: linear-gradient(90deg, #007cf0, #00dfd8);
+  --gradient-preview: linear-gradient(90deg, #7928ca, #ff0080);
+  --gradient-ship: linear-gradient(90deg, #ff4d4d, #f9cb28);
+
+  /* Colors - Primary */
+  --color-primary: #0070f3;
+  --color-primary-hover: #0060d0;
+  --color-primary-active: #0050b0;
+  --color-primary-light: #0a2540;
+  --color-accent: #0070f3;
+
+  /* Colors - Backgrounds (TRUE BLACK) */
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #1a1a1a;
+  --bg-muted: #1a1a1a;
+  --bg-elevated: #1a1a1a;
+  --bg-overlay: rgba(0, 0, 0, 0.9);
+
+  /* Colors - Text */
+  --text-primary: #ededed;
+  --text-secondary: #a1a1a1;
+  --text-tertiary: #888888;
+  --text-muted: #7d7d7d;
+  --text-inverse: #000000;
+
+  /* Colors - Semantic */
+  --color-success: #0ca766;
+  --color-warning: #f5a623;
+  --color-error: #e5484d;
+  --color-info: #0070f3;
+
+  /* Colors - Borders */
+  --border-default: rgba(255, 255, 255, 0.14);
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.24);
+
+  /* Typography */
+  --font-sans: "Geist", Arial, sans-serif;
+  --font-display: "Space Grotesk", "Geist", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  /* Border Radius (Vercel uses smaller radii) */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows (Compound shadows - Vercel signature) */
+  --shadow-sm: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.16);
+  --shadow-md: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 2px 2px rgba(0, 0, 0, 0.32);
+  --shadow-lg: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 8px 16px -4px rgba(0, 0, 0, 0.16);
+  --shadow-xl: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 24px 32px -8px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 30px rgba(0, 124, 240, 0.3);
+
+  /* Animations (BOUNCY - Vercel signature) */
+  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+
+  /* Layout */
+  --header-height: 64px;
+  --page-max-width: 1400px;
+
+  /* Component tokens */
+  --button-radius: var(--radius-md);
+  --card-radius: var(--radius-lg);
+  --card-bg: var(--bg-elevated);
+  --card-border: var(--border-subtle);
+  --nav-bg: var(--bg-primary);
+}
+
+/* ============================================
+ * GLOBAL BASE STYLES
+ * ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  transition: background-color var(--duration-normal) var(--ease-default),
+              color var(--duration-normal) var(--ease-default);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-primary);
+  color: var(--text-inverse);
+}
+
+/* ============================================
+ * KEYFRAME ANIMATIONS
+ * ============================================ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Marquee animation for logo strips */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============================================
+ * UTILITY CLASSES
+ * ============================================ */
+.animate-fade-in {
+  animation: fadeIn var(--duration-normal) var(--ease-default);
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--duration-normal) var(--ease-bounce);
+}
+
+.animate-slide-up {
+  animation: slideInUp var(--duration-normal) var(--ease-bounce);
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Gradient text utility (for DS4) */
+.gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* DS4 specific gradient classes */
+[data-theme="ds4"] .gradient-develop {
+  background: var(--gradient-develop);
+}
+
+[data-theme="ds4"] .gradient-preview {
+  background: var(--gradient-preview);
+}
+
+[data-theme="ds4"] .gradient-ship {
+  background: var(--gradient-ship);
+}
