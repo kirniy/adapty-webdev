@@ -127,7 +127,7 @@
   --font-sans: "Inter Variable", "Inter", -apple-system, sans-serif;
   --font-mono: "Berkeley Mono", "JetBrains Mono", ui-monospace, monospace;
   --letter-spacing-tight: -0.02em;
-  --letter-spacing-heading: -0.025em;
+  --letter-spacing-heading: -0.04em;
 
   /* Border Radius (LINEAR: 8px BUTTONS, 30px CARDS) */
   --radius-sm: 4px;
@@ -143,6 +143,8 @@
   --shadow-md: 0px 4px 24px rgba(0, 0, 0, 0.2);
   --shadow-lg: 0px 7px 32px rgba(0, 0, 0, 0.35);
   --shadow-xl: 0px 10px 40px rgba(0, 0, 0, 0.5);
+  /* LINEAR: White border ring + shadow for authentic "glass" depth */
+  --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 8px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
   --shadow-glow: 0 0 20px rgba(94, 106, 210, 0.3);
 
   /* Animations (LINEAR: 67+ custom easings) */

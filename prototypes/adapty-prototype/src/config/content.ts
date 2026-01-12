@@ -215,26 +215,33 @@ export const content = {
   // ============================================
   features: {
     paywallABTesting: {
-      title: "Increase subscription revenue without app releases",
+      title: "Paywall A/B Testing",
       description:
-        "Manage, target, localize and personalize paywalls without leaving your browser.",
-      cta: { text: "Increase app revenue", href: "https://adapty.io/paywall-ab-testing/" },
+        "Data-driven decisions for your paywalls. Run A/B tests to find the best performing paywall for your app. Optimize prices, trial periods, and layout.",
+      cta: {
+        text: "Learn more about A/B testing",
+        href: "/features/ab-testing",
+      },
       image: {
-        src: "/images/sections/paywall-ab-testing.webp",
-        alt: "Paywall A/B Testing Interface",
-        bgColor: "#2A594F",
+        src: "/assets/feature-ab.png",
+        alt: "Paywall A/B Testing Dashboard",
+        bgColor: "#E8F5E9", // Light green for generic
       },
       features: [
-        "Test paywalls, pricing, and offers",
         "Statistical significance calculator",
-        "Audience segmentation",
-        "Automatic winner selection",
-      ],
-      codeSnippet: `// 1. Get paywall
-const paywall = await adapty.getPaywall("paywall_id");
+        "Cohort analysis & retention impact",
+        "Real-time experiment switching",
+        "No app update required"
+      ] as const,
+      codeSnippet: `// 1. Fetch remote config
+const paywall = await adapty.getPaywall("placement_id");
 
-// 2. Log view (A/B test starts)
-await adapty.logShowPaywall(paywall);`,
+// 2. Log view event
+await adapty.logShowPaywall(paywall);
+
+// 3. Display paywall UI
+const view = new AdaptyPaywallView(paywall);
+view.present();`,
       testimonial: {
         logo: "/images/sections/smartist-logo.png",
         quote:
@@ -247,22 +254,34 @@ await adapty.logShowPaywall(paywall);`,
       },
     },
     refundSaver: {
-      title: "Cut refund rate by 40%",
+      title: "Refund Saver",
       description:
-        "Stop losing revenue on refunds — Adapty automatically shares user activity data with Apple for refund requests and reduces it.",
-      cta: { text: "Set up Refund Saver", href: "https://adapty.io/refund-saver/" },
-      image: {
-        src: "/images/sections/refund-rate.webp",
-        alt: "Refund Rate Chart",
-        bgColor: "#D1F2E8",
+        "Retain users who are about to cancel. Automatically offer a discount or a different plan when a user initiates a refund or cancellation.",
+      cta: {
+        text: "Stop churn with Refund Saver",
+        href: "/features/refund-saver",
       },
-      features: ["Save up to 40% of refund requests", "Automated customer recovery"],
-      codeSnippet: `// Check subscription status
-const profile = await adapty.getProfile();
-
-if (profile.accessLevels['premium'].isActive) {
-  // Grant access
-}`,
+      image: {
+        src: "/assets/feature-refund.png",
+        alt: "Refund Saver Logic",
+        bgColor: "#FFF3E0", // Light orange
+      },
+      features: [
+        "Automated retention offers",
+        "Cancellation reason surveys",
+        "Win-back campaigns",
+        "Churn prediction models"
+      ] as const,
+      codeSnippet: `// Intercept cancellation intent
+adapty.on("subscription_cancel_intent", async (user) => {
+  if (user.ltv > 50) {
+    // Offer 20% discount to high-value users
+    await adapty.presentOffer({
+      id: "winback_20_percent",
+      placement: "cancellation_flow"
+    });
+  }
+});`,
       testimonial: {
         quote:
           "I never thought that doing something about refunds could make such a difference. We just flipped the switch, set it up, and suddenly, it felt like we stopped letting money slip away.",
