@@ -1,27 +1,24 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { getDSConfig, type SectionId } from "~/config/ds-configs";
 import { content } from "~/config/content";
-import {
-  Hero,
-  TrustedBy,
-  RoleCards,
-  Stats,
-  Testimonials,
-  CaseStudies,
-  Enterprise,
-  G2Badges,
-  IntegrationsMarquee,
-  SDKCodeSnippet,
-  FinalCTA,
-  FeatureSection,
-} from "~/components/sections";
-import { Header } from "~/components/layout/Header";
-import { Footer } from "~/components/layout/Footer";
+// ... imports
 
 export function DynamicPage() {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent hydration mismatch by not rendering theme-dependent structure until mounted
+  if (!mounted) {
+    return <div className="min-h-screen bg-white" />; // Clean white slate or loader
+  }
+
   const config = getDSConfig(theme ?? "ds5");
 
   // Render a section by its ID
