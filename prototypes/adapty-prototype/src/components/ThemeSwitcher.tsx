@@ -30,10 +30,24 @@ export function ThemeSwitcher() {
     setIsOpen(false);
   };
 
+  // Fixed dark theme colors for the switcher (works on any background)
+  const switcherStyles = {
+    bg: "rgba(24, 24, 27, 0.95)",
+    bgHover: "rgba(39, 39, 42, 0.95)",
+    border: "rgba(63, 63, 70, 0.8)",
+    text: "#fafafa",
+    textMuted: "#a1a1aa",
+    accent: "#8b5cf6",
+    accentBg: "rgba(139, 92, 246, 0.15)",
+  };
+
   if (!mounted) {
     return (
       <div className="fixed bottom-4 right-4 z-50">
-        <div className="h-10 w-32 animate-pulse rounded-lg bg-[var(--bg-secondary)]" />
+        <div
+          className="h-10 w-32 animate-pulse rounded-lg"
+          style={{ backgroundColor: switcherStyles.bg }}
+        />
       </div>
     );
   }
@@ -42,15 +56,20 @@ export function ThemeSwitcher() {
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
-      {/* Toggle Button */}
+      {/* Toggle Button - Fixed dark style */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-lg border border-[var(--border-default)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] shadow-[var(--shadow-md)] transition-all duration-[var(--duration-fast)] hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-lg)]"
+        className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium shadow-lg backdrop-blur-sm transition-all duration-150 hover:scale-[1.02]"
         style={{
-          transition: `all var(--duration-fast) var(--ease-bounce)`,
+          backgroundColor: switcherStyles.bg,
+          border: `1px solid ${switcherStyles.border}`,
+          color: switcherStyles.text,
         }}
       >
-        <span className="flex h-3 w-3 rounded-full bg-[var(--color-primary)]" />
+        <span
+          className="flex h-3 w-3 rounded-full"
+          style={{ backgroundColor: switcherStyles.accent }}
+        />
         <span>{currentTheme.name}</span>
         <svg
           className={`h-4 w-4 transition-transform duration-150 ${isOpen ? "rotate-180" : ""}`}
@@ -67,7 +86,7 @@ export function ThemeSwitcher() {
         </svg>
       </button>
 
-      {/* Dropdown */}
+      {/* Dropdown - Fixed dark style */}
       {isOpen && (
         <>
           {/* Backdrop */}
@@ -78,35 +97,52 @@ export function ThemeSwitcher() {
 
           {/* Menu */}
           <div
-            className="absolute right-0 bottom-full z-50 mb-2 w-64 origin-bottom-right animate-scale-in overflow-hidden rounded-xl border border-[var(--border-default)] bg-[var(--bg-secondary)] shadow-[var(--shadow-xl)]"
+            className="absolute right-0 bottom-full z-50 mb-2 w-64 origin-bottom-right animate-scale-in overflow-hidden rounded-xl shadow-2xl backdrop-blur-sm"
+            style={{
+              backgroundColor: switcherStyles.bg,
+              border: `1px solid ${switcherStyles.border}`,
+            }}
           >
             <div className="p-1">
               {dsThemes.map((ds) => (
                 <button
                   key={ds.id}
                   onClick={() => handleThemeChange(ds.id)}
-                  className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors duration-[var(--duration-fast)] ${
-                    theme === ds.id
-                      ? "bg-[var(--color-primary-light)] text-[var(--color-primary)]"
-                      : "text-[var(--text-primary)] hover:bg-[var(--bg-muted)]"
-                  }`}
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors duration-150"
+                  style={{
+                    backgroundColor: theme === ds.id ? switcherStyles.accentBg : "transparent",
+                    color: theme === ds.id ? switcherStyles.accent : switcherStyles.text,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (theme !== ds.id) {
+                      e.currentTarget.style.backgroundColor = switcherStyles.bgHover;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (theme !== ds.id) {
+                      e.currentTarget.style.backgroundColor = "transparent";
+                    }
+                  }}
                 >
                   <span
-                    className={`flex h-2.5 w-2.5 rounded-full ${
-                      theme === ds.id
-                        ? "bg-[var(--color-primary)]"
-                        : "bg-[var(--text-muted)]"
-                    }`}
+                    className="flex h-2.5 w-2.5 rounded-full"
+                    style={{
+                      backgroundColor: theme === ds.id ? switcherStyles.accent : switcherStyles.textMuted,
+                    }}
                   />
                   <div className="flex-1">
                     <div className="font-medium">{ds.name}</div>
-                    <div className="text-xs text-[var(--text-muted)]">
+                    <div
+                      className="text-xs"
+                      style={{ color: switcherStyles.textMuted }}
+                    >
                       {ds.description}
                     </div>
                   </div>
                   {theme === ds.id && (
                     <svg
-                      className="h-4 w-4 text-[var(--color-primary)]"
+                      className="h-4 w-4"
+                      style={{ color: switcherStyles.accent }}
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -122,9 +158,21 @@ export function ThemeSwitcher() {
             </div>
 
             {/* Footer with keyboard hint */}
-            <div className="border-t border-[var(--border-subtle)] bg-[var(--bg-muted)] px-3 py-2">
-              <div className="text-xs text-[var(--text-muted)]">
-                Direct link: <code className="rounded bg-[var(--bg-tertiary)] px-1.5 py-0.5 font-mono">?ds={theme}</code>
+            <div
+              className="px-3 py-2"
+              style={{
+                borderTop: `1px solid ${switcherStyles.border}`,
+                backgroundColor: "rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              <div
+                className="text-xs"
+                style={{ color: switcherStyles.textMuted }}
+              >
+                Direct link: <code
+                  className="rounded px-1.5 py-0.5 font-mono"
+                  style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+                >?ds={theme}</code>
               </div>
             </div>
           </div>
