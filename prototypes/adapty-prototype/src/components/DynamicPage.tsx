@@ -4,7 +4,22 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { getDSConfig, type SectionId } from "~/config/ds-configs";
 import { content } from "~/config/content";
-// ... imports
+import {
+  Hero,
+  TrustedBy,
+  RoleCards,
+  Stats,
+  Testimonials,
+  CaseStudies,
+  Enterprise,
+  G2Badges,
+  IntegrationsMarquee,
+  SDKCodeSnippet,
+  FinalCTA,
+  FeatureSection,
+} from "~/components/sections";
+import { Header } from "~/components/layout/Header";
+import { Footer } from "~/components/layout/Footer";
 
 export function DynamicPage() {
   const { theme } = useTheme();

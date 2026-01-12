@@ -293,109 +293,128 @@ adapty.on("subscription_cancel_intent", async (user) => {
       },
     },
     subscriptionBI: {
+      title: "Subscription BI",
+      description:
+        "Real-time analytics for your subscription business. Track MRR, Churn, LTV, and other key metrics in one place.",
+      image: {
+        src: "https://placehold.co/800x600/E3F2FD/1565C0/png?text=Subscription+BI",
+        alt: "Subscription BI Dashboard",
+        bgColor: "#E3F2FD",
+      },
+      cta: {
+        text: "Explore Subscription BI",
+        href: "/features/analytics",
+      },
+      features: [
+        "Real-time revenue tracking (MRR/ARR)",
+        "Cohort retention heatmaps",
+        "Funnel conversion analytics",
+        "Cross-platform data aggregation"
+      ] as const,
     },
-  },
-},
-  noCodePaywall: {
-    title: "No-code paywall builder",
-    description:
-    "Build beautiful native paywalls for iOS, Android, Flutter, and React Native without a dev team.",
-    cta: { text: "Create paywalls within minutes", href: "https://adapty.io/paywall-builder/" },
-    image: {
-      src: "/images/sections/paywall-builder.webp",
-      alt: "Paywall Builder Interface",
-      bgColor: "transparent",
-    },
-    features: [
-      "Drag-and-drop visual builder",
-      "Pre-built templates",
-      "Real-time preview on device",
-      "Instant updates without app release",
-    ],
-    testimonial: {
-      quote:
-      "Adapty's Paywall Builder and A/B testing tools paired together are a game changer for anyone trying to do high-velocity testing and find quick wins.",
-      company: { name: "Moodworks Inc", category: "Mental health apps", logo: "/images/sections/cat-icon.png" },
-      author: {
-        name: "Mike McSweeney",
-        role: "Chief Product Officer",
-        avatar: "/images/sections/mike.webp",
+    noCodePaywall: {
+      title: "No-code paywall builder",
+      description:
+        "Build beautiful native paywalls for iOS, Android, Flutter, and React Native without a dev team.",
+      cta: {
+        text: "Create paywalls within minutes",
+        href: "https://adapty.io/paywall-builder/"
+      },
+      image: {
+        src: "/images/sections/paywall-builder.webp",
+        alt: "Paywall Builder Interface",
+        bgColor: "transparent",
+      },
+      features: [
+        "Drag-and-drop visual builder",
+        "Pre-built templates",
+        "Real-time preview on device",
+        "Instant updates without app release",
+      ],
+      testimonial: {
+        quote:
+          "Adapty's Paywall Builder and A/B testing tools paired together are a game changer for anyone trying to do high-velocity testing and find quick wins.",
+        company: { name: "Moodworks Inc", category: "Mental health apps", logo: "/images/sections/cat-icon.png" },
+        author: {
+          name: "Mike McSweeney",
+          role: "Chief Product Officer",
+          avatar: "/images/sections/mike.webp",
+        },
       },
     },
-  },
-  funnelFox: {
-    title: "Boost app revenue fast with web funnels",
-    description:
-    "Build and launch web-to-app funnels, integrate payments, optimize with A/B testing and scale globally — all in one platform, no coding needed.",
-    cta: { text: "Explore FunnelFox", href: "https://funnelfox.io", external: true },
-    image: {
-      src: "/images/sections/funnelfox.webp",
-      alt: "FunnelFox Dashboard",
-      bgColor: "#F4F4F5",
-    },
-  },
-  revenueSync: {
-    title: "Sync purchase data with other services",
-    description:
-    "Forward subscription events to analytics and attribution services without coding.",
-    cta: { text: "Explore integrations", href: "https://adapty.io/integrations/" },
-    testimonial: {
-      quote:
-      "They have a great external API that makes it easy to pass related events to other analytics tools such as Amplitude and Mixpanel.",
-      author: {
-        name: "Chris Bick",
-        role: "Founder and CEO",
-        avatar: "/images/testimonials/chris.webp",
+    funnelFox: {
+      title: "Boost app revenue fast with web funnels",
+      description:
+        "Build and launch web-to-app funnels, integrate payments, optimize with A/B testing and scale globally — all in one platform, no coding needed.",
+      cta: { text: "Explore FunnelFox", href: "https://funnelfox.io", external: true },
+      image: {
+        src: "/images/sections/funnelfox.webp",
+        alt: "FunnelFox Dashboard",
+        bgColor: "#F4F4F5",
       },
-      logo: "/images/testimonials/logos/logo-bickster.png",
     },
-  },
+    revenueSync: {
+      title: "Sync purchase data with other services",
+      description:
+        "Forward subscription events to analytics and attribution services without coding.",
+      cta: { text: "Explore integrations", href: "https://adapty.io/integrations/" },
+      testimonial: {
+        quote:
+          "They have a great external API that makes it easy to pass related events to other analytics tools such as Amplitude and Mixpanel.",
+        author: {
+          name: "Chris Bick",
+          role: "Founder and CEO",
+          avatar: "/images/testimonials/chris.webp",
+        },
+        logo: "/images/testimonials/logos/logo-bickster.png",
+      },
+    },
   },
 
-// ============================================
-// ROLE CARDS SECTION
-// ============================================
-roleCards: {
-  headline: {
-    primary: "Help your team run the mobile subscription business.",
+  // ============================================
+  // ROLE CARDS SECTION
+  // ============================================
+  roleCards: {
+    headline: {
+      primary: "Help your team run the mobile subscription business.",
       secondary: "Faster and cheaper.",
     },
-  items: [
-    {
-      title: "For developers",
-      image: "/images/role-developers-new.webp",
-      link: "https://adapty.io/for-developers/",
-      tags: ["Subscriptions SDK", "Refund Saver", "Remote config", "Fallback paywalls"],
-    },
-    {
-      title: "For app owners",
-      image: "/images/role-owners-new.webp",
-      link: "https://adapty.io/for-app-owners/",
-      tags: ["Revenue analytics", "LTV analytics", "AI LTV and revenue predictions"],
-    },
-    {
-      title: "For marketers",
-      image: "/images/role-marketers-new.webp",
-      link: "https://adapty.io/for-marketers/",
-      tags: ["A/B testing", "No-code Builder", "Localizations", "Targeting"],
-    },
-  ],
+    items: [
+      {
+        title: "For developers",
+        image: "/images/role-developers-new.webp",
+        link: "https://adapty.io/for-developers/",
+        tags: ["Subscriptions SDK", "Refund Saver", "Remote config", "Fallback paywalls"],
+      },
+      {
+        title: "For app owners",
+        image: "/images/role-owners-new.webp",
+        link: "https://adapty.io/for-app-owners/",
+        tags: ["Revenue analytics", "LTV analytics", "AI LTV and revenue predictions"],
+      },
+      {
+        title: "For marketers",
+        image: "/images/role-marketers-new.webp",
+        link: "https://adapty.io/for-marketers/",
+        tags: ["A/B testing", "No-code Builder", "Localizations", "Targeting"],
+      },
+    ],
   },
 
-// ============================================
-// SDK SECTION
-// ============================================
-sdk: {
-  headline: {
-    primary: "Integrate in-app purchases",
+  // ============================================
+  // SDK SECTION
+  // ============================================
+  sdk: {
+    headline: {
+      primary: "Integrate in-app purchases",
       secondary: "with a few lines of code",
     },
-  subheadline: {
-    primary: "Integrate IAPs within a few hours without server coding.",
+    subheadline: {
+      primary: "Integrate IAPs within a few hours without server coding.",
       secondary: "Adapty handles the correct subscription state, taking everything under the hood, from free trials to refunds, in a simple, developer-friendly SDK.",
     },
-  cta: { text: "Make subscriptions easy", href: "https://adapty.io/sdk/" },
-  gridHeadline: "Get the SDK for your platform",
+    cta: { text: "Make subscriptions easy", href: "https://adapty.io/sdk/" },
+    gridHeadline: "Get the SDK for your platform",
     platforms: [
       { name: "Swift SDK", icon: "/sdks/swift.svg", link: "https://adapty.io/sdk/ios/", color: "#F05138" },
       { name: "Kotlin SDK", icon: "/sdks/kotlin.svg", link: "https://adapty.io/sdk/android/", color: "#7F52FF" },
@@ -408,8 +427,8 @@ sdk: {
       { name: "Web API", icon: "/sdks/web-api.svg", link: "https://adapty.io/sdk/web/", color: "#3B82F6" },
       { name: "Stripe", icon: "/sdks/stripe.svg", link: "https://adapty.io/integrations/stripe/", color: "#635BFF" },
     ],
-      codeExamples: {
-    swift: `import Adapty
+    codeExamples: {
+      swift: `import Adapty
 
 // 1. Activate Adapty
 try await Adapty.activate("PUBLIC_KEY")
@@ -440,7 +459,7 @@ Adapty.makePurchase(activity, product) { result ->
         // grant access
     }
 }`,
-        flutter: `import 'package:adapty_flutter/adapty_flutter.dart';
+      flutter: `import 'package:adapty_flutter/adapty_flutter.dart';
 
 // 1. Activate Adapty
 try {
@@ -457,7 +476,7 @@ final result = await Adapty().makePurchase(product: product);
 if (result?.accessLevel["premium"]?.isActive == true) {
    // grant access
 }`,
-          "react-native": `import { adapty } from 'react-native-adapty';
+      "react-native": `import { adapty } from 'react-native-adapty';
 
 // 1. Activate Adapty
 await adapty.activate('PUBLIC_KEY');
@@ -471,23 +490,23 @@ if (result.accessLevel['premium'].isActive) {
   // grant access
 }`,
     },
-  testimonial: {
-    logo: "/images/testimonials/logos/logo-smitten.webp",
+    testimonial: {
+      logo: "/images/testimonials/logos/logo-smitten.webp",
       quote:
-    "Adapty SDK made integrating in-app purchases a walk in the park. With just a few lines of code, I was able to implement subscriptions seamlessly for both iOS and Android.",
+        "Adapty SDK made integrating in-app purchases a walk in the park. With just a few lines of code, I was able to implement subscriptions seamlessly for both iOS and Android.",
       author: {
-      name: "Magnus Olafsson",
+        name: "Magnus Olafsson",
         role: "Chief Technology Officer at Smitten",
-          avatar: "/images/testimonial-magnus.webp",
+        avatar: "/images/testimonial-magnus.webp",
       },
+    },
   },
-},
 
-// ============================================
-// INTEGRATIONS SECTION
-// ============================================
-integrations: {
-  headline: "Works with your favorite tools",
+  // ============================================
+  // INTEGRATIONS SECTION
+  // ============================================
+  integrations: {
+    headline: "Works with your favorite tools",
     items: [
       "amplitude",
       "mixpanel",
@@ -509,148 +528,148 @@ integrations: {
       "tenjin",
       "apple-ads",
     ],
-      detailedLogos: [
-        { name: "Airbridge", file: "logo-airbridge.svg" },
-        { name: "Adjust", file: "logo-adjust.svg" },
-        { name: "Amazon S3", file: "logo-amazon-s3.svg" },
-        { name: "Amplitude", file: "logo-amplitude.svg" },
-        { name: "Apple Search Ads", file: "icon-apple-ads-text.svg" },
-        { name: "AppsFlyer", file: "logo-appsflyer.svg" },
-        { name: "AppMetrica", file: "logo-appmetrica.svg" },
-        { name: "Asapty", file: "logo-asapty.svg" },
-        { name: "Branch", file: "logo-branch.svg" },
-        { name: "Braze", file: "logo-braze.svg" },
-        { name: "Facebook", file: "logo-facebook-blue-text.svg" },
-        { name: "Firebase", file: "logo-firebase-and-ga.svg" },
-        { name: "Google Cloud", file: "logo-google-cloud-storage.svg" },
-        { name: "Mixpanel", file: "logo-mixpanel.svg" },
-        { name: "OneSignal", file: "logo-onesignal.svg" },
-        { name: "PostHog", file: "posthog-logo-colorfull.svg" },
-        { name: "Pushwoosh", file: "logo-pushwoosh.svg" },
-        { name: "SplitMetrics", file: "logo-split-metrics.svg" },
-        { name: "Singular", file: "singular-logo-block.svg" },
-        { name: "Stripe", file: "icon-stripe-logo.svg" },
-        { name: "Tenjin", file: "tenjin_logo_color.svg" },
-        { name: "Webhooks", file: "logo-webhook.svg" },
-      ],
+    detailedLogos: [
+      { name: "Airbridge", file: "logo-airbridge.svg" },
+      { name: "Adjust", file: "logo-adjust.svg" },
+      { name: "Amazon S3", file: "logo-amazon-s3.svg" },
+      { name: "Amplitude", file: "logo-amplitude.svg" },
+      { name: "Apple Search Ads", file: "icon-apple-ads-text.svg" },
+      { name: "AppsFlyer", file: "logo-appsflyer.svg" },
+      { name: "AppMetrica", file: "logo-appmetrica.svg" },
+      { name: "Asapty", file: "logo-asapty.svg" },
+      { name: "Branch", file: "logo-branch.svg" },
+      { name: "Braze", file: "logo-braze.svg" },
+      { name: "Facebook", file: "logo-facebook-blue-text.svg" },
+      { name: "Firebase", file: "logo-firebase-and-ga.svg" },
+      { name: "Google Cloud", file: "logo-google-cloud-storage.svg" },
+      { name: "Mixpanel", file: "logo-mixpanel.svg" },
+      { name: "OneSignal", file: "logo-onesignal.svg" },
+      { name: "PostHog", file: "posthog-logo-colorfull.svg" },
+      { name: "Pushwoosh", file: "logo-pushwoosh.svg" },
+      { name: "SplitMetrics", file: "logo-split-metrics.svg" },
+      { name: "Singular", file: "singular-logo-block.svg" },
+      { name: "Stripe", file: "icon-stripe-logo.svg" },
+      { name: "Tenjin", file: "tenjin_logo_color.svg" },
+      { name: "Webhooks", file: "logo-webhook.svg" },
+    ],
   },
 
-// ============================================
-// G2 BADGES SECTION
-// ============================================
-g2Badges: {
-  headline: "Trusted for usability and customer service",
+  // ============================================
+  // G2 BADGES SECTION
+  // ============================================
+  g2Badges: {
+    headline: "Trusted for usability and customer service",
     subheadline: "Recognized by G2 in Winter 2025 reports",
-      badges: [
-        "g2-winter-2025-1",
-        "g2-winter-2025-2",
-        "g2-winter-2025-3",
-        "g2-winter-2025-4",
-        "g2-winter-2025-5",
-      ],
+    badges: [
+      "g2-winter-2025-1",
+      "g2-winter-2025-2",
+      "g2-winter-2025-3",
+      "g2-winter-2025-4",
+      "g2-winter-2025-5",
+    ],
   },
 
-// ============================================
-// ENTERPRISE SECTION
-// ============================================
-enterprise: {
-  badge: "Enterprise Grade",
+  // ============================================
+  // ENTERPRISE SECTION
+  // ============================================
+  enterprise: {
+    badge: "Enterprise Grade",
     headline: {
-    primary: "Enterprise-grade platform",
+      primary: "Enterprise-grade platform",
       secondary: "built for scale",
     },
-  description: {
-    primary: "Adapty is built for scale with secure infrastructure,",
+    description: {
+      primary: "Adapty is built for scale with secure infrastructure,",
       secondary: "reliable SLAs, and responsive support for high-growth teams.",
     },
-  cta: {
-    primary: { text: "Contact Sales", href: "#" },
-    secondary: { text: "View Security Docs", href: "#" },
-  },
-  features: [
-    {
-      title: "Secure",
-      icon: "shield",
-      color: "emerald",
-      items: ["SOC2 verified", "Encrypted", "24/7 global fraud monitoring"],
+    cta: {
+      primary: { text: "Contact Sales", href: "#" },
+      secondary: { text: "View Security Docs", href: "#" },
     },
-    {
-      title: "Reliable",
-      icon: "lock",
-      color: "blue",
-      items: ["99.99% SLA", "Over $500M/year of in-app purchases processed"],
-    },
-    {
-      title: "Responsive",
-      icon: "server",
-      color: "purple",
-      items: [
-        "Dedicated customer success manager",
-        "Direct communication via Slack",
-        "Live chat on the website",
-        "Four ways to reach us",
-      ],
-    },
-  ],
+    features: [
+      {
+        title: "Secure",
+        icon: "shield",
+        color: "emerald",
+        items: ["SOC2 verified", "Encrypted", "24/7 global fraud monitoring"],
+      },
+      {
+        title: "Reliable",
+        icon: "lock",
+        color: "blue",
+        items: ["99.99% SLA", "Over $500M/year of in-app purchases processed"],
+      },
+      {
+        title: "Responsive",
+        icon: "server",
+        color: "purple",
+        items: [
+          "Dedicated customer success manager",
+          "Direct communication via Slack",
+          "Live chat on the website",
+          "Four ways to reach us",
+        ],
+      },
+    ],
   },
 
-// ============================================
-// FINAL CTA SECTION
-// ============================================
-finalCta: {
-  // Original text split at natural break
-  headline: {
-    primary: "Get started today",
+  // ============================================
+  // FINAL CTA SECTION
+  // ============================================
+  finalCta: {
+    // Original text split at natural break
+    headline: {
+      primary: "Get started today",
       secondary: "or schedule a demo for your personal onboarding",
     },
-  cta: {
-    primary: { text: "Start for free", href: "#" },
-    secondary: { text: "Or schedule a demo", href: "https://adapty.io/schedule-demo/" },
+    cta: {
+      primary: { text: "Start for free", href: "#" },
+      secondary: { text: "Or schedule a demo", href: "https://adapty.io/schedule-demo/" },
+    },
   },
-},
 
-// ============================================
-// FOOTER
-// ============================================
-footer: {
-  logo: "/images/logo-white.svg",
+  // ============================================
+  // FOOTER
+  // ============================================
+  footer: {
+    logo: "/images/logo-white.svg",
     copyright: "© 2024 Adapty Tech Inc.",
-      sections: [
-        {
-          title: "Product",
-          links: [
-            { text: "Paywall A/B Testing", href: "https://adapty.io/paywall-ab-testing/" },
-            { text: "Paywall Builder", href: "https://adapty.io/paywall-builder/" },
-            { text: "Subscription Analytics", href: "https://adapty.io/ltv-analytics/" },
-            { text: "Refund Saver", href: "https://adapty.io/refund-saver/" },
-            { text: "SDK", href: "https://adapty.io/sdk/" },
-            { text: "Integrations", href: "https://adapty.io/integrations/" },
-          ],
-        },
-        {
-          title: "Resources",
-          links: [
-            { text: "Documentation", href: "https://docs.adapty.io/" },
-            { text: "Blog", href: "https://adapty.io/blog/" },
-            { text: "Case Studies", href: "https://adapty.io/case-studies/" },
-            { text: "Ebooks", href: "https://adapty.io/ebooks/" },
-          ],
-        },
-        {
-          title: "Company",
-          links: [
-            { text: "About", href: "https://adapty.io/about/" },
-            { text: "Careers", href: "https://adapty.io/careers/" },
-            { text: "Contact", href: "https://adapty.io/contact/" },
-          ],
-        },
-      ],
-        social: [
-          { name: "Twitter", href: "https://twitter.com/adapaboris", icon: "twitter" },
-          { name: "LinkedIn", href: "https://linkedin.com/company/adapty", icon: "linkedin" },
-          { name: "GitHub", href: "https://github.com/adaptyteam", icon: "github" },
+    sections: [
+      {
+        title: "Product",
+        links: [
+          { text: "Paywall A/B Testing", href: "https://adapty.io/paywall-ab-testing/" },
+          { text: "Paywall Builder", href: "https://adapty.io/paywall-builder/" },
+          { text: "Subscription Analytics", href: "https://adapty.io/ltv-analytics/" },
+          { text: "Refund Saver", href: "https://adapty.io/refund-saver/" },
+          { text: "SDK", href: "https://adapty.io/sdk/" },
+          { text: "Integrations", href: "https://adapty.io/integrations/" },
         ],
+      },
+      {
+        title: "Resources",
+        links: [
+          { text: "Documentation", href: "https://docs.adapty.io/" },
+          { text: "Blog", href: "https://adapty.io/blog/" },
+          { text: "Case Studies", href: "https://adapty.io/case-studies/" },
+          { text: "Ebooks", href: "https://adapty.io/ebooks/" },
+        ],
+      },
+      {
+        title: "Company",
+        links: [
+          { text: "About", href: "https://adapty.io/about/" },
+          { text: "Careers", href: "https://adapty.io/careers/" },
+          { text: "Contact", href: "https://adapty.io/contact/" },
+        ],
+      },
+    ],
+    social: [
+      { name: "Twitter", href: "https://twitter.com/adapaboris", icon: "twitter" },
+      { name: "LinkedIn", href: "https://linkedin.com/company/adapty", icon: "linkedin" },
+      { name: "GitHub", href: "https://github.com/adaptyteam", icon: "github" },
+    ],
   },
-} as const ;
+} as const;
 
 export type Content = typeof content;
