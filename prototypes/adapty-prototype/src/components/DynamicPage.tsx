@@ -31,7 +31,7 @@ export function DynamicPage() {
 
   // Prevent hydration mismatch by not rendering theme-dependent structure until mounted
   if (!mounted) {
-    return <div className="min-h-screen bg-white" />; // Clean white slate or loader
+    return null; // Avoid flash of unstyled content/white screen
   }
 
   const config = getDSConfig(theme ?? "ds5");
