@@ -1,0 +1,580 @@
+@import "tailwindcss";
+
+/* @theme {
+  --font-gilroy: var(--font-gilroy);
+
+  --color-background: #FFFFFF;
+  --color-background-secondary: #FAFAFB;
+  --color-background-tertiary: #F4F5F6;
+  --color-background-muted: #EEEFF1;
+
+  --color-foreground: #1C1D1F;
+  --color-foreground-secondary: #5C5E63;
+  --color-foreground-muted: #A1A1AA;
+
+  --color-brand: #6720FF;
+  --color-brand-hover: #5519CC;
+  --color-brand-light: #F5F3FF;
+
+  --color-border: #E6E7EA;
+  --color-border-subtle: #F0F0F0;
+  --color-border-focus: #266DF0;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+
+  --animate-smooth: cubic-bezier(0.2, 0, 0, 1);
+} */
+
+:root {
+  /* Design Tokens as CSS Variables for utility usage if needed */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FAFAFA;
+  --bg-tertiary: #F4F5F6;
+  --bg-muted: #EEEFF1;
+
+  --text-primary: #181818;
+  --text-secondary: #75777C;
+  --text-muted: #A1A1AA;
+
+  --brand-primary: #6720FF;
+  --brand-hover: #5519CC;
+  --brand-light: #F5F3FF;
+  --brand: #6720FF;
+
+  --border-default: #E6E7EA;
+  --border-subtle: #F0F0F0;
+  --border-focus: #266DF0;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 2px 6px rgba(28, 40, 64, 0.06), 0 6px 20px -2px rgba(28, 40, 64, 0.08);
+  --shadow-elevated: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+  --font-gilroy: 'Gilroy', system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-gilroy);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .hero-grid-layer {
+    position: absolute;
+    mix-blend-mode: normal;
+  }
+
+  .mobile-menu-panel {
+    height: 100dvh;
+  }
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee var(--marquee-duration, 30s) linear infinite;
+  }
+
+  .animate-marquee-vertical {
+    animation: marquee-vertical var(--marquee-duration, 30s) linear infinite;
+  }
+
+  .mask-fade-sides {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s cubic-bezier(0.2, 0, 0, 1) forwards;
+  }
+
+  .fill-mode-forwards {
+    animation-fill-mode: forwards;
+  }
+
+  /* tailwindcss-animate plugin compatibility for Tailwind v4 */
+  .animate-in {
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .fade-in {
+    --tw-enter-opacity: 0;
+    animation-name: fadeIn;
+  }
+
+  .slide-in-from-bottom-4 {
+    --tw-enter-translate-y: 1rem;
+    animation-name: slideUpSmall;
+  }
+
+  .slide-in-from-bottom-8 {
+    --tw-enter-translate-y: 2rem;
+    animation-name: slideUp;
+  }
+
+  .zoom-in-95 {
+    --tw-enter-scale: 0.95;
+    animation-name: zoomIn;
+  }
+
+  /* Combined animations for animate-in */
+  .animate-in.fade-in.slide-in-from-bottom-8 {
+    animation-name: slideUpFade;
+  }
+
+  .animate-in.fade-in.slide-in-from-bottom-4 {
+    animation-name: slideUpFadeSmall;
+  }
+
+  .animate-in.fade-in.zoom-in-95 {
+    animation-name: zoomInFade;
+  }
+
+  /* Override opacity-0 when animation is active */
+  .animate-in.fade-in {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpSmall {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpFadeSmall {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomInFade {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-100% - var(--marquee-gap, 2rem)));
+  }
+}
+
+.blog-code-block code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  white-space: pre;
+}
+
+.blog-code-block .token.comment,
+.blog-code-block .token.prolog,
+.blog-code-block .token.doctype,
+.blog-code-block .token.cdata {
+  color: #565F89;
+}
+
+.blog-code-block .token.punctuation {
+  color: #A9B1D6;
+}
+
+.blog-code-block .token.property,
+.blog-code-block .token.tag,
+.blog-code-block .token.boolean,
+.blog-code-block .token.number,
+.blog-code-block .token.constant,
+.blog-code-block .token.symbol,
+.blog-code-block .token.deleted {
+  color: #FF9E64;
+}
+
+.blog-code-block .token.selector,
+.blog-code-block .token.attr-name,
+.blog-code-block .token.string,
+.blog-code-block .token.char,
+.blog-code-block .token.builtin,
+.blog-code-block .token.inserted {
+  color: #9ECE6A;
+}
+
+.blog-code-block .token.operator,
+.blog-code-block .token.entity,
+.blog-code-block .token.url,
+.blog-code-block .token.variable {
+  color: #89DDFF;
+}
+
+.blog-code-block .token.atrule,
+.blog-code-block .token.attr-value,
+.blog-code-block .token.function,
+.blog-code-block .token.class-name {
+  color: #7AA2F7;
+}
+
+.blog-code-block .token.keyword {
+  color: #BB9AF7;
+}
+
+.blog-code-block .token.regex,
+.blog-code-block .token.important {
+  color: #E0AF68;
+}
+
+.blog-code-block .token.important,
+.blog-code-block .token.bold {
+  font-weight: 700;
+}
+
+.blog-code-block .token.italic {
+  font-style: italic;
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+@keyframes marquee-vertical {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(calc(-100% - var(--marquee-gap, 2rem)));
+  }
+}
+
+/* CSS Houdini @property for animatable gradients */
+@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.animated-gradient-border {
+  position: relative;
+  border-radius: 9999px;
+}
+
+.animated-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  padding: 2px;
+  background: conic-gradient(from var(--gradient-angle) at 50% 50%,
+      #fd9038 0%,
+      #f5b900 12%,
+      #ff5b59 37%,
+      #266df0 62%,
+      #13dd8d 88%,
+      #fd9038 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: gradient-spin 30s linear infinite;
+}
+
+@keyframes gradient-spin {
+  0% {
+    --gradient-angle: 0deg;
+  }
+
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+/* Animation keyframes for Tailwind v4 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+
+  .shimmer-text {
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer-text 4s linear infinite;
+  }
+
+  /* Attio Premium Glass (Triple Layer) */
+  .attio-glass-premium {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.15),
+      /* Highlight edge */
+      0 10px 30px -10px rgba(0, 0, 0, 0.1);
+    /* Soft shadow */
+  }
+
+  /* Sequential Search Result Animation */
+  .search-result-item {
+    opacity: 0;
+    transform: translateY(4px);
+    animation: slideIn 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+  }
+
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+
+  .animate-beam-rotate {
+    animation: beam-rotate 4s linear infinite;
+  }
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer-text {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@theme {
+  --animate-beam-rotate: beam-rotate 4s linear infinite;
+
+  @keyframes beam-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+
+  --animate-aurora: aurora 60s linear infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-border-beam: border-beam calc(var(--duration)*1s) infinite linear;
+  --animate-marquee: marquee var(--duration) linear infinite;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --animate-ai-shimmer: ai-shimmer 3s infinite linear;
+
+  @keyframes aurora {
+    from {
+      background-position: 50% 50%, 50% 50%;
+    }
+
+    to {
+      background-position: 350% 50%, 350% 50%;
+    }
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: 0 0;
+    }
+
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes border-beam {
+    100% {
+      offset-distance: 100%;
+    }
+  }
+
+  /* Attio-style AI thinking shimmer - gradient text animation */
+  @keyframes ai-shimmer {
+    from {
+      background-position: 200% 0%;
+    }
+
+    to {
+      background-position: -200% 0%;
+    }
+  }
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.blog-code-block code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  white-space: pre;
+}
+
+.blog-code-block .token.comment,
+.blog-code-block .token.prolog,
+.blog-code-block .token.doctype,
+.blog-code-block .token.cdata {
+  color: #565F89;
+}
+
+.blog-code-block .token.punctuation {
+  color: #A9B1D6;
+}
+
+.blog-code-block .token.property,
+.blog-code-block .token.tag,
+.blog-code-block .token.boolean,
+.blog-code-block .token.number,
+.blog-code-block .token.constant,
+.blog-code-block .token.symbol,
+.blog-code-block .token.deleted {
+  color: #FF9E64;
+}
+
+.blog-code-block .token.selector,
+.blog-code-block .token.attr-name,
+.blog-code-block .token.string,
+.blog-code-block .token.char,
+.blog-code-block .token.builtin,
+.blog-code-block .token.inserted {
+  color: #9ECE6A;
+}
+
+.blog-code-block .token.operator,
+.blog-code-block .token.entity,
+.blog-code-block .token.url,
+.blog-code-block .token.variable {
+  color: #89DDFF;
+}
+
+.blog-code-block .token.atrule,
+.blog-code-block .token.attr-value,
+.blog-code-block .token.function,
+.blog-code-block .token.class-name {
+  color: #7AA2F7;
+}
+
+.blog-code-block .token.keyword {
+  color: #BB9AF7;
+}
+
+.blog-code-block .token.regex,
+.blog-code-block .token.important {
+  color: #E0AF68;
+}
+
+.blog-code-block .token.important,
+.blog-code-block .token.bold {
+  font-weight: 700;
+}
+
+.blog-code-block .token.italic {
+  font-style: italic;
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
