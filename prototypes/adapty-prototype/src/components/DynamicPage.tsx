@@ -167,7 +167,7 @@ export function DynamicPage() {
             image={{
               src: "/images/integrations/logo-amplitude.svg",
               alt: "Integrations",
-              bgColor: "#00A3B5",
+              bgColor: "transparent",
             }}
             cta={content.features.revenueSync.cta}
             testimonial={content.features.revenueSync.testimonial}

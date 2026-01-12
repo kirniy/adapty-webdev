@@ -8,7 +8,7 @@ export const dsThemes = [
   { id: "ds2", name: "Attio", description: "Light, editorial typography" },
   { id: "ds3", name: "Polar", description: "Dark, minimal, fast" },
   { id: "ds4", name: "Vercel", description: "True black, bold gradients" },
-  { id: "ds5", name: "Hybrid", description: "Warm light, recommended" },
+  { id: "ds5", name: "Clerk", description: "Warm light, pill buttons, purple accent" },
 ] as const;
 
 export type DSTheme = (typeof dsThemes)[number]["id"];

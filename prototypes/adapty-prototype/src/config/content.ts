@@ -225,7 +225,7 @@ export const content = {
       image: {
         src: "https://placehold.co/800x600/E8F5E9/2E7D32/png?text=Paywall+A/B+Testing",
         alt: "Paywall A/B Testing Dashboard",
-        bgColor: "#E8F5E9",
+        bgColor: "transparent",
       },
       features: [
         "Statistical significance calculator",
@@ -264,7 +264,7 @@ view.present();`,
       image: {
         src: "https://placehold.co/800x600/FFF3E0/EF6C00/png?text=Refund+Saver",
         alt: "Refund Saver Logic",
-        bgColor: "#FFF3E0",
+        bgColor: "transparent",
       },
       features: [
         "Automated retention offers",
@@ -299,7 +299,7 @@ adapty.on("subscription_cancel_intent", async (user) => {
       image: {
         src: "https://placehold.co/800x600/E3F2FD/1565C0/png?text=Subscription+BI",
         alt: "Subscription BI Dashboard",
-        bgColor: "#E3F2FD",
+        bgColor: "transparent",
       },
       cta: {
         text: "Explore Subscription BI",
@@ -358,7 +358,7 @@ adapty.on("subscription_cancel_intent", async (user) => {
       image: {
         src: "/images/sections/funnelfox.webp",
         alt: "FunnelFox Dashboard",
-        bgColor: "#F4F4F5",
+        bgColor: "transparent",
       },
     },
     revenueSync: {
