@@ -1,0 +1,374 @@
+/**
+ * Design System 5: Hybrid Premium
+ * CSS Custom Properties / Design Tokens
+ *
+ * Theme: Light with warmth (Clerk) + Premium animations (Linear) + Bouncy feel (Vercel)
+ * Best of: Clerk's warm gray + Linear's animations + Vercel's bouncy easing + Polar's speed
+ *
+ * RECOMMENDED FOR ADAPTY - Balanced approach for broad appeal
+ */
+
+:root {
+  /* ============================================
+   * COLORS - Primary Palette (Indigo/Purple - Developer friendly)
+   * ============================================ */
+  --color-primary: #6366f1;           /* Indigo - between Linear and Clerk */
+  --color-primary-hover: #818cf8;     /* Lighter on hover */
+  --color-primary-active: #4f46e5;    /* Darker on active */
+  --color-primary-light: #eef2ff;     /* Light tint for backgrounds */
+  --color-primary-dark: #4338ca;      /* Dark variant */
+
+  /* Alternative: Clerk purple */
+  --color-accent: rgb(108, 71, 255);  /* Clerk's signature purple */
+  --color-accent-hover: rgb(128, 91, 255);
+
+  /* ============================================
+   * COLORS - Backgrounds (Warm Gray - Clerk inspired)
+   * ============================================ */
+  --bg-primary: #f7f7f8;              /* Main page - warm gray, NOT pure white */
+  --bg-secondary: #ffffff;            /* Cards, elevated surfaces */
+  --bg-tertiary: #fafafa;             /* Subtle differentiation */
+  --bg-muted: #f1f1f3;                /* Muted sections */
+  --bg-elevated: #ffffff;             /* Elevated surfaces */
+  --bg-overlay: rgba(0, 0, 0, 0.5);   /* Modal overlays */
+  --bg-subtle: #f4f4f5;               /* Subtle backgrounds */
+
+  /* ============================================
+   * COLORS - Gray Scale (Warm grays - Zinc palette)
+   * ============================================ */
+  --gray-50: #fafafa;
+  --gray-100: #f4f4f5;
+  --gray-200: #e4e4e7;
+  --gray-300: #d4d4d8;
+  --gray-400: #a1a1aa;
+  --gray-500: #71717a;
+  --gray-600: #52525b;
+  --gray-700: #3f3f46;
+  --gray-800: #27272a;
+  --gray-900: #18181b;
+  --gray-950: #09090b;
+
+  /* ============================================
+   * COLORS - Text
+   * ============================================ */
+  --text-primary: #131316;            /* Near-black - Clerk style */
+  --text-secondary: #42434d;          /* Muted gray */
+  --text-tertiary: #71717a;           /* Lighter gray */
+  --text-muted: #9394a1;              /* Very muted */
+  --text-inverse: #ffffff;            /* White text on dark bg */
+
+  /* ============================================
+   * COLORS - Semantic
+   * ============================================ */
+  --color-success: #22c55e;           /* Green */
+  --color-success-light: #dcfce7;
+  --color-warning: #f59e0b;           /* Amber */
+  --color-warning-light: #fef3c7;
+  --color-error: #ef4444;             /* Red */
+  --color-error-light: #fee2e2;
+  --color-info: #3b82f6;              /* Blue */
+  --color-info-light: #dbeafe;
+
+  /* ============================================
+   * COLORS - Borders
+   * ============================================ */
+  --border-default: #d9d9de;          /* Clerk's border color */
+  --border-subtle: #eeeef0;           /* Lighter border */
+  --border-strong: #a1a1aa;           /* Stronger border */
+  --border-muted: #e4e4e7;            /* Muted border */
+
+  /* ============================================
+   * COLORS - Focus
+   * ============================================ */
+  --focus-ring-color: rgba(99, 102, 241, 0.5);  /* Primary with alpha */
+  --focus-ring-offset: #ffffff;
+
+  /* ============================================
+   * TYPOGRAPHY - Font Families
+   * ============================================ */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Open Sans", "Helvetica Neue", sans-serif;
+  --font-display: "Inter Display", var(--font-sans);
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+
+  /* ============================================
+   * TYPOGRAPHY - Font Sizes
+   * ============================================ */
+  --text-xs: 0.75rem;       /* 12px */
+  --text-sm: 0.875rem;      /* 14px */
+  --text-base: 1rem;        /* 16px */
+  --text-lg: 1.125rem;      /* 18px */
+  --text-xl: 1.25rem;       /* 20px */
+  --text-2xl: 1.5rem;       /* 24px */
+  --text-3xl: 1.875rem;     /* 30px */
+  --text-4xl: 2.25rem;      /* 36px */
+  --text-5xl: 3rem;         /* 48px */
+  --text-6xl: 3.75rem;      /* 60px */
+  --text-7xl: 4rem;         /* 64px - Clerk H1 */
+
+  /* ============================================
+   * TYPOGRAPHY - Font Weights
+   * ============================================ */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ============================================
+   * TYPOGRAPHY - Line Heights
+   * ============================================ */
+  --leading-none: 1;
+  --leading-tight: 1.125;
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 1.75;
+
+  /* ============================================
+   * TYPOGRAPHY - Letter Spacing (Tight for headlines)
+   * ============================================ */
+  --tracking-tighter: -0.05em;        /* Large headlines */
+  --tracking-tight: -0.025em;         /* Subheadings */
+  --tracking-normal: 0;               /* Body text */
+  --tracking-wide: 0.025em;           /* Labels, buttons */
+
+  /* ============================================
+   * SPACING (4px base unit)
+   * ============================================ */
+  --spacing-unit: 4px;
+
+  --space-0: 0;
+  --space-1: 0.25rem;     /* 4px */
+  --space-2: 0.5rem;      /* 8px */
+  --space-3: 0.75rem;     /* 12px */
+  --space-4: 1rem;        /* 16px */
+  --space-5: 1.25rem;     /* 20px */
+  --space-6: 1.5rem;      /* 24px - PRIMARY GAP */
+  --space-8: 2rem;        /* 32px */
+  --space-10: 2.5rem;     /* 40px */
+  --space-12: 3rem;       /* 48px */
+  --space-16: 4rem;       /* 64px */
+  --space-20: 5rem;       /* 80px */
+  --space-24: 6rem;       /* 96px */
+  --space-32: 8rem;       /* 128px */
+  --space-40: 10rem;      /* 160px */
+  --space-48: 12rem;      /* 192px */
+  --space-64: 16rem;      /* 256px */
+
+  /* Section Padding */
+  --section-padding-y: var(--space-20);   /* 80px - generous vertical */
+  --section-padding-x: var(--space-6);    /* 24px */
+
+  /* Component Gaps */
+  --gap-xs: var(--space-1);    /* 4px */
+  --gap-sm: var(--space-2);    /* 8px */
+  --gap-md: var(--space-4);    /* 16px */
+  --gap-lg: var(--space-6);    /* 24px - Primary gap */
+  --gap-xl: var(--space-8);    /* 32px */
+
+  /* ============================================
+   * BORDERS
+   * ============================================ */
+  --border-width-thin: 1px;
+  --border-width-default: 1px;
+  --border-width-thick: 2px;
+
+  /* ============================================
+   * BORDER RADIUS (Professional but friendly)
+   * ============================================ */
+  --radius-none: 0;
+  --radius-sm: 4px;           /* Subtle rounding */
+  --radius-md: 6px;           /* Default - professional */
+  --radius-lg: 8px;           /* Cards, containers */
+  --radius-xl: 12px;          /* Large cards */
+  --radius-2xl: 16px;         /* Hero sections */
+  --radius-3xl: 24px;         /* Extra large */
+  --radius-full: 9999px;      /* Pills, avatars */
+
+  /* ============================================
+   * SHADOWS (Light theme - soft and subtle)
+   * ============================================ */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+
+  /* Border-based elevation (alternative) */
+  --shadow-border: 0 0 0 1px rgba(0, 0, 0, 0.05);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
+
+  /* ============================================
+   * ANIMATIONS - Timing Functions
+   * Polar speed + Vercel bounce = Premium feel
+   * ============================================ */
+  --ease-linear: linear;
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);           /* Standard */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);                  /* Accelerate */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);                 /* Decelerate */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);            /* Smooth */
+  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);   /* BOUNCY - Premium feel */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);   /* Alias */
+
+  /* ============================================
+   * ANIMATIONS - Durations
+   * Fast like Polar, but not too fast
+   * ============================================ */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;      /* Micro-interactions */
+  --duration-normal: 200ms;    /* Standard transitions */
+  --duration-slow: 300ms;      /* Overlays, modals */
+  --duration-slower: 500ms;    /* Page transitions */
+
+  /* ============================================
+   * Z-INDEX
+   * ============================================ */
+  --z-base: 0;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-fixed: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-popover: 60;
+  --z-tooltip: 70;
+  --z-toast: 80;
+  --z-max: 9999;
+
+  /* ============================================
+   * LAYOUT
+   * ============================================ */
+  --header-height: 64px;              /* Standard header */
+  --sidebar-width: 280px;             /* Dashboard sidebar */
+  --page-max-width: 1400px;           /* Max content width */
+  --prose-width: 65ch;                /* Optimal reading width */
+
+  /* Containers */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1400px;
+}
+
+/* ============================================
+ * COMPONENT-SPECIFIC TOKENS
+ * ============================================ */
+
+/* Button Tokens */
+:root {
+  --button-primary-bg: var(--color-primary);
+  --button-primary-text: var(--text-inverse);
+  --button-primary-border: transparent;
+  --button-primary-hover-bg: var(--color-primary-hover);
+
+  --button-secondary-bg: var(--bg-secondary);
+  --button-secondary-text: var(--text-primary);
+  --button-secondary-border: var(--border-default);
+
+  --button-ghost-bg: transparent;
+  --button-ghost-text: var(--text-secondary);
+  --button-ghost-hover-bg: var(--bg-muted);
+
+  /* Size scale */
+  --button-height-sm: 32px;
+  --button-height-md: 40px;
+  --button-height-lg: 48px;
+
+  --button-padding-sm: 0 12px;
+  --button-padding-md: 0 16px;
+  --button-padding-lg: 0 24px;
+
+  --button-radius: var(--radius-md);         /* Professional default */
+  --button-radius-pill: var(--radius-full);  /* Friendly pill option */
+}
+
+/* Card Tokens */
+:root {
+  --card-bg: var(--bg-secondary);
+  --card-border: var(--border-subtle);
+  --card-radius: var(--radius-lg);
+  --card-padding: var(--space-6);
+  --card-shadow: var(--shadow-sm);
+  --card-hover-shadow: var(--shadow-md);
+}
+
+/* Input Tokens */
+:root {
+  --input-bg: var(--bg-secondary);
+  --input-border: var(--border-default);
+  --input-border-focus: var(--color-primary);
+  --input-radius: var(--radius-md);
+  --input-padding: 0.5rem 0.75rem;
+  --input-placeholder: var(--text-muted);
+
+  /* Size scale (match buttons) */
+  --input-height-sm: 32px;
+  --input-height-md: 40px;
+  --input-height-lg: 48px;
+}
+
+/* Navigation Tokens */
+:root {
+  --nav-height: var(--header-height);
+  --nav-bg: var(--bg-primary);
+  --nav-border: var(--border-subtle);
+  --nav-item-padding: 0.5rem 0.75rem;
+  --nav-backdrop-blur: 12px;
+}
+
+/* ============================================
+ * KEYFRAME ANIMATIONS (Linear-inspired)
+ * ============================================ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scaleOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.96); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}

@@ -1,0 +1,376 @@
+/**
+ * Design System 2: Attio-Inspired
+ * CSS Custom Properties / Design Tokens
+ *
+ * Theme: Light, editorial, multi-font hierarchy
+ * Source: attio.com extraction 2026-01-12
+ * Key Feature: LAB color space, 4-font system
+ */
+
+:root {
+  /* ============================================
+   * COLORS - Primary Palette (Blue)
+   * ============================================ */
+  --color-primary: lab(47.85% 16.78 -73.44);  /* blue-500 */
+  --color-primary-hover: lab(39.85% 12.44 -60.28);  /* blue-600 */
+  --color-primary-active: lab(39.85% 12.44 -60.28);
+
+  /* ============================================
+   * COLORS - White Scale (LAB - warm whites)
+   * ============================================ */
+  --white-100: lab(99.99% 0.03 0);
+  --white-200: lab(98.29% 0.13 -0.51);
+  --white-300: lab(96.16% -0.08 -1.14);
+  --white-400: lab(94.37% -0.16 -2.23);
+  --white-500: lab(91.52% -0.37 -2.85);
+  --white-600: lab(89.69% -0.71 -2.96);
+  --white-700: lab(86.10% -0.78 -4.10);
+  --white-800: lab(83.21% -0.84 -5.26);
+  --white-900: lab(76.25% -1.10 -7.09);
+
+  /* ============================================
+   * COLORS - Black Scale (LAB)
+   * ============================================ */
+  --black-0: lab(0% 0 0);
+  --black-50: lab(5.03% -0.07 -1.27);
+  --black-100: lab(10.72% -0.10 -1.54);
+  --black-200: lab(12.72% 0.10 -2.22);
+  --black-300: lab(14.60% -0.16 -2.99);
+  --black-400: lab(20.57% -0.64 -4.44);
+  --black-500: lab(25.91% -0.87 -6.44);
+  --black-600: lab(37.43% -1.09 -9.33);
+  --black-700: lab(50.38% -1.32 -9.56);
+  --black-800: lab(62.78% -1.33 -9.19);
+  --black-900: lab(70.31% -1.30 -7.87);
+
+  /* ============================================
+   * COLORS - Backgrounds (Light theme)
+   * ============================================ */
+  --bg-primary: lab(99.99% 0.03 0);  /* Pure white with warmth */
+  --bg-secondary: lab(98.29% 0.13 -0.51);
+  --bg-tertiary: lab(94.37% -0.16 -2.23);
+  --bg-surface: lab(94.37% -0.16 -2.23);
+  --bg-elevated: lab(99.99% 0.03 0);
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  /* ============================================
+   * COLORS - Text
+   * ============================================ */
+  --text-primary: lab(0% 0 0);
+  --text-secondary: lab(25.91% -0.87 -6.44);
+  --text-tertiary: lab(50.38% -1.32 -9.56);
+  --text-muted: lab(62.78% -1.33 -9.19);
+  --text-inverse: lab(99.99% 0.03 0);
+
+  /* ============================================
+   * COLORS - Semantic
+   * ============================================ */
+  --color-success: lab(69.45% -54.62 23.89);
+  --color-success-hover: lab(64.83% -51.60 22.50);
+  --color-warning: lab(79.10% 13.37 80.55);
+  --color-warning-hover: lab(71.62% 11.78 74.11);
+  --color-error: lab(61.97% 63.13 36.95);
+  --color-error-hover: lab(59.17% 62.97 37.70);
+  --color-info: lab(47.85% 16.78 -73.44);
+
+  /* ============================================
+   * COLORS - Borders / Strokes
+   * ============================================ */
+  --border-default: lab(86.10% -0.78 -4.10);
+  --border-subtle: lab(91.52% -0.37 -2.85);
+  --border-strong: lab(76.25% -1.10 -7.09);
+  --stroke-default: lab(86.10% -0.78 -4.10);
+  --stroke-subtle: lab(91.52% -0.37 -2.85);
+  --stroke-weak: lab(94.37% -0.16 -2.23);
+
+  /* ============================================
+   * TYPOGRAPHY - Font Families (4-font system)
+   * ============================================ */
+  --font-sans: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Inter Display", "Inter Display Fallback", var(--font-sans);
+  --font-mono: "JetBrains Mono", "JetBrains Mono Fallback", ui-monospace, monospace;
+  --font-serif: "Tiempos Text", "Tiempos Text Fallback", Georgia, serif;
+
+  /* ============================================
+   * TYPOGRAPHY - Headings
+   * ============================================ */
+  --heading-xl-size: 4rem;
+  --heading-xl-weight: 600;
+  --heading-xl-tracking: -0.02em;
+  --heading-xl-leading: 4rem;
+
+  --heading-lg-size: 3.5rem;
+  --heading-lg-weight: 600;
+  --heading-lg-tracking: -0.015em;
+  --heading-lg-leading: 3.75rem;
+
+  --heading-md-size: 2.5rem;
+  --heading-md-weight: 600;
+  --heading-md-tracking: -0.01em;
+  --heading-md-leading: 2.75rem;
+
+  --heading-sm-size: 2rem;
+  --heading-sm-weight: 600;
+  --heading-sm-tracking: -0.01em;
+  --heading-sm-leading: 2.375rem;
+
+  --heading-xs-size: 1.75rem;
+  --heading-xs-weight: 600;
+  --heading-xs-tracking: -0.01em;
+  --heading-xs-leading: 2.125rem;
+
+  /* ============================================
+   * TYPOGRAPHY - Body Text
+   * ============================================ */
+  --body-2xl-size: 1.5rem;
+  --body-2xl-weight: 500;
+  --body-2xl-tracking: -0.01em;
+  --body-2xl-leading: 1.875rem;
+
+  --body-xl-size: 1.25rem;
+  --body-xl-weight: 500;
+  --body-xl-tracking: -0.01em;
+  --body-xl-leading: 1.625rem;
+
+  --body-lg-size: 1.125rem;
+  --body-lg-weight: 500;
+  --body-lg-tracking: -0.01em;
+  --body-lg-leading: 1.5rem;
+
+  --body-base-size: 1rem;
+  --body-base-weight: 500;
+  --body-base-tracking: -0.01em;
+  --body-base-leading: 1.375rem;
+
+  --body-sm-size: 0.875rem;
+  --body-sm-weight: 500;
+  --body-sm-tracking: -0.005em;
+  --body-sm-leading: 1.25rem;
+
+  --body-xs-size: 0.75rem;
+  --body-xs-weight: 500;
+  --body-xs-tracking: 0;
+  --body-xs-leading: 1.125rem;
+
+  /* ============================================
+   * TYPOGRAPHY - Font Sizes (standard scale)
+   * ============================================ */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.75rem;
+  --text-4xl: 2rem;
+  --text-5xl: 2.5rem;
+  --text-6xl: 3.5rem;
+  --text-7xl: 4rem;
+
+  /* ============================================
+   * TYPOGRAPHY - Font Weights
+   * ============================================ */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ============================================
+   * TYPOGRAPHY - Line Heights
+   * ============================================ */
+  --leading-none: 1;
+  --leading-tight: 1.125;
+  --leading-snug: 1.25;
+  --leading-normal: 1.375;
+  --leading-relaxed: 1.5;
+  --leading-loose: 1.625;
+
+  /* ============================================
+   * TYPOGRAPHY - Letter Spacing
+   * ============================================ */
+  --tracking-tighter: -0.02em;
+  --tracking-tight: -0.01em;
+  --tracking-normal: -0.005em;
+  --tracking-wide: 0;
+
+  /* ============================================
+   * SPACING (4px base unit)
+   * ============================================ */
+  --spacing-unit: 0.25rem;
+
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-40: 10rem;
+  --space-48: 12rem;
+  --space-64: 16rem;
+
+  /* Section Padding */
+  --section-padding-y: var(--space-16);
+  --section-padding-x: var(--space-6);
+
+  /* Component Gaps */
+  --gap-xs: var(--space-1);
+  --gap-sm: var(--space-2);
+  --gap-md: var(--space-4);
+  --gap-lg: var(--space-6);
+  --gap-xl: var(--space-8);
+
+  /* ============================================
+   * BORDERS
+   * ============================================ */
+  --border-width-thin: 1px;
+  --border-width-default: 1px;
+  --border-width-thick: 2px;
+
+  /* ============================================
+   * BORDER RADIUS (Attio uses smaller radii)
+   * ============================================ */
+  --radius-none: 0;
+  --radius-xs: 0.125rem;   /* 2px */
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.375rem;   /* 6px */
+  --radius-lg: 0.5rem;     /* 8px */
+  --radius-xl: 0.75rem;    /* 12px */
+  --radius-2xl: 1rem;      /* 16px */
+  --radius-3xl: 1.25rem;   /* 20px */
+  --radius-full: 9999px;
+
+  /* ============================================
+   * SHADOWS (Light theme - soft)
+   * ============================================ */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+  --shadow-glow: 0 0 20px rgba(70, 130, 240, 0.15);
+
+  /* ============================================
+   * BLUR
+   * ============================================ */
+  --blur-xs: 4px;
+  --blur-md: 12px;
+  --blur-lg: 16px;
+  --blur-xl: 24px;
+
+  /* ============================================
+   * ANIMATIONS - Timing Functions
+   * ============================================ */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.3, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0, 1);
+  --ease-in-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+
+  /* ============================================
+   * ANIMATIONS - Durations
+   * ============================================ */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+
+  /* ============================================
+   * Z-INDEX
+   * ============================================ */
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-fixed: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-popover: 60;
+  --z-tooltip: 70;
+
+  /* ============================================
+   * LAYOUT
+   * ============================================ */
+  --header-height: 68px;
+  --banner-height: 48px;
+  --page-max-width: 80rem;  /* 1280px */
+  --breakpoint-lg: 992px;
+
+  /* ============================================
+   * CONTAINERS
+   * ============================================ */
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --container-6xl: 72rem;
+  --container-7xl: 80rem;
+}
+
+/* ============================================
+ * COMPONENT-SPECIFIC TOKENS
+ * ============================================ */
+
+/* Button Tokens */
+:root {
+  --button-primary-bg: var(--color-primary);
+  --button-primary-text: var(--text-inverse);
+  --button-primary-border: transparent;
+  --button-primary-hover-bg: var(--color-primary-hover);
+
+  --button-secondary-bg: transparent;
+  --button-secondary-text: var(--text-primary);
+  --button-secondary-border: var(--border-default);
+
+  --button-ghost-bg: transparent;
+  --button-ghost-text: var(--text-secondary);
+
+  --button-padding-sm: 0.5rem 0.75rem;
+  --button-padding-md: 0.625rem 1rem;
+  --button-padding-lg: 0.75rem 1.25rem;
+
+  --button-radius: var(--radius-md);
+}
+
+/* Card Tokens */
+:root {
+  --card-bg: var(--bg-elevated);
+  --card-border: var(--border-subtle);
+  --card-radius: var(--radius-xl);
+  --card-padding: var(--space-6);
+  --card-shadow: var(--shadow-sm);
+  --card-hover-shadow: var(--shadow-md);
+}
+
+/* Input Tokens */
+:root {
+  --input-bg: var(--bg-primary);
+  --input-border: var(--border-default);
+  --input-border-focus: var(--color-primary);
+  --input-radius: var(--radius-md);
+  --input-padding: 0.5rem 0.75rem;
+  --input-placeholder: var(--text-muted);
+}
+
+/* Navigation Tokens */
+:root {
+  --nav-height: var(--header-height);
+  --nav-bg: var(--bg-primary);
+  --nav-border: var(--border-subtle);
+  --nav-item-padding: 0.5rem 0.75rem;
+}

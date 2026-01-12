@@ -1,0 +1,407 @@
+/**
+ * Design System 4: Vercel-Inspired
+ * CSS Custom Properties / Design Tokens
+ *
+ * Theme: Dark (true black), bold visuals, bouncy animations
+ * Source: vercel.com extraction 2026-01-12
+ * Key Feature: Bouncy easing, signature gradients, compound shadows
+ */
+
+:root {
+  /* ============================================
+   * COLORS - Brand Gradients (Vercel Signature)
+   * ============================================ */
+  --gradient-develop-start: #007cf0;
+  --gradient-develop-end: #00dfd8;
+  --gradient-develop-text: #0a72ef;
+
+  --gradient-preview-start: #7928ca;
+  --gradient-preview-end: #ff0080;
+  --gradient-preview-text: #de1d8d;
+
+  --gradient-ship-start: #ff4d4d;
+  --gradient-ship-end: #f9cb28;
+  --gradient-ship-text: #ff5b4f;
+
+  /* ============================================
+   * COLORS - Primary Palette (Blue)
+   * ============================================ */
+  --color-primary: hsl(206, 100%, 50%);       /* blue-600 */
+  --color-primary-hover: hsl(212, 100%, 48%); /* blue-700 */
+  --color-primary-active: hsl(210, 100%, 66%); /* blue-900 */
+  --color-primary-bg: hsl(216, 50%, 12%);     /* blue-100 */
+
+  /* ============================================
+   * COLORS - Background (True Black)
+   * ============================================ */
+  --bg-100: hsl(0, 0%, 4%);    /* Near black */
+  --bg-200: hsl(0, 0%, 0%);    /* True black */
+  --bg-primary: hsl(0, 0%, 0%);
+  --bg-secondary: hsl(0, 0%, 4%);
+  --bg-tertiary: hsl(0, 0%, 10%);
+  --bg-elevated: hsl(0, 0%, 10%);
+  --bg-overlay: rgba(0, 0, 0, 0.9);
+
+  /* ============================================
+   * COLORS - Gray Scale (10 levels)
+   * ============================================ */
+  --gray-100: hsl(0, 0%, 10%);
+  --gray-200: hsl(0, 0%, 12%);
+  --gray-300: hsl(0, 0%, 16%);
+  --gray-400: hsl(0, 0%, 18%);
+  --gray-500: hsl(0, 0%, 27%);
+  --gray-600: hsl(0, 0%, 53%);
+  --gray-700: hsl(0, 0%, 56%);
+  --gray-800: hsl(0, 0%, 49%);
+  --gray-900: hsl(0, 0%, 63%);
+  --gray-1000: hsl(0, 0%, 93%);
+
+  /* ============================================
+   * COLORS - Gray Alpha (Transparency)
+   * ============================================ */
+  --gray-alpha-100: rgba(255, 255, 255, 0.06);
+  --gray-alpha-200: rgba(255, 255, 255, 0.09);
+  --gray-alpha-300: rgba(255, 255, 255, 0.13);
+  --gray-alpha-400: rgba(255, 255, 255, 0.14);
+  --gray-alpha-500: rgba(255, 255, 255, 0.24);
+  --gray-alpha-600: rgba(255, 255, 255, 0.51);
+  --gray-alpha-700: rgba(255, 255, 255, 0.54);
+  --gray-alpha-800: rgba(255, 255, 255, 0.47);
+  --gray-alpha-900: rgba(255, 255, 255, 0.61);
+  --gray-alpha-1000: rgba(255, 255, 255, 0.92);
+
+  /* ============================================
+   * COLORS - Text
+   * ============================================ */
+  --text-primary: hsl(0, 0%, 93%);
+  --text-secondary: hsl(0, 0%, 63%);
+  --text-tertiary: hsl(0, 0%, 53%);
+  --text-muted: hsl(0, 0%, 49%);
+  --text-inverse: hsl(0, 0%, 0%);
+
+  /* ============================================
+   * COLORS - Semantic
+   * ============================================ */
+  --color-success: hsl(135, 70%, 34%);
+  --color-success-hover: hsl(131, 41%, 46%);
+  --color-success-light: hsl(136, 73%, 94%);
+  --color-success-bg: hsl(136, 50%, 9%);
+
+  --color-warning: hsl(39, 85%, 49%);
+  --color-warning-hover: hsl(39, 100%, 57%);
+  --color-warning-light: hsl(39, 90%, 50%);
+
+  --color-error: hsl(358, 75%, 59%);
+  --color-error-hover: hsl(358, 100%, 69%);
+  --color-error-light: hsl(353, 90%, 96%);
+  --color-error-bg: hsl(357, 37%, 12%);
+
+  --color-info: hsl(206, 100%, 50%);
+
+  /* Additional semantic */
+  --color-teal: hsl(172, 85%, 32%);
+  --color-purple: hsl(272, 51%, 54%);
+  --color-pink: hsl(336, 75%, 40%);
+  --color-amber: hsl(39, 85%, 49%);
+
+  /* ============================================
+   * COLORS - Borders
+   * ============================================ */
+  --border-default: rgba(255, 255, 255, 0.14);
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.24);
+
+  /* ============================================
+   * COLORS - Legacy / Accents
+   * ============================================ */
+  --accents-1: #111;
+  --accents-2: #333;
+  --accents-3: #444;
+  --accents-4: #666;
+  --accents-5: #888;
+  --accents-6: #999;
+  --accents-7: #eaeaea;
+  --accents-8: #fafafa;
+
+  /* ============================================
+   * COLORS - Focus
+   * ============================================ */
+  --focus-color: hsl(210, 100%, 66%);
+  --focus-ring: 0 0 0 2px hsl(0, 0%, 4%), 0 0 0 4px hsl(210, 100%, 66%);
+
+  /* ============================================
+   * TYPOGRAPHY - Font Families
+   * ============================================ */
+  --font-sans: "Geist", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, "Roboto Mono", Menlo, Monaco, "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace;
+  --font-display: "Space Grotesk", "Geist", Arial, sans-serif;
+
+  /* ============================================
+   * TYPOGRAPHY - Font Sizes
+   * ============================================ */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+
+  /* ============================================
+   * TYPOGRAPHY - Form Sizes
+   * ============================================ */
+  --form-small-font: 0.875rem;
+  --form-small-height: 32px;
+  --form-small-line-height: 0.875rem;
+
+  --form-default-font: 0.875rem;
+  --form-default-height: 40px;
+  --form-default-line-height: 1.25rem;
+
+  --form-large-font: 1rem;
+  --form-large-height: 48px;
+  --form-large-line-height: 1.5rem;
+
+  /* ============================================
+   * TYPOGRAPHY - Font Weights
+   * ============================================ */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ============================================
+   * TYPOGRAPHY - Line Heights
+   * ============================================ */
+  --leading-none: 1;
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* ============================================
+   * TYPOGRAPHY - Letter Spacing
+   * ============================================ */
+  --tracking-tighter: -0.03em;
+  --tracking-tight: -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+
+  /* ============================================
+   * SPACING (4px base unit)
+   * ============================================ */
+  --spacing-unit: 4px;
+  --spacing-2x: 8px;
+  --spacing-3x: 12px;
+  --spacing-4x: 16px;
+  --spacing-6x: 24px;
+  --spacing-8x: 32px;
+  --spacing-10x: 40px;
+  --spacing-16x: 64px;
+  --spacing-24x: 96px;
+  --spacing-32x: 128px;
+  --spacing-48x: 192px;
+  --spacing-64x: 256px;
+
+  /* Standard scale */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;    /* GAP - Primary */
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-40: 10rem;
+  --space-48: 12rem;
+  --space-64: 16rem;
+
+  /* Gap shortcuts */
+  --gap: 24px;
+  --gap-half: 12px;
+  --gap-quarter: 8px;
+
+  /* Section Padding */
+  --section-padding-y: var(--space-16);
+  --section-padding-x: var(--space-6);
+
+  /* Component Gaps */
+  --gap-xs: var(--space-1);
+  --gap-sm: var(--space-2);
+  --gap-md: var(--space-4);
+  --gap-lg: var(--space-6);
+  --gap-xl: var(--space-8);
+
+  /* ============================================
+   * BORDERS
+   * ============================================ */
+  --border-width-thin: 1px;
+  --border-width-default: 1px;
+  --border-width-thick: 2px;
+
+  /* ============================================
+   * BORDER RADIUS (Vercel uses smaller radii)
+   * ============================================ */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 6px;        /* Default */
+  --radius-lg: 8px;        /* Marketing */
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* ============================================
+   * SHADOWS (Compound shadows - Vercel signature)
+   * ============================================ */
+  --shadow-border: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 0 0 1px hsl(0, 0%, 0%);
+  --shadow-border-small: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.16), 0 0 0 1px hsl(0, 0%, 0%);
+  --shadow-border-medium: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 2px 2px rgba(0, 0, 0, 0.32), 0px 8px 8px -8px rgba(0, 0, 0, 0.16), 0 0 0 1px hsl(0, 0%, 0%);
+  --shadow-border-large: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 2px 2px rgba(0, 0, 0, 0.04), 0px 8px 16px -4px rgba(0, 0, 0, 0.04), 0 0 0 1px hsl(0, 0%, 0%);
+  --shadow-modal: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 1px 1px rgba(0, 0, 0, 0.02), 0px 8px 16px -4px rgba(0, 0, 0, 0.04), 0px 24px 32px -8px rgba(0, 0, 0, 0.06), 0 0 0 1px hsl(0, 0%, 0%);
+  --shadow-menu: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 1px 1px rgba(0, 0, 0, 0.02), 0px 4px 8px -4px rgba(0, 0, 0, 0.04), 0px 16px 24px -8px rgba(0, 0, 0, 0.06), 0 0 0 1px hsl(0, 0%, 0%);
+  --shadow-tooltip: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 1px 1px rgba(0, 0, 0, 0.02), 0px 4px 8px rgba(0, 0, 0, 0.04), 0 0 0 1px hsl(0, 0%, 0%);
+
+  /* Standard shadows */
+  --shadow-xs: var(--shadow-border);
+  --shadow-sm: var(--shadow-border-small);
+  --shadow-md: var(--shadow-border-medium);
+  --shadow-lg: var(--shadow-border-large);
+  --shadow-xl: var(--shadow-modal);
+  --shadow-2xl: var(--shadow-modal);
+  --shadow-glow: 0 0 30px rgba(0, 124, 240, 0.3);
+
+  /* ============================================
+   * ANIMATIONS - Timing Functions (BOUNCY - Vercel signature)
+   * ============================================ */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-swift: cubic-bezier(0.175, 0.885, 0.32, 1.1);    /* BOUNCY - Vercel signature */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+
+  /* ============================================
+   * ANIMATIONS - Durations
+   * ============================================ */
+  --duration-instant: 0ms;
+  --duration-fast: 200ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+
+  /* Motion-specific */
+  --motion-overlay-duration: 300ms;
+  --motion-overlay-scale: 0.96;
+  --motion-popover-duration: 200ms;
+
+  /* ============================================
+   * Z-INDEX
+   * ============================================ */
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-fixed: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-popover: 60;
+  --z-tooltip: 70;
+
+  /* ============================================
+   * LAYOUT
+   * ============================================ */
+  --header-height: 64px;
+  --navbar-height: 85px;
+  --page-width: 1400px;
+  --page-margin: 24px;
+  --page-max-width: 1400px;
+}
+
+/* ============================================
+ * COMPONENT-SPECIFIC TOKENS
+ * ============================================ */
+
+/* Button Tokens */
+:root {
+  --button-primary-bg: var(--text-primary);
+  --button-primary-text: var(--text-inverse);
+  --button-primary-border: transparent;
+  --button-primary-hover-bg: var(--gray-1000);
+
+  --button-secondary-bg: transparent;
+  --button-secondary-text: var(--text-primary);
+  --button-secondary-border: var(--border-default);
+
+  --button-ghost-bg: transparent;
+  --button-ghost-text: var(--text-secondary);
+
+  --button-padding-sm: 0 12px;
+  --button-padding-md: 0 16px;
+  --button-padding-lg: 0 24px;
+
+  --button-height-sm: 32px;
+  --button-height-md: 40px;
+  --button-height-lg: 48px;
+
+  --button-radius: var(--radius-md);
+}
+
+/* Card Tokens */
+:root {
+  --card-bg: var(--bg-elevated);
+  --card-border: var(--border-subtle);
+  --card-radius: var(--radius-lg);
+  --card-padding: var(--space-6);
+  --card-shadow: var(--shadow-border);
+  --card-hover-shadow: var(--shadow-border-medium);
+}
+
+/* Input Tokens */
+:root {
+  --input-bg: transparent;
+  --input-border: var(--border-default);
+  --input-border-focus: var(--text-primary);
+  --input-radius: var(--radius-md);
+  --input-padding: 0 12px;
+  --input-placeholder: var(--text-muted);
+}
+
+/* Navigation Tokens */
+:root {
+  --nav-height: var(--header-height);
+  --nav-bg: var(--bg-primary);
+  --nav-border: var(--border-subtle);
+  --nav-item-padding: 0.5rem 0.75rem;
+}
+
+/* ============================================
+ * GRADIENT UTILITIES
+ * ============================================ */
+.gradient-develop {
+  background: linear-gradient(90deg, var(--gradient-develop-start), var(--gradient-develop-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-preview {
+  background: linear-gradient(90deg, var(--gradient-preview-start), var(--gradient-preview-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-ship {
+  background: linear-gradient(90deg, var(--gradient-ship-start), var(--gradient-ship-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

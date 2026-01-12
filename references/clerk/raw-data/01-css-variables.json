@@ -1,0 +1,95 @@
+{
+  "colors": {
+    "background": {
+      "root": "#F7F7F8",
+      "body": "rgb(247, 247, 248)"
+    },
+    "typography": {
+      "heading": "#131316",
+      "heavy": "#131316",
+      "color": "#42434D",
+      "strong": "#131316",
+      "link": "#131316",
+      "linkHover": "#131316",
+      "linkIcon": "#9394A1",
+      "linkIconBg": "#EEEEF0",
+      "linkIconBgHover": "#131316",
+      "linkIconHover": "#fff",
+      "underline": "#D9D9DE",
+      "underlineHover": "#131316"
+    },
+    "code": {
+      "text": "#131316",
+      "bg": "#fff",
+      "border": "#D9D9DE"
+    },
+    "border": {
+      "tbody": "#EEEEF0",
+      "thead": "#D9D9DE"
+    },
+    "brand": {
+      "purple": "rgb(108, 71, 255)"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "primary": "\"suisse\",\"suisse Fallback\"",
+      "numbers": "\"geistNumbers\"",
+      "mono": "\"soehneMono\""
+    },
+    "headings": {
+      "h1": {
+        "fontSize": "64px",
+        "fontWeight": "700",
+        "letterSpacing": "-2.24px",
+        "lineHeight": "72px",
+        "color": "rgb(19, 19, 22)"
+      },
+      "h2-label": {
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "lineHeight": "24px",
+        "color": "rgb(108, 71, 255)"
+      },
+      "h3": {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(0, 0, 0)"
+      }
+    },
+    "body": {
+      "default": {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px"
+      },
+      "small": {
+        "fontSize": "13px",
+        "fontWeight": "500"
+      }
+    }
+  },
+  "components": {
+    "buttons": {
+      "pill": {
+        "borderRadius": "24px",
+        "padding": "2px 10px",
+        "height": "30px"
+      },
+      "nav": {
+        "borderRadius": "0px",
+        "padding": "0px 8px",
+        "fontSize": "16px",
+        "fontWeight": "400"
+      }
+    }
+  },
+  "layout": {
+    "headerMarginTop": "3rem"
+  },
+  "focus": {
+    "ringColor": "rgb(59 130 246/0.5)",
+    "ringOffsetColor": "#fff"
+  }
+}

@@ -1,0 +1,318 @@
+/**
+ * Design System 3: Polar-Inspired
+ * CSS Custom Properties / Design Tokens
+ *
+ * Theme: Dark, minimal, fast animations
+ * Source: polar.sh extraction 2026-01-12
+ * Key Feature: Fast 150ms animations, single border color, Geist fonts
+ */
+
+:root {
+  /* ============================================
+   * COLORS - Primary Palette (Blue - LAB)
+   * ============================================ */
+  --color-primary: lab(44.06% 29.03 -86.04);  /* Polar blue-600 */
+  --color-primary-hover: lab(54.17% 13.34 -74.68);  /* blue-500 */
+  --color-primary-active: lab(44.06% 29.03 -86.04);
+  --color-primary-light: lab(96.49% -1.15 -5.11);  /* blue-50 */
+
+  /* ============================================
+   * COLORS - Polar Scale (Dark grays)
+   * ============================================ */
+  --polar-50: #d7d7db;
+  --polar-100: #c7c7cc;
+  --polar-200: #a9aab1;
+  --polar-300: #999aa3;
+  --polar-400: #7e808b;
+  --polar-500: #6f717b;
+  --polar-600: #3a3b40;
+  --polar-700: #1d1d20;
+  --polar-800: #171719;
+  --polar-900: #101011;
+  --polar-950: #070708;
+
+  /* ============================================
+   * COLORS - Gray Scale (LAB)
+   * ============================================ */
+  --gray-50: lab(98.26% -0.25 -0.71);
+  --gray-100: lab(96.16% -0.08 -1.14);
+  --gray-200: lab(91.62% -0.16 -2.27);
+  --gray-300: lab(85.12% -0.61 -3.71);
+  --gray-400: lab(65.93% -0.83 -8.17);
+  --gray-500: lab(47.78% -0.39 -10.03);
+  --gray-600: lab(35.63% -1.59 -10.84);
+  --gray-700: lab(27.11% -0.96 -12.32);
+  --gray-800: lab(16.11% -1.18 -11.75);
+  --gray-900: lab(8.12% 0.81 -12.25);
+  --gray-950: lab(1.90% 0.28 -5.49);
+
+  /* ============================================
+   * COLORS - Backgrounds (Dark)
+   * ============================================ */
+  --bg-primary: #171719;      /* background */
+  --bg-secondary: #101011;    /* secondary */
+  --bg-card: #171719;
+  --bg-popover: #101011;
+  --bg-sidebar: #070708;
+  --bg-muted: #1d1d20;
+  --bg-elevated: #1d1d20;
+  --bg-tertiary: #1d1d20;
+  --bg-overlay: rgba(0, 0, 0, 0.8);
+
+  /* ============================================
+   * COLORS - Text
+   * ============================================ */
+  --text-primary: #d7d7db;    /* polar-50 */
+  --text-secondary: #6f717b;  /* polar-500 */
+  --text-tertiary: #3a3b40;   /* polar-600 */
+  --text-muted: #6f717b;
+  --text-inverse: #171719;
+
+  /* ============================================
+   * COLORS - Semantic (LAB)
+   * ============================================ */
+  --color-success: lab(66.98% -58.27 19.54);     /* green-500 */
+  --color-success-hover: lab(55.05% -49.92 15.93);  /* green-600 */
+  --color-warning: lab(76.39% 14.53 98.46);      /* yellow-500 */
+  --color-error: lab(55.48% 75.07 48.85);        /* red-500 */
+  --color-error-hover: lab(48.45% 77.43 61.55);  /* red-600 */
+  --color-info: lab(54.17% 13.34 -74.68);        /* blue-500 */
+
+  /* ============================================
+   * COLORS - Borders (Single color - minimal)
+   * ============================================ */
+  --border-default: #1d1d20;
+  --border-subtle: #1d1d20;
+  --border-strong: #3a3b40;
+  --border-input: #1d1d20;
+  --border-ring: #1d1d20;
+
+  /* ============================================
+   * TYPOGRAPHY - Font Families (Geist)
+   * ============================================ */
+  --font-sans: "Geist Sans", "Geist Sans Fallback", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, "Roboto Mono", Menlo, Monaco, "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace;
+
+  /* ============================================
+   * TYPOGRAPHY - Font Sizes
+   * ============================================ */
+  --text-xxs: 0.65rem;    /* 10.4px */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  --text-6xl: 3.75rem;    /* 60px */
+  --text-7xl: 4.5rem;     /* 72px */
+
+  /* ============================================
+   * TYPOGRAPHY - Font Weights
+   * ============================================ */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ============================================
+   * TYPOGRAPHY - Line Heights
+   * ============================================ */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* ============================================
+   * TYPOGRAPHY - Letter Spacing
+   * ============================================ */
+  --tracking-tighter: -0.025em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* ============================================
+   * SPACING (4px base unit)
+   * ============================================ */
+  --spacing-unit: 0.25rem;
+
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-40: 10rem;
+  --space-48: 12rem;
+  --space-64: 16rem;
+
+  /* Section Padding */
+  --section-padding-y: var(--space-16);
+  --section-padding-x: var(--space-6);
+
+  /* Component Gaps */
+  --gap-xs: var(--space-1);
+  --gap-sm: var(--space-2);
+  --gap-md: var(--space-4);
+  --gap-lg: var(--space-6);
+  --gap-xl: var(--space-8);
+
+  /* ============================================
+   * BORDERS
+   * ============================================ */
+  --border-width-thin: 1px;
+  --border-width-default: 1px;
+  --border-width-thick: 2px;
+
+  /* ============================================
+   * BORDER RADIUS (Polar uses 0.6rem base)
+   * ============================================ */
+  --radius-base: 0.6rem;
+  --radius-none: 0;
+  --radius-xs: 0.125rem;
+  --radius-sm: calc(0.6rem - 4px);   /* ~5.6px */
+  --radius-md: calc(0.6rem - 2px);   /* ~7.6px */
+  --radius-lg: 0.6rem;               /* 9.6px */
+  --radius-xl: 0.75rem;              /* 12px */
+  --radius-2xl: 1rem;                /* 16px */
+  --radius-3xl: 1.5rem;              /* 24px */
+  --radius-4xl: 2rem;                /* 32px */
+  --radius-full: 9999px;
+
+  /* ============================================
+   * SHADOWS (Dark theme - minimal)
+   * ============================================ */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 24px 48px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 20px rgba(68, 6, 96, 0.3);
+
+  /* ============================================
+   * ANIMATIONS - Timing Functions (Minimal set)
+   * ============================================ */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+
+  /* ============================================
+   * ANIMATIONS - Durations (FAST - Polar signature)
+   * ============================================ */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;    /* Polar default - FAST */
+  --duration-normal: 150ms;  /* Keep it fast */
+  --duration-slow: 200ms;
+  --duration-slower: 300ms;
+
+  /* ============================================
+   * Z-INDEX
+   * ============================================ */
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-fixed: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-popover: 60;
+  --z-tooltip: 70;
+
+  /* ============================================
+   * LAYOUT
+   * ============================================ */
+  --header-height: 64px;
+  --sidebar-width: 280px;
+  --page-max-width: 80rem;
+
+  /* ============================================
+   * BREAKPOINTS
+   * ============================================ */
+  --breakpoint-sm: 40rem;   /* 640px */
+  --breakpoint-md: 48rem;   /* 768px */
+  --breakpoint-xl: 80rem;   /* 1280px */
+  --breakpoint-2xl: 96rem;  /* 1536px */
+
+  /* ============================================
+   * CONTAINERS
+   * ============================================ */
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --container-6xl: 72rem;
+  --container-7xl: 80rem;
+}
+
+/* ============================================
+ * COMPONENT-SPECIFIC TOKENS
+ * ============================================ */
+
+/* Button Tokens */
+:root {
+  --button-primary-bg: var(--color-primary);
+  --button-primary-text: #fff;
+  --button-primary-border: transparent;
+  --button-primary-hover-bg: var(--color-primary-hover);
+
+  --button-secondary-bg: transparent;
+  --button-secondary-text: var(--text-primary);
+  --button-secondary-border: var(--border-default);
+
+  --button-ghost-bg: transparent;
+  --button-ghost-text: var(--text-secondary);
+
+  --button-padding-sm: 0.5rem 0.75rem;
+  --button-padding-md: 0.625rem 1rem;
+  --button-padding-lg: 0.75rem 1.25rem;
+
+  --button-radius: var(--radius-lg);
+}
+
+/* Card Tokens */
+:root {
+  --card-bg: var(--bg-card);
+  --card-border: var(--border-default);
+  --card-radius: var(--radius-lg);
+  --card-padding: var(--space-6);
+  --card-shadow: var(--shadow-sm);
+  --card-hover-shadow: var(--shadow-md);
+}
+
+/* Input Tokens */
+:root {
+  --input-bg: var(--bg-muted);
+  --input-border: var(--border-input);
+  --input-border-focus: var(--color-primary);
+  --input-radius: var(--radius-md);
+  --input-padding: 0.5rem 0.75rem;
+  --input-placeholder: var(--text-muted);
+}
+
+/* Navigation Tokens */
+:root {
+  --nav-height: var(--header-height);
+  --nav-bg: var(--bg-primary);
+  --nav-border: var(--border-default);
+  --nav-item-padding: 0.5rem 0.75rem;
+}

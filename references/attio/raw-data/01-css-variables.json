@@ -1,0 +1,127 @@
+{
+  "colors": {
+    "white-scale": {
+      "100": "lab(99.9987% .0337958 .000309944)",
+      "200": "lab(98.2947% .128329 -.513124)",
+      "300": "lab(96.1596% -.0828803 -1.13571)",
+      "400": "lab(94.3726% -.157326 -2.23036)",
+      "500": "lab(91.5182% -.365466 -2.84777)",
+      "600": "lab(89.685% -.706792 -2.95746)",
+      "700": "lab(86.0989% -.77799 -4.0961)",
+      "800": "lab(83.208% -.844151 -5.26234)",
+      "900": "lab(76.2541% -1.09726 -7.09252)"
+    },
+    "black-scale": {
+      "0": "lab(0% 0 0)",
+      "50": "lab(5.02854% -.0691488 -1.2677)",
+      "100": "lab(10.7201% -.0959039 -1.54182)",
+      "200": "lab(12.7212% .103362 -2.22102)",
+      "300": "lab(14.599% -.159428 -2.99254)",
+      "400": "lab(20.5697% -.638425 -4.44436)",
+      "500": "lab(25.9077% -.872329 -6.43952)",
+      "600": "lab(37.426% -1.09151 -9.33263)",
+      "700": "lab(50.3787% -1.31875 -9.56043)",
+      "800": "lab(62.775% -1.33127 -9.18812)",
+      "900": "lab(70.311% -1.30147 -7.86561)"
+    },
+    "semantic": {
+      "blue-500": "lab(47.8503% 16.7831 -73.4422)",
+      "blue-600": "lab(39.8546% 12.4429 -60.277)",
+      "green-500": "lab(69.4503% -54.6161 23.889)",
+      "green-600": "lab(64.8297% -51.5975 22.501)",
+      "red-500": "lab(61.966% 63.1275 36.9452)",
+      "red-600": "lab(59.1651% 62.9685 37.6953)",
+      "yellow-500": "lab(79.0964% 13.374 80.5465)",
+      "yellow-600": "lab(71.6198% 11.7839 74.107)"
+    },
+    "surface": {
+      "page-background": "lab(99.9987% .0337958 .000309944)",
+      "primary-background": "lab(99.9987% .0337958 .000309944)",
+      "secondary-background": "lab(98.2947% .128329 -.513124)",
+      "surface": "lab(94.3726% -.157326 -2.23036)"
+    },
+    "stroke": {
+      "default": "lab(86.0989% -.77799 -4.0961)",
+      "subtle": "lab(91.5182% -.365466 -2.84777)",
+      "weak": "lab(94.3726% -.157326 -2.23036)"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "default": "\"inter\",\"inter Fallback\"",
+      "display": "\"interDisplay\",\"interDisplay Fallback\"",
+      "mono": "\"JetBrains Mono\",\"JetBrains Mono Fallback\"",
+      "serif": "\"tiemposText\",\"tiemposText Fallback\""
+    },
+    "weights": {
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700"
+    },
+    "headings": {
+      "xl": { "size": "4rem", "weight": "600", "letterSpacing": "-.02em", "lineHeight": "4rem" },
+      "lg": { "size": "3.5rem", "weight": "600", "letterSpacing": "-.015em", "lineHeight": "3.75rem" },
+      "md": { "size": "2.5rem", "weight": "600", "letterSpacing": "-.01em", "lineHeight": "2.75rem" },
+      "sm": { "size": "2rem", "weight": "600", "letterSpacing": "-.01em", "lineHeight": "2.375rem" },
+      "xs": { "size": "1.75rem", "weight": "600", "letterSpacing": "-.01em", "lineHeight": "2.125rem" }
+    },
+    "body": {
+      "2xl": { "size": "1.5rem", "weight": "500", "letterSpacing": "-.01em", "lineHeight": "1.875rem" },
+      "xl": { "size": "1.25rem", "weight": "500", "letterSpacing": "-.01em", "lineHeight": "1.625rem" },
+      "lg": { "size": "1.125rem", "weight": "500", "letterSpacing": "-.01em", "lineHeight": "1.5rem" },
+      "base": { "size": "1rem", "weight": "500", "letterSpacing": "-.01em", "lineHeight": "1.375rem" },
+      "sm": { "size": ".875rem", "weight": "500", "letterSpacing": "-.005em", "lineHeight": "1.25rem" },
+      "xs": { "size": ".75rem", "weight": "500", "letterSpacing": "0", "lineHeight": "1.125rem" }
+    }
+  },
+  "spacing": {
+    "base": ".25rem"
+  },
+  "radius": {
+    "xs": ".125rem",
+    "sm": ".25rem",
+    "md": ".375rem",
+    "lg": ".5rem",
+    "xl": ".75rem",
+    "2xl": "1rem",
+    "3xl": "1.25rem"
+  },
+  "blur": {
+    "xs": "4px",
+    "md": "12px",
+    "lg": "16px",
+    "xl": "24px"
+  },
+  "containers": {
+    "xs": "20rem",
+    "sm": "24rem",
+    "md": "28rem",
+    "lg": "32rem",
+    "xl": "36rem",
+    "2xl": "42rem",
+    "3xl": "48rem",
+    "4xl": "56rem",
+    "5xl": "64rem",
+    "6xl": "72rem",
+    "7xl": "80rem"
+  },
+  "animation": {
+    "easings": {
+      "in": "cubic-bezier(.3,0,1,1)",
+      "out": "cubic-bezier(0,0,0,1)",
+      "in-out": "cubic-bezier(.2,0,0,1)",
+      "in-out-cubic": "cubic-bezier(.65,0,.35,1)",
+      "out-cubic": "cubic-bezier(.33,1,.68,1)",
+      "emphasized-in-out": "cubic-bezier(.2,0,0,1)"
+    },
+    "duration": {
+      "default": ".15s"
+    }
+  },
+  "layout": {
+    "header-height": "68px",
+    "banner-height": "48px",
+    "breakpoint-lg": "992px"
+  }
+}
