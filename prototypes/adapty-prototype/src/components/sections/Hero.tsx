@@ -52,7 +52,17 @@ function HeroDS1() {
   return (
     <section className="relative overflow-hidden bg-[var(--bg-primary)] pt-24 pb-16 md:pt-32 md:pb-24">
       {/* LINEAR SIGNATURE: Subtle radial gradient from accent color */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--color-accent)/8%_0%,transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--color-accent)/15%_0%,transparent_50%)]" />
+
+      {/* LINEAR SIGNATURE: Starfield / Particles */}
+      <div className="absolute inset-0" style={{
+        backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px), radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)',
+        backgroundSize: '40px 40px, 20px 20px',
+        backgroundPosition: '0 0, 10px 10px',
+        maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
+        WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
+        opacity: 0.3
+      }} />
 
       <Container className="relative z-10">
         {/* Centered Content - Linear style */}
@@ -283,15 +293,16 @@ function HeroDS2() {
           </div>
         </div>
 
-        {/* ATTIO SIGNATURE: Underline tab bar navigation with connection nodes */}
+        {/* ATTIO SIGNATURE: Full-width tab bar with border container and vertical dividers */}
         <div className="mx-auto max-w-5xl">
-          {/* Tab Bar - underline style */}
+          {/* Tab Bar - Attio style: bordered container, full width, vertical dividers, underline active */}
           <div
             role="tablist"
-            className="relative flex gap-6 border-b border-[var(--border-subtle)] mb-6"
+            className="relative grid grid-cols-4 border border-[var(--border-subtle)] rounded-none mb-6"
           >
-            {tabs.map((tab) => {
+            {tabs.map((tab, index) => {
               const isActive = activeTab === tab.id;
+              const isLast = index === tabs.length - 1;
               return (
                 <button
                   key={tab.id}
@@ -300,25 +311,19 @@ function HeroDS2() {
                   aria-controls={`panel-${tab.id}`}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    "relative pb-3 px-1 text-sm font-medium transition-colors",
+                    "relative py-4 text-sm font-medium transition-colors text-center",
                     "duration-[var(--duration-fast)] ease-[var(--ease-in-out)]",
+                    !isLast && "border-r border-[var(--border-subtle)]",
                     isActive
                       ? "text-[var(--text-primary)]"
                       : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   )}
                 >
-                  {/* Connection node on active tab */}
-                  {isActive && (
-                    <StatusNode
-                      status="active"
-                      size="sm"
-                      className="absolute -top-2 left-1/2 -translate-x-1/2"
-                    />
-                  )}
                   {tab.label}
+                  {/* Active underline indicator */}
                   {isActive && (
                     <span
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-primary)] transition-all duration-150"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--text-primary)] transition-all duration-150"
                       aria-hidden="true"
                     />
                   )}
