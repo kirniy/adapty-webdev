@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTheme } from "next-themes";
 import { getDSConfig, type SectionId } from "~/config/ds-configs";
 import { content } from "~/config/content";
@@ -34,11 +34,28 @@ export function DynamicPage() {
     return null; // Avoid flash of unstyled content/white screen
   }
 
-  const config = getDSConfig(theme ?? "ds5");
+  // Memoize config to prevent unnecessary recalculations
+  const config = useMemo(() => getDSConfig(theme ?? "ds5"), [theme]);
+
+  // Memoize sections array to ensure stable reference
+  const sections = useMemo(() => config.sections, [config.sections]);
+
+  // Track section occurrences for stable key generation
+  const sectionCounts = useMemo(() => {
+    const counts = new Map<SectionId, number>();
+    sections.forEach((id) => {
+      counts.set(id, (counts.get(id) || 0) + 1);
+    });
+    return counts;
+  }, [sections]);
 
   // Render a section by its ID
   const renderSection = (sectionId: SectionId, index: number) => {
-    const key = `${sectionId}-${index}`;
+    // Use stable key: sectionId only, or sectionId-index if duplicates exist
+    // This prevents remounting when theme changes but section order/index changes
+    const key = (sectionCounts.get(sectionId) ?? 0) > 1 
+      ? `${sectionId}-${index}` 
+      : sectionId;
     const overrides = config.sectionOverrides?.[sectionId];
 
     switch (sectionId) {
@@ -189,7 +206,7 @@ export function DynamicPage() {
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <Header />
       <main>
-        {config.sections.map((sectionId, index) => renderSection(sectionId, index))}
+        {sections.map((sectionId, index) => renderSection(sectionId, index))}
       </main>
     </div>
   );

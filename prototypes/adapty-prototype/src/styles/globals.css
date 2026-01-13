@@ -39,10 +39,11 @@
   --border-strong: #B8B9BD;
 
   /* Typography (Suisse-like, fall back to Inter) */
-  --font-sans: "Suisse International", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: "Suisse International", "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* CLERK SIGNATURE: Clean, professional letter-spacing */
+  --letter-spacing-h1: -0.035em;
   --letter-spacing-tight: -0.035em;
   --letter-spacing-heading: -0.02em;
   --letter-spacing-body: -0.01em;
@@ -493,8 +494,8 @@
   --border-strong: #3A3B40;
 
   /* Typography (POLAR: Geist fonts) */
-  --font-sans: var(--font-geist-sans), "Geist", -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+  --font-sans: var(--font-geist-sans), "Geist", "Inter Variable", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
 
   /* POLAR SIGNATURE: Tight, code-like letter-spacing */
   --letter-spacing-tight: -0.02em;
@@ -545,7 +546,7 @@
   --code-border: var(--border-default);
 
   /* POLAR SIGNATURE: Gradient code blocks */
-  --code-gradient: linear-gradient(135deg, #f97316 0%, #ec4899 35%, #3b82f6 65%, #8b5cf6 100%);
+  --code-gradient: linear-gradient(135deg, #FF6B35 0%, #E91E63 50%, #3B82F6 100%);
   --code-gradient-subtle: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(236, 72, 153, 0.1) 35%, rgba(59, 130, 246, 0.1) 65%, rgba(139, 92, 246, 0.1) 100%);
 
   /* POLAR SIGNATURE: Badge styles */
@@ -575,6 +576,10 @@
   --gradient-develop: linear-gradient(90deg, #007CF0, #00DFD8);
   --gradient-preview: linear-gradient(90deg, #7928CA, #FF0080);
   --gradient-ship: linear-gradient(90deg, #FF4D4D, #F9CB28);
+  /* Gradient Hero - ADD (CRITICAL) */
+  --gradient-hero: linear-gradient(135deg, #FF0080 0%, #7928CA 50%, #0070F3 100%);
+  --gradient-hero-opacity: 0.6;
+  --gradient-hero-blur: 100px;
 
   /* Colors - Primary (WHITE button like Vercel CTA) */
   --color-primary: #ffffff;
@@ -620,6 +625,8 @@
   --font-display: var(--font-space-grotesk), "Space Grotesk", "Geist", sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
 
+  --font-size-h1: 72px;
+
   /* Border Radius (VERCEL: 6px DEFAULT) */
   --radius-sm: 4px;
   --radius-md: 6px;
@@ -634,10 +641,13 @@
   --shadow-lg: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 8px 16px -4px rgba(0, 0, 0, 0.16);
   --shadow-xl: 0 0 0 1px rgba(255, 255, 255, 0.15), 0px 24px 32px -8px rgba(0, 0, 0, 0.25);
   --shadow-glow: 0 0 30px rgba(0, 124, 240, 0.25);
+  --shadow-compound:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 8px 40px rgba(0, 0, 0, 0.6);
 
   /* Animations (VERCEL: BOUNCY EASING) */
   --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
-  --ease-bouncy: cubic-bezier(0.4, 0, 0.2, 1.2);
+  --ease-bouncy: cubic-bezier(0.175, 0.885, 0.32, 1.1);
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-fast: 200ms;
   --duration-normal: 250ms;

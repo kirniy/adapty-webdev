@@ -68,7 +68,7 @@ function HeroDS1() {
           </a>
 
           {/* LINEAR SIGNATURE: Two-Tone Headline with tight letter-spacing */}
-          <h1 className="heading-linear mb-6 text-4xl font-semibold sm:text-5xl md:text-6xl leading-[1.06]">
+          <h1 className="heading-linear mb-6 text-4xl font-semibold sm:text-5xl md:text-6xl leading-[1.06] tracking-[var(--letter-spacing-h1)]">
             <span className="text-[var(--text-primary)]">{hero.headline.primary}</span>
             <br />
             <span className="text-[var(--text-muted)]">{hero.headline.secondary}</span>
@@ -93,15 +93,15 @@ function HeroDS1() {
         </div>
 
         {/* LINEAR SIGNATURE: Enhanced 3D Layered Product Showcase with perspective */}
-        <div className="relative mx-auto mt-20 max-w-6xl perspective-container">
-          <div className="relative" style={{ perspective: 'var(--perspective-depth)' }}>
+        <div className="relative mx-auto mt-20 max-w-6xl perspective-container" style={{ perspective: 'var(--perspective-depth)' }}>
+          <div className="relative transform-style-3d">
             {/* Background layer - Analytics panel (LEFT) - Enhanced 3D */}
             <div
               className="card-linear animate-float absolute left-0 top-8 w-[35%] rounded-[var(--radius-card)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-4"
               style={{
                 animationDelay: '0s',
-                transform: 'rotateY(var(--rotate-back)) var(--transform-z-back)',
-                transformStyle: 'preserve-3d',
+                transform: 'var(--transform-layer-back) rotateY(var(--rotate-back))',
+                boxShadow: 'var(--shadow-layered-card)'
               }}>
               <div className="rounded-xl bg-[var(--bg-tertiary)] p-4">
                 <div className="flex items-center gap-2 mb-3">
@@ -126,7 +126,10 @@ function HeroDS1() {
             </div>
 
             {/* Middle layer - Main Dashboard */}
-            <div className="relative z-10 mx-auto w-[80%] card-linear rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-tertiary)] p-2">
+            <div
+              className="relative z-10 mx-auto w-[80%] card-linear rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-tertiary)] p-2"
+              style={{ transform: 'translateZ(0)', boxShadow: 'var(--shadow-layered-card)' }}
+            >
               <div className="overflow-hidden rounded-2xl">
                 <Image
                   src={hero.image.dashboard}
@@ -144,8 +147,8 @@ function HeroDS1() {
               className="card-linear animate-float absolute right-0 top-16 w-[30%] rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-secondary)] p-3"
               style={{
                 animationDelay: '2s',
-                transform: 'rotateY(var(--rotate-subtle)) var(--transform-z-front)',
-                transformStyle: 'preserve-3d',
+                transform: 'var(--transform-layer-front) rotateY(var(--rotate-subtle))',
+                boxShadow: 'var(--shadow-layered-card)'
               }}>
               <div className="rounded-xl bg-[var(--bg-tertiary)] p-4">
                 <div className="flex items-center gap-2 mb-3">
@@ -166,7 +169,7 @@ function HeroDS1() {
 
             {/* Additional floating element - Metrics card (TOP RIGHT) */}
             <div className="card-linear animate-float absolute -right-4 -top-4 w-[20%] rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-3"
-                 style={{ animationDelay: '1s' }}>
+              style={{ animationDelay: '1s' }}>
               <div className="text-xs text-[var(--text-muted)] mb-1">Monthly Revenue</div>
               <div className="text-lg font-semibold text-[var(--color-success)]">+23.5%</div>
               <div className="mt-2 h-1 w-full rounded bg-[var(--bg-tertiary)]">
@@ -229,10 +232,12 @@ function HeroDS2() {
           {/* Headline - Two-tone with SERIF emphasis */}
           <h1 className="headline-attio mb-4 text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl" style={{ fontWeight: 'var(--font-weight-default, 500)' }}>
             <span className="text-[var(--text-primary)]">
-              The <span className="text-serif italic">power</span> of subscription
+              The <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>power</span> of subscription
             </span>
             <br className="hidden sm:block" />
-            <span className="text-[var(--text-muted)]">analytics & paywalls</span>
+            <span className="text-[var(--text-muted)]">
+              analytics & <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>paywalls</span>
+            </span>
           </h1>
 
           {/* Two-Tone Subheadline with medium weight */}
@@ -246,7 +251,7 @@ function HeroDS2() {
             <Button size="lg" href={hero.cta.primary.href}>
               {hero.cta.primary.text}
             </Button>
-            <Button variant="ghost" size="lg" href={hero.cta.secondary.href}>
+            <Button variant="ghost" size="lg" href={hero.cta.secondary.href} className="hover:bg-transparent">
               {hero.cta.secondary.text}
               <ArrowRight className="h-4 w-4" />
             </Button>
@@ -502,14 +507,14 @@ function HeroDS4() {
   return (
     <section className="relative overflow-hidden bg-[var(--bg-primary)] pt-20 pb-24 md:pt-28 md:pb-32">
       {/* VERCEL SIGNATURE: Gradient hero band at top */}
-      <div className="absolute top-0 left-0 right-0 h-[500px] overflow-hidden pointer-events-none">
-        {/* Multi-color gradient blobs */}
-        <div className="absolute -top-[200px] left-1/4 w-[600px] h-[600px] rounded-full bg-[#007CF0] opacity-20 blur-[120px]" />
-        <div className="absolute -top-[150px] left-1/2 w-[500px] h-[500px] rounded-full bg-[#7928CA] opacity-20 blur-[100px] -translate-x-1/2" />
-        <div className="absolute -top-[200px] right-1/4 w-[600px] h-[600px] rounded-full bg-[#FF0080] opacity-15 blur-[120px]" />
-        {/* Subtle orange accent on far right */}
-        <div className="absolute -top-[100px] right-0 w-[400px] h-[400px] rounded-full bg-[#F9CB28] opacity-10 blur-[100px]" />
-      </div>
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[200%] h-[600px] pointer-events-none"
+        style={{
+          background: 'var(--gradient-hero)',
+          opacity: 'var(--gradient-hero-opacity, 0.6)',
+          filter: 'blur(var(--gradient-hero-blur, 100px))',
+        }}
+      />
 
       {/* Grid pattern background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border-subtle)_1px,transparent_1px),linear-gradient(to_bottom,var(--border-subtle)_1px,transparent_1px)] [background-size:64px_64px] opacity-30" />
@@ -555,19 +560,11 @@ function HeroDS4() {
 
         {/* VERCEL SIGNATURE: Dashboard with compound shadow and bouncy hover */}
         <div className="relative mx-auto mt-16 max-w-5xl group">
-          {/* Gradient glow effect that intensifies on hover */}
-          <div
-            className="absolute -inset-4 rounded-3xl opacity-50 blur-3xl transition-opacity duration-[var(--duration-slow)] group-hover:opacity-70"
-            style={{
-              background: 'linear-gradient(135deg, #007CF0 0%, #7928CA 50%, #FF0080 100%)',
-            }}
-          />
-
           {/* Dashboard card with compound shadow (border-ring + shadow) */}
           <div
             className="relative rounded-xl bg-[var(--bg-tertiary)] p-2 transition-transform duration-[var(--duration-normal)]"
             style={{
-              boxShadow: 'var(--shadow-xl)',
+              boxShadow: 'var(--shadow-compound)',
               transition: 'transform var(--duration-normal) var(--ease-bouncy)',
             }}
           >
@@ -686,16 +683,16 @@ function HeroDS5() {
               <div className="space-y-3 mb-6">
                 <button className="oauth-button w-full flex items-center justify-center gap-3 px-4 py-3 text-sm font-medium text-[var(--text-primary)]">
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                    <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                    <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                    <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                    <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                   </svg>
                   Continue with Google
                 </button>
                 <button className="oauth-button w-full flex items-center justify-center gap-3 px-4 py-3 text-sm font-medium text-[var(--text-primary)]">
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                   </svg>
                   Continue with GitHub
                 </button>

@@ -314,7 +314,7 @@ const hasAccess = profile.accessLevels.premium?.isActive;`,
           <div className="lg:[direction:ltr]">
             <div className="overflow-hidden rounded-xl border border-[var(--border-default)] shadow-2xl">
               {/* Gradient background container */}
-              <div className="bg-gradient-to-br from-[#FF6B35]/20 via-[#E91E63]/20 to-[#3B82F6]/20 p-[1px]">
+              <div className="p-[1px]" style={{ background: 'var(--code-gradient-subtle)' }}>
                 <div className="bg-[#0C0C0C] rounded-xl overflow-hidden">
                   {/* Window Controls */}
                   <div className="flex items-center gap-2 border-b border-white/5 bg-white/5 px-4 py-3">
@@ -366,8 +366,13 @@ function FeatureSectionVercel({
         <div className={cn("grid gap-16 lg:grid-cols-2 items-center", flipped && "lg:[direction:rtl]")}>
           {/* Visual - Clean border, no shadow */}
           <div className="lg:[direction:ltr]">
-            <div className="relative aspect-video overflow-hidden rounded-lg border border-[var(--border-default)] bg-[var(--bg-secondary)]">
+            <div
+              className="group relative aspect-video overflow-hidden rounded-lg border border-[var(--border-default)] bg-[var(--bg-secondary)] transition-all duration-[var(--duration-normal)] hover:scale-[1.02] hover:shadow-[var(--shadow-xl)]"
+              style={{ transitionTimingFunction: 'var(--ease-bouncy)' }}
+            >
               <Image src={image.src} alt={image.alt} fill className="object-cover" />
+              {/* Interactive glare effect */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             </div>
           </div>
 

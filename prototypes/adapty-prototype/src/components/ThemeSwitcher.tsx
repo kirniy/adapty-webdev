@@ -12,14 +12,14 @@ export function ThemeSwitcher() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Handle URL query param on mount
+  // Handle URL query param on mount and when it changes
   useEffect(() => {
     setMounted(true);
     const dsParam = searchParams.get("ds");
-    if (dsParam && dsThemes.some((t) => t.id === dsParam)) {
+    if (dsParam && dsThemes.some((t) => t.id === dsParam) && theme !== dsParam) {
       setTheme(dsParam);
     }
-  }, [searchParams, setTheme]);
+  }, [searchParams, setTheme, theme]);
 
   // Update URL when theme changes
   const handleThemeChange = (newTheme: DSTheme) => {
