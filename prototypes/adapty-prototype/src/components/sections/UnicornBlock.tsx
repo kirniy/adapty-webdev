@@ -18,7 +18,7 @@ export function UnicornBlock({
   className = ""
 }: UnicornBlockProps) {
   return (
-    <Section className={`relative overflow-hidden ${className}`}>
+    <Section className={`relative overflow-hidden bg-[var(--bg-primary)] ${className}`}>
       <div
         className="w-full relative"
         style={{ height }}
