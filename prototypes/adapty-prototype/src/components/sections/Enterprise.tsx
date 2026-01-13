@@ -3,6 +3,9 @@ import { Button } from "~/components/ui/Button";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 
 const iconMap = {
   shield: Shield,
@@ -28,12 +31,23 @@ const colorMap = {
   },
 };
 
-export function Enterprise() {
+interface EnterpriseProps {
+  ds?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5";
+}
+
+export function Enterprise({ ds }: EnterpriseProps) {
   const { enterprise } = content;
 
   return (
-    <Section className="bg-[var(--bg-primary)]">
-      <Container>
+    <Section className="bg-[var(--bg-primary)] relative overflow-hidden">
+      {/* DS2: Soft Corner Gradient */}
+      {ds === "ds2" && <SoftCornerGradient opacity={0.4} />}
+      {/* DS3: Moiré */}
+      {ds === "ds3" && <MoireInterference opacity={0.08} />}
+      {/* DS4: Floor */}
+      {ds === "ds4" && <div className="absolute inset-0 opacity-20 pointer-events-none"><InfiniteFloor /></div>}
+
+      <Container className="relative z-10">
         <div className="grid items-center gap-16 lg:grid-cols-2">
           {/* Content */}
           <div>

@@ -7,5 +7,8 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #234 | 5:39 PM | ✅ | Repository Structure Cleanup and Organization | ~393 |
+| #224 | 3:40 PM | 🟣 | Professional Russian-Language Executive Report Generator for Phase B Research | ~1891 |
+| #223 | " | 🟣 | Automated Russian DOCX Report Generation for Phase B Research Stakeholder Communication | ~567 |
+| #216 | 3:11 PM | ⚖️ | Gemini Deep Research Completed: Strategic AI-Native Frontend Architecture for ADAPTY Phase B | ~1646 |
+| #206 | 2:54 PM | ⚖️ | Phase B Technology Stack Selection with shadcn/ui as Primary Foundation | ~1658 |
 </claude-mem-context>

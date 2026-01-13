@@ -4,17 +4,34 @@ import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
 import { useEffect, useRef, useState } from "react";
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 
 interface StatsProps {
   variant?: "default" | "bold";
+  ds?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5";
 }
 
-export function Stats({ variant = "default" }: StatsProps) {
+export function Stats({ variant = "default", ds }: StatsProps) {
   const { stats } = content;
 
   return (
-    <Section className="border-y border-[var(--border-subtle)] bg-gradient-to-b from-[var(--bg-primary)] to-[var(--bg-secondary)]">
-      <Container>
+    <Section className="relative border-y border-[var(--border-subtle)] bg-gradient-to-b from-[var(--bg-primary)] to-[var(--bg-secondary)] overflow-hidden">
+      {/* DS2: Soft Corner Gradient */}
+      {ds === "ds2" && <SoftCornerGradient opacity={0.4} />}
+
+      {/* DS3: Moiré Interference */}
+      {ds === "ds3" && <MoireInterference opacity={0.1} />}
+
+      {/* DS4: Infinite Floor */}
+      {ds === "ds4" && (
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <InfiniteFloor />
+        </div>
+      )}
+
+      <Container className="relative z-10">
         <h2 className="mb-12 text-center text-2xl font-bold tracking-tight md:text-3xl">
           <span className="text-[var(--text-primary)]">{stats.headline.primary}</span>
           <br className="hidden sm:block" />

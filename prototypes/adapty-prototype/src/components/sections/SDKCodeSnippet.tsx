@@ -8,10 +8,17 @@ import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
 import { cn } from "~/lib/utils";
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 
 type Tab = "swift" | "kotlin" | "flutter" | "react-native";
 
-export function SDKCodeSnippet() {
+interface SDKCodeSnippetProps {
+  ds?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5";
+}
+
+export function SDKCodeSnippet({ ds }: SDKCodeSnippetProps) {
   const { sdk } = content;
   const [activeTab, setActiveTab] = useState<Tab>("swift");
   const [copied, setCopied] = useState(false);
@@ -23,8 +30,15 @@ export function SDKCodeSnippet() {
   };
 
   return (
-    <div className="border-y border-[var(--border-subtle)] bg-[var(--bg-secondary)]">
-      <Section>
+    <div className="border-y border-[var(--border-subtle)] bg-[var(--bg-secondary)] relative overflow-hidden">
+      {/* DS2: Soft Corner Gradient */}
+      {ds === "ds2" && <SoftCornerGradient opacity={0.3} />}
+      {/* DS3: Moiré */}
+      {ds === "ds3" && <MoireInterference opacity={0.05} />}
+      {/* DS4: Floor */}
+      {ds === "ds4" && <div className="absolute inset-0 opacity-10 pointer-events-none"><InfiniteFloor /></div>}
+
+      <Section className="relative z-10">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2">
             {/* Content */}
@@ -82,64 +96,64 @@ export function SDKCodeSnippet() {
             <div className="group order-1 lg:order-2">
               {/* DS3 POLAR SIGNATURE: Gradient border wrapper */}
               <div className="code-gradient-border rounded-xl p-[1px]">
-              <div className="relative overflow-hidden rounded-xl border border-[var(--border-default)] bg-[#1E1E2E] shadow-[var(--shadow-xl)] code-editor-card">
-                {/* Window Header */}
-                <div className="flex items-center justify-between border-b border-white/5 bg-[#252535] px-4 py-3">
-                  <div className="flex gap-2">
-                    <div className="h-3 w-3 rounded-full bg-[#FF5F56]" />
-                    <div className="h-3 w-3 rounded-full bg-[#FFBD2E]" />
-                    <div className="h-3 w-3 rounded-full bg-[#27C93F]" />
+                <div className="relative overflow-hidden rounded-xl border border-[var(--border-default)] bg-[#1E1E2E] shadow-[var(--shadow-xl)] code-editor-card">
+                  {/* Window Header */}
+                  <div className="flex items-center justify-between border-b border-white/5 bg-[#252535] px-4 py-3">
+                    <div className="flex gap-2">
+                      <div className="h-3 w-3 rounded-full bg-[#FF5F56]" />
+                      <div className="h-3 w-3 rounded-full bg-[#FFBD2E]" />
+                      <div className="h-3 w-3 rounded-full bg-[#27C93F]" />
+                    </div>
+
+                    {/* Tabs */}
+                    <div className="flex gap-1 rounded-lg bg-black/20 p-1">
+                      {(["swift", "kotlin", "flutter", "react-native"] as Tab[]).map(
+                        (tab) => (
+                          <button
+                            key={tab}
+                            onClick={() => setActiveTab(tab)}
+                            className={cn(
+                              "rounded-md px-3 py-1 text-xs font-medium capitalize transition-all",
+                              activeTab === tab
+                                ? "bg-white/10 text-white"
+                                : "text-white/40 hover:bg-white/5 hover:text-white/70"
+                            )}
+                          >
+                            {tab.replace("-", " ")}
+                          </button>
+                        )
+                      )}
+                    </div>
                   </div>
 
-                  {/* Tabs */}
-                  <div className="flex gap-1 rounded-lg bg-black/20 p-1">
-                    {(["swift", "kotlin", "flutter", "react-native"] as Tab[]).map(
-                      (tab) => (
-                        <button
-                          key={tab}
-                          onClick={() => setActiveTab(tab)}
-                          className={cn(
-                            "rounded-md px-3 py-1 text-xs font-medium capitalize transition-all",
-                            activeTab === tab
-                              ? "bg-white/10 text-white"
-                              : "text-white/40 hover:bg-white/5 hover:text-white/70"
-                          )}
-                        >
-                          {tab.replace("-", " ")}
-                        </button>
-                      )
-                    )}
+                  {/* Code */}
+                  <div className="relative p-6">
+                    <button
+                      onClick={handleCopy}
+                      className="absolute right-4 top-4 rounded-lg bg-white/5 p-2 text-white/40 transition-all hover:bg-white/10 hover:text-white"
+                      title="Copy code"
+                    >
+                      {copied ? (
+                        <CheckCircle2 className="h-4 w-4 text-green-400" />
+                      ) : (
+                        <Copy className="h-4 w-4" />
+                      )}
+                    </button>
+
+                    <pre className="font-mono text-sm leading-relaxed text-[#CDD6F4]">
+                      <code>
+                        {sdk.codeExamples[activeTab].split("\n").map((line, i) => (
+                          <div key={i} className="table-row">
+                            <span className="table-cell select-none pr-4 text-right text-white/20">
+                              {i + 1}
+                            </span>
+                            <span className="table-cell">{line}</span>
+                          </div>
+                        ))}
+                      </code>
+                    </pre>
                   </div>
                 </div>
-
-                {/* Code */}
-                <div className="relative p-6">
-                  <button
-                    onClick={handleCopy}
-                    className="absolute right-4 top-4 rounded-lg bg-white/5 p-2 text-white/40 transition-all hover:bg-white/10 hover:text-white"
-                    title="Copy code"
-                  >
-                    {copied ? (
-                      <CheckCircle2 className="h-4 w-4 text-green-400" />
-                    ) : (
-                      <Copy className="h-4 w-4" />
-                    )}
-                  </button>
-
-                  <pre className="font-mono text-sm leading-relaxed text-[#CDD6F4]">
-                    <code>
-                      {sdk.codeExamples[activeTab].split("\n").map((line, i) => (
-                        <div key={i} className="table-row">
-                          <span className="table-cell select-none pr-4 text-right text-white/20">
-                            {i + 1}
-                          </span>
-                          <span className="table-cell">{line}</span>
-                        </div>
-                      ))}
-                    </code>
-                  </pre>
-                </div>
-              </div>
               </div>{/* Close gradient border wrapper */}
             </div>
           </div>

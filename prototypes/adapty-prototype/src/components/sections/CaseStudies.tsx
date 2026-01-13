@@ -3,18 +3,29 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 
 interface CaseStudiesProps {
   variant?: "default" | "compact";
+  ds?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5";
 }
 
-export function CaseStudies({ variant = "default" }: CaseStudiesProps) {
+export function CaseStudies({ variant = "default", ds }: CaseStudiesProps) {
   const { caseStudies } = content;
   const displayItems = variant === "compact" ? caseStudies.items.slice(0, 6) : caseStudies.items;
 
   return (
-    <Section className="border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]">
-      <Container>
+    <Section className="relative border-b border-[var(--border-subtle)] bg-[var(--bg-primary)] overflow-hidden">
+      {/* DS2: Soft Corner Gradient */}
+      {ds === "ds2" && <SoftCornerGradient opacity={0.3} />}
+      {/* DS3: Moiré */}
+      {ds === "ds3" && <MoireInterference opacity={0.08} />}
+      {/* DS4: Floor */}
+      {ds === "ds4" && <div className="absolute inset-0 opacity-15 pointer-events-none"><InfiniteFloor /></div>}
+
+      <Container className="relative z-10">
         <div className="mb-12 flex items-end justify-between">
           <h2 className="max-w-xl text-3xl font-bold tracking-tight md:text-4xl">
             <span className="text-[var(--text-primary)]">{caseStudies.headline.primary}</span>

@@ -4,13 +4,26 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 
-export function RoleCards() {
+interface RoleCardsProps {
+  ds?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5";
+}
+
+export function RoleCards({ ds }: RoleCardsProps) {
   const { roleCards } = content;
 
   return (
-    <Section className="bg-[var(--bg-primary)]">
-      <Container>
+    <Section className="bg-[var(--bg-primary)] relative overflow-hidden">
+      {/* DS2: Soft Corner Gradient - very subtle */}
+      {ds === "ds2" && <SoftCornerGradient opacity={0.2} />}
+
+      {/* DS3: Moiré - very subtle */}
+      {ds === "ds3" && <MoireInterference opacity={0.05} />}
+
+      <Container className="relative z-10">
         <h2 className="mb-16 text-center text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
           <span className="text-[var(--text-primary)]">{roleCards.headline.primary}</span>
           <br />

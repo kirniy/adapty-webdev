@@ -141,7 +141,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-[var(--bg-primary)] font-sans antialiased">
+      <body className="min-h-screen bg-[var(--bg-primary)] font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider>
           <Suspense fallback={null}>
             <ThemeSwitcher />

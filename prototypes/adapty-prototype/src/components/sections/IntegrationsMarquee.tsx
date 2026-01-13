@@ -4,8 +4,15 @@ import Image from "next/image";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
 import { useEffect, useRef, useState } from "react";
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 
-export function IntegrationsMarquee() {
+interface IntegrationsMarqueeProps {
+  ds?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5";
+}
+
+export function IntegrationsMarquee({ ds }: IntegrationsMarqueeProps) {
   const { integrations } = content;
   const [isPaused, setIsPaused] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -38,36 +45,43 @@ export function IntegrationsMarquee() {
   }, [isPaused]);
 
   return (
-    <Section className="overflow-hidden bg-[var(--bg-primary)] py-12">
-      <div className="mb-8 text-center">
-        <p className="text-sm font-medium uppercase tracking-wider text-[var(--text-muted)]">
-          Integrations
-        </p>
-        <h2 className="mt-2 text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
-          {integrations.headline}
-        </h2>
-      </div>
+    <Section className="bg-[var(--bg-primary)] py-12 relative overflow-hidden">
+      {/* DS2: Soft Corner Gradient - very subtle */}
+      {ds === "ds2" && <SoftCornerGradient opacity={0.2} />}
+      {/* DS3: Moiré - very subtle */}
+      {ds === "ds3" && <MoireInterference opacity={0.05} />}
 
-      <div
-        ref={scrollRef}
-        className="flex gap-12 overflow-hidden py-4"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        {items.map((name, index) => (
-          <div
-            key={`${name}-${index}`}
-            className="flex h-12 w-32 shrink-0 items-center justify-center opacity-50 transition-opacity hover:opacity-100 md:w-40"
-          >
-            <Image
-              src={`/integrations/${name}.svg`}
-              alt={name}
-              width={160}
-              height={48}
-              className="h-full w-full object-contain"
-            />
-          </div>
-        ))}
+      <div className="relative z-10">
+        <div className="mb-8 text-center">
+          <p className="text-sm font-medium uppercase tracking-wider text-[var(--text-muted)]">
+            Integrations
+          </p>
+          <h2 className="mt-2 text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
+            {integrations.headline}
+          </h2>
+        </div>
+
+        <div
+          ref={scrollRef}
+          className="flex gap-12 overflow-hidden py-4"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {items.map((name, index) => (
+            <div
+              key={`${name}-${index}`}
+              className="flex h-12 w-32 shrink-0 items-center justify-center opacity-50 transition-opacity hover:opacity-100 md:w-40"
+            >
+              <Image
+                src={`/integrations/${name}.svg`}
+                alt={name}
+                width={160}
+                height={48}
+                className="h-full w-full object-contain"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </Section>
   );

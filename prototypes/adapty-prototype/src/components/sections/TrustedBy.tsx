@@ -3,12 +3,33 @@ import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
 
-export function TrustedBy() {
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
+
+interface TrustedByProps {
+  ds?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5";
+}
+
+export function TrustedBy({ ds }: TrustedByProps) {
   const { trustedBy } = content;
 
   return (
-    <Section className="border-b border-[var(--border-subtle)] bg-[var(--bg-primary)] py-12">
-      <Container>
+    <Section className="relative border-b border-[var(--border-subtle)] bg-[var(--bg-primary)] py-12 overflow-hidden">
+      {/* DS2: Soft Corner Gradient */}
+      {ds === "ds2" && <SoftCornerGradient opacity={0.3} />}
+
+      {/* DS3: Moiré Interference */}
+      {ds === "ds3" && <MoireInterference opacity={0.08} />}
+
+      {/* DS4: Infinite Floor (Subtle) */}
+      {ds === "ds4" && (
+        <div className="absolute inset-0 opacity-20">
+          <InfiniteFloor />
+        </div>
+      )}
+
+      <Container className="relative z-10">
         <p className="mb-8 text-center text-sm font-medium uppercase tracking-wider">
           <span className="text-[var(--text-secondary)]">{trustedBy.headline.primary}</span>
           <span className="text-[var(--text-muted)]"> {trustedBy.headline.secondary}</span>

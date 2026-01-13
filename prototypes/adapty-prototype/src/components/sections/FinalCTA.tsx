@@ -3,18 +3,29 @@ import { Button } from "~/components/ui/Button";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 
 interface FinalCTAProps {
   variant?: "default" | "enterprise";
+  ds?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5";
 }
 
-export function FinalCTA({ variant = "default" }: FinalCTAProps) {
+export function FinalCTA({ variant = "default", ds }: FinalCTAProps) {
   const { finalCta } = content;
 
   return (
     <Section className="py-24 md:py-32">
       <Container>
         <div className="relative overflow-hidden rounded-[var(--card-radius)] bg-[var(--bg-tertiary)] p-12 text-center md:p-24">
+          {/* DS2: Soft Corner Gradient */}
+          {ds === "ds2" && <SoftCornerGradient opacity={0.4} />}
+          {/* DS3: Moiré */}
+          {ds === "ds3" && <MoireInterference opacity={0.1} />}
+          {/* DS4: Floor */}
+          {ds === "ds4" && <div className="absolute inset-0 opacity-20"><InfiniteFloor /></div>}
+
           {/* Background Pattern */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,var(--border-subtle)_1px,transparent_0)] [background-size:24px_24px] opacity-30" />
 

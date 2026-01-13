@@ -11,6 +11,10 @@ import { cn } from "~/lib/utils";
 import { SchematicLine, SchematicConnector } from "~/components/ds2/SchematicLine";
 import { ConnectionNode, StatusNode } from "~/components/ds2/ConnectionNode";
 import { FlowDiagramCard, FlowDiagramResult } from "~/components/ds2/FlowDiagramCard";
+import { NoiseTexture } from "~/components/textures/NoiseTexture";
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 
 interface HeroProps {
   variant?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5" | "default";
@@ -51,6 +55,9 @@ function HeroDS1() {
 
   return (
     <section className="relative overflow-hidden bg-[var(--bg-primary)] pt-24 pb-16 md:pt-32 md:pb-24">
+      {/* DS1 ASSET: Living Noise Texture (Matte Finish) */}
+      <NoiseTexture opacity={0.06} />
+
       {/* LINEAR SIGNATURE: Subtle radial gradient from accent color */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--color-accent)/15%_0%,transparent_50%)]" />
 
@@ -213,6 +220,9 @@ function HeroDS2() {
 
   return (
     <section className="relative bg-[var(--bg-primary)] pt-16 pb-0">
+      {/* DS2 ASSET: Ambient Occlusion / Inverted Shadow */}
+      <SoftCornerGradient opacity={0.5} />
+
       {/* ATTIO SIGNATURE: Edge accent line on left side */}
       <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-[var(--color-primary)] via-[var(--color-primary)]/50 to-transparent" />
 
@@ -392,8 +402,11 @@ function HeroDS3() {
   const { hero } = content;
 
   return (
-    <section className="relative bg-[var(--bg-primary)] pt-24 pb-16 md:pt-32 md:pb-20">
-      <Container>
+    <section className="relative bg-[var(--bg-primary)] pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden">
+      {/* DS3 ASSET: Moiré Interference Pattern (Math Texture) */}
+      <MoireInterference opacity={0.12} />
+
+      <Container className="relative z-10">
         {/* POLAR SIGNATURE: Ultra-minimal centered content */}
         <div className="mx-auto max-w-3xl text-center">
           {/* POLAR SIGNATURE: "Now in Beta" badge */}
@@ -511,18 +524,15 @@ function HeroDS4() {
 
   return (
     <section className="relative overflow-hidden bg-[var(--bg-primary)] pt-20 pb-24 md:pt-28 md:pb-32">
-      {/* VERCEL SIGNATURE: Gradient hero band at top */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[200%] h-[600px] pointer-events-none"
-        style={{
-          background: 'var(--gradient-hero)',
-          opacity: 'var(--gradient-hero-opacity, 0.6)',
-          filter: 'blur(var(--gradient-hero-blur, 100px))',
-        }}
-      />
+      {/* VERCEL SIGNATURE: White Conic Spotlights (Clean, Clean, Clean) */}
+      <div className="absolute top-0 left-0 w-full h-[600px] bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(255,255,255,0.15),transparent)] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-[conic-gradient(from_90deg_at_50%_50%,#00000000_50%,#fff_50%),radial-gradient(rgba(200,200,200,0.1) 0%, transparent 50%)] opacity-0 pointer-events-none" />
 
-      {/* Grid pattern background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border-subtle)_1px,transparent_1px),linear-gradient(to_bottom,var(--border-subtle)_1px,transparent_1px)] [background-size:64px_64px] opacity-30" />
+      {/* DS4 ASSET: Infinite Perspective Floor (Infrastructure Scale) */}
+      <InfiniteFloor />
+
+      {/* Grid pattern background - REMOVED (Replaced by Infinite Floor) */}
+      {/* <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border-subtle)_1px,transparent_1px),linear-gradient(to_bottom,var(--border-subtle)_1px,transparent_1px)] [background-size:64px_64px] opacity-30" /> */}
 
       <Container className="relative z-10">
         <div className="mx-auto max-w-5xl text-center">

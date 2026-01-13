@@ -1,18 +1,61 @@
 ---
 project: adapty-redesign
-version: 2.1.0
-last_updated: 2026-01-13T18:48:00Z
+version: 3.1.0
+last_updated: 2026-01-13T21:00:00Z
 owner: kirill-kholodenko
 stakeholder: sergey-muratov
-phase: phase-a-testing
+phase: phase-b-shadcn
 status: active
-tags: [redesign, nextjs, tailwind, design-system, a-b-testing]
+tags: [redesign, nextjs, tailwind, design-system, shadcn-ui, tailark]
 ---
 
 # ADAPTY Website Redesign - Navigation & Context
 
 > **IMPORTANT**: This is a living navigation document. Update after every significant change.
-> Last significant update: 2026-01-13 - Repo cleanup, DS wireframe comparison audit complete
+> Last significant update: 2026-01-13 - Phase B setup complete, ready for implementation
+
+---
+
+## SESSION START INSTRUCTIONS (READ FIRST)
+
+### Required Skills to Activate
+```
+1. styling-with-shadcn    - shadcn/ui patterns and best practices
+2. frontend-design        - Distinctive, production-grade UI
+3. frontend-ui-ux         - Designer-turned-developer mindset
+```
+
+### Required MCP: shadcn
+The **shadcn MCP** has been installed. Verify it's active:
+1. Run `/mcp` command to see active servers
+2. Look for `shadcn` in the list
+3. If missing, reinstall: `pnpm dlx shadcn@latest mcp init --client claude`
+
+**ALWAYS use the shadcn MCP for:**
+- Adding new components
+- Exploring available components
+- Component documentation
+
+### Current Work: Building proto-ds1-linear
+- **Status**: In progress
+- **Location**: `/prototypes/phase-b-shadcn/proto-ds1-linear/`
+- **Plan**: `/docs/PHASE-B-PLAN.md`
+- **Local docs**: `/prototypes/phase-b-shadcn/proto-ds1-linear/CLAUDE.md`
+
+### What's Done
+- [x] Next.js 15 scaffolded
+- [x] shadcn/ui initialized
+- [x] Base components installed
+- [x] globals.css with DS1 Linear tokens
+
+### What's Next (DISCOVERY FIRST - DO NOT SKIP)
+1. **Verify shadcn MCP** is active (run `/mcp`)
+2. **Use shadcn MCP** to explore ALL available components
+3. **For EACH of 14 sections**: Use MCP to decide which components fit
+4. **Document decisions** in `/docs/COMPONENT-DECISIONS.md` with rationale
+5. **ONLY THEN**: Build sections with decided components
+
+**DO NOT assume components. EXPLORE first, DECIDE second, BUILD third.**
 
 ---
 
@@ -37,48 +80,63 @@ tags: [redesign, nextjs, tailwind, design-system, a-b-testing]
 ## Current State (UPDATE THIS SECTION REGULARLY)
 
 ```yaml
-current_phase: "Phase A - Design System Testing"
-next_phase: "Improve DS variants based on audit findings"
+current_phase: "Phase B - shadcn/ui Design System Testing"
+next_phase: "Phase B Part 2 - Tailark Marketing Blocks"
 blocking_tasks: []
-completed_today:
-  - ✅ Phase B research complete (Gemini + Opus 4.5)
-  - ✅ DS wireframe comparison audit (all 5 variants vs reference sites)
-  - ✅ Repo cleanup (removed duplicate folders, scattered CLAUDE.md files)
-  - ✅ Reports folder structure created
-  - ✅ Research folder organized with Gemini prompt and findings
-  - ✅ ASCII wireframes added to Vercel and Clerk analysis.md files
-  - ✅ All 5 reference analysis.md files now have comprehensive wireframes
+completed_phases:
+  phase_a:
+    - ✅ Phase A prototype with 5-way theme switcher (adapty-prototype.vercel.app)
+    - ✅ DS wireframe comparison audit (all 5 variants vs reference sites)
+    - ✅ Phase B research complete (shadcn/ui selected as primary)
 in_progress:
-  - Improve DS variants based on audit findings
+  - Building 5 fresh shadcn/ui prototypes from scratch
 pending:
-  - Fix critical gaps identified in audit (DS4 Vercel gradient, DS1 Linear animations)
-  - Gather feedback from Sergey
-prototype_status:
+  - Deploy all 5 Phase B prototypes to Vercel
+  - Build Phase B Part 2 (Tailark marketing blocks)
+  - Present findings to Sergey
+
+# Phase B Architecture
+phase_b_structure:
+  part_1_shadcn: "/prototypes/phase-b-shadcn/"  # Current focus
+  part_2_tailark: "/prototypes/phase-b-tailark/"  # Future
+
+# 5 Prototypes (Part 1: Pure shadcn/ui)
+prototypes:
+  proto-ds1-linear:
+    status: "in_progress"
+    theme: "Dark (#08090a), premium, 3D depth"
+    signature: "Floating cards, glow hover, -0.04em tracking"
+  proto-ds2-attio:
+    status: "pending"
+    theme: "Light (#ffffff), editorial sophistication"
+    signature: "Serif accents, schematic lines, LAB colors"
+  proto-ds3-polar:
+    status: "pending"
+    theme: "Dark (#171719), code aesthetics"
+    signature: "Geist fonts, 150ms timing, gradient code blocks"
+  proto-ds4-vercel:
+    status: "pending"
+    theme: "True black (#000000), bold"
+    signature: "Gradient hero band, bouncy easing, compound shadows"
+  proto-ds5-clerk:
+    status: "pending"
+    theme: "Warm gray (#F7F7F8), friendly"
+    signature: "Pill buttons (24px), purple accent, background patterns"
+
+# Phase A Reference (completed)
+phase_a_reference:
   location: "/prototypes/adapty-prototype"
   deployed: true
   url: "adapty-prototype.vercel.app"
   theme_switcher: "Top-right corner, persists via localStorage + URL ?ds=ds1-5"
-extraction_results:
-  linear: "Dark theme, 67+ animations, Inter Variable, layered backgrounds"
-  attio: "Light theme, LAB colors, 4-font system (Inter, Display, Tiempos, JetBrains)"
-  polar: "Dark theme, Geist fonts, fast 150ms animations, minimal"
-  vercel: "True black, bouncy easing, compound shadows, signature gradients"
-  clerk: "Light warm gray (#F7F7F8), Suisse font, purple accent, pill buttons"
+
+# Design System DNA
 ds_token_summary:
   DS1_Linear: "8px buttons, 30px cards, #08090a bg, tight letter-spacing"
   DS2_Attio: "10px buttons, 12px cards, #ffffff bg, ghost buttons"
   DS3_Polar: "10px buttons, 10px cards, #171719 bg, ALL 150ms anims"
   DS4_Vercel: "6px buttons, 8px cards, #000000 bg, compound shadows"
   DS5_Clerk: "24px pill buttons, 12px cards, #F7F7F8 bg, purple accent"
-audit_results:
-  DS1_Linear: "45% match - missing layered hero, animated cards"
-  DS2_Attio: "55% match - missing serif font emphasis"
-  DS3_Polar: "40% match - missing embedded mini-UIs in cards"
-  DS4_Vercel: "30% match - CRITICAL: missing signature gradient hero"
-  DS5_Clerk: "60% match - closest, missing background pattern"
-session_notes:
-  - Audit report: reports/audits/2026-01-13-1700-ds-wireframe-comparison-audit.md
-  - Priority fixes: DS4 gradient hero, DS1 animated cards, DS2 serif fonts
 ```
 
 ---
@@ -112,27 +170,38 @@ session_notes:
 ```
 /prototypes/
 ├── README.md                      # Testing methodology
-├── shared/                        # Shared dependencies
-│   └── base-dependencies.json     # Base package.json reference
-├── phase-a-design-systems/        # DS testing (no libraries)
-│   ├── proto-ds1/                 # (TODO: create)
-│   ├── proto-ds2/                 # (TODO: create)
-│   ├── proto-ds3/                 # (TODO: create)
-│   ├── proto-ds4/                 # (TODO: create)
-│   └── proto-ds5/                 # (TODO: create)
-└── phase-b-libraries/             # Library testing (with winner DS)
-    ├── proto-shadcn-ui/           # (TODO: after Phase A)
-    ├── proto-shadcn-blocks/
-    ├── proto-21st-dev/
-    ├── proto-react-bits/
-    └── proto-custom-mix/
+├── adapty-prototype/              # ✅ Phase A - 5-way theme switcher (DEPLOYED)
+│
+├── phase-b-shadcn/                # 🔄 Phase B Part 1 - Pure shadcn/ui (IN PROGRESS)
+│   ├── proto-ds1-linear/          # Dark, premium, 3D depth
+│   ├── proto-ds2-attio/           # Light, editorial, serif
+│   ├── proto-ds3-polar/           # Dark, minimal, code-first
+│   ├── proto-ds4-vercel/          # True black, gradient hero
+│   └── proto-ds5-clerk/           # Warm gray, pill buttons
+│
+└── phase-b-tailark/               # 📋 Phase B Part 2 - Tailark blocks (FUTURE)
+    ├── proto-ds1-linear/          # DS1 with @tailark/* components
+    ├── proto-ds2-attio/           # DS2 with @tailark/* components
+    ├── proto-ds3-polar/           # DS3 with @tailark/* components
+    ├── proto-ds4-vercel/          # DS4 with @tailark/* components
+    └── proto-ds5-clerk/           # DS5 with @tailark/* components
 ```
+
+**Phase B Part 1 (Current):**
+- Each prototype is independent Next.js 15 + shadcn/ui project
+- 5 fresh implementations from scratch (not ports of Phase A)
+- Same content, different design system DNA
+- Goal: Impress with visual quality and shadcn mastery
+
+**Phase B Part 2 (Future):**
+- Uses Tailark marketing blocks (https://tailark.com/docs)
+- Integrates via shadcn CLI: `pnpm dlx shadcn add @tailark/{component}`
+- Compare development speed vs hand-crafted approach
 
 **Local conventions:**
 - Each prototype is independent Next.js 15 project
-- Use `/scripts/create-prototype.sh` to scaffold
-- Use `/scripts/deploy-prototype.sh` to deploy
-- All use same skeleton content from `/skeleton/`
+- Content sourced from `/adapty-pt2/` (READ-ONLY reference)
+- Assets copied from adapty-pt2/public/
 
 ### `/skeleton/` - Shared Test Content
 
@@ -256,8 +325,19 @@ session_notes:
 
 **Research Conclusions:**
 - Primary: shadcn/ui + MCP integration for Claude
-- Animation: ReactBits + 21stDev for micro-interactions
+- Animation: ReactBits + 21stDev for micro-interactions (future)
 - Alternative: Shadcn Blocks for pre-built components
+- Marketing Blocks: Tailark (https://tailark.com/docs) for Phase B Part 2
+
+**Tailark Integration:**
+```bash
+# Add to components.json registries
+"@tailark": "https://tailark.com/r"
+
+# Install components
+pnpm dlx shadcn add @tailark/hero-1
+pnpm dlx shadcn add @tailark/features-1
+```
 
 ---
 
@@ -310,27 +390,41 @@ Location: `/docs/TASKS.md` (create if not exists)
 - `[!]` Blocked
 - `[-]` Cancelled
 
-### Current Sprint (2026-01-13)
+### Phase A Completed Tasks
 ```
 [x] Create repository structure
 [x] Write initial CLAUDE.md
 [x] Create SKELETON.md (14 sections)
 [x] Extract assets from adapty-pt2
 [x] Create DS templates (5 variants)
-[x] Create automation scripts
-[x] Write message 01-roadmap for Sergey
-[x] Restructure CLAUDE.md as navigation layer
-[x] Set up memory system (claude-mem) - ACTIVE
 [x] Extract reference sites via Chrome - 5/5 COMPLETE
-[x] Create synthesis docs (patterns, differentiators, recommendations)
 [x] Fill DS tokens from extraction data - ALL 5 COMPLETE
 [x] Build Phase A prototype with 5-way theme switcher
 [x] Deploy to Vercel (adapty-prototype.vercel.app)
-[x] Phase B research (Gemini + Opus 4.5) - shadcn/ui + MCP selected
+[x] Phase B research (Gemini + Opus 4.5) - shadcn/ui selected
 [x] DS wireframe comparison audit - all 5 variants analyzed
-[x] Repo cleanup - removed duplicates, organized reports/research
-[>] Improve DS variants based on audit findings
-[ ] Present findings to Sergey
+```
+
+### Current Sprint: Phase B Part 1 (2026-01-13)
+```
+[x] Update CLAUDE.md for Phase B
+[>] Create /prototypes/phase-b-shadcn/ structure
+[>] Build proto-ds1-linear (Dark, premium, 3D depth)
+[ ] Build proto-ds2-attio (Light, editorial, serif)
+[ ] Build proto-ds3-polar (Dark, minimal, code-first)
+[ ] Build proto-ds4-vercel (True black, gradient hero)
+[ ] Build proto-ds5-clerk (Warm gray, pill buttons)
+[ ] Deploy all 5 to Vercel
+[ ] Create comparison report
+[ ] Present to Sergey
+```
+
+### Future: Phase B Part 2 (Tailark)
+```
+[ ] Create /prototypes/phase-b-tailark/ structure
+[ ] Build 5 prototypes using @tailark/* blocks
+[ ] Compare dev speed vs Part 1 (hand-crafted)
+[ ] Final recommendation
 ```
 
 ---

@@ -54,8 +54,8 @@ export function DynamicPage() {
   const renderSection = (sectionId: SectionId, index: number) => {
     // Use stable key: sectionId only, or sectionId-index if duplicates exist
     // This prevents remounting when theme changes but section order/index changes
-    const key = (sectionCounts.get(sectionId) ?? 0) > 1 
-      ? `${sectionId}-${index}` 
+    const key = (sectionCounts.get(sectionId) ?? 0) > 1
+      ? `${sectionId}-${index}`
       : sectionId;
     const overrides = config.sectionOverrides?.[sectionId];
 
@@ -64,31 +64,31 @@ export function DynamicPage() {
         return <Hero key={key} variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "trustedBy":
-        return <TrustedBy key={key} />;
+        return <TrustedBy key={key} ds={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "roleCards":
-        return <RoleCards key={key} />;
+        return <RoleCards key={key} ds={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "stats":
-        return <Stats key={key} variant={overrides?.variant as "default" | "bold"} />;
+        return <Stats key={key} variant={overrides?.variant as "default" | "bold"} ds={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "testimonials":
-        return <Testimonials key={key} variant={overrides?.variant as "carousel" | "single" | "grid"} />;
+        return <Testimonials key={key} variant={overrides?.variant as "carousel" | "single" | "grid"} ds={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "caseStudies":
-        return <CaseStudies key={key} variant={overrides?.variant as "default" | "compact"} />;
+        return <CaseStudies key={key} variant={overrides?.variant as "default" | "compact"} ds={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "enterprise":
-        return <Enterprise key={key} />;
+        return <Enterprise key={key} ds={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "g2Badges":
-        return <G2Badges key={key} />;
+        return <G2Badges key={key} ds={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "integrationsMarquee":
-        return <IntegrationsMarquee key={key} />;
+        return <IntegrationsMarquee key={key} ds={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "sdkCodeSnippet":
-        return <SDKCodeSnippet key={key} />;
+        return <SDKCodeSnippet key={key} ds={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "sdkGrid":
         // SDK Grid is part of SDKCodeSnippet, skip rendering separately
@@ -193,7 +193,7 @@ export function DynamicPage() {
         );
 
       case "finalCta":
-        return <FinalCTA key={key} variant={overrides?.variant as "default" | "enterprise"} />;
+        return <FinalCTA key={key} variant={overrides?.variant as "default" | "enterprise"} ds={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"} />;
 
       case "footer":
         return <Footer key={key} />;

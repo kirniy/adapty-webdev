@@ -2,13 +2,25 @@ import Image from "next/image";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 
-export function G2Badges() {
+interface G2BadgesProps {
+  ds?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5";
+}
+
+export function G2Badges({ ds }: G2BadgesProps) {
   const { g2Badges } = content;
 
   return (
-    <Section className="border-b border-[var(--border-subtle)] bg-gradient-to-b from-[var(--bg-secondary)] to-[var(--bg-primary)] py-12">
-      <Container>
+    <Section className="relative border-b border-[var(--border-subtle)] bg-gradient-to-b from-[var(--bg-secondary)] to-[var(--bg-primary)] py-12 overflow-hidden">
+      {/* DS2: Soft Corner Gradient */}
+      {ds === "ds2" && <SoftCornerGradient opacity={0.2} />}
+      {/* DS3: Moiré */}
+      {ds === "ds3" && <MoireInterference opacity={0.05} />}
+
+      <Container className="relative z-10">
         <div className="mb-10 text-center">
           <h2 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] md:text-3xl">
             {g2Badges.headline}

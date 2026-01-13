@@ -7,12 +7,16 @@ import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
 import { cn } from "~/lib/utils";
+import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
+import { MoireInterference } from "~/components/textures/MoireInterference";
+import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 
 interface TestimonialsProps {
   variant?: "carousel" | "single" | "grid";
+  ds?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5";
 }
 
-export function Testimonials({ variant = "carousel" }: TestimonialsProps) {
+export function Testimonials({ variant = "carousel", ds }: TestimonialsProps) {
   const { testimonials } = content;
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -41,8 +45,15 @@ export function Testimonials({ variant = "carousel" }: TestimonialsProps) {
   if (variant === "single" && testimonials.items[0]) {
     const single = testimonials.items[0];
     return (
-      <Section className="bg-[var(--bg-secondary)]">
-        <Container>
+      <Section className="relative bg-[var(--bg-secondary)] overflow-hidden">
+        {/* DS2: Soft Corner Gradient */}
+        {ds === "ds2" && <SoftCornerGradient opacity={0.4} />}
+        {/* DS3: Moiré */}
+        {ds === "ds3" && <MoireInterference opacity={0.08} />}
+        {/* DS4: Floor */}
+        {ds === "ds4" && <div className="absolute inset-0 opacity-15"><InfiniteFloor /></div>}
+
+        <Container className="relative z-10">
           <div className="mx-auto max-w-3xl text-center">
             <Quote className="mx-auto mb-6 h-12 w-12 text-[var(--color-primary)] opacity-20" />
             <p className="mb-8 text-xl font-medium text-[var(--text-primary)] md:text-2xl">
@@ -75,6 +86,18 @@ export function Testimonials({ variant = "carousel" }: TestimonialsProps) {
 
   return (
     <Section className="border-y border-[var(--border-subtle)] bg-[var(--bg-secondary)] relative overflow-hidden">
+      {/* DS2: Soft Corner Gradient */}
+      {ds === "ds2" && <SoftCornerGradient opacity={0.4} />}
+
+      {/* DS3: Moiré Interference */}
+      {ds === "ds3" && <MoireInterference opacity={0.08} />}
+
+      {/* DS4: Infinite Floor */}
+      {ds === "ds4" && (
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <InfiniteFloor />
+        </div>
+      )}
       {/* DS2 ATTIO SIGNATURE: Massive faded quote watermark */}
       <div className="quote-watermark absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
         <span className="font-[var(--font-serif)] text-[12rem] md:text-[16rem] lg:text-[20rem] leading-none text-[var(--text-primary)] opacity-[var(--quote-watermark-opacity,0)] italic">
