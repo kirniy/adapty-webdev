@@ -1,8 +1,8 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useEffect, useState, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { dsThemes, type DSTheme } from "./ThemeProvider";
 
 export function ThemeSwitcher() {
@@ -10,23 +10,29 @@ export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const isInitialMount = useRef(true);
 
-  // Handle URL query param on mount and when it changes
+  // Only sync URL → theme on initial mount (not on every searchParams change)
   useEffect(() => {
     setMounted(true);
-    const dsParam = searchParams.get("ds");
-    if (dsParam && dsThemes.some((t) => t.id === dsParam) && theme !== dsParam) {
-      setTheme(dsParam);
-    }
-  }, [searchParams, setTheme, theme]);
 
-  // Update URL when theme changes
+    // Only read URL param on initial mount
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      const dsParam = searchParams.get("ds");
+      if (dsParam && dsThemes.some((t) => t.id === dsParam)) {
+        setTheme(dsParam);
+      }
+    }
+  }, [searchParams, setTheme]);
+
+  // Update URL when theme changes (without causing navigation/re-render)
   const handleThemeChange = (newTheme: DSTheme) => {
     setTheme(newTheme);
+    // Update URL without triggering navigation - use history.replaceState
     const url = new URL(window.location.href);
     url.searchParams.set("ds", newTheme);
-    router.replace(url.pathname + url.search, { scroll: false });
+    window.history.replaceState(null, "", url.pathname + url.search);
     setIsOpen(false);
   };
 

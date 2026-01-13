@@ -28,7 +28,8 @@ export function ThemeProvider({
       defaultTheme={defaultTheme}
       themes={dsThemes.map((t) => t.id)}
       enableSystem={false}
-      disableTransitionOnChange={false}
+      disableTransitionOnChange={true} // Prevent visual glitches during theme switch
+      storageKey="adapty-ds-theme"
     >
       {children}
     </NextThemesProvider>
