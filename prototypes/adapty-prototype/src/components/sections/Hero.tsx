@@ -82,11 +82,15 @@ function HeroDS1() {
       onMouseMove={handleMouseMove}
     >
       {/* UNICORN STUDIO: Interactive WebGL Background */}
-      <div className="absolute inset-0 z-0 w-full h-full">
+      <div className="absolute inset-0 z-0">
         <UnicornScene
           projectId="dDA6HINiv1KdJg1kM8hm"
+          width="100%"
+          height="100%"
           scale={1}
           dpi={1.5}
+          lazyLoad={false}
+          className="absolute inset-0 w-full h-full"
         />
       </div>
 
