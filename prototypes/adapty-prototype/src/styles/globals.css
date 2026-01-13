@@ -427,7 +427,7 @@
   background-color: transparent !important;
 }
 
-[data-theme="ds2"] .page-wrapper > main {
+[data-theme="ds2"] .page-wrapper>main {
   background-color: transparent !important;
 }
 
@@ -469,110 +469,106 @@
  * Reference: polar.sh
  * ============================================ */
 [data-theme="ds3"] {
-  /* Colors - Primary (Blue) */
-  --color-primary: #3B82F6;
-  --color-primary-hover: #60A5FA;
-  --color-primary-active: #2563EB;
-  --color-primary-light: #1E3A5F;
-  --color-accent: #3B82F6;
+  /* Colors - Primary (White Action) */
+  --color-primary: #FFFFFF;
+  --color-primary-hover: #E5E5E5;
+  --color-primary-active: #D4D4D4;
+  --color-primary-light: #2A2A2A;
+  --color-primary-foreground: #000000;
+  /* Brand color is strictly for subtle accents or content, not UI */
+  --color-accent: #FFFFFF;
 
-  /* Colors - Backgrounds (Dark Minimal) */
-  --bg-primary: #171719;
-  --bg-secondary: #101011;
-  --bg-tertiary: #1D1D20;
-  --bg-muted: #232326;
-  --bg-elevated: #1D1D20;
-  --bg-overlay: rgba(0, 0, 0, 0.8);
+  /* Colors - Backgrounds (POLAR: PURE BLACK) */
+  --bg-primary: #000000;
+  --bg-secondary: #0A0A0A;
+  --bg-tertiary: #121212;
+  --bg-muted: #1A1A1A;
+  --bg-elevated: #161616;
+  --bg-overlay: rgba(0, 0, 0, 0.9);
 
-  /* Colors - Text (Monochrome - Muted) */
-  --text-primary: #D7D7DB;
-  --text-secondary: #6F717B;
-  --text-tertiary: #4A4B52;
-  --text-muted: #3A3B40;
-  --text-inverse: #171719;
+  /* Colors - Text (Extreme Contrast) */
+  --text-primary: #FFFFFF;
+  --text-secondary: #757575;
+  --text-tertiary: #525252;
+  --text-muted: #404040;
+  --text-inverse: #000000;
 
-  /* Colors - Semantic */
-  --color-success: #22C55E;
-  --color-warning: #EAB308;
-  --color-error: #EF4444;
-  --color-info: #3B82F6;
+  /* Colors - Semantic (Desaturated or specific to content) */
+  --color-success: #FFFFFF;
+  /* Polar often uses white for success checks in list */
+  --color-warning: #404040;
+  --color-error: #FF3B30;
+  --color-info: #FFFFFF;
 
-  /* Colors - Borders (POLAR: single color, minimal) */
-  --border-default: #1D1D20;
-  --border-subtle: #1D1D20;
-  --border-strong: #3A3B40;
+  /* Colors - Borders (Dark Grey) */
+  --border-default: #262626;
+  --border-subtle: #171717;
+  --border-strong: #404040;
 
   /* Typography (POLAR: Geist fonts) */
   --font-sans: var(--font-geist-sans), "Geist", "Inter Variable", system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
 
   /* POLAR SIGNATURE: Tight, code-like letter-spacing */
-  --letter-spacing-tight: -0.02em;
-  --letter-spacing-heading: -0.03em;
+  --letter-spacing-tight: -0.015em;
+  --letter-spacing-heading: -0.025em;
   --letter-spacing-mono: 0;
 
-  /* Border Radius (POLAR: 0.6rem BASE = 9.6px) */
-  --radius-base: 0.6rem;
-  --radius-sm: 4px;
+  /* Border Radius (POLAR: 12px default) */
+  --radius-sm: 6px;
   --radius-md: 8px;
-  --radius-lg: 10px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
   --radius-full: 9999px;
 
-  /* Shadows (Minimal, no decorative shadows) */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
-  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.2);
-  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.2);
+  /* Shadows (Minimal, deep) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
+  --shadow-glow: none;
+  /* No colored glow */
 
-  /* Animations (POLAR: ALL 150ms - FAST) */
-  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
-  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Animations (POLAR: Snappy) */
+  --ease-default: cubic-bezier(0.25, 1, 0.5, 1);
   --duration-fast: 150ms;
-  --duration-normal: 150ms;
-  --duration-slow: 150ms;
+  --duration-normal: 200ms;
 
   /* Layout */
   --header-height: 64px;
-  --page-max-width: 1280px;
-  --section-padding-y: 5rem;
+  --page-max-width: 1200px;
+  --section-padding-y: 6rem;
   --section-padding-x: 1.5rem;
 
-  /* Component tokens (POLAR: ~10px BUTTON RADIUS) */
-  --button-radius: var(--radius-lg);
-  --button-padding-x: 14px;
-  --button-padding-y: 8px;
-  --card-radius: var(--radius-lg);
-  --card-bg: var(--bg-tertiary);
+  /* Component tokens */
+  --button-radius: var(--radius-full);
+  --button-padding-x: 20px;
+  --button-padding-y: 10px;
+  --card-radius: var(--radius-xl);
+  --card-bg: var(--bg-secondary);
   --card-border: var(--border-default);
-  --input-radius: var(--radius-md);
-  --nav-bg: var(--bg-primary);
 
   /* Code-first tokens (POLAR signature) */
-  --code-bg: var(--bg-secondary);
+  --code-bg: #050505;
   --code-border: var(--border-default);
 
-  /* POLAR SIGNATURE: Gradient code blocks */
-  --code-gradient: linear-gradient(135deg, #FF6B35 0%, #E91E63 50%, #3B82F6 100%);
-  --code-gradient-subtle: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(236, 72, 153, 0.1) 35%, rgba(59, 130, 246, 0.1) 65%, rgba(139, 92, 246, 0.1) 100%);
+  /* POLAR SIGNATURE: Monochrome Gradients (Subtle noise) */
+  --code-gradient: linear-gradient(135deg, #333333, #1a1a1a);
+  --code-gradient-subtle: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
 
-  /* POLAR SIGNATURE: Badge styles */
-  --badge-beta-bg: var(--color-primary);
-  --badge-beta-text: #ffffff;
-  --badge-feature-bg: var(--bg-tertiary);
-  --badge-feature-text: var(--text-secondary);
+  /* Badge styles (Monochrome Pill) */
+  --badge-beta-bg: #1A1A1A;
+  --badge-beta-text: #FFFFFF;
 
-  /* POLAR SIGNATURE: Feature list checkmarks */
-  --checkmark-color: var(--color-success);
-  --checkmark-size: 1.25rem;
+  /* Feature List */
+  --checkmark-color: #FFFFFF;
 
-  /* POLAR SIGNATURE: Embedded mini-UI cards */
-  --mini-ui-bg: var(--bg-secondary);
-  --mini-ui-border: var(--border-default);
-  --mini-ui-radius: var(--radius-lg);
-  --mini-ui-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  /* Mini UI Cards */
+  --mini-ui-bg: #0A0A0A;
+  --mini-ui-border: #262626;
+  --mini-ui-radius: var(--radius-xl);
+  --mini-ui-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
 }
 
 /* ============================================

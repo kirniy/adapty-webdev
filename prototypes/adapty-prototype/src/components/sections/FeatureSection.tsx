@@ -315,13 +315,13 @@ const hasAccess = profile.accessLevels.premium?.isActive;`,
             <div className="overflow-hidden rounded-xl border border-[var(--border-default)] shadow-2xl">
               {/* Gradient background container */}
               <div className="p-[1px]" style={{ background: 'var(--code-gradient-subtle)' }}>
-                <div className="bg-[#0C0C0C] rounded-xl overflow-hidden">
+                <div className="rounded-xl overflow-hidden" style={{ background: 'var(--code-bg)' }}>
                   {/* Window Controls */}
-                  <div className="flex items-center gap-2 border-b border-white/5 bg-white/5 px-4 py-3">
-                    <div className="h-3 w-3 rounded-full bg-[#FF5F56]" />
-                    <div className="h-3 w-3 rounded-full bg-[#FFBD2E]" />
-                    <div className="h-3 w-3 rounded-full bg-[#27C93F]" />
-                    <div className="ml-auto font-mono text-xs text-white/30">
+                  <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] px-4 py-3" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                    <div className="h-3 w-3 rounded-full bg-[var(--border-strong)]" />
+                    <div className="h-3 w-3 rounded-full bg-[var(--border-strong)]" />
+                    <div className="h-3 w-3 rounded-full bg-[var(--border-strong)]" />
+                    <div className="ml-auto font-mono text-xs text-[var(--text-muted)]">
                       {activeTabData?.filename || "code.ts"}
                     </div>
                   </div>
