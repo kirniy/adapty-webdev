@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset=".github/adapty-logo-white.svg">
-    <source media="(prefers-color-scheme: light)" srcset=".github/adapty-logo-color.svg">
-    <img alt="Adapty Logo" src=".github/adapty-logo-color.svg" width="200">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kirniy/adapty-webdev/main/.github/adapty-logo-white.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kirniy/adapty-webdev/main/.github/adapty-logo-color.svg">
+    <img alt="Adapty Logo" src="https://raw.githubusercontent.com/kirniy/adapty-webdev/main/.github/adapty-logo-color.svg" width="200">
   </picture>
 </p>
 
