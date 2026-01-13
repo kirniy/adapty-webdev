@@ -17,7 +17,7 @@ import { MoireInterference } from "~/components/textures/MoireInterference";
 import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
 import { FadeIn, StaggerContainer, ScaleIn } from "~/components/motion/MotionPrimitives";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { MOTION_DS1 } from "~/lib/motion-config";
+import { MOTION_DS1, MOTION_DS4 } from "~/lib/motion-config";
 
 interface HeroProps {
   variant?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5" | "default";
@@ -581,7 +581,12 @@ function HeroDS4() {
     <section className="relative overflow-hidden bg-[var(--bg-primary)] pt-20 pb-24 md:pt-28 md:pb-32">
       {/* VERCEL SIGNATURE: White Conic Spotlights (Clean, Clean, Clean) */}
       <div className="absolute top-0 left-0 w-full h-[600px] bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(255,255,255,0.15),transparent)] pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-[conic-gradient(from_90deg_at_50%_50%,#00000000_50%,#fff_50%),radial-gradient(rgba(200,200,200,0.1) 0%, transparent 50%)] opacity-0 pointer-events-none" />
+      <motion.div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-[conic-gradient(from_90deg_at_50%_50%,#00000000_50%,#fff_50%),radial-gradient(rgba(200,200,200,0.1) 0%, transparent 50%)] opacity-[0.08] pointer-events-none"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        style={{ originX: 0.5, originY: 0.5 }}
+      />
 
       {/* DS4 ASSET: Infinite Perspective Floor (Infrastructure Scale) */}
       <InfiniteFloor />
@@ -651,27 +656,29 @@ function HeroDS4() {
           </div>
 
           {/* VERCEL SIGNATURE: Floating metrics badges with bouncy animation */}
-          <div
-            className="absolute -top-4 -right-4 rounded-lg bg-[var(--bg-elevated)] px-4 py-2 border border-[var(--border-default)] transition-transform hover:scale-105"
+          <motion.div
+            className="absolute -top-4 -right-4 rounded-lg bg-[var(--bg-elevated)] px-4 py-2 border border-[var(--border-default)]"
+            initial={{ y: 0 }}
+            whileHover={{ y: -5, scale: 1.05, transition: MOTION_DS4.transition }}
             style={{
-              boxShadow: 'var(--shadow-lg)',
-              transition: 'transform var(--duration-fast) var(--ease-bouncy)',
+              boxShadow: 'var(--shadow-lg)'
             }}
           >
             <div className="text-xs text-[var(--text-muted)] mb-0.5">Active Users</div>
             <div className="text-lg font-bold text-[var(--color-success)]">+12.4%</div>
-          </div>
+          </motion.div>
 
-          <div
-            className="absolute -bottom-4 -left-4 rounded-lg bg-[var(--bg-elevated)] px-4 py-2 border border-[var(--border-default)] transition-transform hover:scale-105"
+          <motion.div
+            className="absolute -bottom-4 -left-4 rounded-lg bg-[var(--bg-elevated)] px-4 py-2 border border-[var(--border-default)]"
+            initial={{ y: 0 }}
+            whileHover={{ y: -5, scale: 1.05, transition: MOTION_DS4.transition }}
             style={{
-              boxShadow: 'var(--shadow-lg)',
-              transition: 'transform var(--duration-fast) var(--ease-bouncy)',
+              boxShadow: 'var(--shadow-lg)'
             }}
           >
             <div className="text-xs text-[var(--text-muted)] mb-0.5">Conversion Rate</div>
             <div className="text-lg font-bold gradient-text gradient-develop">8.2%</div>
-          </div>
+          </motion.div>
         </div>
       </Container>
     </section>
@@ -697,39 +704,47 @@ function HeroDS5() {
       <Container className="relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left: Content */}
-          <div className="text-center lg:text-left">
+          <StaggerContainer className="text-center lg:text-left" viewportAmount={0.2}>
             {/* Label - Clerk style purple accent (using section-label class) */}
-            <div className="mb-6">
-              <span className="section-label">
-                Subscription Platform
-              </span>
-            </div>
+            <FadeIn>
+              <div className="mb-6">
+                <span className="section-label">
+                  Subscription Platform
+                </span>
+              </div>
+            </FadeIn>
 
             {/* Two-Tone Headline */}
-            <h1 className="mb-6 text-4xl font-bold tracking-[-0.035em] sm:text-5xl md:text-6xl">
-              <span className="text-[var(--text-primary)]">{hero.headline.primary}</span>
-              <br className="hidden sm:block" />
-              <span className="text-[var(--text-muted)]">{hero.headline.secondary}</span>
-            </h1>
+            <FadeIn>
+              <h1 className="mb-6 text-4xl font-bold tracking-[-0.035em] sm:text-5xl md:text-6xl">
+                <span className="text-[var(--text-primary)]">{hero.headline.primary}</span>
+                <br className="hidden sm:block" />
+                <span className="text-[var(--text-muted)]">{hero.headline.secondary}</span>
+              </h1>
+            </FadeIn>
 
             {/* Two-Tone Subheadline */}
-            <p className="mb-10 max-w-xl text-lg leading-relaxed mx-auto lg:mx-0">
-              <span className="text-[var(--text-primary)]">{hero.subheadline.primary}</span>
-              <span className="text-[var(--text-muted)]"> {hero.subheadline.secondary}</span>
-            </p>
+            <FadeIn>
+              <p className="mb-10 max-w-xl text-lg leading-relaxed mx-auto lg:mx-0">
+                <span className="text-[var(--text-primary)]">{hero.subheadline.primary}</span>
+                <span className="text-[var(--text-muted)]"> {hero.subheadline.secondary}</span>
+              </p>
+            </FadeIn>
 
             {/* CTAs - Pill shaped buttons (Clerk style - 24px radius from tokens) */}
-            <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start sm:justify-center">
-              <Button size="lg" href={hero.cta.primary.href}>
-                {hero.cta.primary.text}
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" size="lg" href={hero.cta.secondary.href}>
-                <Play className="h-4 w-4" />
-                {hero.cta.secondary.text}
-              </Button>
-            </div>
-          </div>
+            <FadeIn>
+              <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start sm:justify-center">
+                <Button size="lg" href={hero.cta.primary.href}>
+                  {hero.cta.primary.text}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="lg" href={hero.cta.secondary.href}>
+                  <Play className="h-4 w-4" />
+                  {hero.cta.secondary.text}
+                </Button>
+              </div>
+            </FadeIn>
+          </StaggerContainer>
 
           {/* Right: CLERK SIGNATURE - Mock Sign-Up Form Showcase */}
           <div className="relative">
@@ -798,9 +813,17 @@ function HeroDS5() {
 
               {/* Secured by badge */}
               <div className="mt-6 flex items-center justify-center gap-2 text-xs text-[var(--text-muted)]">
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <motion.svg
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  animate={{ rotate: [0, 5, 0, -5, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
+                </motion.svg>
                 Secured by Adapty
               </div>
             </div>

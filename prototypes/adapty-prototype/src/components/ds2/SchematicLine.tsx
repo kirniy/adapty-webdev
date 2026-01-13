@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "~/lib/utils";
+import { motion } from "motion/react";
 
 /**
  * SchematicLine - Attio's signature connector line system
@@ -65,16 +66,16 @@ export function SchematicLine({
   // Dotted line using repeating gradient (Attio's signature look)
   const dottedStyle = direction === "vertical"
     ? {
-        backgroundImage: `repeating-linear-gradient(to bottom, var(--schematic-line-color) 0px, var(--schematic-line-color) 2px, transparent 2px, transparent 6px)`,
-        backgroundSize: "1px 100%",
-      }
+      backgroundImage: `repeating-linear-gradient(to bottom, var(--schematic-line-color) 0px, var(--schematic-line-color) 2px, transparent 2px, transparent 6px)`,
+      backgroundSize: "1px 100%",
+    }
     : {
-        backgroundImage: `repeating-linear-gradient(to right, var(--schematic-line-color) 0px, var(--schematic-line-color) 2px, transparent 2px, transparent 6px)`,
-        backgroundSize: "100% 1px",
-      };
+      backgroundImage: `repeating-linear-gradient(to right, var(--schematic-line-color) 0px, var(--schematic-line-color) 2px, transparent 2px, transparent 6px)`,
+      backgroundSize: "100% 1px",
+    };
 
   return (
-    <div
+    <motion.div
       className={cn(
         "relative opacity-[var(--schematic-line-opacity)]",
         direction === "vertical" ? "w-[1px]" : "h-[1px]",
@@ -84,6 +85,17 @@ export function SchematicLine({
         className
       )}
       style={solid ? undefined : dottedStyle}
+      initial={{
+        clipPath: direction === "vertical" ? "inset(0 0 100% 0)" : "inset(0 100% 0 0)"
+      }}
+      whileInView={{
+        clipPath: "inset(0 0 0% 0)"
+      }}
+      viewport={{ once: true }}
+      transition={{
+        duration: 1.5,
+        ease: [0.4, 0, 0.2, 1] // Cinematic ease
+      }}
     >
       {/* Start Node */}
       {(withNode === "start" || withNode === "both") && (
@@ -108,7 +120,7 @@ export function SchematicLine({
           )}
         />
       )}
-    </div>
+    </motion.div>
   );
 }
 

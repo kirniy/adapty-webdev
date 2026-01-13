@@ -1,10 +1,17 @@
 "use client";
 
 import * as React from "react";
+import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowUpRight, TrendUp, TrendDown, Sparkle } from "@phosphor-icons/react";
+import {
+  linearEasing,
+  transition,
+  staggerContainer,
+  cardHover,
+} from "@/lib/animations";
 
 const caseStudies = [
   {
@@ -99,87 +106,125 @@ function getMetricColor(type: string) {
 }
 
 export function CaseStudies() {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <section className="py-24 bg-[var(--bg-primary)]">
+    <section ref={ref} className="py-24 bg-[var(--bg-primary)]">
       <div className="mx-auto max-w-[var(--container-max-width)] px-6 md:px-12 lg:px-16">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4 tracking-[var(--letter-spacing-heading)]">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, ease: linearEasing.dramatic }}
+        >
+          <h2 className="heading-linear text-3xl md:text-4xl text-[var(--text-primary)] mb-4">
             Trusted by thousands of scaling apps
           </h2>
           <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
             Real results from real apps using Adapty
           </p>
-        </div>
+        </motion.div>
 
         {/* Case Studies Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {caseStudies.map((study, index) => {
             const MetricIcon = getMetricIcon(study.metricType);
             const metricColor = getMetricColor(study.metricType);
 
             return (
-              <Card
+              <motion.div
                 key={index}
-                className={cn(
-                  "group cursor-pointer",
-                  "bg-[var(--bg-secondary)] border-[var(--border-subtle)]",
-                  "rounded-[var(--card-radius)]",
-                  "hover:border-[var(--border-default)]",
-                  "hover:shadow-[var(--shadow-card)]",
-                  "transition-all duration-[var(--duration-normal)]"
-                )}
+                variants={{
+                  hidden: { opacity: 0, y: 40, scale: 0.95 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    transition: {
+                      duration: 0.5,
+                      delay: index * 0.08,
+                      ease: linearEasing.dramatic,
+                    },
+                  },
+                }}
+                whileHover={cardHover}
+                transition={transition.spring}
               >
-                <CardContent className="p-6">
-                  {/* Category Badge */}
-                  <Badge
-                    variant="secondary"
-                    className={cn(
-                      "mb-4 text-xs",
-                      "bg-[var(--bg-tertiary)] text-[var(--text-muted)]",
-                      "border-none"
-                    )}
-                  >
-                    {study.category}
-                  </Badge>
-
-                  {/* Metric */}
-                  <div className="flex items-center gap-2 mb-3">
-                    <MetricIcon size={20} weight="duotone" className={metricColor} />
-                    <span
+                <Card
+                  className={cn(
+                    "group cursor-pointer h-full",
+                    "bg-[var(--bg-secondary)] border-[var(--border-subtle)]",
+                    "rounded-[var(--card-radius)]",
+                    "transition-colors duration-[var(--duration-normal)]"
+                  )}
+                >
+                  <CardContent className="p-6">
+                    {/* Category Badge */}
+                    <Badge
+                      variant="secondary"
                       className={cn(
-                        "text-2xl font-bold tracking-tight",
-                        metricColor
+                        "mb-4 text-xs",
+                        "bg-[var(--bg-tertiary)] text-[var(--text-muted)]",
+                        "border-none"
                       )}
                     >
-                      {study.metric}
-                    </span>
-                  </div>
+                      {study.category}
+                    </Badge>
 
-                  {/* Title */}
-                  <h3 className="text-base font-medium text-[var(--text-primary)] mb-2 leading-snug">
-                    {study.title}
-                  </h3>
+                    {/* Metric */}
+                    <motion.div
+                      className="flex items-center gap-2 mb-3"
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
+                      transition={{ delay: 0.3 + index * 0.08, duration: 0.3 }}
+                    >
+                      <MetricIcon size={20} weight="duotone" className={metricColor} />
+                      <span
+                        className={cn(
+                          "text-2xl font-bold tracking-tight",
+                          metricColor
+                        )}
+                      >
+                        {study.metric}
+                      </span>
+                    </motion.div>
 
-                  {/* Company with Arrow */}
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border-subtle)]">
-                    <span className="text-sm text-[var(--text-muted)]">
-                      {study.company}
-                    </span>
-                    <ArrowUpRight
-                      className={cn(
-                        "w-4 h-4 text-[var(--text-muted)]",
-                        "group-hover:text-[var(--color-accent)]",
-                        "group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
-                        "transition-all duration-[var(--duration-fast)]"
-                      )}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
+                    {/* Title */}
+                    <h3 className="text-base font-medium text-[var(--text-primary)] mb-2 leading-snug">
+                      {study.title}
+                    </h3>
+
+                    {/* Company with Arrow */}
+                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border-subtle)]">
+                      <span className="text-sm text-[var(--text-muted)]">
+                        {study.company}
+                      </span>
+                      <motion.div
+                        whileHover={{ x: 2, y: -2 }}
+                        transition={transition.snappy}
+                      >
+                        <ArrowUpRight
+                          className={cn(
+                            "w-4 h-4 text-[var(--text-muted)]",
+                            "group-hover:text-[var(--color-accent)]",
+                            "transition-colors duration-[var(--duration-fast)]"
+                          )}
+                        />
+                      </motion.div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

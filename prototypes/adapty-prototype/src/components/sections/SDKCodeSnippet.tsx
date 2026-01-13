@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Copy, CheckCircle2 } from "lucide-react";
+import { motion } from "motion/react";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
@@ -95,7 +96,24 @@ export function SDKCodeSnippet({ ds }: SDKCodeSnippetProps) {
             {/* Code Editor */}
             <div className="group order-1 lg:order-2">
               {/* DS3 POLAR SIGNATURE: Gradient border wrapper */}
-              <div className="code-gradient-border rounded-xl p-[1px]">
+              <motion.div
+                className={cn(
+                  "rounded-xl p-[1px]",
+                  ds !== "ds3" && "code-gradient-border"
+                )}
+                style={ds === "ds3" ? {
+                  background: "linear-gradient(90deg, #333 0%, #fff 50%, #333 100%)",
+                  backgroundSize: "200% 100%",
+                } : undefined}
+                animate={ds === "ds3" ? {
+                  backgroundPosition: ["100% 0", "-100% 0"]
+                } : undefined}
+                transition={{
+                  duration: 3,
+                  ease: "linear",
+                  repeat: Infinity
+                }}
+              >
                 <div className="relative overflow-hidden rounded-xl border border-[var(--border-default)] bg-[#1E1E2E] shadow-[var(--shadow-xl)] code-editor-card">
                   {/* Window Header */}
                   <div className="flex items-center justify-between border-b border-white/5 bg-[#252535] px-4 py-3">
@@ -154,7 +172,7 @@ export function SDKCodeSnippet({ ds }: SDKCodeSnippetProps) {
                     </pre>
                   </div>
                 </div>
-              </div>{/* Close gradient border wrapper */}
+              </motion.div>{/* Close gradient border wrapper */}
             </div>
           </div>
         </Container>

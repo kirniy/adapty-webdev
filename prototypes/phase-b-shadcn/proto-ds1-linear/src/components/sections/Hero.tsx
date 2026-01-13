@@ -11,7 +11,6 @@ import {
   heroSubheadline,
   heroCTA,
   heroDashboard,
-  badgePulse,
   transition,
   hoverScale,
   tapScale,
@@ -62,27 +61,25 @@ export function Hero() {
 
       <div className="relative mx-auto max-w-[var(--container-max-width)] px-6 md:px-12 lg:px-16">
         <div className="flex flex-col items-center text-center">
-          {/* Promotional Badge with pulse animation */}
-          <motion.div
-            variants={badgePulse}
-            initial="initial"
-            animate="animate"
+          {/* Promotional Badge with subtle animation */}
+          <motion.span
+            className={cn(
+              "inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full cursor-pointer group",
+              "border border-white/10 bg-white/5",
+              "text-[var(--text-secondary)] text-sm font-medium",
+              "backdrop-blur-sm",
+              "hover:border-[var(--color-accent)]/40 hover:bg-[var(--color-accent)]/10 hover:text-[var(--text-primary)]",
+              "transition-all duration-[var(--duration-normal)]"
+            )}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: linearEasing.dramatic }}
+            whileHover={{ scale: 1.02 }}
           >
-            <span
-              className={cn(
-                "inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full cursor-pointer group",
-                "border border-white/10 bg-white/5",
-                "text-[var(--text-secondary)] text-sm font-medium",
-                "backdrop-blur-sm",
-                "hover:border-[var(--color-accent)]/40 hover:bg-[var(--color-accent)]/10 hover:text-[var(--text-primary)]",
-                "transition-all duration-[var(--duration-normal)]"
-              )}
-            >
-              <BookOpen size={16} weight="duotone" className="text-[var(--color-accent)]" />
-              Ebook: $100K playbook
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </motion.div>
+            <BookOpen size={16} weight="duotone" className="text-[var(--color-accent)]" />
+            Ebook: $100K playbook
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </motion.span>
 
           {/* Main Headline with dramatic reveal */}
           <motion.h1

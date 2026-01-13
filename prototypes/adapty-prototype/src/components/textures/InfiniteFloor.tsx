@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "motion/react";
 
 /**
  * DS4 (Vercel) Asset: "Perspective Floor" (The Infrastructure)
@@ -19,7 +20,7 @@ export function InfiniteFloor() {
                 perspective: "1000px",
             }}
         >
-            <div
+            <motion.div
                 className="absolute inset-0 origin-bottom"
                 style={{
                     transform: "rotateX(60deg) scale(2) translateY(-20%)",
@@ -31,6 +32,14 @@ export function InfiniteFloor() {
                     maskImage: "linear-gradient(to bottom, transparent 0%, black 40%, black 80%, transparent 100%)",
                     WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%, black 80%, transparent 100%)",
                     // The floor should fade out towards the horizon (top of this DIV due to 3D rotation)
+                }}
+                animate={{
+                    backgroundPosition: ["0px 0px", "0px 60px"]
+                }}
+                transition={{
+                    duration: 3,
+                    ease: "linear",
+                    repeat: Infinity
                 }}
             />
 

@@ -1,8 +1,15 @@
 "use client";
 
 import * as React from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  linearEasing,
+  transition,
+  staggerContainer,
+  staggerItem,
+} from "@/lib/animations";
 
 const codeSnippets = {
   javascript: `import { adapty } from 'adapty';
@@ -46,22 +53,36 @@ const platforms = [
 ];
 
 export function SDKCodeSnippet() {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [activeTab, setActiveTab] = React.useState("javascript");
+
   return (
-    <section className="py-24 bg-[var(--bg-primary)]">
+    <section ref={ref} className="py-24 bg-[var(--bg-primary)]">
       <div className="mx-auto max-w-[var(--container-max-width)] px-6 md:px-12 lg:px-16">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4 tracking-[var(--letter-spacing-heading)]">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, ease: linearEasing.dramatic }}
+        >
+          <h2 className="heading-linear text-3xl md:text-4xl text-[var(--text-primary)] mb-4">
             One SDK for every platform
           </h2>
           <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
             Integrate Adapty in minutes with native SDKs
           </p>
-        </div>
+        </motion.div>
 
         {/* Code Tabs */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <Tabs defaultValue="javascript" className="w-full">
+        <motion.div
+          className="max-w-4xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: linearEasing.dramatic }}
+        >
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList
               className={cn(
                 "grid w-full grid-cols-4 mb-6",
@@ -69,111 +90,120 @@ export function SDKCodeSnippet() {
                 "rounded-[var(--card-radius)] p-1"
               )}
             >
-              <TabsTrigger
-                value="javascript"
-                className={cn(
-                  "rounded-lg text-sm font-medium",
-                  "data-[state=active]:bg-[var(--bg-elevated)]",
-                  "data-[state=active]:text-[var(--text-primary)]",
-                  "data-[state=inactive]:text-[var(--text-muted)]",
-                  "transition-all duration-[var(--duration-fast)]"
-                )}
-              >
-                JavaScript
-              </TabsTrigger>
-              <TabsTrigger
-                value="reactNative"
-                className={cn(
-                  "rounded-lg text-sm font-medium",
-                  "data-[state=active]:bg-[var(--bg-elevated)]",
-                  "data-[state=active]:text-[var(--text-primary)]",
-                  "data-[state=inactive]:text-[var(--text-muted)]",
-                  "transition-all duration-[var(--duration-fast)]"
-                )}
-              >
-                React Native
-              </TabsTrigger>
-              <TabsTrigger
-                value="flutter"
-                className={cn(
-                  "rounded-lg text-sm font-medium",
-                  "data-[state=active]:bg-[var(--bg-elevated)]",
-                  "data-[state=active]:text-[var(--text-primary)]",
-                  "data-[state=inactive]:text-[var(--text-muted)]",
-                  "transition-all duration-[var(--duration-fast)]"
-                )}
-              >
-                Flutter
-              </TabsTrigger>
-              <TabsTrigger
-                value="swift"
-                className={cn(
-                  "rounded-lg text-sm font-medium",
-                  "data-[state=active]:bg-[var(--bg-elevated)]",
-                  "data-[state=active]:text-[var(--text-primary)]",
-                  "data-[state=inactive]:text-[var(--text-muted)]",
-                  "transition-all duration-[var(--duration-fast)]"
-                )}
-              >
-                Swift
-              </TabsTrigger>
-            </TabsList>
-
-            {Object.entries(codeSnippets).map(([key, code]) => (
-              <TabsContent key={key} value={key}>
-                <div
+              {["javascript", "reactNative", "flutter", "swift"].map((tab) => (
+                <TabsTrigger
+                  key={tab}
+                  value={tab}
                   className={cn(
-                    "rounded-[var(--card-radius)] overflow-hidden",
-                    "bg-[var(--bg-secondary)] border border-[var(--border-subtle)]",
-                    "shadow-[var(--shadow-card)]"
+                    "relative rounded-lg text-sm font-medium",
+                    "data-[state=active]:text-[var(--text-primary)]",
+                    "data-[state=inactive]:text-[var(--text-muted)]",
+                    "transition-all duration-[var(--duration-fast)]"
                   )}
                 >
-                  {/* Code Header */}
-                  <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--border-subtle)] bg-[var(--bg-tertiary)]">
-                    <div className="flex gap-1.5">
-                      <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                      <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                      <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-                    </div>
-                    <span className="ml-2 text-xs text-[var(--text-muted)]">
-                      {key === "swift" ? "main.swift" : key === "flutter" ? "main.dart" : "index.js"}
-                    </span>
-                  </div>
-                  {/* Code Block */}
-                  <pre className="p-6 overflow-x-auto">
-                    <code className="text-sm font-mono text-[var(--text-secondary)] leading-relaxed">
-                      {code}
-                    </code>
-                  </pre>
-                </div>
-              </TabsContent>
-            ))}
+                  {tab === "reactNative" ? "React Native" : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  {activeTab === tab && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute inset-0 bg-[var(--bg-elevated)] rounded-lg -z-10"
+                      transition={transition.snappy}
+                    />
+                  )}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            <AnimatePresence mode="wait">
+              {Object.entries(codeSnippets).map(([key, code]) => (
+                <TabsContent key={key} value={key} forceMount>
+                  {activeTab === key && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2, ease: linearEasing.snappy }}
+                      className={cn(
+                        "rounded-[var(--card-radius)] overflow-hidden",
+                        "bg-[var(--bg-secondary)] border border-[var(--border-subtle)]",
+                        "shadow-[var(--shadow-card)]"
+                      )}
+                    >
+                      {/* Code Header */}
+                      <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--border-subtle)] bg-[var(--bg-tertiary)]">
+                        <div className="flex gap-1.5">
+                          <motion.div
+                            className="w-3 h-3 rounded-full bg-[#ff5f56]"
+                            whileHover={{ scale: 1.2 }}
+                            transition={transition.snappy}
+                          />
+                          <motion.div
+                            className="w-3 h-3 rounded-full bg-[#ffbd2e]"
+                            whileHover={{ scale: 1.2 }}
+                            transition={transition.snappy}
+                          />
+                          <motion.div
+                            className="w-3 h-3 rounded-full bg-[#27c93f]"
+                            whileHover={{ scale: 1.2 }}
+                            transition={transition.snappy}
+                          />
+                        </div>
+                        <span className="ml-2 text-xs text-[var(--text-muted)]">
+                          {key === "swift" ? "main.swift" : key === "flutter" ? "main.dart" : "index.js"}
+                        </span>
+                      </div>
+                      {/* Code Block */}
+                      <pre className="p-6 overflow-x-auto">
+                        <code className="text-sm font-mono text-[var(--text-secondary)] leading-relaxed">
+                          {code}
+                        </code>
+                      </pre>
+                    </motion.div>
+                  )}
+                </TabsContent>
+              ))}
+            </AnimatePresence>
           </Tabs>
-        </div>
+        </motion.div>
 
         {/* Platform Icons */}
-        <div className="text-center">
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           <p className="text-sm text-[var(--text-muted)] mb-6">
             Available on 10+ platforms
           </p>
-          <div className="flex flex-wrap justify-center gap-6 md:gap-8">
-            {platforms.map((platform) => (
-              <div
+          <motion.div
+            className="flex flex-wrap justify-center gap-6 md:gap-8"
+            variants={staggerContainer}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+          >
+            {platforms.map((platform, index) => (
+              <motion.div
                 key={platform.name}
+                variants={staggerItem}
                 className={cn(
                   "flex flex-col items-center gap-2",
-                  "opacity-60 hover:opacity-100",
-                  "transition-opacity duration-[var(--duration-normal)]",
                   "cursor-default"
                 )}
+                whileHover={{ scale: 1.1, y: -4 }}
+                transition={transition.snappy}
               >
-                <div
+                <motion.div
                   className={cn(
                     "w-12 h-12 rounded-xl",
                     "bg-[var(--bg-secondary)] border border-[var(--border-subtle)]",
                     "flex items-center justify-center",
                     "p-2"
                   )}
+                  whileHover={{
+                    borderColor: "rgba(94, 106, 210, 0.4)",
+                    boxShadow: "0 0 20px rgba(94, 106, 210, 0.2)",
+                  }}
+                  transition={transition.snappy}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -181,14 +211,14 @@ export function SDKCodeSnippet() {
                     alt={platform.name}
                     className="w-6 h-6 object-contain"
                   />
-                </div>
+                </motion.div>
                 <span className="text-xs text-[var(--text-muted)]">
                   {platform.name}
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

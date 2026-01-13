@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { motion } from "motion/react";
 
 /**
  * DS3 (Polar) Asset: "Moiré Interference Grid"
@@ -44,7 +45,7 @@ export function MoireInterference({ opacity = 0.15 }: { opacity?: number }) {
             />
 
             {/* Interference Grid - Slight offset scale (12.1px) + Dynamic Position */}
-            <div
+            <motion.div
                 ref={frontGridRef}
                 className="absolute inset-[-20px]"
                 style={{
@@ -52,7 +53,14 @@ export function MoireInterference({ opacity = 0.15 }: { opacity?: number }) {
                     backgroundSize: "12.2px 12.2px", // Slight mismatch causes Moiré
                     maskImage: "linear-gradient(to bottom, black, transparent)",
                     WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
-                    transition: "transform 0.1s linear"
+                }}
+                animate={{
+                    y: [0, -10, 0]
+                }}
+                transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "linear"
                 }}
             />
         </div>
