@@ -365,12 +365,18 @@
   will-change: var(--will-change-auto);
 }
 
-/* ATTIO SIGNATURE: Dot Grid Background - APPLIED */
-[data-theme="ds2"] .dot-grid-bg,
-[data-theme="ds2"] main {
+/* ATTIO SIGNATURE: Dot Grid Background - APPLIED TO BODY */
+[data-theme="ds2"] body {
+  background-color: var(--bg-primary);
   background-image: var(--bg-pattern-dot-grid);
   background-size: var(--bg-pattern-dot-size);
   background-position: 0 0;
+  background-attachment: fixed;
+}
+
+/* Make sections transparent so dot grid shows through */
+[data-theme="ds2"] section {
+  background-color: transparent !important;
 }
 
 /* ATTIO SIGNATURE: Connector Lines - Flow schematic skeleton */
