@@ -20,7 +20,7 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({
   children,
-  defaultTheme = "ds5",
+  defaultTheme = "ds2",
 }: ThemeProviderProps) {
   return (
     <NextThemesProvider
