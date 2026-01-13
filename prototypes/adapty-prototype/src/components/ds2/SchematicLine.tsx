@@ -5,15 +5,16 @@ import { cn } from "~/lib/utils";
 /**
  * SchematicLine - Attio's signature connector line system
  *
- * Creates thin 1px lines that connect elements in a technical diagram aesthetic.
+ * Creates ultra-thin dotted lines that connect elements in a technical diagram aesthetic.
+ * The lines are barely perceptible - very subtle like the real Attio site.
  * Can include connection nodes (small circles) at start/end points.
  *
  * @example
- * // Vertical line with node at bottom
+ * // Vertical dotted line with node at bottom
  * <SchematicLine direction="vertical" withNode="end" className="h-12" />
  *
- * // Horizontal accent line
- * <SchematicLine direction="horizontal" accent className="w-full" />
+ * // Horizontal accent line (solid)
+ * <SchematicLine direction="horizontal" accent solid className="w-full" />
  */
 
 interface SchematicLineProps {
@@ -23,6 +24,8 @@ interface SchematicLineProps {
   withNode?: "start" | "end" | "both" | "none";
   /** Use accent color instead of default gray */
   accent?: boolean;
+  /** Use solid line instead of dotted (default is dotted for Attio authenticity) */
+  solid?: boolean;
   /** Additional CSS classes */
   className?: string;
   /** Node size variant */
@@ -35,39 +38,52 @@ export function SchematicLine({
   direction,
   withNode = "none",
   accent = false,
+  solid = false,
   className,
-  nodeSize = "md",
+  nodeSize = "sm", // Default to small for subtlety
   nodeFilled = false,
 }: SchematicLineProps) {
   const nodeSizes = {
-    sm: "w-1.5 h-1.5",
-    md: "w-2 h-2",
-    lg: "w-2.5 h-2.5",
+    sm: "w-1 h-1",
+    md: "w-1.5 h-1.5",
+    lg: "w-2 h-2",
   };
 
   const nodeClasses = cn(
-    "absolute rounded-full border-2 z-10",
+    "absolute rounded-full border z-10",
     nodeSizes[nodeSize],
     accent
       ? "border-[var(--schematic-line-accent)]"
-      : "border-[var(--schematic-line-color)]",
+      : "border-[var(--node-color)]",
     nodeFilled
       ? accent
         ? "bg-[var(--schematic-line-accent)]"
-        : "bg-[var(--schematic-line-color)]"
-      : "bg-[var(--bg-primary)]"
+        : "bg-[var(--node-color)]"
+      : "bg-[var(--node-fill)]"
   );
+
+  // Dotted line using repeating gradient (Attio's signature look)
+  const dottedStyle = direction === "vertical"
+    ? {
+        backgroundImage: `repeating-linear-gradient(to bottom, var(--schematic-line-color) 0px, var(--schematic-line-color) 2px, transparent 2px, transparent 6px)`,
+        backgroundSize: "1px 100%",
+      }
+    : {
+        backgroundImage: `repeating-linear-gradient(to right, var(--schematic-line-color) 0px, var(--schematic-line-color) 2px, transparent 2px, transparent 6px)`,
+        backgroundSize: "100% 1px",
+      };
 
   return (
     <div
       className={cn(
-        "relative",
+        "relative opacity-[var(--schematic-line-opacity)]",
         direction === "vertical" ? "w-[1px]" : "h-[1px]",
-        accent
+        solid && (accent
           ? "bg-[var(--schematic-line-accent)]"
-          : "bg-[var(--schematic-line-color)]",
+          : "bg-[var(--schematic-line-color)]"),
         className
       )}
+      style={solid ? undefined : dottedStyle}
     >
       {/* Start Node */}
       {(withNode === "start" || withNode === "both") && (
@@ -169,7 +185,7 @@ export function SchematicCorner({
 
 /**
  * SchematicConnector - Creates a complete path between two points
- * Useful for connecting cards in a flow diagram
+ * Ultra-subtle dotted lines like Attio's technical diagram aesthetic
  */
 interface SchematicConnectorProps {
   /** Path type */
@@ -182,6 +198,8 @@ interface SchematicConnectorProps {
   withNodes?: boolean;
   /** Use accent color */
   accent?: boolean;
+  /** Use solid line instead of dotted */
+  solid?: boolean;
   className?: string;
 }
 
@@ -189,8 +207,9 @@ export function SchematicConnector({
   path,
   primaryLength = "48px",
   secondaryLength = "48px",
-  withNodes = true,
+  withNodes = false, // Default to no nodes for subtlety
   accent = false,
+  solid = false,
   className,
 }: SchematicConnectorProps) {
   const lineColor = accent
@@ -199,17 +218,33 @@ export function SchematicConnector({
 
   const nodeColor = accent
     ? "border-[var(--schematic-line-accent)]"
-    : "border-[var(--schematic-line-color)]";
+    : "border-[var(--node-color)]";
+
+  // Dotted line styles (Attio's signature look)
+  const dottedStyleV = {
+    backgroundImage: `repeating-linear-gradient(to bottom, var(--schematic-line-color) 0px, var(--schematic-line-color) 2px, transparent 2px, transparent 6px)`,
+    backgroundSize: "1px 100%",
+    height: primaryLength,
+  };
+
+  const dottedStyleH = {
+    backgroundImage: `repeating-linear-gradient(to right, var(--schematic-line-color) 0px, var(--schematic-line-color) 2px, transparent 2px, transparent 6px)`,
+    backgroundSize: "100% 1px",
+    width: primaryLength,
+  };
 
   if (path === "straight-v") {
     return (
-      <div className={cn("relative flex flex-col items-center", className)}>
+      <div className={cn("relative flex flex-col items-center opacity-[var(--schematic-line-opacity)]", className)}>
         {withNodes && (
-          <div className={cn("w-2 h-2 rounded-full border-2 bg-[var(--bg-primary)]", nodeColor)} />
+          <div className={cn("w-1 h-1 rounded-full border bg-[var(--node-fill)]", nodeColor)} />
         )}
-        <div className={cn("w-[1px]", lineColor)} style={{ height: primaryLength }} />
+        <div
+          className={cn("w-[1px]", solid && lineColor)}
+          style={solid ? { height: primaryLength } : dottedStyleV}
+        />
         {withNodes && (
-          <div className={cn("w-2 h-2 rounded-full border-2 bg-[var(--bg-primary)]", nodeColor)} />
+          <div className={cn("w-1 h-1 rounded-full border bg-[var(--node-fill)]", nodeColor)} />
         )}
       </div>
     );
@@ -217,13 +252,16 @@ export function SchematicConnector({
 
   if (path === "straight-h") {
     return (
-      <div className={cn("relative flex items-center", className)}>
+      <div className={cn("relative flex items-center opacity-[var(--schematic-line-opacity)]", className)}>
         {withNodes && (
-          <div className={cn("w-2 h-2 rounded-full border-2 bg-[var(--bg-primary)]", nodeColor)} />
+          <div className={cn("w-1 h-1 rounded-full border bg-[var(--node-fill)]", nodeColor)} />
         )}
-        <div className={cn("h-[1px]", lineColor)} style={{ width: primaryLength }} />
+        <div
+          className={cn("h-[1px]", solid && lineColor)}
+          style={solid ? { width: primaryLength } : dottedStyleH}
+        />
         {withNodes && (
-          <div className={cn("w-2 h-2 rounded-full border-2 bg-[var(--bg-primary)]", nodeColor)} />
+          <div className={cn("w-1 h-1 rounded-full border bg-[var(--node-fill)]", nodeColor)} />
         )}
       </div>
     );

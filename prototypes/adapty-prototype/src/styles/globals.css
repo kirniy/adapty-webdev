@@ -358,21 +358,25 @@
   --bg-pattern-dot-grid: radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
   --bg-pattern-dot-size: 24px 24px;
 
-  /* ATTIO SIGNATURE: Schematic Line System (Technical Diagram Aesthetic) */
-  --schematic-line-color: #D8DCE3;
+  /* ATTIO SIGNATURE: Schematic Line System (Technical Diagram Aesthetic)
+   * NOTE: These should be VERY subtle - barely perceptible like Attio
+   * The real Attio uses ultra-thin, dotted, low-opacity lines */
+  --schematic-line-color: rgba(0, 0, 0, 0.08);
   --schematic-line-width: 1px;
   --schematic-line-accent: var(--color-accent);
+  --schematic-line-dash: 2px 6px; /* For dotted/dashed appearance */
+  --schematic-line-opacity: 0.5;
 
-  /* Connection Nodes (Junction Points) */
-  --node-size: 8px;
-  --node-border: 2px;
-  --node-color: var(--schematic-line-color);
+  /* Connection Nodes (Junction Points) - smaller, subtler */
+  --node-size: 6px;
+  --node-border: 1px;
+  --node-color: rgba(0, 0, 0, 0.15);
   --node-fill: var(--bg-primary);
 
-  /* Edge Accent Line (Vertical accent on cards/sections) */
+  /* Edge Accent Line (Vertical accent on cards/sections) - very subtle */
   --edge-line-color: var(--color-accent);
-  --edge-line-width: 3px;
-  --edge-line-opacity: 0.15;
+  --edge-line-width: 2px;
+  --edge-line-opacity: 0.08;
 
   /* Performance Optimizations */
   --will-change-transform: transform;
@@ -417,9 +421,80 @@
   background-attachment: fixed;
 }
 
+/* =============================================
+ * ATTIO SIGNATURE: Viewport Frame (Blueprint Aesthetic)
+ * Subtle vertical borders on left/right edges of viewport
+ * Creates the "browsing a schematic" feel
+ * ============================================= */
+[data-theme="ds2"]::before,
+[data-theme="ds2"]::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--border-subtle) 5%,
+    var(--border-subtle) 95%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+[data-theme="ds2"]::before {
+  left: 24px;
+}
+
+[data-theme="ds2"]::after {
+  right: 24px;
+}
+
+/* Viewport frame corner brackets (top) */
+[data-theme="ds2"] body::before {
+  content: "";
+  position: fixed;
+  top: 80px;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--border-subtle) 0px,
+    var(--border-subtle) 4px,
+    transparent 4px,
+    transparent 12px
+  );
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.5;
+}
+
 /* Make sections transparent so dot grid shows through */
 [data-theme="ds2"] section {
   background-color: transparent !important;
+}
+
+/* =============================================
+ * ATTIO SIGNATURE: Ultra-thin Section Separators
+ * Barely perceptible dotted lines between sections
+ * ============================================= */
+[data-theme="ds2"] section + section::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-bottom: 2rem;
+  background: repeating-linear-gradient(
+    to right,
+    var(--border-subtle) 0px,
+    var(--border-subtle) 2px,
+    transparent 2px,
+    transparent 8px
+  );
+  opacity: 0.4;
 }
 
 /* Make main page wrapper and main element transparent so dot grid shows through */
