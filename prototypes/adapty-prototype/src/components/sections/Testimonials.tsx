@@ -74,8 +74,23 @@ export function Testimonials({ variant = "carousel" }: TestimonialsProps) {
   if (!active) return null;
 
   return (
-    <Section className="border-y border-[var(--border-subtle)] bg-[var(--bg-secondary)]">
-      <Container>
+    <Section className="border-y border-[var(--border-subtle)] bg-[var(--bg-secondary)] relative overflow-hidden">
+      {/* DS2 ATTIO SIGNATURE: Massive faded quote watermark */}
+      <div className="quote-watermark absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
+        <span className="font-[var(--font-serif)] text-[12rem] md:text-[16rem] lg:text-[20rem] leading-none text-[var(--text-primary)] opacity-[var(--quote-watermark-opacity,0)] italic">
+          &ldquo;
+        </span>
+      </div>
+
+      <Container className="relative z-10">
+        {/* DS2 ATTIO: Section number with dotted separator */}
+        <div className="section-number-container mb-6 flex items-center justify-center gap-4">
+          <span className="section-number">[04]</span>
+          <div className="dotted-separator w-12" />
+          <span className="text-xs font-medium tracking-widest text-[var(--text-muted)] uppercase">Testimonials</span>
+          <div className="dotted-separator w-12" />
+        </div>
+
         <div className="mx-auto mb-12 max-w-3xl text-center">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
             <span className="text-[var(--text-primary)]">{testimonials.headline.primary}</span>

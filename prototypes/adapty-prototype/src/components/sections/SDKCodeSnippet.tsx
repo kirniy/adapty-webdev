@@ -80,7 +80,9 @@ export function SDKCodeSnippet() {
 
             {/* Code Editor */}
             <div className="group order-1 lg:order-2">
-              <div className="relative overflow-hidden rounded-xl border border-[var(--border-default)] bg-[#1E1E2E] shadow-[var(--shadow-xl)]">
+              {/* DS3 POLAR SIGNATURE: Gradient border wrapper */}
+              <div className="code-gradient-border rounded-xl p-[1px]">
+              <div className="relative overflow-hidden rounded-xl border border-[var(--border-default)] bg-[#1E1E2E] shadow-[var(--shadow-xl)] code-editor-card">
                 {/* Window Header */}
                 <div className="flex items-center justify-between border-b border-white/5 bg-[#252535] px-4 py-3">
                   <div className="flex gap-2">
@@ -138,6 +140,7 @@ export function SDKCodeSnippet() {
                   </pre>
                 </div>
               </div>
+              </div>{/* Close gradient border wrapper */}
             </div>
           </div>
         </Container>

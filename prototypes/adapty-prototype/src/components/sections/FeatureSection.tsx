@@ -56,7 +56,7 @@ export function FeatureSection(props: FeatureSectionProps) {
 }
 
 // ==========================================
-// DS1: LINEAR (Glass, Lists, Tight Type)
+// DS1: LINEAR (Glass, Lists, Tight Type, Animated Cards)
 // ==========================================
 function FeatureSectionLinear({
   title,
@@ -68,37 +68,72 @@ function FeatureSectionLinear({
   className,
 }: FeatureSectionProps) {
   return (
-    <Section className={cn("border-b border-[var(--border-subtle)] bg-[var(--bg-primary)] py-24", className)}>
-      <Container>
+    <Section className={cn("border-b border-[var(--border-subtle)] bg-[var(--bg-primary)] py-24 relative overflow-hidden", className)}>
+      {/* LINEAR SIGNATURE: Radial gradient background glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--color-primary)/5_0%,transparent_70%)] pointer-events-none" />
+
+      <Container className="relative z-10">
         <div className={cn("grid gap-16 lg:grid-cols-2 items-center", flipped && "lg:[direction:rtl]")}>
-          {/* Visual: Glass Card styling */}
-          <div className={cn("relative lg:[direction:ltr]")}>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] shadow-[var(--shadow-card)]">
+          {/* Visual: Animated Glass Card with Glow */}
+          <div className={cn("relative lg:[direction:ltr] group")}>
+            {/* Glow effect on hover */}
+            <div className="absolute -inset-4 bg-[var(--color-primary)]/0 rounded-3xl blur-2xl transition-all duration-500 group-hover:bg-[var(--color-primary)]/10" />
+
+            {/* Main Card with Linear layered shadow */}
+            <div className="card-linear relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] transition-all duration-300 group-hover:shadow-[var(--card-glow-hover)]">
+              {/* Glass overlay */}
               <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-20" />
-              <div className={cn("h-full w-full p-8 flex items-center justify-center", image.bgColor ? `bg-[${image.bgColor}]` : "")}>
+
+              {/* Motion Lines - Animated illustration elements */}
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Horizontal precision guides */}
+                <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--color-primary)]/20 to-transparent animate-pulse" style={{ animationDelay: '0s' }} />
+                <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--color-primary)]/30 to-transparent animate-pulse" style={{ animationDelay: '0.5s' }} />
+                <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--color-primary)]/20 to-transparent animate-pulse" style={{ animationDelay: '1s' }} />
+
+                {/* Vertical precision guides */}
+                <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-[var(--color-primary)]/15 to-transparent animate-pulse" style={{ animationDelay: '0.3s' }} />
+                <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-[var(--color-primary)]/15 to-transparent animate-pulse" style={{ animationDelay: '0.8s' }} />
+
+                {/* Corner accent dots */}
+                <div className="absolute top-4 left-4 w-2 h-2 rounded-full bg-[var(--color-primary)]/30 animate-pulse" />
+                <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[var(--color-primary)]/30 animate-pulse" style={{ animationDelay: '0.5s' }} />
+                <div className="absolute bottom-4 left-4 w-2 h-2 rounded-full bg-[var(--color-primary)]/30 animate-pulse" style={{ animationDelay: '1s' }} />
+                <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-[var(--color-primary)]/30 animate-pulse" style={{ animationDelay: '1.5s' }} />
+              </div>
+
+              {/* Main image with floating animation */}
+              <div className={cn("h-full w-full p-8 flex items-center justify-center animate-float", image.bgColor ? `bg-[${image.bgColor}]` : "")} style={{ animationDuration: '6s' }}>
                 <Image src={image.src} alt={image.alt} fill className="object-contain" />
               </div>
+
+              {/* LINEAR SIGNATURE: Expand button (+) */}
+              <button className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-[var(--bg-primary)] border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-all duration-200 opacity-0 group-hover:opacity-100">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M6 1v10M1 6h10" />
+                </svg>
+              </button>
             </div>
           </div>
 
           {/* Content */}
           <div className="lg:[direction:ltr]">
-            <h2 className="mb-6 text-4xl font-medium tracking-[var(--letter-spacing-heading)] text-[var(--text-primary)] leading-[1.1]">
+            <h2 className="heading-linear mb-6 text-4xl font-medium text-[var(--text-primary)] leading-[1.1]">
               {title}
             </h2>
             <p className="mb-8 text-lg text-[var(--text-secondary)] leading-relaxed">
               {description}
             </p>
 
-            {/* Linear Style Lists: "Icon + Text" Rows */}
+            {/* Linear Style Lists: "Icon + Text" Rows with hover animation */}
             {features && features.length > 0 && (
               <ul className="mb-8 space-y-4">
                 {features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-4 group">
-                    <div className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                  <li key={i} className="flex items-start gap-4 group/item">
+                    <div className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] transition-all duration-200 group-hover/item:bg-[var(--color-primary)]/20 group-hover/item:scale-110">
                       <Check className="h-3 w-3" />
                     </div>
-                    <span className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">
+                    <span className="text-[var(--text-secondary)] group-hover/item:text-[var(--text-primary)] transition-colors">
                       {feature}
                     </span>
                   </li>

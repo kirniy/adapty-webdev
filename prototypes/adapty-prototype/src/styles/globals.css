@@ -80,6 +80,28 @@
   --card-border: var(--border-subtle);
   --input-radius: var(--radius-md);
   --nav-bg: var(--bg-primary);
+
+  /* CLERK SIGNATURE: Subtle circuit/geometric background pattern */
+  --bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%236C47FF' stroke-opacity='0.03' stroke-width='1'%3E%3Cpath d='M0 30h60M30 0v60M0 0l30 30M60 0L30 30M0 60l30-30M60 60L30 30'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  --bg-pattern-opacity: 1;
+
+  /* CLERK SIGNATURE: Section labels (purple, small) */
+  --section-label-size: 13px;
+  --section-label-weight: 600;
+  --section-label-color: var(--color-primary);
+  --section-label-spacing: 0.1em;
+
+  /* CLERK SIGNATURE: OAuth button styling */
+  --oauth-button-bg: #ffffff;
+  --oauth-button-border: var(--border-default);
+  --oauth-button-radius: var(--radius-md);
+  --oauth-button-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  /* CLERK SIGNATURE: Mock form card */
+  --form-card-bg: #ffffff;
+  --form-card-border: var(--border-default);
+  --form-card-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --form-card-radius: var(--radius-xl);
 }
 
 /* ============================================
@@ -171,6 +193,19 @@
   --card-border: var(--border-subtle);
   --input-radius: var(--radius-md);
   --nav-bg: var(--header-bg);
+
+  /* LINEAR SIGNATURE: Layered card animations & glow */
+  --card-glow-hover: 0 0 40px rgba(94, 106, 210, 0.2);
+  --shadow-layered-card:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0px 2px 4px rgba(0, 0, 0, 0.1),
+    0px 4px 24px rgba(0, 0, 0, 0.2),
+    0px 8px 32px rgba(0, 0, 0, 0.35);
+
+  /* LINEAR SIGNATURE: 3D perspective transforms */
+  --perspective-depth: 1500px;
+  --rotate-subtle: 3deg;
+  --transform-hover: translateY(-4px);
 }
 
 /* ============================================
@@ -216,7 +251,7 @@
   /* Typography (ATTIO: 4-font system) */
   --font-sans: "Inter", -apple-system, sans-serif;
   --font-display: "Inter Display", var(--font-sans);
-  --font-serif: "Tiempos Headline", Georgia, serif;
+  --font-serif: var(--font-playfair), "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* Border Radius (ATTIO: 10px BUTTONS) */
@@ -262,6 +297,20 @@
   /* Section numbering (ATTIO signature) */
   --section-number-color: var(--text-muted);
   --section-number-size: 0.875rem;
+
+  /* ATTIO SIGNATURE: Serif emphasis for emotional words */
+  --font-weight-default: 500;
+  --serif-emphasis-weight: 600;
+
+  /* ATTIO SIGNATURE: Watermark quotes */
+  --quote-watermark-size: 12rem;
+  --quote-watermark-opacity: 0.06;
+  --quote-watermark-color: var(--text-muted);
+
+  /* ATTIO SIGNATURE: Section dotted separators */
+  --section-separator-color: var(--border-default);
+  --section-separator-dash: 4px;
+  --section-separator-gap: 8px;
 }
 
 /* ============================================
@@ -304,8 +353,8 @@
   --border-strong: #3A3B40;
 
   /* Typography (POLAR: Geist fonts) */
-  --font-sans: "Geist Sans", "Geist", -apple-system, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-sans: var(--font-geist-sans), "Geist", -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
 
   /* Border Radius (POLAR: 0.6rem BASE = 9.6px) */
   --radius-base: 0.6rem;
@@ -349,6 +398,26 @@
   /* Code-first tokens (POLAR signature) */
   --code-bg: var(--bg-secondary);
   --code-border: var(--border-default);
+
+  /* POLAR SIGNATURE: Gradient code blocks */
+  --code-gradient: linear-gradient(135deg, #f97316 0%, #ec4899 35%, #3b82f6 65%, #8b5cf6 100%);
+  --code-gradient-subtle: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(236, 72, 153, 0.1) 35%, rgba(59, 130, 246, 0.1) 65%, rgba(139, 92, 246, 0.1) 100%);
+
+  /* POLAR SIGNATURE: Badge styles */
+  --badge-beta-bg: var(--color-primary);
+  --badge-beta-text: #ffffff;
+  --badge-feature-bg: var(--bg-tertiary);
+  --badge-feature-text: var(--text-secondary);
+
+  /* POLAR SIGNATURE: Feature list checkmarks */
+  --checkmark-color: var(--color-success);
+  --checkmark-size: 1.25rem;
+
+  /* POLAR SIGNATURE: Embedded mini-UI cards */
+  --mini-ui-bg: var(--bg-secondary);
+  --mini-ui-border: var(--border-default);
+  --mini-ui-radius: var(--radius-lg);
+  --mini-ui-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* ============================================
@@ -402,9 +471,9 @@
   --border-strong: rgba(255, 255, 255, 0.24);
 
   /* Typography (VERCEL: Geist + Space Grotesk for display) */
-  --font-sans: "Geist", -apple-system, sans-serif;
-  --font-display: "Space Grotesk", "Geist", sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-sans: var(--font-geist-sans), "Geist", -apple-system, sans-serif;
+  --font-display: var(--font-space-grotesk), "Space Grotesk", "Geist", sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
 
   /* Border Radius (VERCEL: 6px DEFAULT) */
   --radius-sm: 4px;
@@ -613,4 +682,220 @@ body {
 
 [data-theme="ds4"] .gradient-ship {
   background: var(--gradient-ship);
+}
+
+/* ============================================
+ * DS1 LINEAR: Signature Utilities
+ * ============================================ */
+[data-theme="ds1"] .card-linear {
+  box-shadow: var(--shadow-layered-card);
+  transition: transform var(--duration-fast) var(--ease-premium), box-shadow var(--duration-fast) var(--ease-premium);
+}
+
+[data-theme="ds1"] .card-linear:hover {
+  transform: var(--transform-hover);
+  box-shadow: var(--shadow-layered-card), var(--card-glow-hover);
+}
+
+[data-theme="ds1"] .heading-linear {
+  letter-spacing: var(--letter-spacing-heading);
+  font-weight: 590;
+}
+
+/* LINEAR: 3D perspective container */
+[data-theme="ds1"] .perspective-container {
+  perspective: var(--perspective-depth);
+}
+
+[data-theme="ds1"] .layer-back {
+  transform: rotateY(calc(-1 * var(--rotate-subtle))) translateZ(-20px);
+}
+
+[data-theme="ds1"] .layer-front {
+  transform: rotateY(var(--rotate-subtle)) translateZ(20px);
+}
+
+/* ============================================
+ * DS2 ATTIO: Signature Utilities
+ * ============================================ */
+
+/* DS2 elements hidden by default on other themes */
+.section-number-container {
+  display: none;
+}
+
+.quote-watermark {
+  opacity: 0;
+  pointer-events: none;
+}
+
+[data-theme="ds2"] .section-number-container {
+  display: flex;
+}
+
+[data-theme="ds2"] .text-serif {
+  font-family: var(--font-serif);
+  font-weight: var(--serif-emphasis-weight);
+}
+
+[data-theme="ds2"] .quote-watermark {
+  position: absolute;
+  font-size: var(--quote-watermark-size);
+  opacity: var(--quote-watermark-opacity);
+  color: var(--quote-watermark-color);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+[data-theme="ds2"] .section-number {
+  font-size: var(--section-number-size);
+  color: var(--section-number-color);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-theme="ds2"] .dotted-separator {
+  background-image: linear-gradient(
+    to right,
+    var(--section-separator-color) var(--section-separator-dash),
+    transparent var(--section-separator-dash)
+  );
+  background-size: calc(var(--section-separator-dash) + var(--section-separator-gap)) 1px;
+  background-repeat: repeat-x;
+  height: 1px;
+}
+
+/* ============================================
+ * DS3 POLAR: Signature Utilities
+ * ============================================ */
+[data-theme="ds3"] .code-gradient-bg {
+  background: var(--code-gradient-subtle);
+}
+
+[data-theme="ds3"] .code-gradient-border {
+  position: relative;
+}
+
+[data-theme="ds3"] .code-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--code-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+[data-theme="ds3"] .badge-beta {
+  background-color: var(--badge-beta-bg);
+  color: var(--badge-beta-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+[data-theme="ds3"] .checkmark-list li::before {
+  content: '✓';
+  color: var(--checkmark-color);
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+[data-theme="ds3"] .mini-ui-card {
+  background: var(--mini-ui-bg);
+  border: 1px solid var(--mini-ui-border);
+  border-radius: var(--mini-ui-radius);
+  box-shadow: var(--mini-ui-shadow);
+}
+
+/* ============================================
+ * DS5 CLERK: Signature Utilities
+ * ============================================ */
+[data-theme="ds5"] .bg-pattern {
+  background-image: var(--bg-pattern);
+  background-repeat: repeat;
+}
+
+[data-theme="ds5"] .section-label {
+  font-size: var(--section-label-size);
+  font-weight: var(--section-label-weight);
+  color: var(--section-label-color);
+  letter-spacing: var(--section-label-spacing);
+  text-transform: uppercase;
+}
+
+[data-theme="ds5"] .oauth-button {
+  background-color: var(--oauth-button-bg);
+  border: 1px solid var(--oauth-button-border);
+  border-radius: var(--oauth-button-radius);
+  box-shadow: var(--oauth-button-shadow);
+  transition: box-shadow var(--duration-fast) var(--ease-default);
+}
+
+[data-theme="ds5"] .oauth-button:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="ds5"] .form-card {
+  background-color: var(--form-card-bg);
+  border: 1px solid var(--form-card-border);
+  border-radius: var(--form-card-radius);
+  box-shadow: var(--form-card-shadow);
+}
+
+/* ============================================
+ * KEYFRAME ANIMATIONS - DS SPECIFIC
+ * ============================================ */
+/* LINEAR: Floating animation for layered cards */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotateY(var(--rotate-subtle));
+  }
+  50% {
+    transform: translateY(-8px) rotateY(var(--rotate-subtle));
+  }
+}
+
+[data-theme="ds1"] .animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* LINEAR: Glow pulse for accent elements */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: var(--shadow-glow);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(94, 106, 210, 0.4);
+  }
+}
+
+[data-theme="ds1"] .animate-glow {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* ATTIO: Gradient reveal for quotes */
+@keyframes gradientReveal {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+[data-theme="ds2"] .animate-gradient-reveal {
+  background: linear-gradient(90deg, var(--text-primary) 50%, var(--text-muted) 50%);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientReveal 1s ease forwards;
 }
