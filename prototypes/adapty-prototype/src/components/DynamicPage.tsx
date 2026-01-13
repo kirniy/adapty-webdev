@@ -17,6 +17,7 @@ import {
   SDKCodeSnippet,
   FinalCTA,
   FeatureSection,
+  UnicornBlock,
 } from "~/components/sections";
 import { Header } from "~/components/layout/Header";
 import { Footer } from "~/components/layout/Footer";
@@ -189,6 +190,15 @@ export function DynamicPage() {
             testimonial={content.features.revenueSync.testimonial}
             variant={(theme ?? "ds5") as "ds1" | "ds2" | "ds3" | "ds4" | "ds5"}
             sectionNumber="06"
+          />
+        );
+
+      case "unicornBlockDS3":
+        return (
+          <UnicornBlock
+            key={key}
+            projectId="S2rJQl5b5HhlIAi0JxcZ"
+            height="500px"
           />
         );
 

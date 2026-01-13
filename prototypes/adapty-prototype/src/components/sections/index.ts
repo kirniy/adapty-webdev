@@ -11,3 +11,4 @@ export { IntegrationsMarquee } from "./IntegrationsMarquee";
 export { SDKCodeSnippet } from "./SDKCodeSnippet";
 export { FinalCTA } from "./FinalCTA";
 export { FeatureSection } from "./FeatureSection";
+export { UnicornBlock } from "./UnicornBlock";

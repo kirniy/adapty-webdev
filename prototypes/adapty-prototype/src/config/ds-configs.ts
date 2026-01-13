@@ -19,6 +19,7 @@ export type SectionId =
   | "g2Badges"
   | "caseStudies"
   | "enterprise"
+  | "unicornBlockDS3"
   | "finalCta"
   | "footer";
 
@@ -153,6 +154,7 @@ export const ds3Config: DSConfig = {
     "sdkGrid",
     "testimonials", // "Featured Testimonial" - Late
     "g2Badges",
+    "unicornBlockDS3", // Interactive WebGL visual before CTA
     "finalCta", // Minimal
     "footer",
   ],
@@ -350,6 +352,11 @@ export const sectionMeta: Record<
     component: "Enterprise",
     label: "Enterprise",
     description: "Enterprise features and security",
+  },
+  unicornBlockDS3: {
+    component: "UnicornBlock",
+    label: "Unicorn Block (DS3)",
+    description: "Interactive WebGL visual for DS3",
   },
   finalCta: {
     component: "FinalCTA",
