@@ -135,6 +135,7 @@ proto-ds1-linear/
 3. **IDENTICAL CONTENT** - All 5 prototypes have same content, only styling differs
 4. **DS1 LINEAR AESTHETIC** - Dark, premium, 3D depth, micro-interactions
 5. **FOLLOW SKELETON.MD** - Exact 14 sections with specified content
+6. **NEVER USE EMOJIS** - No emojis in code, comments, or UI text
 
 
 <claude-mem-context>

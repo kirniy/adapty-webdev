@@ -163,7 +163,8 @@
   --button-padding-x: 16px;
   --button-padding-y: 8px;
   --section-padding: 96px;
-  --container-max-width: 1280px;
+  --container-max-width: 1120px;
+  --container-padding: 48px;
 }
 
 @layer base {
@@ -250,11 +251,12 @@
     );
   }
 
-  /* Noise texture overlay */
+  /* Noise texture overlay - subtle, fine grain like Linear */
   .noise-texture {
     @apply fixed inset-0 pointer-events-none;
-    opacity: 0.06;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    z-index: 9999;
   }
 
   /* Radial glow background */

@@ -15,6 +15,9 @@ import { NoiseTexture } from "~/components/textures/NoiseTexture";
 import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
 import { MoireInterference } from "~/components/textures/MoireInterference";
 import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
+import { FadeIn, StaggerContainer, ScaleIn } from "~/components/motion/MotionPrimitives";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { MOTION_DS1 } from "~/lib/motion-config";
 
 interface HeroProps {
   variant?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5" | "default";
@@ -53,8 +56,27 @@ export function Hero({ variant = "default" }: HeroProps) {
 function HeroDS1() {
   const { hero } = content;
 
+  // Parallax Logic
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 40, damping: 30 });
+  const springY = useSpring(mouseY, { stiffness: 40, damping: 30 });
+  const starsX = useTransform(springX, [0, 1], [15, -15]);
+  const starsY = useTransform(springY, [0, 1], [15, -15]);
+
+  function handleMouseMove(e: React.MouseEvent) {
+    const { clientX, clientY } = e;
+    // Normalize -0.5 to 0.5
+    const { innerWidth, innerHeight } = window;
+    mouseX.set(clientX / innerWidth);
+    mouseY.set(clientY / innerHeight);
+  }
+
   return (
-    <section className="relative overflow-hidden bg-[var(--bg-primary)] pt-24 pb-16 md:pt-32 md:pb-24">
+    <section
+      className="relative overflow-hidden bg-[var(--bg-primary)] pt-24 pb-16 md:pt-32 md:pb-24"
+      onMouseMove={handleMouseMove}
+    >
       {/* DS1 ASSET: Living Noise Texture (Matte Finish) */}
       <NoiseTexture opacity={0.06} />
 
@@ -62,62 +84,84 @@ function HeroDS1() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--color-accent)/15%_0%,transparent_50%)]" />
 
       {/* LINEAR SIGNATURE: Starfield / Particles */}
-      <div className="absolute inset-0" style={{
-        backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px), radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)',
-        backgroundSize: '40px 40px, 20px 20px',
-        backgroundPosition: '0 0, 10px 10px',
-        maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
-        WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
-        opacity: 0.3
-      }} />
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px), radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)',
+          backgroundSize: '40px 40px, 20px 20px',
+          backgroundPosition: '0 0, 10px 10px',
+          maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
+          opacity: 0.3,
+          x: starsX,
+          y: starsY
+        }}
+      />
 
       <Container className="relative z-10">
         {/* Centered Content - Linear style */}
-        <div className="mx-auto max-w-4xl text-center">
+        <StaggerContainer className="mx-auto max-w-4xl text-center" viewportAmount={0.1}>
           {/* Badge - Linear style pill with glow */}
-          <a
-            href={hero.badge.href}
-            className="animate-glow mb-8 inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] transition-all duration-100 hover:border-[var(--color-accent)] hover:text-[var(--text-primary)]"
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
-            {hero.badge.text}
-            <ChevronRight className="h-3.5 w-3.5" />
-          </a>
+          <FadeIn>
+            <a
+              href={hero.badge.href}
+              className="animate-glow mb-8 inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] transition-all duration-100 hover:border-[var(--color-accent)] hover:text-[var(--text-primary)]"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
+              {hero.badge.text}
+              <ChevronRight className="h-3.5 w-3.5" />
+            </a>
+          </FadeIn>
 
           {/* LINEAR SIGNATURE: Two-Tone Headline with tight letter-spacing */}
-          <h1 className="heading-linear mb-6 text-4xl font-semibold sm:text-5xl md:text-6xl leading-[1.06] tracking-[var(--letter-spacing-h1)]">
-            <span className="text-[var(--text-primary)]">{hero.headline.primary}</span>
-            <br />
-            <span className="text-[var(--text-muted)]">{hero.headline.secondary}</span>
-          </h1>
+          <FadeIn>
+            <h1 className="heading-linear mb-6 text-4xl font-semibold sm:text-5xl md:text-6xl leading-[1.06] tracking-[var(--letter-spacing-h1)]">
+              <span className="text-[var(--text-primary)]">{hero.headline.primary}</span>
+              <br />
+              <span className="text-[var(--text-muted)]">{hero.headline.secondary}</span>
+            </h1>
+          </FadeIn>
 
           {/* Two-Tone subheadline with tight letter-spacing */}
-          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed" style={{ letterSpacing: 'var(--letter-spacing-tight)' }}>
-            <span className="text-[var(--text-primary)]">{hero.subheadline.primary}</span>
-            <span className="text-[var(--text-muted)]"> {hero.subheadline.secondary}</span>
-          </p>
+          <FadeIn>
+            <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed" style={{ letterSpacing: 'var(--letter-spacing-tight)' }}>
+              <span className="text-[var(--text-primary)]">{hero.subheadline.primary}</span>
+              <span className="text-[var(--text-muted)]"> {hero.subheadline.secondary}</span>
+            </p>
+          </FadeIn>
 
           {/* CTAs - Linear style: primary solid (white), secondary text link */}
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Button size="lg" href={hero.cta.primary.href}>
-              {hero.cta.primary.text}
-            </Button>
-            <Button variant="text" size="md" href={hero.cta.secondary.href}>
-              {hero.cta.secondary.text}
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
+          <FadeIn>
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <Button size="lg" href={hero.cta.primary.href}>
+                {hero.cta.primary.text}
+              </Button>
+              <Button variant="text" size="md" href={hero.cta.secondary.href}>
+                {hero.cta.secondary.text}
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </FadeIn>
+        </StaggerContainer>
 
         {/* LINEAR SIGNATURE: Enhanced 3D Layered Product Showcase with perspective */}
-        <div className="relative mx-auto mt-20 max-w-6xl perspective-container" style={{ perspective: 'var(--perspective-depth)' }}>
+        <ScaleIn delay={0.2} className="relative mx-auto mt-20 max-w-6xl perspective-container" style={{ perspective: 'var(--perspective-depth)' }}>
           <div className="relative transform-style-3d">
             {/* Background layer - Analytics panel (LEFT) - Enhanced 3D */}
-            <div
+            <motion.div
               className="card-linear animate-float absolute left-0 top-8 w-[35%] rounded-[var(--radius-card)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-4"
+              initial={{
+                z: -50,
+                scale: 0.95,
+                rotateY: -3
+              }}
+              whileHover={{
+                z: -30,
+                scale: 0.98,
+                rotateY: -5,
+                transition: MOTION_DS1.transition
+              }}
               style={{
-                animationDelay: '0s',
-                transform: 'var(--transform-layer-back) rotateY(var(--rotate-back))',
                 boxShadow: 'var(--shadow-layered-card)'
               }}>
               <div className="rounded-xl bg-[var(--bg-tertiary)] p-4">
@@ -140,12 +184,14 @@ function HeroDS1() {
                   <span>Sun</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Middle layer - Main Dashboard */}
-            <div
+            <motion.div
               className="relative z-10 mx-auto w-[80%] card-linear rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-tertiary)] p-2"
-              style={{ transform: 'translateZ(0)', boxShadow: 'var(--shadow-layered-card)' }}
+              initial={{ z: 0 }}
+              whileHover={{ scale: 1.02, transition: MOTION_DS1.transition }}
+              style={{ boxShadow: 'var(--shadow-layered-card)' }}
             >
               <div className="overflow-hidden rounded-2xl">
                 <Image
@@ -157,14 +203,23 @@ function HeroDS1() {
                   priority
                 />
               </div>
-            </div>
+            </motion.div>
 
             {/* Front layer - Paywall Builder (RIGHT) - Enhanced 3D */}
-            <div
+            <motion.div
               className="card-linear animate-float absolute right-0 top-16 w-[30%] rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-secondary)] p-3"
+              initial={{
+                z: 50,
+                scale: 1.02,
+                rotateY: 4
+              }}
+              whileHover={{
+                z: 70,
+                scale: 1.05,
+                rotateY: 6,
+                transition: MOTION_DS1.transition
+              }}
               style={{
-                animationDelay: '2s',
-                transform: 'var(--transform-layer-front) rotateY(var(--rotate-subtle))',
                 boxShadow: 'var(--shadow-layered-card)'
               }}>
               <div className="rounded-xl bg-[var(--bg-tertiary)] p-4">
@@ -182,7 +237,7 @@ function HeroDS1() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Additional floating element - Metrics card (TOP RIGHT) */}
             <div className="card-linear animate-float absolute -right-4 -top-4 w-[20%] rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-3"
@@ -194,7 +249,7 @@ function HeroDS1() {
               </div>
             </div>
           </div>
-        </div>
+        </ScaleIn>
       </Container>
     </section>
   );

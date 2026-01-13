@@ -376,6 +376,42 @@ Phase C: (Optional) Cross-validation
 - Framer Motion
 - Vercel deployment
 
+### Icon Libraries (January 2026 Recommendations)
+
+**Avoid**: Lucide (default shadcn) - too common, "cliche" look
+
+**Recommended Alternatives**:
+| Library | Icons | Weights | Best For | Package |
+|---------|-------|---------|----------|---------|
+| **Phosphor** | 4,500+ | 6 (thin, light, regular, bold, fill, duotone) | Premium apps, versatile | `@phosphor-icons/react` |
+| **Tabler** | 4,500+ | 1 (outline) | Dashboards, SaaS | `@tabler/icons-react` |
+| **Iconoir** | 1,500+ | 1 (outline) | Minimal, clean UI | `iconoir-react` |
+| **Hugeicons** | 40,000+ | 9 styles | Maximum variety | `hugeicons-react` |
+
+**Installation**:
+```bash
+# Phosphor (recommended for DS1 Linear - duotone weight fits premium aesthetic)
+pnpm add @phosphor-icons/react
+
+# Usage
+import { Gear, User, ArrowRight } from "@phosphor-icons/react"
+<Gear size={24} weight="duotone" />
+
+# Tabler (recommended for dashboards)
+pnpm add @tabler/icons-react
+
+# Usage
+import { IconSettings, IconUser } from "@tabler/icons-react"
+<IconSettings size={24} stroke={1.5} />
+```
+
+**DS-Specific Recommendations**:
+- **DS1 Linear**: Phosphor (duotone weight) - matches premium 3D depth aesthetic
+- **DS2 Attio**: Phosphor (regular) or Iconoir - clean editorial feel
+- **DS3 Polar**: Tabler - code/developer aesthetic
+- **DS4 Vercel**: Phosphor (bold) - matches bold visual style
+- **DS5 Clerk**: Phosphor (light/regular) - friendly, approachable
+
 ---
 
 ## Task System

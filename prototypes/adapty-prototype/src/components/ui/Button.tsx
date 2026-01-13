@@ -1,5 +1,10 @@
 import { cn } from "~/lib/utils";
 import Link from "next/link";
+import { motion } from "motion/react";
+import { useTheme } from "next-themes";
+import { MOTION_CONFIGS, type DesignSystem } from "~/lib/motion-config";
+
+const MotionLink = motion.create(Link);
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -35,7 +40,11 @@ export function Button({
 }: ButtonProps) {
   // Base styles using CSS custom properties for DS consistency
   const baseStyles =
-    "inline-flex items-center justify-center font-medium transition-all duration-[var(--duration-fast)] ease-[var(--ease-default)] rounded-[var(--button-radius)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center font-medium transition-colors duration-[var(--duration-fast)] rounded-[var(--button-radius)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+
+  const { theme } = useTheme();
+  const ds = (theme && theme.startsWith("ds") ? theme : "ds5") as DesignSystem;
+  const config = MOTION_CONFIGS[ds];
 
   const variants = {
     // Primary: Filled button with primary color
@@ -65,24 +74,38 @@ export function Button({
 
   if (href) {
     return external ? (
-      <a
+      <motion.a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
         className={classes}
+        whileHover={config.button.hover}
+        whileTap={config.button.tap}
       >
         {children}
-      </a>
+      </motion.a>
     ) : (
-      <Link href={href} className={classes}>
+      <MotionLink
+        href={href}
+        className={classes}
+        whileHover={config.button.hover}
+        whileTap={config.button.tap}
+      >
         {children}
-      </Link>
+      </MotionLink>
     );
   }
 
   return (
-    <button type="button" onClick={onClick} disabled={disabled} className={classes}>
+    <motion.button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={classes}
+      whileHover={config.button.hover}
+      whileTap={config.button.tap}
+    >
       {children}
-    </button>
+    </motion.button>
   );
 }
