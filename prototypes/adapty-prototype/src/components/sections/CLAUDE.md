@@ -8,5 +8,4 @@
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
 | #101 | 11:06 PM | 🟣 | Enterprise Section Component Created | ~430 |
-| #97 | " | 🟣 | Case Studies Section Component Created | ~423 |
 </claude-mem-context>
