@@ -330,8 +330,24 @@
   --section-separator-gap: 8px;
 
   /* ATTIO SIGNATURE: Dot grid background pattern */
-  --bg-pattern-dot-grid: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+  --bg-pattern-dot-grid: radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
   --bg-pattern-dot-size: 24px 24px;
+
+  /* ATTIO SIGNATURE: Schematic Line System (Technical Diagram Aesthetic) */
+  --schematic-line-color: #D8DCE3;
+  --schematic-line-width: 1px;
+  --schematic-line-accent: var(--color-accent);
+
+  /* Connection Nodes (Junction Points) */
+  --node-size: 8px;
+  --node-border: 2px;
+  --node-color: var(--schematic-line-color);
+  --node-fill: var(--bg-primary);
+
+  /* Edge Accent Line (Vertical accent on cards/sections) */
+  --edge-line-color: var(--color-accent);
+  --edge-line-width: 3px;
+  --edge-line-opacity: 0.15;
 
   /* Performance Optimizations */
   --will-change-transform: transform;
