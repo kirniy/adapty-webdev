@@ -254,19 +254,36 @@
   --font-serif: var(--font-playfair), "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Border Radius (ATTIO: 10px BUTTONS) */
+  /* ATTIO SIGNATURE: Typography refinements */
+  --letter-spacing-headline: -0.025em;
+  --font-weight-body: 500;
+  --font-weight-headline: 600;
+
+  /* Border Radius (ATTIO: 8px BUTTONS - squircle, not pill) */
   --radius-sm: 4px;
   --radius-md: 6px;
-  --radius-lg: 10px;
+  --radius-lg: 8px;
   --radius-xl: 12px;
   --radius-2xl: 16px;
   --radius-full: 9999px;
 
-  /* Shadows (Light theme - soft) */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.08);
+  /* ATTIO SIGNATURE: Dual-layer cinematic shadows (ambient + elevation) */
+  --shadow-ambient-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-elevation-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-sm: var(--shadow-ambient-sm), var(--shadow-elevation-sm);
+
+  --shadow-ambient-md: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-elevation-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: var(--shadow-ambient-md), var(--shadow-elevation-md);
+
+  --shadow-ambient-lg: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-elevation-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg: var(--shadow-ambient-lg), var(--shadow-elevation-lg);
+
+  --shadow-ambient-xl: 0 8px 16px rgba(0, 0, 0, 0.1);
+  --shadow-elevation-xl: 0 16px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: var(--shadow-ambient-xl), var(--shadow-elevation-xl);
+
   --shadow-glow: 0 0 20px rgba(70, 130, 240, 0.15);
 
   /* Animations (Smooth, not bouncy) */
@@ -282,7 +299,7 @@
   --section-padding-y: 6rem;
   --section-padding-x: 1.5rem;
 
-  /* Component tokens (ATTIO: 10px BUTTON RADIUS, GHOST BUTTONS) */
+  /* Component tokens (ATTIO: 8px BUTTON RADIUS, GHOST BUTTONS) */
   --button-radius: var(--radius-lg);
   --button-padding-x: 16px;
   --button-padding-y: 10px;
@@ -311,6 +328,41 @@
   --section-separator-color: var(--border-default);
   --section-separator-dash: 4px;
   --section-separator-gap: 8px;
+
+  /* ATTIO SIGNATURE: Dot grid background pattern */
+  --bg-pattern-dot-grid: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+  --bg-pattern-dot-size: 24px 24px;
+
+  /* Performance Optimizations */
+  --will-change-transform: transform;
+  --will-change-opacity: opacity;
+  --will-change-auto: auto;
+}
+
+/* DS2 Performance Optimizations */
+[data-theme="ds2"] .card,
+[data-theme="ds2"] .button,
+[data-theme="ds2"] .section {
+  contain: layout style;
+}
+
+[data-theme="ds2"] .animate-element {
+  will-change: var(--will-change-transform);
+  transform: translateZ(0); /* GPU acceleration */
+}
+
+[data-theme="ds2"] .hover-element {
+  will-change: var(--will-change-transform);
+  backface-visibility: hidden; /* Reduce flickering */
+}
+
+[data-theme="ds2"] .fade-element {
+  will-change: var(--will-change-opacity);
+}
+
+/* Reset will-change after animations */
+[data-theme="ds2"] .animate-complete {
+  will-change: var(--will-change-auto);
 }
 
 /* ============================================
@@ -766,6 +818,32 @@ body {
   background-size: calc(var(--section-separator-dash) + var(--section-separator-gap)) 1px;
   background-repeat: repeat-x;
   height: 1px;
+}
+
+/* ATTIO SIGNATURE: Dot grid background pattern */
+[data-theme="ds2"] .bg-dot-grid {
+  background-image: var(--bg-pattern-dot-grid);
+  background-size: var(--bg-pattern-dot-size);
+}
+
+/* ATTIO SIGNATURE: Typography refinements */
+[data-theme="ds2"] .headline-attio {
+  letter-spacing: var(--letter-spacing-headline);
+  font-weight: var(--font-weight-headline);
+}
+
+[data-theme="ds2"] .body-attio {
+  font-weight: var(--font-weight-body);
+}
+
+/* ATTIO SIGNATURE: Cinematic shadow cards */
+[data-theme="ds2"] .card-cinematic {
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow var(--duration-normal) var(--ease-default);
+}
+
+[data-theme="ds2"] .card-cinematic:hover {
+  box-shadow: var(--shadow-xl);
 }
 
 /* ============================================

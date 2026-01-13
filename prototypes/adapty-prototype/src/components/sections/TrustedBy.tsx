@@ -15,18 +15,18 @@ export function TrustedBy() {
         </p>
 
         {/* Logo Grid */}
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+        <div className="flex flex-wrap items-center justify-center gap-12 md:gap-16">
           {trustedBy.logos.map((logo) => (
             <div
               key={logo.name}
-              className="opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+              className="opacity-40 grayscale transition-all duration-300 hover:opacity-80 hover:grayscale-0"
             >
               <Image
                 src={`/logos/trusted-by/${logo.file}`}
                 alt={logo.name}
                 width={120}
                 height={40}
-                className="h-8 w-auto object-contain md:h-10"
+                className="h-4 w-auto object-contain md:h-4"
               />
             </div>
           ))}
