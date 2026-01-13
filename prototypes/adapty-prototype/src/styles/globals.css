@@ -365,6 +365,63 @@
   will-change: var(--will-change-auto);
 }
 
+/* ATTIO SIGNATURE: Dot Grid Background - APPLIED */
+[data-theme="ds2"] .dot-grid-bg,
+[data-theme="ds2"] main {
+  background-image: var(--bg-pattern-dot-grid);
+  background-size: var(--bg-pattern-dot-size);
+  background-position: 0 0;
+}
+
+/* ATTIO SIGNATURE: Connector Lines - Flow schematic skeleton */
+[data-theme="ds2"] .connector-line {
+  position: absolute;
+  background: var(--border-subtle);
+}
+
+[data-theme="ds2"] .connector-line-v {
+  width: 1px;
+  height: 100%;
+}
+
+[data-theme="ds2"] .connector-line-h {
+  height: 1px;
+  width: 100%;
+}
+
+/* Connector line with node dots */
+[data-theme="ds2"] .connector-node {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+}
+
+[data-theme="ds2"] .connector-node-filled {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Section connector - vertical line between sections */
+[data-theme="ds2"] section::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) translateY(50%);
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--border-default), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+[data-theme="ds2"] section:last-of-type::after {
+  display: none;
+}
+
 /* ============================================
  * DS3: POLAR-INSPIRED
  * Dark, minimal, code-first, FAST 150ms animations
