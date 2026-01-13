@@ -1,8 +1,10 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://adapty.io/static/logo-light-bbabc985b32ae35da6fbcca33fde3913.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://adapty.io/static/logo-dark-5c6af0f9ae3ef8cd5a5eaa1959d5e1fc.svg">
-  <img alt="Adapty Logo" src="https://adapty.io/static/logo-dark-5c6af0f9ae3ef8cd5a5eaa1959d5e1fc.svg" width="200">
-</picture>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/adapty-logo-white.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/adapty-logo-color.svg">
+    <img alt="Adapty Logo" src=".github/adapty-logo-color.svg" width="200">
+  </picture>
+</p>
 
 # Website Redesign Project
 
