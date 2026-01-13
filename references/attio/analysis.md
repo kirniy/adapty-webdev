@@ -29,10 +29,10 @@ Attio uses a clean, light-first design with sophisticated LAB color space for pe
 
 ## Typography
 - **Primary**: Inter (body), Inter Display (headings)
-- **Serif**: Tiempos Text (accent/quotes)
 - **Mono**: JetBrains Mono (code)
 - **Weights**: 400 (normal), 500 (medium), 600 (semibold), 700 (bold)
 - **Default weight**: 500 (medium) - slightly heavier than typical
+- **Note**: All text including quotes and headlines uses sans-serif fonts
 
 ### Type Scale
 | Level | Size | Weight | Letter Spacing | Line Height |
@@ -431,7 +431,7 @@ Attio uses a clean, light-first design with sophisticated LAB color space for pe
 ```
 
 ### 3. Quote Animation
-- Large serif-style quote
+- Large sans-serif quote (Inter Display)
 - Gradient text reveal on scroll
 - Part of text lighter (grayed out)
 - Animates which section is highlighted
@@ -460,7 +460,7 @@ Attio uses a clean, light-first design with sophisticated LAB color space for pe
 ## Key Insights for Adapty
 
 1. **LAB color space** provides perceptually uniform colors
-2. **Inter Display** for headings vs Inter for body creates hierarchy
+2. **Inter font family** throughout with weight variations for hierarchy (no serif)
 3. **Medium weight (500) as default** makes text feel substantial
 4. **Tight line-height on H1** (1:1 ratio) creates compact headlines
 5. **Subtle gray scale** (white-100 to white-900) for depth without darkness

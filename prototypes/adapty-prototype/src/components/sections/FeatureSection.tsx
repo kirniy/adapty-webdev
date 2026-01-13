@@ -165,15 +165,6 @@ function FeatureSectionAttio({
   return (
     <Section className={cn("border-b border-[var(--border-subtle)] bg-[var(--bg-primary)] py-20", className)}>
       <Container>
-        {/* Attio Editorial Header: [01] TITLE ............ / ITEM */}
-        <div className="mb-12 flex items-baseline justify-between border-b border-dotted border-[var(--border-strong)] pb-4 font-mono text-xs tracking-widest text-[var(--text-tertiary)] uppercase">
-          <div className="flex items-center gap-4">
-            <span className="text-[var(--color-primary)]">[{sectionNumber || "00"}]</span>
-            <span className="text-[var(--text-primary)]">{title}</span>
-          </div>
-          <div className="hidden sm:block">/ {image.alt.split(" ")[0] || "FEATURE"}</div>
-        </div>
-
         <div className={cn("grid gap-12 lg:grid-cols-12", flipped && "lg:[direction:rtl]")}>
           {/* Content Column (Narrower in Attio style often) */}
           <div className="lg:col-span-5 lg:[direction:ltr] flex flex-col justify-center">

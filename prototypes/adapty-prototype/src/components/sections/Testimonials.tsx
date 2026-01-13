@@ -83,14 +83,6 @@ export function Testimonials({ variant = "carousel" }: TestimonialsProps) {
       </div>
 
       <Container className="relative z-10">
-        {/* DS2 ATTIO: Section number with dotted separator */}
-        <div className="section-number-container mb-6 flex items-center justify-center gap-4">
-          <span className="section-number">[04]</span>
-          <div className="dotted-separator w-12" />
-          <span className="text-xs font-medium tracking-widest text-[var(--text-muted)] uppercase">Testimonials</span>
-          <div className="dotted-separator w-12" />
-        </div>
-
         <div className="mx-auto mb-12 max-w-3xl text-center">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
             <span className="text-[var(--text-primary)]">{testimonials.headline.primary}</span>

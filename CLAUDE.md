@@ -1,10 +1,10 @@
 ---
 project: adapty-redesign
-version: 2.0.0
-last_updated: 2026-01-12T18:30:00Z
+version: 2.1.0
+last_updated: 2026-01-13T18:48:00Z
 owner: kirill-kholodenko
 stakeholder: sergey-muratov
-phase: setup
+phase: phase-a-testing
 status: active
 tags: [redesign, nextjs, tailwind, design-system, a-b-testing]
 ---
@@ -12,7 +12,7 @@ tags: [redesign, nextjs, tailwind, design-system, a-b-testing]
 # ADAPTY Website Redesign - Navigation & Context
 
 > **IMPORTANT**: This is a living navigation document. Update after every significant change.
-> Last significant update: 2026-01-12 - DS token files complete, ready for prototypes
+> Last significant update: 2026-01-13 - Repo cleanup, DS wireframe comparison audit complete
 
 ---
 
@@ -23,12 +23,14 @@ tags: [redesign, nextjs, tailwind, design-system, a-b-testing]
 | **Project Root** | `/` | Main workspace | Active |
 | **Reference Source** | `/adapty-pt2/` | READ-ONLY source of truth | Locked |
 | **Design Systems** | `/design-systems/` | 5 DS variants for testing | ✅ Tokens filled |
-| **Prototypes** | `/prototypes/` | Phase A & B builds | Not started |
+| **Prototypes** | `/prototypes/` | Phase A & B builds | ✅ Deployed |
 | **Skeleton** | `/skeleton/` | Shared content/assets | Complete |
 | **References** | `/references/` | Site analysis data | ✅ COMPLETE |
 | **Messages** | `/messages/` | Sergey communications | 01-roadmap ready |
 | **Scripts** | `/scripts/` | Automation tools | Ready |
 | **Docs** | `/docs/` | Project documentation | Partial |
+| **Reports** | `/reports/` | Audits, comparisons, research | Active |
+| **Research** | `/research/` | Phase B library research | ✅ Complete |
 
 ---
 
@@ -36,25 +38,20 @@ tags: [redesign, nextjs, tailwind, design-system, a-b-testing]
 
 ```yaml
 current_phase: "Phase A - Design System Testing"
-next_phase: "Deploy & Test Prototypes"
+next_phase: "Improve DS variants based on audit findings"
 blocking_tasks: []
 completed_today:
-  - Repository structure created
-  - SKELETON.md with 14 sections defined
-  - 5 DS templates (design-system.md, tokens.css, tailwind.config.ts)
-  - Automation scripts (create-prototype.sh, deploy-prototype.sh, generate-comparison.sh)
-  - Message 01-roadmap for Sergey
-  - CLAUDE.md restructured as navigation layer v2.0
-  - claude-mem plugin installed and working
-  - ✅ Reference site extraction COMPLETE (5 sites via Chrome automation)
-  - ✅ Synthesis documents created (patterns.md, differentiators.md, recommendations.md)
-  - ✅ DS token files COMPLETE (all 5 variants filled)
-  - ✅ SINGLE PROTOTYPE BUILT with 5-way theme switcher
-  - ✅ All CSS tokens consistent per DS (buttons, cards, radiuses)
-  - ✅ Build passes, deployed to Vercel
-in_progress: []
+  - ✅ Phase B research complete (Gemini + Opus 4.5)
+  - ✅ DS wireframe comparison audit (all 5 variants vs reference sites)
+  - ✅ Repo cleanup (removed duplicate folders, scattered CLAUDE.md files)
+  - ✅ Reports folder structure created
+  - ✅ Research folder organized with Gemini prompt and findings
+  - ✅ ASCII wireframes added to Vercel and Clerk analysis.md files
+  - ✅ All 5 reference analysis.md files now have comprehensive wireframes
+in_progress:
+  - Improve DS variants based on audit findings
 pending:
-  - Visual testing of all 5 DS variants
+  - Fix critical gaps identified in audit (DS4 Vercel gradient, DS1 Linear animations)
   - Gather feedback from Sergey
 prototype_status:
   location: "/prototypes/adapty-prototype"
@@ -73,10 +70,15 @@ ds_token_summary:
   DS3_Polar: "10px buttons, 10px cards, #171719 bg, ALL 150ms anims"
   DS4_Vercel: "6px buttons, 8px cards, #000000 bg, compound shadows"
   DS5_Clerk: "24px pill buttons, 12px cards, #F7F7F8 bg, purple accent"
+audit_results:
+  DS1_Linear: "45% match - missing layered hero, animated cards"
+  DS2_Attio: "55% match - missing serif font emphasis"
+  DS3_Polar: "40% match - missing embedded mini-UIs in cards"
+  DS4_Vercel: "30% match - CRITICAL: missing signature gradient hero"
+  DS5_Clerk: "60% match - closest, missing background pattern"
 session_notes:
-  - claude-mem is ACTIVE - 24+ memories captured today
-  - All components use --button-radius and --card-radius tokens
-  - Button component has 5 variants: primary, secondary, outline, ghost, text
+  - Audit report: reports/audits/2026-01-13-1700-ds-wireframe-comparison-audit.md
+  - Priority fixes: DS4 gradient hero, DS1 animated cards, DS2 serif fonts
 ```
 
 ---
@@ -224,6 +226,39 @@ session_notes:
 ./scripts/generate-comparison.sh a --lighthouse --screenshots
 ```
 
+### `/reports/` - Project Reports
+
+```
+/reports/
+├── audits/                        # DS wireframe audits, code audits
+│   └── 2026-01-13-1700-ds-wireframe-comparison-audit.md
+├── comparisons/                   # Side-by-side comparisons
+└── research/                      # Research summaries
+```
+
+**Local conventions:**
+- All report files named with date-time prefix: `YYYY-MM-DD-HHMM-description.md`
+- Audits compare prototypes vs reference sites
+- Comparisons are side-by-side DS or library evaluations
+- Research contains summarized findings
+
+### `/research/` - Phase B Research
+
+```
+/research/
+├── phase-b-ui-libraries-research.md     # Opus 4.5 research summary
+├── phase-b-gemini-ui-libraries-research.md  # Gemini Deep Research
+├── phase-b-report-sergey.docx           # Russian report for stakeholder
+├── gemini-research-prompt.md            # Prompt used for Gemini research
+├── ui-libraries/                        # Individual library analysis
+└── animation-libraries/                 # Animation library research
+```
+
+**Research Conclusions:**
+- Primary: shadcn/ui + MCP integration for Claude
+- Animation: ReactBits + 21stDev for micro-interactions
+- Alternative: Shadcn Blocks for pre-built components
+
 ---
 
 ## Key Context
@@ -275,7 +310,7 @@ Location: `/docs/TASKS.md` (create if not exists)
 - `[!]` Blocked
 - `[-]` Cancelled
 
-### Current Sprint (2026-01-12)
+### Current Sprint (2026-01-13)
 ```
 [x] Create repository structure
 [x] Write initial CLAUDE.md
@@ -289,8 +324,13 @@ Location: `/docs/TASKS.md` (create if not exists)
 [x] Extract reference sites via Chrome - 5/5 COMPLETE
 [x] Create synthesis docs (patterns, differentiators, recommendations)
 [x] Fill DS tokens from extraction data - ALL 5 COMPLETE
-[>] Build Phase A prototypes
-[ ] Deploy to Vercel for comparison
+[x] Build Phase A prototype with 5-way theme switcher
+[x] Deploy to Vercel (adapty-prototype.vercel.app)
+[x] Phase B research (Gemini + Opus 4.5) - shadcn/ui + MCP selected
+[x] DS wireframe comparison audit - all 5 variants analyzed
+[x] Repo cleanup - removed duplicates, organized reports/research
+[>] Improve DS variants based on audit findings
+[ ] Present findings to Sergey
 ```
 
 ---

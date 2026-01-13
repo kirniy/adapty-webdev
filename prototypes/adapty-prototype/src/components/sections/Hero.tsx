@@ -5,8 +5,12 @@ import Image from "next/image";
 import { Button } from "~/components/ui/Button";
 import { Container } from "~/components/ui/Container";
 import { content } from "~/config/content";
-import { ArrowRight, Play, ChevronRight } from "lucide-react";
+import { ArrowRight, Play, ChevronRight, Zap, RefreshCw, BarChart3, Target } from "lucide-react";
 import { cn } from "~/lib/utils";
+// DS2 Attio-specific schematic components
+import { SchematicLine, SchematicConnector } from "~/components/ds2/SchematicLine";
+import { ConnectionNode } from "~/components/ds2/ConnectionNode";
+import { FlowDiagramCard, FlowDiagramResult } from "~/components/ds2/FlowDiagramCard";
 
 interface HeroProps {
   variant?: "ds1" | "ds2" | "ds3" | "ds4" | "ds5" | "default";
@@ -70,8 +74,8 @@ function HeroDS1() {
             <span className="text-[var(--text-muted)]">{hero.headline.secondary}</span>
           </h1>
 
-          {/* Two-Tone subheadline */}
-          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed tracking-[-0.01em]">
+          {/* Two-Tone subheadline with tight letter-spacing */}
+          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed" style={{ letterSpacing: 'var(--letter-spacing-tight)' }}>
             <span className="text-[var(--text-primary)]">{hero.subheadline.primary}</span>
             <span className="text-[var(--text-muted)]"> {hero.subheadline.secondary}</span>
           </p>
@@ -88,12 +92,17 @@ function HeroDS1() {
           </div>
         </div>
 
-        {/* LINEAR SIGNATURE: 3D Layered Product Showcase with perspective */}
+        {/* LINEAR SIGNATURE: Enhanced 3D Layered Product Showcase with perspective */}
         <div className="relative mx-auto mt-20 max-w-6xl perspective-container">
           <div className="relative" style={{ perspective: 'var(--perspective-depth)' }}>
-            {/* Background layer - Analytics panel (LEFT) */}
-            <div className="card-linear animate-float absolute left-0 top-8 w-[35%] rounded-[var(--radius-card)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-4 layer-back"
-                 style={{ animationDelay: '0s' }}>
+            {/* Background layer - Analytics panel (LEFT) - Enhanced 3D */}
+            <div
+              className="card-linear animate-float absolute left-0 top-8 w-[35%] rounded-[var(--radius-card)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-4"
+              style={{
+                animationDelay: '0s',
+                transform: 'rotateY(var(--rotate-back)) var(--transform-z-back)',
+                transformStyle: 'preserve-3d',
+              }}>
               <div className="rounded-xl bg-[var(--bg-tertiary)] p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="h-2 w-2 rounded-full bg-[var(--color-accent)]" />
@@ -130,9 +139,14 @@ function HeroDS1() {
               </div>
             </div>
 
-            {/* Front layer - Paywall Builder (RIGHT) */}
-            <div className="card-linear animate-float absolute right-0 top-16 w-[30%] rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-secondary)] p-3 layer-front"
-                 style={{ animationDelay: '2s' }}>
+            {/* Front layer - Paywall Builder (RIGHT) - Enhanced 3D */}
+            <div
+              className="card-linear animate-float absolute right-0 top-16 w-[30%] rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-secondary)] p-3"
+              style={{
+                animationDelay: '2s',
+                transform: 'rotateY(var(--rotate-subtle)) var(--transform-z-front)',
+                transformStyle: 'preserve-3d',
+              }}>
               <div className="rounded-xl bg-[var(--bg-tertiary)] p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="h-2 w-2 rounded-full bg-[var(--color-success)]" />
@@ -169,10 +183,9 @@ function HeroDS1() {
 // ============================================
 // DS2: Attio-Inspired Layout
 // - Section numbering [01]
-// - ATTIO SIGNATURE: Serif emphasis on emotional words
-// - Two-tone headline (black + gray) with serif accent
+// - Two-tone headline (black + gray)
 // - Interactive product tabs in hero
-// - Dual button CTAs with ghost variant
+// - Dual button CTAs with ghost variant (8px squircle radius)
 // ============================================
 function HeroDS2() {
   const { hero } = content;
@@ -187,36 +200,48 @@ function HeroDS2() {
 
   return (
     <section className="relative bg-[var(--bg-primary)] pt-16 pb-0">
+      {/* ATTIO SIGNATURE: Edge accent line on left side */}
+      <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-[var(--color-primary)] via-[var(--color-primary)]/50 to-transparent" />
+
       <Container>
-        {/* ATTIO SIGNATURE: Section number + dotted separator */}
-        <div className="mb-8 flex items-center justify-center gap-4">
-          <span className="section-number">[01]</span>
-          <div className="dotted-separator w-16" />
-          <span className="text-xs font-medium tracking-widest text-[var(--text-muted)] uppercase">
-            Platform
-          </span>
+        {/* ATTIO SIGNATURE: Schematic connector lines */}
+        <div className="absolute left-8 top-24 hidden lg:block">
+          <SchematicLine orientation="vertical" length={120} hasStartNode />
+          <div className="ml-[-4px] mt-2">
+            <SchematicConnector path="straight-h" primaryLength="40px" withNodes={false} />
+          </div>
         </div>
 
-        {/* ATTIO SIGNATURE: Headline with serif emphasis */}
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="mb-4 text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl" style={{ fontWeight: 'var(--font-weight-default, 500)' }}>
-            {/* Split headline with serif emphasis on "powerful" emotional word */}
+        {/* Content with badge */}
+        <div className="mx-auto max-w-4xl text-center relative">
+          {/* Badge - Attio style stroke variant */}
+          <div className="mb-6">
+            <a
+              href={hero.badge.href}
+              className="inline-flex items-center gap-2 rounded-[var(--radius-md)] border border-[var(--border-default)] bg-transparent px-3 py-1.5 text-sm font-medium text-[var(--text-secondary)] transition-all duration-[var(--duration-fast)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)]" />
+              {hero.badge.text}
+              <ChevronRight className="h-3.5 w-3.5" />
+            </a>
+          </div>
+
+          {/* Headline - Two-tone with SERIF emphasis */}
+          <h1 className="headline-attio mb-4 text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl" style={{ fontWeight: 'var(--font-weight-default, 500)' }}>
             <span className="text-[var(--text-primary)]">
-              The{" "}
-              <span className="text-serif italic">magic</span>
-              {" "}of subscription
+              The <span className="text-serif italic">power</span> of subscription
             </span>
             <br className="hidden sm:block" />
             <span className="text-[var(--text-muted)]">analytics & paywalls</span>
           </h1>
 
           {/* Two-Tone Subheadline with medium weight */}
-          <p className="mx-auto mb-8 max-w-xl text-lg font-medium">
+          <p className="body-attio mx-auto mb-8 max-w-xl text-lg font-medium">
             <span className="text-[var(--text-primary)]">{hero.subheadline.primary}</span>
             <span className="text-[var(--text-muted)]"> {hero.subheadline.secondary}</span>
           </p>
 
-          {/* Dual CTAs - Attio uses solid primary + ghost secondary */}
+          {/* Dual CTAs - Attio uses solid primary + ghost secondary (8px squircle) */}
           <div className="mb-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Button size="lg" href={hero.cta.primary.href}>
               {hero.cta.primary.text}
@@ -228,39 +253,96 @@ function HeroDS2() {
           </div>
         </div>
 
-        {/* Interactive Product Tabs - Signature Attio pattern */}
+        {/* ATTIO SIGNATURE: Flow Diagram Cards - Automation Workflow */}
+        <div className="mx-auto max-w-4xl mb-12">
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+            <FlowDiagramCard
+              icon={<Zap className="h-4 w-4" />}
+              label="Trigger"
+              status="active"
+              description="User opens app"
+            />
+            <SchematicConnector path="straight-h" primaryLength="32px" withNodes={false} className="hidden sm:block" />
+            <FlowDiagramCard
+              icon={<Target className="h-4 w-4" />}
+              label="Condition"
+              status="pending"
+              description="Check subscription"
+            />
+            <SchematicConnector path="straight-h" primaryLength="32px" withNodes={false} className="hidden sm:block" />
+            <FlowDiagramResult
+              icon={<BarChart3 className="h-4 w-4" />}
+              label="Result"
+              value="+23% conversion"
+            />
+          </div>
+        </div>
+
+        {/* ATTIO SIGNATURE: Underline tab bar navigation with connection nodes */}
         <div className="mx-auto max-w-5xl">
-          {/* Tab Navigation - rounded pill style */}
-          <div className="mb-0 flex justify-center gap-1 rounded-full border border-[var(--border-default)] bg-[var(--bg-secondary)] p-1">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={cn(
-                  "rounded-full px-6 py-2.5 text-sm font-medium transition-all",
-                  activeTab === tab.id
-                    ? "bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-sm"
-                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                )}
-              >
-                {tab.label}
-              </button>
-            ))}
+          {/* Tab Bar - underline style */}
+          <div
+            role="tablist"
+            className="relative flex gap-6 border-b border-[var(--border-subtle)] mb-6"
+          >
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls={`panel-${tab.id}`}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={cn(
+                    "relative pb-3 px-1 text-sm font-medium transition-colors",
+                    "duration-[var(--duration-fast)] ease-[var(--ease-in-out)]",
+                    isActive
+                      ? "text-[var(--text-primary)]"
+                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                  )}
+                >
+                  {/* Connection node on active tab */}
+                  {isActive && (
+                    <ConnectionNode
+                      size="sm"
+                      variant="active"
+                      className="absolute -top-2 left-1/2 -translate-x-1/2"
+                    />
+                  )}
+                  {tab.label}
+                  {isActive && (
+                    <span
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-primary)] transition-all duration-150"
+                      aria-hidden="true"
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Tab Content - Product Demo with sidebar */}
-          <div className="relative mt-6 overflow-hidden rounded-t-2xl border border-b-0 border-[var(--border-default)] bg-[var(--bg-secondary)]">
+          {/* Tab Content - Product Demo with sidebar + schematic lines */}
+          <div
+            role="tabpanel"
+            id={`panel-${activeTab}`}
+            className="relative overflow-hidden rounded-t-2xl border border-b-0 border-[var(--border-default)] bg-[var(--bg-secondary)] card-cinematic"
+          >
             <div className="grid lg:grid-cols-3">
-              {/* Sidebar simulation - Attio style */}
-              <div className="hidden border-r border-[var(--border-subtle)] bg-[var(--bg-tertiary)] p-4 lg:block">
-                <div className="space-y-2">
+              {/* Sidebar simulation - Attio style with schematic lines */}
+              <div className="hidden border-r border-[var(--border-subtle)] bg-[var(--bg-tertiary)] p-4 lg:block relative">
+                {/* Schematic line in sidebar */}
+                <div className="absolute left-2 top-4 bottom-4">
+                  <SchematicLine orientation="vertical" length={200} hasStartNode hasEndNode />
+                </div>
+                <div className="space-y-2 ml-4">
                   <div className="flex items-center gap-2 rounded-lg bg-[var(--color-primary)]/10 px-3 py-2 text-sm font-medium text-[var(--color-primary)]">
-                    <div className="h-2 w-2 rounded bg-[var(--color-primary)]" />
+                    <ConnectionNode size="xs" variant="active" />
                     {tabs.find((t) => t.id === activeTab)?.label}
                   </div>
                   {tabs.filter((t) => t.id !== activeTab).map((tab) => (
                     <div key={tab.id} className="flex items-center gap-2 px-3 py-2 text-sm text-[var(--text-muted)]">
-                      <div className="h-2 w-2 rounded bg-[var(--text-muted)]/30" />
+                      <ConnectionNode size="xs" variant="inactive" />
                       {tab.label}
                     </div>
                   ))}
@@ -407,16 +489,28 @@ let profile = Adapty.getProfile()`}</code>
 
 // ============================================
 // DS4: Vercel-Inspired Layout
+// - VERCEL SIGNATURE: Gradient hero band (pink→purple→blue blur)
+// - VERCEL SIGNATURE: Compound shadows (border-ring + shadow)
+// - VERCEL SIGNATURE: Bouncy easing animations
 // - Grid pattern background
-// - Large bold headline (no gradients on text - just bold)
+// - Large bold headline
 // - Metrics row before CTAs
-// - Dashboard with subtle glow
 // ============================================
 function HeroDS4() {
   const { hero, stats } = content;
 
   return (
     <section className="relative overflow-hidden bg-[var(--bg-primary)] pt-20 pb-24 md:pt-28 md:pb-32">
+      {/* VERCEL SIGNATURE: Gradient hero band at top */}
+      <div className="absolute top-0 left-0 right-0 h-[500px] overflow-hidden pointer-events-none">
+        {/* Multi-color gradient blobs */}
+        <div className="absolute -top-[200px] left-1/4 w-[600px] h-[600px] rounded-full bg-[#007CF0] opacity-20 blur-[120px]" />
+        <div className="absolute -top-[150px] left-1/2 w-[500px] h-[500px] rounded-full bg-[#7928CA] opacity-20 blur-[100px] -translate-x-1/2" />
+        <div className="absolute -top-[200px] right-1/4 w-[600px] h-[600px] rounded-full bg-[#FF0080] opacity-15 blur-[120px]" />
+        {/* Subtle orange accent on far right */}
+        <div className="absolute -top-[100px] right-0 w-[400px] h-[400px] rounded-full bg-[#F9CB28] opacity-10 blur-[100px]" />
+      </div>
+
       {/* Grid pattern background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border-subtle)_1px,transparent_1px),linear-gradient(to_bottom,var(--border-subtle)_1px,transparent_1px)] [background-size:64px_64px] opacity-30" />
 
@@ -459,12 +553,24 @@ function HeroDS4() {
           </div>
         </div>
 
-        {/* Dashboard with subtle border glow */}
-        <div className="relative mx-auto mt-16 max-w-5xl">
-          {/* Subtle glow effect */}
-          <div className="absolute -inset-4 bg-[var(--color-primary)]/10 blur-3xl rounded-3xl" />
+        {/* VERCEL SIGNATURE: Dashboard with compound shadow and bouncy hover */}
+        <div className="relative mx-auto mt-16 max-w-5xl group">
+          {/* Gradient glow effect that intensifies on hover */}
+          <div
+            className="absolute -inset-4 rounded-3xl opacity-50 blur-3xl transition-opacity duration-[var(--duration-slow)] group-hover:opacity-70"
+            style={{
+              background: 'linear-gradient(135deg, #007CF0 0%, #7928CA 50%, #FF0080 100%)',
+            }}
+          />
 
-          <div className="relative rounded-xl border border-[var(--border-default)] bg-[var(--bg-tertiary)] p-2 shadow-2xl">
+          {/* Dashboard card with compound shadow (border-ring + shadow) */}
+          <div
+            className="relative rounded-xl bg-[var(--bg-tertiary)] p-2 transition-transform duration-[var(--duration-normal)]"
+            style={{
+              boxShadow: 'var(--shadow-xl)',
+              transition: 'transform var(--duration-normal) var(--ease-bouncy)',
+            }}
+          >
             <div className="overflow-hidden rounded-lg">
               <Image
                 src={hero.image.dashboard}
@@ -475,6 +581,29 @@ function HeroDS4() {
                 priority
               />
             </div>
+          </div>
+
+          {/* VERCEL SIGNATURE: Floating metrics badges with bouncy animation */}
+          <div
+            className="absolute -top-4 -right-4 rounded-lg bg-[var(--bg-elevated)] px-4 py-2 border border-[var(--border-default)] transition-transform hover:scale-105"
+            style={{
+              boxShadow: 'var(--shadow-lg)',
+              transition: 'transform var(--duration-fast) var(--ease-bouncy)',
+            }}
+          >
+            <div className="text-xs text-[var(--text-muted)] mb-0.5">Active Users</div>
+            <div className="text-lg font-bold text-[var(--color-success)]">+12.4%</div>
+          </div>
+
+          <div
+            className="absolute -bottom-4 -left-4 rounded-lg bg-[var(--bg-elevated)] px-4 py-2 border border-[var(--border-default)] transition-transform hover:scale-105"
+            style={{
+              boxShadow: 'var(--shadow-lg)',
+              transition: 'transform var(--duration-fast) var(--ease-bouncy)',
+            }}
+          >
+            <div className="text-xs text-[var(--text-muted)] mb-0.5">Conversion Rate</div>
+            <div className="text-lg font-bold gradient-text gradient-develop">8.2%</div>
           </div>
         </div>
       </Container>

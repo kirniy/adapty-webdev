@@ -42,6 +42,11 @@
   --font-sans: "Suisse International", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
+  /* CLERK SIGNATURE: Clean, professional letter-spacing */
+  --letter-spacing-tight: -0.035em;
+  --letter-spacing-heading: -0.02em;
+  --letter-spacing-body: -0.01em;
+
   /* Border Radius (CLERK: 24px PILL BUTTONS) */
   --radius-sm: 6px;
   --radius-md: 8px;
@@ -145,11 +150,13 @@
   --border-subtle: rgba(255, 255, 255, 0.05);
   --border-strong: #34343a;
 
-  /* Typography (Inter Variable with tight letter-spacing) */
+  /* Typography (Inter Variable with LINEAR's tight letter-spacing) */
   --font-sans: "Inter Variable", "Inter", -apple-system, sans-serif;
   --font-mono: "Berkeley Mono", "JetBrains Mono", ui-monospace, monospace;
-  --letter-spacing-tight: -0.02em;
+  /* LINEAR SIGNATURE: Tighter letter-spacing than most sites */
+  --letter-spacing-tight: -0.03em;
   --letter-spacing-heading: -0.04em;
+  --letter-spacing-display: -0.05em;
 
   /* Border Radius (LINEAR: 8px BUTTONS, 30px CARDS) */
   --radius-sm: 4px;
@@ -202,10 +209,13 @@
     0px 4px 24px rgba(0, 0, 0, 0.2),
     0px 8px 32px rgba(0, 0, 0, 0.35);
 
-  /* LINEAR SIGNATURE: 3D perspective transforms */
-  --perspective-depth: 1500px;
-  --rotate-subtle: 3deg;
-  --transform-hover: translateY(-4px);
+  /* LINEAR SIGNATURE: Enhanced 3D perspective transforms */
+  --perspective-depth: 1200px;
+  --rotate-subtle: 4deg;
+  --rotate-back: -3deg;
+  --transform-hover: translateY(-6px);
+  --transform-z-front: translateZ(40px);
+  --transform-z-back: translateZ(-30px);
 }
 
 /* ============================================
@@ -426,23 +436,6 @@
   border-color: var(--color-primary);
 }
 
-/* Section connector - vertical line between sections */
-[data-theme="ds2"] section::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%) translateY(50%);
-  width: 1px;
-  height: 48px;
-  background: linear-gradient(to bottom, var(--border-default), transparent);
-  pointer-events: none;
-  z-index: 1;
-}
-
-[data-theme="ds2"] section:last-of-type::after {
-  display: none;
-}
 
 /* ============================================
  * DS3: POLAR-INSPIRED
@@ -486,6 +479,11 @@
   /* Typography (POLAR: Geist fonts) */
   --font-sans: var(--font-geist-sans), "Geist", -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+
+  /* POLAR SIGNATURE: Tight, code-like letter-spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-heading: -0.03em;
+  --letter-spacing-mono: 0;
 
   /* Border Radius (POLAR: 0.6rem BASE = 9.6px) */
   --radius-base: 0.6rem;
