@@ -1,61 +1,54 @@
 ---
 project: adapty-redesign
-version: 3.1.0
-last_updated: 2026-01-13T21:00:00Z
+version: 3.2.0
+last_updated: 2026-01-13T22:30:00Z
 owner: kirill-kholodenko
 stakeholder: sergey-muratov
-phase: phase-b-shadcn
-status: active
+phase: decision-point
+status: paused-for-review
 tags: [redesign, nextjs, tailwind, design-system, shadcn-ui, tailark]
 ---
 
 # ADAPTY Website Redesign - Navigation & Context
 
 > **IMPORTANT**: This is a living navigation document. Update after every significant change.
-> Last significant update: 2026-01-13 - Phase B setup complete, ready for implementation
+> Last significant update: 2026-01-13 - Phase B assessment complete. shadcn/ui underperformed vs Phase A.
 
 ---
 
 ## SESSION START INSTRUCTIONS (READ FIRST)
 
-### Required Skills to Activate
+### Current Status: DECISION POINT
+
+**Phase B (shadcn/ui) has been evaluated and found lacking.**
+
+Results:
+- Phase A (vanilla Tailwind): Quality 7/10, unique, full control
+- Phase B (shadcn/ui): Quality 4/10, generic, over-engineered
+
+### What Exists Now
+
+| Prototype | Location | Status | Quality |
+|-----------|----------|--------|---------|
+| **Phase A** | `/prototypes/adapty-prototype/` | DEPLOYED | Good base |
+| **DS1-Linear (shadcn)** | `/prototypes/phase-b-shadcn/proto-ds1-linear/` | 14/14 sections | Weak |
+| **DS2-Attio (shadcn)** | `/prototypes/phase-b-shadcn/proto-ds2-attio/` | 10/14 sections | Weak |
+| **DS3-Polar (shadcn)** | `/prototypes/phase-b-shadcn/proto-ds3-polar/` | Scaffolded only | - |
+
+### Awaiting Decision
+
+Three options proposed to Sergey (see `/messages/03-phase-b-assessment/message.md`):
+
+**Option A (Recommended):** Enhance Phase A prototype with polish and animations
+**Option B:** Try Tailark marketing blocks (shadcn extension for landing pages)
+**Option C:** Hybrid - vanilla Tailwind for marketing, shadcn for functional components
+
+### Skills for Next Phase
 ```
-1. styling-with-shadcn    - shadcn/ui patterns and best practices
-2. frontend-design        - Distinctive, production-grade UI
-3. frontend-ui-ux         - Designer-turned-developer mindset
+1. frontend-design        - Distinctive, production-grade UI
+2. frontend-ui-ux         - Designer-turned-developer mindset
+3. (conditional) styling-with-shadcn - Only if Option B or C chosen
 ```
-
-### Required MCP: shadcn
-The **shadcn MCP** has been installed. Verify it's active:
-1. Run `/mcp` command to see active servers
-2. Look for `shadcn` in the list
-3. If missing, reinstall: `pnpm dlx shadcn@latest mcp init --client claude`
-
-**ALWAYS use the shadcn MCP for:**
-- Adding new components
-- Exploring available components
-- Component documentation
-
-### Current Work: Building proto-ds1-linear
-- **Status**: In progress
-- **Location**: `/prototypes/phase-b-shadcn/proto-ds1-linear/`
-- **Plan**: `/docs/PHASE-B-PLAN.md`
-- **Local docs**: `/prototypes/phase-b-shadcn/proto-ds1-linear/CLAUDE.md`
-
-### What's Done
-- [x] Next.js 15 scaffolded
-- [x] shadcn/ui initialized
-- [x] Base components installed
-- [x] globals.css with DS1 Linear tokens
-
-### What's Next (DISCOVERY FIRST - DO NOT SKIP)
-1. **Verify shadcn MCP** is active (run `/mcp`)
-2. **Use shadcn MCP** to explore ALL available components
-3. **For EACH of 14 sections**: Use MCP to decide which components fit
-4. **Document decisions** in `/docs/COMPONENT-DECISIONS.md` with rationale
-5. **ONLY THEN**: Build sections with decided components
-
-**DO NOT assume components. EXPLORE first, DECIDE second, BUILD third.**
 
 ---
 
@@ -80,57 +73,62 @@ The **shadcn MCP** has been installed. Verify it's active:
 ## Current State (UPDATE THIS SECTION REGULARLY)
 
 ```yaml
-current_phase: "Phase B - shadcn/ui Design System Testing"
-next_phase: "Phase B Part 2 - Tailark Marketing Blocks"
-blocking_tasks: []
+current_phase: "Decision Point - Awaiting Sergey's direction"
+next_phase: "TBD based on decision (Option A, B, or C)"
+blocking_tasks:
+  - Awaiting stakeholder decision on direction
+
+# Completed Work
 completed_phases:
   phase_a:
-    - ✅ Phase A prototype with 5-way theme switcher (adapty-prototype.vercel.app)
-    - ✅ DS wireframe comparison audit (all 5 variants vs reference sites)
-    - ✅ Phase B research complete (shadcn/ui selected as primary)
-in_progress:
-  - Building 5 fresh shadcn/ui prototypes from scratch
-pending:
-  - Deploy all 5 Phase B prototypes to Vercel
-  - Build Phase B Part 2 (Tailark marketing blocks)
-  - Present findings to Sergey
+    status: "COMPLETE - DEPLOYED"
+    url: "https://adapty-prototype.vercel.app"
+    quality: "7/10 - Good base, room for polish"
+    sections: "14/14"
+    verdict: "WINNER - vanilla Tailwind provides more control"
 
-# Phase B Architecture
-phase_b_structure:
-  part_1_shadcn: "/prototypes/phase-b-shadcn/"  # Current focus
-  part_2_tailark: "/prototypes/phase-b-tailark/"  # Future
+  phase_b_part_1_assessment:
+    status: "EVALUATED - NOT RECOMMENDED"
+    quality: "4/10 - Generic, over-engineered"
+    conclusion: "shadcn/ui adds friction for marketing sites"
+    prototypes_built:
+      - "proto-ds1-linear: 14/14 sections (weak result)"
+      - "proto-ds2-attio: 10/14 sections (weak result)"
+      - "proto-ds3-polar: scaffolded only (not built)"
+      - "proto-ds4-vercel: not started"
+      - "proto-ds5-clerk: not started"
 
-# 5 Prototypes (Part 1: Pure shadcn/ui)
-prototypes:
-  proto-ds1-linear:
-    status: "in_progress"
-    theme: "Dark (#08090a), premium, 3D depth"
-    signature: "Floating cards, glow hover, -0.04em tracking"
-  proto-ds2-attio:
-    status: "pending"
-    theme: "Light (#ffffff), editorial sophistication"
-    signature: "Serif accents, schematic lines, LAB colors"
-  proto-ds3-polar:
-    status: "pending"
-    theme: "Dark (#171719), code aesthetics"
-    signature: "Geist fonts, 150ms timing, gradient code blocks"
-  proto-ds4-vercel:
-    status: "pending"
-    theme: "True black (#000000), bold"
-    signature: "Gradient hero band, bouncy easing, compound shadows"
-  proto-ds5-clerk:
-    status: "pending"
-    theme: "Warm gray (#F7F7F8), friendly"
-    signature: "Pill buttons (24px), purple accent, background patterns"
+# Proposed Options (see /messages/03-phase-b-assessment/message.md)
+options:
+  option_a:
+    name: "Enhance Phase A"
+    description: "Polish existing prototype with animations"
+    recommended: true
+  option_b:
+    name: "Try Tailark"
+    description: "Marketing blocks for landing pages"
+    recommended: false
+  option_c:
+    name: "Hybrid approach"
+    description: "Vanilla for marketing, shadcn for functional"
+    recommended: false
 
-# Phase A Reference (completed)
+# Key Learning
+key_insight: >
+  shadcn/ui is optimized for dashboards and apps, not landing pages.
+  Marketing sites need pixel-perfect control that component libraries
+  make harder, not easier. Phase A's vanilla Tailwind approach
+  produced better results with similar effort.
+
+# Phase A Reference (the winner)
 phase_a_reference:
   location: "/prototypes/adapty-prototype"
   deployed: true
   url: "adapty-prototype.vercel.app"
   theme_switcher: "Top-right corner, persists via localStorage + URL ?ds=ds1-5"
+  potential: "High - needs polish, animations, and focus on one DS"
 
-# Design System DNA
+# Design System DNA (for reference)
 ds_token_summary:
   DS1_Linear: "8px buttons, 30px cards, #08090a bg, tight letter-spacing"
   DS2_Attio: "10px buttons, 12px cards, #ffffff bg, ghost buttons"
@@ -262,17 +260,24 @@ ds_token_summary:
 
 ```
 /messages/
-├── 01-roadmap/                    # TODAY - Research roadmap (READY)
+├── 01-roadmap/                    # Initial research roadmap
 │   └── message.md
+├── 02-gemini-audit/               # Gemini audit reports (v1-v3)
+│   ├── audit-report.md
+│   ├── audit-report-v2.md
+│   └── audit-report-v3.md
 ├── 02-reference-analysis/         # Reference site analysis
-├── 03-ds-results/                 # Phase A results
-└── 04-library-results/            # Phase B results
+├── 03-phase-b-assessment/         # NEW - Phase B results & recommendations
+│   └── message.md                 # Russian: shadcn didn't work, options A/B/C
+├── 03-ds-results/                 # Phase A results (legacy)
+└── 04-library-results/            # Phase B results (legacy)
 ```
 
 **Local conventions:**
 - All messages to Sergey in RUSSIAN
 - Include clear next steps and questions
 - Reference specific deliverables
+- Latest message: `/messages/03-phase-b-assessment/message.md`
 
 ### `/scripts/` - Automation
 
@@ -323,11 +328,13 @@ ds_token_summary:
 └── animation-libraries/                 # Animation library research
 ```
 
-**Research Conclusions:**
-- Primary: shadcn/ui + MCP integration for Claude
-- Animation: ReactBits + 21stDev for micro-interactions (future)
-- Alternative: Shadcn Blocks for pre-built components
-- Marketing Blocks: Tailark (https://tailark.com/docs) for Phase B Part 2
+**Research Conclusions (UPDATED 2026-01-13):**
+- **INITIAL**: shadcn/ui + MCP integration for Claude
+- **ACTUAL RESULT**: shadcn/ui underperformed for marketing pages
+- **Lesson**: Component libraries add friction for landing pages where every pixel matters
+- **Still worth trying**: Tailark marketing blocks (https://tailark.com/docs)
+- **Animation**: ReactBits + 21stDev for micro-interactions (if proceeding with shadcn)
+- **Recommendation**: Return to vanilla Tailwind (Phase A approach) for marketing sections
 
 **Tailark Integration:**
 ```bash
@@ -338,6 +345,44 @@ ds_token_summary:
 pnpm dlx shadcn add @tailark/hero-1
 pnpm dlx shadcn add @tailark/features-1
 ```
+
+---
+
+## Stakeholder Requirements (from Slack 2026-01-13)
+
+### Priority Pages (in order)
+1. **Homepage** - most visits
+2. **Pricing**
+3. **Schedule a demo**
+4. **Feature pages**: paywall-builder, paywall-ab-testing, onboarding-builder
+5. **Role pages**: for-marketers, for-developers, for-app-owners
+
+**Timeline**: Full site migration in ~1 month, starting with priority pages.
+
+### Sergey's Design Direction
+- **Theme preference**: LIGHT theme, less dense information
+- **Primary refs**: Linear, Attio, Polar.sh, Vercel, Clerk
+- **Caution**: Stripe (outdated, over-copied before)
+- **Competitors to study**: RevenueCat, Superwall (information packaging)
+- **Additional refs**: WorkOS, Railway, Render, Fly.io, Neon, Supabase, Webflow, Raycast, Retool, Notion, Figma, Slack
+
+### External Resources
+- **Figma board**: https://www.figma.com/board/p8dkKA6wUlntwTJFjU3bMB/New-website-references
+- **Existing vibe-code**: https://next-adapty.vercel.app/
+- **Preferred style examples**:
+  - https://adapty.io/apple-ads-manager/
+  - https://adapty.io/apple-fiscal-calendar/
+
+### MCP Resources (from Sergey)
+| Resource | MCP Available | Pricing |
+|----------|---------------|---------|
+| shadcn UI | https://ui.shadcn.com/docs/mcp | FREE |
+| shadcn Blocks | https://www.shadcnblocks.com/pricing | Paid only |
+| React Bits | https://reactbits.dev/get-started/mcp | Free (Pro coming) |
+| 21st.dev | https://21st.dev/mcp | $16+ (API key) |
+| shadcn/studio | https://shadcnstudio.com/mcp/onboarding | $200 PRO |
+
+**Note**: Kirill has prior experience with 21st.dev Magic MCP from founder contact.
 
 ---
 

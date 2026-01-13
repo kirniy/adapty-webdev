@@ -2,6 +2,7 @@ import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { TrustedBy } from "@/components/sections/TrustedBy";
 import { FeatureSection } from "@/components/sections/FeatureSection";
+import { IntegrationsMarquee } from "@/components/sections/IntegrationsMarquee";
 import { RoleCards } from "@/components/sections/RoleCards";
 import { Stats } from "@/components/sections/Stats";
 import { SDKCodeSnippet } from "@/components/sections/SDKCodeSnippet";
@@ -97,6 +98,7 @@ export default function Home() {
         />
       ))}
 
+      <IntegrationsMarquee />
       <RoleCards />
       <Stats />
       <SDKCodeSnippet />

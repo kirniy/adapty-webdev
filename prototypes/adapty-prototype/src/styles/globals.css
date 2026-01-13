@@ -229,44 +229,48 @@
  * Light theme, editorial typography, ghost buttons, section numbering
  * Reference: attio.com
  * ============================================ */
+/* ============================================
+ * DS2: ATTIO-INSPIRED
+ * Light theme, editorial typography, ghost buttons, section numbering
+ * Reference: attio.com
+ * ============================================ */
 [data-theme="ds2"] {
   /* Colors - Primary (BLACK button like Attio CTA) */
-  --color-primary: #000000;
-  --color-primary-hover: #1a1a1a;
-  --color-primary-active: #333333;
-  --color-primary-light: #EEF4FF;
+  --color-primary: #0e1016;
+  /* Deep Ink Black */
+  --color-primary-hover: #1f2128;
+  --color-primary-active: #000000;
+  --color-primary-light: #F2F4F7;
   /* Blue accent for links, interactive elements (NOT buttons) */
   --color-accent: #4682F0;
 
   /* Colors - Backgrounds (Pure White) */
   --bg-primary: #ffffff;
   --bg-secondary: #FAFBFC;
-  --bg-tertiary: #F0F2F5;
+  --bg-tertiary: #F4F5F7;
   --bg-muted: #E8EAED;
   --bg-elevated: #ffffff;
   --bg-overlay: rgba(0, 0, 0, 0.5);
 
   /* Colors - Text (Matching Attio exactly) */
-  --text-primary: #131316;
-  --text-secondary: #42434D;
-  --text-tertiary: #5A6578;
-  --text-muted: #8795A8;
+  --text-primary: #1c1d21;
+  --text-secondary: #5e6473;
+  --text-tertiary: #87909e;
+  --text-muted: #aeb4bc;
   --text-inverse: #ffffff;
 
   /* Colors - Semantic (LAB to hex) */
-  --color-bg-secondary: lab(98% 0 2);
+  --color-bg-secondary: #f7f8f9;
   --color-success: #22A861;
   --color-warning: #E5A20C;
   --color-error: #E53E3E;
   --color-info: #4682F0;
 
   /* Colors - Borders */
-  --border-default: #D8DCE3;
-  --border-subtle: #E8EBEF;
-  --border-strong: #A3ADB8;
+  --border-default: #e2e4e8;
+  --border-subtle: #f0f1f3;
+  --border-strong: #d1d4d9;
   --border-style-section: dotted;
-  /* ADD */
-
 
   /* Typography (ATTIO: 4-font system) */
   --font-sans: "Inter", -apple-system, sans-serif;
@@ -276,36 +280,25 @@
 
   /* ATTIO SIGNATURE: Typography refinements */
   --letter-spacing-headline: -0.025em;
-  --font-weight-body: 500;
+  --font-weight-body: 450;
   --font-weight-headline: 600;
   --font-size-h1: 68px;
   --section-number-tracking: 0.2em;
 
-  /* Border Radius (ATTIO: 8px BUTTONS - squircle, not pill) */
+  /* Border Radius (ATTIO: 12px BUTTONS - squircle) */
   --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
   --radius-xl: 12px;
+  /* Key for buttons */
   --radius-2xl: 16px;
   --radius-full: 9999px;
 
   /* ATTIO SIGNATURE: Dual-layer cinematic shadows (ambient + elevation) */
-  --shadow-ambient-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-elevation-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
-  --shadow-sm: var(--shadow-ambient-sm), var(--shadow-elevation-sm);
-
-  --shadow-ambient-md: 0 2px 4px rgba(0, 0, 0, 0.06);
-  --shadow-elevation-md: 0 4px 8px rgba(0, 0, 0, 0.08);
-  --shadow-md: var(--shadow-ambient-md), var(--shadow-elevation-md);
-
-  --shadow-ambient-lg: 0 4px 8px rgba(0, 0, 0, 0.08);
-  --shadow-elevation-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
-  --shadow-lg: var(--shadow-ambient-lg), var(--shadow-elevation-lg);
-
-  --shadow-ambient-xl: 0 8px 16px rgba(0, 0, 0, 0.1);
-  --shadow-elevation-xl: 0 16px 32px rgba(0, 0, 0, 0.12);
-  --shadow-xl: var(--shadow-ambient-xl), var(--shadow-elevation-xl);
-
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 24px 48px -12px rgba(0, 0, 0, 0.12);
   --shadow-glow: 0 0 20px rgba(70, 130, 240, 0.15);
 
   /* Animations (Smooth, not bouncy) */
@@ -316,32 +309,33 @@
   --duration-slow: 300ms;
 
   /* Layout */
-  --header-height: 68px;
+  --header-height: 80px;
+  /* Taller header */
   --page-max-width: 1280px;
   --section-padding-y: 6rem;
   --section-padding-x: 1.5rem;
 
-  /* Component tokens (ATTIO: 8px BUTTON RADIUS, GHOST BUTTONS) */
-  --button-radius: var(--radius-lg);
-  --button-padding-x: 16px;
+  /* Component tokens (ATTIO: 12px BUTTON RADIUS) */
+  --button-radius: var(--radius-xl);
+  --button-padding-x: 18px;
   --button-padding-y: 10px;
   --button-ghost-bg: transparent;
-  --button-ghost-border: var(--border-default);
-  --ghost-button-hover-bg: transparent;
+  --button-ghost-border: transparent;
+  --ghost-button-hover-bg: rgba(0, 0, 0, 0.04);
   /* Override */
 
   --card-radius: var(--radius-xl);
   --card-bg: var(--bg-elevated);
   --card-border: var(--border-subtle);
   --input-radius: var(--radius-md);
-  --nav-bg: var(--bg-primary);
+  --nav-bg: rgba(255, 255, 255, 0.9);
 
   /* Section numbering (ATTIO signature) */
   --section-number-color: var(--text-muted);
   --section-number-size: 0.875rem;
 
   /* ATTIO SIGNATURE: Serif emphasis for emotional words */
-  --font-weight-default: 500;
+  --font-weight-default: 450;
   --serif-emphasis-weight: 600;
 
   /* ATTIO SIGNATURE: Watermark quotes */
@@ -355,26 +349,23 @@
   --section-separator-gap: 8px;
 
   /* ATTIO SIGNATURE: Dot grid background pattern */
-  --bg-pattern-dot-grid: radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+  --bg-pattern-dot-grid: radial-gradient(circle, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
   --bg-pattern-dot-size: 24px 24px;
 
-  /* ATTIO SIGNATURE: Schematic Line System (Technical Diagram Aesthetic)
-   * NOTE: These should be VERY subtle - barely perceptible like Attio
-   * The real Attio uses ultra-thin, dotted, low-opacity lines */
-  --schematic-line-color: rgba(0, 0, 0, 0.08);
+  /* ATTIO SIGNATURE: Schematic Line System */
+  --schematic-line-color: rgba(0, 0, 0, 0.06);
   --schematic-line-width: 1px;
   --schematic-line-accent: var(--color-accent);
   --schematic-line-dash: 2px 6px;
-  /* For dotted/dashed appearance */
   --schematic-line-opacity: 0.5;
 
-  /* Connection Nodes (Junction Points) - smaller, subtler */
+  /* Connection Nodes */
   --node-size: 6px;
   --node-border: 1px;
-  --node-color: rgba(0, 0, 0, 0.15);
+  --node-color: rgba(0, 0, 0, 0.1);
   --node-fill: var(--bg-primary);
 
-  /* Edge Accent Line (Vertical accent on cards/sections) - very subtle */
+  /* Edge Accent Line */
   --edge-line-color: var(--color-accent);
   --edge-line-width: 2px;
   --edge-line-opacity: 0.08;
