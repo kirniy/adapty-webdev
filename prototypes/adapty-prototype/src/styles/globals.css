@@ -422,6 +422,15 @@
   background-color: transparent !important;
 }
 
+/* Make main page wrapper and main element transparent so dot grid shows through */
+[data-theme="ds2"] .page-wrapper {
+  background-color: transparent !important;
+}
+
+[data-theme="ds2"] .page-wrapper > main {
+  background-color: transparent !important;
+}
+
 /* ATTIO SIGNATURE: Connector Lines - Flow schematic skeleton */
 [data-theme="ds2"] .connector-line {
   position: absolute;

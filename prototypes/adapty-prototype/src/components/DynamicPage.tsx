@@ -29,12 +29,8 @@ export function DynamicPage() {
     setMounted(true);
   }, []);
 
-  // Prevent hydration mismatch by not rendering theme-dependent structure until mounted
-  if (!mounted) {
-    return null; // Avoid flash of unstyled content/white screen
-  }
-
   // Memoize config to prevent unnecessary recalculations
+  // Must be called before any conditional returns (Rules of Hooks)
   const config = useMemo(() => getDSConfig(theme ?? "ds5"), [theme]);
 
   // Memoize sections array to ensure stable reference
@@ -48,6 +44,11 @@ export function DynamicPage() {
     });
     return counts;
   }, [sections]);
+
+  // Prevent hydration mismatch by not rendering theme-dependent structure until mounted
+  if (!mounted) {
+    return null; // Avoid flash of unstyled content/white screen
+  }
 
   // Render a section by its ID
   const renderSection = (sectionId: SectionId, index: number) => {
@@ -203,7 +204,7 @@ export function DynamicPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
+    <div className="min-h-screen bg-[var(--bg-primary)] page-wrapper">
       <Header />
       <main>
         {sections.map((sectionId, index) => renderSection(sectionId, index))}
