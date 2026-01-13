@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
+import { cn } from "~/lib/utils";
 import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
 import { MoireInterference } from "~/components/textures/MoireInterference";
 import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
@@ -22,10 +23,13 @@ export function G2Badges({ ds }: G2BadgesProps) {
 
       <Container className="relative z-10">
         <div className="mb-10 text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] md:text-3xl">
+          <h2 className={cn(
+            "text-2xl font-bold tracking-tight md:text-3xl",
+            ds === "ds1" ? "heading-metallic" : "text-[var(--text-primary)]"
+          )}>
             {g2Badges.headline}
           </h2>
-          <p className="mt-2 text-[var(--text-secondary)]">
+          <p className={cn("mt-2", ds === "ds1" ? "text-[var(--text-secondary)] opacity-80" : "text-[var(--text-secondary)]")}>
             {g2Badges.subheadline}
           </p>
         </div>

@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
+import { cn } from "~/lib/utils";
 import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
 import { MoireInterference } from "~/components/textures/MoireInterference";
 import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
@@ -27,10 +28,13 @@ export function CaseStudies({ variant = "default", ds }: CaseStudiesProps) {
 
       <Container className="relative z-10">
         <div className="mb-12 flex items-end justify-between">
-          <h2 className="max-w-xl text-3xl font-bold tracking-tight md:text-4xl">
-            <span className="text-[var(--text-primary)]">{caseStudies.headline.primary}</span>
+          <h2 className={cn(
+            "max-w-xl text-3xl font-bold tracking-tight md:text-4xl",
+            ds === "ds1" && "heading-metallic"
+          )}>
+            <span className={ds === "ds1" ? "" : "text-[var(--text-primary)]"}>{caseStudies.headline.primary}</span>
             <br />
-            <span className="text-[var(--text-muted)]">{caseStudies.headline.secondary}</span>
+            <span className={ds === "ds1" ? "opacity-60" : "text-[var(--text-muted)]"}>{caseStudies.headline.secondary}</span>
           </h2>
           <a
             href="https://adapty.io/case-studies/"
@@ -50,7 +54,13 @@ export function CaseStudies({ variant = "default", ds }: CaseStudiesProps) {
               href={study.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex flex-col overflow-hidden rounded-[var(--card-radius)] border border-transparent bg-[var(--bg-secondary)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-[var(--border-subtle)] hover:bg-[var(--bg-primary)] hover:shadow-[var(--shadow-xl)]"
+              className={cn(
+                "group relative flex flex-col overflow-hidden rounded-[var(--card-radius)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1",
+                // DS1: LINEAR PHYSICS - glass substrate with top-light borders
+                ds === "ds1"
+                  ? "card-glass hover:shadow-[var(--shadow-xl)]"
+                  : "border border-transparent bg-[var(--bg-secondary)] hover:border-[var(--border-subtle)] hover:bg-[var(--bg-primary)] hover:shadow-[var(--shadow-xl)]"
+              )}
             >
               <div className="mb-6 flex items-center justify-between">
                 <Image

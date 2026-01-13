@@ -3,6 +3,7 @@ import { Button } from "~/components/ui/Button";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
+import { cn } from "~/lib/utils";
 import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
 import { MoireInterference } from "~/components/textures/MoireInterference";
 import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
@@ -56,10 +57,13 @@ export function Enterprise({ ds }: EnterpriseProps) {
               {enterprise.badge}
             </span>
 
-            <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-              <span className="text-[var(--text-primary)]">{enterprise.headline.primary}</span>
+            <h2 className={cn(
+              "mb-6 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl",
+              ds === "ds1" && "heading-metallic"
+            )}>
+              <span className={ds === "ds1" ? "" : "text-[var(--text-primary)]"}>{enterprise.headline.primary}</span>
               <br />
-              <span className="text-[var(--text-muted)]">{enterprise.headline.secondary}</span>
+              <span className={ds === "ds1" ? "opacity-60" : "text-[var(--text-muted)]"}>{enterprise.headline.secondary}</span>
             </h2>
 
             <p className="mb-10 max-w-lg text-lg">
@@ -90,7 +94,13 @@ export function Enterprise({ ds }: EnterpriseProps) {
               return (
                 <div
                   key={feature.title}
-                  className="rounded-[var(--card-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:shadow-[var(--shadow-lg)]"
+                  className={cn(
+                    "rounded-[var(--card-radius)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1",
+                    // DS1: LINEAR PHYSICS - glass substrate with top-light borders
+                    ds === "ds1"
+                      ? "card-glass hover:shadow-[var(--shadow-lg)]"
+                      : "border border-[var(--border-subtle)] bg-[var(--bg-secondary)] hover:shadow-[var(--shadow-lg)]"
+                  )}
                 >
                   <div className="flex gap-4">
                     <div

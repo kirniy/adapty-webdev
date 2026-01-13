@@ -213,6 +213,35 @@
     0 4px 6px -1px rgba(0, 0, 0, 0.3),
     0 10px 15px -3px rgba(0, 0, 0, 0.2);
 
+  /* ========== LINEAR PHYSICS ENGINE ========== */
+  /* The "Light & Glass" model - surfaces catch light from above */
+
+  /* TOP-LIGHT BORDER PHYSICS: Skylight reflection model */
+  --border-top-light: 1px solid rgba(255, 255, 255, 0.15);
+  --border-bottom-shadow: 1px solid rgba(255, 255, 255, 0.05);
+  --border-side-neutral: 1px solid rgba(255, 255, 255, 0.08);
+
+  /* INNER GLOW: "Milled edge" highlight on inside lip */
+  --shadow-inner-glow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  --shadow-inner-glow-strong: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+
+  /* GLASS SUBSTRATE: Translucent dark glass, not solid fill */
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-bg-hover: rgba(255, 255, 255, 0.04);
+  --glass-bg-elevated: rgba(255, 255, 255, 0.03);
+
+  /* ELECTRIC ACCENTS: Neon emission with bloom */
+  --accent-electric: #7c7fff;
+  --accent-emission: 0 0 20px rgba(94, 106, 210, 0.4), 0 0 40px rgba(94, 106, 210, 0.2);
+  --accent-emission-strong: 0 0 30px rgba(94, 106, 210, 0.5), 0 0 60px rgba(94, 106, 210, 0.25);
+
+  /* METALLIC TEXT: Vertical gradient for headlines (white top -> gray bottom) */
+  --text-metallic-gradient: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
+
+  /* FADE-TO-VOID: Mask for screenshot edges */
+  --mask-fade-bottom: linear-gradient(to bottom, black 60%, transparent 100%);
+  --mask-fade-bottom-strong: linear-gradient(to bottom, black 40%, transparent 95%);
+
   /* LINEAR SIGNATURE: Enhanced 3D perspective transforms */
   --perspective-depth: 2000px;
   --rotate-subtle: 4deg;
@@ -903,19 +932,86 @@ body {
 /* ============================================
  * DS1 LINEAR: Signature Utilities
  * ============================================ */
+/* ========== LINEAR PHYSICS UTILITY CLASSES ========== */
+
+/* GLASS CARD: The "milled aluminum" card with proper lighting */
+[data-theme="ds1"] .card-glass {
+  background: var(--glass-bg);
+  border-top: var(--border-top-light);
+  border-bottom: var(--border-bottom-shadow);
+  border-left: var(--border-side-neutral);
+  border-right: var(--border-side-neutral);
+  box-shadow: var(--shadow-inner-glow), var(--shadow-layered-card);
+  transition: all var(--duration-normal) var(--ease-premium);
+}
+
+[data-theme="ds1"] .card-glass:hover {
+  background: var(--glass-bg-hover);
+  transform: var(--transform-hover);
+  box-shadow: var(--shadow-inner-glow-strong), var(--shadow-layered-card), var(--card-glow-hover);
+}
+
+/* Legacy .card-linear upgraded with physics */
 [data-theme="ds1"] .card-linear {
-  box-shadow: var(--shadow-layered-card);
+  background: var(--glass-bg);
+  border-top: var(--border-top-light);
+  border-bottom: var(--border-bottom-shadow);
+  border-left: var(--border-side-neutral);
+  border-right: var(--border-side-neutral);
+  box-shadow: var(--shadow-inner-glow), var(--shadow-layered-card);
   transition: transform var(--duration-fast) var(--ease-premium), box-shadow var(--duration-fast) var(--ease-premium);
 }
 
 [data-theme="ds1"] .card-linear:hover {
   transform: var(--transform-hover);
-  box-shadow: var(--shadow-layered-card), var(--card-glow-hover);
+  box-shadow: var(--shadow-inner-glow-strong), var(--shadow-layered-card), var(--card-glow-hover);
+}
+
+/* METALLIC HEADLINE: Vertical gradient text (white top -> gray bottom) */
+[data-theme="ds1"] .heading-metallic {
+  background: var(--text-metallic-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: var(--letter-spacing-heading);
+  font-weight: 590;
 }
 
 [data-theme="ds1"] .heading-linear {
   letter-spacing: var(--letter-spacing-heading);
   font-weight: 590;
+}
+
+/* ELECTRIC ACCENT: Elements that "emit" light */
+[data-theme="ds1"] .accent-emit {
+  box-shadow: var(--accent-emission);
+}
+
+[data-theme="ds1"] .accent-emit:hover {
+  box-shadow: var(--accent-emission-strong);
+}
+
+/* FADE-TO-VOID: Screenshot edge treatment */
+[data-theme="ds1"] .fade-to-void {
+  mask-image: var(--mask-fade-bottom);
+  -webkit-mask-image: var(--mask-fade-bottom);
+}
+
+[data-theme="ds1"] .fade-to-void-strong {
+  mask-image: var(--mask-fade-bottom-strong);
+  -webkit-mask-image: var(--mask-fade-bottom-strong);
+}
+
+/* NOISE TEXTURE: Global overlay (2.5% opacity for Linear) */
+[data-theme="ds1"] .noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
 }
 
 /* LINEAR: 3D perspective container */

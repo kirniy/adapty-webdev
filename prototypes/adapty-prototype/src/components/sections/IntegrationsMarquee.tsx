@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
 import { useEffect, useRef, useState } from "react";
+import { cn } from "~/lib/utils";
 import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
 import { MoireInterference } from "~/components/textures/MoireInterference";
 import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
@@ -53,10 +54,16 @@ export function IntegrationsMarquee({ ds }: IntegrationsMarqueeProps) {
 
       <div className="relative z-10">
         <div className="mb-8 text-center">
-          <p className="text-sm font-medium uppercase tracking-wider text-[var(--text-muted)]">
+          <p className={cn(
+            "text-sm font-medium uppercase tracking-wider",
+            ds === "ds1" ? "text-[var(--text-muted)] opacity-80" : "text-[var(--text-muted)]"
+          )}>
             Integrations
           </p>
-          <h2 className="mt-2 text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
+          <h2 className={cn(
+            "mt-2 text-2xl font-semibold md:text-3xl",
+            ds === "ds1" ? "heading-metallic" : "text-[var(--text-primary)]"
+          )}>
             {integrations.headline}
           </h2>
         </div>

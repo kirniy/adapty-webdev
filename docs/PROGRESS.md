@@ -2,7 +2,7 @@
 project: adapty-redesign
 type: progress-log
 status: active
-last_updated: 2026-01-12
+last_updated: 2026-01-13
 tags: [progress, log, history]
 ---
 
@@ -170,6 +170,107 @@ Audit report: `/reports/audits/2026-01-13-1700-ds-wireframe-comparison-audit.md`
 - Average DS match to reference: 46%
 - ASCII wireframes created: 5
 - Research documents: 4 (Gemini, Opus, DOCX, prompt)
+
+---
+
+## 2026-01-13 (Evening) - Phase B Assessment & New Discoveries
+
+### Session Summary
+Built Phase B shadcn/ui prototypes, evaluated results against Phase A, discovered ShadCN Create tool that may change the equation.
+
+### Accomplishments
+
+#### 1. Phase B Prototype Development
+Built shadcn/ui prototypes to test component library approach:
+| Prototype | Sections | Assessment |
+|-----------|----------|------------|
+| proto-ds1-linear | 14/14 | Generic look, over-engineered |
+| proto-ds2-attio | 10/14 | Same issues |
+| proto-ds3-polar | Scaffolded | Not built |
+
+**Tech stack used**: Next.js 15 + shadcn/ui + Framer Motion + Phosphor Icons
+
+#### 2. Phase B Assessment
+**Key finding**: shadcn/ui underperformed vs Phase A (vanilla Tailwind)
+
+| Criterion | Phase A | Phase B |
+|-----------|---------|---------|
+| Visual quality | 7/10 | 4/10 |
+| Uniqueness | High | Low (generic) |
+| Development time | Medium | Medium+ (many overrides) |
+| Customization | Full | Limited by defaults |
+| Marketing suitability | Yes | No |
+
+**Root cause**: Using default shadcn presets. Components look "generic" because all AI models trained on same defaults.
+
+#### 3. ShadCN Create Discovery (Game Changer)
+Discovered ShadCN Create (https://ui.shadcn.com/themes) - launched Dec 12, 2025:
+- Customizes shadcn/ui components BEFORE installation
+- Set fonts, colors, border radius, presets visually
+- Components generated with YOUR brand DNA baked in
+- May solve the "generic look" problem
+
+**Status**: New Option D - recommended to test before abandoning shadcn.
+
+#### 4. Drawbridge Tool Discovery
+Found Drawbridge (https://github.com/breschio/drawbridge):
+- Visual debugging integration with Claude Code
+- Select UI elements visually instead of describing
+- Eliminates "move button 2px" back-and-forth
+- Useful for polish phase
+
+#### 5. Plan Loop Methodology (Matt Pocock)
+Source: https://www.aihero.dev/my-agents-md-file-for-building-plans-you-actually-read
+
+The Plan Loop: Plan → Execute → Test → Commit → Repeat
+
+**Key rules added to ~/.claude/CLAUDE.md**:
+- Make plans extremely concise (sacrifice grammar for scannability)
+- End plans with unresolved questions to answer
+
+**Why it matters**: Planning forces clarity. Without it, AI guesses what you want.
+
+#### 6. Documentation Updates
+Updated all documentation with new findings:
+- `/CLAUDE.md` - Added Stakeholder Requirements, ShadCN Create, Drawbridge sections
+- `/messages/03-phase-b-assessment/message.md` - Russian message for Sergey with options A/B/C/D
+- Research conclusions updated to reflect actual findings
+
+#### 7. Stakeholder Context Captured
+Documented Sergey's requirements from Slack:
+- **Theme preference**: Light, less dense information
+- **Priority pages**: Homepage, Pricing, Schedule Demo, Feature pages, Role pages
+- **Design refs**: Linear, Attio, Polar, Vercel, Clerk (Stripe with caution)
+- **Preferred style**: apple-ads-manager, apple-fiscal-calendar landing pages
+- **MCP resources**: shadcn UI (free), shadcn Blocks (paid), React Bits, 21st.dev, shadcn/studio
+
+### Options Proposed to Sergey
+
+| Option | Description | Recommendation |
+|--------|-------------|----------------|
+| A | Enhance Phase A prototype | Safe choice |
+| B | Try Tailark marketing blocks | Worth testing |
+| C | Hybrid (vanilla + shadcn) | Complex |
+| D | ShadCN Create with custom preset | **Try first** |
+
+### Blockers
+- Awaiting Sergey's decision on direction
+
+### Next Steps
+1. Test ShadCN Create (Option D) - 1-2 hours
+2. If successful: rebuild one DS prototype with custom preset
+3. If not: proceed with Option A (enhance Phase A)
+4. Consider Drawbridge for visual polish phase
+
+### Metrics
+- Phase B prototypes built: 2.5/5
+- Phase B sections complete: 24/70 (~34%)
+- New tools/methodologies discovered: 3 (ShadCN Create, Drawbridge, Plan Loop)
+- Documentation files updated: 4 (CLAUDE.md, message.md, PROGRESS.md, ~/.claude/CLAUDE.md)
+- Options proposed: 4
+
+### Key Learning
+> shadcn/ui's "generic look" problem stems from using default presets, not the library itself. ShadCN Create may be the solution - customize BEFORE installing.
 
 ---
 

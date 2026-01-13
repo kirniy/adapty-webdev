@@ -44,10 +44,13 @@ export function SDKCodeSnippet({ ds }: SDKCodeSnippetProps) {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             {/* Content */}
             <div className="order-2 lg:order-1">
-              <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">
-                <span className="text-[var(--text-primary)]">{sdk.headline.primary}</span>
+              <h2 className={cn(
+                "mb-6 text-3xl font-bold tracking-tight md:text-4xl",
+                ds === "ds1" && "heading-metallic"
+              )}>
+                <span className={ds === "ds1" ? "" : "text-[var(--text-primary)]"}>{sdk.headline.primary}</span>
                 <br />
-                <span className="text-[var(--text-muted)]">{sdk.headline.secondary}</span>
+                <span className={ds === "ds1" ? "opacity-60" : "text-[var(--text-muted)]"}>{sdk.headline.secondary}</span>
               </h2>
               <p className="mb-8 text-lg">
                 <span className="text-[var(--text-primary)]">{sdk.subheadline.primary}</span>
@@ -62,7 +65,12 @@ export function SDKCodeSnippet({ ds }: SDKCodeSnippetProps) {
               </Link>
 
               {/* Testimonial */}
-              <div className="mt-10 rounded-[var(--card-radius)] border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-6">
+              <div className={cn(
+                "mt-10 rounded-[var(--card-radius)] p-6",
+                ds === "ds1"
+                  ? "card-glass"
+                  : "border border-[var(--border-subtle)] bg-[var(--bg-primary)]"
+              )}>
                 <Image
                   src={sdk.testimonial.logo}
                   alt="Company logo"
@@ -181,7 +189,10 @@ export function SDKCodeSnippet({ ds }: SDKCodeSnippetProps) {
       {/* SDK Grid */}
       <Section className="pb-24 pt-8">
         <Container>
-          <h2 className="mb-12 text-center text-2xl font-bold tracking-tight text-[var(--text-primary)] md:text-3xl">
+          <h2 className={cn(
+            "mb-12 text-center text-2xl font-bold tracking-tight md:text-3xl",
+            ds === "ds1" ? "heading-metallic" : "text-[var(--text-primary)]"
+          )}>
             {sdk.gridHeadline}
           </h2>
 
@@ -190,7 +201,12 @@ export function SDKCodeSnippet({ ds }: SDKCodeSnippetProps) {
               <Link
                 key={platform.name}
                 href={platform.link}
-                className="group flex flex-col items-center justify-center rounded-[var(--card-radius)] border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-transparent hover:shadow-[var(--shadow-xl)]"
+                className={cn(
+                  "group flex flex-col items-center justify-center rounded-[var(--card-radius)] p-6 transition-all duration-[var(--duration-normal)] hover:-translate-y-1",
+                  ds === "ds1"
+                    ? "card-glass hover:shadow-[var(--shadow-xl)]"
+                    : "border border-[var(--border-subtle)] bg-[var(--bg-primary)] hover:border-transparent hover:shadow-[var(--shadow-xl)]"
+                )}
               >
                 <div className="relative mb-4 h-12 w-12 transition-transform group-hover:scale-110">
                   <Image

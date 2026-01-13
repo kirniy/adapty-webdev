@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
-
+import { cn } from "~/lib/utils";
 import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
 import { MoireInterference } from "~/components/textures/MoireInterference";
 import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
@@ -30,9 +30,12 @@ export function TrustedBy({ ds }: TrustedByProps) {
       )}
 
       <Container className="relative z-10">
-        <p className="mb-8 text-center text-sm font-medium uppercase tracking-wider">
-          <span className="text-[var(--text-secondary)]">{trustedBy.headline.primary}</span>
-          <span className="text-[var(--text-muted)]"> {trustedBy.headline.secondary}</span>
+        <p className={cn(
+          "mb-8 text-center text-sm font-medium uppercase tracking-wider",
+          ds === "ds1" && "heading-metallic"
+        )}>
+          <span className={ds === "ds1" ? "" : "text-[var(--text-secondary)]"}>{trustedBy.headline.primary}</span>
+          <span className={ds === "ds1" ? "opacity-60" : "text-[var(--text-muted)]"}> {trustedBy.headline.secondary}</span>
         </p>
 
         {/* Logo Grid */}

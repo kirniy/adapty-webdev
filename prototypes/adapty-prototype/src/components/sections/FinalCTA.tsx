@@ -3,6 +3,7 @@ import { Button } from "~/components/ui/Button";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
+import { cn } from "~/lib/utils";
 import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
 import { MoireInterference } from "~/components/textures/MoireInterference";
 import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
@@ -14,6 +15,44 @@ interface FinalCTAProps {
 
 export function FinalCTA({ variant = "default", ds }: FinalCTAProps) {
   const { finalCta } = content;
+
+  // DS1: LINEAR PHYSICS - Premium glass card with electric accents
+  if (ds === "ds1") {
+    return (
+      <Section className="py-24 md:py-32 bg-[var(--bg-primary)]">
+        <Container>
+          <div className="relative overflow-hidden rounded-[var(--card-radius)] card-glass p-12 text-center md:p-24">
+            {/* LINEAR SIGNATURE: Radial gradient glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--color-primary)/10_0%,transparent_70%)] pointer-events-none" />
+
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,var(--border-subtle)_1px,transparent_0)] [background-size:24px_24px] opacity-20 pointer-events-none" />
+
+            <div className="relative z-10 mx-auto max-w-3xl">
+              <h2 className="heading-metallic mb-8 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+                {finalCta.headline.primary}
+                <br className="hidden sm:block" />
+                <span className="opacity-60">{finalCta.headline.secondary}</span>
+              </h2>
+
+              <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
+                {/* Electric accent button with emission glow */}
+                <Button size="lg" href={finalCta.cta.primary.href} className="accent-emit">
+                  {finalCta.cta.primary.text}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+
+                <Button variant="text" size="md" href={finalCta.cta.secondary.href}>
+                  {finalCta.cta.secondary.text}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+    );
+  }
 
   // DS2 Special "Dark Grid" Variant
   if (ds === "ds2") {

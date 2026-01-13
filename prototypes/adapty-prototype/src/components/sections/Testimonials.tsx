@@ -107,10 +107,13 @@ export function Testimonials({ variant = "carousel", ds }: TestimonialsProps) {
 
       <Container className="relative z-10">
         <div className="mx-auto mb-12 max-w-3xl text-center">
-          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
-            <span className="text-[var(--text-primary)]">{testimonials.headline.primary}</span>
+          <h2 className={cn(
+            "text-2xl font-bold tracking-tight md:text-3xl",
+            ds === "ds1" && "heading-metallic"
+          )}>
+            <span className={ds === "ds1" ? "" : "text-[var(--text-primary)]"}>{testimonials.headline.primary}</span>
             <br className="hidden sm:block" />
-            <span className="text-[var(--text-muted)]">{testimonials.headline.secondary}</span>
+            <span className={ds === "ds1" ? "opacity-60" : "text-[var(--text-muted)]"}>{testimonials.headline.secondary}</span>
           </h2>
         </div>
 
@@ -134,7 +137,13 @@ export function Testimonials({ variant = "carousel", ds }: TestimonialsProps) {
           </button>
 
           {/* Card */}
-          <div className="relative overflow-hidden rounded-[var(--card-radius)] border border-[var(--border-default)] bg-[var(--bg-primary)] p-8 shadow-[var(--shadow-lg)] md:p-12">
+          <div className={cn(
+            "relative overflow-hidden rounded-[var(--card-radius)] p-8 md:p-12",
+            // DS1: LINEAR PHYSICS - glass substrate with top-light borders
+            ds === "ds1"
+              ? "card-glass shadow-[var(--shadow-lg)]"
+              : "border border-[var(--border-default)] bg-[var(--bg-primary)] shadow-[var(--shadow-lg)]"
+          )}>
             <Quote className="absolute right-8 top-8 h-24 w-24 text-[var(--color-primary)] opacity-5" />
 
             <div className="grid gap-8 md:grid-cols-2 md:items-center">

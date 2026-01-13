@@ -74,13 +74,13 @@ function FeatureSectionLinear({
 
       <Container className="relative z-10">
         <div className={cn("grid gap-16 lg:grid-cols-2 items-center", flipped && "lg:[direction:rtl]")}>
-          {/* Visual: Animated Glass Card with Glow */}
+          {/* Visual: LINEAR PHYSICS glass card with proper lighting */}
           <div className={cn("relative lg:[direction:ltr] group")}>
-            {/* Glow effect on hover */}
-            <div className="absolute -inset-4 bg-[var(--color-primary)]/0 rounded-3xl blur-2xl transition-all duration-500 group-hover:bg-[var(--color-primary)]/10" />
+            {/* Electric emission glow on hover */}
+            <div className="absolute -inset-4 bg-[var(--color-accent)]/0 rounded-3xl blur-2xl transition-all duration-500 group-hover:bg-[var(--color-accent)]/10" />
 
-            {/* Main Card with Linear layered shadow */}
-            <div className="card-linear relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] transition-all duration-300 group-hover:shadow-[var(--card-glow-hover)]">
+            {/* Main Card with LINEAR PHYSICS: glass substrate + top-light borders */}
+            <div className="card-glass relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)]">
               {/* Glass overlay */}
               <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-20" />
 
@@ -118,7 +118,8 @@ function FeatureSectionLinear({
 
           {/* Content */}
           <div className="lg:[direction:ltr]">
-            <h2 className="heading-linear mb-6 text-4xl font-medium text-[var(--text-primary)] leading-[1.1]">
+            {/* LINEAR PHYSICS: Metallic vertical gradient for headlines */}
+            <h2 className="heading-metallic mb-6 text-4xl font-medium leading-[1.1]">
               {title}
             </h2>
             <p className="mb-8 text-lg text-[var(--text-secondary)] leading-relaxed">

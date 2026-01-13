@@ -2,10 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { Button } from "~/components/ui/Button";
 import { Container } from "~/components/ui/Container";
 import { content } from "~/config/content";
 import { ArrowRight, Play, ChevronRight, Zap, RefreshCw, BarChart3, Target } from "lucide-react";
+
+// Dynamically import UnicornScene to avoid SSR issues
+const UnicornScene = dynamic(() => import("unicornstudio-react"), { ssr: false });
 import { cn } from "~/lib/utils";
 // DS2 Attio-specific schematic components
 import { SchematicLine, SchematicConnector } from "~/components/ds2/SchematicLine";
@@ -77,26 +81,21 @@ function HeroDS1() {
       className="relative overflow-hidden bg-[var(--bg-primary)] pt-24 pb-16 md:pt-32 md:pb-24"
       onMouseMove={handleMouseMove}
     >
-      {/* DS1 ASSET: Living Noise Texture (Matte Finish) */}
-      <NoiseTexture opacity={0.06} />
+      {/* UNICORN STUDIO: Interactive WebGL Background */}
+      <div className="absolute inset-0 z-0">
+        <UnicornScene
+          projectId="dDA6HINiv1KdJg1kM8hm"
+          style={{ width: '100%', height: '100%' }}
+          scale={1}
+          dpi={1.5}
+        />
+      </div>
+
+      {/* LINEAR PHYSICS: Film grain noise at 2.5% for tactile void texture */}
+      <NoiseTexture opacity={0.025} />
 
       {/* LINEAR SIGNATURE: Subtle radial gradient from accent color */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--color-accent)/15%_0%,transparent_50%)]" />
-
-      {/* LINEAR SIGNATURE: Starfield / Particles */}
-      <motion.div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px), radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)',
-          backgroundSize: '40px 40px, 20px 20px',
-          backgroundPosition: '0 0, 10px 10px',
-          maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
-          WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
-          opacity: 0.3,
-          x: starsX,
-          y: starsY
-        }}
-      />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--color-accent)/15%_0%,transparent_50%)] z-[1]" />
 
       <Container className="relative z-10">
         {/* Centered Content - Linear style */}
@@ -113,12 +112,12 @@ function HeroDS1() {
             </a>
           </FadeIn>
 
-          {/* LINEAR SIGNATURE: Two-Tone Headline with tight letter-spacing */}
+          {/* LINEAR PHYSICS: Metallic gradient headline (white top -> gray bottom) */}
           <FadeIn>
-            <h1 className="heading-linear mb-6 text-4xl font-semibold sm:text-5xl md:text-6xl leading-[1.06] tracking-[var(--letter-spacing-h1)]">
-              <span className="text-[var(--text-primary)]">{hero.headline.primary}</span>
+            <h1 className="heading-metallic mb-6 text-4xl font-semibold sm:text-5xl md:text-6xl leading-[1.06] tracking-[var(--letter-spacing-h1)]">
+              {hero.headline.primary}
               <br />
-              <span className="text-[var(--text-muted)]">{hero.headline.secondary}</span>
+              <span className="opacity-60">{hero.headline.secondary}</span>
             </h1>
           </FadeIn>
 
@@ -147,9 +146,9 @@ function HeroDS1() {
         {/* LINEAR SIGNATURE: Enhanced 3D Layered Product Showcase with perspective */}
         <ScaleIn delay={0.2} className="relative mx-auto mt-20 max-w-6xl perspective-container" style={{ perspective: 'var(--perspective-depth)' }}>
           <div className="relative transform-style-3d">
-            {/* Background layer - Analytics panel (LEFT) - Enhanced 3D */}
+            {/* Background layer - Analytics panel (LEFT) - LINEAR PHYSICS glass card */}
             <motion.div
-              className="card-linear animate-float absolute left-0 top-8 w-[35%] rounded-[var(--radius-card)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-4"
+              className="card-glass animate-float absolute left-0 top-8 w-[35%] rounded-[var(--radius-card)] p-4"
               initial={{
                 z: -50,
                 scale: 0.95,
@@ -160,9 +159,6 @@ function HeroDS1() {
                 scale: 0.98,
                 rotateY: -5,
                 transition: MOTION_DS1.transition
-              }}
-              style={{
-                boxShadow: 'var(--shadow-layered-card)'
               }}>
               <div className="rounded-xl bg-[var(--bg-tertiary)] p-4">
                 <div className="flex items-center gap-2 mb-3">
@@ -186,14 +182,14 @@ function HeroDS1() {
               </div>
             </motion.div>
 
-            {/* Middle layer - Main Dashboard */}
+            {/* Middle layer - Main Dashboard with LINEAR PHYSICS */}
             <motion.div
-              className="relative z-10 mx-auto w-[80%] card-linear rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-tertiary)] p-2"
+              className="relative z-10 mx-auto w-[80%] card-linear rounded-[var(--radius-card)] p-2"
               initial={{ z: 0 }}
               whileHover={{ scale: 1.02, transition: MOTION_DS1.transition }}
-              style={{ boxShadow: 'var(--shadow-layered-card)' }}
             >
-              <div className="overflow-hidden rounded-2xl">
+              {/* LINEAR PHYSICS: Fade-to-void mask dissolves into background */}
+              <div className="overflow-hidden rounded-2xl fade-to-void">
                 <Image
                   src={hero.image.dashboard}
                   alt="Adapty Dashboard"
@@ -205,9 +201,9 @@ function HeroDS1() {
               </div>
             </motion.div>
 
-            {/* Front layer - Paywall Builder (RIGHT) - Enhanced 3D */}
+            {/* Front layer - Paywall Builder (RIGHT) - LINEAR PHYSICS glass card */}
             <motion.div
-              className="card-linear animate-float absolute right-0 top-16 w-[30%] rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-secondary)] p-3"
+              className="card-glass animate-float absolute right-0 top-16 w-[30%] rounded-[var(--radius-card)] p-3"
               initial={{
                 z: 50,
                 scale: 1.02,
@@ -218,9 +214,6 @@ function HeroDS1() {
                 scale: 1.05,
                 rotateY: 6,
                 transition: MOTION_DS1.transition
-              }}
-              style={{
-                boxShadow: 'var(--shadow-layered-card)'
               }}>
               <div className="rounded-xl bg-[var(--bg-tertiary)] p-4">
                 <div className="flex items-center gap-2 mb-3">
@@ -239,8 +232,8 @@ function HeroDS1() {
               </div>
             </motion.div>
 
-            {/* Additional floating element - Metrics card (TOP RIGHT) */}
-            <div className="card-linear animate-float absolute -right-4 -top-4 w-[20%] rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-3"
+            {/* Additional floating element - Metrics card (TOP RIGHT) - LINEAR PHYSICS with emission */}
+            <div className="card-glass accent-emit animate-float absolute -right-4 -top-4 w-[20%] rounded-xl p-3"
               style={{ animationDelay: '1s' }}>
               <div className="text-xs text-[var(--text-muted)] mb-1">Monthly Revenue</div>
               <div className="text-lg font-semibold text-[var(--color-success)]">+23.5%</div>

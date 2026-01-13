@@ -457,6 +457,72 @@ import { IconSettings, IconUser } from "@tabler/icons-react"
 - **DS4 Vercel**: Phosphor (bold) - matches bold visual style
 - **DS5 Clerk**: Phosphor (light/regular) - friendly, approachable
 
+### ShadCN Create (December 2025 - GAME CHANGER)
+
+**URL**: https://ui.shadcn.com/themes
+
+**What it does**: Customizes shadcn/ui components BEFORE installation. Generates pre-styled component code matching your brand.
+
+**Why it matters**: The Phase B "generic look" problem was caused by using default presets. ShadCN Create lets you bake your design system into components from the start.
+
+**Workflow**:
+1. Go to https://ui.shadcn.com/themes
+2. Select component library (Radix UI or Base UI)
+3. Choose style preset (or click "Shuffle" for random)
+4. Set base colors, fonts, border radius
+5. Preview components in real-time
+6. Click "Create Project" and copy the install command
+7. All components are pre-styled to your specifications
+
+**Available Options**:
+- **Component Library**: Radix UI (default), Base UI (newer)
+- **Presets**: Multiple built-in styles (Lyra, etc.)
+- **Colors**: Neutral, Stone, Zinc, etc.
+- **Fonts**: Roboto, Inter, etc.
+- **Border Radius**: Small, Medium, Large
+
+**Integration**:
+```bash
+# Example generated command (varies based on your choices)
+npx shadcn@latest init --style lyra --base-color neutral --css-variables
+```
+
+**Status**: NEW - not yet tested with Adapty prototypes. Recommended as Option D.
+
+### Drawbridge (Visual Debugging Tool)
+
+**GitHub**: https://github.com/breschio/drawbridge
+
+**What it does**: Visual debugging integration with Claude Code. Select UI elements visually, point at issues, get fixes.
+
+**Why it matters**: Eliminates "move button 2px left" back-and-forth. Show Claude exactly what you mean instead of describing it.
+
+**Use cases**:
+- Pixel-perfect UI adjustments
+- Visual bug identification
+- Layout debugging
+- Responsive design issues
+
+**Status**: Available for integration. Consider adding when doing polish work.
+
+### Plan Loop Methodology (Matt Pocock)
+
+**Source**: https://www.aihero.dev/my-agents-md-file-for-building-plans-you-actually-read
+
+**The Loop**: Plan → Execute → Test → Commit → Repeat
+
+**Why it matters**: Instead of asking AI to write code directly, work through a structured cycle:
+1. **Plan** with AI first - think through approach together before writing code
+2. **Execute** - AI writes code matching the plan (not guessing)
+3. **Test** together - unit tests, type safety, manual QA
+4. **Commit** and repeat
+
+**Rules for great plans**:
+- Make plans **extremely concise** - sacrifice grammar for scannability
+- End with **unresolved questions** to answer
+
+**Key insight**: Planning forces clarity. Makes AI's job easier, your code better. Without planning, you're asking AI to guess what you want.
+
 ---
 
 ## Task System

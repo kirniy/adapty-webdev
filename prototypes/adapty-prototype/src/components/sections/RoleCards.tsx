@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "~/components/ui/Container";
 import { Section } from "~/components/ui/Section";
 import { content } from "~/config/content";
+import { cn } from "~/lib/utils";
 import { SoftCornerGradient } from "~/components/textures/SoftCornerGradient";
 import { MoireInterference } from "~/components/textures/MoireInterference";
 import { InfiniteFloor } from "~/components/textures/InfiniteFloor";
@@ -24,10 +25,13 @@ export function RoleCards({ ds }: RoleCardsProps) {
       {ds === "ds3" && <MoireInterference opacity={0.05} />}
 
       <Container className="relative z-10">
-        <h2 className="mb-16 text-center text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-          <span className="text-[var(--text-primary)]">{roleCards.headline.primary}</span>
+        <h2 className={cn(
+          "mb-16 text-center text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl",
+          ds === "ds1" && "heading-metallic"
+        )}>
+          <span className={ds === "ds1" ? "" : "text-[var(--text-primary)]"}>{roleCards.headline.primary}</span>
           <br />
-          <span className="text-[var(--text-muted)]">{roleCards.headline.secondary}</span>
+          <span className={ds === "ds1" ? "opacity-60" : "text-[var(--text-muted)]"}>{roleCards.headline.secondary}</span>
         </h2>
 
         <div className="grid gap-8 md:grid-cols-3">
@@ -35,7 +39,13 @@ export function RoleCards({ ds }: RoleCardsProps) {
             <Link
               key={role.title}
               href={role.link}
-              className="group relative flex flex-col overflow-hidden rounded-[var(--card-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] transition-all duration-[var(--duration-normal)] hover:-translate-y-1 hover:border-[var(--color-primary-light)] hover:shadow-[var(--shadow-xl)]"
+              className={cn(
+                "group relative flex flex-col overflow-hidden rounded-[var(--card-radius)] transition-all duration-[var(--duration-normal)] hover:-translate-y-1",
+                // DS1: LINEAR PHYSICS - glass substrate with top-light borders
+                ds === "ds1"
+                  ? "card-glass hover:shadow-[var(--shadow-xl)]"
+                  : "border border-[var(--border-subtle)] bg-[var(--bg-secondary)] hover:border-[var(--color-primary-light)] hover:shadow-[var(--shadow-xl)]"
+              )}
             >
               {/* Image */}
               <div className="relative h-[200px] overflow-hidden bg-gradient-to-b from-[var(--bg-tertiary)] to-[var(--bg-secondary)] p-4">
