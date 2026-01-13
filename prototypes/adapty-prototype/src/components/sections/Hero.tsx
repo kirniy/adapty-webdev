@@ -9,7 +9,7 @@ import { ArrowRight, Play, ChevronRight, Zap, RefreshCw, BarChart3, Target } fro
 import { cn } from "~/lib/utils";
 // DS2 Attio-specific schematic components
 import { SchematicLine, SchematicConnector } from "~/components/ds2/SchematicLine";
-import { ConnectionNode } from "~/components/ds2/ConnectionNode";
+import { ConnectionNode, StatusNode } from "~/components/ds2/ConnectionNode";
 import { FlowDiagramCard, FlowDiagramResult } from "~/components/ds2/FlowDiagramCard";
 
 interface HeroProps {
@@ -206,7 +206,7 @@ function HeroDS2() {
       <Container>
         {/* ATTIO SIGNATURE: Schematic connector lines */}
         <div className="absolute left-8 top-24 hidden lg:block">
-          <SchematicLine orientation="vertical" length={120} hasStartNode />
+          <SchematicLine direction="vertical" withNode="start" className="h-[120px]" />
           <div className="ml-[-4px] mt-2">
             <SchematicConnector path="straight-h" primaryLength="40px" withNodes={false} />
           </div>
@@ -257,23 +257,23 @@ function HeroDS2() {
         <div className="mx-auto max-w-4xl mb-12">
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <FlowDiagramCard
-              icon={<Zap className="h-4 w-4" />}
+              labelIcon={<Zap className="h-4 w-4" />}
               label="Trigger"
+              title="User opens app"
               status="active"
-              description="User opens app"
             />
             <SchematicConnector path="straight-h" primaryLength="32px" withNodes={false} className="hidden sm:block" />
             <FlowDiagramCard
-              icon={<Target className="h-4 w-4" />}
+              labelIcon={<Target className="h-4 w-4" />}
               label="Condition"
+              title="Check subscription"
               status="pending"
-              description="Check subscription"
             />
             <SchematicConnector path="straight-h" primaryLength="32px" withNodes={false} className="hidden sm:block" />
             <FlowDiagramResult
               icon={<BarChart3 className="h-4 w-4" />}
-              label="Result"
-              value="+23% conversion"
+              text="Result"
+              highlight="+23% conversion"
             />
           </div>
         </div>
@@ -304,9 +304,9 @@ function HeroDS2() {
                 >
                   {/* Connection node on active tab */}
                   {isActive && (
-                    <ConnectionNode
+                    <StatusNode
+                      status="active"
                       size="sm"
-                      variant="active"
                       className="absolute -top-2 left-1/2 -translate-x-1/2"
                     />
                   )}
@@ -333,16 +333,16 @@ function HeroDS2() {
               <div className="hidden border-r border-[var(--border-subtle)] bg-[var(--bg-tertiary)] p-4 lg:block relative">
                 {/* Schematic line in sidebar */}
                 <div className="absolute left-2 top-4 bottom-4">
-                  <SchematicLine orientation="vertical" length={200} hasStartNode hasEndNode />
+                  <SchematicLine direction="vertical" withNode="both" className="h-[200px]" />
                 </div>
                 <div className="space-y-2 ml-4">
                   <div className="flex items-center gap-2 rounded-lg bg-[var(--color-primary)]/10 px-3 py-2 text-sm font-medium text-[var(--color-primary)]">
-                    <ConnectionNode size="xs" variant="active" />
+                    <StatusNode status="active" size="sm" />
                     {tabs.find((t) => t.id === activeTab)?.label}
                   </div>
                   {tabs.filter((t) => t.id !== activeTab).map((tab) => (
                     <div key={tab.id} className="flex items-center gap-2 px-3 py-2 text-sm text-[var(--text-muted)]">
-                      <ConnectionNode size="xs" variant="inactive" />
+                      <StatusNode status="pending" size="sm" />
                       {tab.label}
                     </div>
                   ))}

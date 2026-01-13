@@ -154,7 +154,8 @@
   --font-sans: "Inter Variable", "Inter", -apple-system, sans-serif;
   --font-mono: "Berkeley Mono", "JetBrains Mono", ui-monospace, monospace;
   /* LINEAR SIGNATURE: Tighter letter-spacing than most sites */
-  --letter-spacing-tight: -0.03em;
+  --letter-spacing-h1: -0.04em;
+  --letter-spacing-tight: -0.02em;
   --letter-spacing-heading: -0.04em;
   --letter-spacing-display: -0.05em;
 
@@ -202,18 +203,22 @@
   --nav-bg: var(--header-bg);
 
   /* LINEAR SIGNATURE: Layered card animations & glow */
-  --card-glow-hover: 0 0 40px rgba(94, 106, 210, 0.2);
+  --card-glow-hover:
+    0 0 30px rgba(94, 106, 210, 0.3),
+    0 0 60px rgba(94, 106, 210, 0.1);
+
   --shadow-layered-card:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0px 2px 4px rgba(0, 0, 0, 0.1),
-    0px 4px 24px rgba(0, 0, 0, 0.2),
-    0px 8px 32px rgba(0, 0, 0, 0.35);
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 10px 15px -3px rgba(0, 0, 0, 0.2);
 
   /* LINEAR SIGNATURE: Enhanced 3D perspective transforms */
-  --perspective-depth: 1200px;
+  --perspective-depth: 2000px;
   --rotate-subtle: 4deg;
   --rotate-back: -3deg;
   --transform-hover: translateY(-6px);
+  --transform-layer-back: translateZ(-50px) scale(0.95);
+  --transform-layer-front: translateZ(50px) scale(1.02);
   --transform-z-front: translateZ(40px);
   --transform-z-back: translateZ(-30px);
 }
@@ -248,6 +253,7 @@
   --text-inverse: #ffffff;
 
   /* Colors - Semantic (LAB to hex) */
+  --color-bg-secondary: lab(98% 0 2);
   --color-success: #22A861;
   --color-warning: #E5A20C;
   --color-error: #E53E3E;
@@ -257,17 +263,22 @@
   --border-default: #D8DCE3;
   --border-subtle: #E8EBEF;
   --border-strong: #A3ADB8;
+  --border-style-section: dotted;
+  /* ADD */
+
 
   /* Typography (ATTIO: 4-font system) */
   --font-sans: "Inter", -apple-system, sans-serif;
   --font-display: "Inter Display", var(--font-sans);
-  --font-serif: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-serif: "Tiempos Headline", "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* ATTIO SIGNATURE: Typography refinements */
   --letter-spacing-headline: -0.025em;
   --font-weight-body: 500;
   --font-weight-headline: 600;
+  --font-size-h1: 68px;
+  --section-number-tracking: 0.2em;
 
   /* Border Radius (ATTIO: 8px BUTTONS - squircle, not pill) */
   --radius-sm: 4px;
@@ -315,6 +326,9 @@
   --button-padding-y: 10px;
   --button-ghost-bg: transparent;
   --button-ghost-border: var(--border-default);
+  --ghost-button-hover-bg: transparent;
+  /* Override */
+
   --card-radius: var(--radius-xl);
   --card-bg: var(--bg-elevated);
   --card-border: var(--border-subtle);
@@ -374,12 +388,14 @@
 
 [data-theme="ds2"] .animate-element {
   will-change: var(--will-change-transform);
-  transform: translateZ(0); /* GPU acceleration */
+  transform: translateZ(0);
+  /* GPU acceleration */
 }
 
 [data-theme="ds2"] .hover-element {
   will-change: var(--will-change-transform);
-  backface-visibility: hidden; /* Reduce flickering */
+  backface-visibility: hidden;
+  /* Reduce flickering */
 }
 
 [data-theme="ds2"] .fade-element {
@@ -887,11 +903,9 @@ body {
 }
 
 [data-theme="ds2"] .dotted-separator {
-  background-image: linear-gradient(
-    to right,
-    var(--section-separator-color) var(--section-separator-dash),
-    transparent var(--section-separator-dash)
-  );
+  background-image: linear-gradient(to right,
+      var(--section-separator-color) var(--section-separator-dash),
+      transparent var(--section-separator-dash));
   background-size: calc(var(--section-separator-dash) + var(--section-separator-gap)) 1px;
   background-repeat: repeat-x;
   height: 1px;
@@ -1010,9 +1024,12 @@ body {
  * ============================================ */
 /* LINEAR: Floating animation for layered cards */
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0) rotateY(var(--rotate-subtle));
   }
+
   50% {
     transform: translateY(-8px) rotateY(var(--rotate-subtle));
   }
@@ -1024,9 +1041,12 @@ body {
 
 /* LINEAR: Glow pulse for accent elements */
 @keyframes glowPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: var(--shadow-glow);
   }
+
   50% {
     box-shadow: 0 0 30px rgba(94, 106, 210, 0.4);
   }
@@ -1041,6 +1061,7 @@ body {
   from {
     background-position: 100% 0;
   }
+
   to {
     background-position: 0 0;
   }
