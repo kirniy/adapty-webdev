@@ -152,6 +152,9 @@ function FeatureSectionLinear({
 // ==========================================
 // DS2: ATTIO (Editorial, Numbers, Structured)
 // ==========================================
+// ==========================================
+// DS2: ATTIO (Editorial, Numbers, Structured)
+// ==========================================
 function FeatureSectionAttio({
   title,
   description,
@@ -163,36 +166,67 @@ function FeatureSectionAttio({
   className,
 }: FeatureSectionProps) {
   return (
-    <Section className={cn("border-b border-[var(--border-subtle)] bg-[var(--bg-primary)] py-20", className)}>
+    <Section className={cn("border-b border-[var(--border-subtle)] bg-[var(--bg-primary)] py-24", className)}>
       <Container>
-        <div className={cn("grid gap-12 lg:grid-cols-12", flipped && "lg:[direction:rtl]")}>
-          {/* Content Column (Narrower in Attio style often) */}
-          <div className="lg:col-span-5 lg:[direction:ltr] flex flex-col justify-center">
-            <h3 className="mb-6 text-3xl font-semibold text-[var(--text-primary)] tracking-tight">
-              {description.split(".")[0]}.
-            </h3>
-            <p className="mb-8 text-[var(--text-secondary)] leading-relaxed">
+        <div className={cn("grid gap-16 lg:grid-cols-2 items-start", flipped && "lg:[direction:rtl]")}>
+          {/* Content Column - Styled like a "Persona Card" from the screenshot */}
+          <div className="lg:[direction:ltr] flex flex-col justify-center h-full">
+            {/* Persona Header: Icon + Title */}
+            <div className="flex items-center gap-3 mb-4">
+              {/* Placeholder Icon mimicking the screenshot's 'code', 'chart', 'megaphone' icons */}
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--border-default)] bg-white shadow-sm text-[var(--text-secondary)]">
+                {title.toLowerCase().includes("develop") ? (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                ) : title.toLowerCase().includes("market") ? (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 16v.01"></path><path d="M12 12v.01"></path></svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                )}
+              </div>
+              <div className="flex flex-col">
+                <h3 className="text-xl font-semibold text-[var(--text-primary)] leading-tight">
+                  {title}
+                </h3>
+                <span className="text-sm text-[var(--text-muted)]">Powering your growth</span>
+              </div>
+            </div>
+
+            <p className="mb-6 text-[var(--text-secondary)] leading-relaxed text-[15px]">
               {description}
             </p>
 
-            {/* Tag logic simulation */}
+            {/* Refined List: Chevrons + Text */}
             {features && (
-              <div className="flex flex-wrap gap-2 mb-8">
+              <ul className="mb-8 space-y-2">
                 {features.map((f, i) => (
-                  <span key={i} className="px-2 py-1 rounded bg-[var(--bg-secondary)] border border-[var(--border-default)] text-xs font-medium text-[var(--text-secondary)]">
-                    {f}
-                  </span>
+                  <li key={i} className="flex items-start gap-2.5 text-[14px]">
+                    <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center text-[var(--text-muted)]">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
+                    <span className="text-[var(--text-secondary)] font-medium">
+                      {f}
+                    </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
 
-            <ButtonLink href={cta.href} text={cta.text} external={cta.external} />
+            <div className="mt-auto pt-2">
+              <a href={cta.href} className="inline-flex items-center text-sm font-semibold text-[var(--text-primary)] hover:opacity-70 transition-opacity group">
+                Learn more
+                <span className="ml-1 inline-block transition-transform group-hover:translate-x-0.5">›</span>
+              </a>
+            </div>
           </div>
 
-          {/* Image Column */}
-          <div className="lg:col-span-7 lg:[direction:ltr]">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-[var(--border-default)] bg-[var(--bg-secondary)] shadow-sm">
-              <Image src={image.src} alt={image.alt} fill className="object-cover" />
+          {/* Image Column - Card Style */}
+          <div className="lg:[direction:ltr]">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-white shadow-sm hover:shadow-md transition-shadow duration-500">
+              {/* Screenshot shows subtle gradient backgrounds behind UI elements */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-secondary)] to-white" />
+              <div className="relative h-full w-full p-8 flex items-center justify-center">
+                <Image src={image.src} alt={image.alt} fill className="object-contain" />
+              </div>
             </div>
           </div>
         </div>
