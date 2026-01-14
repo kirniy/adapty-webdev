@@ -7,35 +7,33 @@ import {
   CheckCircle
 } from "@phosphor-icons/react/dist/ssr";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
-import { TheInfiniteGrid } from "@/components/ui/TheInfiniteGrid";
 
 export function Hero() {
   return (
-    <div className="relative flex flex-col min-h-dvh pt-16 lg:pt-20 overflow-hidden">
-      {/* Animated Grid Background with Mouse-Following Spotlight */}
-      <TheInfiniteGrid className="fixed inset-0 z-0" />
+    <div className="relative flex flex-col min-h-[85vh] overflow-hidden">
+      {/* 
+         REMOVED local TheInfiniteGrid - now handled globally in PageFrame
+      */}
 
-      {/* Main Content Area */}
-      <main className="flex-1 w-full relative z-10">
-        <section className="max-w-[1600px] mx-auto px-6 lg:px-12 pt-8 pb-12 lg:pt-16 lg:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[60vh] lg:min-h-[75vh]">
+      {/* Main Content Area - Z-index 10 to sit above global grid */}
+      <main className="flex-1 w-full relative z-10 flex flex-col justify-center">
+        <section className="max-w-[1600px] mx-auto px-6 lg:px-12 pt-12 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Text Content (Span 7 to match template) */}
-          {/* Using stagger-children for blur-in sequence (SEO-safe: no opacity:0 default) */}
+          {/* Left Column: Text Content */}
           <div className="lg:col-span-7 space-y-8 stagger-children">
 
-            {/* Badge - blur in first */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium bg-white border-stone-200 text-stone-600 shadow-sm">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium bg-white/80 backdrop-blur-sm border-stone-200 text-stone-600 shadow-sm">
               <span className="w-2 h-2 rounded-full bg-brand-lime animate-pulse" />
               Revenue Management &amp; Growth
             </div>
 
-            {/* Headline - blur in second */}
-            {/* DS2-inspired: Serif accent on emotional keyword creates editorial feel */}
+            {/* Headline */}
             <h1 className="leading-[0.95] lg:text-7xl xl:text-8xl text-5xl font-medium text-stone-900 tracking-tighter font-sans text-balance">
               Revenue management for{" "}
               <span className="relative inline-block">
-                <span className="serif-accent">in-app purchases</span>
-                {/* SVG Underline with delayed draw-in */}
+                <span className="serif-accent italic">in-app purchases</span>
+                {/* SVG Underline */}
                 <svg
                   className="absolute w-full h-4 -bottom-2 left-0 text-brand-lime -z-10 animate-intro-blur delay-500"
                   viewBox="0 0 100 10"
@@ -52,14 +50,13 @@ export function Hero() {
               </span>
             </h1>
 
-            {/* Subheadline - blur in third */}
-            <p className="leading-relaxed lg:text-xl text-lg font-normal text-stone-500 font-sans max-w-2xl">
+            {/* Subheadline */}
+            <p className="leading-relaxed lg:text-xl text-lg font-normal text-stone-500 font-sans max-w-2xl text-balance">
               Save months on integrating subscriptions and double your app revenue with paywall management and A/B testing.
             </p>
 
-            {/* Buttons - blur in fourth */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
-              {/* Glass Button (Shiny) */}
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button className="glass-button relative group cursor-pointer outline-none z-30 overflow-hidden rounded-full transition-transform active:scale-[0.98]">
                 <span className="block select-none text-lg font-semibold text-stone-900 tracking-tight py-4 px-8 relative z-10">
                   Start for free
@@ -67,38 +64,34 @@ export function Hero() {
                 <div className="button-shine" />
               </button>
 
-              {/* Outline Button */}
-              <button className="flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-stone-300 font-semibold text-stone-700 hover:bg-stone-200/50 transition-colors bg-white/50 backdrop-blur-sm">
+              <button className="flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-stone-300 font-semibold text-stone-700 hover:bg-stone-50 transition-colors bg-white/60 backdrop-blur-sm">
                 View Documentation
               </button>
             </div>
 
-            {/* Trust Signal - blur in fifth */}
+            {/* Trust Signal */}
             <div className="flex items-center gap-2 text-xs font-medium text-stone-500 pt-2">
               <CheckCircle size={16} weight="fill" className="text-stone-400" />
               Trusted by 15,000+ apps worldwide
             </div>
           </div>
 
-          {/* Right Column: Visuals (Floating Cards) */}
-          <div className="lg:col-span-5 flex flex-col justify-center relative h-full mt-12 lg:mt-0">
+          {/* Right Column: Visuals */}
+          <div className="lg:col-span-5 flex flex-col justify-center relative h-full mt-12 lg:mt-0 min-h-[400px]">
 
-            {/* Background Glow - scales in with delay */}
+            {/* Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-brand-lime opacity-20 blur-[100px] rounded-full pointer-events-none animate-scale-in delay-400" />
 
             <div className="relative space-y-4">
-
-              {/* Card 1: Subscription SDK - blur + slide in */}
+              {/* Cards */}
               <SpotlightCard
-                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-cinematic-lg lg:ml-0 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-300"
+                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-xl lg:ml-0 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-300"
               >
-                {/* Sonar pulse effect on icon */}
                 <div className="relative">
                   <div className="w-10 h-10 rounded-full flex items-center justify-center border shrink-0 bg-stone-50 text-stone-600 border-stone-200 relative z-10">
                     <HardDrives size={20} weight="duotone" />
                   </div>
-                  {/* Sonar rings */}
-                  <div className="absolute inset-0 rounded-full border border-stone-300 animate-sonar opacity-50" />
+                  <div className="absolute inset-0 rounded-full border border-stone-300 animate-sonar opacity-50 z-20" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
@@ -112,16 +105,14 @@ export function Hero() {
                 </span>
               </SpotlightCard>
 
-              {/* Card 2: Revenue Growth - blur + slide in with offset */}
               <SpotlightCard
-                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-cinematic-lg lg:ml-8 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-500"
+                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-xl lg:ml-8 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-500"
               >
                 <div className="relative">
                   <div className="flex shrink-0 bg-brand-lime w-10 h-10 border rounded-full items-center justify-center text-stone-900 border-[#aae65f] relative z-10">
                     <ArrowUpRight size={20} weight="bold" />
                   </div>
-                  {/* Lime sonar pulse */}
-                  <div className="absolute inset-0 rounded-full border-2 border-brand-lime animate-sonar" />
+                  <div className="absolute inset-0 rounded-full border-2 border-brand-lime animate-sonar z-20" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
@@ -135,16 +126,14 @@ export function Hero() {
                 </span>
               </SpotlightCard>
 
-              {/* Card 3: Analytics Sync - blur + slide in */}
               <SpotlightCard
-                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-cinematic-lg lg:-ml-4 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-700"
+                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-xl lg:-ml-4 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-700"
               >
                 <div className="relative">
                   <div className="w-10 h-10 rounded-full text-brand-lime flex items-center justify-center border shrink-0 bg-stone-900 border-stone-800 relative z-10">
                     <Database size={20} weight="fill" />
                   </div>
-                  {/* Dark sonar pulse */}
-                  <div className="absolute inset-0 rounded-full border border-stone-600 animate-sonar opacity-60" />
+                  <div className="absolute inset-0 rounded-full border border-stone-600 animate-sonar opacity-60 z-20" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
@@ -160,7 +149,6 @@ export function Hero() {
 
             </div>
           </div>
-
         </section>
       </main>
     </div>

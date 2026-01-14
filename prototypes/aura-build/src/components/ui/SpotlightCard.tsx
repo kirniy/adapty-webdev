@@ -35,7 +35,7 @@ export function SpotlightCard({
     <Component
       ref={divRef}
       onMouseMove={handleMouseMove}
-      className={cn("spotlight-card relative overflow-hidden", className)}
+      className={cn("spotlight-card relative", className)}
       style={
         {
           "--spotlight-color": from,
