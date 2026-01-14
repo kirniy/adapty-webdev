@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { GeistSans, GeistMono } from "geist/font";
 import { Instrument_Serif } from "next/font/google";
-import { SchematicGrid } from "@/components/ui/SchematicGrid";
 import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
@@ -34,20 +33,9 @@ export default function RootLayout({
       lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable} ${instrumentSerif.variable} scroll-smooth`}
     >
-      <body className="min-h-screen overflow-x-hidden bg-stone-50 font-sans text-stone-900 antialiased selection:bg-[#c1ff72] selection:text-black">
-        {/* Base Grid Texture */}
-        <div className="pointer-events-none fixed inset-0 z-0 grid-lines opacity-40" />
-
-        {/* Global Schematic System - High-Z to overlay sections nicely or Low-Z? 
-            Let's keep it fixed in background but with random beams.
-            Using a high column count for "intricate" look.
-        */}
-        <div className="fixed inset-0 z-0 pointer-events-none">
-          <SchematicGrid cols={12} rows={8} opacity={0.04} />
-        </div>
-
-        {/* Main Content */}
-        <div className="relative z-10 flex flex-col min-h-screen">
+      <body className="min-h-dvh overflow-x-hidden bg-stone-50 font-sans text-stone-900 antialiased selection:bg-brand-lime selection:text-black">
+        {/* Main Content - Clean background, no competing grids */}
+        <div className="relative flex flex-col min-h-dvh">
           {children}
         </div>
       </body>

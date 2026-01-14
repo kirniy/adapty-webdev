@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Quotes } from "@phosphor-icons/react";
+import { Quotes } from "@phosphor-icons/react/dist/ssr";
 import { Card } from "@/components/ui/Card";
 
 const testimonials = [

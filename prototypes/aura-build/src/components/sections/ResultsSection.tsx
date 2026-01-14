@@ -1,7 +1,6 @@
 "use client";
 
-import { Check, Timer, HardDrives } from "@phosphor-icons/react/dist/ssr";
-import { ArrowRight } from "@phosphor-icons/react";
+import { Check, Timer, HardDrives, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { Badge } from "@/components/ui/Badge";
 import { SchematicLine } from "@/components/ui/SchematicLine";
 
@@ -24,11 +23,11 @@ export function ResultsSection() {
           <div className="flex-1 lg:p-16 flex flex-col z-10 pt-8 pr-8 pb-8 pl-8 relative justify-center">
             
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-2 h-2 bg-[#c1ff72] rounded-full animate-pulse" />
-              <span className="text-[#c1ff72] font-mono text-xs uppercase tracking-wider">Verified Results</span>
+              <div className="w-2 h-2 bg-brand-lime rounded-full animate-pulse" />
+              <span className="text-brand-lime font-mono text-xs uppercase tracking-wider">Verified Results</span>
             </div>
 
-            <h2 className="lg:text-5xl xl:text-6xl leading-tight lg:mr-6 lg:mb-8 text-3xl font-medium text-white tracking-tight font-sans mb-6">
+            <h2 className="lg:text-5xl xl:text-6xl leading-tight lg:mr-6 lg:mb-8 text-3xl font-medium text-white tracking-tight font-sans mb-6 text-balance">
               Results that Compound.
             </h2>
 
@@ -36,7 +35,7 @@ export function ResultsSection() {
               See how we deliver measurable impact for our partners.
             </p>
 
-            <button className="group flex items-center gap-3 bg-[#c1ff72] hover:bg-[#b0f060] transition-all text-sm font-semibold rounded-full px-8 py-4 w-fit shadow-lg hover:shadow-[0_0_20px_rgba(193,255,114,0.3)] text-stone-900">
+            <button className="group flex items-center gap-3 bg-brand-lime hover:bg-[#b0f060] transition-all text-sm font-semibold rounded-full px-8 py-4 w-fit shadow-lg hover:shadow-[0_0_20px_rgba(193,255,114,0.3)] text-stone-900">
               <span>Read Case Studies</span>
               <ArrowRight size={16} weight="bold" className="group-hover:translate-x-1 transition-transform" />
             </button>
@@ -64,12 +63,12 @@ export function ResultsSection() {
                 <div className="p-4 rounded border bg-stone-900 border-stone-800">
                   <span className="block text-stone-500 mb-2">Cloud Spend</span>
                   <span className="text-2xl font-bold text-white block mb-1">-40%</span>
-                  <span className="text-[#c1ff72] text-[10px]">SaaS Client / Kubernetes</span>
+                  <span className="text-brand-lime text-[10px]">SaaS Client / Kubernetes</span>
                 </div>
                 <div className="p-4 rounded border bg-stone-900 border-stone-800">
                   <span className="block text-stone-500 mb-2">Conversion Rate</span>
                   <span className="text-2xl font-bold text-white block mb-1">+15%</span>
-                  <span className="text-[#c1ff72] text-[10px]">Retail Brand / Speed</span>
+                  <span className="text-brand-lime text-[10px]">Retail Brand / Speed</span>
                 </div>
               </div>
 
@@ -80,14 +79,14 @@ export function ResultsSection() {
                     <Timer size={14} className="text-lime-400" />
                     <span className="text-stone-300">Checkout speed increased by 2.5s</span>
                   </div>
-                  <span className="text-[#c1ff72]"><Check size={14} /></span>
+                  <span className="text-brand-lime"><Check size={14} /></span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded transition-colors border border-transparent bg-stone-900/50">
                   <div className="flex items-center gap-3">
                     <HardDrives size={14} className="text-lime-400" />
                     <span className="text-stone-300">Legacy infrastructure migration complete</span>
                   </div>
-                  <span className="text-[#c1ff72]"><Check size={14} /></span>
+                  <span className="text-brand-lime"><Check size={14} /></span>
                 </div>
               </div>
 

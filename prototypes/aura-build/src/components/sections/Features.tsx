@@ -44,8 +44,8 @@ export function Features() {
           <div className="relative">
             <ConnectionNode size="sm" accent filled />
             {/* Sonar ripple rings */}
-            <div className="absolute inset-0 w-3 h-3 -translate-x-0.5 -translate-y-0.5 rounded-full border border-[#c1ff72] animate-sonar opacity-60" />
-            <div className="absolute inset-0 w-3 h-3 -translate-x-0.5 -translate-y-0.5 rounded-full border border-[#c1ff72] animate-sonar opacity-40" style={{ animationDelay: "0.5s" }} />
+            <div className="absolute inset-0 w-3 h-3 -translate-x-0.5 -translate-y-0.5 rounded-full border border-brand-lime animate-sonar opacity-60" />
+            <div className="absolute inset-0 w-3 h-3 -translate-x-0.5 -translate-y-0.5 rounded-full border border-brand-lime animate-sonar opacity-40" style={{ animationDelay: "0.5s" }} />
           </div>
         </div>
         <div className="absolute -top-3 left-[66%] hidden lg:block">
@@ -131,8 +131,8 @@ export function Features() {
               <div className="relative">
                 <ConnectionNode size="xs" filled accent pulse />
                 {/* Sonar rings emanating from the dot */}
-                <div className="absolute inset-0 w-2 h-2 -translate-x-0.5 -translate-y-0.5 rounded-full border border-[#c1ff72] animate-sonar" />
-                <div className="absolute inset-0 w-2 h-2 -translate-x-0.5 -translate-y-0.5 rounded-full border border-[#c1ff72] animate-sonar" style={{ animationDelay: "0.7s" }} />
+                <div className="absolute inset-0 w-2 h-2 -translate-x-0.5 -translate-y-0.5 rounded-full border border-brand-lime animate-sonar" />
+                <div className="absolute inset-0 w-2 h-2 -translate-x-0.5 -translate-y-0.5 rounded-full border border-brand-lime animate-sonar" style={{ animationDelay: "0.7s" }} />
               </div>
             </div>
           </div>
@@ -148,9 +148,9 @@ export function Features() {
           {/* Center sonar node */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <div className="relative">
-              <div className="w-3 h-3 rounded-full bg-[#c1ff72] shadow-[0_0_10px_rgba(193,255,114,0.8)]" />
-              <div className="absolute inset-0 rounded-full border border-[#c1ff72] animate-sonar" />
-              <div className="absolute inset-0 rounded-full border border-[#c1ff72] animate-sonar" style={{ animationDelay: "0.6s" }} />
+              <div className="w-3 h-3 rounded-full bg-brand-lime shadow-[0_0_10px_rgba(193,255,114,0.8)]" />
+              <div className="absolute inset-0 rounded-full border border-brand-lime animate-sonar" />
+              <div className="absolute inset-0 rounded-full border border-brand-lime animate-sonar" style={{ animationDelay: "0.6s" }} />
             </div>
           </div>
         </div>

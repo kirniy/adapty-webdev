@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import {
   SchematicLine,
   ConnectionNode,
@@ -7,11 +8,73 @@ import {
 } from "@/components/ui/SchematicLine";
 
 const stats = [
-  { value: "$2B+", label: "Processed revenue" },
-  { value: "15k+", label: "Apps powered" },
-  { value: "99.99%", label: "Uptime SLA" },
-  { value: "200M+", label: "Monthly requests" },
+  { value: 2, suffix: "B+", label: "Processed revenue", prefix: "$" },
+  { value: 15, suffix: "k+", label: "Apps powered" },
+  { value: 99.99, suffix: "%", label: "Uptime SLA", decimalPlaces: 2 },
+  { value: 200, suffix: "M+", label: "Monthly requests" },
 ];
+
+function AnimatedNumber({
+  value,
+  prefix = "",
+  suffix = "",
+  decimalPlaces = 0,
+  delay = 0,
+  className,
+}: {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  decimalPlaces?: number;
+  delay?: number;
+  className?: string;
+}) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          setTimeout(() => {
+            const duration = 2000;
+            const startTime = Date.now();
+
+            const animate = () => {
+              const elapsed = Date.now() - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3); // Ease out cubic
+              setDisplayValue(value * eased);
+
+              if (progress < 1) {
+                requestAnimationFrame(animate);
+              }
+            };
+
+            requestAnimationFrame(animate);
+          }, delay);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [value, delay, hasAnimated]);
+
+  return (
+    <div ref={ref} className={className}>
+      {prefix}
+      {displayValue.toFixed(decimalPlaces)}
+      {suffix}
+    </div>
+  );
+}
 
 export function Stats() {
   return (
@@ -73,9 +136,15 @@ export function Stats() {
               />
             </div>
 
-            <div className="text-4xl lg:text-5xl font-bold tracking-tight text-stone-900 animate-intro-blur pt-4" style={{ animationDelay: `${index * 100}ms` }}>
-              {stat.value}
-            </div>
+            <AnimatedNumber
+              value={stat.value}
+              prefix={stat.prefix}
+              suffix={stat.suffix}
+              decimalPlaces={stat.decimalPlaces}
+              delay={index * 100}
+              className="text-4xl lg:text-5xl font-bold tracking-tight text-stone-900 pt-4 font-sans"
+            />
+            
             <div className="text-sm font-medium text-stone-500">
               {stat.label}
             </div>

@@ -1,20 +1,19 @@
 "use client";
 
-import Link from "next/link";
-import { 
-  HardDrives, 
-  ArrowUpRight, 
-  Database, 
+import {
+  HardDrives,
+  ArrowUpRight,
+  Database,
   CheckCircle
 } from "@phosphor-icons/react/dist/ssr";
-import { cn } from "@/lib/cn";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { TheInfiniteGrid } from "@/components/ui/TheInfiniteGrid";
 
 export function Hero() {
   return (
-    <div className="relative flex flex-col min-h-screen pt-16 lg:pt-20 overflow-hidden">
-      {/* Grid Background */}
-      <div className="fixed inset-0 grid-lines pointer-events-none z-0" />
+    <div className="relative flex flex-col min-h-dvh pt-16 lg:pt-20 overflow-hidden">
+      {/* Animated Grid Background with Mouse-Following Spotlight */}
+      <TheInfiniteGrid className="fixed inset-0 z-0" />
 
       {/* Main Content Area */}
       <main className="flex-1 w-full relative z-10">
@@ -26,18 +25,19 @@ export function Hero() {
 
             {/* Badge - blur in first */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium bg-white border-stone-200 text-stone-600 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#c1ff72] animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-brand-lime animate-pulse" />
               Revenue Management &amp; Growth
             </div>
 
             {/* Headline - blur in second */}
-            <h1 className="leading-[0.95] lg:text-7xl xl:text-8xl text-5xl font-medium text-stone-900 tracking-tighter font-sans">
+            {/* DS2-inspired: Serif accent on emotional keyword creates editorial feel */}
+            <h1 className="leading-[0.95] lg:text-7xl xl:text-8xl text-5xl font-medium text-stone-900 tracking-tighter font-sans text-balance">
               Revenue management for{" "}
-              <span className="relative inline-block text-stone-900">
-                in-app purchases
+              <span className="relative inline-block">
+                <span className="serif-accent">in-app purchases</span>
                 {/* SVG Underline with delayed draw-in */}
                 <svg
-                  className="absolute w-full h-3 -bottom-1 left-0 text-[#c1ff72] -z-10 animate-intro-blur delay-500"
+                  className="absolute w-full h-4 -bottom-2 left-0 text-brand-lime -z-10 animate-intro-blur delay-500"
                   viewBox="0 0 100 10"
                   preserveAspectRatio="none"
                 >
@@ -46,7 +46,7 @@ export function Hero() {
                     stroke="currentColor"
                     strokeWidth="8"
                     fill="none"
-                    opacity="0.4"
+                    opacity="0.5"
                   />
                 </svg>
               </span>
@@ -84,13 +84,13 @@ export function Hero() {
           <div className="lg:col-span-5 flex flex-col justify-center relative h-full mt-12 lg:mt-0">
 
             {/* Background Glow - scales in with delay */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-[#c1ff72] opacity-20 blur-[100px] rounded-full pointer-events-none animate-scale-in delay-400" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-brand-lime opacity-20 blur-[100px] rounded-full pointer-events-none animate-scale-in delay-400" />
 
             <div className="relative space-y-4">
 
               {/* Card 1: Subscription SDK - blur + slide in */}
               <SpotlightCard
-                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-lg lg:ml-0 max-w-sm mx-auto w-full bg-white/60 animate-intro-blur delay-300"
+                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-cinematic-lg lg:ml-0 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-300"
               >
                 {/* Sonar pulse effect on icon */}
                 <div className="relative">
@@ -114,14 +114,14 @@ export function Hero() {
 
               {/* Card 2: Revenue Growth - blur + slide in with offset */}
               <SpotlightCard
-                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-lg lg:ml-8 max-w-sm mx-auto w-full bg-white/60 animate-intro-blur delay-500"
+                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-cinematic-lg lg:ml-8 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-500"
               >
                 <div className="relative">
-                  <div className="flex shrink-0 bg-[#c1ff72] w-10 h-10 border rounded-full items-center justify-center text-stone-900 border-[#aae65f] relative z-10">
+                  <div className="flex shrink-0 bg-brand-lime w-10 h-10 border rounded-full items-center justify-center text-stone-900 border-[#aae65f] relative z-10">
                     <ArrowUpRight size={20} weight="bold" />
                   </div>
                   {/* Lime sonar pulse */}
-                  <div className="absolute inset-0 rounded-full border-2 border-[#c1ff72] animate-sonar" />
+                  <div className="absolute inset-0 rounded-full border-2 border-brand-lime animate-sonar" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
@@ -130,17 +130,17 @@ export function Hero() {
                   </div>
                   <p className="text-xs text-stone-500 truncate">Q3 Performance</p>
                 </div>
-                <span className="bg-[#c1ff72] text-[10px] px-2 py-0.5 rounded border border-[#aae65f] font-medium text-stone-900">
+                <span className="bg-brand-lime text-[10px] px-2 py-0.5 rounded border border-[#aae65f] font-medium text-stone-900">
                   +23.4%
                 </span>
               </SpotlightCard>
 
               {/* Card 3: Analytics Sync - blur + slide in */}
               <SpotlightCard
-                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-lg lg:-ml-4 max-w-sm mx-auto w-full bg-white/60 animate-intro-blur delay-700"
+                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-cinematic-lg lg:-ml-4 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-700"
               >
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-full text-[#c1ff72] flex items-center justify-center border shrink-0 bg-stone-900 border-stone-800 relative z-10">
+                  <div className="w-10 h-10 rounded-full text-brand-lime flex items-center justify-center border shrink-0 bg-stone-900 border-stone-800 relative z-10">
                     <Database size={20} weight="fill" />
                   </div>
                   {/* Dark sonar pulse */}

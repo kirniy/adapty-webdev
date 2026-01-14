@@ -2,188 +2,287 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { CaretDown, List } from "@phosphor-icons/react";
+import { CaretDown, List, X } from "@phosphor-icons/react/dist/ssr";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-import { useState } from "react";
-import {
-  SchematicLine,
-  ConnectionNode,
-  BeamNoodle,
-} from "@/components/ui/SchematicLine";
+import { useState, useEffect, type ReactNode } from "react";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "motion/react";
+import { ProductMenu } from "./menus/ProductMenu";
+import { CasesMenu } from "./menus/CasesMenu";
+import { ResourcesMenu } from "./menus/ResourcesMenu";
+import { DocsMenu } from "./menus/DocsMenu";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
-const navigation = {
-  product: {
-    label: "Product",
-    items: [
-      { name: "Subscriptions SDK", href: "#" },
-      { name: "Paywall Builder", href: "#" },
-      { name: "A/B Testing", href: "#" },
-      { name: "Analytics", href: "#" },
-      { name: "Integrations", href: "#" },
-    ],
-  },
-  solutions: {
-    label: "Solutions",
-    items: [
-      { name: "For Developers", href: "#" },
-      { name: "For Marketers", href: "#" },
-      { name: "For Enterprise", href: "#" },
-    ],
-  },
-  resources: {
-    label: "Resources",
-    items: [
-      { name: "Blog", href: "#" },
-      { name: "Documentation", href: "#" },
-      { name: "Case Studies", href: "#" },
-    ],
-  },
-};
+type NavKey = "product" | "cases" | "resources" | "docs";
 
-function NavDropdown({
-  label,
-  items,
-}: {
+interface NavItem {
+  key: NavKey;
   label: string;
-  items: { name: string; href: string }[];
+  menu: ReactNode;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { key: "product", label: "Product", menu: <ProductMenu /> },
+  { key: "cases", label: "Case Studies", menu: <CasesMenu /> },
+  { key: "resources", label: "Resources", menu: <ResourcesMenu /> },
+  { key: "docs", label: "Docs", menu: <DocsMenu /> },
+];
+
+function MegaMenuDropdown({
+  item,
+  isOpen,
+  onHover,
+  onLeave,
+}: {
+  item: NavItem;
+  isOpen: boolean;
+  onHover: () => void;
+  onLeave: () => void;
 }) {
   return (
-    <div className="relative group h-20 flex items-center">
-      <button className="flex items-center gap-1 text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">
-        {label}
-        <CaretDown size={14} weight="bold" />
-      </button>
-      <div
+    <div className="relative h-20 flex items-center" onMouseEnter={onHover}>
+      <button
         className={cn(
-          "absolute top-full left-0 w-56 bg-white border border-stone-200 rounded-xl shadow-xl p-2",
-          "opacity-0 invisible group-hover:opacity-100 group-hover:visible",
-          "transition-all duration-200 transform translate-y-2 group-hover:translate-y-0"
+          "flex items-center gap-1.5 text-sm font-medium transition-colors",
+          isOpen
+            ? "text-stone-900"
+            : "text-stone-600 hover:text-stone-900"
         )}
       >
-        {/* Corner nodes on dropdown */}
-        <div className="absolute top-1.5 left-1.5">
-          <ConnectionNode size="xs" />
-        </div>
-        <div className="absolute top-1.5 right-1.5">
-          <ConnectionNode size="xs" />
-        </div>
-        <div className="absolute bottom-1.5 left-1.5">
-          <ConnectionNode size="xs" />
-        </div>
-        <div className="absolute bottom-1.5 right-1.5">
-          <ConnectionNode size="xs" accent />
-        </div>
+        {item.label}
+        <CaretDown
+          size={14}
+          weight="bold"
+          className={cn(
+            "transition-transform duration-200",
+            isOpen && "rotate-180"
+          )}
+        />
+      </button>
 
-        {items.map((item, index) => (
-          <Link
-            key={item.name}
-            href={item.href}
-            className="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg transition-colors relative group/item"
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.15 }}
+            className="absolute top-full left-1/2 -translate-x-1/2 pt-2"
+            onMouseLeave={onLeave}
           >
-            {item.name}
-            {/* Node on hover */}
-            <div className="absolute -left-0.5 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity">
-              <ConnectionNode size="xs" accent={index === 0} />
+            <div className="bg-white border border-stone-200 rounded-2xl shadow-2xl overflow-hidden">
+              {item.menu}
             </div>
-          </Link>
-        ))}
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
+function MobileMenu({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      // iOS scroll lock
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      document.body.style.overflow = "hidden";
+
+      return () => {
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.width = "";
+        document.body.style.overflow = "";
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
+  if (!mounted) return null;
+
+  return createPortal(
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-40"
+            onClick={onClose}
+          />
+
+          {/* Panel */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed right-0 top-0 bottom-0 w-[85%] max-w-[400px] bg-white z-50 overflow-y-auto"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-stone-200">
+              <Image
+                src="/logos/adapty-logo.svg"
+                alt="Adapty"
+                width={100}
+                height={26}
+                className="h-7 w-auto"
+              />
+              <button
+                onClick={onClose}
+                aria-label="Close menu"
+                className="p-2 rounded-lg hover:bg-stone-100 transition-colors"
+              >
+                <X size={24} weight="bold" className="text-stone-600" />
+              </button>
+            </div>
+
+            {/* Navigation */}
+            <div className="p-4 space-y-6">
+              {/* Product */}
+              <div>
+                <h3 className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">
+                  Product
+                </h3>
+                <div className="space-y-2">
+                  <Link href="/sdk" className="block py-2 text-stone-700 hover:text-stone-900">
+                    SDK Integration
+                  </Link>
+                  <Link href="/paywall-builder" className="block py-2 text-stone-700 hover:text-stone-900">
+                    Paywall Builder
+                  </Link>
+                  <Link href="/ab-testing" className="block py-2 text-stone-700 hover:text-stone-900">
+                    A/B Testing
+                  </Link>
+                  <Link href="/analytics" className="block py-2 text-stone-700 hover:text-stone-900">
+                    Analytics
+                  </Link>
+                </div>
+              </div>
+
+              {/* Resources */}
+              <div>
+                <h3 className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">
+                  Resources
+                </h3>
+                <div className="space-y-2">
+                  <Link href="/case-studies" className="block py-2 text-stone-700 hover:text-stone-900">
+                    Case Studies
+                  </Link>
+                  <Link href="/blog" className="block py-2 text-stone-700 hover:text-stone-900">
+                    Blog
+                  </Link>
+                  <Link href="/docs" className="block py-2 text-stone-700 hover:text-stone-900">
+                    Documentation
+                  </Link>
+                  <Link href="/pricing" className="block py-2 text-stone-700 hover:text-stone-900">
+                    Pricing
+                  </Link>
+                </div>
+              </div>
+
+              {/* Auth */}
+              <div className="pt-4 border-t border-stone-200 space-y-3">
+                <Button variant="primary" size="lg" className="w-full justify-center">
+                  Sign up free
+                </Button>
+                <Button variant="ghost" size="lg" className="w-full justify-center">
+                  Log in
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>,
+    document.body
+  );
+}
+
 export function Header() {
+  const [hoveredNav, setHoveredNav] = useState<NavKey | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-panel">
-      {/* ══════════════════════════════════════════════════════════════
-         HEADER SCHEMATIC DECORATIONS
-         ══════════════════════════════════════════════════════════════ */}
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-stone-200/50">
+      <div className="max-w-[1440px] mx-auto px-6 h-16 lg:h-20 flex items-center justify-between">
+        {/* Left Side: Logo + Language Switcher */}
+        <div className="flex items-center gap-6">
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logos/adapty-logo.svg"
+              alt="Adapty"
+              width={120}
+              height={32}
+              className="h-8 w-auto"
+              priority
+            />
+          </Link>
 
-      {/* Bottom edge beam */}
-      <div className="absolute bottom-0 left-24 right-24 hidden lg:block">
-        <BeamNoodle direction="horizontal" length="100%" from="left" delay={0.5} />
-      </div>
-
-      {/* Left edge node */}
-      <div className="absolute left-2 top-1/2 -translate-y-1/2 hidden lg:block">
-        <ConnectionNode size="sm" />
-      </div>
-
-      {/* Right edge node */}
-      <div className="absolute right-2 top-1/2 -translate-y-1/2 hidden lg:block">
-        <ConnectionNode size="sm" accent />
-      </div>
-
-      <div className="max-w-[1440px] mx-auto px-6 h-16 lg:h-20 flex items-center justify-between relative">
-        {/* Logo - Full wordmark (197x52 native) */}
-        <Link href="/" className="flex items-center group relative">
-          <Image
-            src="/logos/adapty-logo.svg"
-            alt="Adapty"
-            width={120}
-            height={32}
-            className="h-8 w-auto"
-            priority
-          />
-          {/* Corner node on logo hover */}
-          <div className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity">
-            <ConnectionNode size="xs" accent />
+          {/* Language Switcher - Next to logo */}
+          <div className="hidden lg:block">
+            <LanguageSwitcher />
           </div>
-        </Link>
+        </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex gap-x-8 items-center relative">
-          {/* Connection beam through nav */}
-          <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 pointer-events-none">
-            <SchematicLine direction="horizontal" length="100%" noAnimation />
-          </div>
+        {/* Center: Desktop Navigation */}
+        <nav
+          className="hidden lg:flex gap-x-6 items-center"
+          onMouseLeave={() => setHoveredNav(null)}
+        >
+          {NAV_ITEMS.map((item) => (
+            <MegaMenuDropdown
+              key={item.key}
+              item={item}
+              isOpen={hoveredNav === item.key}
+              onHover={() => setHoveredNav(item.key)}
+              onLeave={() => setHoveredNav(null)}
+            />
+          ))}
 
-          <NavDropdown {...navigation.product} />
-          <NavDropdown {...navigation.solutions} />
-          <NavDropdown {...navigation.resources} />
           <Link
-            href="#"
-            className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors relative group"
+            href="/pricing"
+            className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors h-20 flex items-center"
           >
             Pricing
-            <div className="absolute -left-1 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <ConnectionNode size="xs" />
-            </div>
-          </Link>
-          <Link
-            href="#"
-            className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors relative group"
-          >
-            Docs
-            <div className="absolute -left-1 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <ConnectionNode size="xs" accent />
-            </div>
           </Link>
         </nav>
 
-        {/* Auth Buttons */}
-        <div className="flex items-center gap-4 relative">
-          {/* Connection node before buttons */}
-          <div className="absolute -left-4 top-1/2 -translate-y-1/2 hidden lg:block">
-            <ConnectionNode size="sm" filled />
-          </div>
-
+        {/* Right Side: Auth Buttons */}
+        <div className="flex items-center gap-4">
           <Link
-            href="#"
+            href="/login"
             className="hidden lg:block text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors"
           >
             Log in
           </Link>
-          <Button variant="primary" size="md" beam>
+
+          <Button variant="primary" size="md">
             Sign up
           </Button>
+
           {/* Mobile menu button */}
           <button
             className="lg:hidden p-2 text-stone-600 hover:text-stone-900"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
           >
             <List size={24} weight="bold" />
           </button>
@@ -191,36 +290,7 @@ export function Header() {
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-stone-200 bg-white/95 backdrop-blur-lg">
-          <nav className="max-w-[1440px] mx-auto px-6 py-4 space-y-4">
-            {Object.values(navigation).map((group) => (
-              <div key={group.label}>
-                <div className="text-xs font-semibold uppercase tracking-wider text-stone-400 mb-2">
-                  {group.label}
-                </div>
-                {group.items.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="block py-2 text-stone-600 hover:text-stone-900"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            ))}
-            <div className="pt-4 border-t border-stone-200 flex gap-4">
-              <Link href="#" className="text-stone-600 hover:text-stone-900">
-                Pricing
-              </Link>
-              <Link href="#" className="text-stone-600 hover:text-stone-900">
-                Docs
-              </Link>
-            </div>
-          </nav>
-        </div>
-      )}
+      <MobileMenu isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
     </header>
   );
 }

@@ -1,110 +1,67 @@
 "use client";
 
 import Image from "next/image";
-import { Marquee } from "@/components/ui/Marquee";
-import {
-  SchematicLine,
-  ConnectionNode,
-  BeamNoodle,
-} from "@/components/ui/SchematicLine";
+import { cn } from "@/lib/cn";
 
 const integrations = [
-  { name: "Amplitude", src: "/integrations/amplitude.svg" },
-  { name: "Mixpanel", src: "/integrations/mixpanel.svg" },
-  { name: "AppsFlyer", src: "/integrations/appsflyer.svg" },
-  { name: "Adjust", src: "/integrations/adjust.svg" },
-  { name: "Branch", src: "/integrations/branch.svg" },
-  { name: "Segment", src: "/integrations/segment.svg" },
-  { name: "Firebase", src: "/integrations/firebase.svg" },
-  { name: "Facebook", src: "/integrations/facebook.svg" },
-  { name: "OneSignal", src: "/integrations/onesignal.svg" },
-  { name: "Slack", src: "/integrations/slack.svg" },
-  { name: "Braze", src: "/integrations/braze.svg" },
-  { name: "PostHog", src: "/integrations/posthog.svg" },
+  { name: "Amplitude", logo: "amplitude.svg" },
+  { name: "Mixpanel", logo: "mixpanel.svg" },
+  { name: "AppsFlyer", logo: "appsflyer.svg" },
+  { name: "Adjust", logo: "adjust.svg" },
+  { name: "Branch", logo: "branch.svg" },
+  { name: "Segment", logo: "segment.svg" },
+  { name: "Firebase", logo: "firebase.svg" },
+  { name: "Facebook", logo: "facebook.svg" },
+  { name: "OneSignal", logo: "onesignal.svg" },
+  { name: "Slack", logo: "slack.svg" },
 ];
 
 export function IntegrationsMarquee() {
   return (
-    <section className="py-12 bg-stone-50 overflow-hidden relative">
-      {/* ══════════════════════════════════════════════════════════════
-         SCHEMATIC DECORATIONS
-         ══════════════════════════════════════════════════════════════ */}
-
-      {/* Left vertical rail */}
-      <div className="absolute left-0 top-4 bottom-4 hidden lg:block">
-        <SchematicLine direction="vertical" length="100%" withNode="both" delay={0.2} />
-      </div>
-
-      {/* Right vertical rail */}
-      <div className="absolute right-0 top-4 bottom-4 hidden lg:block">
-        <SchematicLine direction="vertical" length="100%" withNode="both" delay={0.3} />
-      </div>
-
-      {/* Top beam connector */}
-      <div className="absolute top-4 left-12 right-12 hidden lg:block">
-        <BeamNoodle direction="horizontal" length="100%" from="left" delay={0.5} />
-      </div>
-
-      {/* Bottom beam connector */}
-      <div className="absolute bottom-4 left-12 right-12 hidden lg:block">
-        <SchematicLine direction="horizontal" length="100%" withNode="both" delay={0.6} />
-      </div>
-
-      <div className="text-center mb-10 px-6 relative">
-        <h2 className="text-2xl font-semibold tracking-tight mb-2 animate-intro-blur">
+    <section className="py-20 bg-stone-50/50 overflow-hidden relative border-y border-stone-200/50 backdrop-blur-sm">
+      <div className="max-w-[1440px] mx-auto px-6 mb-12 text-center stagger-children">
+        <h2 className="text-2xl font-semibold tracking-tight mb-2 text-stone-900 animate-intro-blur">
           Connect with your favorite tools
         </h2>
         <p className="text-stone-500 text-sm animate-intro-blur delay-100">
           Send subscription data to analytics, attribution, and marketing
           platforms
         </p>
-
-        {/* Decorative nodes */}
-        <div className="absolute -left-4 top-1/2 -translate-y-1/2 hidden lg:block">
-          <ConnectionNode size="sm" accent />
-        </div>
-        <div className="absolute -right-4 top-1/2 -translate-y-1/2 hidden lg:block">
-          <ConnectionNode size="sm" />
-        </div>
       </div>
 
-      <div className="relative">
-        {/* Connection nodes at marquee edges */}
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
-          <ConnectionNode size="md" accent filled pulse />
-        </div>
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
-          <ConnectionNode size="md" filled />
-        </div>
+      {/* Blueprint Grid Overlay (Subtle) */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: "linear-gradient(#000 1px, transparent 1px)",
+          backgroundSize: "100% 40px"
+        }}
+      />
 
-        {/* Horizontal beam through marquee */}
-        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 hidden lg:block pointer-events-none">
-          <BeamNoodle direction="horizontal" length="100%" from="left" delay={0.8} />
-        </div>
+      {/* Gradient Fade Masks - Improved visibility */}
+      <div className="z-10 bg-gradient-to-r from-[#fcfcfc] via-[#fcfcfc]/90 to-transparent w-32 h-full absolute top-0 left-0" />
+      <div className="z-10 bg-gradient-to-l from-[#fcfcfc] via-[#fcfcfc]/90 to-transparent w-32 h-full absolute top-0 right-0" />
 
-        <Marquee pauseOnHover speed="slow" className="bg-stone-50">
-          <div className="flex items-center gap-12 px-6">
-            {integrations.map((integration, index) => (
-              <div
-                key={integration.name}
-                className="relative h-10 w-28 opacity-60 hover:opacity-100 transition-opacity duration-300 group"
-              >
-                <Image
-                  src={integration.src}
-                  alt={integration.name}
-                  fill
-                  className="object-contain"
-                />
-                {/* Connection node on hover */}
-                {index % 3 === 0 && (
-                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ConnectionNode size="xs" accent />
-                  </div>
-                )}
-              </div>
-            ))}
+      <div className="flex w-max animate-marquee hover-pause py-4">
+        {[...integrations, ...integrations, ...integrations].map((tool, idx) => (
+          <div 
+            key={`${tool.name}-${idx}`} 
+            className="group relative w-40 h-12 flex items-center justify-center mx-6 transition-all duration-300"
+          >
+            {/* Logo */}
+            <div className="relative w-32 h-8 opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110">
+              <Image
+                src={`/integrations/${tool.logo}`}
+                alt={tool.name}
+                fill
+                className="object-contain"
+              />
+            </div>
+            
+            {/* Hover Micro-interaction: Subtle glow below */}
+            <div className="absolute -bottom-4 w-12 h-1 bg-black/5 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
-        </Marquee>
+        ))}
       </div>
     </section>
   );

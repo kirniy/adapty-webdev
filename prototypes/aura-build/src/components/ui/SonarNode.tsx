@@ -40,7 +40,7 @@ export function SonarNode({
 }: SonarNodeProps) {
   const colorClasses = {
     default: "border-stone-300",
-    lime: "border-[#c1ff72]",
+    lime: "border-brand-lime",
     dark: "border-stone-600",
   };
 
@@ -107,7 +107,7 @@ export function PulseDot({
   };
 
   const colorClasses = {
-    lime: "bg-[#c1ff72]",
+    lime: "bg-brand-lime",
     green: "bg-green-500",
     blue: "bg-blue-500",
     red: "bg-red-500",

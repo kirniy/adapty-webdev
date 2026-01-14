@@ -16,7 +16,7 @@ import { cn } from "@/lib/cn";
 export function CoreServices() {
   return (
     <section id="services" className="lg:px-12 lg:mb-20 max-w-[1600px] mx-auto mb-12 px-6">
-      <h2 className="text-3xl lg:text-5xl font-medium text-stone-900 tracking-tight font-sans mb-10 lg:mb-12">
+      <h2 className="text-3xl lg:text-5xl font-medium text-stone-900 tracking-tight font-sans mb-10 lg:mb-12 text-balance">
         End-to-End Digital Engineering
       </h2>
 
@@ -59,7 +59,7 @@ export function CoreServices() {
                 <div className="flex gap-2"><span className="text-blue-400">metadata:</span></div>
                 <div className="pl-4 flex gap-2"><span className="text-purple-400">name:</span> production-api</div>
                 <div className="flex gap-2"><span className="text-blue-400">spec:</span></div>
-                <div className="pl-4 flex gap-2"><span className="text-purple-400">replicas:</span> <span className="text-[#c1ff72]">12</span></div>
+                <div className="pl-4 flex gap-2"><span className="text-purple-400">replicas:</span> <span className="text-brand-lime">12</span></div>
                 
                 {/* Interactive Element Mockup */}
                 <div className="flex gap-3 bg-stone-800 border-stone-700 border rounded-lg mt-4 p-2 items-center">
@@ -67,7 +67,7 @@ export function CoreServices() {
                     <Check size={14} weight="bold" />
                   </div>
                   <div className="flex-1 text-[9px] text-stone-300">Autoscaling Policy</div>
-                  <div className="h-5 w-10 bg-[#c1ff72] rounded text-[8px] text-stone-900 font-bold flex items-center justify-center">ON</div>
+                  <div className="h-5 w-10 bg-brand-lime rounded text-[8px] text-stone-900 font-bold flex items-center justify-center">ON</div>
                 </div>
               </div>
             </div>
@@ -150,7 +150,7 @@ export function CoreServices() {
               </div>
               <div className="bg-[#002f43] p-3 rounded-2xl rounded-tl-none shadow-sm text-xs text-white w-fit transform group-hover:translate-x-1 transition-transform delay-100">
                 <div className="flex items-center gap-2">
-                  <ArrowRight className="text-[#c1ff72]" size={16} />
+                  <ArrowRight className="text-brand-lime" size={16} />
                   Sent to Sales Pipeline
                 </div>
               </div>

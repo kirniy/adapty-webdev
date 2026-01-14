@@ -16,6 +16,18 @@ tags: [redesign, nextjs, tailwind, design-system, shadcn-ui, tailark]
 
 ---
 
+## ABSOLUTE RULES (NON-NEGOTIABLE)
+
+### NO EMOJIS - EVER
+**NEVER use emojis in any code, comments, UI text, documentation, or any file in this project.**
+- No emoji flags for language switchers (use text abbreviations or SVG icons)
+- No emoji icons in UI components
+- No emoji in commit messages
+- No emoji in documentation
+- No exceptions. Zero tolerance.
+
+---
+
 ## SESSION START INSTRUCTIONS (READ FIRST)
 
 ### Current Status: DECISION POINT
@@ -43,7 +55,23 @@ Three options proposed to Sergey (see `/messages/03-phase-b-assessment/message.m
 **Option B:** Try Tailark marketing blocks (shadcn extension for landing pages)
 **Option C:** Hybrid - vanilla Tailwind for marketing, shadcn for functional components
 
-### Skills for Next Phase
+### Required Skills (ALWAYS LOAD)
+
+**For ALL React/Next.js work in this project:**
+```
+react-best-practices     - Vercel Engineering performance guidelines (MANDATORY)
+vercel-deploy            - No-auth deployment to Vercel (say "deploy my app")
+```
+
+This skill contains priority-ordered optimization rules. Apply patterns from highest impact first:
+1. **CRITICAL**: Eliminate waterfalls (`Promise.all`, defer await)
+2. **CRITICAL**: Bundle size (avoid barrel imports, dynamic imports)
+3. **HIGH**: Server performance (`React.cache()`, parallel fetching)
+4. **MEDIUM**: Re-render optimization (memo, transitions, derived state)
+
+**Reference files**: `~/.claude/skills/react-best-practices/references/rules/`
+
+### Additional Skills for Next Phase
 ```
 1. frontend-design        - Distinctive, production-grade UI
 2. frontend-ui-ux         - Designer-turned-developer mindset
@@ -420,6 +448,17 @@ Phase C: (Optional) Cross-validation
 - shadcn/ui ecosystem
 - Framer Motion
 - Vercel deployment
+
+### Claude Code Skills (Global)
+Located in `~/.claude/skills/`:
+| Skill | Purpose | Usage |
+|-------|---------|-------|
+| **react-best-practices** | Vercel perf guidelines | Auto-apply when writing React |
+| **vercel-deploy** | No-auth deployment | "Deploy my app" |
+| frontend-design | Production-grade UI | UI component creation |
+| frontend-ui-ux | Designer mindset | UX decisions |
+| styling-with-shadcn | shadcn patterns | When using shadcn |
+| nextjs | Next.js patterns | App Router, RSC |
 
 ### Icon Libraries (January 2026 Recommendations)
 
