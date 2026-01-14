@@ -23,8 +23,12 @@ export function TheInfiniteGrid({ className, children }: TheInfiniteGridProps) {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+      // Get offset relative to container if possible, but window is fine for fixed/bg
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (rect) {
+        mouseX.set(e.clientX - rect.left);
+        mouseY.set(e.clientY - rect.top);
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -50,7 +54,7 @@ export function TheInfiniteGrid({ className, children }: TheInfiniteGridProps) {
     <div
       ref={containerRef}
       className={cn(
-        "relative w-full overflow-hidden pointer-events-none",
+        "relative w-full h-full overflow-hidden pointer-events-none",
         className
       )}
     >

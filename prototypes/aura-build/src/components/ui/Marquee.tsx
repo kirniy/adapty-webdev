@@ -26,10 +26,10 @@ export function Marquee({
 
   return (
     <div className={cn("relative w-full overflow-hidden", className)}>
-      {/* Left fade gradient */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none" />
-      {/* Right fade gradient */}
-      <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+      {/* Left fade - positioned at viewport edge */}
+      <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-stone-100 to-transparent pointer-events-none" />
+      {/* Right fade - positioned at viewport edge */}
+      <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-stone-100 to-transparent pointer-events-none" />
 
       <div
         className={cn(

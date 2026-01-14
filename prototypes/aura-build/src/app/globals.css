@@ -17,7 +17,7 @@
   /* Font Families */
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
-  --font-display: var(--font-instrument-serif), Georgia, serif;
+  --font-display: "Instrument Serif", Georgia, serif;
 
   /* Animations */
   --animate-marquee: marquee 40s linear infinite;
@@ -543,13 +543,128 @@
     background-size: 24px 24px;
   }
 
-  /* SVG Animation Utilities - proper transform-origin for SVG elements */
-  svg .animate-sonar {
-    transform-box: fill-box;
-    transform-origin: center;
+  /* ─────────────────────────────────────────────────────────────────
+     Schematic / Blueprint Design System (Attio-inspired)
+     ───────────────────────────────────────────────────────────────── */
+
+  /* Blueprint Grid - Horizontal Dotted Lines */
+  .bg-blueprint-grid {
+    background-size: 100% 40px;
+    background-image: linear-gradient(to bottom, transparent 39px, rgba(0, 0, 0, 0.06) 40px);
   }
 
-  svg .animate-beam-path {
-    animation: beamPath var(--animate-beam-path-duration, 6s) linear infinite;
+  /* Vertical Dotted Lines (for grid intersection) */
+  .bg-blueprint-grid-vertical {
+    background-size: 40px 100%;
+    background-image: linear-gradient(to right, transparent 39px, rgba(0, 0, 0, 0.06) 40px);
+  }
+
+  /* Hatched Fill Pattern */
+  .bg-hatch {
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 3px,
+      rgba(0, 0, 0, 0.05) 3px,
+      rgba(0, 0, 0, 0.05) 4px
+    );
+  }
+  .bg-hatch-lime {
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 3px,
+      rgba(193, 255, 114, 0.3) 3px,
+      rgba(193, 255, 114, 0.3) 4px
+    );
+  }
+
+  /* Dashed Stroke Utility */
+  .stroke-dashed {
+    stroke-dasharray: 4 6;
+    stroke-linecap: round;
+  }
+  
+  .stroke-dotted {
+    stroke-dasharray: 1 4;
+    stroke-linecap: round;
+  }
+
+  /* Connector Node Point */
+  .node-point {
+    width: 7px;
+    height: 7px;
+    background-color: white;
+    border: 1.5px solid #d6d3d1; /* stone-300 */
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+  }
+  
+  .node-point-filled {
+    background-color: #1c1917; /* stone-900 */
+    border-color: #1c1917;
+  }
+
+  /* Hairline Divider */
+  .hairline-divider {
+    height: 1px;
+    background: repeating-linear-gradient(
+      to right,
+      #d6d3d1 0,
+      #d6d3d1 4px,
+      transparent 4px,
+      transparent 10px
+    );
+  }
+
+  /* ─────────────────────────────────────────────────────────────────
+     Blueprint / Connectivity SVG Utilities (Attio-precise)
+     ───────────────────────────────────────────────────────────────── */
+
+  /* SVG Stroke Widths */
+  .stroke-hairline { stroke-width: 0.5px; }
+  .stroke-thin { stroke-width: 1px; }
+  .stroke-medium { stroke-width: 1.5px; }
+  .stroke-thick { stroke-width: 2px; }
+
+  /* SVG Stroke Colors (Attio's opacity levels) */
+  .stroke-blueprint-subtle { stroke: rgba(0, 0, 0, 0.08); }
+  .stroke-blueprint-medium { stroke: rgba(0, 0, 0, 0.12); }
+  .stroke-blueprint-strong { stroke: rgba(0, 0, 0, 0.20); }
+  .stroke-blueprint-accent { stroke: rgba(193, 255, 114, 0.6); }
+
+  /* Cross-Hatch Patterns (different angles) */
+  .bg-crosshatch {
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(0, 0, 0, 0.04) 3px, rgba(0, 0, 0, 0.04) 4px),
+      repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(0, 0, 0, 0.04) 3px, rgba(0, 0, 0, 0.04) 4px);
+  }
+
+  /* Ruled Paper Background (horizontal lines only) */
+  .bg-ruled {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 39px,
+      rgba(0, 0, 0, 0.06) 39px,
+      rgba(0, 0, 0, 0.06) 40px
+    );
+    background-size: 100% 40px;
+  }
+
+  /* Blueprint Node Sizes */
+  .node-xs { width: 4px; height: 4px; }
+  .node-sm { width: 6px; height: 6px; }
+  .node-md { width: 8px; height: 8px; }
+  .node-lg { width: 12px; height: 12px; }
+
+  /* Animated Beam Gradient (for SVG or CSS) */
+  .beam-gradient {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(193, 255, 114, 0.8) 50%,
+      transparent 100%
+    );
   }
 }

@@ -2,28 +2,27 @@
 
 import { Check, Timer, HardDrives, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { Badge } from "@/components/ui/Badge";
-import { SchematicLine } from "@/components/ui/SchematicLine";
 
 export function ResultsSection() {
   return (
     <section id="cases" className="max-w-[1600px] mx-auto px-6 lg:px-12 mt-16 lg:mt-20 mb-12 lg:mb-20">
       <div className="overflow-hidden min-h-[500px] lg:h-[600px] rounded-[32px] relative shadow-2xl border shadow-zinc-900/30 bg-stone-900 border-stone-800">
-        
+
         {/* Background Grid Pattern */}
-        <div 
-          className="opacity-20 absolute top-0 right-0 bottom-0 left-0 pointer-events-none" 
-          style={{ 
-            backgroundImage: "linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px)", 
-            backgroundSize: "30px 30px" 
-          }} 
+        <div
+          className="opacity-20 absolute top-0 right-0 bottom-0 left-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px)",
+            backgroundSize: "30px 30px"
+          }}
         />
 
         <div className="flex flex-col lg:flex-row h-full">
           {/* Left Content */}
           <div className="flex-1 lg:p-16 flex flex-col z-10 pt-8 pr-8 pb-8 pl-8 relative justify-center">
-            
+
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-2 h-2 bg-brand-lime rounded-full animate-pulse" />
+              <div className="w-2 h-2 bg-brand-lime rounded-full" />
               <span className="text-brand-lime font-mono text-xs uppercase tracking-wider">Verified Results</span>
             </div>
 
@@ -35,7 +34,7 @@ export function ResultsSection() {
               See how we deliver measurable impact for our partners.
             </p>
 
-            <button className="group flex items-center gap-3 bg-brand-lime hover:bg-[#b0f060] transition-all text-sm font-semibold rounded-full px-8 py-4 w-fit shadow-lg hover:shadow-[0_0_20px_rgba(193,255,114,0.3)] text-stone-900">
+            <button className="group flex items-center gap-3 bg-brand-lime hover:bg-brand-lime-dark transition-all text-sm font-semibold rounded-full px-8 py-4 w-fit shadow-[0_0_30px_rgba(193,255,114,0.4)] text-stone-900">
               <span>Read Case Studies</span>
               <ArrowRight size={16} weight="bold" className="group-hover:translate-x-1 transition-transform" />
             </button>

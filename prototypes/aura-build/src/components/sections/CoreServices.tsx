@@ -12,18 +12,57 @@ import {
   CaretRight
 } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/cn";
+import { BlueprintNode } from "@/components/ui/BlueprintElements";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
+import { ScrambleText } from "@/components/ui/ScrambleText";
 
 export function CoreServices() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+
   return (
-    <section id="services" className="lg:px-12 lg:mb-20 max-w-[1600px] mx-auto mb-12 px-6">
-      <h2 className="text-3xl lg:text-5xl font-medium text-stone-900 tracking-tight font-sans mb-10 lg:mb-12 text-balance">
+    <section ref={containerRef} id="services" className="lg:px-12 lg:mb-20 max-w-[1600px] mx-auto mb-12 px-6 relative">
+      {/* Background Blueprint Grid - Vertical & Horizontal */}
+      <div className="absolute inset-0 pointer-events-none -mx-[50vw] left-[50%] right-[50%] w-[100vw] bg-blueprint-grid opacity-[0.4]" />
+      
+      <h2 className="text-3xl lg:text-5xl font-medium text-stone-900 tracking-tight font-sans mb-10 lg:mb-12 text-balance animate-intro-blur animation-fill-mode-both relative z-10">
         End-to-End Digital Engineering
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-fr">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-fr relative">
         
+        {/* Schematic Connectors - SVG Layer */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-visible hidden lg:block">
+          {/* Connector 1: Cloud -> ERP */}
+          <svg className="absolute w-full h-full overflow-visible">
+            <motion.path
+              d="M 320 150 C 350 150, 350 200, 380 200 L 400 200"
+              fill="none"
+              stroke="#d6d3d1"
+              strokeWidth="1"
+              strokeDasharray="4 6"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={isInView ? { pathLength: 1, opacity: 0.6 } : { pathLength: 0, opacity: 0 }}
+              transition={{ duration: 1.5, ease: "easeInOut", delay: 0.5 }}
+            />
+            {/* Visual connector circles */}
+            <motion.circle 
+                cx="320" cy="150" r="3" fill="white" stroke="#d6d3d1" strokeWidth="1.5" 
+                initial={{ scale: 0 }}
+                animate={isInView ? { scale: 1 } : { scale: 0 }}
+                transition={{ delay: 0.5 }}
+            />
+          </svg>
+        </div>
+
         {/* Card 1: Cloud & DevOps (Dark Blue) */}
-        <div className="row-span-1 lg:row-span-2 group overflow-hidden lg:p-10 flex flex-col min-h-[500px] lg:min-h-full transition-transform hover:scale-[1.01] duration-300 bg-[#002f43] border-[#002f43] border rounded-[32px] pt-6 pr-6 pb-6 pl-6 relative justify-between">
+        <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6 }}
+            className="row-span-1 lg:row-span-2 group overflow-hidden lg:p-10 flex flex-col min-h-[500px] lg:min-h-full transition-transform hover:scale-[1.01] duration-300 bg-[#002f43] border-[#002f43] border rounded-[32px] pt-6 pr-6 pb-6 pl-6 relative justify-between z-10"
+        >
           
           {/* Visual Anchor (Top) */}
           <div className="z-20 mt-auto relative">
@@ -34,8 +73,8 @@ export function CoreServices() {
             <p className="text-stone-300 mb-6 text-sm lg:text-base leading-relaxed max-w-sm">
               Scale without the crash. AWS, Azure, &amp; Kubernetes expert management and automation.
             </p>
-            <Link href="#" className="inline-flex items-center text-white font-medium text-sm hover:underline underline-offset-4 group/link">
-              Explore Cloud Services 
+            <Link href="#" className="inline-flex items-center text-white font-medium text-sm group/link">
+              <span className="underline underline-offset-4">Explore Cloud Services</span>
               <ArrowRight size={16} className="ml-2 group-hover/link:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -59,23 +98,32 @@ export function CoreServices() {
                 <div className="flex gap-2"><span className="text-blue-400">metadata:</span></div>
                 <div className="pl-4 flex gap-2"><span className="text-purple-400">name:</span> production-api</div>
                 <div className="flex gap-2"><span className="text-blue-400">spec:</span></div>
-                <div className="pl-4 flex gap-2"><span className="text-purple-400">replicas:</span> <span className="text-brand-lime">12</span></div>
+                <div className="pl-4 flex gap-2"><span className="text-purple-400">replicas:</span> <span className="text-brand-lime"><ScrambleText text="12" hover={false} delay={1000} speed={100} /></span></div>
                 
-                {/* Interactive Element Mockup */}
-                <div className="flex gap-3 bg-stone-800 border-stone-700 border rounded-lg mt-4 p-2 items-center">
-                  <div className="h-6 w-6 rounded bg-lime-900/50 text-lime-400 flex items-center justify-center shrink-0">
+                {/* Interactive Element Mockup with Hatching */}
+                <div className="flex gap-3 bg-stone-800 border-stone-700 border rounded-lg mt-4 p-2 items-center relative overflow-hidden">
+                  <div className="absolute inset-0 bg-hatch opacity-10 pointer-events-none" />
+                  <div className="h-6 w-6 rounded bg-lime-900/50 text-lime-400 flex items-center justify-center shrink-0 z-10">
                     <Check size={14} weight="bold" />
                   </div>
-                  <div className="flex-1 text-[9px] text-stone-300">Autoscaling Policy</div>
-                  <div className="h-5 w-10 bg-brand-lime rounded text-[8px] text-stone-900 font-bold flex items-center justify-center">ON</div>
+                  <div className="flex-1 text-[9px] text-stone-300 z-10">Autoscaling Policy</div>
+                  <div className="h-5 w-10 bg-brand-lime rounded text-[8px] text-stone-900 font-bold flex items-center justify-center z-10">ON</div>
                 </div>
               </div>
             </div>
+            
+            {/* Blueprint connector node */}
+            <BlueprintNode className="absolute top-1/2 left-[30%] hidden lg:block" />
           </div>
-        </div>
+        </motion.div>
 
         {/* Card 2: ERP & Operations (Wide - Cyan/Lime) */}
-        <div className="col-span-1 md:col-span-2 group overflow-hidden lg:p-10 min-h-[400px] flex flex-col md:flex-row transition-transform hover:scale-[1.01] duration-300 bg-lime-300 border-lime-300 border rounded-[32px] pt-6 pr-6 pb-6 pl-6 relative items-center justify-between">
+        <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="col-span-1 md:col-span-2 group overflow-hidden lg:p-10 min-h-[400px] flex flex-col md:flex-row transition-transform hover:scale-[1.01] duration-300 bg-lime-300 border-lime-300 border rounded-[32px] pt-6 pr-6 pb-6 pl-6 relative items-center justify-between z-10"
+        >
           
           {/* Text Side */}
           <div className="relative z-20 flex flex-col h-full justify-between w-full md:w-1/2 mb-8 md:mb-0">
@@ -88,8 +136,8 @@ export function CoreServices() {
                 Unified business logic. Odoo &amp; SAP integrations that actually work together.
               </p>
             </div>
-            <Link href="#" className="inline-flex items-center text-stone-900 font-bold text-sm hover:underline underline-offset-4 group/link">
-              See Integrations 
+            <Link href="#" className="inline-flex items-center text-stone-900 font-bold text-sm group/link">
+              <span className="underline underline-offset-4">See Integrations</span>
               <ArrowRight size={16} className="ml-2 group-hover/link:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -98,13 +146,20 @@ export function CoreServices() {
           <div className="relative w-full md:w-1/2 h-full min-h-[220px] flex items-center justify-end">
             {/* Tilted Container for dynamic effect */}
             <div className="absolute right-[-20px] md:right-[-40px] w-[120%] md:w-[110%] group-hover:scale-105 group-hover:-rotate-1 transition-all duration-500 ease-out">
-              <div className="bg-white/90 backdrop-blur rounded-xl shadow-lg border border-lime-400/50 p-4">
+              <div className="bg-white/90 backdrop-blur rounded-xl shadow-lg border border-lime-400/50 p-4 relative overflow-hidden">
+                {/* Blueprint grid inside the card */}
+                <div className="absolute inset-0 bg-blueprint-grid opacity-30 pointer-events-none" />
+                
                 {/* Columns */}
-                <div className="flex gap-3">
+                <div className="flex gap-3 relative z-10">
                   {/* Col 1 */}
-                  <div className="flex-1 bg-stone-50 rounded-lg p-2 space-y-2">
-                    <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Inventory</div>
-                    <div className="bg-white p-3 rounded border border-stone-100 shadow-sm">
+                  <div className="flex-1 bg-stone-50 rounded-lg p-2 space-y-2 border border-stone-100">
+                    <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1 flex items-center gap-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-stone-300" />
+                      Inventory
+                    </div>
+                    <div className="bg-white p-3 rounded border border-stone-100 shadow-sm relative overflow-hidden">
+                      <div className="absolute right-0 top-0 w-8 h-8 bg-hatch opacity-20" />
                       <div className="flex justify-between items-center mb-2">
                         <div className="h-1.5 w-12 bg-lime-300 rounded" />
                         <span className="text-[8px] text-stone-400">SKU-102</span>
@@ -113,8 +168,11 @@ export function CoreServices() {
                     </div>
                   </div>
                   {/* Col 2 */}
-                  <div className="flex-1 bg-stone-50 rounded-lg p-2 space-y-2">
-                    <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Processing</div>
+                  <div className="flex-1 bg-stone-50 rounded-lg p-2 space-y-2 border border-stone-100">
+                    <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1 flex items-center gap-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-lime-500" />
+                      Processing
+                    </div>
                     <div className="bg-white p-3 rounded border border-lime-500 shadow-sm relative overflow-hidden">
                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-lime-500" />
                       <div className="h-1.5 w-16 bg-stone-800 rounded mb-2" />
@@ -124,6 +182,8 @@ export function CoreServices() {
                         <div className="text-[8px] text-stone-400">Syncing...</div>
                       </div>
                     </div>
+                    {/* Schematic Connector */}
+                    <div className="absolute -left-2 top-10 w-4 border-t border-dashed border-stone-300 hidden md:block" />
                   </div>
                   {/* Col 3 (Partial) */}
                   <div className="flex-1 bg-stone-50 rounded-lg p-2 opacity-50">
@@ -134,22 +194,33 @@ export function CoreServices() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Card 3: Growth Marketing (Mint) */}
-        <div className="group relative overflow-hidden bg-lime-100/80 rounded-[32px] p-6 lg:p-10 flex flex-col justify-between min-h-[350px] transition-transform hover:scale-[1.01] duration-300 border border-lime-200">
+        <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="group relative overflow-hidden bg-lime-100/80 rounded-[32px] p-6 lg:p-10 flex flex-col justify-between min-h-[350px] transition-transform hover:scale-[1.01] duration-300 border border-lime-200 z-10"
+        >
           
           {/* Visuals */}
           <div className="relative w-full h-32 mb-4">
+            {/* Blueprint node connector */}
+            <BlueprintNode className="absolute -top-1 left-[37px]" />
+
             <div className="absolute right-0 top-0 space-y-3 w-full max-w-[220px]">
-              <div className="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm text-xs text-stone-600 ml-auto w-fit transform group-hover:-translate-x-1 transition-transform delay-75">
+              <div className="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm text-xs text-stone-600 ml-auto w-fit transform group-hover:-translate-x-1 transition-transform delay-75 border border-stone-100 relative">
+                {/* Node connector line */}
+                <div className="absolute -left-4 top-1/2 w-4 border-t border-dashed border-stone-300" />
                 <div className="flex items-center gap-2">
                   <User className="text-stone-400" size={16} />
                   New Lead Captured
                 </div>
               </div>
-              <div className="bg-[#002f43] p-3 rounded-2xl rounded-tl-none shadow-sm text-xs text-white w-fit transform group-hover:translate-x-1 transition-transform delay-100">
-                <div className="flex items-center gap-2">
+              <div className="bg-[#002f43] p-3 rounded-2xl rounded-tl-none shadow-sm text-xs text-white w-fit transform group-hover:translate-x-1 transition-transform delay-100 relative overflow-hidden">
+                <div className="absolute inset-0 bg-hatch opacity-10" />
+                <div className="flex items-center gap-2 relative z-10">
                   <ArrowRight className="text-brand-lime" size={16} />
                   Sent to Sales Pipeline
                 </div>
@@ -167,21 +238,29 @@ export function CoreServices() {
               Learn More <CaretRight size={14} className="ml-1" />
             </Link>
           </div>
-        </div>
+        </motion.div>
 
         {/* Card 4: E-Commerce (Sky Blue) */}
-        <div className="group relative overflow-hidden bg-sky-50 rounded-[32px] p-6 lg:p-10 flex flex-col justify-between min-h-[350px] transition-transform hover:scale-[1.01] duration-300 border border-sky-100">
+        <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="group relative overflow-hidden bg-sky-50 rounded-[32px] p-6 lg:p-10 flex flex-col justify-between min-h-[350px] transition-transform hover:scale-[1.01] duration-300 border border-sky-100 z-10"
+        >
           
           {/* E-commerce Visual */}
           <div className="flex w-full h-32 relative justify-end">
             <div className="relative transform rotate-3 group-hover:rotate-6 transition-transform duration-500 origin-bottom-right">
-              <div className="bg-white p-3 rounded-xl shadow-lg border border-sky-100 w-32">
+              <div className="bg-white p-3 rounded-xl shadow-lg border border-sky-100 w-32 relative overflow-hidden">
+                <div className="absolute inset-0 bg-blueprint-grid opacity-10" />
                 <div className="w-full aspect-square bg-stone-100 rounded-lg mb-2 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-tr from-sky-100 to-transparent opacity-50" />
+                  {/* Hatched overlay */}
+                  <div className="absolute bottom-0 left-0 w-full h-1/2 bg-hatch opacity-10" />
                 </div>
                 <div className="h-1.5 bg-stone-200 rounded w-2/3 mb-1" />
                 <div className="h-1.5 bg-stone-100 rounded w-1/2" />
-                <div className="-top-2 -right-2 text-[10px] font-bold text-white bg-stone-900 rounded-full pt-1 pr-2 pb-1 pl-2 absolute shadow-md">
+                <div className="-top-2 -right-2 text-[10px] font-bold text-white bg-stone-900 rounded-full pt-1 pr-2 pb-1 pl-2 absolute shadow-md border border-white">
                   $
                 </div>
               </div>
@@ -198,7 +277,7 @@ export function CoreServices() {
               View Storefronts <CaretRight size={14} className="ml-1" />
             </Link>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>

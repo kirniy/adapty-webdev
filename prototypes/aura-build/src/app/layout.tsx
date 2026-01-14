@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
 import { GeistSans, GeistMono } from "geist/font";
-import { Instrument_Serif } from "next/font/google";
 import { TheInfiniteGrid } from "@/components/ui/TheInfiniteGrid";
 import "./globals.css";
-
-const instrumentSerif = Instrument_Serif({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-instrument-serif",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Adapty - Revenue Management for In-App Purchases",
@@ -32,8 +24,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} ${instrumentSerif.variable} scroll-smooth`}
+      className={`${GeistSans.variable} ${GeistMono.variable} scroll-smooth`}
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+      </head>
       <body className="min-h-dvh overflow-x-hidden bg-stone-50 font-sans text-stone-900 antialiased selection:bg-brand-lime selection:text-black">
         {/* Global animated grid background */}
         <div className="fixed inset-0 pointer-events-none">

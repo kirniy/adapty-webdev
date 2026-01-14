@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Quotes } from "@phosphor-icons/react/dist/ssr";
-import { Card } from "@/components/ui/Card";
+import { Marquee } from "@/components/ui/Marquee";
 
 const testimonials = [
   {
@@ -42,40 +42,46 @@ const testimonials = [
   },
 ];
 
+function TestimonialCard({ testimonial }: { testimonial: typeof testimonials[0] }) {
+  return (
+    <div className="bg-white rounded-2xl p-8 shadow-cinematic-lg w-[400px] shrink-0 mx-3">
+      {/* Quote Icon */}
+      <div className="mb-6 text-brand-lime">
+        <Quotes size={32} weight="fill" />
+      </div>
+
+      {/* Quote */}
+      <p className="text-lg font-medium text-stone-900 mb-8 leading-relaxed">
+        &ldquo;{testimonial.quote}&rdquo;
+      </p>
+
+      {/* Author */}
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 rounded-full overflow-hidden relative bg-stone-100 ring-2 ring-stone-100">
+          <Image
+            src={testimonial.image}
+            alt={testimonial.name}
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div>
+          <div className="text-sm font-bold text-stone-900">{testimonial.name}</div>
+          <div className="text-sm text-stone-500">
+            {testimonial.role}, {testimonial.company}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Testimonials() {
   return (
-    <div className="flex gap-6 overflow-x-auto pb-8 no-scrollbar snap-x relative">
-      {testimonials.map((testimonial, index) => (
-        <Card
-          key={testimonial.name}
-          hover={false}
-          className="min-w-[300px] md:min-w-[400px] p-8 snap-center relative group animate-intro-blur"
-          style={{ animationDelay: `${index * 100}ms` }}
-        >
-          <div className="mb-6 text-brand-lime">
-            <Quotes size={24} weight="fill" />
-          </div>
-          <p className="text-lg font-medium text-stone-900 mb-6">
-            &ldquo;{testimonial.quote}&rdquo;
-          </p>
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full overflow-hidden relative bg-stone-100">
-              <Image
-                src={testimonial.image}
-                alt={testimonial.name}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <div className="text-sm font-semibold">{testimonial.name}</div>
-              <div className="text-xs text-stone-500">
-                {testimonial.role}, {testimonial.company}
-              </div>
-            </div>
-          </div>
-        </Card>
+    <Marquee pauseOnHover speed="slow" className="py-4">
+      {testimonials.map((testimonial) => (
+        <TestimonialCard key={testimonial.name} testimonial={testimonial} />
       ))}
-    </div>
+    </Marquee>
   );
 }

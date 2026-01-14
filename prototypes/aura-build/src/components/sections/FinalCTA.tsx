@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 
 export function FinalCTA() {
@@ -43,15 +42,15 @@ export function FinalCTA() {
               placeholder="Enter your work email"
               className="flex-1 h-12 text-sm"
             />
-            {/* Wider button with whitespace-nowrap to prevent text wrapping */}
-            <Button
+            {/* Solid lime button for dark background */}
+            <button
               type="submit"
-              variant="primary"
-              size="lg"
-              className="h-12 px-6 min-w-[160px] whitespace-nowrap bg-brand-lime hover:bg-[#b0f060] text-stone-900 border-0 font-semibold"
+              className="relative group cursor-pointer outline-none overflow-hidden rounded-full transition-all active:scale-[0.98] bg-brand-lime hover:bg-brand-lime-dark shadow-[0_0_30px_rgba(193,255,114,0.4)]"
             >
-              Start for free
-            </Button>
+              <span className="block select-none text-lg font-semibold text-stone-900 tracking-tight py-3 px-6 relative z-10">
+                Start for free
+              </span>
+            </button>
           </form>
 
           <div>

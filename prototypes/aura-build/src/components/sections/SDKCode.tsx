@@ -2,14 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/cn";
-import {
-  SchematicLine,
-  ConnectionNode,
-  SVGBeam,
-} from "@/components/ui/SchematicLine";
 
 const tabs = [
   { id: "javascript", label: "JavaScript" },
@@ -18,72 +12,107 @@ const tabs = [
   { id: "swift", label: "Swift" },
 ];
 
-const codeSnippets: Record<string, string> = {
-  javascript: `import { adapty } from 'adapty';
+const codeSnippets: Record<string, { code: string; lines: CodeLine[] }> = {
+  javascript: {
+    code: "",
+    lines: [
+      { type: "import", content: ["import", " { adapty } ", "from", " ", "'adapty'", ";"] },
+      { type: "empty", content: [] },
+      { type: "comment", content: ["// Activate Adapty on app start"] },
+      { type: "code", content: ["await", " adapty.", "activate", "(", "'YOUR_API_KEY'", ");"] },
+      { type: "empty", content: [] },
+      { type: "code", content: ["const", " profile = ", "await", " adapty.", "getProfile", "();"] },
+      { type: "code", content: ["const", " isPremium = profile.accessLevels[", "'premium'", "]?.isActive;"] },
+    ]
+  },
+  "react-native": {
+    code: "",
+    lines: [
+      { type: "import", content: ["import", " { adapty } ", "from", " ", "'react-native-adapty'", ";"] },
+      { type: "empty", content: [] },
+      { type: "comment", content: ["// Activate Adapty on app start"] },
+      { type: "code", content: ["await", " adapty.", "activate", "(", "'YOUR_API_KEY'", ");"] },
+      { type: "empty", content: [] },
+      { type: "code", content: ["const", " profile = ", "await", " adapty.", "getProfile", "();"] },
+      { type: "code", content: ["const", " isPremium = profile.accessLevels.premium?.isActive;"] },
+    ]
+  },
+  flutter: {
+    code: "",
+    lines: [
+      { type: "import", content: ["import", " ", "'package:adapty_flutter/adapty_flutter.dart'", ";"] },
+      { type: "empty", content: [] },
+      { type: "comment", content: ["// Activate Adapty on app start"] },
+      { type: "code", content: ["await", " Adapty().", "activate", "(", "'YOUR_API_KEY'", ");"] },
+      { type: "empty", content: [] },
+      { type: "code", content: ["final", " profile = ", "await", " Adapty().", "getProfile", "();"] },
+      { type: "code", content: ["final", " isPremium = profile.accessLevels[", "'premium'", "]?.isActive;"] },
+    ]
+  },
+  swift: {
+    code: "",
+    lines: [
+      { type: "import", content: ["import", " Adapty"] },
+      { type: "empty", content: [] },
+      { type: "comment", content: ["// Activate Adapty on app start"] },
+      { type: "code", content: ["Adapty.", "activate", "(", "\"YOUR_API_KEY\"", ")"] },
+      { type: "empty", content: [] },
+      { type: "code", content: ["Adapty.", "getProfile", " { result ", "in"] },
+      { type: "code", content: ["    ", "let", " isPremium = result.value?.accessLevels[", "\"premium\"", "]?.isActive"] },
+      { type: "code", content: ["}"] },
+    ]
+  },
+};
 
-// Activate Adapty on app start
-await adapty.activate('YOUR_API_KEY');
-
-const profile = await adapty.getProfile();
-const isPremium = profile.accessLevels['premium']?.isActive;`,
-
-  "react-native": `import { adapty } from 'react-native-adapty';
-
-// Activate Adapty on app start
-await adapty.activate('YOUR_API_KEY');
-
-const profile = await adapty.getProfile();
-const isPremium = profile.accessLevels.premium?.isActive;`,
-
-  flutter: `import 'package:adapty_flutter/adapty_flutter.dart';
-
-// Activate Adapty on app start
-await Adapty().activate('YOUR_API_KEY');
-
-final profile = await Adapty().getProfile();
-final isPremium = profile.accessLevels['premium']?.isActive;`,
-
-  swift: `import Adapty
-
-// Activate Adapty on app start
-Adapty.activate("YOUR_API_KEY")
-
-Adapty.getProfile { result in
-    let isPremium = result.value?.accessLevels["premium"]?.isActive
-}`,
+type CodeLine = {
+  type: "import" | "comment" | "code" | "empty";
+  content: string[];
 };
 
 const platforms = [
-  { name: "iOS", src: "/images/sdks/swift.svg" },
-  { name: "Android", src: "/images/sdks/kotlin.svg" },
-  { name: "Flutter", src: "/images/sdks/flutter.svg" },
-  { name: "React Native", src: "/images/sdks/react-native.svg" },
-  { name: "Unity", src: "/images/sdks/unity.svg" },
-  { name: "Stripe", src: "/images/sdks/stripe.svg" },
+  { name: "iOS", src: "/images/sdks/swift.svg", color: "bg-orange-50 border-orange-200" },
+  { name: "Android", src: "/images/sdks/kotlin.svg", color: "bg-purple-50 border-purple-200" },
+  { name: "Flutter", src: "/images/sdks/flutter.svg", color: "bg-sky-50 border-sky-200" },
+  { name: "React Native", src: "/images/sdks/react-native.svg", color: "bg-cyan-50 border-cyan-200" },
+  { name: "Unity", src: "/images/sdks/unity.svg", color: "bg-stone-800 border-stone-700 text-white" },
+  { name: "Stripe", src: "/images/sdks/stripe.svg", color: "bg-indigo-50 border-indigo-200" },
 ];
 
-function highlightCode(code: string): string {
-  return code
-    .replace(
-      /(import|from|await|const|let|var|async|final|func)/g,
-      '<span class="token-keyword">$1</span>'
-    )
-    .replace(
-      /(\.[a-zA-Z]+)\(/g,
-      '.<span class="token-function">$1</span>('
-    )
-    .replace(
-      /(\/\/.+)/g,
-      '<span class="token-comment">$1</span>'
-    )
-    .replace(
-      /('[^']*')/g,
-      '<span class="token-string">$1</span>'
-    )
-    .replace(
-      /("[^"]*")/g,
-      '<span class="token-string">$1</span>'
+// Keywords to highlight
+const keywords = ["import", "from", "await", "const", "let", "var", "async", "final", "func", "in"];
+const functions = ["activate", "getProfile", "getPaywall"];
+
+function tokenize(part: string): React.ReactNode {
+  if (keywords.includes(part)) {
+    return <span className="text-[#ff7b72]">{part}</span>;
+  }
+  if (functions.includes(part)) {
+    return <span className="text-[#d2a8ff]">{part}</span>;
+  }
+  if ((part.startsWith("'") && part.endsWith("'")) || (part.startsWith('"') && part.endsWith('"'))) {
+    return <span className="text-[#a5d6ff]">{part}</span>;
+  }
+  return <span className="text-[#c9d1d9]">{part}</span>;
+}
+
+function renderLine(line: CodeLine, index: number): React.ReactNode {
+  if (line.type === "empty") {
+    return <div key={index} className="h-5" />;
+  }
+  if (line.type === "comment") {
+    return (
+      <div key={index} className="text-[#8b949e]">
+        {line.content[0]}
+      </div>
     );
+  }
+  return (
+    <div key={index}>
+      {line.content.map((part, i) => (
+        <span key={i}>{tokenize(part)}</span>
+      ))}
+    </div>
+  );
 }
 
 export function SDKCode() {
@@ -91,33 +120,13 @@ export function SDKCode() {
 
   return (
     <section className="relative py-24 px-6 overflow-hidden">
-      <div className="max-w-[1440px] mx-auto relative">
-        
-        {/* ══════════════════════════════════════════════════════════════
-           SCHEMATIC DECORATIONS
-           ══════════════════════════════════════════════════════════════ */}
+      <div className="max-w-[1440px] mx-auto">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
 
-        {/* Vertical Rail Left */}
-        <div className="absolute left-0 top-0 bottom-0 hidden xl:block">
-          <SchematicLine direction="vertical" length="100%" solid delay={0.2} className="border-l border-stone-200/50" />
-        </div>
-
-        {/* Vertical Rail Right */}
-        <div className="absolute right-0 top-0 bottom-0 hidden xl:block">
-          <SchematicLine direction="vertical" length="100%" solid delay={0.2} className="border-l border-stone-200/50" />
-        </div>
-
-        {/* Cross Dotted Line */}
-        <div className="absolute top-12 left-0 right-0 hidden lg:block opacity-50">
-          <SchematicLine direction="horizontal" length="100%" delay={0.3} />
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center relative z-10">
-          
           {/* Content */}
-          <div className="lg:w-1/2 space-y-8 stagger-children">
+          <div className="lg:w-1/2 space-y-8">
             <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight text-stone-900 animate-intro-blur">
+              <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight text-stone-900 animate-intro-blur text-balance">
                 One SDK for every platform
               </h2>
               <p className="text-stone-500 text-lg animate-intro-blur delay-100 max-w-md">
@@ -126,77 +135,51 @@ export function SDKCode() {
               </p>
             </div>
 
-            {/* Platform icons */}
-            <div className="flex flex-wrap gap-6 pt-4 relative animate-intro-blur delay-200">
+            {/* Platform icons - REDESIGNED as cards with names */}
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 pt-4 animate-intro-blur delay-200">
               {platforms.map((platform, index) => (
                 <div
                   key={platform.name}
-                  className="relative w-8 h-8 opacity-60 hover:opacity-100 transition-opacity group cursor-pointer"
-                  title={platform.name}
+                  className={cn(
+                    "flex flex-col items-center justify-center p-4 rounded-xl border transition-all cursor-pointer group",
+                    platform.color,
+                    "hover:scale-105 hover:shadow-md"
+                  )}
+                  style={{ animationDelay: `${index * 50}ms` }}
                 >
-                  <Image
-                    src={platform.src}
-                    alt={platform.name}
-                    fill
-                    className="object-contain"
-                  />
-                  {/* Subtle hover pulse */}
-                  <div className="absolute -inset-2 bg-stone-100 rounded-full opacity-0 group-hover:opacity-100 -z-10 transition-opacity scale-90 group-hover:scale-100 duration-300" />
+                  <div className="relative w-8 h-8 mb-2 group-hover:scale-110 transition-transform">
+                    <Image
+                      src={platform.src}
+                      alt={platform.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <span className={cn("text-xs font-medium", platform.color.includes("text-white") ? "text-white" : "text-stone-600")}>{platform.name}</span>
                 </div>
               ))}
             </div>
 
-            <Link
-              href="#"
-              className="inline-flex items-center gap-2 text-stone-900 font-semibold group animate-intro-blur delay-300"
-            >
-              <span className="border-b border-stone-300 group-hover:border-stone-900 transition-colors">
-                Read documentation
-              </span>
+            <button className="flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-stone-300 font-semibold text-stone-700 hover:bg-stone-50 transition-colors bg-white/60 backdrop-blur-sm animate-intro-blur delay-300 group">
+              Read documentation
               <ArrowRight size={16} weight="bold" className="group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </button>
           </div>
 
-          {/* Code block with "Noodle" Beam */}
-          <div className="lg:w-1/2 w-full relative animate-intro-blur delay-200">
-            
-            {/* SVG Beam Connector - flowing from text to code */}
-            <div className="absolute -left-32 top-1/2 w-32 h-24 hidden lg:block -translate-y-1/2 pointer-events-none">
-              <SVGBeam 
-                width={128} 
-                height={96} 
-                from={{x: 0, y: 48}} 
-                to={{x: 128, y: 48}} 
-                curvature={0.5} 
-                duration={2.5}
-              />
-            </div>
-
-            {/* Connection Node at Code Entry */}
-            <div className="absolute -left-3 top-1/2 -translate-y-1/2 z-20 hidden lg:block">
-               <ConnectionNode size="sm" filled accent pulse />
-            </div>
-
-            <div className="bg-[#0d1117] rounded-xl shadow-2xl overflow-hidden border border-stone-800/60 relative group text-stone-300 transform transition-all hover:scale-[1.01] duration-500">
-              {/* Corner schematic nodes */}
-              <div className="absolute top-3 left-3 opacity-30 group-hover:opacity-100 transition-opacity duration-500">
-                <ConnectionNode size="xs" accent />
-              </div>
-              <div className="absolute bottom-3 right-3 opacity-30 group-hover:opacity-100 transition-opacity duration-500">
-                <ConnectionNode size="xs" accent filled pulse />
-              </div>
-
-              {/* Tabs */}
-              <div className="flex items-center border-b border-white/5 px-2 overflow-x-auto no-scrollbar bg-white/5">
+          {/* Code block */}
+          <div className="lg:w-1/2 w-full animate-intro-blur delay-200">
+            <div className="bg-[#0d1117] rounded-2xl shadow-2xl overflow-hidden border border-stone-800/60 transform transition-all hover:scale-[1.01] duration-500">
+              {/* Tabs - FULL WIDTH */}
+              <div className="grid grid-cols-4 border-b border-white/10 bg-[#161b22]">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={cn(
-                      "px-4 py-3 text-xs font-medium whitespace-nowrap transition-all relative",
+                      "px-4 py-3 text-sm font-medium transition-all relative text-center",
                       activeTab === tab.id
-                        ? "text-white bg-white/5"
-                        : "text-stone-500 hover:text-stone-300"
+                        ? "text-white bg-[#0d1117]"
+                        : "text-stone-400 hover:text-stone-200 hover:bg-white/5"
                     )}
                   >
                     {tab.label}
@@ -207,14 +190,10 @@ export function SDKCode() {
                 ))}
               </div>
 
-              {/* Code */}
-              <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto bg-[#0d1117]">
-                <pre>
-                  <code
-                    dangerouslySetInnerHTML={{
-                      __html: highlightCode(codeSnippets[activeTab] || ""),
-                    }}
-                  />
+              {/* Code - NO SCROLL */}
+              <div className="p-6 font-mono text-sm leading-relaxed bg-[#0d1117]">
+                <pre className="whitespace-pre-wrap">
+                  {codeSnippets[activeTab]?.lines.map((line, i) => renderLine(line, i))}
                 </pre>
               </div>
             </div>

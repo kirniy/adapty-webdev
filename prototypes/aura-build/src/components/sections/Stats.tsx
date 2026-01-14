@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import {
-  SchematicLine,
-  ConnectionNode,
-  BeamNoodle,
-} from "@/components/ui/SchematicLine";
+import { useEffect, useState } from "react";
+import { motion, useSpring, useTransform, useMotionValue, useInView } from "motion/react";
+import { useRef } from "react";
 
 const stats = [
   { value: 2, suffix: "B+", label: "Processed revenue", prefix: "$" },
@@ -29,129 +26,60 @@ function AnimatedNumber({
   delay?: number;
   className?: string;
 }) {
-  const [displayValue, setDisplayValue] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
+  const motionValue = useMotionValue(0);
+  const springValue = useSpring(motionValue, {
+    damping: 50,
+    stiffness: 100,
+    mass: 1, // slightly heavier feel
+  });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-          setTimeout(() => {
-            const duration = 2000;
-            const startTime = Date.now();
-
-            const animate = () => {
-              const elapsed = Date.now() - startTime;
-              const progress = Math.min(elapsed / duration, 1);
-              const eased = 1 - Math.pow(1 - progress, 3); // Ease out cubic
-              setDisplayValue(value * eased);
-
-              if (progress < 1) {
-                requestAnimationFrame(animate);
-              }
-            };
-
-            requestAnimationFrame(animate);
-          }, delay);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (isInView) {
+      setTimeout(() => {
+        motionValue.set(value);
+      }, delay);
     }
+  }, [isInView, value, delay, motionValue]);
 
-    return () => observer.disconnect();
-  }, [value, delay, hasAnimated]);
+  // Use useTransform to format the number as it changes
+  const displayValue = useTransform(springValue, (latest) => {
+    return latest.toFixed(decimalPlaces);
+  });
 
   return (
-    <div ref={ref} className={className}>
+    <span ref={ref} className={className}>
       {prefix}
-      {displayValue.toFixed(decimalPlaces)}
+      <motion.span>{displayValue}</motion.span>
       {suffix}
-    </div>
+    </span>
   );
 }
 
 export function Stats() {
   return (
-    <section className="border-y border-stone-200 bg-white relative">
-      {/* ══════════════════════════════════════════════════════════════
-         SCHEMATIC DECORATIONS
-         ══════════════════════════════════════════════════════════════ */}
-
-      {/* Left vertical rail */}
-      <div className="absolute left-0 top-4 bottom-4 hidden lg:block">
-        <SchematicLine direction="vertical" length="100%" withNode="both" delay={0.2} />
-      </div>
-
-      {/* Right vertical rail */}
-      <div className="absolute right-0 top-4 bottom-4 hidden lg:block">
-        <SchematicLine direction="vertical" length="100%" withNode="both" accent delay={0.3} />
-      </div>
-
-      {/* Top connector beam */}
-      <div className="absolute top-4 left-12 right-12 hidden lg:block">
-        <BeamNoodle direction="horizontal" length="100%" from="left" delay={0.5} />
-      </div>
-
-      {/* Bottom connector beam */}
-      <div className="absolute bottom-4 left-12 right-12 hidden lg:block">
-        <SchematicLine direction="horizontal" length="100%" withNode="both" delay={0.6} />
-      </div>
-
-      <div className="max-w-[1440px] mx-auto px-6 py-16 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center relative">
-        {/* Horizontal beam connecting all stats */}
-        <div className="absolute top-8 left-[15%] w-[70%] hidden lg:block">
-          <BeamNoodle direction="horizontal" length="100%" from="left" delay={0.8} />
-        </div>
-
+    <section className="border-y border-stone-200 bg-white relative z-10">
+      <div className="max-w-[1440px] mx-auto px-6 py-16 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
         {stats.map((stat, index) => (
           <div
             key={stat.label}
-            className={`space-y-2 relative group ${
+            className={`space-y-2 ${
               index > 0 ? "border-l border-stone-100" : ""
             }`}
           >
-            {/* Top connection node */}
-            <div className="absolute -top-2 left-1/2 -translate-x-1/2 hidden lg:block">
-              <ConnectionNode
-                size="sm"
-                accent={index === 2}
-                filled={index === 0}
-                pulse={index === 2}
+            <div className="text-4xl lg:text-5xl font-bold tracking-tight text-stone-900 font-sans tabular-nums">
+              <AnimatedNumber
+                value={stat.value}
+                prefix={stat.prefix}
+                suffix={stat.suffix}
+                decimalPlaces={stat.decimalPlaces}
+                delay={index * 150}
               />
             </div>
 
-            {/* Vertical line from node to value */}
-            <div className="absolute -top-2 left-1/2 -translate-x-1/2 hidden lg:block">
-              <SchematicLine
-                direction="vertical"
-                length="16px"
-                accent={index === 2}
-                delay={0.4 + index * 0.1}
-              />
-            </div>
-
-            <AnimatedNumber
-              value={stat.value}
-              prefix={stat.prefix}
-              suffix={stat.suffix}
-              decimalPlaces={stat.decimalPlaces}
-              delay={index * 100}
-              className="text-4xl lg:text-5xl font-bold tracking-tight text-stone-900 pt-4 font-sans"
-            />
-            
             <div className="text-sm font-medium text-stone-500">
               {stat.label}
-            </div>
-
-            {/* Bottom connection node on hover */}
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity hidden lg:block">
-              <ConnectionNode size="xs" accent />
             </div>
           </div>
         ))}

@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/cn";
-import { ConnectionNode } from "./SchematicLine";
+import { BlueprintNode } from "./BlueprintElements";
 import { Check, Circle, Lightning, ArrowRight, WarningCircle } from "@phosphor-icons/react/dist/ssr";
 
 interface FlowCardProps {
@@ -79,7 +79,7 @@ export function FlowCard({
             point === "right" && "right-0 top-1/2 translate-x-1/2 -translate-y-1/2"
           )}
         >
-          <ConnectionNode size="sm" filled className="bg-stone-900 border-stone-800" />
+          <BlueprintNode size={6} pulse={false} />
         </div>
       ))}
 

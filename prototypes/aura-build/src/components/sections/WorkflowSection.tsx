@@ -1,17 +1,14 @@
 "use client";
 
 import {
-  SchematicLine,
-  ConnectionNode,
-  BeamNoodle,
-} from "@/components/ui/SchematicLine";
-import {
   Code,
   Palette,
   ChartLineUp,
   Lightning,
-  ArrowRight,
 } from "@phosphor-icons/react/dist/ssr";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
+import { cn } from "@/lib/cn";
 
 const WORKFLOW_STEPS = [
   {
@@ -48,13 +45,13 @@ const colorClasses = {
 };
 
 export function WorkflowSection() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+
   return (
-    <section className="max-w-[1440px] mx-auto px-6 py-24 relative">
+    <section ref={containerRef} className="max-w-[1440px] mx-auto px-6 py-24 relative">
       {/* Section Header */}
-      <div className="text-center mb-16 relative">
-        <div className="absolute left-1/2 -translate-x-1/2 -top-4">
-          <ConnectionNode size="md" accent filled />
-        </div>
+      <div className="text-center mb-16">
         <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight mb-4 text-balance">
           Simple workflow, powerful results
         </h2>
@@ -63,69 +60,71 @@ export function WorkflowSection() {
         </p>
       </div>
 
-      {/* Workflow Steps */}
-      <div className="relative">
-        {/* Horizontal connection line through steps */}
-        <div className="absolute top-24 left-[10%] right-[10%] hidden lg:block">
-          <BeamNoodle direction="horizontal" length="100%" from="left" delay={0.5} />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
-          {WORKFLOW_STEPS.map((step, index) => (
-            <div
-              key={step.title}
-              className="relative flex flex-col items-center text-center group"
-            >
-              {/* Step Number */}
-              <div className="absolute -top-2 left-4 lg:left-1/2 lg:-translate-x-1/2 text-xs font-bold text-stone-300 z-10">
-                0{index + 1}
-              </div>
-
-              {/* Connection Node above icon */}
-              <div className="mb-2 hidden lg:block">
-                <ConnectionNode size="sm" accent={index === 2} />
-              </div>
-
-              {/* Icon Container */}
-              <div
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 border ${
-                  colorClasses[step.color as keyof typeof colorClasses]
-                } transition-transform group-hover:scale-110`}
-              >
-                <step.icon size={28} weight="duotone" />
-              </div>
-
-              {/* Content */}
-              <h3 className="text-lg font-semibold text-stone-900 mb-2">
-                {step.title}
-              </h3>
-              <p className="text-sm text-stone-500">{step.description}</p>
-
-              {/* Arrow to next step (hidden on last item) */}
-              {index < WORKFLOW_STEPS.length - 1 && (
-                <div className="hidden lg:block absolute right-0 top-24 translate-x-1/2 z-10">
-                  <ArrowRight
-                    size={20}
-                    weight="bold"
-                    className="text-stone-300"
-                  />
-                </div>
-              )}
-
-              {/* Vertical line to next step on mobile */}
-              {index < WORKFLOW_STEPS.length - 1 && (
-                <div className="lg:hidden absolute -bottom-4 left-1/2 -translate-x-1/2 h-8">
-                  <SchematicLine direction="vertical" length="100%" />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+      {/* SVG Connecting Line (The "Thoughtful" Touch) */}
+      <div className="absolute top-[280px] left-0 w-full hidden lg:block pointer-events-none -z-10">
+        <svg
+            className="w-full h-20 overflow-visible"
+            viewBox="0 0 1440 80"
+            preserveAspectRatio="none"
+        >
+            {/* Base line */}
+            <path
+                d="M 100 40 L 1340 40"
+                fill="none"
+                stroke="#e7e5e4"
+                strokeWidth="2"
+                strokeDasharray="6 6"
+            />
+            {/* Animated drawing line */}
+            <motion.path
+                d="M 100 40 L 1340 40"
+                fill="none"
+                stroke="#c1ff72"
+                strokeWidth="2"
+                initial={{ pathLength: 0 }}
+                animate={isInView ? { pathLength: 1 } : { pathLength: 0 }}
+                transition={{ duration: 1.5, ease: "easeInOut", delay: 0.5 }}
+            />
+        </svg>
       </div>
 
-      {/* Bottom schematic decoration */}
-      <div className="absolute bottom-0 left-24 right-24 hidden lg:block">
-        <SchematicLine direction="horizontal" length="100%" withNode="both" delay={1.2} />
+      {/* Workflow Steps */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 relative z-10">
+        {WORKFLOW_STEPS.map((step, index) => (
+          <motion.div
+            key={step.title}
+            className="flex flex-col items-center text-center group cursor-default"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: index * 0.15 + 0.2, duration: 0.5 }}
+          >
+            {/* Step Number Badge */}
+            <div className="text-xs font-bold text-stone-400 mb-4 bg-white px-2 relative z-20">
+              Step {index + 1}
+            </div>
+
+            {/* Icon Container with Scale Hover */}
+            <div
+              className={cn(
+                "w-16 h-16 rounded-2xl flex items-center justify-center mb-4 border transition-transform duration-300 group-hover:scale-110 relative bg-white",
+                 colorClasses[step.color as keyof typeof colorClasses]
+              )}
+            >
+              <step.icon size={28} weight="duotone" />
+              {/* Subtle Glow Behind */}
+              <div className={cn(
+                  "absolute inset-0 rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-300 -z-10",
+                  step.color === 'lime' ? 'bg-brand-lime' : `bg-${step.color}-400`
+              )} />
+            </div>
+
+            {/* Content */}
+            <h3 className="text-lg font-semibold text-stone-900 mb-2">
+              {step.title}
+            </h3>
+            <p className="text-sm text-stone-500">{step.description}</p>
+          </motion.div>
+        ))}
       </div>
     </section>
   );

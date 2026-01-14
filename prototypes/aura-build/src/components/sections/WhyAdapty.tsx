@@ -1,13 +1,10 @@
 "use client";
 
-import { 
-  Binary, 
-  Monitor, 
-  Users, 
-  ChartBar, 
-  LockKey 
+import {
+  Binary,
+  Monitor,
+  Users,
 } from "@phosphor-icons/react/dist/ssr";
-import { SchematicLine } from "@/components/ui/SchematicLine";
 
 const features = [
   {
@@ -30,16 +27,11 @@ const features = [
 export function WhyAdapty() {
   return (
     <section className="py-12 lg:py-16 max-w-[1600px] mx-auto px-6 lg:px-12 relative">
-      {/* Schematic Lines */}
-      <div className="absolute left-12 right-12 top-0 hidden lg:block">
-        <SchematicLine direction="horizontal" length="100%" withNode="both" />
-      </div>
-
       <div className="text-center max-w-4xl mx-auto space-y-8 pt-12">
         <h2 className="text-3xl lg:text-6xl font-medium text-stone-900 tracking-tight font-sans leading-tight text-balance">
           Why Adapty?
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-6">
           {features.map((feature, i) => (
             <div key={i} className="space-y-3 group cursor-default">

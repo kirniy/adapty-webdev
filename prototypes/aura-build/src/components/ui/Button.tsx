@@ -1,5 +1,6 @@
 import { cn } from "@/lib/cn";
 import { forwardRef, type ButtonHTMLAttributes } from "react";
+import { motion } from "motion/react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "ghost" | "lime" | "glass";
@@ -41,6 +42,29 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         >
           <span className="relative z-10">{children}</span>
           <div className="button-shine" />
+          {/* Liquid Metal Border for Glass Button if requested */}
+           {beam && (
+               <div className="absolute inset-0 pointer-events-none rounded-full overflow-hidden">
+                   <div className="absolute inset-0 rounded-full border border-white/20" />
+                    <motion.div 
+                        className="absolute inset-[-100%]"
+                        initial={{ rotate: 0 }}
+                        animate={{ rotate: 360 }}
+                        whileHover={{ 
+                            rotate: 360,
+                            transition: { duration: 1, ease: "linear", repeat: Infinity } 
+                        }}
+                        transition={{ 
+                            duration: 3, 
+                            ease: "linear", 
+                            repeat: Infinity 
+                        }}
+                        style={{
+                            background: "conic-gradient(from 0deg, transparent 0deg 340deg, white 360deg)"
+                        }}
+                    />
+               </div>
+           )}
         </button>
       );
     }
@@ -50,7 +74,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={cn(
           // Base styles
-          "inline-flex items-center justify-center gap-2 font-semibold transition-all",
+          "inline-flex items-center justify-center gap-2 font-semibold transition-all relative z-10",
           "focus:outline-none focus:ring-2 focus:ring-offset-2",
           "disabled:pointer-events-none disabled:opacity-50",
           // Hover transform for premium feel
@@ -86,12 +110,22 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     // Wrap with beam effect if enabled (for non-glass variants)
     if (beam && (variant === "lime" || variant === "primary")) {
       return (
-        <div className="relative inline-flex group">
+        <div className="relative inline-flex group rounded-full p-[1px] overflow-hidden">
           {/* Beam container */}
-          <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            {/* Rotating conic gradient */}
-            <div
-              className="absolute inset-[-200%] animate-[borderBeamSpin_3s_linear_infinite]"
+          <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+             <motion.div
+              className="absolute inset-[-100%]"
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 360 }}
+              whileHover={{ 
+                  scale: 1, // Keep scale
+                  transition: { duration: 1, ease: "linear", repeat: Infinity } 
+              }}
+              transition={{
+                duration: 3,
+                ease: "linear",
+                repeat: Infinity,
+              }}
               style={{
                 background:
                   variant === "lime"
@@ -99,15 +133,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                     : "conic-gradient(from 0deg, transparent 0deg 330deg, #c1ff72 360deg)",
               }}
             />
-            {/* Inner mask */}
-            <div
-              className={cn(
-                "absolute inset-[2px] rounded-full",
-                variant === "lime" ? "bg-brand-lime" : "bg-stone-900"
-              )}
-            />
           </div>
-          <div className="relative z-10">{baseButton}</div>
+          {/* Inner mask is handled by the button's own background being opaque and z-10 */}
+          {baseButton}
         </div>
       );
     }

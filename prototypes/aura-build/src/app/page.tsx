@@ -1,6 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { PageFrame } from "@/components/layout/PageFrame"; // Import the wrapper
+import { PageFrame } from "@/components/layout/PageFrame";
 import { Hero } from "@/components/sections/Hero";
 import { TrustedBy } from "@/components/sections/TrustedBy";
 import { CoreServices } from "@/components/sections/CoreServices";
@@ -14,105 +14,51 @@ import { ResultsSection } from "@/components/sections/ResultsSection";
 import { Enterprise } from "@/components/sections/Enterprise";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { WorkflowSection } from "@/components/sections/WorkflowSection";
-import { SectionDivider, VerticalConnector } from "@/components/ui/SectionConnectors";
+import {
+  BlueprintDivider,
+  BlueprintVertical,
+} from "@/components/ui/BlueprintElements";
 
 /**
  * Adapty Homepage
  *
- * 14-section homepage converted from Aura.build template
- *
- * Design Philosophy:
- * - Seamless sections with no hard borders
- * - Thin dotted schematic lines connect everything
- * - Animated beams flow through the page
- * - Glassmorphism and floating elements throughout
+ * Uses Attio-inspired BlueprintElements for section connections:
+ * - SVG stroke-dasharray="4 6" for precise dashed lines
+ * - Animated beams traveling along the lines
+ * - Pulsing nodes at key intersections
  */
 export default function HomePage() {
   return (
     <>
-      {/* Header - Client Component for dropdowns */}
       <Header />
-
       <PageFrame>
-        {/* Main Content */}
-        <main className="pt-20 lg:pt-24 flex-1">
-          {/* 1. Hero Section */}
+        <main className="flex-1 flex flex-col pt-20 lg:pt-24 relative z-10">
           <Hero />
-
-          {/* Vertical connector from Hero to TrustedBy */}
-          <VerticalConnector height="48px" className="my-4" />
-
-          {/* 2. Trusted By - Client Component for marquee */}
+          <BlueprintVertical height={48} className="my-4" />
           <TrustedBy />
-
-          {/* Schematic divider */}
-          <SectionDivider />
-
-          {/* 3 & 4. Core Services (Bento Grid) - Replaces Features */}
+          <BlueprintDivider />
           <CoreServices />
-
-          {/* Vertical connector */}
-          <VerticalConnector height="64px" className="my-8" />
-
-          {/* 5. Integrations Marquee - Client Component */}
+          <BlueprintVertical height={64} className="my-8" />
           <IntegrationsMarquee />
-
-          {/* Schematic divider */}
-          <SectionDivider />
-
-          {/* New Section: Why Adapty (Section D in template) */}
+          <BlueprintDivider />
           <WhyAdapty />
-
-          {/* Vertical connector */}
-          <VerticalConnector height="64px" className="my-8" />
-
-          {/* 6. Role Cards */}
+          <BlueprintVertical height={64} className="my-8" />
           <RoleCards />
-
-          {/* Vertical connector */}
-          <VerticalConnector height="48px" className="my-6" />
-
-          {/* 7. Stats */}
+          <BlueprintVertical height={48} className="my-6" />
           <Stats />
-
-          {/* Schematic divider */}
-          <SectionDivider />
-
-          {/* NEW: Workflow Section (Flow Diagram) */}
+          <BlueprintDivider />
           <WorkflowSection />
-
-          {/* Vertical connector */}
-          <VerticalConnector height="64px" className="my-8" />
-
-          {/* 8. SDK Code Snippet - Client Component for tabs */}
+          <BlueprintVertical height={64} className="my-8" />
           <SDKCode />
-
-          {/* Vertical connector */}
-          <VerticalConnector height="64px" className="my-8" />
-
-          {/* 9 & 10. Testimonials + G2 Badges */}
+          <BlueprintVertical height={64} className="my-8" />
           <TestimonialsSection />
-
-          {/* Schematic divider */}
-          <SectionDivider />
-
-          {/* 11. Results Section (Case Studies + Metrics) - Replaces CaseStudies */}
+          <BlueprintDivider />
           <ResultsSection />
-
-          {/* Vertical connector */}
-          <VerticalConnector height="48px" className="my-6" />
-
-          {/* 12. Enterprise */}
+          <BlueprintVertical height={48} className="my-6" />
           <Enterprise />
-
-          {/* Schematic divider - leads to final CTA */}
-          <SectionDivider showNodes={false} />
-
-          {/* 13. Final CTA */}
+          <BlueprintDivider showNodes={false} />
           <FinalCTA />
         </main>
-
-        {/* 14. Footer */}
         <Footer />
       </PageFrame>
     </>

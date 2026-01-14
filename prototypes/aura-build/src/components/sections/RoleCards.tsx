@@ -1,12 +1,7 @@
 "use client";
 
-import { Code, ChartLineUp, Layout, Check, TerminalWindow, ChartBar, Browsers } from "@phosphor-icons/react/dist/ssr";
+import { Code, ChartLineUp, Layout, Check } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/cn";
-import {
-  SchematicLine,
-  ConnectionNode,
-  BeamNoodle,
-} from "@/components/ui/SchematicLine";
 
 const roles = [
   {
@@ -44,25 +39,6 @@ const roles = [
 export function RoleCards() {
   return (
     <section className="max-w-[1440px] mx-auto px-6 py-24 relative">
-      {/* ══════════════════════════════════════════════════════════════
-         SCHEMATIC DECORATIONS
-         ══════════════════════════════════════════════════════════════ */}
-
-      {/* Left vertical rail */}
-      <div className="absolute left-0 top-12 bottom-12 hidden lg:block">
-        <SchematicLine direction="vertical" length="100%" withNode="both" delay={0.2} />
-      </div>
-
-      {/* Right vertical rail */}
-      <div className="absolute right-0 top-12 bottom-12 hidden lg:block">
-        <SchematicLine direction="vertical" length="100%" withNode="both" delay={0.3} />
-      </div>
-
-      {/* Top beam connector */}
-      <div className="absolute top-6 left-12 right-12 hidden lg:block">
-        <BeamNoodle direction="horizontal" length="100%" from="left" delay={0.5} />
-      </div>
-
       <div className="text-center max-w-3xl mx-auto mb-20 relative">
         <h2 className="text-3xl lg:text-5xl font-medium tracking-tight animate-intro-blur font-sans mb-6">
           Built for the entire product team
@@ -70,37 +46,19 @@ export function RoleCards() {
         <p className="text-lg text-stone-500 animate-intro-blur delay-100 max-w-xl mx-auto">
           From implementation to optimization, Adapty unifies your mobile subscription stack.
         </p>
-
-        {/* Decorative nodes near heading */}
-        <div className="absolute -left-8 top-1/2 -translate-y-1/2 hidden lg:block">
-          <ConnectionNode size="sm" accent />
-        </div>
-        <div className="absolute -right-8 top-1/2 -translate-y-1/2 hidden lg:block">
-          <ConnectionNode size="sm" />
-        </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-8 relative">
-        {/* Horizontal beam connecting all cards */}
-        <div className="absolute top-[20%] left-[10%] w-[80%] hidden lg:block pointer-events-none">
-          <BeamNoodle direction="horizontal" length="100%" from="left" delay={0.8} />
-        </div>
-
         {roles.map((role, index) => (
           <div
             key={role.title}
             className="group relative animate-intro-blur flex flex-col"
             style={{ animationDelay: `${index * 150}ms` }}
           >
-            {/* Connection Node (Top Center) */}
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <ConnectionNode size="sm" accent={index === 1} filled />
-            </div>
-
             {/* Main Card - Persona Style */}
             <div className="glass-panel p-1 rounded-2xl h-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
               <div className="bg-white/50 rounded-xl p-6 h-full flex flex-col backdrop-blur-sm">
-                
+
                 {/* Persona Header */}
                 <div className="flex items-center justify-between mb-6 pb-6 border-b border-stone-100">
                   <div className="flex items-center gap-3">
@@ -116,7 +74,7 @@ export function RoleCards() {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Status Indicator */}
                   <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-stone-100 border border-stone-200">
                     <div className={cn(
@@ -150,16 +108,8 @@ export function RoleCards() {
 
               </div>
             </div>
-
-            {/* Bottom Connector */}
-            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 h-8 w-[1px] bg-gradient-to-b from-stone-200 to-transparent hidden group-hover:block" />
           </div>
         ))}
-      </div>
-
-      {/* Bottom beam connector */}
-      <div className="absolute bottom-6 left-12 right-12 hidden lg:block">
-        <SchematicLine direction="horizontal" length="100%" withNode="both" delay={1} />
       </div>
     </section>
   );

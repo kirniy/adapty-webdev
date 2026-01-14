@@ -6,8 +6,8 @@ export function TestimonialsSection() {
     <section className="bg-stone-100 py-20 border-y border-stone-200">
       <div className="max-w-[1440px] mx-auto px-6">
         <G2Badges />
-        <Testimonials />
       </div>
+      <Testimonials />
     </section>
   );
 }
