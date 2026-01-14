@@ -41,11 +41,16 @@
   --animate-border-beam: borderBeam 4s linear infinite;
   --animate-sonar: sonar 2s ease-out infinite;
   --animate-ripple: ripple 1.5s ease-out infinite;
+  --animate-beam-path: beamPath 6s linear infinite;
 
   /* Keyframes */
   @keyframes marquee {
     0% { transform: translateX(0%); }
     100% { transform: translateX(-50%); }
+  }
+  @keyframes beamPath {
+    0% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 0; }
   }
   @keyframes fadeUp {
     0% { opacity: 0; transform: translateY(20px); }
@@ -255,6 +260,7 @@
      ───────────────────────────────────────────────────────────────── */
   @property --angle-1 { syntax: "<angle>"; inherits: false; initial-value: -75deg; }
   @property --angle-2 { syntax: "<angle>"; inherits: false; initial-value: -45deg; }
+  @property --beam-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 
   .glass-button {
     background: linear-gradient(-75deg, rgba(193, 255, 114, 0.1), rgba(255, 255, 255, 0.5), rgba(193, 255, 114, 0.1));
@@ -390,4 +396,160 @@
   .stagger-children > *:nth-child(6) { animation-delay: 500ms; }
   .stagger-children > *:nth-child(7) { animation-delay: 600ms; }
   .stagger-children > *:nth-child(8) { animation-delay: 700ms; }
+
+  /* ─────────────────────────────────────────────────────────────────
+     DS2 Editorial Typography (Attio-inspired)
+     ───────────────────────────────────────────────────────────────── */
+
+  /* Serif accent for emotional words - use on keywords like "power", "growth" */
+  .serif-accent {
+    font-family: var(--font-instrument-serif), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Headline with tight letter-spacing */
+  .headline-editorial {
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+
+  /* Two-tone headline - primary color first line, muted second */
+  .text-primary-editorial { color: #1c1917; }
+  .text-muted-editorial { color: #a8a29e; }
+
+  /* Body text with medium weight (between 400-500) */
+  .body-editorial {
+    font-weight: 450;
+  }
+
+  /* Section numbering - fixed width for alignment */
+  .section-number {
+    font-size: 0.75rem;
+    color: #a8a29e;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* Quote watermark - giant faded quote behind testimonials */
+  .quote-watermark {
+    position: absolute;
+    font-size: clamp(8rem, 20vw, 20rem);
+    opacity: 0.04;
+    color: #78716c;
+    font-family: var(--font-instrument-serif), Georgia, serif;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 0.8;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  /* Dotted separator lines */
+  .dotted-separator {
+    height: 1px;
+    background-image: linear-gradient(to right,
+      #d6d3d1 0px,
+      #d6d3d1 4px,
+      transparent 4px,
+      transparent 12px);
+    background-repeat: repeat-x;
+  }
+
+  /* Cinematic shadows - dual layer for depth */
+  .shadow-cinematic {
+    box-shadow:
+      0 4px 8px rgba(0, 0, 0, 0.04),
+      0 1px 3px rgba(0, 0, 0, 0.02);
+  }
+  .shadow-cinematic-md {
+    box-shadow:
+      0 8px 16px -2px rgba(0, 0, 0, 0.06),
+      0 2px 6px rgba(0, 0, 0, 0.03);
+  }
+  .shadow-cinematic-lg {
+    box-shadow:
+      0 12px 24px -4px rgba(0, 0, 0, 0.08),
+      0 4px 8px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 300ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  .shadow-cinematic-lg:hover {
+    box-shadow:
+      0 20px 40px -8px rgba(0, 0, 0, 0.12),
+      0 8px 16px rgba(0, 0, 0, 0.06);
+  }
+  .shadow-cinematic-xl {
+    box-shadow:
+      0 24px 48px -12px rgba(0, 0, 0, 0.12),
+      0 12px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Editorial card style - subtle border + cinematic shadow */
+  .card-editorial {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    box-shadow:
+      0 12px 24px -4px rgba(0, 0, 0, 0.08),
+      0 4px 8px rgba(0, 0, 0, 0.04);
+    transition: all 300ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  .card-editorial:hover {
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 20px 40px -8px rgba(0, 0, 0, 0.12),
+      0 8px 16px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+
+  /* Gradient text reveal animation */
+  .animate-gradient-reveal {
+    background: linear-gradient(90deg, #1c1917 50%, #a8a29e 50%);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientReveal 1s ease forwards;
+  }
+
+  @keyframes gradientReveal {
+    from { background-position: 100% 0; }
+    to { background-position: 0 0; }
+  }
+
+  /* Schematic connection nodes */
+  .connector-node {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fafaf9;
+    border: 1px solid #d6d3d1;
+  }
+  .connector-node-filled {
+    background: #1c1917;
+    border-color: #1c1917;
+  }
+  .connector-node-lime {
+    background: var(--brand-lime);
+    border-color: var(--brand-lime-dark);
+  }
+
+  /* Dot grid background pattern */
+  .bg-dot-grid {
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* SVG Animation Utilities - proper transform-origin for SVG elements */
+  svg .animate-sonar {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  svg .animate-beam-path {
+    animation: beamPath var(--animate-beam-path-duration, 6s) linear infinite;
+  }
 }
