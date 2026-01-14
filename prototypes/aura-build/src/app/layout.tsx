@@ -34,10 +34,7 @@ export default function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable} ${instrumentSerif.variable} scroll-smooth`}
     >
       <body className="min-h-dvh overflow-x-hidden bg-stone-50 font-sans text-stone-900 antialiased selection:bg-brand-lime selection:text-black">
-        {/* Main Content - Clean background, no competing grids */}
-        <div className="relative flex flex-col min-h-dvh">
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   );
