@@ -55,7 +55,7 @@ export function CoreServices() {
               {/* Content Mockup */}
               <div className="space-y-3 font-mono text-[10px] text-stone-400">
                 <div className="flex gap-2"><span className="text-blue-400">apiVersion:</span> apps/v1</div>
-                <div className="flex gap-2"><span classNam="text-blue-400">kind:</span> Deployment</div>
+                <div className="flex gap-2"><span className="text-blue-400">kind:</span> Deployment</div>
                 <div className="flex gap-2"><span className="text-blue-400">metadata:</span></div>
                 <div className="pl-4 flex gap-2"><span className="text-purple-400">name:</span> production-api</div>
                 <div className="flex gap-2"><span className="text-blue-400">spec:</span></div>
