@@ -24,15 +24,15 @@ export function Hero() {
 
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium bg-white/80 backdrop-blur-sm border-stone-200 text-stone-600 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-brand-lime animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-brand-lime" />
               Revenue Management &amp; Growth
             </div>
 
-            {/* Headline */}
-            <h1 className="leading-[0.95] lg:text-7xl xl:text-8xl text-5xl font-medium text-stone-900 tracking-tighter font-sans text-balance">
-              Revenue management for{" "}
-              <span className="relative inline-block">
-                <span className="serif-accent italic">in-app purchases</span>
+            {/* Headline - Two-tone editorial style */}
+            <h1 className="headline-editorial leading-[0.92] lg:text-7xl xl:text-8xl text-5xl text-balance animate-intro-blur animation-fill-mode-both">
+              <span className="text-primary-editorial">Revenue management for</span>{" "}
+              <span className="relative inline-block text-muted-editorial">
+                <span className="serif-accent">in-app purchases</span>
                 {/* SVG Underline */}
                 <svg
                   className="absolute w-full h-4 -bottom-2 left-0 text-brand-lime -z-10 animate-intro-blur delay-500"
@@ -51,26 +51,26 @@ export function Hero() {
             </h1>
 
             {/* Subheadline */}
-            <p className="leading-relaxed lg:text-xl text-lg font-normal text-stone-500 font-sans max-w-2xl text-balance">
+            <p className="body-editorial leading-relaxed lg:text-xl text-lg text-stone-500 max-w-2xl text-balance animate-intro-blur animation-fill-mode-both delay-100">
               Save months on integrating subscriptions and double your app revenue with paywall management and A/B testing.
             </p>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button className="glass-button relative group cursor-pointer outline-none z-30 overflow-hidden rounded-full transition-transform active:scale-[0.98]">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-intro-blur animation-fill-mode-both delay-200">
+              <button className="glass-button relative group cursor-pointer outline-none z-30 overflow-hidden rounded-full transition-transform active:scale-[0.98] border-beam-btn">
                 <span className="block select-none text-lg font-semibold text-stone-900 tracking-tight py-4 px-8 relative z-10">
                   Start for free
                 </span>
                 <div className="button-shine" />
               </button>
 
-              <button className="flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-stone-300 font-semibold text-stone-700 hover:bg-stone-50 transition-colors bg-white/60 backdrop-blur-sm">
+              <button className="flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-stone-300 font-semibold text-stone-700 hover:bg-stone-50 transition-colors bg-white/60 backdrop-blur-sm border-beam-btn relative overflow-hidden">
                 View Documentation
               </button>
             </div>
 
             {/* Trust Signal */}
-            <div className="flex items-center gap-2 text-xs font-medium text-stone-500 pt-2">
+            <div className="flex items-center gap-2 text-xs font-medium text-stone-500 pt-2 animate-intro-blur animation-fill-mode-both delay-300">
               <CheckCircle size={16} weight="fill" className="text-stone-400" />
               Trusted by 15,000+ apps worldwide
             </div>
@@ -85,13 +85,10 @@ export function Hero() {
             <div className="relative space-y-4">
               {/* Cards */}
               <SpotlightCard
-                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-xl lg:ml-0 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-300"
+                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-cinematic-lg lg:ml-0 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-300"
               >
-                <div className="relative">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center border shrink-0 bg-stone-50 text-stone-600 border-stone-200 relative z-10">
-                    <HardDrives size={20} weight="duotone" />
-                  </div>
-                  <div className="absolute inset-0 rounded-full border border-stone-300 animate-sonar opacity-50 z-20" />
+                <div className="w-10 h-10 rounded-full flex items-center justify-center border shrink-0 bg-stone-50 text-stone-600 border-stone-200">
+                  <HardDrives size={20} weight="duotone" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
@@ -106,13 +103,10 @@ export function Hero() {
               </SpotlightCard>
 
               <SpotlightCard
-                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-xl lg:ml-8 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-500"
+                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-cinematic-lg lg:ml-8 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-500"
               >
-                <div className="relative">
-                  <div className="flex shrink-0 bg-brand-lime w-10 h-10 border rounded-full items-center justify-center text-stone-900 border-[#aae65f] relative z-10">
-                    <ArrowUpRight size={20} weight="bold" />
-                  </div>
-                  <div className="absolute inset-0 rounded-full border-2 border-brand-lime animate-sonar z-20" />
+                <div className="flex shrink-0 bg-brand-lime w-10 h-10 border rounded-full items-center justify-center text-stone-900 border-brand-lime-dark">
+                  <ArrowUpRight size={20} weight="bold" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
@@ -127,13 +121,10 @@ export function Hero() {
               </SpotlightCard>
 
               <SpotlightCard
-                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-xl lg:-ml-4 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-700"
+                className="glass-panel p-4 rounded-xl flex items-center gap-4 shadow-cinematic-lg lg:-ml-4 max-w-sm mx-auto w-full bg-white/80 animate-intro-blur delay-700"
               >
-                <div className="relative">
-                  <div className="w-10 h-10 rounded-full text-brand-lime flex items-center justify-center border shrink-0 bg-stone-900 border-stone-800 relative z-10">
-                    <Database size={20} weight="fill" />
-                  </div>
-                  <div className="absolute inset-0 rounded-full border border-stone-600 animate-sonar opacity-60 z-20" />
+                <div className="w-10 h-10 rounded-full text-brand-lime flex items-center justify-center border shrink-0 bg-stone-900 border-stone-800">
+                  <Database size={20} weight="fill" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
