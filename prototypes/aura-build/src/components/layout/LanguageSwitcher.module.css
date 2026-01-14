@@ -19,12 +19,12 @@
   border-color: rgba(0, 0, 0, 0.15);
 }
 
-.langCode {
-  font-size: 12px;
-  font-weight: 600;
-  color: #57534e;
-  letter-spacing: 0.02em;
-  min-width: 22px;
+.flag {
+  width: 20px;
+  height: 15px;
+  border-radius: 2px;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .chevron {

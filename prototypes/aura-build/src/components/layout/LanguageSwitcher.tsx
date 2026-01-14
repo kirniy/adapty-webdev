@@ -2,25 +2,26 @@
 
 import { useState, useRef, useEffect } from "react";
 import { CaretDown, Check } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 import styles from "./LanguageSwitcher.module.css";
 
 interface Language {
   code: string;
   name: string;
-  shortCode: string;
+  flag: string;
 }
 
 const LANGUAGES: Language[] = [
-  { code: "en", name: "English", shortCode: "EN" },
-  { code: "zh", name: "中文", shortCode: "ZH" },
-  { code: "ja", name: "日本語", shortCode: "JA" },
-  { code: "ko", name: "한국어", shortCode: "KO" },
-  { code: "es", name: "Español", shortCode: "ES" },
-  { code: "pt", name: "Português", shortCode: "PT" },
-  { code: "de", name: "Deutsch", shortCode: "DE" },
-  { code: "fr", name: "Français", shortCode: "FR" },
-  { code: "tr", name: "Türkçe", shortCode: "TR" },
-  { code: "vi", name: "Tiếng Việt", shortCode: "VI" },
+  { code: "en", name: "English", flag: "/flags/us.svg" },
+  { code: "zh", name: "中文", flag: "/flags/cn.svg" },
+  { code: "ja", name: "日本語", flag: "/flags/jp.svg" },
+  { code: "ko", name: "한국어", flag: "/flags/kr.svg" },
+  { code: "es", name: "Español", flag: "/flags/es.svg" },
+  { code: "pt", name: "Português", flag: "/flags/br.svg" },
+  { code: "de", name: "Deutsch", flag: "/flags/de.svg" },
+  { code: "fr", name: "Français", flag: "/flags/fr.svg" },
+  { code: "tr", name: "Türkçe", flag: "/flags/tr.svg" },
+  { code: "vi", name: "Tiếng Việt", flag: "/flags/vn.svg" },
 ];
 
 export function LanguageSwitcher() {
@@ -45,7 +46,13 @@ export function LanguageSwitcher() {
         onClick={() => setIsOpen(!isOpen)}
         onMouseEnter={() => setIsOpen(true)}
       >
-        <span className={styles.langCode}>{currentLang.shortCode}</span>
+        <Image
+          src={currentLang.flag}
+          alt={currentLang.name}
+          width={20}
+          height={15}
+          className={styles.flag}
+        />
         <CaretDown size={12} weight="bold" className={styles.chevron} />
       </button>
 
@@ -63,7 +70,13 @@ export function LanguageSwitcher() {
                   setIsOpen(false);
                 }}
               >
-                <span className={styles.langCode}>{lang.shortCode}</span>
+                <Image
+                  src={lang.flag}
+                  alt={lang.name}
+                  width={20}
+                  height={15}
+                  className={styles.flag}
+                />
                 <span className={styles.languageName}>{lang.name}</span>
                 {lang.code === currentLang.code && (
                   <Check size={14} weight="bold" className={styles.checkIcon} />
