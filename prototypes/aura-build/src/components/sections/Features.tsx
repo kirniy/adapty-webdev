@@ -39,12 +39,21 @@ export function Features() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min relative">
-        {/* Grid intersection nodes - top row */}
+        {/* Grid intersection nodes - top row with SONAR effect */}
         <div className="absolute -top-3 left-[33%] hidden lg:block">
-          <ConnectionNode size="sm" accent />
+          <div className="relative">
+            <ConnectionNode size="sm" accent filled />
+            {/* Sonar ripple rings */}
+            <div className="absolute inset-0 w-3 h-3 -translate-x-0.5 -translate-y-0.5 rounded-full border border-[#c1ff72] animate-sonar opacity-60" />
+            <div className="absolute inset-0 w-3 h-3 -translate-x-0.5 -translate-y-0.5 rounded-full border border-[#c1ff72] animate-sonar opacity-40" style={{ animationDelay: "0.5s" }} />
+          </div>
         </div>
         <div className="absolute -top-3 left-[66%] hidden lg:block">
-          <ConnectionNode size="sm" />
+          <div className="relative">
+            <ConnectionNode size="sm" />
+            {/* Sonar ripple rings */}
+            <div className="absolute inset-0 w-3 h-3 -translate-x-0.5 -translate-y-0.5 rounded-full border border-stone-400 animate-sonar opacity-40" />
+          </div>
         </div>
 
         {/* 4A. Paywall A/B Testing (Large - spans 2 cols) */}
@@ -117,16 +126,33 @@ export function Features() {
             <span className="text-xs text-red-400 font-medium">
               Refunds Saved
             </span>
-            {/* Pulsing indicator */}
+            {/* Pulsing indicator with SONAR ripple effect */}
             <div className="absolute -top-1 -right-1">
-              <ConnectionNode size="xs" filled accent pulse />
+              <div className="relative">
+                <ConnectionNode size="xs" filled accent pulse />
+                {/* Sonar rings emanating from the dot */}
+                <div className="absolute inset-0 w-2 h-2 -translate-x-0.5 -translate-y-0.5 rounded-full border border-[#c1ff72] animate-sonar" />
+                <div className="absolute inset-0 w-2 h-2 -translate-x-0.5 -translate-y-0.5 rounded-full border border-[#c1ff72] animate-sonar" style={{ animationDelay: "0.7s" }} />
+              </div>
             </div>
           </div>
         </Card>
 
-        {/* Row divider beam */}
-        <div className="col-span-full hidden lg:block my-2">
+        {/* Row divider beam - with glowing noodle animation */}
+        <div className="col-span-full hidden lg:block my-4 relative">
           <SchematicLine direction="horizontal" length="100%" withNode="both" delay={0.6} />
+          {/* Animated beam flowing across */}
+          <div className="absolute top-0 left-0 right-0">
+            <BeamNoodle direction="horizontal" length="100%" from="left" delay={1.0} />
+          </div>
+          {/* Center sonar node */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="relative">
+              <div className="w-3 h-3 rounded-full bg-[#c1ff72] shadow-[0_0_10px_rgba(193,255,114,0.8)]" />
+              <div className="absolute inset-0 rounded-full border border-[#c1ff72] animate-sonar" />
+              <div className="absolute inset-0 rounded-full border border-[#c1ff72] animate-sonar" style={{ animationDelay: "0.6s" }} />
+            </div>
+          </div>
         </div>
 
         {/* 4C. Subscription Analytics (Dark) */}
