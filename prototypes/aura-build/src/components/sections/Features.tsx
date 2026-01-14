@@ -15,7 +15,6 @@ import {
   ConnectionNode,
   BeamNoodle,
 } from "@/components/ui/SchematicLine";
-import { SpotlightGrid } from "@/components/ui/SpotlightCard";
 
 export function Features() {
   return (
@@ -39,7 +38,7 @@ export function Features() {
         <BeamNoodle direction="horizontal" length="100%" from="left" delay={0.5} />
       </div>
 
-      <SpotlightGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min relative">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min relative">
         {/* Grid intersection nodes - top row */}
         <div className="absolute -top-3 left-[33%] hidden lg:block">
           <ConnectionNode size="sm" accent />
@@ -252,7 +251,7 @@ export function Features() {
             </div>
           </Card>
         </div>
-      </SpotlightGrid>
+      </div>
 
       {/* Bottom connector beam */}
       <div className="absolute bottom-0 left-12 right-12 hidden lg:block">
