@@ -1,0 +1,662 @@
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimal Factors - Digital Engineering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script>
+    tailwind.config = {
+    theme: {
+    extend: {
+    fontFamily: {
+    sans: ['Geist', 'sans-serif'],
+    },
+    colors: {
+    brand: {
+    lime: '#c1ff72',
+    },
+    neutral: {
+    50: '#fafafa',
+    100: '#f5f5f5',
+    200: '#e5e5e5',
+    300: '#d4d4d4',
+    400: '#a3a3a3',
+    500: '#737373',
+    600: '#525252',
+    700: '#404040',
+    800: '#262626',
+    900: '#171717',
+    }
+    },
+    animation: {
+    'marquee': 'marquee 40s linear infinite',
+    'clip-in': 'clipIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) both',
+    'fade-up': 'fadeUp 0.8s ease-out forwards',
+    'float': 'float 6s ease-in-out infinite',
+    'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+    },
+    keyframes: {
+    marquee: {
+    '0%': { transform: 'translateX(0%)' },
+    '100%': { transform: 'translateX(-50%)' },
+    },
+    clipIn: {
+    '0%': { opacity: '0', clipPath: 'inset(0 0 100% 0)' },
+    '100%': { opacity: '1', clipPath: 'inset(0 0 0 0)' },
+    },
+    fadeUp: {
+    '0%': { opacity: '0', transform: 'translateY(20px)' },
+    '100%': { opacity: '1', transform: 'translateY(0)' },
+    },
+    float: {
+    '0%, 100%': { transform: 'translateY(0)' },
+    '50%': { transform: 'translateY(-10px)' },
+    }
+    }
+    }
+    }
+    }
+    </script>
+    <style>
+    /* Utilitários Personalizados */
+    .glass-panel {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    .glass-panel-dark {
+    background: rgba(23, 23, 23, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    /* Efeito Spotlight */
+    .spotlight-card {
+    position: relative;
+    overflow: hidden;
+    }
+    .spotlight-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(193, 255, 114, 0.15), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 10;
+    }
+    .spotlight-card:hover::before {
+    opacity: 1;
+    }
+    /* Linhas de Fundo */
+    .grid-lines {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+    }
+    /* Scrollbar invisível */
+    .no-scrollbar::-webkit-scrollbar {
+    display: none;
+    }
+    .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap">
+    <script src="https://www.aura.build/FxFilter.js"></script>
+    <link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-google-sans-flex" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-google-sans-flex">.font-google-sans-flex { font-family: 'Google Sans Flex', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link id="all-fonts-link-font-newsreader" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..800&amp;display=swap"><style id="all-fonts-style-font-newsreader">.font-newsreader { font-family: 'Newsreader', serif !important; }</style><link id="all-fonts-link-font-oswald" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-oswald">.font-oswald { font-family: 'Oswald', sans-serif !important; }</style><link id="all-fonts-link-font-dm-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-dm-sans">.font-dm-sans { font-family: 'DM Sans', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style></head>
+    <body class="min-h-screen overflow-x-hidden selection:bg-[#c1ff72] selection:text-neutral-900 text-neutral-900 font-geist bg-neutral-100 relative">
+    
+        <!-- Header / Navigation (Horizontal) -->
+        <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-stone-200/50">
+            <div class="max-w-[1600px] mx-auto px-6 lg:px-12 h-16 lg:h-20 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="block group text-2xl lg:text-3xl font-semibold tracking-tighter font-google-sans-flex">
+                    Optimal<span class="transition-colors text-stone-500">Factors</span>
+                </a>
+    
+                <!-- Desktop Menu -->
+                <nav class="hidden lg:flex font-montserrat gap-x-10 items-center">
+                    <a href="#services" class="hover:text-stone-900 transition-colors text-sm font-medium text-stone-600">Services</a>
+                    <a href="#cases" class="hover:text-stone-900 transition-colors text-sm font-medium text-stone-600">Case Studies</a>
+                    <a href="#" class="hover:text-stone-900 transition-colors text-sm font-medium text-stone-600">Login</a>
+                </nav>
+    
+                <!-- Actions -->
+                <div class="flex gap-x-8 items-center">
+                    <button class="bg-stone-900 text-[#c1ff72] hover:bg-stone-800 transition-all font-medium px-4 py-2 lg:px-5 lg:py-2.5 rounded-lg text-xs lg:text-sm flex items-center gap-2 group">
+                        Book Strategy Call
+                        <iconify-icon icon="lucide:arrow-right" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </header>
+    
+        <!-- Fundo com Grid (Apenas Hero) -->
+        <div class="fixed grid-lines w-full h-[100vh] top-0 right-0 left-0 pointer-events-none z-0"></div>
+    
+        <div class="relative z-10 flex flex-col min-h-screen pt-16 lg:pt-20">
+            
+            <!-- Área de Conteúdo Principal -->
+            <main class="flex-1 w-full">
+    
+                <!-- Section A: Hero -->
+                <section class="lg:px-12 lg:pt-16 lg:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 min-h-[60vh] lg:min-h-[75vh] max-w-[1600px] mr-auto ml-auto pt-8 pr-6 pb-12 pl-6 items-center">
+                    <div class="animate-clip-in lg:col-span-7 space-y-6" style="animation-delay: 0.1s">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium bg-white border-stone-200 text-stone-600">
+                            <span class="w-2 h-2 rounded-full bg-[#c1ff72] animate-pulse"></span>
+                            Digital Infrastructure &amp; Growth
+                        </div>
+                        <!-- Headline -->
+                        <h1 class="leading-[0.95] lg:text-7xl xl:text-8xl text-5xl font-medium text-stone-900 tracking-tighter">
+                            Your Technology, 
+                            <span class="text-slate-950 font-google-sans-flex relative inline-block">Optimized
+                            <svg class="absolute w-full h-3 -bottom-1 left-0 text-[#c1ff72] -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" opacity="0.4"></path></svg>
+                            </span> for Growth.
+                        </h1>
+                        <p class="leading-relaxed lg:text-xl text-lg font-normal text-stone-500 font-montserrat max-w-2xl">
+                            We design, build, and manage the digital systems—cloud, ERP, and marketing—that power your business. No silos, just results.
+                        </p>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                            <button class="glass-button all-unset cursor-pointer outline-none focus:outline-none z-30 pointer-events-auto text-base rounded-full relative group">
+                                <span class="button-text block select-none text-lg font-semibold text-stone-900 tracking-tight pt-4 pr-8 pb-4 pl-8 relative">
+                                    Start Your Optimization
+                                </span>
+                                <div class="button-shine"></div>
+                            </button>
+                            <button class="flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-stone-300 font-semibold text-stone-700 hover:bg-stone-200/50 transition-colors">
+                                View Our Work
+                            </button>
+                        </div>
+    
+                        <style>
+                        @property --angle-1 { syntax: "<angle>"; inherits: false; initial-value: -75deg; }
+                        @property --angle-2 { syntax: "<angle>"; inherits: false; initial-value: -45deg; }
+                        .glass-button {
+                            background: linear-gradient(-75deg, rgba(193, 255, 114, 0.1), rgba(255, 255, 255, 0.5), rgba(193, 255, 114, 0.1));
+                            box-shadow: inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05), inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5), 0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2), 0 0 0.1em 0.25em rgba(193, 255, 114, 0.4) inset, 0 0 0 0 rgba(255, 255, 255, 1);
+                            backdrop-filter: blur(4px);
+                            transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+                        }
+                        .glass-button:hover { transform: scale(0.98); }
+                        .button-shine {
+                            position: absolute; inset: 0; border-radius: 999px; width: calc(100% - 1px); height: calc(100% - 1px); top: 0.5px; left: 0.5px;
+                            background: linear-gradient(var(--angle-2), rgba(255, 255, 255, 0) 0%, rgba(193, 255, 114, 0.5) 40% 50%, rgba(255, 255, 255, 0) 55%);
+                            mix-blend-mode: screen; pointer-events: none; background-size: 200% 200%; background-position: 0% 50%; background-repeat: no-repeat;
+                            transition: background-position 500ms, --angle-2 500ms;
+                        }
+                        .glass-button:hover .button-shine { background-position: 25% 50%; }
+                        </style>
+                    </div>
+    
+                    <!-- Hero Visual -->
+                    <div class="lg:col-span-5 flex flex-col animate-fade-up lg:mt-0 h-full mt-8 relative justify-center" style="animation-delay: 0.3s">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-[#c1ff72] opacity-20 blur-[100px] rounded-full pointer-events-none"></div>
+                        <div class="relative space-y-4">
+                            <!-- Card 1: Cloud Status -->
+                            <div class="glass-panel p-4 rounded-xl flex items-center gap-4 animate-float shadow-lg lg:ml-0 max-w-sm mx-auto w-full" style="animation-delay: 0s;">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center border shrink-0 bg-lime-50 text-lime-600 border-lime-100">
+                                    <iconify-icon icon="lucide:server" width="20" class=""></iconify-icon>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex justify-between items-center mb-0.5">
+                                        <p class="text-xs font-semibold text-stone-900">Kubernetes Cluster</p>
+                                        <span class="text-[10px] text-stone-400">us-east-1</span>
+                                    </div>
+                                    <p class="text-xs text-stone-500 truncate">Autoscaling Triggered</p>
+                                </div>
+                                <span class="text-[10px] px-2 py-0.5 rounded border font-medium bg-stone-100 text-stone-600 border-stone-200">99.9% Uptime</span>
+                            </div>
+                            <!-- Card 2: Marketing Attribution -->
+                            <div class="glass-panel p-4 rounded-xl flex items-center gap-4 animate-float shadow-lg lg:ml-8 max-w-sm mx-auto w-full" style="animation-delay: 1.5s;">
+                                <div class="flex shrink-0 bg-[#c1ff72] w-10 h-10 border rounded-full items-center justify-center text-stone-900 border-lime-600">
+                                    <iconify-icon icon="lucide:arrow-up-right" width="20"></iconify-icon>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex justify-between items-center mb-0.5">
+                                        <p class="text-xs font-semibold text-stone-900">Campaign ROAS</p>
+                                        <span class="text-[10px] text-stone-400">Real-time</span>
+                                    </div>
+                                    <p class="text-xs text-stone-500 truncate">Q3 Paid Search Performance</p>
+                                </div>
+                                <span class="bg-[#c1ff72] text-[10px] px-2 py-0.5 rounded border border-[#aae65f] font-medium text-stone-900">+15.4%</span>
+                            </div>
+                            <!-- Card 3: Integration -->
+                            <div class="glass-panel p-4 rounded-xl flex items-center gap-4 animate-float shadow-lg lg:-ml-4 max-w-sm mx-auto w-full" style="animation-delay: 2.5s;">
+                                <div class="w-10 h-10 rounded-full text-[#c1ff72] flex items-center justify-center border shrink-0 bg-stone-900 border-stone-800">
+                                    <iconify-icon icon="lucide:database" width="20" class=""></iconify-icon>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex justify-between items-center mb-0.5">
+                                        <p class="text-xs font-semibold text-stone-900">ERP Sync</p>
+                                        <span class="text-[10px] text-stone-400">Now</span>
+                                    </div>
+                                    <p class="text-xs text-stone-500 truncate">Odoo &lt;-&gt; Shopify Connected</p>
+                                </div>
+                                <span class="text-[10px] px-2 py-0.5 rounded border font-medium bg-stone-900 text-white border-stone-700">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- WHITE BACKGROUND SECTION -->
+                <div class="bg-white w-full z-20 rounded-t-[40px] pt-12 pb-12 relative shadow-[0_-20px_40px_rgba(0,0,0,0.02)]">
+    
+                     <!-- Marquee (Trust Signal) -->
+                     <section class="max-w-[1600px] mx-auto w-full mb-16 lg:mb-24 px-6 lg:px-12">
+                        <p class="text-left text-sm font-medium text-stone-400 uppercase tracking-widest mb-6">Trusted by forward-thinking companies</p>
+                        <div class="overflow-hidden w-full relative">
+                            <div class="z-10 bg-gradient-to-r to-transparent w-12 lg:w-40 h-full absolute top-0 left-0 from-white"></div>
+                            <div class="bg-gradient-to-l to-transparent w-12 lg:w-40 h-full z-10 absolute top-0 right-0 from-white"></div>
+                            <div class="flex w-max animate-marquee hover:pause-animation">
+                                <div class="flex items-center gap-12 lg:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:cloud-lightning"></iconify-icon> SaaSforce</div>
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:cpu" class=""></iconify-icon> TechFlow</div>
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:database"></iconify-icon> DataScale</div>
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:globe"></iconify-icon> VentureCorp</div>
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:server"></iconify-icon> CloudNine</div>
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:zap"></iconify-icon> BoltSoft</div>
+                                </div>
+                                <div class="flex items-center gap-12 lg:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 ml-12 lg:ml-24">
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:cloud-lightning"></iconify-icon> SaaSforce</div>
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:cpu"></iconify-icon> TechFlow</div>
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:database"></iconify-icon> DataScale</div>
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:globe"></iconify-icon> VentureCorp</div>
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:server"></iconify-icon> CloudNine</div>
+                                    <div class="flex items-center gap-2 text-xl lg:text-2xl font-bold font-sans"><iconify-icon icon="lucide:zap"></iconify-icon> BoltSoft</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+    
+                    <!-- Section B: Pain Point Reversal -->
+                    <section class="max-w-[1600px] mx-auto px-6 lg:px-12 animate-fade-up w-full mb-12 lg:mb-20" style="animation-delay: 0.4s">
+                        <div class="text-center mb-12">
+                            <h2 class="lg:text-5xl text-3xl font-medium text-stone-900 tracking-tight font-montserrat">
+                                Stop Letting Your Tech Stack  <span class="text-stone-400">Slow You Down.</span>
+                            </h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                            <!-- Card 1: Founder -->
+                            <div class="p-8 bg-neutral-50 border border-stone-200 rounded-2xl hover:shadow-md transition-shadow">
+                                <div class="w-12 h-12 bg-red-100 text-red-600 rounded-xl flex items-center justify-center mb-6">
+                                    <iconify-icon icon="lucide:alert-triangle" width="24"></iconify-icon>
+                                </div>
+                                <h3 class="text-xl font-semibold text-stone-900 mb-2">Tired of downtime?</h3>
+                                <p class="text-stone-500 text-sm leading-relaxed">We ensure 99.9% uptime with scalable cloud architecture so your business never stops.</p>
+                            </div>
+                             <!-- Card 2: CTO -->
+                             <div class="p-8 bg-neutral-50 border border-stone-200 rounded-2xl hover:shadow-md transition-shadow">
+                                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                                    <iconify-icon icon="lucide:eye" width="24" class=""></iconify-icon>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2 text-stone-900">Blind to risks?</h3>
+                                <p class="text-stone-500 text-sm leading-relaxed">Get total visibility with our integrated monitoring dashboards across all systems.</p>
+                            </div>
+                             <!-- Card 3: Marketer -->
+                             <div class="p-8 bg-neutral-50 border border-stone-200 rounded-2xl hover:shadow-md transition-shadow">
+                                <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-6">
+                                    <iconify-icon icon="lucide:bar-chart-2" width="24"></iconify-icon>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2 text-stone-900">Losing leads?</h3>
+                                <p class="text-stone-500 text-sm leading-relaxed">We connect your ads directly to your CRM for perfect attribution and follow-up.</p>
+                            </div>
+                        </div>
+                    </section>
+    
+                    <!-- Section C: Core Services -->
+                    <section id="services" class="lg:px-12 lg:mb-20 max-w-[1600px] mr-auto mb-12 ml-auto pr-6 pl-6">
+                        <h2 class="text-3xl lg:text-5xl font-medium text-stone-900 tracking-tight font-montserrat mb-10 lg:mb-12">End-to-End Digital Engineering</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-fr">
+                            
+                            <!-- Card 1: Cloud & DevOps (Dark Blue) -->
+                            <div class="row-span-1 lg:row-span-2 group overflow-hidden lg:p-10 flex flex-col min-h-[500px] lg:min-h-full transition-transform hover:scale-[1.01] duration-300 bg-[#002f43] border-[#002f43] border rounded-[32px] pt-6 pr-6 pb-6 pl-6 relative justify-between">
+                                
+                                <!-- Visual Anchor (Top) -->
+                                <div class="z-20 mt-auto relative">
+                                    <div class="flex text-white bg-white/10 w-12 h-12 border-white/10 border rounded-2xl mb-6 backdrop-blur-md items-center justify-center">
+                                        <iconify-icon icon="lucide:cloud" width="24" class=""></iconify-icon>
+                                    </div>
+                                    <h3 class="lg:text-3xl text-2xl font-bold text-white font-montserrat mb-3">Cloud &amp; DevOps</h3>
+                                    <p class="text-stone-300 mb-6 text-sm lg:text-base leading-relaxed max-w-sm">
+                                        Scale without the crash. AWS, Azure, &amp; Kubernetes expert management and automation.
+                                    </p>
+                                    <a href="#" class="inline-flex items-center text-white font-medium text-sm hover:underline underline-offset-4 group/link">
+                                        Explore Cloud Services 
+                                        <iconify-icon icon="lucide:arrow-right" class="ml-2 group-hover/link:translate-x-1 transition-transform"></iconify-icon>
+                                    </a>
+                                </div><div class="flex-1 flex w-full mt-8 mb-8 relative items-center justify-center">
+                                    <!-- Background Decoration -->
+                                    <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent rounded-2xl pointer-events-none"></div>
+                                    
+                                    <!-- Floating Card UI -->
+                                    <div class="transform group-hover:-translate-y-2 transition-transform duration-500 bg-stone-900 w-full max-w-[280px] z-10 rounded-xl pt-5 pr-5 pb-5 pl-5 relative shadow-2xl border border-stone-800">
+                                        <!-- Fake Browser Header -->
+                                        <div class="flex gap-2 border-stone-800 border-b mb-4 pb-3 gap-x-2 gap-y-2 items-center">
+                                            <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                                            <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+                                        </div>
+                                        <!-- Content Mockup -->
+                                        <div class="space-y-3 font-mono text-[10px] text-stone-400">
+                                            <div class="flex gap-2"><span class="text-blue-400">apiVersion:</span> apps/v1</div>
+                                            <div class="flex gap-2"><span class="text-blue-400">kind:</span> Deployment</div>
+                                            <div class="flex gap-2"><span class="text-blue-400">metadata:</span></div>
+                                            <div class="pl-4 flex gap-2"><span class="text-purple-400">name:</span> production-api</div>
+                                            <div class="flex gap-2"><span class="text-blue-400">spec:</span></div>
+                                            <div class="pl-4 flex gap-2"><span class="text-purple-400">replicas:</span> <span class="text-[#c1ff72]">12</span></div>
+                                            
+                                            <!-- Interactive Element Mockup -->
+                                            <div class="flex gap-3 bg-stone-800 border-stone-700 border rounded-lg mt-4 pt-2 pr-2 pb-2 pl-2 gap-x-3 gap-y-3 items-center">
+                                                <div class="h-6 w-6 rounded bg-lime-900/50 text-lime-400 flex items-center justify-center shrink-0">
+                                                    <iconify-icon icon="lucide:check" width="14"></iconify-icon>
+                                                </div>
+                                                <div class="flex-1 text-[9px] text-stone-300">Autoscaling Policy</div>
+                                                <div class="h-5 w-10 bg-[#c1ff72] rounded text-[8px] text-stone-900 font-bold flex items-center justify-center">ON</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- Card 2: ERP & Operations (Wide - Cyan/Lime) -->
+                            <div class="col-span-1 md:col-span-2 group overflow-hidden lg:p-10 min-h-[400px] flex flex-col md:flex-row transition-transform hover:scale-[1.01] duration-300 bg-lime-300 border-lime-300 border rounded-[32px] pt-6 pr-6 pb-6 pl-6 relative items-center justify-between">
+                                
+                                <!-- Text Side -->
+                                <div class="relative z-20 flex flex-col h-full justify-between w-full md:w-1/2 mb-8 md:mb-0">
+                                    <div class="">
+                                        <div class="w-12 h-12 rounded-2xl bg-white/40 backdrop-blur-sm flex items-center justify-center mb-6 text-stone-900">
+                                            <iconify-icon icon="lucide:layers" width="24"></iconify-icon>
+                                        </div>
+                                        <h3 class="lg:text-3xl text-2xl font-bold text-stone-900 font-montserrat mb-3">ERP &amp; Operations</h3>
+                                        <p class="text-stone-800 text-sm lg:text-base mb-6 leading-relaxed max-w-xs">
+                                            Unified business logic. Odoo &amp; SAP integrations that actually work together.
+                                        </p>
+                                    </div>
+                                    <a href="#" class="inline-flex items-center text-stone-900 font-bold text-sm hover:underline underline-offset-4 group/link">
+                                        See Integrations 
+                                        <iconify-icon icon="lucide:arrow-right" class="ml-2 group-hover/link:translate-x-1 transition-transform"></iconify-icon>
+                                    </a>
+                                </div>
+    
+                                <!-- Visual Side (Kanban/Operations) -->
+                                <div class="relative w-full md:w-1/2 h-full min-h-[220px] flex items-center justify-end">
+                                    <!-- Tilted Container for dynamic effect -->
+                                    <div class="absolute right-[-20px] md:right-[-40px] w-[120%] md:w-[110%] group-hover:scale-105 group-hover:-rotate-1 transition-all duration-500 ease-out">
+                                        <div class="bg-white/90 backdrop-blur rounded-xl shadow-lg border border-lime-400/50 p-4">
+                                            <!-- Columns -->
+                                            <div class="flex gap-3">
+                                                <!-- Col 1 -->
+                                                <div class="flex-1 bg-stone-50 rounded-lg p-2 space-y-2">
+                                                    <div class="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Inventory</div>
+                                                    <div class="bg-white p-3 rounded border border-stone-100 shadow-sm">
+                                                        <div class="flex justify-between items-center mb-2">
+                                                            <div class="h-1.5 w-12 bg-lime-300 rounded"></div>
+                                                            <span class="text-[8px] text-stone-400">SKU-102</span>
+                                                        </div>
+                                                        <div class="h-1 w-full bg-stone-100 rounded"></div>
+                                                    </div>
+                                                </div>
+                                                <!-- Col 2 -->
+                                                <div class="flex-1 bg-stone-50 rounded-lg p-2 space-y-2">
+                                                    <div class="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Processing</div>
+                                                    <div class="bg-white p-3 rounded border border-lime-500 shadow-sm relative overflow-hidden">
+                                                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-lime-500"></div>
+                                                        <div class="h-1.5 w-16 bg-stone-800 rounded mb-2"></div>
+                                                        <div class="h-1 w-full bg-stone-100 rounded"></div>
+                                                        <div class="mt-2 flex items-center gap-1">
+                                                            <div class="w-4 h-4 rounded-full bg-stone-200"></div>
+                                                            <div class="text-[8px] text-stone-400">Syncing...</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Col 3 (Partial) -->
+                                                <div class="flex-1 bg-stone-50 rounded-lg p-2 opacity-50">
+                                                    <div class="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Shipped</div>
+                                                    <div class="bg-white p-3 rounded shadow-sm h-16 border-dashed border-2 border-stone-200"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- Card 3: Growth Marketing (Mint) -->
+                            <div class="group relative overflow-hidden bg-lime-100/80 rounded-[32px] p-6 lg:p-10 flex flex-col justify-between min-h-[350px] transition-transform hover:scale-[1.01] duration-300 border border-lime-200">
+                                
+                                <!-- Visuals -->
+                                <div class="relative w-full h-32 mb-4">
+                                    <div class="absolute right-0 top-0 space-y-3 w-full max-w-[220px]">
+                                        <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm text-xs text-stone-600 ml-auto w-fit transform group-hover:-translate-x-1 transition-transform delay-75">
+                                            <div class="flex items-center gap-2">
+                                                <iconify-icon icon="lucide:user" class="text-stone-400"></iconify-icon>
+                                                New Lead Captured
+                                            </div>
+                                        </div>
+                                        <div class="bg-[#002f43] p-3 rounded-2xl rounded-tl-none shadow-sm text-xs text-white w-fit transform group-hover:translate-x-1 transition-transform delay-100">
+                                            <div class="flex items-center gap-2">
+                                                <iconify-icon icon="lucide:arrow-right" class="text-[#c1ff72]"></iconify-icon>
+                                                Sent to Sales Pipeline
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="mt-auto relative z-20">
+                                    <div class="w-10 h-10 rounded-xl bg-white/60 backdrop-blur flex items-center justify-center mb-4 text-stone-900">
+                                        <iconify-icon icon="lucide:trending-up" width="20"></iconify-icon>
+                                    </div>
+                                    <h3 class="lg:text-2xl text-xl font-bold text-stone-900 font-montserrat mb-2">Growth Marketing</h3>
+                                    <p class="text-stone-700 text-sm mb-4 leading-relaxed">Data-driven acquisition. Campaigns that feed directly into your sales pipeline.</p>
+                                    <a href="#" class="inline-flex items-center text-stone-900 font-bold text-xs uppercase tracking-wide hover:opacity-70">
+                                        Learn More <iconify-icon icon="lucide:chevron-right" class="ml-1"></iconify-icon>
+                                    </a>
+                                </div>
+                            </div>
+    
+                            <!-- Card 4: E-Commerce (Sky Blue) -->
+                            <div class="group relative overflow-hidden bg-sky-50 rounded-[32px] p-6 lg:p-10 flex flex-col justify-between min-h-[350px] transition-transform hover:scale-[1.01] duration-300 border border-sky-100">
+                                
+                                <!-- E-commerce Visual -->
+                                <div class="flex w-full h-32 relative justify-end">
+                                    <div class="relative transform rotate-3 group-hover:rotate-6 transition-transform duration-500 origin-bottom-right">
+                                        <div class="bg-white p-3 rounded-xl shadow-lg border border-sky-100 w-32">
+                                            <div class="w-full aspect-square bg-stone-100 rounded-lg mb-2 relative overflow-hidden">
+                                                <div class="absolute inset-0 bg-gradient-to-tr from-sky-100 to-transparent opacity-50"></div>
+                                            </div>
+                                            <div class="h-1.5 bg-stone-200 rounded w-2/3 mb-1"></div>
+                                            <div class="h-1.5 bg-stone-100 rounded w-1/2"></div>
+                                            <div class="-top-2 -right-2 text-[10px] font-bold text-white bg-stone-900 rounded-full pt-1 pr-2 pb-1 pl-2 absolute shadow-md" style="">$</div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="z-20 mt-auto relative">
+                                    <div class="w-10 h-10 rounded-xl bg-white/60 backdrop-blur flex items-center justify-center mb-4 text-stone-900">
+                                        <iconify-icon icon="lucide:shopping-bag" width="20"></iconify-icon>
+                                    </div>
+                                    <h3 class="lg:text-2xl text-xl font-bold text-stone-900 font-montserrat mb-2">E-Commerce</h3>
+                                    <p class="text-stone-700 text-sm mb-4 leading-relaxed">High-performance storefronts. Shopify &amp; Custom builds designed to sell.</p>
+                                    <a href="#" class="inline-flex items-center text-stone-900 font-bold text-xs uppercase tracking-wide hover:opacity-70">
+                                        View Storefronts <iconify-icon icon="lucide:chevron-right" class="ml-1"></iconify-icon>
+                                    </a>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </section>
+    
+                    <!-- Section D: Why Optimal Factors? -->
+                    <section class="py-12 lg:py-16 max-w-[1600px] mx-auto px-6 lg:px-12">
+                        <div class="text-center max-w-4xl mx-auto space-y-8">
+                            <h2 class="text-3xl lg:text-6xl font-medium text-stone-900 tracking-tight font-montserrat leading-tight">
+                                Why Optimal Factors?
+                            </h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-6">
+                                <div class="space-y-3">
+                                    <div class="mx-auto w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center text-stone-900 mb-2">
+                                        <iconify-icon icon="lucide:binary" width="24"></iconify-icon>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-stone-900">We Speak Data</h3>
+                                    <p class="text-stone-600 text-sm leading-relaxed">No guessing. Every decision is backed by analytics and raw performance metrics.</p>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="mx-auto w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center text-stone-900 mb-2">
+                                        <iconify-icon icon="lucide:monitor" width="24"></iconify-icon>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-stone-900">Full-Stack Visibility</h3>
+                                    <p class="text-stone-600 text-sm leading-relaxed">We don't just fix the code; we optimize the business outcome across the stack.</p>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="mx-auto w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center text-stone-900 mb-2">
+                                        <iconify-icon icon="lucide:users" width="24"></iconify-icon>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-stone-900">Partner, Not Vendor</h3>
+                                    <p class="text-stone-600 text-sm leading-relaxed">We integrate with your team via Slack/Teams for real-time collaboration.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+    
+                    <!-- Section E: Results that Compound (Case Study Visual) -->
+                    <section id="cases" class="max-w-[1600px] mx-auto px-6 lg:px-12 mt-16 lg:mt-20 mb-12 lg:mb-20">
+                        <div class="overflow-hidden min-h-[500px] lg:h-[600px] rounded-[32px] relative shadow-2xl border shadow-zinc-900/30 bg-stone-900 border-stone-800">
+                            <div class="opacity-20 absolute top-0 right-0 bottom-0 left-0" style="background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 30px 30px"></div>
+                            <div class="flex flex-col lg:flex-row h-full">
+                                <div class="flex-1 lg:p-16 flex flex-col z-10 pt-8 pr-8 pb-8 pl-8 relative justify-center">
+                                <div class="flex items-center gap-2 mb-6">
+                                    <div class="w-2 h-2 bg-[#c1ff72] rounded-full animate-pulse"></div>
+                                    <span class="text-[#c1ff72] font-mono text-xs uppercase tracking-wider">Verified Results</span>
+                                </div>
+                                <h2 class="lg:text-5xl xl:text-6xl leading-tight lg:mr-6 lg:mb-8 text-3xl font-medium text-white tracking-tight font-montserrat mb-6">
+                                    Results that Compound.
+                                </h2>
+                                <p class="text-base lg:text-lg text-stone-400 font-montserrat max-w-md mb-8 lg:mb-10 leading-relaxed">
+                                    See how we deliver measurable impact for our partners.
+                                </p>
+    
+                                <button class="group flex items-center gap-3 bg-[#c1ff72] hover:bg-[#b0f060] transition-all text-sm font-semibold rounded-full px-8 py-4 w-fit shadow-lg hover:shadow-[0_0_20px_rgba(193,255,114,0.3)] text-stone-900">
+                                    <span>Read Case Studies</span>
+                                    <iconify-icon icon="lucide:arrow-right" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+                                </button>
+                                </div>
+                                <div class="flex lg:w-[50%] lg:pt-24 lg:pr-16 lg:pl-0 lg:items-center lg:pb-34 pt-8 pr-4 pb-16 pl-4 relative items-end">
+                                    <div class="transform [--fx-filter:blur(10px)_liquid-glass(0,10)_saturate(1.25)_noise(0.5,1,0)] lg:rounded-xl lg:translate-y-12 text-xs text-stone-400 font-mono bg-slate-950/80 w-full border-stone-800 border rounded-t-xl pt-8 pr-8 pb-16 pl-8 shadow-2xl backdrop-blur-md">
+                                        <div class="flex items-center justify-between border-b pb-4 mb-4 border-stone-800">
+                                            <span class="text-stone-300">performance_metrics.json</span>
+                                            <div class="flex gap-1.5">
+                                                <div class="w-2.5 h-2.5 bg-orange-700/50 rounded-full"></div>
+                                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+                                                <div class="w-2.5 h-2.5 rounded-full bg-lime-500/50"></div>
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-4 mb-4">
+                                            <div class="p-4 rounded border bg-stone-900 border-stone-800">
+                                                <span class="block text-stone-500 mb-2">Cloud Spend</span>
+                                                <span class="text-2xl font-bold text-white block mb-1">-40%</span>
+                                                <span class="text-[#c1ff72] text-[10px]">SaaS Client / Kubernetes</span>
+                                            </div>
+                                            <div class="p-4 rounded border bg-stone-900 border-stone-800">
+                                                <span class="block text-stone-500 mb-2">Conversion Rate</span>
+                                                <span class="text-2xl font-bold text-white block mb-1">+15%</span>
+                                                <span class="text-[#c1ff72] text-[10px]">Retail Brand / Speed</span>
+                                            </div>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between p-3 rounded transition-colors border border-transparent bg-stone-900/50">
+                                                <div class="flex items-center gap-3">
+                                                    <iconify-icon icon="lucide:timer" class="text-lime-400 text-sm"></iconify-icon>
+                                                    <span class="text-stone-300">Checkout speed increased by 2.5s</span>
+                                                </div>
+                                                <span class="text-[#c1ff72]"><iconify-icon icon="lucide:check"></iconify-icon></span>
+                                            </div>
+                                            <div class="flex items-center justify-between p-3 rounded transition-colors border border-transparent bg-stone-900/50">
+                                                <div class="flex items-center gap-3">
+                                                    <iconify-icon icon="lucide:server" class="text-lime-400 text-sm"></iconify-icon>
+                                                    <span class="text-stone-300">Legacy infrastructure migration complete</span>
+                                                </div>
+                                                <span class="text-[#c1ff72]"><iconify-icon icon="lucide:check"></iconify-icon></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+    
+                    <!-- Section F: Footer (CTA & Links) -->
+                    <section class="max-w-[1600px] mx-auto px-6 lg:px-12 my-12 lg:my-20">
+                        <div class="lg:p-20 overflow-hidden text-center bg-[#c1ff72] rounded-[32px] pt-8 pr-8 pb-8 pl-8 relative">
+                            <div class="relative z-10 max-w-3xl mx-auto space-y-8">
+                                <h2 class="text-3xl lg:text-6xl leading-tight font-medium text-stone-900 tracking-tight font-montserrat">Ready to optimize your infrastructure?</h2>
+                                <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                                    <button class="font-medium px-8 py-4 rounded-full transition-transform hover:scale-105 shadow-xl bg-stone-900 text-white hover:bg-stone-800 w-full sm:w-auto text-center justify-center flex">
+                                        Book a Strategy Call
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none" style="background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 20%), radial-gradient(circle at 90% 80%, rgba(255,255,255,0.8) 0%, transparent 20%);"></div>
+                        </div>
+                    </section>
+    
+                    <!-- Footer Links -->
+                    <footer class="max-w-[1600px] mx-auto px-6 lg:px-12 pb-8">
+                        <div class="border rounded-3xl p-8 lg:p-12 shadow-sm bg-neutral-50 border-stone-200">
+                            <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 justify-between">
+                                <div class="lg:w-1/3 space-y-5">
+                                <div class="flex gap-2 items-center">
+                                    <span class="text-2xl font-bold tracking-tighter font-google-sans-flex">Optimal<span class="text-lime-500">Factors</span></span>
+                                </div>
+                                <p class="text-sm text-stone-500 font-montserrat max-w-sm leading-relaxed">
+                                    End-to-end digital engineering for modern business.
+                                </p>
+                                </div>
+                                <div class="flex flex-wrap gap-10 lg:gap-20 text-sm">
+                                    <div class="space-y-4">
+                                        <h3 class="text-xs uppercase font-semibold tracking-wider text-stone-400">Company</h3>
+                                        <ul class="space-y-3 text-stone-600">
+                                            <li><a href="#services" class="hover:text-stone-900 transition-colors">Services</a></li>
+                                            <li><a href="#cases" class="hover:text-stone-900 transition-colors">Case Studies</a></li>
+                                            <li><a href="#" class="hover:text-stone-900 transition-colors">Login</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <h3 class="text-xs uppercase font-semibold tracking-wider text-stone-400">Connect</h3>
+                                        <ul class="space-y-3 text-stone-600">
+                                            <li><a href="#" class="flex items-center gap-2 hover:text-stone-900 transition-colors"><iconify-icon icon="simple-icons:linkedin" width="14"></iconify-icon> LinkedIn</a></li>
+                                            <li><a href="#" class="flex items-center gap-2 hover:text-stone-900 transition-colors"><iconify-icon icon="simple-icons:twitter" width="14"></iconify-icon> Twitter</a></li>
+                                            <li><a href="#" class="flex items-center gap-2 hover:text-stone-900 transition-colors"><iconify-icon icon="simple-icons:github" width="14"></iconify-icon> GitHub</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <h3 class="text-xs uppercase font-semibold tracking-wider text-stone-400">Legal</h3>
+                                        <ul class="space-y-3 text-stone-600">
+                                            <li><a href="#" class="hover:text-stone-900 transition-colors">Privacy Policy</a></li>
+                                            <li><a href="#" class="hover:text-stone-900 transition-colors">Terms</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-12 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-xs border-stone-200 text-stone-400">
+                                <p>© 2026 Optimal Factors. All rights reserved.</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+                <!-- End of White Background Section -->
+            </main>
+        </div>
+    
+        <script>
+            function handleSpotlight(e) {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+                e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+            }
+        </script>
+    
+    </body></html>

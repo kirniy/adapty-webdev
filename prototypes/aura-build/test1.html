@@ -1,0 +1,720 @@
+<html lang="en" class="scroll-smooth"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adapty - Revenue Management for In-App Purchases</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Geist', 'Inter', 'sans-serif'],
+                display: ['Montserrat', 'sans-serif'],
+                mono: ['Geist Mono', 'monospace'],
+            },
+            colors: {
+                brand: {
+                    lime: '#c1ff72',
+                    dark: '#0a0a0a',
+                }
+            },
+            animation: {
+                'marquee': 'marquee 40s linear infinite',
+                'fade-up': 'fadeUp 0.8s ease-out forwards',
+                'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+                marquee: {
+                    '0%': { transform: 'translateX(0%)' },
+                    '100%': { transform: 'translateX(-50%)' },
+                },
+                fadeUp: {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                }
+            }
+        }
+    }
+}
+</script>
+<style>
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .grid-lines {
+        background-size: 40px 40px;
+        background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    /* Code Syntax Highlighting Simulation */
+    .token-keyword { color: #ff7b72; }
+    .token-function { color: #d2a8ff; }
+    .token-string { color: #a5d6ff; }
+    .token-comment { color: #8b949e; }
+    .token-variable { color: #79c0ff; }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;family=Montserrat:wght@400;500;600&amp;display=swap">
+<link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link id="all-fonts-link-font-newsreader" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..800&amp;display=swap"><style id="all-fonts-style-font-newsreader">.font-newsreader { font-family: 'Newsreader', serif !important; }</style><link id="all-fonts-link-font-google-sans-flex" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-google-sans-flex">.font-google-sans-flex { font-family: 'Google Sans Flex', sans-serif !important; }</style><link id="all-fonts-link-font-oswald" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-oswald">.font-oswald { font-family: 'Oswald', sans-serif !important; }</style><link id="all-fonts-link-font-dm-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-dm-sans">.font-dm-sans { font-family: 'DM Sans', sans-serif !important; }</style><link id="all-fonts-link-font-cormorant" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-cormorant">.font-cormorant { font-family: 'Cormorant Garamond', serif !important; }</style></head>
+<body class="min-h-screen overflow-x-hidden text-stone-900 font-sans bg-stone-50 selection:bg-[#c1ff72] selection:text-black">
+
+    <!-- 1. Header / Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel">
+        <div class="max-w-[1440px] mx-auto px-6 h-16 lg:h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-stone-900 rounded-lg flex items-center justify-center text-[#c1ff72]">
+                    <iconify-icon icon="lucide:triangle" width="20" stroke-width="2.5" class=""></iconify-icon>
+                </div>
+                <span class="text-xl font-semibold tracking-tight">Adapty</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden lg:flex gap-x-8 items-center">
+                <!-- Product Dropdown Group -->
+                <div class="relative group h-20 flex items-center">
+                    <button class="flex items-center gap-1 text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">
+                        Product <iconify-icon icon="lucide:chevron-down" width="14"></iconify-icon>
+                    </button>
+                    <!-- Simple Dropdown Content -->
+                    <div class="absolute top-full left-0 w-56 bg-white border border-stone-200 rounded-xl shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">Subscriptions SDK</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">Paywall Builder</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">A/B Testing</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">Analytics</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">Integrations</a>
+                    </div>
+                </div>
+
+                <div class="relative group h-20 flex items-center">
+                    <button class="flex items-center gap-1 text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">
+                        Solutions <iconify-icon icon="lucide:chevron-down" width="14"></iconify-icon>
+                    </button>
+                     <div class="absolute top-full left-0 w-56 bg-white border border-stone-200 rounded-xl shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">For Developers</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">For Marketers</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">For Enterprise</a>
+                    </div>
+                </div>
+
+                <div class="relative group h-20 flex items-center">
+                    <button class="flex items-center gap-1 text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">
+                        Resources <iconify-icon icon="lucide:chevron-down" width="14"></iconify-icon>
+                    </button>
+                    <div class="absolute top-full left-0 w-56 bg-white border border-stone-200 rounded-xl shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">Blog</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">Documentation</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 rounded-lg">Case Studies</a>
+                    </div>
+                </div>
+
+                <a href="#" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Pricing</a>
+                <a href="#" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Docs</a>
+            </nav>
+
+            <!-- Auth Buttons -->
+            <div class="flex items-center gap-4">
+                <a href="#" class="hidden lg:block text-sm font-medium text-stone-600 hover:text-stone-900">Log in</a>
+                <a href="#" class="bg-stone-900 text-white hover:bg-stone-800 transition-all font-medium px-4 py-2 rounded-lg text-sm flex items-center gap-2">
+                    Sign up
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Background Grid -->
+    <div class="fixed grid-lines w-full h-screen top-0 left-0 pointer-events-none z-0 opacity-60"></div>
+
+    <main class="relative z-10 pt-20 lg:pt-24">
+
+        <!-- 2. Hero Section -->
+        <section class="max-w-[1440px] mx-auto px-6 pt-16 pb-16 lg:pb-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8 animate-fade-up">
+                <!-- Badge -->
+                <a href="#" class="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-medium bg-white border-stone-200 text-stone-600 hover:border-stone-300 transition-colors group">
+                    <span class="w-2 h-2 rounded-full bg-[#c1ff72] animate-pulse"></span>
+                    Ebook: $100K playbook
+                    <span class="text-stone-400 group-hover:text-stone-900 ml-1 transition-colors">download →</span>
+                </a>
+
+                <!-- Headline -->
+                <h1 class="text-5xl lg:text-7xl font-semibold text-stone-900 tracking-tight leading-[1.05]">
+                    Revenue management for <span class="text-stone-400">in-app purchases</span>
+                </h1>
+
+                <!-- Subheadline -->
+                <p class="text-lg lg:text-xl text-stone-500 font-medium leading-relaxed max-w-xl">
+                    Save months on integrating subscriptions and double your app revenue with paywall management.
+                </p>
+
+                <!-- Email CTA -->
+                <div class="flex flex-col sm:flex-row gap-3 max-w-md">
+                    <input type="email" placeholder="Enter your work email" class="flex-1 px-4 py-3 rounded-lg border border-stone-200 bg-white focus:outline-none focus:ring-2 focus:ring-stone-200 text-sm">
+                    <button class="px-6 py-3 rounded-lg bg-[#c1ff72] text-stone-900 font-semibold text-sm hover:opacity-90 transition-opacity whitespace-nowrap">
+                        Get started
+                    </button>
+                </div>
+
+                <!-- Trust -->
+                <div class="flex items-center gap-2 text-xs font-medium text-stone-500">
+                    <iconify-icon icon="lucide:check-circle" class="text-stone-400"></iconify-icon>
+                    Trusted by 15,000+ apps worldwide
+                </div>
+            </div>
+
+            <!-- Hero Visual Placeholder -->
+            <div class="relative lg:h-[500px] w-full bg-white rounded-2xl border border-stone-200 shadow-xl overflow-hidden animate-fade-up" style="animation-delay: 0.2s;">
+                 <!-- Abstract Dashboard UI Representation -->
+                 <div class="absolute inset-0 bg-stone-50/50"></div>
+                 <div class="absolute top-12 left-12 right-0 bottom-0 bg-white border-t border-l border-stone-200 rounded-tl-xl shadow-sm p-8">
+                     <div class="flex items-center justify-between mb-8">
+                         <div class="space-y-1">
+                             <div class="h-2 w-24 bg-stone-100 rounded"></div>
+                             <div class="h-4 w-48 bg-stone-200 rounded"></div>
+                         </div>
+                         <div class="flex gap-2">
+                             <div class="h-8 w-8 rounded-full bg-stone-100"></div>
+                             <div class="h-8 w-24 rounded-lg bg-[#c1ff72]/20 border border-[#c1ff72]"></div>
+                         </div>
+                     </div>
+                     <!-- Charts -->
+                     <div class="grid grid-cols-3 gap-4 mb-8">
+                         <div class="p-4 rounded-lg border border-stone-100 bg-stone-50/50">
+                             <div class="h-2 w-12 bg-stone-200 rounded mb-2"></div>
+                             <div class="h-6 w-20 bg-stone-300 rounded"></div>
+                         </div>
+                         <div class="p-4 rounded-lg border border-stone-100 bg-stone-50/50">
+                             <div class="h-2 w-12 bg-stone-200 rounded mb-2"></div>
+                             <div class="h-6 w-20 bg-stone-300 rounded"></div>
+                         </div>
+                         <div class="p-4 rounded-lg border border-stone-100 bg-stone-50/50">
+                             <div class="h-2 w-12 bg-stone-200 rounded mb-2"></div>
+                             <div class="h-6 w-20 bg-stone-300 rounded"></div>
+                         </div>
+                     </div>
+                     <div class="h-32 w-full bg-stone-50 rounded-lg border border-stone-100 relative overflow-hidden">
+                        <svg class="absolute bottom-0 left-0 right-0 w-full h-24 text-[#c1ff72]" viewBox="0 0 100 20" preserveAspectRatio="none">
+                            <path d="M0 20 L0 15 Q 10 5 20 12 T 40 10 T 60 14 T 80 5 L 100 8 L 100 20 Z" fill="currentColor" opacity="0.4"></path>
+                            <path d="M0 20 L0 15 Q 10 5 20 12 T 40 10 T 60 14 T 80 5 L 100 8" stroke="currentColor" fill="none" stroke-width="0.5"></path>
+                        </svg>
+                     </div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- 3. Trusted By Section -->
+        <section class="border-y border-stone-200 bg-white py-12 overflow-hidden">
+            <div class="max-w-[1440px] mx-auto px-6 text-center mb-8">
+                <p class="text-sm font-medium text-stone-500 uppercase tracking-widest">Trusted by 15,000+ apps and the world's largest app publishers</p>
+            </div>
+            <div class="relative w-full">
+                <div class="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-white to-transparent"></div>
+                <div class="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-white to-transparent"></div>
+                
+                <div class="flex w-max animate-marquee hover:[animation-play-state:paused]">
+                    <!-- Loop 1 -->
+                    <div class="flex items-center gap-16 px-8 grayscale opacity-50">
+                        <span class="text-xl font-bold font-display">feeld</span>
+                        <span class="text-xl font-bold font-display">bumble</span>
+                        <span class="text-xl font-bold font-display">weewoo</span>
+                        <span class="text-xl font-bold font-display">appnation</span>
+                        <span class="text-xl font-bold font-display">almus</span>
+                        <span class="text-xl font-bold font-display">impala</span>
+                        <span class="text-xl font-bold font-display">hubx</span>
+                    </div>
+                    <!-- Loop 2 (Duplicate) -->
+                    <div class="flex items-center gap-16 px-8 grayscale opacity-50">
+                        <span class="text-xl font-bold font-display">feeld</span>
+                        <span class="text-xl font-bold font-display">bumble</span>
+                        <span class="text-xl font-bold font-display">weewoo</span>
+                        <span class="text-xl font-bold font-display">appnation</span>
+                        <span class="text-xl font-bold font-display">almus</span>
+                        <span class="text-xl font-bold font-display">impala</span>
+                        <span class="text-xl font-bold font-display">hubx</span>
+                    </div>
+                     <!-- Loop 3 (Duplicate for width) -->
+                     <div class="flex items-center gap-16 px-8 grayscale opacity-50">
+                        <span class="text-xl font-bold font-display">feeld</span>
+                        <span class="text-xl font-bold font-display">bumble</span>
+                        <span class="text-xl font-bold font-display">weewoo</span>
+                        <span class="text-xl font-bold font-display">appnation</span>
+                        <span class="text-xl font-bold font-display">almus</span>
+                        <span class="text-xl font-bold font-display">impala</span>
+                        <span class="text-xl font-bold font-display">hubx</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Feature Sections (Bento Grid) -->
+        <section class="max-w-[1440px] mx-auto px-6 py-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min">
+                
+                <!-- 4A. Paywall A/B Testing (Large) -->
+                <div class="lg:col-span-2 bg-white rounded-3xl p-8 lg:p-12 border border-stone-200 shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row gap-8 items-center overflow-hidden relative">
+                    <div class="flex-1 z-10">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                            <iconify-icon icon="lucide:flask-conical" width="24"></iconify-icon>
+                        </div>
+                        <h3 class="text-2xl lg:text-3xl font-semibold tracking-tight mb-3">Test your way to higher conversions</h3>
+                        <p class="text-stone-500 mb-6">Run experiments with statistical confidence. Test paywalls, pricing, and audience segmentation.</p>
+                        <ul class="space-y-2 text-sm font-medium text-stone-600">
+                            <li class="flex items-center gap-2"><span class="text-[#c1ff72] font-bold">+23%</span> Conversion Rate</li>
+                            <li class="flex items-center gap-2"><span class="text-[#c1ff72] font-bold">+18%</span> Revenue per User</li>
+                        </ul>
+                    </div>
+                    <div class="flex-1 w-full bg-stone-50 rounded-xl border border-stone-100 p-6 min-h-[200px] relative">
+                        <div class="absolute inset-x-4 top-4 bottom-0 bg-white shadow-lg rounded-t-lg border border-stone-100 p-4 space-y-3">
+                            <div class="h-2 bg-stone-100 rounded w-1/3"></div>
+                            <div class="flex gap-2">
+                                <div class="h-20 flex-1 bg-stone-50 rounded border border-stone-100"></div>
+                                <div class="h-20 flex-1 bg-blue-50 rounded border border-blue-100 relative">
+                                    <div class="absolute top-2 right-2 text-[10px] bg-blue-100 text-blue-700 px-1 rounded">Winner</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4B. Refund Saver -->
+                <div class="bg-white rounded-3xl p-8 border border-stone-200 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center mb-6">
+                        <iconify-icon icon="lucide:shield-check" width="24"></iconify-icon>
+                    </div>
+                    <h3 class="text-xl font-semibold tracking-tight mb-2">Recover revenue automatically</h3>
+                    <p class="text-stone-500 text-sm mb-auto">Reduce refunds with intelligent intervention. Save up to 40% of refund requests.</p>
+                    <div class="mt-6 bg-red-50/50 rounded-lg p-4 border border-red-100">
+                        <span class="text-2xl font-semibold text-red-600 block">40%</span>
+                        <span class="text-xs text-red-400 font-medium">Refunds Saved</span>
+                    </div>
+                </div>
+
+                <!-- 4C. Subscription Analytics -->
+                <div class="bg-stone-900 text-white rounded-3xl p-8 border border-stone-800 shadow-sm hover:shadow-md transition-shadow flex flex-col relative overflow-hidden group">
+                    <div class="w-12 h-12 bg-stone-800 rounded-xl flex items-center justify-center mb-6 text-[#c1ff72]">
+                        <iconify-icon icon="lucide:bar-chart-3" width="24"></iconify-icon>
+                    </div>
+                    <h3 class="text-xl font-semibold tracking-tight mb-2">Understand your business</h3>
+                    <p class="text-stone-400 text-sm mb-6">Real-time insights into MRR, LTV, and Churn.</p>
+                    <div class="mt-auto grid grid-cols-2 gap-2">
+                        <div class="bg-stone-800/50 p-3 rounded-lg">
+                            <div class="text-[10px] text-stone-500 uppercase">MRR</div>
+                            <div class="font-mono text-lg text-[#c1ff72]">$42.5k</div>
+                        </div>
+                        <div class="bg-stone-800/50 p-3 rounded-lg">
+                            <div class="text-[10px] text-stone-500 uppercase">LTV</div>
+                            <div class="font-mono text-lg text-[#c1ff72]">$12.40</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4D. No-Code Paywall Builder -->
+                <div class="lg:col-span-2 bg-[#f0fdf4] rounded-3xl p-8 lg:p-12 border border-[#dcfce7] shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row gap-8 items-center">
+                    <div class="flex-1 order-2 md:order-1 w-full relative h-[240px]">
+                        <div class="absolute inset-0 bg-white rounded-xl shadow-sm border border-stone-200 p-4 transform -rotate-1 hover:rotate-0 transition-transform duration-500">
+                            <!-- Builder UI Mockup -->
+                            <div class="flex justify-between border-b pb-2 mb-2">
+                                <span class="text-xs font-bold text-stone-400">Paywall Editor</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="w-16 bg-stone-50 rounded h-32"></div>
+                                <div class="flex-1 space-y-2">
+                                    <div class="h-24 bg-stone-50 border-2 border-dashed border-stone-200 rounded flex items-center justify-center text-xs text-stone-400">Drag components here</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 order-1 md:order-2">
+                        <div class="w-12 h-12 bg-white text-green-600 rounded-xl flex items-center justify-center mb-6 shadow-sm">
+                            <iconify-icon icon="lucide:layout-template" width="24"></iconify-icon>
+                        </div>
+                        <h3 class="text-2xl font-semibold tracking-tight mb-3 text-stone-900">Build paywalls without code</h3>
+                        <p class="text-stone-600">Design, test, and deploy in minutes. Instant updates without app release.</p>
+                    </div>
+                </div>
+
+                <!-- 4E. FunnelFox & 4F Revenue Sync -->
+                <div class="grid grid-rows-2 gap-6">
+                    <div class="bg-white rounded-3xl p-6 border border-stone-200 shadow-sm flex items-center gap-4">
+                        <div class="w-10 h-10 bg-orange-50 text-orange-600 rounded-lg flex items-center justify-center shrink-0">
+                            <iconify-icon icon="lucide:globe" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-stone-900 text-sm">Web-to-App Bridge</h4>
+                            <p class="text-xs text-stone-500">Convert web visitors into subscribers.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-3xl p-6 border border-stone-200 shadow-sm flex items-center gap-4">
+                        <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center shrink-0">
+                            <iconify-icon icon="lucide:webhook" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-stone-900 text-sm">Revenue Sync</h4>
+                            <p class="text-xs text-stone-500">22+ Integrations available.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. Integrations Marquee -->
+        <section class="py-12 bg-stone-50 overflow-hidden">
+            <div class="text-center mb-10 px-6">
+                <h2 class="text-2xl font-semibold tracking-tight mb-2">Connect with your favorite tools</h2>
+                <p class="text-stone-500 text-sm">Send subscription data to analytics, attribution, and marketing platforms</p>
+            </div>
+            <div class="flex w-max animate-marquee hover:[animation-play-state:paused]">
+                <div class="flex items-center gap-12 px-6 opacity-60">
+                    <span class="font-semibold text-lg">Amplitude</span>
+                    <span class="font-semibold text-lg">Mixpanel</span>
+                    <span class="font-semibold text-lg">AppsFlyer</span>
+                    <span class="font-semibold text-lg">Adjust</span>
+                    <span class="font-semibold text-lg">Branch</span>
+                    <span class="font-semibold text-lg">Segment</span>
+                    <span class="font-semibold text-lg">Firebase</span>
+                    <span class="font-semibold text-lg">Facebook</span>
+                    <span class="font-semibold text-lg">OneSignal</span>
+                    <span class="font-semibold text-lg">Slack</span>
+                </div>
+                <div class="flex items-center gap-12 px-6 opacity-60">
+                     <span class="font-semibold text-lg">Amplitude</span>
+                    <span class="font-semibold text-lg">Mixpanel</span>
+                    <span class="font-semibold text-lg">AppsFlyer</span>
+                    <span class="font-semibold text-lg">Adjust</span>
+                    <span class="font-semibold text-lg">Branch</span>
+                    <span class="font-semibold text-lg">Segment</span>
+                    <span class="font-semibold text-lg">Firebase</span>
+                    <span class="font-semibold text-lg">Facebook</span>
+                    <span class="font-semibold text-lg">OneSignal</span>
+                    <span class="font-semibold text-lg">Slack</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Role Cards -->
+        <section class="max-w-[1440px] mx-auto px-6 py-20">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl lg:text-4xl font-semibold tracking-tight">Help your team run the mobile subscription business. Faster and cheaper.</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Developers -->
+                <div class="bg-white p-8 rounded-2xl border border-stone-200">
+                    <iconify-icon icon="lucide:code-2" width="32" class="text-stone-900 mb-4"></iconify-icon>
+                    <h3 class="text-lg font-semibold mb-2">For Developers</h3>
+                    <p class="text-stone-500 text-sm leading-relaxed mb-4">Integrate subscriptions in minutes with our SDK. Handle receipt validation, manage entitlements, and sync purchase data automatically.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-stone-100 rounded text-xs font-medium text-stone-600">Native SDKs</span>
+                        <span class="px-2 py-1 bg-stone-100 rounded text-xs font-medium text-stone-600">Server API</span>
+                    </div>
+                </div>
+                <!-- Marketers -->
+                <div class="bg-white p-8 rounded-2xl border border-stone-200">
+                    <iconify-icon icon="lucide:line-chart" width="32" class="text-stone-900 mb-4"></iconify-icon>
+                    <h3 class="text-lg font-semibold mb-2">For Marketers</h3>
+                    <p class="text-stone-500 text-sm leading-relaxed mb-4">Design paywalls, run A/B tests, and optimize conversions without engineering help.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-stone-100 rounded text-xs font-medium text-stone-600">No-code builder</span>
+                        <span class="px-2 py-1 bg-stone-100 rounded text-xs font-medium text-stone-600">A/B testing</span>
+                    </div>
+                </div>
+                <!-- Owners -->
+                <div class="bg-white p-8 rounded-2xl border border-stone-200">
+                    <iconify-icon icon="lucide:layout-dashboard" width="32" class="text-stone-900 mb-4"></iconify-icon>
+                    <h3 class="text-lg font-semibold mb-2">For App Owners</h3>
+                    <p class="text-stone-500 text-sm leading-relaxed mb-4">Get real-time visibility into your subscription business with revenue analytics and cohort analysis.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-stone-100 rounded text-xs font-medium text-stone-600">Revenue analytics</span>
+                        <span class="px-2 py-1 bg-stone-100 rounded text-xs font-medium text-stone-600">Dashboards</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Stats -->
+        <section class="border-y border-stone-200 bg-white">
+            <div class="max-w-[1440px] mx-auto px-6 py-16 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center divide-x divide-stone-100">
+                <div class="space-y-2">
+                    <div class="text-4xl lg:text-5xl font-bold tracking-tight text-stone-900">$2B+</div>
+                    <div class="text-sm font-medium text-stone-500">Processed revenue</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-4xl lg:text-5xl font-bold tracking-tight text-stone-900">15k+</div>
+                    <div class="text-sm font-medium text-stone-500">Apps powered</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-4xl lg:text-5xl font-bold tracking-tight text-stone-900">99.99%</div>
+                    <div class="text-sm font-medium text-stone-500">Uptime SLA</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-4xl lg:text-5xl font-bold tracking-tight text-stone-900">200M+</div>
+                    <div class="text-sm font-medium text-stone-500">Monthly requests</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. SDK Code Snippet -->
+        <section class="max-w-[1440px] mx-auto px-6 py-24">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2 space-y-6">
+                    <h2 class="text-3xl lg:text-4xl font-semibold tracking-tight text-stone-900">One SDK for every platform</h2>
+                    <p class="text-stone-500 text-lg">Integrate Adapty in minutes with native SDKs. Robust, typed, and developer-friendly.</p>
+                    
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <!-- Platform Icons -->
+                        <iconify-icon icon="logos:apple" width="24" class="opacity-60 hover:opacity-100 transition-opacity"></iconify-icon>
+                        <iconify-icon icon="logos:android-icon" width="24" class="opacity-60 hover:opacity-100 transition-opacity"></iconify-icon>
+                        <iconify-icon icon="logos:flutter" width="24" class="opacity-60 hover:opacity-100 transition-opacity"></iconify-icon>
+                        <iconify-icon icon="logos:react" width="24" class="opacity-60 hover:opacity-100 transition-opacity"></iconify-icon>
+                        <iconify-icon icon="logos:unity" width="24" class="opacity-60 hover:opacity-100 transition-opacity"></iconify-icon>
+                        <iconify-icon icon="logos:stripe" width="24" class="opacity-60 hover:opacity-100 transition-opacity"></iconify-icon>
+                    </div>
+
+                    <a href="#" class="inline-flex items-center gap-2 text-stone-900 font-semibold border-b border-stone-900 pb-0.5 hover:opacity-70 transition-opacity">
+                        Read documentation <iconify-icon icon="lucide:arrow-right" width="16"></iconify-icon>
+                    </a>
+                </div>
+
+                <div class="lg:w-1/2 w-full">
+                    <div class="bg-[#0d1117] rounded-xl shadow-2xl overflow-hidden border border-stone-800">
+                        <!-- Tabs -->
+                        <div class="flex items-center border-b border-stone-800 px-4">
+                            <button class="px-4 py-3 text-sm font-medium text-white border-b-2 border-[#c1ff72]">JavaScript</button>
+                            <button class="px-4 py-3 text-sm font-medium text-stone-500 hover:text-stone-300">React Native</button>
+                            <button class="px-4 py-3 text-sm font-medium text-stone-500 hover:text-stone-300">Flutter</button>
+                            <button class="px-4 py-3 text-sm font-medium text-stone-500 hover:text-stone-300">Swift</button>
+                        </div>
+                        <!-- Code Block -->
+                        <div class="p-6 font-mono text-sm leading-relaxed overflow-x-auto">
+<pre><code><span class="token-keyword">import</span> { adapty } <span class="token-keyword">from</span> <span class="token-string">'adapty'</span>;
+
+<span class="token-comment">// Activate Adapty on app start</span>
+<span class="token-keyword">await</span> adapty.<span class="token-function">activate</span>(<span class="token-string">'YOUR_API_KEY'</span>);
+
+<span class="token-keyword">const</span> profile = <span class="token-keyword">await</span> adapty.<span class="token-function">getProfile</span>();
+<span class="token-keyword">const</span> isPremium = profile.accessLevels[<span class="token-string">'premium'</span>]?.isActive;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Testimonials & 10. G2 -->
+        <section class="bg-stone-100 py-20 border-y border-stone-200">
+            <div class="max-w-[1440px] mx-auto px-6">
+                <!-- G2 Badges -->
+                <div class="mb-16 text-center">
+                    <h4 class="text-sm font-semibold uppercase tracking-widest text-stone-500 mb-6">Top-rated on G2 | Winter 2025</h4>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <div class="h-16 w-12 bg-white border border-stone-200 shadow-sm rounded flex items-center justify-center"><iconify-icon icon="simple-icons:g2" class="text-red-500 text-xl"></iconify-icon></div>
+                        <div class="h-16 w-12 bg-white border border-stone-200 shadow-sm rounded flex items-center justify-center"><iconify-icon icon="lucide:award" class="text-stone-400 text-xl"></iconify-icon></div>
+                        <div class="h-16 w-12 bg-white border border-stone-200 shadow-sm rounded flex items-center justify-center"><iconify-icon icon="lucide:star" class="text-yellow-400 text-xl"></iconify-icon></div>
+                        <div class="h-16 w-12 bg-white border border-stone-200 shadow-sm rounded flex items-center justify-center"><iconify-icon icon="lucide:heart" class="text-red-400 text-xl"></iconify-icon></div>
+                    </div>
+                </div>
+
+                <!-- Testimonials Carousel (Simple Flex) -->
+                <div class="flex gap-6 overflow-x-auto pb-8 no-scrollbar snap-x">
+                    <!-- T1 -->
+                    <div class="min-w-[300px] md:min-w-[400px] bg-white p-8 rounded-2xl border border-stone-200 shadow-sm snap-center">
+                        <div class="mb-6 text-[#c1ff72]"><iconify-icon icon="lucide:quote" width="24"></iconify-icon></div>
+                        <p class="text-lg font-medium text-stone-900 mb-6">"Adapty helped us increase our trial-to-paid conversion by 34%."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-stone-200 rounded-full"></div>
+                            <div>
+                                <div class="text-sm font-semibold">Alex Rivera</div>
+                                <div class="text-xs text-stone-500">Product Manager, FitApp</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- T2 -->
+                    <div class="min-w-[300px] md:min-w-[400px] bg-white p-8 rounded-2xl border border-stone-200 shadow-sm snap-center">
+                        <div class="mb-6 text-[#c1ff72]"><iconify-icon icon="lucide:quote" width="24"></iconify-icon></div>
+                        <p class="text-lg font-medium text-stone-900 mb-6">"The A/B testing features are incredibly robust. We doubled revenue in 3 months."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-stone-200 rounded-full"></div>
+                            <div>
+                                <div class="text-sm font-semibold">Sarah Chen</div>
+                                <div class="text-xs text-stone-500">Founder, PhotoEdit</div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- T3 -->
+                     <div class="min-w-[300px] md:min-w-[400px] bg-white p-8 rounded-2xl border border-stone-200 shadow-sm snap-center">
+                        <div class="mb-6 text-[#c1ff72]"><iconify-icon icon="lucide:quote" width="24"></iconify-icon></div>
+                        <p class="text-lg font-medium text-stone-900 mb-6">"Implementation took less than an afternoon. Support is world class."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-stone-200 rounded-full"></div>
+                            <div>
+                                <div class="text-sm font-semibold">Mike Johnson</div>
+                                <div class="text-xs text-stone-500">CTO, TravelPlan</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11. Case Studies -->
+        <section class="max-w-[1440px] mx-auto px-6 py-24">
+            <h2 class="text-3xl font-semibold tracking-tight mb-12">Trusted by thousands of scaling apps</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Case 1 -->
+                <div class="group cursor-pointer">
+                    <div class="aspect-[4/3] bg-stone-200 rounded-xl mb-4 overflow-hidden">
+                        <div class="w-full h-full bg-stone-300 group-hover:scale-105 transition-transform duration-500"></div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-xs font-semibold bg-[#c1ff72] px-2 py-0.5 rounded text-stone-900">+50% Revenue</span>
+                        <span class="text-xs text-stone-500">Productivity</span>
+                    </div>
+                    <h3 class="font-semibold text-lg leading-tight group-hover:underline">How pricing tests unlocked potential</h3>
+                </div>
+                 <!-- Case 2 -->
+                 <div class="group cursor-pointer">
+                    <div class="aspect-[4/3] bg-stone-200 rounded-xl mb-4 overflow-hidden">
+                        <div class="w-full h-full bg-stone-300 group-hover:scale-105 transition-transform duration-500"></div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-xs font-semibold bg-[#c1ff72] px-2 py-0.5 rounded text-stone-900">+30% Revenue</span>
+                        <span class="text-xs text-stone-500">Photo &amp; Video</span>
+                    </div>
+                    <h3 class="font-semibold text-lg leading-tight group-hover:underline">Boost revenue with experiments</h3>
+                </div>
+                 <!-- Case 3 -->
+                 <div class="group cursor-pointer">
+                    <div class="aspect-[4/3] bg-stone-200 rounded-xl mb-4 overflow-hidden">
+                        <div class="w-full h-full bg-stone-300 group-hover:scale-105 transition-transform duration-500"></div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-xs font-semibold bg-[#c1ff72] px-2 py-0.5 rounded text-stone-900">5x Growth</span>
+                        <span class="text-xs text-stone-500">Education</span>
+                    </div>
+                    <h3 class="font-semibold text-lg leading-tight group-hover:underline">Scaling with Paywall Builder</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- 12. Enterprise Section -->
+        <section class="max-w-[1440px] mx-auto px-6 mb-24">
+            <div class="bg-white border border-stone-200 rounded-3xl p-8 lg:p-16 flex flex-col md:flex-row items-center justify-between gap-12 shadow-sm">
+                <div class="max-w-xl">
+                    <h2 class="text-3xl font-semibold tracking-tight mb-4">Enterprise-ready infrastructure</h2>
+                    <p class="text-stone-500 mb-8">Built for scale, security, and compliance. We support the world's largest publishers.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-2 text-sm font-medium"><iconify-icon icon="lucide:shield" class="text-stone-400"></iconify-icon> SOC 2 Type II</div>
+                        <div class="flex items-center gap-2 text-sm font-medium"><iconify-icon icon="lucide:lock" class="text-stone-400"></iconify-icon> GDPR Compliant</div>
+                        <div class="flex items-center gap-2 text-sm font-medium"><iconify-icon icon="lucide:server" class="text-stone-400"></iconify-icon> 99.99% Uptime</div>
+                        <div class="flex items-center gap-2 text-sm font-medium"><iconify-icon icon="lucide:headphones" class="text-stone-400"></iconify-icon> Dedicated Support</div>
+                    </div>
+                </div>
+                <button class="px-8 py-4 bg-white border border-stone-300 rounded-lg font-semibold text-stone-900 hover:bg-stone-50 transition-colors">
+                    Contact Sales
+                </button>
+            </div>
+        </section>
+
+        <!-- 13. Final CTA -->
+        <section class="max-w-[1440px] mx-auto px-6 mb-12">
+            <div class="bg-[#0a0a0a] rounded-[32px] p-12 lg:p-24 text-center text-white relative overflow-hidden">
+                <!-- Background Glow -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#c1ff72] opacity-10 blur-[100px] rounded-full pointer-events-none"></div>
+                
+                <div class="relative z-10 max-w-2xl mx-auto space-y-8">
+                    <h2 class="text-4xl lg:text-5xl font-semibold tracking-tight">Get started today or schedule a demo for your personal onboarding</h2>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+                        <input type="email" placeholder="Enter your work email" class="px-5 py-3 rounded-lg border border-stone-700 bg-stone-900 text-white placeholder-stone-500 focus:outline-none focus:ring-1 focus:ring-[#c1ff72] min-w-[280px]">
+                        <button class="px-6 py-3 rounded-lg bg-[#c1ff72] text-black font-semibold hover:bg-[#b0f060] transition-colors">
+                            Start for free
+                        </button>
+                    </div>
+                    
+                    <a href="#" class="inline-block text-stone-400 hover:text-white transition-colors text-sm">
+                        Or schedule a demo →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 14. Footer -->
+        <footer class="max-w-[1440px] mx-auto px-6 pb-12 pt-12 border-t border-stone-200">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-16">
+                <!-- Product -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-semibold uppercase tracking-wider text-stone-400">Product</h4>
+                    <ul class="space-y-3 text-sm text-stone-500">
+                        <li><a href="#" class="hover:text-stone-900">Subscriptions SDK</a></li>
+                        <li><a href="#" class="hover:text-stone-900">Paywall Builder</a></li>
+                        
+                        
+                        
+                        
+                    </ul>
+                </div>
+                <!-- Solutions -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-semibold uppercase tracking-wider text-stone-400">Solutions</h4>
+                    <ul class="space-y-3 text-sm text-stone-500">
+                        <li><a href="#" class="hover:text-stone-900">For Developers</a></li>
+                        <li><a href="#" class="hover:text-stone-900">For Marketers</a></li>
+                        
+                        
+                        
+                    </ul>
+                </div>
+                <!-- Resources -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-semibold uppercase tracking-wider text-stone-400">Resources</h4>
+                    <ul class="space-y-3 text-sm text-stone-500">
+                        <li><a href="#" class="hover:text-stone-900">Blog</a></li>
+                        <li><a href="#" class="hover:text-stone-900">Documentation</a></li>
+                        
+                        
+                        
+                    </ul>
+                </div>
+                 <!-- Company -->
+                 <div class="space-y-4">
+                    <h4 class="text-xs font-semibold uppercase tracking-wider text-stone-400">Company</h4>
+                    <ul class="space-y-3 text-sm text-stone-500">
+                        <li><a href="#" class="hover:text-stone-900">About Us</a></li>
+                        <li><a href="#" class="hover:text-stone-900">Careers</a></li>
+                        
+                        
+                        
+                    </ul>
+                </div>
+                
+                <!-- Social -->
+                 <div class="col-span-2 lg:col-span-2 lg:text-right">
+                    <div class="flex lg:justify-end gap-4 mb-4">
+                        <a href="#" class="text-stone-400 hover:text-stone-900"><iconify-icon icon="simple-icons:github" width="20"></iconify-icon></a>
+                        <a href="#" class="text-stone-400 hover:text-stone-900"><iconify-icon icon="simple-icons:linkedin" width="20"></iconify-icon></a>
+                        <a href="#" class="text-stone-400 hover:text-stone-900"><iconify-icon icon="simple-icons:x" width="20"></iconify-icon></a>
+                        <a href="#" class="text-stone-400 hover:text-stone-900"><iconify-icon icon="simple-icons:youtube" width="20"></iconify-icon></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-stone-400 pt-8 border-t border-stone-100">
+                <p>© 2026 Adapty. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-stone-900">Privacy Policy</a>
+                    <a href="#" class="hover:text-stone-900">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+</body></html>
