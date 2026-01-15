@@ -22,9 +22,35 @@ function QuoteIcon({ className }: { className?: string }) {
   )
 }
 
-export function Testimonials() {
-  const { featuredTestimonial, testimonials } = content
+// All testimonials as a flat array for the 3-column grid
+const allTestimonials = [
+  {
+    quote:
+      'The no-code paywall builder saved us months of development time. We can now iterate on our monetization strategy in real-time without waiting for app releases.',
+    author: 'Chris Bick',
+    role: 'CEO',
+    company: 'Shmoody',
+    avatar: '/images/testimonials/chris-bick.webp',
+  },
+  {
+    quote:
+      'Adapty helped us increase our subscription revenue by 40% in just 3 months. The A/B testing tools are incredibly powerful.',
+    author: 'Cem Ortabas',
+    role: 'CEO',
+    company: 'Fotorama',
+    avatar: '/images/testimonials/cem-ortabas.webp',
+  },
+  {
+    quote:
+      'Switching to Adapty was the best decision we made. Their analytics and cohort tools are game-changers.',
+    author: 'Roi Mulia',
+    role: 'Growth Lead',
+    company: 'Appi Trips',
+    avatar: '/images/testimonials/roi-mulia.webp',
+  },
+]
 
+export function Testimonials() {
   return (
     <Section className="bg-olive-50">
       <Container>
@@ -35,94 +61,47 @@ export function Testimonials() {
           </Heading>
         </FadeIn>
 
-        {/* Featured Large Testimonial - Two Column with Photo */}
-        <FadeIn delay={0.1}>
-          <figure className="grid grid-cols-1 gap-2 rounded-2xl bg-olive-950/[0.025] p-2 lg:grid-cols-2 overflow-hidden">
-            {/* Quote Side */}
-            <div className="flex flex-col items-start justify-between gap-10 p-8 sm:p-12 text-olive-950 order-2 lg:order-1">
-              <div className="relative">
-                <QuoteIcon className="absolute -top-2 -left-2 opacity-20 w-12 h-12" />
-                <blockquote className="relative text-xl sm:text-2xl/9 text-pretty font-display tracking-tight">
-                  <span>&ldquo;</span>
-                  {featuredTestimonial.quote}
-                  <span>&rdquo;</span>
-                </blockquote>
-              </div>
-
-              <figcaption className="flex items-center gap-4">
-                <motion.div
-                  className="relative size-14 rounded-full overflow-hidden ring-2 ring-olive-200"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: 'spring', stiffness: 400 }}
-                >
-                  <Image
-                    src={featuredTestimonial.avatar}
-                    alt={featuredTestimonial.author}
-                    fill
-                    className="object-cover"
-                  />
-                </motion.div>
-                <div>
-                  <p className="font-semibold text-olive-950">{featuredTestimonial.author}</p>
-                  <p className="text-sm text-olive-600">
-                    {featuredTestimonial.role} at {featuredTestimonial.company}
-                  </p>
-                </div>
-              </figcaption>
-            </div>
-
-            {/* Photo Side */}
-            <motion.div
-              className="relative aspect-[4/3] lg:aspect-auto overflow-hidden rounded-xl order-1 lg:order-2"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
-              <Image
-                src={featuredTestimonial.photo}
-                alt={`${featuredTestimonial.author} at ${featuredTestimonial.company}`}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-olive-950/20 to-transparent" />
-            </motion.div>
-          </figure>
-        </FadeIn>
-
-        {/* Secondary Testimonials */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          {testimonials.map((testimonial, index) => (
-            <FadeIn key={testimonial.author} delay={0.2 + index * 0.1}>
-              <motion.div
+        {/* 3-Column Testimonial Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {allTestimonials.map((testimonial, index) => (
+            <FadeIn key={testimonial.author} delay={0.1 + index * 0.1}>
+              <motion.figure
                 className={cn(
-                  'group relative rounded-xl bg-white p-8',
+                  'group relative flex flex-col h-full rounded-2xl bg-white p-8',
                   'border border-olive-200/50',
-                  'hover:shadow-lg hover:shadow-olive-900/5',
+                  'hover:shadow-xl hover:shadow-olive-900/5',
                   'transition-shadow duration-300'
                 )}
                 whileHover={{ y: -4 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
-                <QuoteIcon className="mb-4 opacity-30" />
-                <blockquote className="text-lg/7 text-olive-700 mb-6">
+                <QuoteIcon className="mb-6 opacity-30" />
+
+                <blockquote className="flex-1 text-lg/7 text-olive-700 mb-8">
                   &ldquo;{testimonial.quote}&rdquo;
                 </blockquote>
-                <figcaption className="flex items-center gap-3">
-                  <div className="relative size-10 rounded-full overflow-hidden">
+
+                <figcaption className="flex items-center gap-4 pt-6 border-t border-olive-100">
+                  <motion.div
+                    className="relative size-12 rounded-full overflow-hidden ring-2 ring-olive-100"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 400 }}
+                  >
                     <Image
                       src={testimonial.avatar}
                       alt={testimonial.author}
                       fill
                       className="object-cover"
                     />
-                  </div>
+                  </motion.div>
                   <div>
-                    <p className="font-semibold text-sm text-olive-950">{testimonial.author}</p>
-                    <p className="text-xs text-olive-500">
+                    <p className="font-semibold text-olive-950">{testimonial.author}</p>
+                    <p className="text-sm text-olive-500">
                       {testimonial.role}, {testimonial.company}
                     </p>
                   </div>
                 </figcaption>
-              </motion.div>
+              </motion.figure>
             </FadeIn>
           ))}
         </div>
