@@ -7,6 +7,7 @@ import {
   GRID_VARIANTS,
   HEADER_VARIANTS,
   GRID_LINES_VARIANTS,
+  DASHED_GRID_VARIANTS,
   HERO_VARIANTS,
   TRUSTED_BY_VARIANTS,
   CORE_FEATURES_VARIANTS,
@@ -78,6 +79,14 @@ const BordersIcon = () => (
     <rect x="3" y="3" width="18" height="18" rx="2" />
     <line x1="3" y1="12" x2="21" y2="12" />
     <line x1="12" y1="3" x2="12" y2="21" />
+  </svg>
+)
+
+const DashedIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="3 3">
+    <line x1="6" y1="3" x2="6" y2="21" />
+    <line x1="12" y1="3" x2="12" y2="21" />
+    <line x1="18" y1="3" x2="18" y2="21" />
   </svg>
 )
 
@@ -169,6 +178,8 @@ export function DebugMenu() {
     setHeaderVariant,
     gridLinesStyle,
     setGridLinesStyle,
+    dashedGridStyle,
+    setDashedGridStyle,
     heroVariant,
     setHeroVariant,
     trustedByVariant,
@@ -233,6 +244,14 @@ export function DebugMenu() {
                 variants={GRID_LINES_VARIANTS}
                 currentValue={gridLinesStyle}
                 onChange={setGridLinesStyle}
+              />
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Dashed Overlay" icon={<DashedIcon />} defaultOpen>
+              <VariantSelector
+                variants={DASHED_GRID_VARIANTS}
+                currentValue={dashedGridStyle}
+                onChange={setDashedGridStyle}
               />
             </CollapsibleSection>
 

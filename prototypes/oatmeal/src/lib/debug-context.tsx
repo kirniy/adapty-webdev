@@ -11,6 +11,9 @@ export type HeaderVariant = 'oatmeal-simple' | 'aura-megamenu'
 // Grid lines style (for GridSection wrapper)
 export type GridLinesStyle = 'off' | 'solid' | 'dashed'
 
+// Dashed grid overlay style (achromatic SVG lines)
+export type DashedGridStyle = 'off' | 'subtle' | 'visible'
+
 // Section variant types - each section can have multiple design variants
 export type HeroVariant = 'centered-demo' | 'split-left' | 'wallpaper-bg' | 'minimal-text'
 export type TrustedByVariant = 'marquee' | 'static-grid' | 'static-minimal'
@@ -46,6 +49,13 @@ export const GRID_LINES_VARIANTS: VariantOption<GridLinesStyle>[] = [
   { value: 'off', label: 'Off', description: 'No section border lines' },
   { value: 'solid', label: 'Solid Lines', description: 'Solid vertical and horizontal section borders' },
   { value: 'dashed', label: 'Dashed Lines', description: 'Dashed vertical and horizontal section borders' },
+]
+
+// Dashed grid overlay variants (achromatic SVG decorative lines)
+export const DASHED_GRID_VARIANTS: VariantOption<DashedGridStyle>[] = [
+  { value: 'off', label: 'Off', description: 'No decorative SVG grid lines' },
+  { value: 'subtle', label: 'Subtle', description: 'Faint decorative dashed grid (lower opacity)' },
+  { value: 'visible', label: 'Visible', description: 'Visible decorative dashed grid overlay' },
 ]
 
 // Section variant options
@@ -100,6 +110,7 @@ interface DebugState {
   gridVariant: GridVariant
   headerVariant: HeaderVariant
   gridLinesStyle: GridLinesStyle
+  dashedGridStyle: DashedGridStyle
   // Section variants
   heroVariant: HeroVariant
   trustedByVariant: TrustedByVariant
@@ -116,9 +127,12 @@ interface DebugContextValue extends DebugState {
   setGridVariant: (variant: GridVariant) => void
   setHeaderVariant: (variant: HeaderVariant) => void
   setGridLinesStyle: (style: GridLinesStyle) => void
+  setDashedGridStyle: (style: DashedGridStyle) => void
   // Computed helpers for GridSection
   showGridLines: boolean
   gridLinesDashed: boolean
+  // Computed helpers for DashedGridOverlay
+  showDashedGrid: boolean
   // Section variant setters
   setHeroVariant: (variant: HeroVariant) => void
   setTrustedByVariant: (variant: TrustedByVariant) => void
@@ -153,6 +167,7 @@ const defaultState: DebugState = {
   gridVariant: 'slow-drift', // Default to slow-drift (not cheesy cursor-tracking)
   headerVariant: 'oatmeal-simple', // Start with current simple navbar
   gridLinesStyle: 'off', // Start with no section border lines
+  dashedGridStyle: 'off', // Start with no decorative SVG grid
   // Section defaults - start with current implementations
   heroVariant: 'centered-demo',
   trustedByVariant: 'marquee',
@@ -186,6 +201,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
           gridVariant: parsed.gridVariant ?? prev.gridVariant,
           headerVariant: parsed.headerVariant ?? prev.headerVariant,
           gridLinesStyle: parsed.gridLinesStyle ?? prev.gridLinesStyle,
+          dashedGridStyle: parsed.dashedGridStyle ?? prev.dashedGridStyle,
           // Section variants
           heroVariant: parsed.heroVariant ?? prev.heroVariant,
           trustedByVariant: parsed.trustedByVariant ?? prev.trustedByVariant,
@@ -227,6 +243,11 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   // Set grid lines style
   const setGridLinesStyle = useCallback((style: GridLinesStyle) => {
     setState(prev => ({ ...prev, gridLinesStyle: style }))
+  }, [])
+
+  // Set dashed grid style
+  const setDashedGridStyle = useCallback((style: DashedGridStyle) => {
+    setState(prev => ({ ...prev, dashedGridStyle: style }))
   }, [])
 
   // Section variant setters
@@ -305,13 +326,18 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   const showGridLines = state.gridLinesStyle !== 'off'
   const gridLinesDashed = state.gridLinesStyle === 'dashed'
 
+  // Computed helpers for DashedGridOverlay
+  const showDashedGrid = state.dashedGridStyle !== 'off'
+
   const value: DebugContextValue = {
     ...state,
     setGridVariant,
     setHeaderVariant,
     setGridLinesStyle,
+    setDashedGridStyle,
     showGridLines,
     gridLinesDashed,
+    showDashedGrid,
     setHeroVariant,
     setTrustedByVariant,
     setCoreFeaturesVariant,

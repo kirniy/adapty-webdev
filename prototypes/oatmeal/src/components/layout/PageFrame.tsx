@@ -5,6 +5,7 @@ import type { ReactNode } from 'react'
 import { DebugProvider } from '@/lib/debug-context'
 import { DebugMenu } from '@/components/debug/DebugMenu'
 import { GridLines } from '@/components/layout/GridLines'
+import { DashedGridOverlay } from '@/components/layout/DashedGridOverlay'
 
 // Dynamic import - AnimatedGrid is a heavy animation component
 // Loads after hydration, doesn't block initial render
@@ -25,6 +26,9 @@ export function PageFrame({ children }: PageFrameProps) {
 
       {/* Achromatic-inspired grid lines - at root level to avoid stacking context issues */}
       <GridLines />
+
+      {/* Achromatic-inspired decorative SVG dashed grid overlay */}
+      <DashedGridOverlay />
 
       {/* Content */}
       <div className="relative z-10">{children}</div>
