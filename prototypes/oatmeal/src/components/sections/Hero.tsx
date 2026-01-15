@@ -2,7 +2,6 @@
 
 import { ButtonLink } from '@/components/elements/Button'
 import { Container } from '@/components/elements/Container'
-import { AnimatedGrid } from '@/components/effects/AnimatedGrid'
 import { FadeIn } from '@/components/effects/FadeIn'
 import { MagneticButton } from '@/components/effects/MagneticButton'
 import { ScrambleText } from '@/components/effects/ScrambleText'
@@ -16,9 +15,6 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden">
-      {/* Animated Grid Background */}
-      <AnimatedGrid className="absolute inset-0 pointer-events-none" />
-
       {/* Hero Content - Centered */}
       <Container className="relative z-10 pt-24 pb-16 sm:pt-32 sm:pb-20">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">

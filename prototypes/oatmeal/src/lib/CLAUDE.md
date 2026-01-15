@@ -7,6 +7,6 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #1442 | 4:09 AM | ✅ | PageFrame component imported into root layout | ~313 |
-| #1435 | 4:08 AM | 🟣 | Adapty brand favicons added to Oatmeal project | ~378 |
+| #1427 | 4:06 AM | 🔵 | Content data structure uses explicit image paths for testimonials and roles | ~423 |
+| #1426 | " | 🔵 | Content data structure reveals asset path configuration | ~469 |
 </claude-mem-context>

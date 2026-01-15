@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Instrument_Serif } from 'next/font/google'
+import { PageFrame } from '@/components/layout/PageFrame'
 import './globals.css'
 
 const inter = Inter({
@@ -63,7 +64,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${instrumentSerif.variable}`}>
       <body className="min-h-screen bg-olive-100 font-sans antialiased">
-        {children}
+        <PageFrame>{children}</PageFrame>
       </body>
     </html>
   )
