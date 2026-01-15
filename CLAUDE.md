@@ -1,18 +1,18 @@
 ---
 project: adapty-redesign
-version: 3.2.0
-last_updated: 2026-01-13T22:30:00Z
+version: 3.3.0
+last_updated: 2026-01-15T04:30:00Z
 owner: kirill-kholodenko
 stakeholder: sergey-muratov
-phase: decision-point
-status: paused-for-review
-tags: [redesign, nextjs, tailwind, design-system, shadcn-ui, tailark]
+phase: oatmeal-prototype
+status: active
+tags: [redesign, nextjs, tailwind, design-system, oatmeal, vanilla-tailwind]
 ---
 
 # ADAPTY Website Redesign - Navigation & Context
 
 > **IMPORTANT**: This is a living navigation document. Update after every significant change.
-> Last significant update: 2026-01-13 - Phase B assessment complete. shadcn/ui underperformed vs Phase A.
+> Last significant update: 2026-01-15 - Oatmeal prototype built and deployed with react-best-practices optimizations.
 
 ---
 
@@ -30,30 +30,33 @@ tags: [redesign, nextjs, tailwind, design-system, shadcn-ui, tailark]
 
 ## SESSION START INSTRUCTIONS (READ FIRST)
 
-### Current Status: DECISION POINT
+### Current Status: OATMEAL PROTOTYPE ACTIVE
 
-**Phase B (shadcn/ui) has been evaluated and found lacking.**
+**New approach: Using purchased Oatmeal template as foundation for vanilla Tailwind build.**
 
-Results:
-- Phase A (vanilla Tailwind): Quality 7/10, unique, full control
-- Phase B (shadcn/ui): Quality 4/10, generic, over-engineered
+Results so far:
+- Oatmeal (vanilla Tailwind): Quality 8/10, sophisticated olive palette, editorial typography
+- Phase A (vanilla Tailwind): Quality 7/10, good base
+- Phase B (shadcn/ui): Quality 4/10, generic, over-engineered (abandoned)
 
 ### What Exists Now
 
 | Prototype | Location | Status | Quality |
 |-----------|----------|--------|---------|
+| **Oatmeal** | `/prototypes/oatmeal/` | DEPLOYED | Best so far |
+| **AuraBuild** | `/prototypes/aura-build/` | OPTIMIZED | Performance tuned |
 | **Phase A** | `/prototypes/adapty-prototype/` | DEPLOYED | Good base |
 | **DS1-Linear (shadcn)** | `/prototypes/phase-b-shadcn/proto-ds1-linear/` | 14/14 sections | Weak |
-| **DS2-Attio (shadcn)** | `/prototypes/phase-b-shadcn/proto-ds2-attio/` | 10/14 sections | Weak |
-| **DS3-Polar (shadcn)** | `/prototypes/phase-b-shadcn/proto-ds3-polar/` | Scaffolded only | - |
 
-### Awaiting Decision
+### Current Direction
 
-Three options proposed to Sergey (see `/messages/03-phase-b-assessment/message.md`):
+**Using Oatmeal template** - purchased premium template providing:
+- Olive color palette (warm, sophisticated greens/grays)
+- Instrument Serif + Inter typography (editorial elegance)
+- Motion React animations from aura-build
+- All 14 homepage sections implemented
 
-**Option A (Recommended):** Enhance Phase A prototype with polish and animations
-**Option B:** Try Tailark marketing blocks (shadcn extension for landing pages)
-**Option C:** Hybrid - vanilla Tailwind for marketing, shadcn for functional components
+**Deployed URL**: `adapty-oatmeal-jan14-2026.vercel.app`
 
 ### Required Skills (ALWAYS LOAD)
 
@@ -101,68 +104,51 @@ This skill contains priority-ordered optimization rules. Apply patterns from hig
 ## Current State (UPDATE THIS SECTION REGULARLY)
 
 ```yaml
-current_phase: "Decision Point - Awaiting Sergey's direction"
-next_phase: "TBD based on decision (Option A, B, or C)"
-blocking_tasks:
-  - Awaiting stakeholder decision on direction
+current_phase: "Active Development - Oatmeal + AuraBuild prototypes"
+next_phase: "Polish and client review"
+blocking_tasks: []
+
+# Active Prototypes
+active_prototypes:
+  oatmeal:
+    status: "DEPLOYED"
+    location: "/prototypes/oatmeal/"
+    url: "adapty-oatmeal-jan14-2026.vercel.app"
+    quality: "8/10 - Sophisticated olive palette, editorial typography"
+    sections: "14/14"
+    design_dna: "Instrument Serif + Inter, warm greens/grays"
+
+  aura_build:
+    status: "OPTIMIZED"
+    location: "/prototypes/aura-build/"
+    quality: "7/10 - Blueprint grid, premium micro-interactions"
+    sections: "14+"
+    optimizations:
+      - "optimizePackageImports for motion/react + @phosphor-icons"
+      - "Dynamic import for TheInfiniteGrid (AnimatedBackground wrapper)"
+      - "Visual polish: grain, shine, elevate, glow effects"
+    design_dna: "Light theme, editorial typography, lime accent"
 
 # Completed Work
 completed_phases:
   phase_a:
     status: "COMPLETE - DEPLOYED"
     url: "https://adapty-prototype.vercel.app"
-    quality: "7/10 - Good base, room for polish"
-    sections: "14/14"
-    verdict: "WINNER - vanilla Tailwind provides more control"
+    quality: "7/10 - Good base"
+    verdict: "Vanilla Tailwind provides more control than shadcn/ui"
 
-  phase_b_part_1_assessment:
+  phase_b_assessment:
     status: "EVALUATED - NOT RECOMMENDED"
     quality: "4/10 - Generic, over-engineered"
     conclusion: "shadcn/ui adds friction for marketing sites"
-    prototypes_built:
-      - "proto-ds1-linear: 14/14 sections (weak result)"
-      - "proto-ds2-attio: 10/14 sections (weak result)"
-      - "proto-ds3-polar: scaffolded only (not built)"
-      - "proto-ds4-vercel: not started"
-      - "proto-ds5-clerk: not started"
 
-# Proposed Options (see /messages/03-phase-b-assessment/message.md)
-options:
-  option_a:
-    name: "Enhance Phase A"
-    description: "Polish existing prototype with animations"
-    recommended: true
-  option_b:
-    name: "Try Tailark"
-    description: "Marketing blocks for landing pages"
-    recommended: false
-  option_c:
-    name: "Hybrid approach"
-    description: "Vanilla for marketing, shadcn for functional"
-    recommended: false
-
-# Key Learning
-key_insight: >
-  shadcn/ui is optimized for dashboards and apps, not landing pages.
-  Marketing sites need pixel-perfect control that component libraries
-  make harder, not easier. Phase A's vanilla Tailwind approach
-  produced better results with similar effort.
-
-# Phase A Reference (the winner)
-phase_a_reference:
-  location: "/prototypes/adapty-prototype"
-  deployed: true
-  url: "adapty-prototype.vercel.app"
-  theme_switcher: "Top-right corner, persists via localStorage + URL ?ds=ds1-5"
-  potential: "High - needs polish, animations, and focus on one DS"
-
-# Design System DNA (for reference)
-ds_token_summary:
-  DS1_Linear: "8px buttons, 30px cards, #08090a bg, tight letter-spacing"
-  DS2_Attio: "10px buttons, 12px cards, #ffffff bg, ghost buttons"
-  DS3_Polar: "10px buttons, 10px cards, #171719 bg, ALL 150ms anims"
-  DS4_Vercel: "6px buttons, 8px cards, #000000 bg, compound shadows"
-  DS5_Clerk: "24px pill buttons, 12px cards, #F7F7F8 bg, purple accent"
+# Key Learnings
+key_insights:
+  - "shadcn/ui is optimized for dashboards, not landing pages"
+  - "Marketing sites need pixel-perfect control"
+  - "vanilla Tailwind approach produces better results"
+  - "optimizePackageImports critical for barrel import performance"
+  - "Server Components can't use ssr:false - use Client wrapper pattern"
 ```
 
 ---
