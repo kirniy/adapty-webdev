@@ -10,11 +10,40 @@ import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { Button } from "@/components/ui/Button";
 import { ScrambleText } from "@/components/ui/ScrambleText";
 import { FadeIn, TextReveal } from "@/components/ui/MotionPrimitives";
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { useRef, useEffect } from "react";
 
 export function Hero() {
+  // Subtle mouse parallax for background glow
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth spring physics for natural movement
+  const springX = useSpring(mouseX, { stiffness: 50, damping: 30 });
+  const springY = useSpring(mouseY, { stiffness: 50, damping: 30 });
+
+  // Transform mouse position to subtle offset (max 30px movement)
+  const glowX = useTransform(springX, [-1, 1], [-30, 30]);
+  const glowY = useTransform(springY, [-1, 1], [-30, 30]);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      // Normalize to -1 to 1 range
+      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+      mouseX.set(x);
+      mouseY.set(y);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
   return (
-    <div className="relative flex flex-col min-h-[85vh] overflow-hidden">
+    <div ref={containerRef} className="relative flex flex-col min-h-[85vh] overflow-hidden">
       
       {/* Main Content Area - Z-index 10 to sit above global grid */}
       <main className="flex-1 w-full relative z-10 flex flex-col justify-center">
@@ -89,9 +118,15 @@ export function Hero() {
           {/* Right Column: Visuals */}
           <div className="lg:col-span-5 flex flex-col justify-center relative h-full mt-12 lg:mt-0 min-h-[400px]">
 
-            {/* Background Glow */}
-            <motion.div 
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-brand-lime opacity-20 blur-[100px] rounded-full pointer-events-none" 
+            {/* Background Glow with Mouse Parallax */}
+            <motion.div
+                className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-brand-lime opacity-20 blur-[100px] rounded-full pointer-events-none"
+                style={{
+                  x: glowX,
+                  y: glowY,
+                  translateX: "-50%",
+                  translateY: "-50%",
+                }}
                 animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
                 transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
             />

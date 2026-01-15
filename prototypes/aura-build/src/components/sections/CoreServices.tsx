@@ -104,8 +104,8 @@ export function CoreServices() {
                 No-code visual builder with 50+ templates. Design, customize, and ship paywalls without developers.
                 </p>
                 <Link href="#" className="inline-flex items-center text-white font-medium text-sm group/link">
-                <span className="underline underline-offset-4">Explore Paywall Builder</span>
-                <ArrowRight size={16} className="ml-2 group-hover/link:translate-x-1 transition-transform" />
+                <span className="link-underline">Explore Paywall Builder</span>
+                <ArrowRight size={16} className="ml-2 group-hover/link:translate-x-1 transition-transform duration-200" />
                 </Link>
             </div>
 
@@ -174,8 +174,8 @@ export function CoreServices() {
                 </p>
                 </div>
                 <Link href="#" className="inline-flex items-center text-stone-900 font-bold text-sm group/link">
-                <span className="underline underline-offset-4">Start Experimenting</span>
-                <ArrowRight size={16} className="ml-2 group-hover/link:translate-x-1 transition-transform" />
+                <span className="link-underline">Start Experimenting</span>
+                <ArrowRight size={16} className="ml-2 group-hover/link:translate-x-1 transition-transform duration-200" />
                 </Link>
             </div>
 
@@ -268,8 +268,9 @@ export function CoreServices() {
                 </div>
                 <h3 className="lg:text-2xl text-xl font-bold text-stone-900 font-sans mb-2">Real-time Analytics</h3>
                 <p className="text-stone-700 text-sm mb-4 leading-relaxed">Track MRR, LTV, churn, and cohorts. Sync data to your favorite analytics tools.</p>
-                <Link href="#" className="inline-flex items-center text-stone-900 font-bold text-xs uppercase tracking-wide hover:opacity-70">
-                View Dashboard <CaretRight size={14} className="ml-1" />
+                <Link href="#" className="inline-flex items-center text-stone-900 font-bold text-xs uppercase tracking-wide group/link">
+                <span className="link-underline">View Dashboard</span>
+                <CaretRight size={14} className="ml-1 group-hover/link:translate-x-0.5 transition-transform duration-200" />
                 </Link>
             </div>
             </motion.div>
@@ -318,8 +319,9 @@ export function CoreServices() {
                 </div>
                 <h3 className="lg:text-2xl text-xl font-bold text-stone-900 font-sans mb-2">Remote Config</h3>
                 <p className="text-stone-700 text-sm mb-4 leading-relaxed">Update pricing, features, and offers instantly. No app updates required.</p>
-                <Link href="#" className="inline-flex items-center text-stone-900 font-bold text-xs uppercase tracking-wide hover:opacity-70">
-                Explore Config <CaretRight size={14} className="ml-1" />
+                <Link href="#" className="inline-flex items-center text-stone-900 font-bold text-xs uppercase tracking-wide group/link">
+                <span className="link-underline">Explore Config</span>
+                <CaretRight size={14} className="ml-1 group-hover/link:translate-x-0.5 transition-transform duration-200" />
                 </Link>
             </div>
             </motion.div>

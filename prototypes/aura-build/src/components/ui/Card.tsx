@@ -20,7 +20,9 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-3xl p-8 transition-all duration-300",
+        "rounded-3xl p-8 transition-all duration-200 ease-out",
+        // Focus-visible for keyboard navigation
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-lime focus-visible:ring-offset-2",
         // Variant styles
         {
           default: "bg-white border border-stone-200 shadow-sm",
@@ -28,8 +30,8 @@ export function Card({
           lime: "bg-[#f0fdf4] border border-[#dcfce7]",
           glass: "glass-card border border-white/20",
         }[variant],
-        // Hover effect
-        hover && "hover:shadow-md hover:-translate-y-0.5",
+        // Hover effect (implies interactivity)
+        hover && "cursor-pointer hover:shadow-md hover:-translate-y-0.5",
         // Spotlight effect
         spotlight && "spotlight-card",
         className
