@@ -10,17 +10,17 @@ import { content } from '@/lib/content'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 
-function QuoteIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={cn('w-8 h-8 text-olive-300', className)}
-    >
-      <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
-    </svg>
-  )
-}
+// Hoisted static SVG - avoids re-creating on every render
+// Per react-best-practices: "Extract static JSX outside components to avoid re-creation"
+const quoteIcon = (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="w-8 h-8 text-olive-300 mb-6 opacity-30"
+  >
+    <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
+  </svg>
+)
 
 // All testimonials as a flat array for the 3-column grid
 const allTestimonials = [
@@ -75,7 +75,7 @@ export function Testimonials() {
                 whileHover={{ y: -4 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
-                <QuoteIcon className="mb-6 opacity-30" />
+                {quoteIcon}
 
                 <blockquote className="flex-1 text-lg/7 text-olive-700 mb-8">
                   &ldquo;{testimonial.quote}&rdquo;

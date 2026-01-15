@@ -7,6 +7,8 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #1521 | 4:24 AM | 🔄 | Navbar scroll state updates wrapped in startTransition for performance | ~414 |
+| #1518 | 4:23 AM | 🟣 | AnimatedGrid dynamically imported with SSR disabled for performance optimization | ~469 |
 | #1446 | 4:10 AM | 🟣 | Site-wide AnimatedGrid background implemented via PageFrame wrapper component | ~510 |
 | #1441 | 4:09 AM | 🟣 | PageFrame component created for site-wide AnimatedGrid background | ~409 |
 </claude-mem-context>

@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Optimize barrel imports - transforms to direct imports at build time
+  // Reduces bundle size and improves cold start performance
+  experimental: {
+    optimizePackageImports: [
+      'motion/react',
+      'clsx',
+      'tailwind-merge',
+    ],
+  },
 }
 
 export default nextConfig

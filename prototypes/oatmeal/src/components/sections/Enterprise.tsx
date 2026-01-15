@@ -5,27 +5,26 @@ import { Eyebrow } from '@/components/elements/Eyebrow'
 import { Heading } from '@/components/elements/Heading'
 import { Section } from '@/components/elements/Section'
 import { FadeIn } from '@/components/effects/FadeIn'
-import { cn } from '@/lib/cn'
 import { content } from '@/lib/content'
 import { motion } from 'motion/react'
 
-function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2.5}
-      className={cn('size-5', className)}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M4.5 12.75l6 6 9-13.5"
-      />
-    </svg>
-  )
-}
+// Hoisted static SVG - avoids re-creating on every render
+// Per react-best-practices: "Extract static JSX outside components to avoid re-creation"
+const checkIcon = (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2.5}
+    className="size-5"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M4.5 12.75l6 6 9-13.5"
+    />
+  </svg>
+)
 
 function EnterpriseFeature({
   icon,
@@ -50,7 +49,7 @@ function EnterpriseFeature({
           transition={{ delay: 0.2 + index * 0.1, type: 'spring' }}
           className="flex items-center justify-center size-10 rounded-full bg-olive-950 text-white flex-shrink-0"
         >
-          <CheckIcon className="size-5" />
+          {checkIcon}
         </motion.div>
         <span className="font-medium text-olive-950">{label}</span>
       </motion.div>

@@ -7,6 +7,8 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #1525 | 4:24 AM | 🔴 | Footer logo path corrected to use actual Adapty logo file | ~340 |
+| #1524 | " | 🔵 | Footer content structure includes logo, description, and navigation link categories | ~375 |
 | #1490 | 4:17 AM | ✅ | A/B Testing feature wallpaper color changed from lime to olive | ~324 |
 | #1471 | 4:13 AM | 🔵 | Current content.ts structure shows comprehensive but generic Adapty messaging | ~583 |
 | #1446 | 4:10 AM | 🟣 | Site-wide AnimatedGrid background implemented via PageFrame wrapper component | ~510 |

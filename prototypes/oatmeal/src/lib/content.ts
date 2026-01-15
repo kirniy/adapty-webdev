@@ -221,7 +221,7 @@ export const content = {
   },
 
   footer: {
-    logo: '/images/logo.svg',
+    logo: '/logos/adapty-logo-black.svg',
     description: 'The complete toolkit for mobile app monetization.',
     links: {
       Product: ['Paywall Builder', 'A/B Testing', 'Analytics', 'Integrations'],

@@ -6,7 +6,7 @@ import { cn } from '@/lib/cn'
 import { motion, useMotionValueEvent, useScroll } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { startTransition, useState } from 'react'
 
 const navLinks = [
   { label: 'Product', href: '#product' },
@@ -19,8 +19,12 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { scrollY } = useScroll()
 
+  // Use startTransition for non-urgent scroll updates
+  // Prevents blocking UI on frequent scroll events
   useMotionValueEvent(scrollY, 'change', (latest) => {
-    setIsScrolled(latest > 50)
+    startTransition(() => {
+      setIsScrolled(latest > 50)
+    })
   })
 
   return (
