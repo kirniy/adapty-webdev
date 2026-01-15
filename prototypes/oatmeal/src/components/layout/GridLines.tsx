@@ -28,8 +28,8 @@ export function GridLines() {
           // Fixed positioning at viewport level
           'pointer-events-none fixed z-40',
           // Position: 1rem from edge on mobile, aligned with container on desktop
-          // Container is max-w-7xl (1280px) centered, plus px-6 (1.5rem) padding
-          'left-4 sm:left-[max(1rem,calc((100vw-1280px)/2))]',
+          // Container is max-w-7xl (1280px) centered, calc needs spaces around operators
+          'left-4 sm:left-[max(1rem,calc((100vw_-_1280px)_/_2))]',
           'top-0 bottom-0 w-px',
           // Smooth opacity transition
           'transition-opacity duration-200',
@@ -46,7 +46,7 @@ export function GridLines() {
       <div
         className={cn(
           'pointer-events-none fixed z-40',
-          'right-4 sm:right-[max(1rem,calc((100vw-1280px)/2))]',
+          'right-4 sm:right-[max(1rem,calc((100vw_-_1280px)_/_2))]',
           'top-0 bottom-0 w-px',
           'transition-opacity duration-200',
           showGridLines ? 'opacity-100' : 'opacity-0',
