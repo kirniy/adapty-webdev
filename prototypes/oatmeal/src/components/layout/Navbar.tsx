@@ -7,7 +7,7 @@ import { motion, useMotionValueEvent, useScroll, AnimatePresence } from 'motion/
 import { CaretDown } from '@phosphor-icons/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { startTransition, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { ProductMenu } from './menus/ProductMenu'
 import { CasesMenu } from './menus/CasesMenu'
 import { ResourcesMenu } from './menus/ResourcesMenu'
@@ -44,9 +44,7 @@ export function Navbar() {
   const { scrollY } = useScroll()
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
-    startTransition(() => {
-      setIsScrolled(latest > 50)
-    })
+    setIsScrolled(latest > 50)
   })
 
   const handleMenuHover = (key: NavKey) => {
