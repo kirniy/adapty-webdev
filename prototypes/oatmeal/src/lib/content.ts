@@ -76,24 +76,23 @@ export const content = {
   // Featured testimonial for large display
   featuredTestimonial: {
     quote:
-      'Adapty helped us increase our subscription revenue by 40% in just 3 months. The A/B testing tools are incredibly powerful and the analytics gave us insights we never had before.',
-    author: 'Cem Ortabas',
+      'The no-code paywall builder saved us months of development time. We can now iterate on our monetization strategy in real-time without waiting for app releases.',
+    author: 'Chris Bick',
     role: 'CEO',
-    company: 'Fotorama',
-    avatar: '/images/testimonials/cem-ortabas.webp',
-    photo: '/images/testimonials/cem.webp',
+    company: 'Shmoody',
+    avatar: '/images/testimonials/chris-bick.webp',
+    photo: '/images/testimonials/chris.webp',
   },
 
   // Additional testimonials for rotation
   testimonials: [
     {
       quote:
-        'The no-code paywall builder saved us months of development time. We can now iterate on our monetization strategy in real-time.',
-      author: 'Chris Bick',
+        'Adapty helped us increase our subscription revenue by 40% in just 3 months. The A/B testing tools are incredibly powerful.',
+      author: 'Cem Ortabas',
       role: 'CEO',
-      company: 'Shmoody',
-      avatar: '/images/testimonials/chris-bick.webp',
-      photo: '/images/testimonials/chris.webp',
+      company: 'Fotorama',
+      avatar: '/images/testimonials/cem-ortabas.webp',
     },
     {
       quote:
@@ -102,7 +101,6 @@ export const content = {
       role: 'Growth Lead',
       company: 'Appi Trips',
       avatar: '/images/testimonials/roi-mulia.webp',
-      photo: '/images/testimonials/roi.webp',
     },
   ],
 
