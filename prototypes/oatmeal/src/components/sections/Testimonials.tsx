@@ -6,12 +6,11 @@ import { Heading } from '@/components/elements/Heading'
 import { Section } from '@/components/elements/Section'
 import { FadeIn } from '@/components/effects/FadeIn'
 import { cn } from '@/lib/cn'
-import { content } from '@/lib/content'
+import { useTestimonialsVariant } from '@/lib/debug-context'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 
 // Hoisted static SVG - avoids re-creating on every render
-// Per react-best-practices: "Extract static JSX outside components to avoid re-creation"
 const quoteIcon = (
   <svg
     viewBox="0 0 24 24"
@@ -22,7 +21,17 @@ const quoteIcon = (
   </svg>
 )
 
-// All testimonials as a flat array for the 3-column grid
+const largeQuoteIcon = (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="w-12 h-12 text-adapty-500/20"
+  >
+    <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
+  </svg>
+)
+
+// Testimonial data
 const allTestimonials = [
   {
     quote:
@@ -50,7 +59,8 @@ const allTestimonials = [
   },
 ]
 
-export function Testimonials() {
+// Variant A: Grid (current - 3 equal columns)
+function TestimonialsGrid() {
   return (
     <Section className="bg-olive-50">
       <Container>
@@ -61,7 +71,6 @@ export function Testimonials() {
           </Heading>
         </FadeIn>
 
-        {/* 3-Column Testimonial Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {allTestimonials.map((testimonial, index) => (
             <FadeIn key={testimonial.author} delay={0.1 + index * 0.1}>
@@ -108,4 +117,150 @@ export function Testimonials() {
       </Container>
     </Section>
   )
+}
+
+// Variant B: Large Featured (one big testimonial, others smaller - Stripe-style)
+function TestimonialsLargeFeatured() {
+  const [featured, ...others] = allTestimonials
+
+  return (
+    <Section className="bg-white">
+      <Container>
+        <FadeIn className="text-center mb-12 lg:mb-16">
+          <Eyebrow>Customer Stories</Eyebrow>
+          <Heading as="h2" className="mt-2">
+            Trusted by growth teams
+          </Heading>
+        </FadeIn>
+
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Featured large testimonial */}
+          <FadeIn>
+            <figure className="relative h-full rounded-3xl bg-olive-50 p-10 lg:p-12">
+              {largeQuoteIcon}
+
+              <blockquote className="mt-6 text-2xl/9 lg:text-3xl/10 font-medium text-olive-900">
+                &ldquo;{featured.quote}&rdquo;
+              </blockquote>
+
+              <figcaption className="mt-10 flex items-center gap-4">
+                <div className="relative size-14 rounded-full overflow-hidden ring-4 ring-white shadow-lg">
+                  <Image
+                    src={featured.avatar}
+                    alt={featured.author}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="text-lg font-semibold text-olive-950">{featured.author}</p>
+                  <p className="text-olive-600">
+                    {featured.role}, {featured.company}
+                  </p>
+                </div>
+              </figcaption>
+            </figure>
+          </FadeIn>
+
+          {/* Other testimonials stacked */}
+          <div className="space-y-6">
+            {others.map((testimonial, index) => (
+              <FadeIn key={testimonial.author} delay={0.1 + index * 0.1}>
+                <figure className="rounded-2xl bg-olive-50/50 p-6 border border-olive-100">
+                  <blockquote className="text-lg text-olive-700">
+                    &ldquo;{testimonial.quote}&rdquo;
+                  </blockquote>
+
+                  <figcaption className="mt-4 flex items-center gap-3">
+                    <div className="relative size-10 rounded-full overflow-hidden">
+                      <Image
+                        src={testimonial.avatar}
+                        alt={testimonial.author}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-medium text-olive-900">{testimonial.author}</p>
+                      <p className="text-sm text-olive-500">
+                        {testimonial.role}, {testimonial.company}
+                      </p>
+                    </div>
+                  </figcaption>
+                </figure>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </Section>
+  )
+}
+
+// Variant C: Carousel (horizontal scrollable)
+function TestimonialsCarousel() {
+  return (
+    <Section className="bg-olive-50 overflow-hidden">
+      <Container>
+        <FadeIn className="text-center mb-12">
+          <Eyebrow>Customer Stories</Eyebrow>
+          <Heading as="h2" className="mt-2">
+            Trusted by growth teams
+          </Heading>
+        </FadeIn>
+      </Container>
+
+      {/* Full-width carousel */}
+      <div className="flex gap-6 overflow-x-auto pb-4 px-4 sm:px-8 snap-x snap-mandatory scrollbar-hide">
+        {allTestimonials.map((testimonial, index) => (
+          <FadeIn key={testimonial.author} delay={0.1 + index * 0.1}>
+            <figure
+              className={cn(
+                'flex-none w-[85vw] sm:w-[400px] snap-center',
+                'rounded-2xl bg-white p-8 shadow-lg shadow-olive-900/5'
+              )}
+            >
+              {quoteIcon}
+
+              <blockquote className="text-lg/7 text-olive-700 mb-8">
+                &ldquo;{testimonial.quote}&rdquo;
+              </blockquote>
+
+              <figcaption className="flex items-center gap-4 pt-6 border-t border-olive-100">
+                <div className="relative size-12 rounded-full overflow-hidden">
+                  <Image
+                    src={testimonial.avatar}
+                    alt={testimonial.author}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="font-semibold text-olive-950">{testimonial.author}</p>
+                  <p className="text-sm text-olive-500">
+                    {testimonial.role}, {testimonial.company}
+                  </p>
+                </div>
+              </figcaption>
+            </figure>
+          </FadeIn>
+        ))}
+      </div>
+    </Section>
+  )
+}
+
+// Main component that switches based on debug context
+export function Testimonials() {
+  const variant = useTestimonialsVariant()
+
+  switch (variant) {
+    case 'large-featured':
+      return <TestimonialsLargeFeatured />
+    case 'carousel':
+      return <TestimonialsCarousel />
+    case 'grid':
+    default:
+      return <TestimonialsGrid />
+  }
 }

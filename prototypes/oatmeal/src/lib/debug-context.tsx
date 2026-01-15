@@ -8,8 +8,23 @@ export type GridVariant = 'cursor-tracking' | 'slow-drift' | 'static' | 'off'
 // Header/navbar variants
 export type HeaderVariant = 'oatmeal-simple' | 'aura-megamenu'
 
+// Section variant types - each section can have multiple design variants
+export type TrustedByVariant = 'marquee' | 'static-grid' | 'static-minimal'
+export type CoreFeaturesVariant = 'colorful' | 'muted' | 'monochrome'
+export type StatsVariant = 'cards' | 'inline' | 'minimal'
+export type TestimonialsVariant = 'grid' | 'large-featured' | 'carousel'
+export type RoleCardsVariant = 'full' | 'simplified' | 'minimal'
+export type IntegrationsVariant = 'marquee' | 'static-grid' | 'categorized'
+
+// Variant option type for UI
+export interface VariantOption<T> {
+  value: T
+  label: string
+  description: string
+}
+
 // All available grid variants with labels
-export const GRID_VARIANTS: { value: GridVariant; label: string; description: string }[] = [
+export const GRID_VARIANTS: VariantOption<GridVariant>[] = [
   { value: 'cursor-tracking', label: 'Cursor Tracking', description: 'Grid reveals around cursor position' },
   { value: 'slow-drift', label: 'Slow Drift', description: 'Continuous animation, no cursor tracking' },
   { value: 'static', label: 'Static', description: 'No animation, just pattern' },
@@ -17,15 +32,59 @@ export const GRID_VARIANTS: { value: GridVariant; label: string; description: st
 ]
 
 // All available header variants with labels
-export const HEADER_VARIANTS: { value: HeaderVariant; label: string; description: string }[] = [
-  { value: 'oatmeal-simple', label: 'Oatmeal Simple', description: 'Current 4-link minimal navbar' },
-  { value: 'aura-megamenu', label: 'Aura Mega Menu', description: 'Multi-level dropdown navigation' },
+export const HEADER_VARIANTS: VariantOption<HeaderVariant>[] = [
+  { value: 'oatmeal-simple', label: 'Floating Pill', description: 'Pill-shaped navbar with glass blur' },
+  { value: 'aura-megamenu', label: 'Full-Width Bar', description: 'Traditional full-width header' },
+]
+
+// Section variant options
+export const TRUSTED_BY_VARIANTS: VariantOption<TrustedByVariant>[] = [
+  { value: 'marquee', label: 'Scrolling Marquee', description: 'Infinite horizontal scroll' },
+  { value: 'static-grid', label: 'Static Grid', description: 'Stripe-style weighted display' },
+  { value: 'static-minimal', label: 'Minimal Row', description: 'Single row, no animation' },
+]
+
+export const CORE_FEATURES_VARIANTS: VariantOption<CoreFeaturesVariant>[] = [
+  { value: 'colorful', label: 'Colorful Cards', description: 'Vibrant wallpaper backgrounds' },
+  { value: 'muted', label: 'Muted Calm', description: 'Subdued colors, editorial feel' },
+  { value: 'monochrome', label: 'Monochrome', description: 'Grayscale with accent highlights' },
+]
+
+export const STATS_VARIANTS: VariantOption<StatsVariant>[] = [
+  { value: 'cards', label: 'Card Grid', description: 'Numbers in bordered cards' },
+  { value: 'inline', label: 'Inline Row', description: 'Horizontal stats bar' },
+  { value: 'minimal', label: 'Minimal', description: 'Large numbers, no decoration' },
+]
+
+export const TESTIMONIALS_VARIANTS: VariantOption<TestimonialsVariant>[] = [
+  { value: 'grid', label: '3-Column Grid', description: 'Equal-sized testimonial cards' },
+  { value: 'large-featured', label: 'Large Featured', description: 'One prominent, others small' },
+  { value: 'carousel', label: 'Carousel', description: 'Swipeable testimonial cards' },
+]
+
+export const ROLE_CARDS_VARIANTS: VariantOption<RoleCardsVariant>[] = [
+  { value: 'full', label: 'Full Cards', description: 'Title, tags, and description' },
+  { value: 'simplified', label: 'Simplified', description: 'Title and description only' },
+  { value: 'minimal', label: 'Minimal Links', description: 'Just text links' },
+]
+
+export const INTEGRATIONS_VARIANTS: VariantOption<IntegrationsVariant>[] = [
+  { value: 'marquee', label: 'Scrolling Marquee', description: 'Continuous logo scroll' },
+  { value: 'static-grid', label: 'Static Grid', description: 'Fixed grid of logos' },
+  { value: 'categorized', label: 'Categorized', description: 'Grouped by integration type' },
 ]
 
 // Debug state interface
 interface DebugState {
   gridVariant: GridVariant
   headerVariant: HeaderVariant
+  // Section variants
+  trustedByVariant: TrustedByVariant
+  coreFeaturesVariant: CoreFeaturesVariant
+  statsVariant: StatsVariant
+  testimonialsVariant: TestimonialsVariant
+  roleCardsVariant: RoleCardsVariant
+  integrationsVariant: IntegrationsVariant
   isDebugMenuOpen: boolean
 }
 
@@ -33,15 +92,44 @@ interface DebugState {
 interface DebugContextValue extends DebugState {
   setGridVariant: (variant: GridVariant) => void
   setHeaderVariant: (variant: HeaderVariant) => void
+  // Section variant setters
+  setTrustedByVariant: (variant: TrustedByVariant) => void
+  setCoreFeaturesVariant: (variant: CoreFeaturesVariant) => void
+  setStatsVariant: (variant: StatsVariant) => void
+  setTestimonialsVariant: (variant: TestimonialsVariant) => void
+  setRoleCardsVariant: (variant: RoleCardsVariant) => void
+  setIntegrationsVariant: (variant: IntegrationsVariant) => void
   toggleDebugMenu: () => void
   cycleGridVariant: (direction: 'next' | 'prev') => void
   cycleHeaderVariant: (direction: 'next' | 'prev') => void
+  // Generic section cycler
+  cycleSectionVariant: (
+    section: keyof typeof SECTION_VARIANT_CONFIG,
+    direction: 'next' | 'prev'
+  ) => void
 }
+
+// Section variant configuration for generic cycling
+export const SECTION_VARIANT_CONFIG = {
+  trustedBy: { variants: TRUSTED_BY_VARIANTS, key: 'trustedByVariant' as const },
+  coreFeatures: { variants: CORE_FEATURES_VARIANTS, key: 'coreFeaturesVariant' as const },
+  stats: { variants: STATS_VARIANTS, key: 'statsVariant' as const },
+  testimonials: { variants: TESTIMONIALS_VARIANTS, key: 'testimonialsVariant' as const },
+  roleCards: { variants: ROLE_CARDS_VARIANTS, key: 'roleCardsVariant' as const },
+  integrations: { variants: INTEGRATIONS_VARIANTS, key: 'integrationsVariant' as const },
+} as const
 
 // Default state
 const defaultState: DebugState = {
   gridVariant: 'slow-drift', // Default to slow-drift (not cheesy cursor-tracking)
   headerVariant: 'oatmeal-simple', // Start with current simple navbar
+  // Section defaults - start with current implementations
+  trustedByVariant: 'marquee',
+  coreFeaturesVariant: 'colorful',
+  statsVariant: 'cards',
+  testimonialsVariant: 'grid',
+  roleCardsVariant: 'full',
+  integrationsVariant: 'marquee',
   isDebugMenuOpen: false,
 }
 
@@ -66,6 +154,13 @@ export function DebugProvider({ children }: { children: ReactNode }) {
           ...prev,
           gridVariant: parsed.gridVariant ?? prev.gridVariant,
           headerVariant: parsed.headerVariant ?? prev.headerVariant,
+          // Section variants
+          trustedByVariant: parsed.trustedByVariant ?? prev.trustedByVariant,
+          coreFeaturesVariant: parsed.coreFeaturesVariant ?? prev.coreFeaturesVariant,
+          statsVariant: parsed.statsVariant ?? prev.statsVariant,
+          testimonialsVariant: parsed.testimonialsVariant ?? prev.testimonialsVariant,
+          roleCardsVariant: parsed.roleCardsVariant ?? prev.roleCardsVariant,
+          integrationsVariant: parsed.integrationsVariant ?? prev.integrationsVariant,
           // Don't restore isDebugMenuOpen - always start closed
         }))
       }
@@ -79,14 +174,12 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isHydrated) return
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        gridVariant: state.gridVariant,
-        headerVariant: state.headerVariant,
-      }))
+      const { isDebugMenuOpen, ...persistedState } = state
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(persistedState))
     } catch {
       // Ignore storage errors
     }
-  }, [state.gridVariant, state.headerVariant, isHydrated])
+  }, [state, isHydrated])
 
   // Set grid variant
   const setGridVariant = useCallback((variant: GridVariant) => {
@@ -96,6 +189,31 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   // Set header variant
   const setHeaderVariant = useCallback((variant: HeaderVariant) => {
     setState(prev => ({ ...prev, headerVariant: variant }))
+  }, [])
+
+  // Section variant setters
+  const setTrustedByVariant = useCallback((variant: TrustedByVariant) => {
+    setState(prev => ({ ...prev, trustedByVariant: variant }))
+  }, [])
+
+  const setCoreFeaturesVariant = useCallback((variant: CoreFeaturesVariant) => {
+    setState(prev => ({ ...prev, coreFeaturesVariant: variant }))
+  }, [])
+
+  const setStatsVariant = useCallback((variant: StatsVariant) => {
+    setState(prev => ({ ...prev, statsVariant: variant }))
+  }, [])
+
+  const setTestimonialsVariant = useCallback((variant: TestimonialsVariant) => {
+    setState(prev => ({ ...prev, testimonialsVariant: variant }))
+  }, [])
+
+  const setRoleCardsVariant = useCallback((variant: RoleCardsVariant) => {
+    setState(prev => ({ ...prev, roleCardsVariant: variant }))
+  }, [])
+
+  const setIntegrationsVariant = useCallback((variant: IntegrationsVariant) => {
+    setState(prev => ({ ...prev, integrationsVariant: variant }))
   }, [])
 
   // Toggle debug menu
@@ -125,13 +243,36 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  // Generic section variant cycler
+  const cycleSectionVariant = useCallback((
+    section: keyof typeof SECTION_VARIANT_CONFIG,
+    direction: 'next' | 'prev'
+  ) => {
+    const config = SECTION_VARIANT_CONFIG[section]
+    setState(prev => {
+      const currentValue = prev[config.key]
+      const currentIndex = config.variants.findIndex(v => v.value === currentValue)
+      const newIndex = direction === 'next'
+        ? (currentIndex + 1) % config.variants.length
+        : (currentIndex - 1 + config.variants.length) % config.variants.length
+      return { ...prev, [config.key]: config.variants[newIndex].value }
+    })
+  }, [])
+
   const value: DebugContextValue = {
     ...state,
     setGridVariant,
     setHeaderVariant,
+    setTrustedByVariant,
+    setCoreFeaturesVariant,
+    setStatsVariant,
+    setTestimonialsVariant,
+    setRoleCardsVariant,
+    setIntegrationsVariant,
     toggleDebugMenu,
     cycleGridVariant,
     cycleHeaderVariant,
+    cycleSectionVariant,
   }
 
   return (
@@ -162,4 +303,35 @@ export function useHeaderVariant(): HeaderVariant {
   const context = useContext(DebugContext)
   // Return default if not in provider (for SSR or isolated components)
   return context?.headerVariant ?? defaultState.headerVariant
+}
+
+// Section variant hooks - use these in individual section components
+export function useTrustedByVariant(): TrustedByVariant {
+  const context = useContext(DebugContext)
+  return context?.trustedByVariant ?? defaultState.trustedByVariant
+}
+
+export function useCoreFeaturesVariant(): CoreFeaturesVariant {
+  const context = useContext(DebugContext)
+  return context?.coreFeaturesVariant ?? defaultState.coreFeaturesVariant
+}
+
+export function useStatsVariant(): StatsVariant {
+  const context = useContext(DebugContext)
+  return context?.statsVariant ?? defaultState.statsVariant
+}
+
+export function useTestimonialsVariant(): TestimonialsVariant {
+  const context = useContext(DebugContext)
+  return context?.testimonialsVariant ?? defaultState.testimonialsVariant
+}
+
+export function useRoleCardsVariant(): RoleCardsVariant {
+  const context = useContext(DebugContext)
+  return context?.roleCardsVariant ?? defaultState.roleCardsVariant
+}
+
+export function useIntegrationsVariant(): IntegrationsVariant {
+  const context = useContext(DebugContext)
+  return context?.integrationsVariant ?? defaultState.integrationsVariant
 }
