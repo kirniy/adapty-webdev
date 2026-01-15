@@ -114,7 +114,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-16 pt-8 border-t border-olive-200">
           <p className="text-sm text-olive-500 text-center">
-            {footer.copyright}
+            &copy; {new Date().getFullYear()} Adapty. All rights reserved.
           </p>
         </div>
       </Container>

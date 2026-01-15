@@ -20,10 +20,10 @@ export const content = {
       { name: 'Bumble', src: '/logos/trusted-by/bumble.svg' },
       { name: 'Feeld', src: '/logos/trusted-by/feeld.svg' },
       { name: 'HubX', src: '/logos/trusted-by/hubx.svg' },
-      { name: 'Impala', src: '/logos/trusted-by/impala.svg' },
+      { name: 'Impala', src: '/logos/trusted-by/impala-studios.svg' },
       { name: 'Almus', src: '/logos/trusted-by/almus.svg' },
       { name: 'WeeWoo', src: '/logos/trusted-by/weewoo.svg' },
-      { name: 'AppNation', src: '/logos/trusted-by/appnation.svg' },
+      { name: 'AppNation', src: '/logos/trusted-by/appnation.webp' },
     ],
   },
 
@@ -73,30 +73,36 @@ export const content = {
     { value: 60, suffix: 'B+', label: 'API calls/month' },
   ],
 
+  // Featured testimonial for large display
+  featuredTestimonial: {
+    quote:
+      'Adapty helped us increase our subscription revenue by 40% in just 3 months. The A/B testing tools are incredibly powerful and the analytics gave us insights we never had before.',
+    author: 'Cem Ortabas',
+    role: 'CEO',
+    company: 'Fotorama',
+    avatar: '/images/testimonials/cem-ortabas.webp',
+    photo: '/images/testimonials/cem.webp',
+  },
+
+  // Additional testimonials for rotation
   testimonials: [
     {
       quote:
-        'Adapty helped us increase our subscription revenue by 40% in just 3 months. The A/B testing tools are incredibly powerful.',
-      author: 'Sarah Chen',
-      role: 'Head of Product',
-      company: 'Fitness App',
-      avatar: '/images/testimonials/testimonial-magnus.webp',
-    },
-    {
-      quote:
         'The no-code paywall builder saved us months of development time. We can now iterate on our monetization strategy in real-time.',
-      author: 'Michael Roberts',
+      author: 'Chris Bick',
       role: 'CEO',
-      company: 'Meditation App',
-      avatar: '/images/testimonials/testimonial-magnus.webp',
+      company: 'Shmoody',
+      avatar: '/images/testimonials/chris-bick.webp',
+      photo: '/images/testimonials/chris.webp',
     },
     {
       quote:
-        'Switching to Adapty was the best decision we made. Their analytics gave us insights we never had before.',
-      author: 'Emma Watson',
+        'Switching to Adapty was the best decision we made. Their analytics and cohort tools are game-changers.',
+      author: 'Roi Mulia',
       role: 'Growth Lead',
-      company: 'Language Learning App',
-      avatar: '/images/testimonials/testimonial-magnus.webp',
+      company: 'Appi Trips',
+      avatar: '/images/testimonials/roi-mulia.webp',
+      photo: '/images/testimonials/roi.webp',
     },
   ],
 
@@ -125,18 +131,78 @@ export const content = {
   ],
 
   integrations: [
-    { name: 'Amplitude', src: '/integrations/amplitude.svg' },
-    { name: 'Mixpanel', src: '/integrations/mixpanel.svg' },
-    { name: 'Segment', src: '/integrations/segment.svg' },
-    { name: 'AppsFlyer', src: '/integrations/appsflyer.svg' },
-    { name: 'Adjust', src: '/integrations/adjust.svg' },
-    { name: 'Branch', src: '/integrations/branch.svg' },
-    { name: 'Firebase', src: '/integrations/firebase-ga.svg' },
-    { name: 'Stripe', src: '/integrations/stripe.svg' },
-    { name: 'OneSignal', src: '/integrations/onesignal.svg' },
-    { name: 'Braze', src: '/integrations/braze.svg' },
-    { name: 'PostHog', src: '/integrations/posthog.svg' },
-    { name: 'Singular', src: '/integrations/singular.svg' },
+    {
+      name: 'Amplitude',
+      src: '/integrations/amplitude.svg',
+      description: 'Product analytics',
+      category: 'Analytics'
+    },
+    {
+      name: 'Mixpanel',
+      src: '/integrations/mixpanel.svg',
+      description: 'User behavior analytics',
+      category: 'Analytics'
+    },
+    {
+      name: 'AppsFlyer',
+      src: '/integrations/appsflyer.svg',
+      description: 'Attribution & marketing',
+      category: 'Attribution'
+    },
+    {
+      name: 'Adjust',
+      src: '/integrations/adjust.svg',
+      description: 'Mobile measurement',
+      category: 'Attribution'
+    },
+    {
+      name: 'Branch',
+      src: '/integrations/branch.svg',
+      description: 'Deep linking & attribution',
+      category: 'Attribution'
+    },
+    {
+      name: 'Firebase',
+      src: '/integrations/firebase.svg',
+      description: 'App development platform',
+      category: 'Platform'
+    },
+    {
+      name: 'OneSignal',
+      src: '/integrations/onesignal.svg',
+      description: 'Push notifications',
+      category: 'Engagement'
+    },
+    {
+      name: 'Braze',
+      src: '/integrations/braze.svg',
+      description: 'Customer engagement',
+      category: 'Engagement'
+    },
+    {
+      name: 'PostHog',
+      src: '/integrations/posthog.svg',
+      description: 'Product analytics',
+      category: 'Analytics'
+    },
+    {
+      name: 'Airship',
+      src: '/integrations/airship.svg',
+      description: 'App experience platform',
+      category: 'Engagement'
+    },
+    {
+      name: 'Facebook',
+      src: '/integrations/facebook.svg',
+      description: 'Ads attribution',
+      category: 'Attribution'
+    },
+    {
+      name: 'Amazon S3',
+      src: '/integrations/amazon-s3.svg',
+      description: 'Cloud storage',
+      category: 'Infrastructure'
+    },
   ],
 
   sdks: [
@@ -149,8 +215,8 @@ export const content = {
 
   caseStudies: [
     { name: 'Productivity App', icon: '/images/case-studies/productivity-app.webp', lift: '+45%' },
-    { name: 'Photo Editor', icon: '/images/case-studies/text-on-pic.webp', lift: '+38%' },
-    { name: 'Travel App', icon: '/images/case-studies/trip-planning.webp', lift: '+52%' },
+    { name: 'Text on Pic', icon: '/images/case-studies/text-on-pic.webp', lift: '+38%' },
+    { name: 'Trip Planning', icon: '/images/case-studies/trip-planning.webp', lift: '+52%' },
     { name: 'Going Merry', icon: '/images/case-studies/going-merry.webp', lift: '+29%' },
     { name: 'Shmoody', icon: '/images/case-studies/shmoody.webp', lift: '+61%' },
     { name: 'Lively', icon: '/images/case-studies/lively.png', lift: '+33%' },
@@ -183,7 +249,7 @@ export const content = {
   },
 
   footer: {
-    logo: '/logos/adapty-logo-black.svg',
+    logo: '/images/logo.svg',
     description: 'The complete toolkit for mobile app monetization.',
     links: {
       Product: ['Paywall Builder', 'A/B Testing', 'Analytics', 'Integrations'],
@@ -192,10 +258,9 @@ export const content = {
       Legal: ['Privacy', 'Terms', 'Security'],
     },
     social: {
-      twitter: 'https://twitter.com/adapaborrowtyio',
+      twitter: 'https://twitter.com/adaptyio',
       linkedin: 'https://linkedin.com/company/adapty',
       github: 'https://github.com/adapty',
     },
-    copyright: '2024 Adapty. All rights reserved.',
   },
 }

@@ -19,12 +19,11 @@ export function FinalCTA() {
             <Eyebrow className="text-olive-400">{finalCta.eyebrow}</Eyebrow>
           </FadeIn>
 
-          <TextReveal
-            as="h2"
-            className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-display tracking-tight text-white"
-          >
-            {finalCta.headline}
-          </TextReveal>
+          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-display tracking-tight text-white">
+            <TextReveal>
+              {finalCta.headline}
+            </TextReveal>
+          </h2>
 
           <FadeIn delay={0.3}>
             <p className="mt-6 text-olive-300 text-lg/7 max-w-lg mx-auto">

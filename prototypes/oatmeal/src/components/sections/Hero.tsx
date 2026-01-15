@@ -1,7 +1,8 @@
 'use client'
 
-import { Button, ButtonLink } from '@/components/elements/Button'
+import { ButtonLink } from '@/components/elements/Button'
 import { Container } from '@/components/elements/Container'
+import { AnimatedGrid } from '@/components/effects/AnimatedGrid'
 import { FadeIn } from '@/components/effects/FadeIn'
 import { MagneticButton } from '@/components/effects/MagneticButton'
 import { ScrambleText } from '@/components/effects/ScrambleText'
@@ -14,7 +15,10 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden pt-24 pb-16 sm:pt-32 sm:pb-24">
-      <Container>
+      {/* Animated Grid Background */}
+      <AnimatedGrid className="absolute inset-0 pointer-events-none" />
+
+      <Container className="relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text Content */}
           <div className="max-w-xl">
@@ -82,19 +86,20 @@ export function Hero() {
           {/* Demo Image */}
           <FadeIn delay={0.3} direction="left">
             <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-olive-200 to-olive-300 p-4 sm:p-8 shadow-2xl">
-                <div className="noise-overlay opacity-20" />
+              {/* Decorative glow behind */}
+              <div className="absolute -z-10 inset-0 bg-gradient-to-br from-olive-400/40 via-olive-300/30 to-olive-500/20 rounded-3xl blur-2xl scale-105" />
+
+              {/* Clean image presentation */}
+              <div className="relative">
                 <Image
                   src={hero.image}
                   alt="Adapty paywall demo"
                   width={600}
-                  height={400}
-                  className="relative rounded-xl shadow-lg ring-1 ring-black/5"
+                  height={1000}
+                  className="rounded-2xl shadow-2xl shadow-olive-900/20 ring-1 ring-olive-900/10"
                   priority
                 />
               </div>
-              {/* Decorative blob */}
-              <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-olive-300/30 rounded-full blur-3xl" />
             </div>
           </FadeIn>
         </div>
