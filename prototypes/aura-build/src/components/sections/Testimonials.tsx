@@ -42,9 +42,9 @@ const testimonials = [
 
 function TestimonialCard({ testimonial }: { testimonial: typeof testimonials[0] }) {
   return (
-    <div className="bg-white rounded-2xl p-8 shadow-cinematic-lg w-[400px] shrink-0 mx-3">
-      {/* Quote Icon */}
-      <div className="mb-6 text-brand-lime">
+    <div className="bg-white rounded-2xl p-8 shadow-cinematic-lg w-[400px] shrink-0 mx-3 card-elevate card-shine cursor-pointer group">
+      {/* Quote Icon with hover rotation */}
+      <div className="mb-6 text-brand-lime transition-transform duration-300 group-hover:rotate-6">
         <Quotes size={32} weight="fill" />
       </div>
 
@@ -55,7 +55,7 @@ function TestimonialCard({ testimonial }: { testimonial: typeof testimonials[0] 
 
       {/* Author */}
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-full overflow-hidden relative bg-stone-100 ring-2 ring-stone-100">
+        <div className="w-12 h-12 rounded-full overflow-hidden relative bg-stone-100 ring-2 ring-stone-100 transition-all duration-300 group-hover:ring-brand-lime/30 group-hover:ring-4">
           <Image
             src={testimonial.image}
             alt={testimonial.name}

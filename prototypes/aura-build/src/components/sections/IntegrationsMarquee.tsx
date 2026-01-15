@@ -46,12 +46,12 @@ export function IntegrationsMarquee() {
 
       <div className="flex w-max animate-marquee hover-pause py-4">
         {[...integrations, ...integrations, ...integrations].map((tool, idx) => (
-          <div 
-            key={`${tool.name}-${idx}`} 
-            className="group relative w-40 h-12 flex items-center justify-center mx-6 transition-all duration-300"
+          <div
+            key={`${tool.name}-${idx}`}
+            className="group relative w-40 h-12 flex items-center justify-center mx-6 cursor-pointer"
           >
-            {/* Logo */}
-            <div className="relative w-32 h-8 opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110">
+            {/* Logo with grayscale-to-color and glow effect */}
+            <div className="relative w-32 h-8 opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110 hover-glow">
               <Image
                 src={`/integrations/${tool.logo}`}
                 alt={tool.name}
@@ -59,9 +59,9 @@ export function IntegrationsMarquee() {
                 className="object-contain"
               />
             </div>
-            
-            {/* Hover Micro-interaction: Subtle glow below */}
-            <div className="absolute -bottom-4 w-12 h-1 bg-black/5 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* Hover Micro-interaction: Lime glow below */}
+            <div className="absolute -bottom-3 w-16 h-1 bg-brand-lime/40 rounded-full blur-md scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
           </div>
         ))}
       </div>

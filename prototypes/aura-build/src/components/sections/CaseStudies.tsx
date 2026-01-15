@@ -38,11 +38,11 @@ export function CaseStudies() {
         {caseStudies.map((study, index) => (
           <article
             key={study.title}
-            className="group cursor-pointer relative animate-intro-blur"
+            className="group cursor-pointer relative animate-intro-blur card-elevate"
             style={{ animationDelay: `${index * 150}ms` }}
           >
             {/* Image Card - Full bleed with logo */}
-            <div className={`aspect-[4/3] ${study.bgColor} rounded-xl mb-4 overflow-hidden relative shadow-sm border border-stone-100 group-hover:shadow-lg transition-shadow duration-300`}>
+            <div className={`aspect-[4/3] ${study.bgColor} rounded-xl mb-4 overflow-hidden relative shadow-sm border border-stone-100 card-shine`}>
               <div className="absolute inset-0 flex items-center justify-center p-8">
                 <div className="relative w-32 h-32 drop-shadow-md">
                   <Image
