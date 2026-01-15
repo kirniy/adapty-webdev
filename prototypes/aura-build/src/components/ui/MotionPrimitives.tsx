@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { motion, type HTMLMotionProps, useMotionValue, useSpring } from "motion/react";
 import { cn } from "@/lib/cn";
 

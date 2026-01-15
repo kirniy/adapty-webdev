@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GeistSans, GeistMono } from "geist/font";
-import { TheInfiniteGrid } from "@/components/ui/TheInfiniteGrid";
+import { AnimatedBackground } from "@/components/ui/AnimatedBackground";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -44,7 +44,7 @@ export default function RootLayout({
       <body className="min-h-dvh overflow-x-hidden bg-stone-50 font-sans text-stone-900 antialiased selection:bg-brand-lime selection:text-black">
         {/* Global animated grid background */}
         <div className="fixed inset-0 pointer-events-none">
-          <TheInfiniteGrid className="w-full h-full" />
+          <AnimatedBackground className="w-full h-full" />
         </div>
 
         {/* Main content */}
