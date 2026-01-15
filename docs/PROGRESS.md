@@ -339,6 +339,71 @@ Applied Vercel Engineering performance guidelines:
 
 ---
 
+## 2026-01-15 - Oatmeal Prototype Build & Optimization
+
+### Session Summary
+Built complete Adapty homepage using purchased Oatmeal template (Tailwind Plus). Applied comprehensive react-best-practices optimizations. Deployed to Vercel.
+
+### Accomplishments
+
+#### 1. Oatmeal Prototype Built
+New prototype using premium Oatmeal template:
+- **Location**: `/prototypes/oatmeal/`
+- **URL**: `adapty-oatmeal-jan14-2026.vercel.app`
+- **Sections**: All 14 homepage sections complete
+
+**Design System**:
+| Element | Value |
+|---------|-------|
+| Palette | Olive (warm sophisticated greens/grays) |
+| Display Font | Instrument Serif |
+| Body Font | Inter |
+| Template | Oatmeal from Tailwind Plus |
+
+**Key Components Used**:
+- Button, Container, Heading, Eyebrow, Text, Section
+- Screenshot with Wallpaper backgrounds (green, blue, purple, olive)
+- FadeIn, TextReveal, NumberTicker animations
+- Marquee for integrations
+
+#### 2. react-best-practices Applied
+Following Vercel Engineering performance guidelines:
+
+| Priority | Optimization | File |
+|----------|--------------|------|
+| CRITICAL | `optimizePackageImports` for motion/react, clsx, tailwind-merge | next.config.ts |
+| CRITICAL | Dynamic import AnimatedGrid with `ssr: false` | PageFrame.tsx |
+| MEDIUM | `startTransition` for scroll state | Navbar.tsx |
+| MEDIUM | Hoisted static SVGs to module scope | Footer, Testimonials, Enterprise |
+
+#### 3. Bug Fixes
+- Case study logos: `logo-*.png` -> `*.webp` (paths didn't match actual files)
+- Footer logo: purple -> black Adapty logo
+
+### Commits
+- `3f236c6` - Apply react-best-practices performance optimizations
+- `f3ac9da` - Fix case study logo paths to match actual assets
+
+### Build Stats
+```
+Route         Size      First Load JS
+/             69.8 kB   172 kB
+Shared        102 kB
+```
+
+### Metrics
+- Sections complete: 14/14
+- First Load JS: 172 kB
+- Optimizations applied: 4 patterns
+- Commits pushed: 2
+
+### Next Steps
+1. Polish based on stakeholder feedback
+2. Add remaining micro-interactions
+3. Compare with AuraBuild prototype
+
+---
+
 ## Template for Future Entries
 
 ```markdown
