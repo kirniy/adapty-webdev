@@ -43,7 +43,7 @@ export function LanguageSwitcher() {
     <div className={styles.languageSwitcher} ref={dropdownRef}>
       <button
         className={styles.toggleButton}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen((prev) => !prev)}
         onMouseEnter={() => setIsOpen(true)}
       >
         <Image

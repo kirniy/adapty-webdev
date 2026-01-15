@@ -30,7 +30,7 @@ function RoleCardsCards() {
   const { roleCards } = content
 
   return (
-    <Section className="bg-olive-50 py-20 lg:py-28">
+    <Section className="bg-olive-50 py-16 sm:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -163,7 +163,7 @@ function RoleCardsTabs() {
   const activeCard = roleCards[activeIndex]
 
   return (
-    <Section className="bg-white py-20 lg:py-28">
+    <Section className="bg-white py-16 sm:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -309,7 +309,7 @@ function RoleCardsHorizontal() {
   const { roleCards } = content
 
   return (
-    <Section className="bg-gradient-to-b from-olive-50 to-white py-20 lg:py-28 overflow-hidden">
+    <Section className="bg-gradient-to-b from-olive-50 to-white py-16 sm:py-24 overflow-hidden">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

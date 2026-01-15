@@ -139,7 +139,7 @@ function CollapsibleSection({
   return (
     <div className="border-t border-olive-200/50 pt-3 mt-3 first:border-t-0 first:pt-0 first:mt-0">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen((prev) => !prev)}
         className="w-full flex items-center justify-between text-xs font-medium text-olive-600 uppercase tracking-wider hover:text-olive-900 transition-colors"
       >
         <span className="flex items-center gap-1.5">

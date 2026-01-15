@@ -12,21 +12,21 @@ export function FinalCTA() {
   const { finalCta } = content
 
   return (
-    <Section className="bg-olive-950 text-white">
+    <Section className="bg-gradient-to-b from-olive-50 to-olive-100 border-t border-olive-200">
       <Container>
         <div className="max-w-2xl mx-auto text-center">
           <FadeIn>
-            <Eyebrow className="text-olive-400">{finalCta.eyebrow}</Eyebrow>
+            <Eyebrow className="text-adapty-600">{finalCta.eyebrow}</Eyebrow>
           </FadeIn>
 
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-display tracking-tight text-white">
+          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-display tracking-tight text-olive-950">
             <TextReveal>
               {finalCta.headline}
             </TextReveal>
           </h2>
 
           <FadeIn delay={0.3}>
-            <p className="mt-6 text-olive-300 text-lg/7 max-w-lg mx-auto">
+            <p className="mt-6 text-olive-600 text-lg/7 max-w-lg mx-auto">
               {finalCta.description}
             </p>
           </FadeIn>
@@ -36,7 +36,7 @@ export function FinalCTA() {
               <EmailForm
                 placeholder="Enter your work email"
                 buttonText={finalCta.cta}
-                className="border-olive-700 focus-within:border-olive-500"
+                className="border-olive-300 focus-within:border-adapty-400"
               />
             </div>
           </FadeIn>

@@ -68,7 +68,7 @@ function CaseStudyCard({
 
         {/* Metric badge */}
         <div className="mt-auto p-6 pt-0">
-          <span className="inline-flex px-4 py-2 rounded-full bg-olive-950 text-white text-lg font-bold">
+          <span className="inline-flex px-4 py-2 rounded-full bg-adapty-500 text-white text-lg font-bold shadow-sm">
             {metric}
           </span>
         </div>

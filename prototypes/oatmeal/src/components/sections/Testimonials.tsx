@@ -51,7 +51,7 @@ const testimonials = [
  * - Sophisticated editorial layout inspired by premium magazines
  * - Large, confident typography with proper typographic hierarchy
  * - Scroll-triggered reveal creates reading rhythm
- * - Quote appears word-by-word for dramatic effect
+ * - Light theme with subtle olive background
  * - Company metric badge adds credibility
  *
  * Polished details:
@@ -74,15 +74,15 @@ function TestimonialsEditorial() {
   const featured = testimonials[0]
 
   return (
-    <Section className="relative overflow-hidden bg-olive-950 py-24 lg:py-32">
+    <Section className="relative overflow-hidden bg-olive-50 py-16 sm:py-24">
       {/* Animated gradient background */}
       <motion.div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-40"
         style={{ y: backgroundY }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-adapty-600/20 via-transparent to-olive-800/30" />
-        <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-adapty-500/10 blur-3xl" />
-        <div className="absolute bottom-1/4 -left-1/4 w-[400px] h-[400px] rounded-full bg-olive-500/10 blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-adapty-100/30 via-transparent to-olive-100/50" />
+        <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-adapty-200/20 blur-3xl" />
+        <div className="absolute bottom-1/4 -left-1/4 w-[400px] h-[400px] rounded-full bg-olive-200/30 blur-3xl" />
       </motion.div>
 
       <Container className="relative">
@@ -100,7 +100,7 @@ function TestimonialsEditorial() {
             className="flex items-center gap-4 mb-12"
           >
             <div className="h-px w-12 bg-adapty-500" />
-            <span className="text-sm font-medium tracking-wider uppercase text-adapty-400">
+            <span className="text-sm font-medium tracking-wider uppercase text-adapty-600">
               Customer Story
             </span>
           </motion.div>
@@ -115,16 +115,16 @@ function TestimonialsEditorial() {
               className="relative"
             >
               {/* Opening quote mark */}
-              <span className="absolute -top-8 -left-2 text-8xl font-serif text-adapty-500/20 select-none">
+              <span className="absolute -top-8 -left-2 text-8xl font-serif text-adapty-300/40 select-none">
                 &ldquo;
               </span>
 
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white leading-[1.2] tracking-tight">
+              <p className="text-3xl sm:text-4xl lg:text-5xl font-medium text-olive-950 leading-[1.2] tracking-tight">
                 {featured.quote}
               </p>
 
               {/* Closing quote mark */}
-              <span className="text-8xl font-serif text-adapty-500/20 select-none leading-none">
+              <span className="text-8xl font-serif text-adapty-300/40 select-none leading-none">
                 &rdquo;
               </span>
             </motion.blockquote>
@@ -140,7 +140,7 @@ function TestimonialsEditorial() {
               <div className="flex items-center gap-5">
                 {/* Avatar with verified ring */}
                 <div className="relative">
-                  <div className="relative size-16 rounded-full overflow-hidden ring-2 ring-adapty-500/50 ring-offset-4 ring-offset-olive-950">
+                  <div className="relative size-16 rounded-full overflow-hidden ring-2 ring-adapty-400/50 ring-offset-4 ring-offset-olive-50">
                     <Image
                       src={featured.avatar}
                       alt={featured.author}
@@ -149,7 +149,7 @@ function TestimonialsEditorial() {
                     />
                   </div>
                   {/* Verified badge */}
-                  <div className="absolute -bottom-1 -right-1 size-6 rounded-full bg-adapty-500 flex items-center justify-center ring-2 ring-olive-950">
+                  <div className="absolute -bottom-1 -right-1 size-6 rounded-full bg-adapty-500 flex items-center justify-center ring-2 ring-olive-50">
                     <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
@@ -157,19 +157,19 @@ function TestimonialsEditorial() {
                 </div>
 
                 <div>
-                  <p className="text-lg font-semibold text-white">{featured.author}</p>
-                  <p className="text-olive-400">
+                  <p className="text-lg font-semibold text-olive-950">{featured.author}</p>
+                  <p className="text-olive-600">
                     {featured.role} at {featured.company}
                   </p>
                 </div>
               </div>
 
               {/* Impact metric */}
-              <div className="flex items-baseline gap-3 px-6 py-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-                <span className="text-4xl font-bold text-adapty-400 tracking-tight">
+              <div className="flex items-baseline gap-3 px-6 py-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-olive-200 shadow-sm">
+                <span className="text-4xl font-bold text-adapty-600 tracking-tight">
                   {featured.metric}
                 </span>
-                <span className="text-sm text-olive-400 uppercase tracking-wide">
+                <span className="text-sm text-olive-600 uppercase tracking-wide">
                   {featured.metricLabel}
                 </span>
               </div>
@@ -203,7 +203,7 @@ function TestimonialsWall() {
   const items = [...testimonials, ...testimonials, ...testimonials]
 
   return (
-    <Section className="bg-gradient-to-b from-white via-olive-50/30 to-white py-20 lg:py-28 overflow-hidden">
+    <Section className="bg-gradient-to-b from-white via-olive-50/30 to-white py-16 sm:py-24 overflow-hidden">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -351,15 +351,16 @@ function TestimonialsCarousel() {
   const [activeIndex, setActiveIndex] = useState(0)
   const current = testimonials[activeIndex]
 
-  const goTo = useCallback((index: number) => {
-    setActiveIndex((index + testimonials.length) % testimonials.length)
+  const goNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % testimonials.length)
   }, [])
 
-  const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo])
-  const goPrev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo])
+  const goPrev = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }, [])
 
   return (
-    <Section className="bg-olive-50 py-24 lg:py-32">
+    <Section className="bg-olive-50 py-16 sm:py-24">
       <Container>
         <div className="max-w-5xl mx-auto">
           {/* Header with navigation */}

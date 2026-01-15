@@ -47,7 +47,7 @@ function EnterpriseFeature({
           whileInView={{ scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 + index * 0.1, type: 'spring' }}
-          className="flex items-center justify-center size-10 rounded-full bg-olive-950 text-white flex-shrink-0"
+          className="flex items-center justify-center size-10 rounded-full bg-adapty-500 text-white flex-shrink-0 shadow-sm"
         >
           {checkIcon}
         </motion.div>

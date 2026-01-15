@@ -30,7 +30,7 @@ function IntegrationsGrid() {
   const { integrations } = content
 
   return (
-    <Section className="bg-olive-50/50 border-y border-olive-100 py-20 lg:py-24">
+    <Section className="bg-olive-50/50 border-y border-olive-100 py-16 sm:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -140,7 +140,7 @@ function IntegrationsMarquee() {
   const secondRow = integrations.slice(Math.ceil(integrations.length / 2))
 
   return (
-    <Section className="bg-gradient-to-b from-white via-olive-50/30 to-white py-20 lg:py-28 overflow-hidden">
+    <Section className="bg-gradient-to-b from-white via-olive-50/30 to-white py-16 sm:py-24 overflow-hidden">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -283,7 +283,7 @@ function IntegrationsCategorized() {
   const categoryOrder = ['Analytics', 'Attribution', 'Platform', 'Engagement', 'Messaging', 'Payments']
 
   return (
-    <Section className="bg-white py-20 lg:py-28">
+    <Section className="bg-white py-16 sm:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -11,25 +11,25 @@ import { motion } from 'motion/react'
 import { useId } from 'react'
 
 /**
- * Variant A: Cards (Dark Background Grid)
+ * Variant A: Cards (Light Background Grid)
  *
  * Design philosophy:
- * - Dark olive background creates dramatic contrast
+ * - Light olive background keeps page cohesive
  * - 4-column grid with generous spacing
  * - NumberTicker animation adds life to numbers
- * - Subtle adapty accent on suffix for brand presence
+ * - Adapty purple accent on numbers for brand presence
  *
  * Polished details:
  * - Staggered fade-in creates reading flow
  * - Responsive font sizes maintain impact at all breakpoints
- * - Olive-300 labels readable but not competing
- * - Best for: High-contrast standalone credibility section
+ * - Olive-600 labels readable but not competing
+ * - Best for: Credibility section within light page flow
  */
 function StatsCards() {
   const { stats } = content
 
   return (
-    <Section className="bg-olive-950 text-white py-20 lg:py-24">
+    <Section className="bg-olive-50/50 border-y border-olive-100 py-16 sm:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ function StatsCards() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <p className="text-sm font-medium tracking-wider uppercase text-adapty-400 mb-2">
+          <p className="text-sm font-medium tracking-wider uppercase text-adapty-600 mb-2">
             Trusted by Growth Teams
           </p>
         </motion.div>
@@ -47,7 +47,7 @@ function StatsCards() {
           {stats.map((stat, index) => (
             <FadeIn key={stat.label} delay={index * 0.1}>
               <div className="text-center group">
-                <div className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-white">
+                <div className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-olive-950">
                   <NumberTicker
                     value={stat.value}
                     prefix={stat.prefix}
@@ -55,7 +55,7 @@ function StatsCards() {
                     decimals={stat.decimals}
                   />
                 </div>
-                <p className="mt-3 text-sm sm:text-base text-olive-400 group-hover:text-olive-300 transition-colors">
+                <p className="mt-3 text-sm sm:text-base text-olive-600 group-hover:text-olive-900 transition-colors">
                   {stat.label}
                 </p>
               </div>
@@ -132,7 +132,7 @@ function StatsWithGraph() {
   const pathId = useId()
 
   return (
-    <Section className="py-20 lg:py-24 bg-white overflow-hidden">
+    <Section className="py-16 sm:py-24 bg-white overflow-hidden">
       <Container>
         <div className="relative">
           {/* Stats Grid */}
@@ -228,7 +228,7 @@ function StatsFloatingCards() {
   const { stats } = content
 
   return (
-    <Section className="py-20 lg:py-24 bg-gradient-to-b from-white to-olive-50/70">
+    <Section className="py-16 sm:py-24 bg-gradient-to-b from-white to-olive-50/70">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

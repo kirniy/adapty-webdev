@@ -23,8 +23,15 @@ import { motion } from 'motion/react'
 export function DashedGridOverlay() {
   const { showDashedGrid, dashedGridStyle } = useDebug()
 
-  // Opacity multiplier based on style: subtle = 0.5x, visible = 1x
-  const opacityMultiplier = dashedGridStyle === 'subtle' ? 0.5 : 1
+  // Base opacities tuned against bg-olive-100 for real contrast.
+  const intensity = dashedGridStyle === 'subtle' ? 0.5 : 1
+  const opacity = {
+    major: 0.28 * intensity,
+    mid: 0.22 * intensity,
+    minor: 0.18 * intensity,
+    support: 0.14 * intensity,
+    supportMid: 0.11 * intensity,
+  }
 
   return (
     <motion.div
@@ -50,7 +57,7 @@ export function DashedGridOverlay() {
           x2="16.67%"
           y2="100%"
           stroke="currentColor"
-          strokeOpacity={0.08 * opacityMultiplier}
+          strokeOpacity={opacity.major}
           strokeDasharray="5 5"
           strokeLinecap="round"
           className="text-olive-400"
@@ -63,7 +70,7 @@ export function DashedGridOverlay() {
           x2="33.33%"
           y2="100%"
           stroke="currentColor"
-          strokeOpacity={0.05 * opacityMultiplier}
+          strokeOpacity={opacity.minor}
           strokeDasharray="4 6"
           strokeLinecap="round"
           className="text-olive-400"
@@ -76,7 +83,7 @@ export function DashedGridOverlay() {
           x2="50%"
           y2="100%"
           stroke="currentColor"
-          strokeOpacity={0.06 * opacityMultiplier}
+          strokeOpacity={opacity.mid}
           strokeDasharray="5 5"
           strokeLinecap="round"
           className="text-olive-400"
@@ -89,7 +96,7 @@ export function DashedGridOverlay() {
           x2="66.67%"
           y2="100%"
           stroke="currentColor"
-          strokeOpacity={0.05 * opacityMultiplier}
+          strokeOpacity={opacity.minor}
           strokeDasharray="4 6"
           strokeLinecap="round"
           className="text-olive-400"
@@ -102,7 +109,7 @@ export function DashedGridOverlay() {
           x2="83.33%"
           y2="100%"
           stroke="currentColor"
-          strokeOpacity={0.08 * opacityMultiplier}
+          strokeOpacity={opacity.major}
           strokeDasharray="5 5"
           strokeLinecap="round"
           className="text-olive-400"
@@ -125,7 +132,7 @@ export function DashedGridOverlay() {
           x2="100%"
           y2="33.33%"
           stroke="currentColor"
-          strokeOpacity={0.04 * opacityMultiplier}
+          strokeOpacity={opacity.support}
           strokeDasharray="6 8"
           strokeLinecap="round"
           className="text-olive-400"
@@ -138,7 +145,7 @@ export function DashedGridOverlay() {
           x2="100%"
           y2="50%"
           stroke="currentColor"
-          strokeOpacity={0.03 * opacityMultiplier}
+          strokeOpacity={opacity.supportMid}
           strokeDasharray="8 12"
           strokeLinecap="round"
           className="text-olive-400"
@@ -151,7 +158,7 @@ export function DashedGridOverlay() {
           x2="100%"
           y2="66.67%"
           stroke="currentColor"
-          strokeOpacity={0.04 * opacityMultiplier}
+          strokeOpacity={opacity.support}
           strokeDasharray="6 8"
           strokeLinecap="round"
           className="text-olive-400"
