@@ -5,7 +5,6 @@ import { Eyebrow } from '@/components/elements/Eyebrow'
 import { Heading } from '@/components/elements/Heading'
 import { Section } from '@/components/elements/Section'
 import { FadeIn } from '@/components/effects/FadeIn'
-import { SpotlightCard } from '@/components/effects/SpotlightCard'
 import { cn } from '@/lib/cn'
 import { content } from '@/lib/content'
 import { motion } from 'motion/react'
@@ -13,113 +12,73 @@ import Image from 'next/image'
 
 // Category colors for visual distinction
 const categoryColors: Record<string, string> = {
-  Analytics: 'bg-blue-500/10 text-blue-700',
-  Attribution: 'bg-green-500/10 text-green-700',
-  Platform: 'bg-orange-500/10 text-orange-700',
-  Engagement: 'bg-purple-500/10 text-purple-700',
-  Infrastructure: 'bg-slate-500/10 text-slate-700',
-}
-
-function IntegrationCard({
-  name,
-  src,
-  description,
-  category,
-  index,
-}: {
-  name: string
-  src: string
-  description: string
-  category: string
-  index: number
-}) {
-  return (
-    <FadeIn delay={0.05 * index}>
-      <SpotlightCard>
-        <motion.div
-          className={cn(
-            'group relative flex flex-col h-full p-6 rounded-xl',
-            'bg-white border border-olive-200/50',
-            'hover:border-olive-300 transition-colors duration-200'
-          )}
-          whileHover={{ y: -4 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-        >
-          {/* Logo */}
-          <div className="flex items-center justify-center h-12 w-12 mb-4 rounded-lg bg-olive-50 group-hover:bg-olive-100 transition-colors">
-            <Image
-              src={src}
-              alt={name}
-              width={32}
-              height={32}
-              className="object-contain"
-            />
-          </div>
-
-          {/* Name and Description */}
-          <h3 className="font-semibold text-olive-950 mb-1">{name}</h3>
-          <p className="text-sm text-olive-600 mb-4 flex-1">{description}</p>
-
-          {/* Category Badge */}
-          <span
-            className={cn(
-              'inline-flex self-start px-2.5 py-1 rounded-full text-xs font-medium',
-              categoryColors[category] || 'bg-olive-100 text-olive-700'
-            )}
-          >
-            {category}
-          </span>
-        </motion.div>
-      </SpotlightCard>
-    </FadeIn>
-  )
+  Analytics: 'bg-blue-500/10 text-blue-700 border-blue-200',
+  Attribution: 'bg-green-500/10 text-green-700 border-green-200',
+  Platform: 'bg-orange-500/10 text-orange-700 border-orange-200',
+  Engagement: 'bg-purple-500/10 text-purple-700 border-purple-200',
+  Messaging: 'bg-pink-500/10 text-pink-700 border-pink-200',
+  Payments: 'bg-indigo-500/10 text-indigo-700 border-indigo-200',
 }
 
 export function Integrations() {
   const { integrations } = content
 
-  // Group integrations by category for visual organization
-  const categories = [...new Set(integrations.map((i) => i.category))]
-
   return (
-    <Section>
+    <Section className="bg-olive-50/50 border-y border-olive-200/50">
       <Container>
-        <FadeIn className="text-center mb-12 lg:mb-16">
+        <FadeIn className="text-center mb-12">
           <Eyebrow>Integrations</Eyebrow>
           <Heading as="h2" className="mt-2">
-            Works with your entire stack
+            Connect with your favorite tools
           </Heading>
-          <p className="mt-4 text-olive-600 max-w-2xl mx-auto text-lg">
-            Connect Adapty to your favorite analytics, attribution, and engagement tools.
-            Send subscription events everywhere in real-time.
+          <p className="mt-4 text-olive-600 max-w-2xl mx-auto">
+            Send subscription data to analytics, attribution, and marketing platforms
           </p>
         </FadeIn>
 
-        {/* Category Pills */}
-        <FadeIn delay={0.1}>
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
-            {categories.map((category) => (
-              <span
-                key={category}
-                className={cn(
-                  'px-4 py-2 rounded-full text-sm font-medium',
-                  categoryColors[category] || 'bg-olive-100 text-olive-700'
-                )}
-              >
-                {category}
-              </span>
-            ))}
-          </div>
-        </FadeIn>
-
-        {/* Integration Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {/* Integration Logos Grid */}
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-6">
           {integrations.map((integration, index) => (
-            <IntegrationCard
-              key={integration.name}
-              {...integration}
-              index={index}
-            />
+            <FadeIn key={integration.name} delay={0.03 * index}>
+              <motion.div
+                className={cn(
+                  'group flex flex-col items-center justify-center p-4 rounded-xl',
+                  'bg-white border border-olive-100',
+                  'hover:border-olive-300 hover:shadow-md',
+                  'transition-all duration-200'
+                )}
+                whileHover={{ y: -4, scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              >
+                {/* Logo */}
+                <div className="relative w-10 h-10 mb-2 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
+                  <Image
+                    src={`/integrations/${integration.logo}`}
+                    alt={integration.name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+
+                {/* Name */}
+                <span className="text-xs font-medium text-olive-700 text-center">
+                  {integration.name}
+                </span>
+
+                {/* Category indicator (subtle dot) */}
+                <span
+                  className={cn(
+                    'mt-2 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity',
+                    integration.category === 'Analytics' && 'bg-blue-500',
+                    integration.category === 'Attribution' && 'bg-green-500',
+                    integration.category === 'Platform' && 'bg-orange-500',
+                    integration.category === 'Engagement' && 'bg-purple-500',
+                    integration.category === 'Messaging' && 'bg-pink-500',
+                    integration.category === 'Payments' && 'bg-indigo-500'
+                  )}
+                />
+              </motion.div>
+            </FadeIn>
           ))}
         </div>
 

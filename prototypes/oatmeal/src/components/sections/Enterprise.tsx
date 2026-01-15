@@ -28,12 +28,12 @@ function CheckIcon({ className }: { className?: string }) {
 }
 
 function EnterpriseFeature({
-  title,
-  description,
+  icon,
+  label,
   index,
 }: {
-  title: string
-  description: string
+  icon: string
+  label: string
   index: number
 }) {
   return (
@@ -41,23 +41,18 @@ function EnterpriseFeature({
       <motion.div
         whileHover={{ x: 4 }}
         transition={{ duration: 0.2 }}
-        className="flex items-start gap-4"
+        className="flex items-center gap-4 p-4 rounded-xl bg-olive-50 border border-olive-100"
       >
-        <div className="flex-shrink-0 mt-1">
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 + index * 0.1, type: 'spring' }}
-            className="flex items-center justify-center size-8 rounded-full bg-olive-950 text-white"
-          >
-            <CheckIcon className="size-4" />
-          </motion.div>
-        </div>
-        <div>
-          <h4 className="font-semibold text-olive-950">{title}</h4>
-          <p className="text-sm text-olive-600 mt-0.5">{description}</p>
-        </div>
+        <motion.div
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 + index * 0.1, type: 'spring' }}
+          className="flex items-center justify-center size-10 rounded-full bg-olive-950 text-white flex-shrink-0"
+        >
+          <CheckIcon className="size-5" />
+        </motion.div>
+        <span className="font-medium text-olive-950">{label}</span>
       </motion.div>
     </FadeIn>
   )
@@ -74,18 +69,19 @@ export function Enterprise() {
           <FadeIn>
             <Eyebrow>Enterprise</Eyebrow>
             <Heading as="h2" className="mt-2">
-              {enterprise.title}
+              {enterprise.headline}{' '}
+              <span className="italic text-olive-600">{enterprise.headlineAccent}</span>
             </Heading>
             <p className="mt-4 text-olive-600 max-w-lg">
-              Built for scale with security, compliance, and support that enterprise teams require.
+              {enterprise.description}
             </p>
           </FadeIn>
 
           {/* Right: Features grid */}
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 gap-4">
             {enterprise.features.map((feature, index) => (
               <EnterpriseFeature
-                key={feature.title}
+                key={feature.label}
                 {...feature}
                 index={index}
               />

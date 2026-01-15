@@ -11,14 +11,18 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 
 function CaseStudyCard({
-  name,
-  icon,
-  lift,
+  title,
+  metric,
+  category,
+  logo,
+  bgColor,
   index,
 }: {
-  name: string
-  icon: string
-  lift: string
+  title: string
+  metric: string
+  category: string
+  logo: string
+  bgColor: string
   index: number
 }) {
   return (
@@ -27,36 +31,45 @@ function CaseStudyCard({
         whileHover={{ y: -4 }}
         transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          'group relative flex items-center gap-4 p-4',
-          'rounded-xl bg-white border border-olive-200',
-          'hover:border-olive-300 hover:shadow-md',
-          'transition-all duration-200 cursor-pointer'
+          'group relative flex flex-col h-full',
+          'rounded-2xl overflow-hidden',
+          'bg-gradient-to-br',
+          bgColor,
+          'border border-olive-200/50',
+          'hover:shadow-xl hover:shadow-olive-900/10',
+          'transition-all duration-300 cursor-pointer'
         )}
       >
-        {/* App icon */}
-        <motion.div
-          whileHover={{ scale: 1.05, rotate: 3 }}
-          transition={{ duration: 0.2 }}
-          className="relative size-14 rounded-xl overflow-hidden shadow-sm flex-shrink-0"
-        >
-          <Image
-            src={icon}
-            alt={name}
-            fill
-            className="object-cover"
-          />
-        </motion.div>
+        {/* Header with logo and category */}
+        <div className="p-6 pb-4">
+          <div className="flex items-start justify-between mb-4">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+              className="relative size-12 rounded-xl overflow-hidden shadow-md bg-white"
+            >
+              <Image
+                src={logo}
+                alt={title}
+                fill
+                className="object-contain p-1"
+              />
+            </motion.div>
+            <span className="text-xs font-medium text-olive-600 bg-white/60 px-2.5 py-1 rounded-full">
+              {category}
+            </span>
+          </div>
 
-        {/* Info */}
-        <div className="flex-1 min-w-0">
-          <p className="font-medium text-olive-950 truncate">{name}</p>
-          <p className="text-sm text-olive-500">Revenue increase</p>
+          {/* Title */}
+          <p className="font-medium text-olive-900 leading-snug line-clamp-2">
+            {title}
+          </p>
         </div>
 
-        {/* Lift badge */}
-        <div className="flex-shrink-0">
-          <span className="inline-flex px-3 py-1.5 rounded-full bg-olive-950 text-white text-sm font-semibold">
-            {lift}
+        {/* Metric badge */}
+        <div className="mt-auto p-6 pt-0">
+          <span className="inline-flex px-4 py-2 rounded-full bg-olive-950 text-white text-lg font-bold">
+            {metric}
           </span>
         </div>
       </motion.div>
@@ -77,9 +90,9 @@ export function CaseStudies() {
           </Heading>
         </FadeIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((study, index) => (
-            <CaseStudyCard key={study.name} {...study} index={index} />
+            <CaseStudyCard key={study.title} {...study} index={index} />
           ))}
         </div>
       </Container>

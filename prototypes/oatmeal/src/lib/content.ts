@@ -1,29 +1,33 @@
-// Adapty Homepage Content Data
+// Adapty Homepage Content Data - Real content from adapty.io and AuraBuild
 
 export const content = {
   hero: {
     eyebrow: 'Revenue Management & Growth',
-    headline: 'The complete toolkit for',
-    headlineAccent: 'in-app subscriptions',
+    headline: 'Revenue management for',
+    headlineAccent: 'in-app purchases',
     description:
-      'Build paywalls, run A/B tests, and track subscription analytics. Adapty helps mobile apps increase revenue by up to 30%.',
+      'Save months on integrating subscriptions and double your app revenue with paywall management and A/B testing.',
     cta: {
-      primary: 'Start free trial',
-      secondary: 'Schedule demo',
+      primary: 'Start for free',
+      secondary: 'View Documentation',
     },
-    image: '/images/hero/adapty-paywall-demo-preview@2x.webp',
+    trustSignal: 'Trusted by 15,000+ apps worldwide',
+    image: '/images/hero-overview.webp',
   },
 
   trustedBy: {
-    title: 'Trusted by leading mobile apps',
+    title: 'Trusted by 15,000+ apps and the world\'s largest app publishers',
     logos: [
-      { name: 'Bumble', src: '/logos/trusted-by/bumble.svg' },
       { name: 'Feeld', src: '/logos/trusted-by/feeld.svg' },
+      { name: 'Bumble', src: '/logos/trusted-by/bumble.svg' },
       { name: 'HubX', src: '/logos/trusted-by/hubx.svg' },
-      { name: 'Impala', src: '/logos/trusted-by/impala-studios.svg' },
-      { name: 'Almus', src: '/logos/trusted-by/almus.svg' },
-      { name: 'WeeWoo', src: '/logos/trusted-by/weewoo.svg' },
       { name: 'AppNation', src: '/logos/trusted-by/appnation.webp' },
+      { name: 'Smitten', src: '/logos/trusted-by/smitten.webp' },
+      { name: 'Bickster', src: '/logos/trusted-by/bickster.png' },
+      { name: 'Almus', src: '/logos/trusted-by/almus.svg' },
+      { name: 'Impala Studios', src: '/logos/trusted-by/impala-studios.svg' },
+      { name: 'SocialKit', src: '/logos/trusted-by/socialkit.svg' },
+      { name: 'Weewoo', src: '/logos/trusted-by/weewoo.svg' },
     ],
   },
 
@@ -31,61 +35,61 @@ export const content = {
     {
       id: 'paywall-builder',
       eyebrow: 'No-Code Builder',
-      title: 'Build paywalls without code',
+      title: 'Paywall Builder',
       description:
-        'Design and deploy beautiful paywalls in minutes. No engineering resources required. Update anytime without app releases.',
+        'No-code visual builder with 50+ templates. Design, customize, and ship paywalls without developers.',
       image: '/images/features/paywalls-cover.webp',
       wallpaper: 'green' as const,
+      link: { text: 'Explore Paywall Builder', href: '#' },
     },
     {
       id: 'ab-testing',
-      eyebrow: 'A/B Testing',
-      title: 'Optimize with experiments',
+      eyebrow: 'Experiments',
+      title: 'A/B Testing',
       description:
-        'Run statistically significant tests on prices, designs, and offers. Make data-driven decisions to maximize conversion rates.',
+        'Bayesian statistics for faster results. Run multi-variant experiments with ML-powered predictions.',
       image: '/images/features/charts-cover.webp',
-      wallpaper: 'blue' as const,
+      wallpaper: 'olive' as const,
+      link: { text: 'Start Experimenting', href: '#' },
     },
     {
       id: 'analytics',
-      eyebrow: 'Subscription Analytics',
-      title: 'Track every metric that matters',
+      eyebrow: 'Real-time Data',
+      title: 'Real-time Analytics',
       description:
-        'Real-time dashboards with MRR, LTV, churn, and cohort analysis. Understand your subscription business at a glance.',
+        'Track MRR, LTV, churn, and cohorts. Sync data to your favorite analytics tools.',
       image: '/images/features/sdk-install-cover.webp',
       wallpaper: 'purple' as const,
+      link: { text: 'View Dashboard', href: '#' },
     },
     {
-      id: 'sdk',
-      eyebrow: 'Cross-Platform SDK',
-      title: 'Integrate in minutes',
+      id: 'remote-config',
+      eyebrow: 'Live Updates',
+      title: 'Remote Config',
       description:
-        'Native SDKs for iOS, Android, React Native, Flutter, and Unity. Server-side validation and webhook support included.',
+        'Update pricing, features, and offers instantly. No app updates required.',
       image: '/images/features/sdk-install-cover.webp',
-      wallpaper: 'brown' as const,
+      wallpaper: 'blue' as const,
+      link: { text: 'Explore Config', href: '#' },
     },
   ],
 
   stats: [
-    { value: 2, prefix: '$', suffix: 'B+', label: 'Revenue processed' },
+    { value: 15, suffix: 'k+', label: 'Apps powered', prefix: '' },
+    { value: 1.5, suffix: 'B+', label: 'User profiles', decimals: 1 },
+    { value: 4, suffix: 'B+', label: 'API calls monthly' },
     { value: 99.99, suffix: '%', label: 'Uptime SLA', decimals: 2 },
-    { value: 2.5, suffix: 'B+', label: 'Users tracked', decimals: 1 },
-    { value: 60, suffix: 'B+', label: 'API calls/month' },
   ],
 
-  // Featured testimonial for large display
-  featuredTestimonial: {
-    quote:
-      'The no-code paywall builder saved us months of development time. We can now iterate on our monetization strategy in real-time without waiting for app releases.',
-    author: 'Chris Bick',
-    role: 'CEO',
-    company: 'Shmoody',
-    avatar: '/images/testimonials/chris-bick.webp',
-    photo: '/images/testimonials/chris.webp',
-  },
-
-  // Additional testimonials for rotation
   testimonials: [
+    {
+      quote:
+        'The no-code paywall builder saved us months of development time. We can now iterate on our monetization strategy in real-time without waiting for app releases.',
+      author: 'Chris Bick',
+      role: 'CEO',
+      company: 'Shmoody',
+      avatar: '/images/testimonials/chris-bick.webp',
+    },
     {
       quote:
         'Adapty helped us increase our subscription revenue by 40% in just 3 months. The A/B testing tools are incredibly powerful.',
@@ -129,95 +133,61 @@ export const content = {
   ],
 
   integrations: [
-    {
-      name: 'Amplitude',
-      src: '/integrations/amplitude.svg',
-      description: 'Product analytics',
-      category: 'Analytics'
-    },
-    {
-      name: 'Mixpanel',
-      src: '/integrations/mixpanel.svg',
-      description: 'User behavior analytics',
-      category: 'Analytics'
-    },
-    {
-      name: 'AppsFlyer',
-      src: '/integrations/appsflyer.svg',
-      description: 'Attribution & marketing',
-      category: 'Attribution'
-    },
-    {
-      name: 'Adjust',
-      src: '/integrations/adjust.svg',
-      description: 'Mobile measurement',
-      category: 'Attribution'
-    },
-    {
-      name: 'Branch',
-      src: '/integrations/branch.svg',
-      description: 'Deep linking & attribution',
-      category: 'Attribution'
-    },
-    {
-      name: 'Firebase',
-      src: '/integrations/firebase.svg',
-      description: 'App development platform',
-      category: 'Platform'
-    },
-    {
-      name: 'OneSignal',
-      src: '/integrations/onesignal.svg',
-      description: 'Push notifications',
-      category: 'Engagement'
-    },
-    {
-      name: 'Braze',
-      src: '/integrations/braze.svg',
-      description: 'Customer engagement',
-      category: 'Engagement'
-    },
-    {
-      name: 'PostHog',
-      src: '/integrations/posthog.svg',
-      description: 'Product analytics',
-      category: 'Analytics'
-    },
-    {
-      name: 'Airship',
-      src: '/integrations/airship.svg',
-      description: 'App experience platform',
-      category: 'Engagement'
-    },
-    {
-      name: 'Facebook',
-      src: '/integrations/facebook.svg',
-      description: 'Ads attribution',
-      category: 'Attribution'
-    },
-    {
-      name: 'Amazon S3',
-      src: '/integrations/amazon-s3.svg',
-      description: 'Cloud storage',
-      category: 'Infrastructure'
-    },
+    { name: 'Amplitude', logo: 'amplitude.svg', category: 'Analytics' },
+    { name: 'Mixpanel', logo: 'mixpanel.svg', category: 'Analytics' },
+    { name: 'AppsFlyer', logo: 'appsflyer.svg', category: 'Attribution' },
+    { name: 'Adjust', logo: 'adjust.svg', category: 'Attribution' },
+    { name: 'Branch', logo: 'branch.svg', category: 'Attribution' },
+    { name: 'Segment', logo: 'segment.svg', category: 'Analytics' },
+    { name: 'Firebase', logo: 'firebase.svg', category: 'Platform' },
+    { name: 'Braze', logo: 'braze.svg', category: 'Engagement' },
+    { name: 'OneSignal', logo: 'onesignal.svg', category: 'Engagement' },
+    { name: 'Slack', logo: 'slack.svg', category: 'Messaging' },
+    { name: 'PostHog', logo: 'posthog.svg', category: 'Analytics' },
+    { name: 'Stripe', logo: 'stripe.svg', category: 'Payments' },
+    { name: 'Apple Ads', logo: 'apple-ads.svg', category: 'Attribution' },
+    { name: 'Singular', logo: 'singular.svg', category: 'Attribution' },
   ],
 
-  sdks: [
-    { name: 'Swift', src: '/sdks/swift.svg' },
-    { name: 'Kotlin', src: '/sdks/kotlin.svg' },
-    { name: 'React Native', src: '/sdks/react-native.svg' },
-    { name: 'Flutter', src: '/sdks/flutter.svg' },
-    { name: 'Unity', src: '/sdks/unity.svg' },
+  sdkPlatforms: [
+    { name: 'iOS', src: '/images/sdks/swift.svg', color: 'bg-orange-50 border-orange-200' },
+    { name: 'Android', src: '/images/sdks/kotlin.svg', color: 'bg-purple-50 border-purple-200' },
+    { name: 'Flutter', src: '/images/sdks/flutter.svg', color: 'bg-sky-50 border-sky-200' },
+    { name: 'React Native', src: '/images/sdks/react-native.svg', color: 'bg-cyan-50 border-cyan-200' },
+    { name: 'Unity', src: '/images/sdks/unity.svg', color: 'bg-stone-800 border-stone-700' },
+    { name: 'Stripe', src: '/images/sdks/stripe.svg', color: 'bg-indigo-50 border-indigo-200' },
+  ],
+
+  sdkTabs: [
+    { id: 'swift', label: 'Swift' },
+    { id: 'kotlin', label: 'Kotlin' },
+    { id: 'react-native', label: 'React Native' },
+    { id: 'flutter', label: 'Flutter' },
+    { id: 'unity', label: 'Unity' },
   ],
 
   caseStudies: [
-    { name: 'Productivity App', icon: '/images/case-studies/productivity-app.webp', lift: '+45%' },
-    { name: 'Text on Pic', icon: '/images/case-studies/text-on-pic.webp', lift: '+38%' },
-    { name: 'Trip Planning', icon: '/images/case-studies/trip-planning.webp', lift: '+52%' },
-    { name: 'Going Merry', icon: '/images/case-studies/going-merry.webp', lift: '+29%' },
-    { name: 'Shmoody', icon: '/images/case-studies/shmoody.webp', lift: '+61%' },
-    { name: 'Lively', icon: '/images/case-studies/lively.png', lift: '+33%' },
+    {
+      title: 'How Glam AI pricing tests unlocked revenue potential',
+      metric: '+50% Revenue',
+      category: 'Photo & Video',
+      logo: '/images/case-studies/logo-glam-ai.png',
+      bgColor: 'from-pink-100 to-purple-100',
+    },
+    {
+      title: 'Going Merry\'s rapid scaling with Paywall Builder',
+      metric: '5x Growth',
+      category: 'Education',
+      logo: '/images/case-studies/logo-going-merry.png',
+      bgColor: 'from-green-100 to-emerald-100',
+    },
+    {
+      title: 'Shmoody boosted conversions with A/B experiments',
+      metric: '+40% Revenue',
+      category: 'Health & Wellness',
+      logo: '/images/case-studies/logo-shmoody.png',
+      bgColor: 'from-blue-100 to-cyan-100',
+    },
   ],
 
   g2Badges: [
@@ -229,13 +199,17 @@ export const content = {
   ],
 
   enterprise: {
-    title: 'Enterprise-ready infrastructure',
+    headline: 'Enterprise-ready',
+    headlineAccent: 'infrastructure',
+    description:
+      'Built for scale, security, and compliance. We support the world\'s largest publishers.',
     features: [
-      { title: 'SOC 2 Type II', description: 'Certified security compliance' },
-      { title: 'GDPR Compliant', description: 'Full data privacy controls' },
-      { title: '99.99% Uptime', description: 'Enterprise SLA guaranteed' },
-      { title: 'Dedicated Support', description: 'Priority technical assistance' },
+      { icon: 'shield', label: 'SOC 2 Type II' },
+      { icon: 'lock', label: 'GDPR Compliant' },
+      { icon: 'server', label: '99.99% Uptime' },
+      { icon: 'headset', label: 'Dedicated Support' },
     ],
+    cta: 'Contact Sales',
   },
 
   finalCta: {
