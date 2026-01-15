@@ -1,4 +1,5 @@
 import { HeaderSwitch } from '@/components/layout/HeaderSwitch'
+import { SectionGrid } from '@/components/layout/SectionGrid'
 import { CaseStudies } from '@/components/sections/CaseStudies'
 import { CoreFeatures } from '@/components/sections/CoreFeatures'
 import { Enterprise } from '@/components/sections/Enterprise'
@@ -17,17 +18,19 @@ export default function HomePage() {
     <>
       <HeaderSwitch />
       <main>
-        <Hero />
-        <TrustedBy />
-        <CoreFeatures />
-        <Stats />
-        <Testimonials />
-        <RoleCards />
-        <Integrations />
-        <CaseStudies />
-        <G2Badges />
-        <Enterprise />
-        <FinalCTA />
+        <SectionGrid>
+          <Hero />
+          <TrustedBy />
+          <CoreFeatures />
+          <Stats />
+          <Testimonials />
+          <RoleCards />
+          <Integrations />
+          <CaseStudies />
+          <G2Badges />
+          <Enterprise />
+          <FinalCTA />
+        </SectionGrid>
       </main>
       <Footer />
     </>

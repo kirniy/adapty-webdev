@@ -8,6 +8,9 @@ export type GridVariant = 'cursor-tracking' | 'slow-drift' | 'static' | 'off'
 // Header/navbar variants
 export type HeaderVariant = 'oatmeal-simple' | 'aura-megamenu'
 
+// Grid lines style (for GridSection wrapper)
+export type GridLinesStyle = 'off' | 'solid' | 'dashed'
+
 // Section variant types - each section can have multiple design variants
 export type HeroVariant = 'centered-demo' | 'split-left' | 'wallpaper-bg' | 'minimal-text'
 export type TrustedByVariant = 'marquee' | 'static-grid' | 'static-minimal'
@@ -36,6 +39,13 @@ export const GRID_VARIANTS: VariantOption<GridVariant>[] = [
 export const HEADER_VARIANTS: VariantOption<HeaderVariant>[] = [
   { value: 'oatmeal-simple', label: 'Floating Pill', description: 'Pill-shaped navbar with glass blur' },
   { value: 'aura-megamenu', label: 'Full-Width Bar', description: 'Traditional full-width header' },
+]
+
+// Grid lines style variants (achromatic-inspired section borders)
+export const GRID_LINES_VARIANTS: VariantOption<GridLinesStyle>[] = [
+  { value: 'off', label: 'Off', description: 'No section border lines' },
+  { value: 'solid', label: 'Solid Lines', description: 'Solid vertical and horizontal section borders' },
+  { value: 'dashed', label: 'Dashed Lines', description: 'Dashed vertical and horizontal section borders' },
 ]
 
 // Section variant options
@@ -89,6 +99,7 @@ export const INTEGRATIONS_VARIANTS: VariantOption<IntegrationsVariant>[] = [
 interface DebugState {
   gridVariant: GridVariant
   headerVariant: HeaderVariant
+  gridLinesStyle: GridLinesStyle
   // Section variants
   heroVariant: HeroVariant
   trustedByVariant: TrustedByVariant
@@ -104,6 +115,10 @@ interface DebugState {
 interface DebugContextValue extends DebugState {
   setGridVariant: (variant: GridVariant) => void
   setHeaderVariant: (variant: HeaderVariant) => void
+  setGridLinesStyle: (style: GridLinesStyle) => void
+  // Computed helpers for GridSection
+  showGridLines: boolean
+  gridLinesDashed: boolean
   // Section variant setters
   setHeroVariant: (variant: HeroVariant) => void
   setTrustedByVariant: (variant: TrustedByVariant) => void
@@ -137,6 +152,7 @@ export const SECTION_VARIANT_CONFIG = {
 const defaultState: DebugState = {
   gridVariant: 'slow-drift', // Default to slow-drift (not cheesy cursor-tracking)
   headerVariant: 'oatmeal-simple', // Start with current simple navbar
+  gridLinesStyle: 'off', // Start with no section border lines
   // Section defaults - start with current implementations
   heroVariant: 'centered-demo',
   trustedByVariant: 'marquee',
@@ -169,6 +185,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
           ...prev,
           gridVariant: parsed.gridVariant ?? prev.gridVariant,
           headerVariant: parsed.headerVariant ?? prev.headerVariant,
+          gridLinesStyle: parsed.gridLinesStyle ?? prev.gridLinesStyle,
           // Section variants
           heroVariant: parsed.heroVariant ?? prev.heroVariant,
           trustedByVariant: parsed.trustedByVariant ?? prev.trustedByVariant,
@@ -205,6 +222,11 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   // Set header variant
   const setHeaderVariant = useCallback((variant: HeaderVariant) => {
     setState(prev => ({ ...prev, headerVariant: variant }))
+  }, [])
+
+  // Set grid lines style
+  const setGridLinesStyle = useCallback((style: GridLinesStyle) => {
+    setState(prev => ({ ...prev, gridLinesStyle: style }))
   }, [])
 
   // Section variant setters
@@ -279,10 +301,17 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  // Computed helpers for GridSection
+  const showGridLines = state.gridLinesStyle !== 'off'
+  const gridLinesDashed = state.gridLinesStyle === 'dashed'
+
   const value: DebugContextValue = {
     ...state,
     setGridVariant,
     setHeaderVariant,
+    setGridLinesStyle,
+    showGridLines,
+    gridLinesDashed,
     setHeroVariant,
     setTrustedByVariant,
     setCoreFeaturesVariant,

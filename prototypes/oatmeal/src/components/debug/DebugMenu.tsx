@@ -6,6 +6,7 @@ import {
   useDebug,
   GRID_VARIANTS,
   HEADER_VARIANTS,
+  GRID_LINES_VARIANTS,
   HERO_VARIANTS,
   TRUSTED_BY_VARIANTS,
   CORE_FEATURES_VARIANTS,
@@ -69,6 +70,14 @@ const BlocksIcon = () => (
     <rect x="3" y="3" width="18" height="18" rx="2" />
     <line x1="3" y1="9" x2="21" y2="9" />
     <line x1="3" y1="15" x2="21" y2="15" />
+  </svg>
+)
+
+const BordersIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2" />
+    <line x1="3" y1="12" x2="21" y2="12" />
+    <line x1="12" y1="3" x2="12" y2="21" />
   </svg>
 )
 
@@ -158,6 +167,8 @@ export function DebugMenu() {
     setGridVariant,
     headerVariant,
     setHeaderVariant,
+    gridLinesStyle,
+    setGridLinesStyle,
     heroVariant,
     setHeroVariant,
     trustedByVariant,
@@ -214,6 +225,14 @@ export function DebugMenu() {
                 variants={HEADER_VARIANTS}
                 currentValue={headerVariant}
                 onChange={setHeaderVariant}
+              />
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Section Borders" icon={<BordersIcon />} defaultOpen>
+              <VariantSelector
+                variants={GRID_LINES_VARIANTS}
+                currentValue={gridLinesStyle}
+                onChange={setGridLinesStyle}
               />
             </CollapsibleSection>
 
