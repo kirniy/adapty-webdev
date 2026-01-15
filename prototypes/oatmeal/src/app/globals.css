@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* Olive palette from Oatmeal */
+  /* Olive palette from Oatmeal (keeping for gradual phase-out) */
   --color-olive-50: oklch(98.8% 0.003 106.5);
   --color-olive-100: oklch(96.6% 0.005 106.5);
   --color-olive-200: oklch(93% 0.007 106.5);
@@ -17,8 +17,21 @@
   --color-olive-900: oklch(22.8% 0.013 107.4);
   --color-olive-950: oklch(15.3% 0.006 107.1);
 
-  /* Typography */
-  --font-display: 'Instrument Serif', Georgia, serif;
+  /* Adapty purple palette (#6720FF) */
+  --color-adapty-50:  oklch(97% 0.02 285);
+  --color-adapty-100: oklch(94% 0.04 285);
+  --color-adapty-200: oklch(88% 0.08 285);
+  --color-adapty-300: oklch(78% 0.12 285);
+  --color-adapty-400: oklch(65% 0.18 285);
+  --color-adapty-500: oklch(52% 0.22 285);
+  --color-adapty-600: oklch(45% 0.20 285);
+  --color-adapty-700: oklch(38% 0.18 285);
+  --color-adapty-800: oklch(30% 0.14 285);
+  --color-adapty-900: oklch(22% 0.10 285);
+  --color-adapty-950: oklch(15% 0.06 285);
+
+  /* Typography - using Inter for both display and body */
+  --font-display: 'Inter', system-ui, sans-serif;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Instrument_Serif } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { PageFrame } from '@/components/layout/PageFrame'
 import './globals.css'
 
@@ -9,13 +9,8 @@ const inter = Inter({
   variable: '--font-sans',
 })
 
-const instrumentSerif = Instrument_Serif({
-  weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-display',
-  style: ['normal', 'italic'],
-})
+// Use Inter for display as well (neutral sans-serif per Sergey's feedback)
+// Removed Instrument_Serif - "Design shouldn't look like a newspaper"
 
 export const metadata: Metadata = {
   title: 'Adapty - In-App Subscription Infrastructure',
@@ -62,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${instrumentSerif.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body className="min-h-screen bg-olive-100 font-sans antialiased">
         <PageFrame>{children}</PageFrame>
       </body>
