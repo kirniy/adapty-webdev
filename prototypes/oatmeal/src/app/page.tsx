@@ -1,4 +1,4 @@
-import { Navbar } from '@/components/layout/Navbar'
+import { HeaderSwitch } from '@/components/layout/HeaderSwitch'
 import { CaseStudies } from '@/components/sections/CaseStudies'
 import { CoreFeatures } from '@/components/sections/CoreFeatures'
 import { Enterprise } from '@/components/sections/Enterprise'
@@ -15,7 +15,7 @@ import { TrustedBy } from '@/components/sections/TrustedBy'
 export default function HomePage() {
   return (
     <>
-      <Navbar />
+      <HeaderSwitch />
       <main>
         <Hero />
         <TrustedBy />

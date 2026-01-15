@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: [
       'motion/react',
+      '@phosphor-icons/react',
       'clsx',
       'tailwind-merge',
     ],
