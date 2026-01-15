@@ -6,6 +6,7 @@ import {
   useDebug,
   GRID_VARIANTS,
   HEADER_VARIANTS,
+  HERO_VARIANTS,
   TRUSTED_BY_VARIANTS,
   CORE_FEATURES_VARIANTS,
   STATS_VARIANTS,
@@ -157,6 +158,8 @@ export function DebugMenu() {
     setGridVariant,
     headerVariant,
     setHeaderVariant,
+    heroVariant,
+    setHeroVariant,
     trustedByVariant,
     setTrustedByVariant,
     coreFeaturesVariant,
@@ -220,6 +223,14 @@ export function DebugMenu() {
                 Section Variants
               </p>
             </div>
+
+            <CollapsibleSection title="Hero" icon={<BlocksIcon />} defaultOpen>
+              <VariantSelector
+                variants={HERO_VARIANTS}
+                currentValue={heroVariant}
+                onChange={setHeroVariant}
+              />
+            </CollapsibleSection>
 
             <CollapsibleSection title="Trusted By" icon={<BlocksIcon />}>
               <VariantSelector

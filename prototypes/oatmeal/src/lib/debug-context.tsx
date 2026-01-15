@@ -9,11 +9,12 @@ export type GridVariant = 'cursor-tracking' | 'slow-drift' | 'static' | 'off'
 export type HeaderVariant = 'oatmeal-simple' | 'aura-megamenu'
 
 // Section variant types - each section can have multiple design variants
+export type HeroVariant = 'centered-demo' | 'split-left' | 'wallpaper-bg' | 'minimal-text'
 export type TrustedByVariant = 'marquee' | 'static-grid' | 'static-minimal'
-export type CoreFeaturesVariant = 'colorful' | 'muted' | 'monochrome'
-export type StatsVariant = 'cards' | 'inline' | 'minimal'
-export type TestimonialsVariant = 'grid' | 'large-featured' | 'carousel'
-export type RoleCardsVariant = 'full' | 'simplified' | 'minimal'
+export type CoreFeaturesVariant = 'zigzag' | 'bento' | 'large-demo' | 'sticky-scroll' | 'cards'
+export type StatsVariant = 'cards' | 'inline' | 'graph' | 'floating'
+export type TestimonialsVariant = 'editorial' | 'wall' | 'carousel'
+export type RoleCardsVariant = 'cards' | 'tabs' | 'horizontal'
 export type IntegrationsVariant = 'marquee' | 'static-grid' | 'categorized'
 
 // Variant option type for UI
@@ -38,6 +39,13 @@ export const HEADER_VARIANTS: VariantOption<HeaderVariant>[] = [
 ]
 
 // Section variant options
+export const HERO_VARIANTS: VariantOption<HeroVariant>[] = [
+  { value: 'centered-demo', label: 'Centered + Demo', description: 'Centered text with screenshot below' },
+  { value: 'split-left', label: 'Split Layout', description: 'Two-column: text left, demo right' },
+  { value: 'wallpaper-bg', label: 'Full Wallpaper', description: 'Text on wallpaper background' },
+  { value: 'minimal-text', label: 'Minimal Text', description: 'Typography-focused, no screenshot' },
+]
+
 export const TRUSTED_BY_VARIANTS: VariantOption<TrustedByVariant>[] = [
   { value: 'marquee', label: 'Scrolling Marquee', description: 'Infinite horizontal scroll' },
   { value: 'static-grid', label: 'Static Grid', description: 'Stripe-style weighted display' },
@@ -45,27 +53,30 @@ export const TRUSTED_BY_VARIANTS: VariantOption<TrustedByVariant>[] = [
 ]
 
 export const CORE_FEATURES_VARIANTS: VariantOption<CoreFeaturesVariant>[] = [
-  { value: 'colorful', label: 'Colorful Cards', description: 'Vibrant wallpaper backgrounds' },
-  { value: 'muted', label: 'Muted Calm', description: 'Subdued colors, editorial feel' },
-  { value: 'monochrome', label: 'Monochrome', description: 'Grayscale with accent highlights' },
+  { value: 'zigzag', label: 'Zigzag Alternating', description: 'Classic 50/50 alternating layout' },
+  { value: 'bento', label: 'Bento Grid', description: 'Modern bento-style with varied sizes' },
+  { value: 'large-demo', label: 'Large Demo', description: 'Hero demo + feature grid below' },
+  { value: 'sticky-scroll', label: 'Sticky Scroll', description: 'Apple-style scroll-triggered' },
+  { value: 'cards', label: 'Feature Cards', description: 'Equal 3-column card grid' },
 ]
 
 export const STATS_VARIANTS: VariantOption<StatsVariant>[] = [
-  { value: 'cards', label: 'Card Grid', description: 'Numbers in bordered cards' },
-  { value: 'inline', label: 'Inline Row', description: 'Horizontal stats bar' },
-  { value: 'minimal', label: 'Minimal', description: 'Large numbers, no decoration' },
+  { value: 'cards', label: 'Dark Cards', description: 'Dark background, centered numbers' },
+  { value: 'inline', label: 'Inline Row', description: 'Compact horizontal bar' },
+  { value: 'graph', label: 'Growth Graph', description: 'Stats with decorative chart' },
+  { value: 'floating', label: 'Floating Cards', description: 'Hoverable card grid' },
 ]
 
 export const TESTIMONIALS_VARIANTS: VariantOption<TestimonialsVariant>[] = [
-  { value: 'grid', label: '3-Column Grid', description: 'Equal-sized testimonial cards' },
-  { value: 'large-featured', label: 'Large Featured', description: 'One prominent, others small' },
-  { value: 'carousel', label: 'Carousel', description: 'Swipeable testimonial cards' },
+  { value: 'editorial', label: 'Editorial', description: 'Magazine-style dark hero' },
+  { value: 'wall', label: 'Social Wall', description: 'Scrolling testimonial marquee' },
+  { value: 'carousel', label: 'Carousel', description: 'Arrow navigation, one at a time' },
 ]
 
 export const ROLE_CARDS_VARIANTS: VariantOption<RoleCardsVariant>[] = [
-  { value: 'full', label: 'Full Cards', description: 'Title, tags, and description' },
-  { value: 'simplified', label: 'Simplified', description: 'Title and description only' },
-  { value: 'minimal', label: 'Minimal Links', description: 'Just text links' },
+  { value: 'cards', label: 'Cards Grid', description: 'Visual cards with images' },
+  { value: 'tabs', label: 'Tab Panel', description: 'Interactive role switcher' },
+  { value: 'horizontal', label: 'Horizontal', description: 'Scrolling card carousel' },
 ]
 
 export const INTEGRATIONS_VARIANTS: VariantOption<IntegrationsVariant>[] = [
@@ -79,6 +90,7 @@ interface DebugState {
   gridVariant: GridVariant
   headerVariant: HeaderVariant
   // Section variants
+  heroVariant: HeroVariant
   trustedByVariant: TrustedByVariant
   coreFeaturesVariant: CoreFeaturesVariant
   statsVariant: StatsVariant
@@ -93,6 +105,7 @@ interface DebugContextValue extends DebugState {
   setGridVariant: (variant: GridVariant) => void
   setHeaderVariant: (variant: HeaderVariant) => void
   // Section variant setters
+  setHeroVariant: (variant: HeroVariant) => void
   setTrustedByVariant: (variant: TrustedByVariant) => void
   setCoreFeaturesVariant: (variant: CoreFeaturesVariant) => void
   setStatsVariant: (variant: StatsVariant) => void
@@ -111,6 +124,7 @@ interface DebugContextValue extends DebugState {
 
 // Section variant configuration for generic cycling
 export const SECTION_VARIANT_CONFIG = {
+  hero: { variants: HERO_VARIANTS, key: 'heroVariant' as const },
   trustedBy: { variants: TRUSTED_BY_VARIANTS, key: 'trustedByVariant' as const },
   coreFeatures: { variants: CORE_FEATURES_VARIANTS, key: 'coreFeaturesVariant' as const },
   stats: { variants: STATS_VARIANTS, key: 'statsVariant' as const },
@@ -124,11 +138,12 @@ const defaultState: DebugState = {
   gridVariant: 'slow-drift', // Default to slow-drift (not cheesy cursor-tracking)
   headerVariant: 'oatmeal-simple', // Start with current simple navbar
   // Section defaults - start with current implementations
+  heroVariant: 'centered-demo',
   trustedByVariant: 'marquee',
-  coreFeaturesVariant: 'colorful',
+  coreFeaturesVariant: 'zigzag',
   statsVariant: 'cards',
-  testimonialsVariant: 'grid',
-  roleCardsVariant: 'full',
+  testimonialsVariant: 'editorial',
+  roleCardsVariant: 'cards',
   integrationsVariant: 'marquee',
   isDebugMenuOpen: false,
 }
@@ -155,6 +170,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
           gridVariant: parsed.gridVariant ?? prev.gridVariant,
           headerVariant: parsed.headerVariant ?? prev.headerVariant,
           // Section variants
+          heroVariant: parsed.heroVariant ?? prev.heroVariant,
           trustedByVariant: parsed.trustedByVariant ?? prev.trustedByVariant,
           coreFeaturesVariant: parsed.coreFeaturesVariant ?? prev.coreFeaturesVariant,
           statsVariant: parsed.statsVariant ?? prev.statsVariant,
@@ -192,6 +208,10 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   }, [])
 
   // Section variant setters
+  const setHeroVariant = useCallback((variant: HeroVariant) => {
+    setState(prev => ({ ...prev, heroVariant: variant }))
+  }, [])
+
   const setTrustedByVariant = useCallback((variant: TrustedByVariant) => {
     setState(prev => ({ ...prev, trustedByVariant: variant }))
   }, [])
@@ -263,6 +283,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     ...state,
     setGridVariant,
     setHeaderVariant,
+    setHeroVariant,
     setTrustedByVariant,
     setCoreFeaturesVariant,
     setStatsVariant,
@@ -306,6 +327,11 @@ export function useHeaderVariant(): HeaderVariant {
 }
 
 // Section variant hooks - use these in individual section components
+export function useHeroVariant(): HeroVariant {
+  const context = useContext(DebugContext)
+  return context?.heroVariant ?? defaultState.heroVariant
+}
+
 export function useTrustedByVariant(): TrustedByVariant {
   const context = useContext(DebugContext)
   return context?.trustedByVariant ?? defaultState.trustedByVariant

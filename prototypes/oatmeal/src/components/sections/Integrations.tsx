@@ -4,7 +4,6 @@ import { Container } from '@/components/elements/Container'
 import { Eyebrow } from '@/components/elements/Eyebrow'
 import { Heading } from '@/components/elements/Heading'
 import { Section } from '@/components/elements/Section'
-import { FadeIn } from '@/components/effects/FadeIn'
 import { Marquee } from '@/components/effects/Marquee'
 import { cn } from '@/lib/cn'
 import { content } from '@/lib/content'
@@ -12,59 +11,65 @@ import { useIntegrationsVariant } from '@/lib/debug-context'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 
-// Category colors for visual distinction
-const categoryColors: Record<string, string> = {
-  Analytics: 'bg-blue-500/10 text-blue-700 border-blue-200',
-  Attribution: 'bg-green-500/10 text-green-700 border-green-200',
-  Platform: 'bg-orange-500/10 text-orange-700 border-orange-200',
-  Engagement: 'bg-purple-500/10 text-purple-700 border-purple-200',
-  Messaging: 'bg-pink-500/10 text-pink-700 border-pink-200',
-  Payments: 'bg-indigo-500/10 text-indigo-700 border-indigo-200',
-}
-
-// Category badge colors (more muted for categorized view)
-const categoryBadgeColors: Record<string, string> = {
-  Analytics: 'bg-blue-50 text-blue-600 ring-blue-200/50',
-  Attribution: 'bg-green-50 text-green-600 ring-green-200/50',
-  Platform: 'bg-orange-50 text-orange-600 ring-orange-200/50',
-  Engagement: 'bg-purple-50 text-purple-600 ring-purple-200/50',
-  Messaging: 'bg-pink-50 text-pink-600 ring-pink-200/50',
-  Payments: 'bg-indigo-50 text-indigo-600 ring-indigo-200/50',
-}
-
-// Variant A: Static Grid (current - 7-column responsive grid)
-function IntegrationsStaticGrid() {
+/**
+ * Variant A: Grid (Minimal Logo Wall)
+ *
+ * Design philosophy:
+ * - Clean, scannable grid of integration logos
+ * - Minimal visual noise, maximum recognition
+ * - Grayscale default with color on hover
+ * - Light background separates from content sections
+ *
+ * Polished details:
+ * - Responsive column count for optimal viewing
+ * - Subtle hover lift with spring physics
+ * - Category dot appears on hover for context
+ * - Staggered fade-in creates visual rhythm
+ */
+function IntegrationsGrid() {
   const { integrations } = content
 
   return (
-    <Section className="bg-olive-50/50 border-y border-olive-200/50">
+    <Section className="bg-olive-50/50 border-y border-olive-100 py-20 lg:py-24">
       <Container>
-        <FadeIn className="text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
+        >
           <Eyebrow>Integrations</Eyebrow>
-          <Heading as="h2" className="mt-2">
+          <Heading as="h2" className="mt-3">
             Connect with your favorite tools
           </Heading>
-          <p className="mt-4 text-olive-600 max-w-2xl mx-auto">
-            Send subscription data to analytics, attribution, and marketing platforms
+          <p className="mt-4 text-lg text-olive-600 max-w-2xl mx-auto">
+            Send subscription data to analytics, attribution, and marketing platforms.
           </p>
-        </FadeIn>
+        </motion.div>
 
         {/* Integration Logos Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-6">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-4 lg:gap-5">
           {integrations.map((integration, index) => (
-            <FadeIn key={integration.name} delay={0.03 * index}>
+            <motion.div
+              key={integration.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.4, delay: index * 0.03 }}
+            >
               <motion.div
                 className={cn(
-                  'group flex flex-col items-center justify-center p-4 rounded-xl',
+                  'group flex flex-col items-center justify-center py-5 px-3 rounded-xl',
                   'bg-white border border-olive-100',
-                  'hover:border-olive-300 hover:shadow-md',
-                  'transition-all duration-200'
+                  'hover:border-olive-200 hover:shadow-lg hover:shadow-olive-900/5',
+                  'transition-all duration-200 cursor-default'
                 )}
                 whileHover={{ y: -4, scale: 1.02 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               >
                 {/* Logo */}
-                <div className="relative w-10 h-10 mb-2 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="relative w-10 h-10 mb-2.5 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
                   <Image
                     src={`/integrations/${integration.logo}`}
                     alt={integration.name}
@@ -74,73 +79,106 @@ function IntegrationsStaticGrid() {
                 </div>
 
                 {/* Name */}
-                <span className="text-xs font-medium text-olive-700 text-center">
+                <span className="text-xs font-medium text-olive-600 group-hover:text-olive-900 text-center transition-colors">
                   {integration.name}
                 </span>
-
-                {/* Category indicator (subtle dot) */}
-                <span
-                  className={cn(
-                    'mt-2 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity',
-                    integration.category === 'Analytics' && 'bg-blue-500',
-                    integration.category === 'Attribution' && 'bg-green-500',
-                    integration.category === 'Platform' && 'bg-orange-500',
-                    integration.category === 'Engagement' && 'bg-purple-500',
-                    integration.category === 'Messaging' && 'bg-pink-500',
-                    integration.category === 'Payments' && 'bg-indigo-500'
-                  )}
-                />
               </motion.div>
-            </FadeIn>
+            </motion.div>
           ))}
         </div>
 
-        {/* "And more" indicator */}
-        <FadeIn delay={0.5}>
-          <div className="mt-10 text-center">
-            <p className="text-olive-500 text-sm">
-              Plus Webhooks, REST API, and custom integrations via our SDK
-            </p>
-          </div>
-        </FadeIn>
+        {/* Footer CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-12 text-center"
+        >
+          <p className="text-olive-500 text-sm mb-4">
+            Plus Webhooks, REST API, and custom integrations via our SDK
+          </p>
+          <a
+            href="#"
+            className={cn(
+              'inline-flex items-center gap-2 px-5 py-2.5 rounded-full',
+              'bg-olive-100 text-olive-700 text-sm font-medium',
+              'hover:bg-olive-200 transition-colors'
+            )}
+          >
+            View all integrations
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </motion.div>
       </Container>
     </Section>
   )
 }
 
-// Variant B: Marquee (scrolling logos like TrustedBy)
+/**
+ * Variant B: Marquee (Continuous Scroll)
+ *
+ * Design philosophy:
+ * - Infinite scroll creates sense of abundance
+ * - Two rows with opposite directions add dynamism
+ * - Pill-shaped cards feel modern and lightweight
+ * - Pauses on hover for exploration
+ *
+ * Polished details:
+ * - Seamless loop without visible seams
+ * - Gradient masks fade edges smoothly
+ * - Logo colorizes on hover
+ * - Speed balanced for readability
+ */
 function IntegrationsMarquee() {
   const { integrations } = content
 
+  // Split for two rows
+  const firstRow = integrations.slice(0, Math.ceil(integrations.length / 2))
+  const secondRow = integrations.slice(Math.ceil(integrations.length / 2))
+
   return (
-    <Section className="bg-white py-16 overflow-hidden">
+    <Section className="bg-gradient-to-b from-white via-olive-50/30 to-white py-20 lg:py-28 overflow-hidden">
       <Container>
-        <FadeIn className="text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
+        >
           <Eyebrow>Integrations</Eyebrow>
-          <Heading as="h2" className="mt-2">
-            Connect with your favorite tools
+          <Heading as="h2" className="mt-3">
+            Works with your stack
           </Heading>
-          <p className="mt-4 text-olive-600 max-w-2xl mx-auto">
-            Send subscription data to analytics, attribution, and marketing platforms
+          <p className="mt-4 text-lg text-olive-600 max-w-2xl mx-auto">
+            Connect Adapty to your analytics, attribution, and engagement platforms.
           </p>
-        </FadeIn>
+        </motion.div>
       </Container>
 
-      {/* Two-row marquee effect */}
-      <div className="space-y-6">
+      {/* Two-row marquee */}
+      <div className="relative space-y-5">
+        {/* Gradient masks */}
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+
         {/* Row 1 - Left direction */}
         <Marquee speed="slow" direction="left" pauseOnHover>
-          {integrations.slice(0, 7).map((integration) => (
+          {firstRow.map((integration) => (
             <div
               key={integration.name}
               className={cn(
                 'group flex items-center gap-3 px-5 py-3 rounded-full',
-                'bg-olive-50 border border-olive-200/50',
-                'hover:bg-olive-100 hover:border-olive-300',
-                'transition-colors duration-200'
+                'bg-white border border-olive-200/60',
+                'shadow-sm shadow-olive-900/5',
+                'hover:border-olive-300 hover:shadow-md',
+                'transition-all duration-200'
               )}
             >
-              <div className="relative w-6 h-6 shrink-0 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
+              <div className="relative w-6 h-6 shrink-0 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
                 <Image
                   src={`/integrations/${integration.logo}`}
                   alt={integration.name}
@@ -148,7 +186,7 @@ function IntegrationsMarquee() {
                   className="object-contain"
                 />
               </div>
-              <span className="text-sm font-medium text-olive-700 whitespace-nowrap">
+              <span className="text-sm font-medium text-olive-700 group-hover:text-olive-900 whitespace-nowrap transition-colors">
                 {integration.name}
               </span>
             </div>
@@ -157,17 +195,18 @@ function IntegrationsMarquee() {
 
         {/* Row 2 - Right direction */}
         <Marquee speed="slow" direction="right" pauseOnHover>
-          {integrations.slice(7).map((integration) => (
+          {secondRow.map((integration) => (
             <div
               key={integration.name}
               className={cn(
                 'group flex items-center gap-3 px-5 py-3 rounded-full',
-                'bg-olive-50 border border-olive-200/50',
-                'hover:bg-olive-100 hover:border-olive-300',
-                'transition-colors duration-200'
+                'bg-white border border-olive-200/60',
+                'shadow-sm shadow-olive-900/5',
+                'hover:border-olive-300 hover:shadow-md',
+                'transition-all duration-200'
               )}
             >
-              <div className="relative w-6 h-6 shrink-0 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
+              <div className="relative w-6 h-6 shrink-0 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
                 <Image
                   src={`/integrations/${integration.logo}`}
                   alt={integration.name}
@@ -175,7 +214,7 @@ function IntegrationsMarquee() {
                   className="object-contain"
                 />
               </div>
-              <span className="text-sm font-medium text-olive-700 whitespace-nowrap">
+              <span className="text-sm font-medium text-olive-700 group-hover:text-olive-900 whitespace-nowrap transition-colors">
                 {integration.name}
               </span>
             </div>
@@ -184,19 +223,37 @@ function IntegrationsMarquee() {
       </div>
 
       <Container>
-        <FadeIn delay={0.3}>
-          <div className="mt-10 text-center">
-            <p className="text-olive-500 text-sm">
-              Plus Webhooks, REST API, and custom integrations via our SDK
-            </p>
-          </div>
-        </FadeIn>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-12 text-center"
+        >
+          <p className="text-olive-500 text-sm">
+            Plus Webhooks, REST API, and custom integrations via our SDK
+          </p>
+        </motion.div>
       </Container>
     </Section>
   )
 }
 
-// Variant C: Categorized (grouped by integration type with headers)
+/**
+ * Variant C: Categorized (Grouped by Type)
+ *
+ * Design philosophy:
+ * - Organized by category for easy scanning
+ * - Category badges provide visual anchors
+ * - Compact list format for information density
+ * - Clean separation between groups
+ *
+ * Polished details:
+ * - Category badges with distinct colors
+ * - Hover slide animation for list items
+ * - Integration count shown per category
+ * - 3-column responsive grid
+ */
 function IntegrationsCategorized() {
   const { integrations } = content
 
@@ -213,41 +270,66 @@ function IntegrationsCategorized() {
     {} as Record<string, typeof integrations>
   )
 
-  // Define category order
+  // Category config with colors and icons
+  const categoryConfig: Record<string, { color: string; bgColor: string }> = {
+    Analytics: { color: 'text-blue-600', bgColor: 'bg-blue-50' },
+    Attribution: { color: 'text-emerald-600', bgColor: 'bg-emerald-50' },
+    Platform: { color: 'text-orange-600', bgColor: 'bg-orange-50' },
+    Engagement: { color: 'text-violet-600', bgColor: 'bg-violet-50' },
+    Messaging: { color: 'text-pink-600', bgColor: 'bg-pink-50' },
+    Payments: { color: 'text-indigo-600', bgColor: 'bg-indigo-50' },
+  }
+
   const categoryOrder = ['Analytics', 'Attribution', 'Platform', 'Engagement', 'Messaging', 'Payments']
 
   return (
-    <Section className="bg-white">
+    <Section className="bg-white py-20 lg:py-28">
       <Container>
-        <FadeIn className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
+        >
           <Eyebrow>Integrations</Eyebrow>
-          <Heading as="h2" className="mt-2">
-            Connect with your favorite tools
+          <Heading as="h2" className="mt-3">
+            Connect by category
           </Heading>
-          <p className="mt-4 text-olive-600 max-w-2xl mx-auto">
-            Send subscription data to analytics, attribution, and marketing platforms
+          <p className="mt-4 text-lg text-olive-600 max-w-2xl mx-auto">
+            Send subscription data to analytics, attribution, and marketing platforms.
           </p>
-        </FadeIn>
+        </motion.div>
 
         {/* Categorized Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categoryOrder
             .filter((category) => groupedIntegrations[category])
-            .map((category, categoryIndex) => (
-              <FadeIn key={category} delay={categoryIndex * 0.1}>
-                <div className="space-y-4">
+            .map((category, categoryIndex) => {
+              const config = categoryConfig[category] || { color: 'text-olive-600', bgColor: 'bg-olive-50' }
+
+              return (
+                <motion.div
+                  key={category}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
+                  className="rounded-2xl bg-olive-50/50 p-6 border border-olive-100"
+                >
                   {/* Category Header */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between mb-5">
                     <span
                       className={cn(
-                        'inline-flex px-3 py-1 text-xs font-semibold rounded-full ring-1',
-                        categoryBadgeColors[category] || 'bg-olive-50 text-olive-600 ring-olive-200'
+                        'inline-flex px-3 py-1.5 text-xs font-semibold rounded-lg',
+                        config.bgColor,
+                        config.color
                       )}
                     >
                       {category}
                     </span>
-                    <span className="text-xs text-olive-400">
-                      {groupedIntegrations[category].length} integrations
+                    <span className="text-xs text-olive-500">
+                      {groupedIntegrations[category].length} tools
                     </span>
                   </div>
 
@@ -257,10 +339,10 @@ function IntegrationsCategorized() {
                       <motion.div
                         key={integration.name}
                         className={cn(
-                          'group flex items-center gap-3 p-3 rounded-lg',
-                          'bg-olive-50/50 border border-transparent',
-                          'hover:bg-olive-100 hover:border-olive-200',
-                          'transition-all duration-200'
+                          'group flex items-center gap-3 p-3 rounded-xl',
+                          'bg-white border border-olive-100/50',
+                          'hover:border-olive-200 hover:shadow-sm',
+                          'transition-all duration-200 cursor-default'
                         )}
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -268,7 +350,7 @@ function IntegrationsCategorized() {
                         transition={{ delay: categoryIndex * 0.1 + index * 0.05 }}
                         whileHover={{ x: 4 }}
                       >
-                        <div className="relative w-8 h-8 shrink-0 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
+                        <div className="relative w-7 h-7 shrink-0 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
                           <Image
                             src={`/integrations/${integration.logo}`}
                             alt={integration.name}
@@ -282,19 +364,36 @@ function IntegrationsCategorized() {
                       </motion.div>
                     ))}
                   </div>
-                </div>
-              </FadeIn>
-            ))}
+                </motion.div>
+              )
+            })}
         </div>
 
         {/* Footer */}
-        <FadeIn delay={0.6}>
-          <div className="mt-12 pt-8 border-t border-olive-100 text-center">
-            <p className="text-olive-600 text-sm">
-              Plus Webhooks, REST API, and custom integrations via our SDK
-            </p>
-          </div>
-        </FadeIn>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="mt-14 pt-8 border-t border-olive-100 text-center"
+        >
+          <p className="text-olive-600 mb-5">
+            Plus Webhooks, REST API, and custom integrations via our SDK
+          </p>
+          <a
+            href="#"
+            className={cn(
+              'inline-flex items-center gap-2 px-6 py-3 rounded-full',
+              'bg-olive-900 text-white text-sm font-medium',
+              'hover:bg-olive-800 transition-colors'
+            )}
+          >
+            Explore all integrations
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </motion.div>
       </Container>
     </Section>
   )
@@ -311,6 +410,6 @@ export function Integrations() {
       return <IntegrationsCategorized />
     case 'static-grid':
     default:
-      return <IntegrationsStaticGrid />
+      return <IntegrationsGrid />
   }
 }
