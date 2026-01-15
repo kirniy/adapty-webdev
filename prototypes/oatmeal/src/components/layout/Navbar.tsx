@@ -127,7 +127,7 @@ export function Navbar() {
                         transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
                         className="absolute top-full left-1/2 -translate-x-1/2 pt-3"
                       >
-                        <div className="bg-gradient-to-b from-white to-olive-50/30 border border-olive-200/60 rounded-3xl shadow-xl shadow-olive-900/10 overflow-hidden">
+                        <div className="bg-gradient-to-b from-white to-olive-50 border border-olive-200/60 rounded-3xl shadow-xl shadow-olive-900/10 overflow-hidden">
                           {item.menu}
                         </div>
                       </motion.div>

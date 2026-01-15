@@ -71,7 +71,7 @@ export const MenuContainer = forwardRef<HTMLDivElement, MenuContainerProps>(
         exit="exit"
         className={cn(
           // Base styles - neutral, works for both header variants
-          'bg-white/95 backdrop-blur-xl',
+          'bg-white backdrop-blur-xl',
           'overflow-hidden',
           className
         )}
