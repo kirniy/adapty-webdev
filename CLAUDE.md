@@ -12,7 +12,7 @@ tags: [redesign, nextjs, tailwind, design-system, oatmeal, vanilla-tailwind]
 # ADAPTY Website Redesign - Navigation & Context
 
 > **IMPORTANT**: This is a living navigation document. Update after every significant change.
-> Last significant update: 2026-01-15 - Oatmeal prototype built and deployed with react-best-practices optimizations.
+> Last significant update: 2026-01-15 (evening) - Aura mega-menu header ported to Oatmeal with variant switching. Gap analysis completed vs adapty.io.
 
 ---
 
@@ -93,7 +93,7 @@ This skill contains priority-ordered optimization rules. Apply patterns from hig
 | **Prototypes** | `/prototypes/` | Phase A & B builds | ✅ Deployed |
 | **Skeleton** | `/skeleton/` | Shared content/assets | Complete |
 | **References** | `/references/` | Site analysis data | ✅ COMPLETE |
-| **Messages** | `/messages/` | Sergey communications | 01-roadmap ready |
+| **Messages** | `/messages/` | Sergey communications | 05-daily-report-jan14 ready |
 | **Scripts** | `/scripts/` | Automation tools | Ready |
 | **Docs** | `/docs/` | Project documentation | Partial |
 | **Reports** | `/reports/` | Audits, comparisons, research | Active |
@@ -104,19 +104,29 @@ This skill contains priority-ordered optimization rules. Apply patterns from hig
 ## Current State (UPDATE THIS SECTION REGULARLY)
 
 ```yaml
-current_phase: "Active Development - Oatmeal + AuraBuild prototypes"
-next_phase: "Polish and client review"
+current_phase: "Block-by-Block Iteration - Header Enhancement"
+next_phase: "Content parity with adapty.io navigation"
 blocking_tasks: []
+plan_file: "~/.claude/plans/rustling-wandering-perlis.md"
 
 # Active Prototypes
 active_prototypes:
   oatmeal:
-    status: "DEPLOYED"
+    status: "IN PROGRESS - Header enhancement"
     location: "/prototypes/oatmeal/"
     url: "adapty-oatmeal-jan14-2026.vercel.app"
-    quality: "8/10 - Sophisticated olive palette, editorial typography"
+    quality: "8/10 - Now with Aura mega-menu header"
     sections: "14/14"
-    design_dna: "Instrument Serif + Inter, warm greens/grays"
+    design_dna: "Inter only, olive palette + adapty purple accent"
+    recent_additions:
+      - "Debug menu system (grid + header variant switching)"
+      - "Aura mega-menu header (4 dropdowns)"
+      - "Font swap: Instrument Serif -> Inter"
+      - "Adapty purple (#6720FF) color palette"
+    header_status:
+      ported: "AuraHeader, 4 menu components, LanguageSwitcher"
+      gap_vs_adapty_io: "Missing sidebar nav, 8 items, nav links"
+      next_task: "Content parity with adapty.io"
 
   aura_build:
     status: "OPTIMIZED"
@@ -148,6 +158,9 @@ key_insights:
   - "Marketing sites need pixel-perfect control"
   - "vanilla Tailwind approach produces better results"
   - "optimizePackageImports critical for barrel import performance"
+  - "Server Components can't use ssr:false - use Client wrapper pattern"
+  - "adapty.io header has 2-3 level nav (sidebar + content) - this is what Sergey meant"
+  - "AdaptyPT2 has 17 product items vs our 9 - content parity needed"
   - "Server Components can't use ssr:false - use Client wrapper pattern"
 ```
 
@@ -281,17 +294,24 @@ key_insights:
 │   ├── audit-report-v2.md
 │   └── audit-report-v3.md
 ├── 02-reference-analysis/         # Reference site analysis
-├── 03-phase-b-assessment/         # NEW - Phase B results & recommendations
+├── 03-phase-b-assessment/         # Phase B results & recommendations
 │   └── message.md                 # Russian: shadcn didn't work, options A/B/C
 ├── 03-ds-results/                 # Phase A results (legacy)
-└── 04-library-results/            # Phase B results (legacy)
+├── 04-daily-report-jan13/         # January 13 daily report
+│   ├── message.md                 # Full report
+│   ├── message-short.md           # Slack version
+│   └── 2026-01-13-REPORT-*.pdf    # PDF export
+└── 05-daily-report-jan14/         # January 14 daily report (LATEST)
+    ├── message.md                 # Full report (22 KB)
+    ├── message-short.md           # Slack version (6.3 KB)
+    └── 2026-01-14-REPORT-*.pdf    # PDF export (590 KB)
 ```
 
 **Local conventions:**
 - All messages to Sergey in RUSSIAN
 - Include clear next steps and questions
 - Reference specific deliverables
-- Latest message: `/messages/03-phase-b-assessment/message.md`
+- Latest message: `/messages/05-daily-report-jan14/message.md`
 
 ### `/scripts/` - Automation
 

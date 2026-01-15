@@ -566,6 +566,130 @@ Four variant modes implemented:
 
 ---
 
+## 2026-01-15 (Late Evening) - Aura Header Port & Navigation Gap Analysis
+
+### Session Summary
+Ported full Aura mega-menu header to Oatmeal prototype with variant switching. Conducted comprehensive gap analysis comparing adapty.io navigation vs our implementation.
+
+### Accomplishments
+
+#### 1. Aura Header Ported to Oatmeal
+Successfully ported all mega-menu components from AuraBuild prototype:
+
+| Component | Lines | Purpose |
+|-----------|-------|---------|
+| AuraHeader.tsx | ~300 | Full mega-menu header with 4 dropdowns |
+| HeaderSwitch.tsx | ~23 | Variant switcher (Simple vs Mega) |
+| LanguageSwitcher.tsx | ~92 | Flag-based language selector |
+| LanguageSwitcher.module.css | ~55 | Component-scoped styles |
+| ProductMenu.tsx | ~128 | Tech/Paywalls/Analytics columns |
+| CasesMenu.tsx | ~107 | Case studies grid |
+| ResourcesMenu.tsx | ~100 | Learn/Connect/Discover sections |
+| DocsMenu.tsx | ~150 | Sidebar + SDK grid |
+
+**Key changes from Aura:**
+- stone palette -> olive palette
+- brand-lime (#c1ff72) -> adapty purple (#6720ff)
+- Added @phosphor-icons/react (with optimizePackageImports)
+
+#### 2. Navigation Gap Analysis (adapty.io vs Oatmeal vs PT2)
+
+Analyzed live adapty.io screenshots and compared with implementations:
+
+**Product Menu Comparison:**
+| Feature | adapty.io | AdaptyPT2 | Oatmeal |
+|---------|-----------|-----------|---------|
+| Layout | Sidebar + 3-col | Sidebar + 3-col | 3-col only |
+| Sidebar items | Product, Solution, Adapty SDK, Integrations | Same | **MISSING** |
+| Secondary links | Why Adapty?, Changelog, Status | Same | **MISSING** |
+| TECH items | 4 (SDK, Sync, Fallback, Refund) | 4 | 3 |
+| PAYWALLS items | 8 (Builder, Onboarding, AI, A/B, Autopilot, Targeting, Localizations, Remote) | 8 | 3 |
+| ANALYTICS items | 5 (Revenue, LTV, AI predictions, LTV model, Apple ads) | 5 | 3 |
+| Width | ~900px | 900px | 720px |
+
+**Cases Menu Comparison:**
+| Feature | adapty.io | AdaptyPT2 | Oatmeal |
+|---------|-----------|-----------|---------|
+| Grid columns | 4 | 3 | 3 |
+| Items shown | 12 (Welmi, Productivity, Text on Pic, Trip planning, Going Merry, Shmoody, Lively, Glam AI, Pepapp, Fotorama, Wave + more) | 11 | 9 |
+| Metrics shown | Yes (MRR tripled, +50% revenue, etc.) | Yes | Generic descriptions |
+| View all link | Yes | Yes | Yes |
+| Width | ~1000px | 1000px | 640px |
+
+**Docs Menu Comparison:**
+| Feature | adapty.io | AdaptyPT2 | Oatmeal |
+|---------|-----------|-----------|---------|
+| Layout | Sidebar + SDK grid | Sidebar + SDK grid | Sidebar + SDK grid |
+| Sidebar items | Quick start, Migrate, Status, Support, All docs | Same | Same |
+| SDK platforms | 8 (iOS, React Native, Flutter, Capacitor, Android, Unity, FlutterFlow, Kotlin) | 8 | 8 |
+| Web payments | Stripe | Stripe | Stripe |
+| API | Server-side | Server-side | Server-side |
+| Status | **MATCHES** | **MATCHES** | **MATCHES** |
+
+**Critical Gaps (High Priority):**
+1. **Missing sidebar navigation** in Product menu (this is the "2-3 levels" Sergey mentioned)
+2. **Fewer items** in all menus - content parity needed
+3. **Missing metrics** on case studies (actual results vs generic descriptions)
+4. **Smaller dropdown widths** (720px vs 900px)
+
+#### 3. Sergey's Feedback Context (From Plan)
+Re-examined plan file for header requirements:
+- "Aura header is simpler than needed; needs 2-3 levels like current site"
+- "AdaptyPT2 header is 621 lines with 4 mega-menus"
+- The sidebar in Product/Docs menus IS the second level
+- Clicking sidebar items would change the right-side content
+
+#### 4. Commits Pushed
+- `4fc9081` - Port Aura mega-menu header to Oatmeal with variant switching
+
+### Key Findings
+
+**What AdaptyPT2 Has That Oatmeal Doesn't:**
+1. SIDEBAR navigation in Product and Docs menus
+2. More product items (17 vs 9 items in Product menu)
+3. More case studies with actual metrics
+4. 900-1000px wide dropdowns vs 640-720px
+5. `web2app` highlighted link in nav
+
+**What We Need to Do:**
+1. Add sidebar to ProductMenu (mirror PT2 structure)
+2. Add all product items (full content parity)
+3. Update CasesMenu with real metrics and missing cases
+4. Increase dropdown widths
+5. Add highlighted nav items (web2app)
+
+### Files Created/Modified
+
+| Action | Path |
+|--------|------|
+| CREATE | `src/components/layout/AuraHeader.tsx` |
+| CREATE | `src/components/layout/HeaderSwitch.tsx` |
+| CREATE | `src/components/layout/LanguageSwitcher.tsx` |
+| CREATE | `src/components/layout/LanguageSwitcher.module.css` |
+| CREATE | `src/components/layout/menus/ProductMenu.tsx` |
+| CREATE | `src/components/layout/menus/CasesMenu.tsx` |
+| CREATE | `src/components/layout/menus/ResourcesMenu.tsx` |
+| CREATE | `src/components/layout/menus/DocsMenu.tsx` |
+| EDIT | `src/app/page.tsx` |
+| EDIT | `next.config.ts` |
+| EDIT | `package.json` |
+
+### Next Steps
+1. **Phase 2A: Content Parity** - Copy exact content from PT2 menus to Oatmeal
+2. **Phase 2B: Sidebar Navigation** - Add sidebar to ProductMenu matching adapty.io structure
+3. **Phase 2C: Metrics Update** - Update CasesMenu with actual result metrics
+4. **Phase 2D: Polish** - Match dropdown widths, add web2app link
+
+### Metrics
+- Components ported: 8
+- Lines of code added: ~1000
+- Build size increase: 8kB (172kB -> 180kB)
+- Product items (Oatmeal vs PT2): 9 vs 17 (53% coverage)
+- Case studies (Oatmeal vs PT2): 9 vs 11 (82% coverage)
+- Docs menu: 100% parity
+
+---
+
 ## Template for Future Entries
 
 ```markdown
