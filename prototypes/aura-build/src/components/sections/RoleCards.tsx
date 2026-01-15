@@ -2,6 +2,9 @@
 
 import { Code, ChartLineUp, Layout, Check } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/cn";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
+import { BlueprintNode } from "@/components/ui/BlueprintElements";
 
 const roles = [
   {
@@ -37,23 +40,53 @@ const roles = [
 ];
 
 export function RoleCards() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+
   return (
-    <section className="max-w-[1440px] mx-auto px-6 py-24 relative">
-      <div className="text-center max-w-3xl mx-auto mb-20 relative">
-        <h2 className="text-3xl lg:text-5xl font-medium tracking-tight animate-intro-blur font-sans mb-6">
-          Built for the entire product team
-        </h2>
-        <p className="text-lg text-stone-500 animate-intro-blur delay-100 max-w-xl mx-auto">
+    <section ref={containerRef} className="max-w-[1440px] mx-auto px-6 py-20 lg:py-28 relative">
+      {/* Blueprint connector at top */}
+      <BlueprintNode className="absolute top-4 left-1/2 -translate-x-1/2" />
+
+      <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-20 relative">
+        <motion.h2
+          className="headline-editorial text-3xl lg:text-5xl text-stone-900 mb-6 text-balance"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          Built for the <span className="serif-accent text-stone-500">entire</span> product team
+        </motion.h2>
+        <motion.p
+          className="body-editorial text-lg text-stone-500 max-w-xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        >
           From implementation to optimization, Adapty unifies your mobile subscription stack.
-        </p>
+        </motion.p>
       </div>
+
+      {/* Horizontal connecting line (desktop) */}
+      <motion.div
+        className="absolute top-[240px] left-[10%] right-[10%] h-px bg-stone-200 hidden lg:block"
+        initial={{ scaleX: 0 }}
+        animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+        transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+      />
 
       <div className="grid md:grid-cols-3 gap-8 relative">
         {roles.map((role, index) => (
-          <div
+          <motion.div
             key={role.title}
-            className="group relative animate-intro-blur flex flex-col"
-            style={{ animationDelay: `${index * 150}ms` }}
+            className="group relative flex flex-col"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{
+              duration: 0.6,
+              delay: index * 0.15 + 0.2,
+              ease: [0.16, 1, 0.3, 1]
+            }}
           >
             {/* Main Card - Persona Style */}
             <div className="glass-panel p-1 rounded-2xl h-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
@@ -108,7 +141,7 @@ export function RoleCards() {
 
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

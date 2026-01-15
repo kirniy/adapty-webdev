@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { Quotes } from "@phosphor-icons/react/dist/ssr";
 import { Marquee } from "@/components/ui/Marquee";

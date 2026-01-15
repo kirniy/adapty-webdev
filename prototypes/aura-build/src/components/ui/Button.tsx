@@ -1,6 +1,9 @@
+"use client";
+
 import { cn } from "@/lib/cn";
 import { forwardRef, type ButtonHTMLAttributes } from "react";
 import { motion } from "motion/react";
+import { MagneticButton } from "@/components/ui/MotionPrimitives";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "ghost" | "lime" | "glass";
@@ -24,123 +27,70 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    // Glass button uses specific CSS structure
-    if (variant === "glass") {
-      return (
-        <button
-          ref={ref}
-          className={cn(
-            "glass-button relative group cursor-pointer outline-none overflow-hidden rounded-full font-semibold text-stone-900 tracking-tight transition-transform active:scale-[0.98]",
-            {
-              sm: "text-xs py-2 px-4",
-              md: "text-sm py-3 px-6",
-              lg: "text-lg py-4 px-8",
-            }[size],
-            className
-          )}
-          {...props}
-        >
-          <span className="relative z-10">{children}</span>
-          <div className="button-shine" />
-          {/* Liquid Metal Border for Glass Button if requested */}
-           {beam && (
-               <div className="absolute inset-0 pointer-events-none rounded-full overflow-hidden">
-                   <div className="absolute inset-0 rounded-full border border-white/20" />
-                    <motion.div 
-                        className="absolute inset-[-100%]"
-                        initial={{ rotate: 0 }}
-                        animate={{ rotate: 360 }}
-                        whileHover={{ 
-                            rotate: 360,
-                            transition: { duration: 1, ease: "linear", repeat: Infinity } 
-                        }}
-                        transition={{ 
-                            duration: 3, 
-                            ease: "linear", 
-                            repeat: Infinity 
-                        }}
-                        style={{
-                            background: "conic-gradient(from 0deg, transparent 0deg 340deg, white 360deg)"
-                        }}
-                    />
-               </div>
-           )}
-        </button>
-      );
-    }
+    
+    // Internal button content
+    const ButtonContent = (
+      <>
+        <span className="relative z-10">{children}</span>
+        
+        {/* Shimmer Effect */}
+        <motion.div
+            className="absolute top-0 bottom-0 left-[-100%] w-[50%] skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none z-20"
+            animate={{ left: "200%" }}
+            transition={{
+                repeat: Infinity,
+                duration: 3,
+                ease: "linear",
+                repeatDelay: 2
+            }}
+        />
 
-    const baseButton = (
-      <button
-        ref={ref}
-        className={cn(
-          // Base styles
-          "inline-flex items-center justify-center gap-2 font-semibold transition-all relative z-10",
-          "focus:outline-none focus:ring-2 focus:ring-offset-2",
-          "disabled:pointer-events-none disabled:opacity-50",
-          // Hover transform for premium feel
-          "hover:scale-[1.02] active:scale-[0.98]",
-          // Size variants
-          {
-            sm: "px-3 py-1.5 text-xs rounded-md",
-            md: "px-4 py-2 text-sm rounded-lg",
-            lg: "px-6 py-3 text-sm rounded-full",
-          }[size],
-          // Color variants
-          {
-            primary:
-              "bg-stone-900 text-white hover:bg-stone-800 focus:ring-stone-400",
-            secondary:
-              "bg-white text-stone-900 border border-stone-300 hover:bg-stone-50 focus:ring-stone-200",
-            ghost:
-              "text-stone-600 hover:text-stone-900 hover:bg-stone-100 focus:ring-stone-200",
+        {variant === "glass" && <div className="button-shine" />}
+      </>
+    );
+
+    // Style configuration based on variant
+    const buttonStyles = cn(
+        "relative inline-flex items-center justify-center gap-2 font-semibold transition-all overflow-hidden cursor-pointer",
+        "focus:outline-none focus:ring-2 focus:ring-offset-2",
+        "disabled:pointer-events-none disabled:opacity-50",
+        // Snappy spring is handled by Motion, but we keep hover scale for simple CSS backup or use Motion wrapper
+        "active:scale-[0.98]", 
+        {
+          sm: "px-3 py-1.5 text-xs rounded-md",
+          md: "px-4 py-2 text-sm rounded-lg",
+          lg: "px-6 py-3 text-sm rounded-full",
+        }[size],
+        {
+            primary: "bg-stone-900 text-white hover:bg-stone-800 focus:ring-stone-400",
+            secondary: "bg-white text-stone-900 border border-stone-300 hover:bg-stone-50 focus:ring-stone-200",
+            ghost: "text-stone-600 hover:text-stone-900 hover:bg-stone-100 focus:ring-stone-200",
             lime: cn(
               "bg-brand-lime text-stone-900 hover:bg-brand-lime-dark focus:ring-brand-lime/50",
               glow && "hover:shadow-[0_0_30px_rgba(193,255,114,0.5)]"
             ),
-            glass: "", // Handled above
-          }[variant],
-          className
-        )}
-        {...props}
-      >
-        {children}
+            glass: "glass-button outline-none rounded-full text-stone-900 tracking-tight",
+        }[variant],
+        className
+    );
+
+    // Render logic
+    const buttonElement = (
+      <button ref={ref} className={buttonStyles} {...props}>
+        {ButtonContent}
       </button>
     );
 
-    // Wrap with beam effect if enabled (for non-glass variants)
-    if (beam && (variant === "lime" || variant === "primary")) {
-      return (
-        <div className="relative inline-flex group rounded-full p-[1px] overflow-hidden">
-          {/* Beam container */}
-          <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-             <motion.div
-              className="absolute inset-[-100%]"
-              initial={{ rotate: 0 }}
-              animate={{ rotate: 360 }}
-              whileHover={{ 
-                  scale: 1, // Keep scale
-                  transition: { duration: 1, ease: "linear", repeat: Infinity } 
-              }}
-              transition={{
-                duration: 3,
-                ease: "linear",
-                repeat: Infinity,
-              }}
-              style={{
-                background:
-                  variant === "lime"
-                    ? "conic-gradient(from 0deg, transparent 0deg 330deg, #0a0a0a 360deg)"
-                    : "conic-gradient(from 0deg, transparent 0deg 330deg, #c1ff72 360deg)",
-              }}
-            />
-          </div>
-          {/* Inner mask is handled by the button's own background being opaque and z-10 */}
-          {baseButton}
-        </div>
-      );
+    // Wrap with Magnetic if primary/glass/lime
+    if (variant === "primary" || variant === "glass" || variant === "lime") {
+        return (
+            <MagneticButton className="inline-block">
+                {buttonElement}
+            </MagneticButton>
+        );
     }
 
-    return baseButton;
+    return buttonElement;
   }
 );
 

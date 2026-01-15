@@ -52,40 +52,22 @@ export function WorkflowSection() {
     <section ref={containerRef} className="max-w-[1440px] mx-auto px-6 py-24 relative">
       {/* Section Header */}
       <div className="text-center mb-16">
-        <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight mb-4 text-balance">
-          Simple workflow, powerful results
-        </h2>
-        <p className="text-stone-500 text-lg max-w-2xl mx-auto">
-          From integration to optimization in four easy steps
-        </p>
-      </div>
-
-      {/* SVG Connecting Line (The "Thoughtful" Touch) */}
-      <div className="absolute top-[280px] left-0 w-full hidden lg:block pointer-events-none -z-10">
-        <svg
-            className="w-full h-20 overflow-visible"
-            viewBox="0 0 1440 80"
-            preserveAspectRatio="none"
+        <motion.h2
+          className="headline-editorial text-3xl lg:text-4xl text-stone-900 mb-4 text-balance"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-            {/* Base line */}
-            <path
-                d="M 100 40 L 1340 40"
-                fill="none"
-                stroke="#e7e5e4"
-                strokeWidth="2"
-                strokeDasharray="6 6"
-            />
-            {/* Animated drawing line */}
-            <motion.path
-                d="M 100 40 L 1340 40"
-                fill="none"
-                stroke="#c1ff72"
-                strokeWidth="2"
-                initial={{ pathLength: 0 }}
-                animate={isInView ? { pathLength: 1 } : { pathLength: 0 }}
-                transition={{ duration: 1.5, ease: "easeInOut", delay: 0.5 }}
-            />
-        </svg>
+          Simple workflow, <span className="serif-accent text-stone-500">powerful</span> results
+        </motion.h2>
+        <motion.p
+          className="body-editorial text-stone-500 text-lg max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          From integration to optimization in four easy steps
+        </motion.p>
       </div>
 
       {/* Workflow Steps */}

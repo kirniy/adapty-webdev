@@ -454,8 +454,16 @@ function HeroDS3() {
 
   return (
     <section className="relative bg-[var(--bg-primary)] pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden">
-      {/* DS3 ASSET: Moiré Interference Pattern (Math Texture) */}
-      <MoireInterference opacity={0.12} />
+      {/* UNICORN STUDIO: Interactive WebGL Background */}
+      <div className="absolute inset-0 z-0">
+        <UnicornScene
+          projectId="S2rJQl5b5HhlIAi0JxcZ"
+          scale={1}
+          dpi={1.5}
+          lazyLoad={false}
+          style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}
+        />
+      </div>
 
       <Container className="relative z-10">
         {/* POLAR SIGNATURE: Ultra-minimal centered content */}

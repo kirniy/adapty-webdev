@@ -230,6 +230,41 @@
     background-color: var(--color-brand-lime);
     color: black;
   }
+
+  /* ─────────────────────────────────────────────────────────────────
+     Reduced Motion Support (WCAG 2.1 Accessibility)
+     ───────────────────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Disable specific problematic animations */
+    .animate-marquee,
+    .animate-marquee-slow,
+    .animate-float,
+    .animate-pulse-slow,
+    .animate-glow,
+    .animate-sonar,
+    .animate-ripple,
+    .animate-aurora,
+    .animate-shimmer,
+    .animate-beam,
+    .animate-beam-pulse,
+    .animate-border-beam {
+      animation: none !important;
+    }
+
+    /* Keep essential UI feedback but make it instant */
+    .hover-pause:hover {
+      animation-play-state: running;
+    }
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────────

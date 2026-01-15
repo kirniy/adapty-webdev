@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import { Marquee } from "@/components/ui/Marquee";
-import { motion } from "motion/react";
 
 const trustedByLogos = [
   { name: "Feeld", src: "/logos/trusted-by/feeld.svg" },

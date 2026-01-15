@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageFrame } from "@/components/layout/PageFrame";
@@ -7,17 +8,31 @@ import { CoreServices } from "@/components/sections/CoreServices";
 import { IntegrationsMarquee } from "@/components/sections/IntegrationsMarquee";
 import { WhyAdapty } from "@/components/sections/WhyAdapty";
 import { RoleCards } from "@/components/sections/RoleCards";
-import { Stats } from "@/components/sections/Stats";
-import { SDKCode } from "@/components/sections/SDKCode";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { ResultsSection } from "@/components/sections/ResultsSection";
 import { Enterprise } from "@/components/sections/Enterprise";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { WorkflowSection } from "@/components/sections/WorkflowSection";
 import {
   BlueprintDivider,
   BlueprintVertical,
 } from "@/components/ui/BlueprintElements";
+
+// Dynamic imports for below-fold Client Components (code splitting)
+const Stats = dynamic(
+  () => import("@/components/sections/Stats").then((mod) => mod.Stats),
+  { ssr: true }
+);
+const SDKCode = dynamic(
+  () => import("@/components/sections/SDKCode").then((mod) => mod.SDKCode),
+  { ssr: true }
+);
+const WorkflowSection = dynamic(
+  () =>
+    import("@/components/sections/WorkflowSection").then(
+      (mod) => mod.WorkflowSection
+    ),
+  { ssr: true }
+);
 
 /**
  * Adapty Homepage
