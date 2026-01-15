@@ -4,11 +4,14 @@ import { Marquee } from "@/components/ui/Marquee";
 const trustedByLogos = [
   { name: "Feeld", src: "/logos/trusted-by/feeld.svg" },
   { name: "Bumble", src: "/logos/trusted-by/bumble.svg" },
-  { name: "Weewoo", src: "/logos/trusted-by/weewoo.svg" },
+  { name: "HubX", src: "/logos/trusted-by/hubx.svg" },
   { name: "AppNation", src: "/logos/trusted-by/appnation.webp" },
+  { name: "Smitten", src: "/logos/trusted-by/smitten.webp" },
+  { name: "Bickster", src: "/logos/trusted-by/bickster.png" },
   { name: "Almus", src: "/logos/trusted-by/almus.svg" },
   { name: "Impala Studios", src: "/logos/trusted-by/impala-studios.svg" },
-  { name: "HubX", src: "/logos/trusted-by/hubx.svg" },
+  { name: "SocialKit", src: "/logos/trusted-by/socialkit.svg" },
+  { name: "Weewoo", src: "/logos/trusted-by/weewoo.svg" },
 ];
 
 export function TrustedBy() {

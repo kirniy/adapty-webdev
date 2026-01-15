@@ -6,10 +6,10 @@ import { useRef } from "react";
 import { BlueprintNode } from "@/components/ui/BlueprintElements";
 
 const stats = [
-  { value: 2, suffix: "B+", label: "Processed revenue", prefix: "$" },
-  { value: 15, suffix: "k+", label: "Apps powered" },
-  { value: 99.99, suffix: "%", label: "Uptime SLA", decimalPlaces: 2 },
-  { value: 200, suffix: "M+", label: "Monthly requests" },
+  { value: 15, suffix: "k+", label: "Apps powered", prefix: "" },
+  { value: 1.5, suffix: "B+", label: "User profiles", decimalPlaces: 1, prefix: "" },
+  { value: 4, suffix: "B+", label: "API calls monthly", prefix: "" },
+  { value: 99.99, suffix: "%", label: "Uptime SLA", decimalPlaces: 2, prefix: "" },
 ];
 
 function AnimatedNumber({

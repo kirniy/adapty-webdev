@@ -6,23 +6,38 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/cn";
 
 const tabs = [
-  { id: "javascript", label: "JavaScript" },
+  { id: "swift", label: "Swift" },
+  { id: "kotlin", label: "Kotlin" },
   { id: "react-native", label: "React Native" },
   { id: "flutter", label: "Flutter" },
-  { id: "swift", label: "Swift" },
+  { id: "unity", label: "Unity" },
 ];
 
 const codeSnippets: Record<string, { code: string; lines: CodeLine[] }> = {
-  javascript: {
+  swift: {
     code: "",
     lines: [
-      { type: "import", content: ["import", " { adapty } ", "from", " ", "'adapty'", ";"] },
+      { type: "import", content: ["import", " Adapty"] },
       { type: "empty", content: [] },
       { type: "comment", content: ["// Activate Adapty on app start"] },
-      { type: "code", content: ["await", " adapty.", "activate", "(", "'YOUR_API_KEY'", ");"] },
+      { type: "code", content: ["Adapty.", "activate", "(", "\"YOUR_API_KEY\"", ")"] },
       { type: "empty", content: [] },
-      { type: "code", content: ["const", " profile = ", "await", " adapty.", "getProfile", "();"] },
-      { type: "code", content: ["const", " isPremium = profile.accessLevels[", "'premium'", "]?.isActive;"] },
+      { type: "code", content: ["Adapty.", "getProfile", " { result ", "in"] },
+      { type: "code", content: ["    ", "let", " isPremium = result.value?.accessLevels[", "\"premium\"", "]?.isActive"] },
+      { type: "code", content: ["}"] },
+    ]
+  },
+  kotlin: {
+    code: "",
+    lines: [
+      { type: "import", content: ["import", " com.adapty.Adapty"] },
+      { type: "empty", content: [] },
+      { type: "comment", content: ["// Activate Adapty on app start"] },
+      { type: "code", content: ["Adapty.", "activate", "(applicationContext, ", "\"YOUR_API_KEY\"", ")"] },
+      { type: "empty", content: [] },
+      { type: "code", content: ["Adapty.", "getProfile", " { result ->"] },
+      { type: "code", content: ["    ", "val", " isPremium = result.getOrNull()?.accessLevels[", "\"premium\"", "]?.isActive"] },
+      { type: "code", content: ["}"] },
     ]
   },
   "react-native": {
@@ -49,17 +64,17 @@ const codeSnippets: Record<string, { code: string; lines: CodeLine[] }> = {
       { type: "code", content: ["final", " isPremium = profile.accessLevels[", "'premium'", "]?.isActive;"] },
     ]
   },
-  swift: {
+  unity: {
     code: "",
     lines: [
-      { type: "import", content: ["import", " Adapty"] },
+      { type: "import", content: ["using", " AdaptySDK;"] },
       { type: "empty", content: [] },
       { type: "comment", content: ["// Activate Adapty on app start"] },
-      { type: "code", content: ["Adapty.", "activate", "(", "\"YOUR_API_KEY\"", ")"] },
+      { type: "code", content: ["Adapty.", "Activate", "(", "\"YOUR_API_KEY\"", ");"] },
       { type: "empty", content: [] },
-      { type: "code", content: ["Adapty.", "getProfile", " { result ", "in"] },
-      { type: "code", content: ["    ", "let", " isPremium = result.value?.accessLevels[", "\"premium\"", "]?.isActive"] },
-      { type: "code", content: ["}"] },
+      { type: "code", content: ["Adapty.", "GetProfile", "((profile, error) => {"] },
+      { type: "code", content: ["    ", "var", " isPremium = profile?.AccessLevels[", "\"premium\"", "]?.IsActive;"] },
+      { type: "code", content: ["});"] },
     ]
   },
 };
@@ -79,8 +94,8 @@ const platforms = [
 ];
 
 // Keywords to highlight
-const keywords = ["import", "from", "await", "const", "let", "var", "async", "final", "func", "in"];
-const functions = ["activate", "getProfile", "getPaywall"];
+const keywords = ["import", "from", "await", "const", "let", "var", "async", "final", "func", "in", "val", "using"];
+const functions = ["activate", "getProfile", "getPaywall", "Activate", "GetProfile"];
 
 function tokenize(part: string): React.ReactNode {
   if (keywords.includes(part)) {
@@ -116,7 +131,7 @@ function renderLine(line: CodeLine, index: number): React.ReactNode {
 }
 
 export function SDKCode() {
-  const [activeTab, setActiveTab] = useState("javascript");
+  const [activeTab, setActiveTab] = useState("swift");
 
   return (
     <section className="relative py-24 px-6 overflow-hidden">
@@ -170,7 +185,7 @@ export function SDKCode() {
           <div className="lg:w-1/2 w-full animate-intro-blur delay-200">
             <div className="bg-[#0d1117] rounded-2xl shadow-2xl overflow-hidden border border-stone-800/60 transform transition-all hover:scale-[1.01] duration-500">
               {/* Tabs - FULL WIDTH */}
-              <div className="grid grid-cols-4 border-b border-white/10 bg-[#161b22]">
+              <div className="grid grid-cols-5 border-b border-white/10 bg-[#161b22]">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}

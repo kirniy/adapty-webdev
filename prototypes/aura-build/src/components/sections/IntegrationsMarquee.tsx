@@ -9,9 +9,13 @@ const integrations = [
   { name: "Branch", logo: "branch.svg" },
   { name: "Segment", logo: "segment.svg" },
   { name: "Firebase", logo: "firebase.svg" },
-  { name: "Facebook", logo: "facebook.svg" },
+  { name: "Braze", logo: "braze.svg" },
   { name: "OneSignal", logo: "onesignal.svg" },
   { name: "Slack", logo: "slack.svg" },
+  { name: "PostHog", logo: "posthog.svg" },
+  { name: "Stripe", logo: "stripe.svg" },
+  { name: "Apple Ads", logo: "apple-ads.svg" },
+  { name: "Singular", logo: "singular.svg" },
 ];
 
 export function IntegrationsMarquee() {

@@ -3,25 +3,25 @@ import { Badge } from "@/components/ui/Badge";
 
 const caseStudies = [
   {
-    title: "How Glam AI pricing tests unlocked potential",
+    title: "How Glam AI pricing tests unlocked revenue potential",
     metric: "+50% Revenue",
     category: "Photo & Video",
     logo: "/images/case-studies/logo-glam-ai.png",
     bgColor: "bg-gradient-to-br from-pink-100 to-purple-100",
   },
   {
-    title: "Fotorama's boost with A/B experiments",
-    metric: "+30% Revenue",
-    category: "Photo & Video",
-    logo: "/images/case-studies/logo-fotorama.png",
-    bgColor: "bg-gradient-to-br from-blue-100 to-cyan-100",
-  },
-  {
-    title: "Going Merry scaling with Paywall Builder",
+    title: "Going Merry's rapid scaling with Paywall Builder",
     metric: "5x Growth",
     category: "Education",
     logo: "/images/case-studies/logo-going-merry.png",
     bgColor: "bg-gradient-to-br from-green-100 to-emerald-100",
+  },
+  {
+    title: "Shmoody boosted conversions with A/B experiments",
+    metric: "+40% Revenue",
+    category: "Health & Wellness",
+    logo: "/images/case-studies/logo-shmoody.png",
+    bgColor: "bg-gradient-to-br from-blue-100 to-cyan-100",
   },
 ];
 
