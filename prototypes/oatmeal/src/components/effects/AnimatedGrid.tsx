@@ -94,12 +94,15 @@ function AnimatedGridInner({
         className
       )}
     >
-      {/* Base Grid (Always visible, very faint) */}
-      <div className="absolute inset-0 z-0 opacity-[0.04]">
+      {/* Base Grid - cursor-tracking gets very faint base, others get visible grid */}
+      <div className={cn(
+        'absolute inset-0 z-0',
+        variant === 'cursor-tracking' ? 'opacity-[0.04]' : 'opacity-[0.15]'
+      )}>
         <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} id="grid-base" />
       </div>
 
-      {/* Revealed Grid - Only for cursor-tracking mode */}
+      {/* Revealed Grid - Only for cursor-tracking mode (follows cursor with mask) */}
       {variant === 'cursor-tracking' && (
         <motion.div
           className="absolute inset-0 z-0"
@@ -114,6 +117,18 @@ function AnimatedGridInner({
             id="grid-reveal"
           />
         </motion.div>
+      )}
+
+      {/* Visible Grid overlay for slow-drift and static modes */}
+      {(variant === 'slow-drift' || variant === 'static') && (
+        <div className="absolute inset-0 z-0 opacity-[0.08]">
+          <GridPattern
+            offsetX={gridOffsetX}
+            offsetY={gridOffsetY}
+            className="text-olive-500"
+            id="grid-visible"
+          />
+        </div>
       )}
 
       {/* Ambient Background Blobs - All modes except off */}
