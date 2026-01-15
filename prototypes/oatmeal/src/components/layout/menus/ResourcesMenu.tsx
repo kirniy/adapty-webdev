@@ -2,6 +2,18 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion } from 'motion/react'
+import { MenuContainer, itemVariants } from './MenuContainer'
+import { RESOURCES } from './data/menuContent'
+import { cn } from '@/lib/cn'
+
+/**
+ * Badge styles for different badge types
+ */
+const badgeStyles: Record<string, string> = {
+  new: 'bg-adapty-100 text-adapty-700',
+  weekly: 'bg-olive-200 text-olive-700',
+}
 
 interface ResourceLinkProps {
   title: string
@@ -11,97 +23,135 @@ interface ResourceLinkProps {
 }
 
 function ResourceLink({ title, href, icon, badge }: ResourceLinkProps) {
+  const badgeStyle = badge ? (badgeStyles[badge] || badgeStyles.new) : ''
+
   return (
-    <Link
-      href={href}
-      className="flex items-center gap-2 p-2 rounded-lg hover:bg-olive-100 transition-colors group"
-    >
-      <Image src={icon} alt="" width={20} height={20} className="w-5 h-5" />
-      <span className="text-sm text-olive-700 group-hover:text-olive-900">{title}</span>
-      {badge && (
-        <span className="px-1.5 py-0.5 text-[10px] font-semibold uppercase bg-adapty-100 text-adapty-700 rounded">
-          {badge}
+    <motion.div variants={itemVariants}>
+      <Link
+        href={href}
+        className="group flex items-center gap-2.5 p-2 -ml-1 rounded-lg hover:bg-olive-100/50 transition-colors"
+      >
+        <div className="w-5 h-5 shrink-0 relative opacity-70 group-hover:opacity-100 transition-opacity">
+          <Image
+            src={icon}
+            alt=""
+            fill
+            className="object-contain"
+          />
+        </div>
+        <span className="text-sm font-medium text-olive-700 group-hover:text-olive-900 transition-colors">
+          {title}
         </span>
-      )}
-    </Link>
+        {badge && (
+          <span
+            className={cn(
+              'px-1.5 py-0.5 text-[10px] font-semibold uppercase rounded leading-none',
+              badgeStyle
+            )}
+          >
+            {badge}
+          </span>
+        )}
+      </Link>
+    </motion.div>
   )
 }
 
+/**
+ * ResourcesMenu - "The Knowledge Hub"
+ *
+ * Layout: 1100px wide, 5 sections across
+ * - LEARN: Blog, Podcasts, Glossary
+ * - CONNECT: Community, Webinars, Events, Careers
+ * - DISCOVER: Tools, calculators, library
+ * - EBOOKS: Growth guides
+ * - RESEARCH: Reports with NEW badge
+ *
+ * Features:
+ * - Section headers with uppercase tracking
+ * - WEEKLY badge for newsletter
+ * - NEW badge for research items
+ * - Column separators for visual grouping
+ */
 export function ResourcesMenu() {
   return (
-    <div className="w-[720px] p-6 grid grid-cols-3 gap-8">
-      {/* LEARN Column */}
-      <div>
-        <h4 className="text-xs font-semibold text-olive-400 uppercase tracking-wider mb-3 px-2">
-          Learn
-        </h4>
-        <div className="space-y-1">
-          <ResourceLink
-            title="Blog"
-            href="/blog"
-            icon="/images/menu-icons/icon-24x24-newsletter.svg"
-          />
-          <ResourceLink
-            title="Glossary"
-            href="/glossary"
-            icon="/images/menu-icons/icon-24x24-doc.svg"
-          />
-          <ResourceLink
-            title="Paywall Newsletter"
-            href="/newsletter"
-            icon="/images/menu-icons/icon-20x20-receipt.svg"
-            badge="weekly"
-          />
+    <MenuContainer width={1100} className="flex p-8 gap-10">
+      {/* Column 1: Learn & Connect */}
+      <div className="flex flex-col gap-8 w-[200px] shrink-0">
+        {/* LEARN */}
+        <div className="flex flex-col gap-2">
+          <motion.h4
+            variants={itemVariants}
+            className="text-xs font-semibold text-olive-400 uppercase tracking-wider mb-1 px-1"
+          >
+            {RESOURCES.LEARN.title}
+          </motion.h4>
+          {RESOURCES.LEARN.items.map((item) => (
+            <ResourceLink key={item.title} {...item} />
+          ))}
+        </div>
+
+        {/* CONNECT */}
+        <div className="flex flex-col gap-2">
+          <motion.h4
+            variants={itemVariants}
+            className="text-xs font-semibold text-olive-400 uppercase tracking-wider mb-1 px-1"
+          >
+            {RESOURCES.CONNECT.title}
+          </motion.h4>
+          {RESOURCES.CONNECT.items.map((item) => (
+            <ResourceLink key={item.title} {...item} />
+          ))}
         </div>
       </div>
 
-      {/* CONNECT Column */}
-      <div>
-        <h4 className="text-xs font-semibold text-olive-400 uppercase tracking-wider mb-3 px-2">
-          Connect
-        </h4>
-        <div className="space-y-1">
-          <ResourceLink
-            title="Slack Community"
-            href="/slack"
-            icon="/images/menu-icons/icon-24x24-difference.svg"
-          />
-          <ResourceLink
-            title="Discord"
-            href="/discord"
-            icon="/images/menu-icons/icon-20x20-neurology.svg"
-          />
-          <ResourceLink
-            title="Events & Webinars"
-            href="/events"
-            icon="/images/menu-icons/icon-24x24-21n.svg"
-          />
-        </div>
+      {/* Column separator */}
+      <div className="w-px bg-olive-200/50 self-stretch" />
+
+      {/* Column 2: Discover */}
+      <div className="flex flex-col gap-2 w-[260px] shrink-0">
+        <motion.h4
+          variants={itemVariants}
+          className="text-xs font-semibold text-olive-400 uppercase tracking-wider mb-1 px-1"
+        >
+          {RESOURCES.DISCOVER.title}
+        </motion.h4>
+        {RESOURCES.DISCOVER.items.map((item) => (
+          <ResourceLink key={item.title} {...item} />
+        ))}
       </div>
 
-      {/* DISCOVER Column */}
-      <div>
-        <h4 className="text-xs font-semibold text-olive-400 uppercase tracking-wider mb-3 px-2">
-          Discover
-        </h4>
-        <div className="space-y-1">
-          <ResourceLink
-            title="Industry Reports"
-            href="/reports"
-            icon="/images/menu-icons/icon-finance-blue-20dp-300w.svg"
-          />
-          <ResourceLink
-            title="eBooks & Guides"
-            href="/ebooks"
-            icon="/images/menu-icons/icon-24x24-23n.svg"
-          />
-          <ResourceLink
-            title="Tool Comparisons"
-            href="/compare"
-            icon="/images/menu-icons/icon-20x20-currency-exchange.svg"
-          />
+      {/* Column separator */}
+      <div className="w-px bg-olive-200/50 self-stretch" />
+
+      {/* Column 3: Ebooks & Research */}
+      <div className="flex-1 flex flex-col gap-8">
+        {/* EBOOKS */}
+        <div className="flex flex-col gap-2">
+          <motion.h4
+            variants={itemVariants}
+            className="text-xs font-semibold text-olive-400 uppercase tracking-wider mb-1 px-1"
+          >
+            {RESOURCES.EBOOKS.title}
+          </motion.h4>
+          {RESOURCES.EBOOKS.items.map((item) => (
+            <ResourceLink key={item.title} {...item} />
+          ))}
+        </div>
+
+        {/* RESEARCH */}
+        <div className="flex flex-col gap-2">
+          <motion.h4
+            variants={itemVariants}
+            className="text-xs font-semibold text-olive-400 uppercase tracking-wider mb-1 px-1"
+          >
+            {RESOURCES.RESEARCH.title}
+          </motion.h4>
+          {RESOURCES.RESEARCH.items.map((item) => (
+            <ResourceLink key={item.title} {...item} />
+          ))}
         </div>
       </div>
-    </div>
+    </MenuContainer>
   )
 }

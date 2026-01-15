@@ -257,11 +257,26 @@ export function AuraHeader() {
             />
           ))}
 
+          {/* Simple nav links */}
           <Link
-            href="/pricing"
+            href="/blog"
+            className="text-sm font-medium text-olive-600 hover:text-olive-900 transition-colors h-20 flex items-center"
+          >
+            Blog
+          </Link>
+
+          <Link
+            href="https://adapty.io/pricing/"
             className="text-sm font-medium text-olive-600 hover:text-olive-900 transition-colors h-20 flex items-center"
           >
             Pricing
+          </Link>
+
+          <Link
+            href="https://adapty.io/web2app/"
+            className="text-sm font-medium text-adapty-600 hover:text-adapty-700 transition-colors h-20 flex items-center"
+          >
+            web2app
           </Link>
         </nav>
 
