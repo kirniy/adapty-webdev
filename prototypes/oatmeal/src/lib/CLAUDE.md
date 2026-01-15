@@ -7,6 +7,8 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #1490 | 4:17 AM | ✅ | A/B Testing feature wallpaper color changed from lime to olive | ~324 |
+| #1471 | 4:13 AM | 🔵 | Current content.ts structure shows comprehensive but generic Adapty messaging | ~583 |
 | #1446 | 4:10 AM | 🟣 | Site-wide AnimatedGrid background implemented via PageFrame wrapper component | ~510 |
 | #1427 | 4:06 AM | 🔵 | Content data structure uses explicit image paths for testimonials and roles | ~423 |
 | #1426 | " | 🔵 | Content data structure reveals asset path configuration | ~469 |
