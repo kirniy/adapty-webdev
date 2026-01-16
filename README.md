@@ -2,14 +2,14 @@
   <img src="https://raw.githubusercontent.com/kirniy/adapty-webdev/main/.github/adapty-logo-color.svg" alt="Adapty" width="200">
 </p>
 
-# Website Redesign Project
+# ADAPTY Website Redesign Project
 
 <p align="center">
   <strong>A systematic, A/B-tested approach to redesigning the ADAPTY marketing website</strong>
 </p>
 
 <p align="center">
-  <a href="https://adapty-prototype.vercel.app"><img src="https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge&logo=vercel" alt="Live Demo"></a>
+  <a href="https://adapty-oatmeal-jan14-2026.vercel.app"><img src="https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge&logo=vercel" alt="Live Demo"></a>
   <a href="#"><img src="https://img.shields.io/badge/next.js-15.5-black?style=for-the-badge&logo=next.js" alt="Next.js 15"></a>
   <a href="#"><img src="https://img.shields.io/badge/react-19-61dafb?style=for-the-badge&logo=react" alt="React 19"></a>
   <a href="#"><img src="https://img.shields.io/badge/tailwind-4.0-38bdf8?style=for-the-badge&logo=tailwindcss" alt="Tailwind CSS 4"></a>
@@ -17,9 +17,9 @@
 </p>
 
 <p align="center">
-  <a href="#-live-demo">Demo</a> •
+  <a href="#-live-prototypes">Live Prototypes</a> •
   <a href="#-features">Features</a> •
-  <a href="#-design-systems">Design Systems</a> •
+  <a href="#-current-status">Status</a> •
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-architecture">Architecture</a> •
   <a href="#-documentation">Docs</a>
@@ -27,92 +27,111 @@
 
 ---
 
-## 🎯 Live Demo
+## 🎯 Live Prototypes
 
-<p align="center">
-  <a href="https://adapty-prototype.vercel.app">
-    <img src="https://img.shields.io/badge/▶_OPEN_LIVE_DEMO-000000?style=for-the-badge&logoColor=white&logo=vercel" alt="Open Demo" height="50">
-  </a>
-</p>
+### Active Prototypes
 
-<table>
-  <tr>
-    <td align="center" width="20%">
-      <a href="https://adapty-prototype.vercel.app?ds=ds1">
-        <img src="https://img.shields.io/badge/DS1-Linear-08090a?style=flat-square" alt="DS1">
-        <br><strong>Linear</strong>
-        <br><sub>Dark • Premium</sub>
-      </a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://adapty-prototype.vercel.app?ds=ds2">
-        <img src="https://img.shields.io/badge/DS2-Attio-ffffff?style=flat-square" alt="DS2">
-        <br><strong>Attio</strong>
-        <br><sub>Light • Editorial</sub>
-      </a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://adapty-prototype.vercel.app?ds=ds3">
-        <img src="https://img.shields.io/badge/DS3-Polar-171719?style=flat-square" alt="DS3">
-        <br><strong>Polar</strong>
-        <br><sub>Dark • Minimal</sub>
-      </a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://adapty-prototype.vercel.app?ds=ds4">
-        <img src="https://img.shields.io/badge/DS4-Vercel-000000?style=flat-square" alt="DS4">
-        <br><strong>Vercel</strong>
-        <br><sub>Black • Bold</sub>
-      </a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://adapty-prototype.vercel.app?ds=ds5">
-        <img src="https://img.shields.io/badge/DS5-Clerk-f7f7f8?style=flat-square" alt="DS5">
-        <br><strong>Clerk</strong>
-        <br><sub>Light • Warm</sub>
-      </a>
-    </td>
-  </tr>
-</table>
+| Prototype | URL | Status | Quality | Description |
+|-----------|-----|--------|---------|-------------|
+| **Oatmeal** | [adapty-oatmeal-jan14-2026.vercel.app](https://adapty-oatmeal-jan14-2026.vercel.app) | 🟢 Active | 8/10 | Current production prototype with debug menu, mega-menu header, 18 section variants |
+| **Aura Build** | [adapty-aura-build-jan-14-2026.vercel.app](https://adapty-aura-build-jan-14-2026.vercel.app) | 🟡 Optimized | 7/10 | Performance-tuned with blueprint grid, premium micro-interactions |
+| **Phase A** | [adapty-prototype.vercel.app](https://adapty-prototype.vercel.app) | 🟢 Deployed | 7/10 | 5-way design system switcher, vanilla Tailwind approach |
 
-> 💡 **Tip**: Add `?ds=ds1` through `?ds=ds5` to the URL to switch design systems, or use the dropdown in the top-right corner.
+### Legacy Prototypes
+
+| Prototype | Status | Quality | Notes |
+|-----------|--------|---------|-------|
+| **Phase B (shadcn/ui)** | ⚠️ Evaluated | 4/10 | Not recommended - generic, over-engineered for marketing sites |
+| **Achromatic** | 🔄 In Development | TBD | Premium SaaS starter-kit integration, debug menu system |
 
 ---
 
 ## ✨ Features
 
+### Current Capabilities
+
 <table>
   <tr>
     <td>
-      <h3>🎨 5 Complete Design Systems</h3>
-      <p>Each with 100+ CSS tokens covering colors, typography, spacing, shadows, and animations. Switch instantly between themes.</p>
+      <h3>🎨 Debug Menu System</h3>
+      <p>Floating panel with 18+ section variants. Switch between design approaches in real-time. Grid overlays, header variants, section styles - all toggleable with localStorage persistence.</p>
     </td>
     <td>
-      <h3>⚡ Real-time Theme Switching</h3>
-      <p>Zero-flash theme switching via URL params, dropdown, or localStorage. Persists across sessions.</p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <h3>📱 Fully Responsive</h3>
-      <p>Mobile-first design with breakpoints at 640px, 768px, 1024px, and 1280px. Touch-optimized interactions.</p>
-    </td>
-    <td>
-      <h3>🔒 Production Ready</h3>
-      <p>Error boundaries, 404 pages, loading states, SEO metadata, security headers, and performance optimizations.</p>
+      <h3>📐 Mega-Menu Headers</h3>
+      <p>Full-featured navigation with 4 dropdown menus: Product (17 items), Cases (11 studies), Resources (5 sections), Docs (SDK grid). Content parity with adapty.io.</p>
     </td>
   </tr>
   <tr>
     <td>
-      <h3>🧩 Component Library</h3>
-      <p>14 section components + UI primitives (Button, Container, Section) all using CSS custom properties.</p>
+      <h3>🎭 18 Section Variants</h3>
+      <p>Each section has multiple design approaches: Hero (centered, minimal, split), TrustedBy (marquee, grid, minimal), Features (colorful, muted, monochrome), Stats (cards, inline, graph, floating), and more.</p>
     </td>
     <td>
-      <h3>📊 A/B Test Ready</h3>
-      <p>Built for systematic comparison. Same content, different styling. Easy to measure and compare.</p>
+      <h3>⚡ Performance Optimized</h3>
+      <p>optimizePackageImports for motion/react + @phosphor-icons, dynamic imports, React.cache() patterns, zero-flash theme switching, modern image formats.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>🎨 Design System Tokens</h3>
+      <p>5 complete design systems with 100+ CSS custom properties each. Olive palette + Adapty purple (#6720FF) accent. Inter typography throughout.</p>
+    </td>
+    <td>
+      <h3>📱 Production Ready</h3>
+      <p>Error boundaries, 404 pages, loading states, SEO metadata, security headers, responsive design, accessibility features.</p>
     </td>
   </tr>
 </table>
+
+### Debug Menu Capabilities
+
+The debug menu system allows real-time switching of:
+
+- **Grid Background**: cursor-tracking, slow-drift, static, off + Achromatic-style guide lines
+- **Header Variants**: Pill-navbar (Oatmeal), Mega-menu (Aura port)
+- **Hero**: centered-demo, minimal-text, split-left
+- **TrustedBy**: marquee, static-grid, static-minimal
+- **CoreFeatures**: colorful, muted, monochrome
+- **Stats**: cards, inline, graph, floating (with spring physics, parallax)
+- **Testimonials**: editorial, wall, carousel
+- **RoleCards**: cards, tabs, horizontal
+- **Integrations**: static-grid, marquee, categorized
+
+---
+
+## 📊 Current Status
+
+### Project Phase: Block-by-Block Iteration
+
+**Current Focus**: Header enhancement and content parity with adapty.io navigation
+
+**Progress**: ~40% complete, targeting 60-80% in next iteration
+
+| Component | Status | Progress |
+|-----------|--------|----------|
+| **Content** | 🟡 In Progress | 70% - Mega-menus filled, 17 product items |
+| **Styling** | 🟡 In Progress | 50% - Fonts (Inter), purple accent, guide lines |
+| **Polish** | 🟡 In Progress | 30% - Micro-interactions, contrast improvements |
+| **Sections** | 🟢 Complete | 80% - 18 variants implemented |
+| **Responsive** | 🟡 In Progress | 50% - Desktop ready, mobile header pending |
+
+### Completed Phases
+
+| Phase | Status | Result |
+|-------|--------|--------|
+| **Reference Analysis** | ✅ Complete | 5 sites extracted (Linear, Attio, Polar, Vercel, Clerk) |
+| **Design System Tokens** | ✅ Complete | 5 DS variants with 100+ CSS custom properties each |
+| **Phase A Prototype** | ✅ Complete | 5-way theme switcher deployed, vanilla Tailwind approach validated |
+| **Phase B Research** | ✅ Complete | shadcn/ui evaluated, not recommended for marketing sites |
+| **Oatmeal Integration** | ✅ Complete | Template ported, debug menu added, mega-menu header integrated |
+
+### Key Learnings
+
+- ✅ **Vanilla Tailwind > shadcn/ui** for marketing sites (pixel-perfect control)
+- ✅ **Debug menu system** enables rapid iteration and stakeholder feedback
+- ✅ **optimizePackageImports** critical for barrel import performance
+- ✅ **Server Components** require Client wrapper pattern for interactive features
+- ✅ **Content parity** essential - adapty.io has 17 product items vs initial 9
 
 ---
 
@@ -129,6 +148,13 @@ Each design system is inspired by a best-in-class SaaS website and implemented w
 | **3** | **Polar** | [polar.sh](https://polar.sh) | 🌙 Dark | `#171719` | Ultra-minimal, fast 150ms animations, code-focused |
 | **4** | **Vercel** | [vercel.com](https://vercel.com) | 🌑 Black | `#000000` | Compound shadows, bouncy easing, signature gradients |
 | **5** | **Clerk** | [clerk.com](https://clerk.com) | ☀️ Light | `#f7f7f8` | Warm gray, pill buttons, purple accents, Suisse font |
+
+### Current Production Design (Oatmeal-based)
+
+- **Palette**: Olive greens/grays + Adapty purple (#6720FF) accent
+- **Typography**: Inter (Instrument Serif removed per feedback)
+- **Grid**: Slow-drift animated background (cursor-tracking disabled)
+- **Style**: Editorial elegance, sophisticated minimalism
 
 ### Token Architecture
 
@@ -151,23 +177,6 @@ Each design system is inspired by a best-in-class SaaS website and implemented w
 --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
 ```
 
-### Universal Patterns
-
-All 5 reference sites share these design decisions:
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  UNIVERSAL DESIGN PATTERNS (discovered through analysis)    │
-├─────────────────────────────────────────────────────────────┤
-│  📐 Spacing      4px base unit, 8px standard gaps           │
-│  🔤 Typography   Geometric sans-serif (Inter, Geist)        │
-│  📝 Headings     Negative letter-spacing (-0.02 to -0.04em) │
-│  🎨 Accents      Blue-purple spectrum (#6366f1 family)      │
-│  ⬜ Radius       6-12px for buttons, 8-16px for cards       │
-│  ⏱️  Animation    200-300ms duration, ease-out timing       │
-└─────────────────────────────────────────────────────────────┘
-```
-
 ---
 
 ## 🚀 Quick Start
@@ -184,8 +193,8 @@ All 5 reference sites share these design decisions:
 git clone https://github.com/kirniy/adapty-webdev.git
 cd adapty-webdev
 
-# Navigate to prototype
-cd prototypes/adapty-prototype
+# Navigate to active prototype (Oatmeal)
+cd prototypes/oatmeal
 
 # Install dependencies
 pnpm install
@@ -204,16 +213,12 @@ pnpm dev
 | `pnpm lint` | Run ESLint |
 | `pnpm typecheck` | Run TypeScript compiler check |
 
-### Theme Switching
+### Debug Menu Usage
 
-```bash
-# Via URL parameter
-http://localhost:3000?ds=ds1  # Linear (dark)
-http://localhost:3000?ds=ds2  # Attio (light)
-http://localhost:3000?ds=ds3  # Polar (dark)
-http://localhost:3000?ds=ds4  # Vercel (black)
-http://localhost:3000?ds=ds5  # Clerk (light) - default
-```
+1. Open the live prototype: https://adapty-oatmeal-jan14-2026.vercel.app
+2. Look for the floating debug panel in the bottom-right corner
+3. Toggle grid variants, header styles, and section designs
+4. Preferences are saved to localStorage automatically
 
 ---
 
@@ -225,58 +230,54 @@ http://localhost:3000?ds=ds5  # Clerk (light) - default
 adapty-webdev/
 │
 ├── 📁 prototypes/
-│   └── 📁 adapty-prototype/          # Main Next.js 15 application
-│       ├── 📁 src/
-│       │   ├── 📁 app/               # App Router pages
-│       │   │   ├── layout.tsx        # Root layout + fonts + metadata
-│       │   │   ├── page.tsx          # Homepage
-│       │   │   ├── error.tsx         # Error boundary
-│       │   │   ├── not-found.tsx     # 404 page
-│       │   │   └── loading.tsx       # Loading skeleton
-│       │   │
-│       │   ├── 📁 components/
-│       │   │   ├── DynamicPage.tsx   # Theme-aware section orchestrator
-│       │   │   ├── ThemeProvider.tsx # next-themes wrapper
-│       │   │   ├── ThemeSwitcher.tsx # DS dropdown selector
-│       │   │   ├── 📁 layout/        # Header, Footer
-│       │   │   ├── 📁 sections/      # 14 page sections
-│       │   │   └── 📁 ui/            # Button, Container, Section
-│       │   │
-│       │   ├── 📁 config/
-│       │   │   ├── content.ts        # All copy/content (683 lines)
-│       │   │   └── ds-configs.ts     # DS-specific configurations
-│       │   │
-│       │   └── 📁 styles/
-│       │       └── globals.css       # All tokens + animations (616 lines)
-│       │
-│       ├── next.config.js            # Next.js + security config
-│       └── package.json
+│   ├── 📁 oatmeal/                    # 🟢 Active prototype (Oatmeal-based)
+│   │   ├── src/
+│   │   │   ├── app/                   # Next.js App Router
+│   │   │   ├── components/
+│   │   │   │   ├── debug/             # Debug menu system
+│   │   │   │   ├── effects/           # AnimatedGrid, FlickeringGrid, etc.
+│   │   │   │   ├── layout/            # Header (mega-menu), Footer
+│   │   │   │   └── sections/         # 14 sections with variants
+│   │   │   └── lib/
+│   │   │       ├── content.ts        # All content/copy
+│   │   │       └── debug-context.tsx  # Debug state management
+│   │   └── public/                    # Assets, logos, images
+│   │
+│   ├── 📁 aura-build/                 # 🟡 Optimized prototype
+│   ├── 📁 adapty-prototype/           # 🟢 Phase A (5-way switcher)
+│   ├── 📁 achromatic-proto/           # 🔄 New integration
+│   └── 📁 phase-b-shadcn/             # ⚠️ Evaluated (not recommended)
 │
-├── 📁 design-systems/                # DS specifications
+├── 📁 design-systems/                 # DS specifications
 │   ├── ds-1-linear-inspired/
 │   ├── ds-2-attio-inspired/
 │   ├── ds-3-polar-minimal/
 │   ├── ds-4-vercel-bold/
 │   └── ds-5-hybrid-premium/
 │
-├── 📁 references/                    # Site analysis data
+├── 📁 references/                     # Site analysis data
 │   ├── linear/
 │   ├── attio/
 │   ├── polar/
 │   ├── vercel/
 │   ├── clerk/
-│   └── synthesis/                    # Cross-site insights
+│   └── synthesis/                     # Cross-site insights
 │
-├── 📁 skeleton/                      # Shared content specification
-│   └── SKELETON.md                   # 14-section homepage spec
+├── 📁 skeleton/                       # Shared content specification
+│   └── SKELETON.md                    # 14-section homepage spec
 │
-├── 📁 docs/                          # Documentation
-├── 📁 reports/                       # Audit reports
-├── 📁 research/                      # Phase B research
+├── 📁 templates/                      # Template integrations
+│   ├── achromatic-template/           # Premium SaaS starter-kit
+│   └── oatmeal-olive-instrument/      # Original Oatmeal template
 │
-├── CLAUDE.md                         # AI assistant context
-├── CHANGELOG.md                      # Version history
-└── README.md                         # You are here!
+├── 📁 docs/                           # Documentation
+├── 📁 reports/                        # Audit reports
+├── 📁 research/                       # Phase B research
+├── 📁 messages/                       # Stakeholder communications
+│
+├── CLAUDE.md                          # AI assistant context (living doc)
+├── CHANGELOG.md                       # Version history
+└── README.md                          # You are here!
 ```
 
 ### Tech Stack
@@ -306,27 +307,36 @@ adapty-webdev/
   </tr>
 </table>
 
+**Additional Libraries:**
+- `motion/react` - Animations (with optimizePackageImports)
+- `@phosphor-icons/react` - Icon library (with optimizePackageImports)
+- `next-themes` - Theme management
+
 ### Component Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                           RootLayout                                 │
 │  ┌───────────────────────────────────────────────────────────────┐  │
-│  │                       ThemeProvider                            │  │
+│  │                    DebugMenuProvider                           │  │
 │  │  ┌─────────────────────────────────────────────────────────┐  │  │
-│  │  │                     DynamicPage                          │  │  │
+│  │  │                     PageFrame                            │  │  │
 │  │  │  ┌─────────────────────────────────────────────────────┐ │  │  │
-│  │  │  │ Header                                               │ │  │  │
+│  │  │  │ Header (Pill-navbar or Mega-menu)                    │ │  │  │
 │  │  │  ├─────────────────────────────────────────────────────┤ │  │  │
-│  │  │  │ Hero          ← DS-aware variant selection          │ │  │  │
-│  │  │  │ TrustedBy     ← Reads from CSS tokens               │ │  │  │
-│  │  │  │ Features      ← Polymorphic structure               │ │  │  │
-│  │  │  │ Stats         ← Uses --color-*, --bg-*              │ │  │  │
-│  │  │  │ Testimonials  ← Uses --card-*, --shadow-*           │ │  │  │
-│  │  │  │ CaseStudies   ← Uses --radius-*, --border-*         │ │  │  │
-│  │  │  │ ...           ← All sections consume tokens          │ │  │  │
+│  │  │  │ Hero (variant: centered/minimal/split)              │ │  │  │
+│  │  │  │ TrustedBy (variant: marquee/grid/minimal)           │ │  │  │
+│  │  │  │ CoreFeatures (variant: colorful/muted/monochrome)   │ │  │  │
+│  │  │  │ Stats (variant: cards/inline/graph/floating)        │ │  │  │
+│  │  │  │ Testimonials (variant: editorial/wall/carousel)     │ │  │  │
+│  │  │  │ RoleCards (variant: cards/tabs/horizontal)          │ │  │  │
+│  │  │  │ Integrations (variant: grid/marquee/categorized)     │ │  │  │
+│  │  │  │ ... (14 sections total)                             │ │  │  │
 │  │  │  ├─────────────────────────────────────────────────────┤ │  │  │
 │  │  │  │ Footer                                               │ │  │  │
+│  │  │  └─────────────────────────────────────────────────────┘ │  │  │
+│  │  │  ┌─────────────────────────────────────────────────────┐ │  │  │
+│  │  │  │ DebugMenu (floating panel)                          │ │  │  │
 │  │  │  └─────────────────────────────────────────────────────┘ │  │  │
 │  │  └─────────────────────────────────────────────────────────┘  │  │
 │  └───────────────────────────────────────────────────────────────┘  │
@@ -335,103 +345,41 @@ adapty-webdev/
 
 ---
 
-## 📊 Project Status
-
-<table>
-  <tr>
-    <th>Phase</th>
-    <th>Status</th>
-    <th>Progress</th>
-    <th>Details</th>
-  </tr>
-  <tr>
-    <td>📚 Reference Analysis</td>
-    <td><img src="https://img.shields.io/badge/Complete-success?style=flat-square" alt="Complete"></td>
-    <td>████████████ 100%</td>
-    <td>5 sites extracted (Linear, Attio, Polar, Vercel, Clerk)</td>
-  </tr>
-  <tr>
-    <td>🎨 Design System Tokens</td>
-    <td><img src="https://img.shields.io/badge/Complete-success?style=flat-square" alt="Complete"></td>
-    <td>████████████ 100%</td>
-    <td>5 DS variants with 100+ CSS custom properties each</td>
-  </tr>
-  <tr>
-    <td>📝 Synthesis Documents</td>
-    <td><img src="https://img.shields.io/badge/Complete-success?style=flat-square" alt="Complete"></td>
-    <td>████████████ 100%</td>
-    <td>Patterns, differentiators, recommendations</td>
-  </tr>
-  <tr>
-    <td>🔬 Phase A Prototype</td>
-    <td><img src="https://img.shields.io/badge/Complete-success?style=flat-square" alt="Complete"></td>
-    <td>████████████ 100%</td>
-    <td>5 DS variants live and deployed</td>
-  </tr>
-  <tr>
-    <td>🔍 Phase B Research</td>
-    <td><img src="https://img.shields.io/badge/Complete-success?style=flat-square" alt="Complete"></td>
-    <td>████████████ 100%</td>
-    <td>UI library evaluation (shadcn/ui selected)</td>
-  </tr>
-  <tr>
-    <td>📦 Phase B Implementation</td>
-    <td><img src="https://img.shields.io/badge/Pending-yellow?style=flat-square" alt="Pending"></td>
-    <td>░░░░░░░░░░░░ 0%</td>
-    <td>After DS winner selection with stakeholder</td>
-  </tr>
-</table>
-
----
-
 ## 📖 Documentation
 
 | Document | Description | Location |
 |:---------|:------------|:---------|
-| 📋 **Project CLAUDE.md** | Living navigation doc, current state, directory routers | `/CLAUDE.md` |
-| 📊 **Changelog** | All releases and changes | `/CHANGELOG.md` |
-| 🎨 **DS Specifications** | Complete design system specs with tokens | `/design-systems/*/` |
-| 📐 **ASCII Wireframes** | Reference site analysis (merged PDF) | `/docs/ASCII-Wireframes.pdf` |
-| 📝 **Skeleton Spec** | 14-section homepage specification | `/skeleton/SKELETON.md` |
-| 🔬 **Phase B Research** | UI library comparison and recommendations | `/research/` |
-| 📈 **Audit Reports** | DS wireframe comparison audits | `/reports/audits/` |
+| **CLAUDE.md** | Living navigation doc, current state, directory routers | `/CLAUDE.md` |
+| **Changelog** | All releases and changes | `/CHANGELOG.md` |
+| **DS Specifications** | Complete design system specs with tokens | `/design-systems/*/` |
+| **Skeleton Spec** | 14-section homepage specification | `/skeleton/SKELETON.md` |
+| **Phase B Research** | UI library comparison and recommendations | `/research/` |
+| **Audit Reports** | DS wireframe comparison audits | `/reports/audits/` |
+| **Daily Reports** | Stakeholder communications | `/messages/07-daily-report-jan15/` |
 
 ---
 
 ## 🧪 Testing Methodology
 
-### Phase A: Design System Testing
+### Phase A: Design System Testing ✅
 
-Test 5 design systems on **vanilla Tailwind CSS** (no UI libraries) to isolate visual impact.
+Tested 5 design systems on **vanilla Tailwind CSS** (no UI libraries) to isolate visual impact.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    SAME CONTENT                              │
-│                    SAME COMPONENTS                           │
-│                    SAME STRUCTURE                            │
-│                         ↓                                    │
-├─────────┬─────────┬─────────┬─────────┬─────────────────────┤
-│   DS1   │   DS2   │   DS3   │   DS4   │        DS5          │
-│ Linear  │  Attio  │  Polar  │ Vercel  │       Clerk         │
-│  Dark   │  Light  │  Dark   │  Black  │       Light         │
-├─────────┴─────────┴─────────┴─────────┴─────────────────────┤
-│                         ↓                                    │
-│              MEASURE & COMPARE                               │
-│         • Visual appeal (stakeholder review)                 │
-│         • Performance (Lighthouse)                           │
-│         • Accessibility (WCAG compliance)                    │
-└─────────────────────────────────────────────────────────────┘
-```
+**Result**: Vanilla Tailwind approach validated. shadcn/ui adds friction for marketing sites.
 
-### Phase B: UI Library Testing (Upcoming)
+### Phase B: UI Library Testing ⚠️
 
-With the winning design system, test different UI library approaches:
+Evaluated shadcn/ui with winning design system.
 
-- **shadcn/ui** - Copy-paste components with full customization
-- **shadcn-blocks** - Pre-built page sections
-- **21st.dev** - AI-powered component generation
-- **React Bits** - Animated component library
-- **Custom mix** - Best of each
+**Result**: Not recommended - generic look, over-engineered for landing pages. Marketing sites need pixel-perfect control.
+
+### Current Approach: Template Integration ✅
+
+Using premium templates (Oatmeal, Achromatic) as foundation:
+- **Oatmeal**: Marketing pages, landing sections
+- **Achromatic**: Infrastructure (docs, blog, auth, dashboard)
+
+**Method**: Debug menu system enables rapid iteration and stakeholder feedback without rebuilding.
 
 ---
 
@@ -449,38 +397,68 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()
 
 ### Performance Optimizations
 
-- ✅ Modern image formats (AVIF, WebP)
-- ✅ Font optimization with `display: swap`
-- ✅ Tree-shaking for lucide-react icons
-- ✅ React Strict Mode enabled
-- ✅ Compression enabled
-- ✅ Zero-flash theme switching (inline script)
+- ✅ **optimizePackageImports** for motion/react + @phosphor-icons (barrel import elimination)
+- ✅ **Dynamic imports** for heavy components (TheInfiniteGrid wrapper)
+- ✅ **React.cache()** for server-side data fetching
+- ✅ **Modern image formats** (AVIF, WebP)
+- ✅ **Font optimization** with `display: swap`
+- ✅ **Zero-flash theme switching** (inline script)
+- ✅ **Tree-shaking** for icon libraries
 
-### Build Output
+### Recent Optimizations (January 2026)
 
-```
-Route (app)           Size      First Load JS
-○ /                   33.6 kB   139 kB
-○ /_not-found         127 B     102 kB
-+ First Load shared   102 kB
-```
+- **Bundle size reduction**: optimizePackageImports eliminated barrel import overhead
+- **Server performance**: React.cache() patterns for parallel fetching
+- **Visual polish**: Grain, shine, elevate, glow effects
+- **Grid performance**: Optimized AnimatedGrid with reduced re-renders
+
+---
+
+## 🎯 Recent Updates (January 2026)
+
+### January 15, 2026
+
+- ✅ **Debug menu system** with 18 section variants
+- ✅ **Mega-menu header** ported from Aura with 4 dropdowns
+- ✅ **Content parity**: 17 product items (was 9), 11 case studies
+- ✅ **Grid variants**: cursor-tracking disabled, slow-drift default, guide lines added
+- ✅ **Typography**: Instrument Serif removed, Inter throughout
+- ✅ **Color palette**: Adapty purple (#6720FF) integrated in OKLCH
+- ✅ **Achromatic integration**: Premium SaaS starter-kit with debug menu
+
+### January 14, 2026
+
+- ✅ **Aura mega-menu header** ported to Oatmeal
+- ✅ **Performance optimizations**: optimizePackageImports, dynamic imports
+- ✅ **Visual polish**: Testimonials, CaseStudies, Integrations redesigned
+- ✅ **AnimatedGrid**: Site-wide background via PageFrame
+
+### January 13, 2026
+
+- ✅ **Phase B evaluation**: shadcn/ui assessed, not recommended
+- ✅ **Oatmeal template**: Purchased and integrated
+- ✅ **14 sections**: All homepage sections implemented
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
-
-1. **Report Bugs** - Open an issue with reproduction steps
-2. **Suggest Features** - Open an issue with your idea
-3. **Submit PRs** - Fork, create a branch, make changes, open PR
+This is a proprietary project for ADAPTY. For internal contributors:
 
 ### Development Guidelines
 
 - Follow existing code style and patterns
 - Use CSS custom properties for all styling
-- Test across all 5 design systems before submitting
+- Test with debug menu across all variants
 - Update relevant documentation
+- **NO EMOJIS** - Zero tolerance policy (see CLAUDE.md)
+
+### Git Workflow
+
+- Use conventional commit messages
+- Test locally before pushing
+- Update CHANGELOG.md for significant changes
+- Update CLAUDE.md for architectural decisions
 
 ---
 
@@ -509,9 +487,9 @@ This project is proprietary to ADAPTY. All rights reserved.
 ---
 
 <p align="center">
-  <sub>Built with ❤️ and <a href="https://claude.ai">Claude</a></sub>
+  <sub>Built with precision and <a href="https://claude.ai">Claude</a></sub>
 </p>
 
 <p align="center">
-  <a href="#website-redesign-project">↑ Back to top</a>
+  <a href="#adapty-website-redesign-project">↑ Back to top</a>
 </p>
