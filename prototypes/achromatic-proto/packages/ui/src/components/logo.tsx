@@ -24,22 +24,13 @@ export function Logo({
         className={cn('flex items-center', className)}
         {...other}
       >
-        {/* Full Adapty logo with wordmark - light mode */}
+        {/* Full Adapty logo - black in light mode, inverted (white) in dark mode */}
         <Image
-          src="/logos/adapty-logo-color.svg"
+          src="/logos/adapty-logo-black.svg"
           alt="Adapty"
           width={120}
           height={32}
-          className="h-8 w-auto dark:hidden"
-          priority
-        />
-        {/* Full Adapty logo - dark mode (white version) */}
-        <Image
-          src="/logos/adapty-logo-white.svg"
-          alt="Adapty"
-          width={120}
-          height={32}
-          className="hidden h-8 w-auto dark:block"
+          className="h-8 w-auto dark:invert"
           priority
         />
       </div>
@@ -52,12 +43,13 @@ export function Logo({
       className={cn('flex items-center', className)}
       {...other}
     >
+      {/* Symbol - invert for dark mode */}
       <Image
         src="/logos/adapty-symbol.svg"
         alt="Adapty"
         width={32}
         height={32}
-        className="size-8"
+        className="size-8 dark:invert"
         priority
       />
     </div>
