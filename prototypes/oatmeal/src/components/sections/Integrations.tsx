@@ -11,6 +11,8 @@ import { useIntegrationsVariant } from '@/lib/debug-context'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 
+import { FlickeringGrid } from '@/components/effects/FlickeringGrid'
+
 /**
  * Variant A: Grid (Minimal Logo Wall)
  *
@@ -30,7 +32,22 @@ function IntegrationsGrid() {
   const { integrations } = content
 
   return (
-    <Section className="bg-olive-50/50 border-y border-olive-100 py-16 sm:py-24">
+    <Section className="relative overflow-hidden border-y border-olive-100 py-16 sm:py-24">
+      {/* Background Effect */}
+      <div className="absolute inset-0 pointer-events-none -z-10 opacity-20">
+        <FlickeringGrid
+          squareSize={4}
+          gridGap={8}
+          color="rgb(88, 101, 74)"
+          maxOpacity={0.1}
+          flickerChance={0.1}
+          height={800}
+          width={1600}
+          className="w-full h-full"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white" />
+      </div>
+
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

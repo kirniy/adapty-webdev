@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { motion } from 'motion/react';
 
 import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 
 const DATA = [
   {
@@ -25,8 +27,9 @@ const DATA = [
 
 export function StoryTimeline(): React.JSX.Element {
   return (
-    <GridSection>
-      <div className="container max-w-6xl py-20">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={800} />
+      <div className="container max-w-6xl py-20 relative z-10">
         <h2 className="mb-16 text-sm font-medium uppercase tracking-wider text-muted-foreground">
           The road so far
         </h2>
@@ -34,11 +37,15 @@ export function StoryTimeline(): React.JSX.Element {
           <div className="absolute left-4 top-0 h-full w-0.5 bg-border" />
           <div className="space-y-16">
             {DATA.map((milestone, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
                 className="relative pl-12"
               >
-                <div className="absolute left-0 top-1 flex size-8 items-center justify-center rounded-full border bg-background">
+                <div className="absolute left-0 top-1 flex size-8 items-center justify-center rounded-full border bg-background shadow-sm">
                   <div className="size-2.5 rounded-full bg-primary" />
                 </div>
                 <div className="text-sm font-medium text-muted-foreground">
@@ -48,7 +55,7 @@ export function StoryTimeline(): React.JSX.Element {
                 <p className="leading-relaxed text-muted-foreground">
                   {milestone.description}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

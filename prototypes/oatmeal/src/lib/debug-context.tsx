@@ -14,12 +14,18 @@ export type GridLinesStyle = 'off' | 'solid' | 'dashed'
 // Dashed grid overlay style (achromatic SVG lines)
 export type DashedGridStyle = 'off' | 'subtle' | 'visible'
 
+// Opacity levels
+export type OpacityLevel = 'low' | 'medium' | 'high'
+
+// Thickness levels
+export type ThicknessLevel = 'hairline' | 'thin' | 'medium'
+
 // Section variant types - each section can have multiple design variants
 export type HeroVariant = 'centered-demo' | 'split-left' | 'wallpaper-bg' | 'minimal-text'
-export type TrustedByVariant = 'marquee' | 'static-grid' | 'static-minimal'
+export type TrustedByVariant = 'marquee' | 'static-grid' | 'static-minimal' | 'static-premium' | 'static-lens'
 export type CoreFeaturesVariant = 'zigzag' | 'bento' | 'large-demo' | 'sticky-scroll' | 'cards'
 export type StatsVariant = 'cards' | 'inline' | 'graph' | 'floating'
-export type TestimonialsVariant = 'editorial' | 'wall' | 'carousel'
+export type TestimonialsVariant = 'editorial' | 'wall' | 'carousel' | 'sticky-cards' | 'minimal-slider'
 export type RoleCardsVariant = 'cards' | 'tabs' | 'horizontal'
 export type IntegrationsVariant = 'marquee' | 'static-grid' | 'categorized'
 
@@ -58,6 +64,20 @@ export const DASHED_GRID_VARIANTS: VariantOption<DashedGridStyle>[] = [
   { value: 'visible', label: 'Visible', description: 'Visible decorative dashed grid overlay' },
 ]
 
+// Opacity options
+export const OPACITY_LEVELS: VariantOption<OpacityLevel>[] = [
+  { value: 'low', label: 'Low', description: 'Subtle, barely visible' },
+  { value: 'medium', label: 'Medium', description: 'Standard visibility' },
+  { value: 'high', label: 'High', description: 'High contrast' },
+]
+
+// Thickness options
+export const THICKNESS_LEVELS: VariantOption<ThicknessLevel>[] = [
+  { value: 'hairline', label: 'Hairline', description: '0.5px ultra-thin' },
+  { value: 'thin', label: 'Thin', description: '1px standard' },
+  { value: 'medium', label: 'Medium', description: '2px bold' },
+]
+
 // Section variant options
 export const HERO_VARIANTS: VariantOption<HeroVariant>[] = [
   { value: 'centered-demo', label: 'Centered + Demo', description: 'Centered text with screenshot below' },
@@ -67,6 +87,8 @@ export const HERO_VARIANTS: VariantOption<HeroVariant>[] = [
 ]
 
 export const TRUSTED_BY_VARIANTS: VariantOption<TrustedByVariant>[] = [
+  { value: 'static-premium', label: 'Premium Static', description: 'Breathing grid with soft focus' },
+  { value: 'static-lens', label: 'Lens Effect', description: 'Fluid spotlight interaction' },
   { value: 'marquee', label: 'Scrolling Marquee', description: 'Infinite horizontal scroll' },
   { value: 'static-grid', label: 'Static Grid', description: 'Stripe-style weighted display' },
   { value: 'static-minimal', label: 'Minimal Row', description: 'Single row, no animation' },
@@ -88,9 +110,11 @@ export const STATS_VARIANTS: VariantOption<StatsVariant>[] = [
 ]
 
 export const TESTIMONIALS_VARIANTS: VariantOption<TestimonialsVariant>[] = [
+  { value: 'sticky-cards', label: 'Sticky Stack', description: 'Stacking cards on scroll' },
+  { value: 'carousel', label: 'Carousel', description: 'Arrow navigation, one at a time' },
+  { value: 'minimal-slider', label: 'Minimal Slider', description: 'Text-focused fluid transition' },
   { value: 'editorial', label: 'Editorial', description: 'Magazine-style dark hero' },
   { value: 'wall', label: 'Social Wall', description: 'Scrolling testimonial marquee' },
-  { value: 'carousel', label: 'Carousel', description: 'Arrow navigation, one at a time' },
 ]
 
 export const ROLE_CARDS_VARIANTS: VariantOption<RoleCardsVariant>[] = [
@@ -111,6 +135,9 @@ interface DebugState {
   headerVariant: HeaderVariant
   gridLinesStyle: GridLinesStyle
   dashedGridStyle: DashedGridStyle
+  gridLinesOpacity: OpacityLevel
+  gridLinesWidth: ThicknessLevel
+  dashedGridOpacity: OpacityLevel
   // Section variants
   heroVariant: HeroVariant
   trustedByVariant: TrustedByVariant
@@ -128,6 +155,9 @@ interface DebugContextValue extends DebugState {
   setHeaderVariant: (variant: HeaderVariant) => void
   setGridLinesStyle: (style: GridLinesStyle) => void
   setDashedGridStyle: (style: DashedGridStyle) => void
+  setGridLinesOpacity: (opacity: OpacityLevel) => void
+  setGridLinesWidth: (width: ThicknessLevel) => void
+  setDashedGridOpacity: (opacity: OpacityLevel) => void
   // Computed helpers for GridSection
   showGridLines: boolean
   gridLinesDashed: boolean
@@ -168,12 +198,15 @@ const defaultState: DebugState = {
   headerVariant: 'oatmeal-simple', // Start with current simple navbar
   gridLinesStyle: 'off', // Start with no section border lines
   dashedGridStyle: 'off', // Start with no decorative SVG grid
+  gridLinesOpacity: 'low',
+  gridLinesWidth: 'thin',
+  dashedGridOpacity: 'low',
   // Section defaults - start with current implementations
   heroVariant: 'centered-demo',
-  trustedByVariant: 'marquee',
+  trustedByVariant: 'static-premium',
   coreFeaturesVariant: 'zigzag',
   statsVariant: 'cards',
-  testimonialsVariant: 'editorial',
+  testimonialsVariant: 'sticky-cards',
   roleCardsVariant: 'cards',
   integrationsVariant: 'marquee',
   isDebugMenuOpen: false,
@@ -202,6 +235,9 @@ export function DebugProvider({ children }: { children: ReactNode }) {
           headerVariant: parsed.headerVariant ?? prev.headerVariant,
           gridLinesStyle: parsed.gridLinesStyle ?? prev.gridLinesStyle,
           dashedGridStyle: parsed.dashedGridStyle ?? prev.dashedGridStyle,
+          gridLinesOpacity: parsed.gridLinesOpacity ?? prev.gridLinesOpacity,
+          gridLinesWidth: parsed.gridLinesWidth ?? prev.gridLinesWidth,
+          dashedGridOpacity: parsed.dashedGridOpacity ?? prev.dashedGridOpacity,
           // Section variants
           heroVariant: parsed.heroVariant ?? prev.heroVariant,
           trustedByVariant: parsed.trustedByVariant ?? prev.trustedByVariant,
@@ -248,6 +284,18 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   // Set dashed grid style
   const setDashedGridStyle = useCallback((style: DashedGridStyle) => {
     setState(prev => ({ ...prev, dashedGridStyle: style }))
+  }, [])
+
+  const setGridLinesOpacity = useCallback((opacity: OpacityLevel) => {
+    setState(prev => ({ ...prev, gridLinesOpacity: opacity }))
+  }, [])
+
+  const setGridLinesWidth = useCallback((width: ThicknessLevel) => {
+    setState(prev => ({ ...prev, gridLinesWidth: width }))
+  }, [])
+
+  const setDashedGridOpacity = useCallback((opacity: OpacityLevel) => {
+    setState(prev => ({ ...prev, dashedGridOpacity: opacity }))
   }, [])
 
   // Section variant setters
@@ -335,6 +383,9 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     setHeaderVariant,
     setGridLinesStyle,
     setDashedGridStyle,
+    setGridLinesOpacity,
+    setGridLinesWidth,
+    setDashedGridOpacity,
     showGridLines,
     gridLinesDashed,
     showDashedGrid,

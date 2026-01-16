@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 
 // Show logos prominently - Sergey: "10-15 clients shown large and static, focus on each name"
 const LOGOS = [
@@ -20,8 +21,9 @@ const LOGOS = [
 
 export function Logos(): React.JSX.Element {
   return (
-    <GridSection>
-      <div className="container py-12 lg:py-16">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={200} />
+      <div className="container py-12 lg:py-16 relative z-10">
         <BlurFade className="mb-8 text-center">
           <p className="text-lg font-medium text-foreground">
             Trusted by 15,000+ apps and the world&apos;s largest app publishers
@@ -41,7 +43,7 @@ export function Logos(): React.JSX.Element {
                 alt={logo.name}
                 width={120}
                 height={48}
-                className="h-8 w-auto object-contain opacity-50 transition-opacity duration-300 hover:opacity-100 dark:invert md:h-10"
+                className="h-8 w-auto object-contain opacity-50 transition-opacity duration-300 hover:opacity-100 dark:invert md:h-10 hover:scale-110"
               />
             </BlurFade>
           ))}

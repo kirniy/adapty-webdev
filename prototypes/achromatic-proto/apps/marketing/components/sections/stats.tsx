@@ -4,6 +4,7 @@ import { cn } from '@workspace/ui/lib/utils';
 
 import { GridSection } from '~/components/fragments/grid-section';
 import { NumberTicker } from '~/components/fragments/number-ticket';
+import { SectionBackground } from '~/components/fragments/section-background';
 
 const DATA = [
   {
@@ -35,13 +36,14 @@ const DATA = [
 
 export function Stats(): React.JSX.Element {
   return (
-    <GridSection>
-      <div className="py-8 text-center">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={400} />
+      <div className="py-8 text-center relative z-10">
         <h2 className="text-lg font-medium text-muted-foreground">
           Adapty processes subscription revenue with the industry&apos;s highest SLA Rate
         </h2>
       </div>
-      <div className="grid grid-cols-2 divide-x divide-border lg:grid-cols-4">
+      <div className="grid grid-cols-2 divide-x divide-border lg:grid-cols-4 relative z-10 bg-background/50 backdrop-blur-sm">
         {DATA.map((stat, index) => (
           <div
             key={index}

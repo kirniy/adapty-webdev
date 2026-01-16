@@ -35,7 +35,7 @@ export function BlogPosts(): React.JSX.Element {
               <Link
                 key={index}
                 href={`${baseUrl.Marketing}${post.slug}`}
-                className="flex h-full flex-col justify-between rounded-2xl bg-background p-6 shadow-xs transition-shadow hover:shadow-md dark:bg-accent/30 dark:hover:bg-accent/50"
+                className="flex h-full flex-col justify-between rounded-2xl bg-background p-6 shadow-xs transition-all duration-300 hover:shadow-xl hover:scale-[1.02] dark:bg-accent/30 dark:hover:bg-accent/50"
               >
                 <div className="mb-4 flex items-center justify-between text-muted-foreground text-sm">
                   <span>{post.category}</span>

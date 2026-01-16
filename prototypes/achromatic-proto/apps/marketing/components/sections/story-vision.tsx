@@ -1,11 +1,13 @@
 import * as React from 'react';
 
 import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 
 export function StoryVision(): React.JSX.Element {
   return (
-    <GridSection>
-      <div className="container max-w-6xl py-20">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={600} />
+      <div className="container max-w-6xl py-20 relative z-10">
         <div className="grid gap-16 lg:grid-cols-2">
           <div>
             <h2 className="mb-8 text-sm font-medium uppercase tracking-wider text-muted-foreground">

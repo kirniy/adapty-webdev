@@ -5,6 +5,7 @@ import { APP_NAME } from '@workspace/common/app';
 
 import { GridSection } from '~/components/fragments/grid-section';
 import { SiteHeading } from '~/components/fragments/site-heading';
+import { SectionBackground } from '~/components/fragments/section-background';
 
 const DATA = [
   {
@@ -29,8 +30,9 @@ const DATA = [
 
 export function CareersBenefits(): React.JSX.Element {
   return (
-    <GridSection>
-      <div className="space-y-20 pt-20">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={600} />
+      <div className="space-y-20 pt-20 relative z-10">
         <div className="container">
           <SiteHeading
             badge="Careers"
@@ -38,11 +40,11 @@ export function CareersBenefits(): React.JSX.Element {
             description={`Work remotely from wherever you want and help us build the future of ${APP_NAME}`}
           />
         </div>
-        <div className="grid divide-y border-t border-dashed md:grid-cols-3 md:divide-x md:divide-y-0">
+        <div className="grid divide-y border-t border-dashed md:grid-cols-3 md:divide-x md:divide-y-0 bg-background/60 backdrop-blur-sm">
           {DATA.map((benefit, index) => (
             <div
               key={index}
-              className="border-dashed px-8 py-12"
+              className="border-dashed px-8 py-12 transition-all hover:bg-accent/50 hover:scale-[1.02] duration-300"
             >
               <div className="mb-7 flex size-12 items-center justify-center rounded-2xl border bg-background shadow">
                 {benefit.icon}

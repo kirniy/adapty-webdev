@@ -3,7 +3,17 @@
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
 
 // Grid animation variants
-// export type GridVariant = 'cursor-tracking' | 'slow-drift' | 'static' | 'off'
+export type GridVariant = 'default' | 'flickering' | 'off'
+
+// Corner radius variants
+export type CornerRadiusVariant = 'default' | 'round' | 'sharp'
+
+// Grid thickness variants
+export type GridThicknessVariant = 'default' | 'thin' | 'thick'
+
+export type GridColorVariant = 'default' | 'muted' | 'accent' | 'blue' | 'purple'
+export type GridOpacityVariant = 'faint' | 'subtle' | 'visible' | 'strong'
+export type GridZIndexVariant = 'deep' | 'back' | 'normal' | 'front'
 
 // Header/navbar variants
 export type HeaderVariant = 'default' | 'simple'
@@ -30,12 +40,45 @@ export interface VariantOption<T> {
 }
 
 // All available grid variants with labels
-// export const GRID_VARIANTS: VariantOption<GridVariant>[] = [
-//   { value: 'cursor-tracking', label: 'Cursor Tracking', description: 'Grid reveals around cursor position' },
-//   { value: 'slow-drift', label: 'Slow Drift', description: 'Continuous animation, no cursor tracking' },
-//   { value: 'static', label: 'Static', description: 'No animation, just pattern' },
-//   { value: 'off', label: 'Off', description: 'No grid displayed' },
-// ]
+export const GRID_VARIANTS: VariantOption<GridVariant>[] = [
+  { value: 'default', label: 'Diagonal Lines', description: 'Classic diagonal static pattern' },
+  { value: 'flickering', label: 'Flickering Grid', description: 'Animated pixel grid' },
+  { value: 'off', label: 'Off', description: 'No background grid' },
+]
+
+export const CORNER_RADIUS_VARIANTS: VariantOption<CornerRadiusVariant>[] = [
+  { value: 'default', label: 'Default', description: 'Standard corner radius' },
+  { value: 'round', label: 'Round', description: 'More rounded corners' },
+  { value: 'sharp', label: 'Sharp', description: 'Square corners' },
+]
+
+export const GRID_THICKNESS_VARIANTS: VariantOption<GridThicknessVariant>[] = [
+  { value: 'default', label: 'Default', description: 'Standard thickness' },
+  { value: 'thin', label: 'Thin', description: 'Thinner lines' },
+  { value: 'thick', label: 'Thick', description: 'Thicker lines' },
+]
+
+export const GRID_COLOR_VARIANTS: VariantOption<GridColorVariant>[] = [
+  { value: 'default', label: 'Default', description: 'Standard color' },
+  { value: 'muted', label: 'Muted', description: 'Subtle gray' },
+  { value: 'accent', label: 'Accent', description: 'Brand accent color' },
+  { value: 'blue', label: 'Blue', description: 'Blue tint' },
+  { value: 'purple', label: 'Purple', description: 'Purple tint' },
+]
+
+export const GRID_OPACITY_VARIANTS: VariantOption<GridOpacityVariant>[] = [
+  { value: 'faint', label: 'Faint', description: 'Barely visible (10%)' },
+  { value: 'subtle', label: 'Subtle', description: 'Light (20%)' },
+  { value: 'visible', label: 'Visible', description: 'Medium (40%)' },
+  { value: 'strong', label: 'Strong', description: 'High contrast (60%)' },
+]
+
+export const GRID_Z_INDEX_VARIANTS: VariantOption<GridZIndexVariant>[] = [
+  { value: 'deep', label: 'Deep', description: 'Behind everything (-10)' },
+  { value: 'back', label: 'Back', description: 'Just behind content (-1)' },
+  { value: 'normal', label: 'Normal', description: 'Document flow (0)' },
+  { value: 'front', label: 'Front', description: 'On top of content (10)' },
+]
 
 // Header variants
 export const HEADER_VARIANTS: VariantOption<HeaderVariant>[] = [
@@ -106,6 +149,13 @@ export const BLOG_VARIANTS: VariantOption<BlogVariant>[] = [
 // Debug state interface
 interface DebugState {
   colorAccentVariant: ColorAccentVariant
+  gridVariant: GridVariant
+  cornerRadiusVariant: CornerRadiusVariant
+  gridThicknessVariant: GridThicknessVariant
+  dashedThicknessVariant: GridThicknessVariant
+  gridColorVariant: GridColorVariant
+  gridOpacityVariant: GridOpacityVariant
+  gridZIndexVariant: GridZIndexVariant
   headerVariant: HeaderVariant
   heroVariant: HeroVariant
   logosVariant: LogosVariant
@@ -121,6 +171,13 @@ interface DebugState {
 // Context value interface
 interface DebugContextValue extends DebugState {
   setColorAccentVariant: (variant: ColorAccentVariant) => void
+  setGridVariant: (variant: GridVariant) => void
+  setCornerRadiusVariant: (variant: CornerRadiusVariant) => void
+  setGridThicknessVariant: (variant: GridThicknessVariant) => void
+  setDashedThicknessVariant: (variant: GridThicknessVariant) => void
+  setGridColorVariant: (variant: GridColorVariant) => void
+  setGridOpacityVariant: (variant: GridOpacityVariant) => void
+  setGridZIndexVariant: (variant: GridZIndexVariant) => void
   setHeaderVariant: (variant: HeaderVariant) => void
   setHeroVariant: (variant: HeroVariant) => void
   setLogosVariant: (variant: LogosVariant) => void
@@ -137,6 +194,13 @@ interface DebugContextValue extends DebugState {
 // Default state
 const defaultState: DebugState = {
   colorAccentVariant: 'subtle',
+  gridVariant: 'default',
+  cornerRadiusVariant: 'default',
+  gridThicknessVariant: 'default',
+  dashedThicknessVariant: 'default',
+  gridColorVariant: 'default',
+  gridOpacityVariant: 'subtle',
+  gridZIndexVariant: 'back',
   headerVariant: 'default',
   heroVariant: 'marketing',
   logosVariant: 'default',
@@ -189,7 +253,25 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     }
   }, [state, isHydrated])
 
+  // Apply corner radius to root
+  useEffect(() => {
+    if (!isHydrated) return
+    const root = document.documentElement
+    const radius = 
+      state.cornerRadiusVariant === 'round' ? '1rem' : 
+      state.cornerRadiusVariant === 'sharp' ? '0' : 
+      '0.5rem'
+    root.style.setProperty('--radius', radius)
+  }, [state.cornerRadiusVariant, isHydrated])
+
   const setColorAccentVariant = useCallback((variant: ColorAccentVariant) => setState(prev => ({ ...prev, colorAccentVariant: variant })), [])
+  const setGridVariant = useCallback((variant: GridVariant) => setState(prev => ({ ...prev, gridVariant: variant })), [])
+  const setCornerRadiusVariant = useCallback((variant: CornerRadiusVariant) => setState(prev => ({ ...prev, cornerRadiusVariant: variant })), [])
+  const setGridThicknessVariant = useCallback((variant: GridThicknessVariant) => setState(prev => ({ ...prev, gridThicknessVariant: variant })), [])
+  const setDashedThicknessVariant = useCallback((variant: GridThicknessVariant) => setState(prev => ({ ...prev, dashedThicknessVariant: variant })), [])
+  const setGridColorVariant = useCallback((variant: GridColorVariant) => setState(prev => ({ ...prev, gridColorVariant: variant })), [])
+  const setGridOpacityVariant = useCallback((variant: GridOpacityVariant) => setState(prev => ({ ...prev, gridOpacityVariant: variant })), [])
+  const setGridZIndexVariant = useCallback((variant: GridZIndexVariant) => setState(prev => ({ ...prev, gridZIndexVariant: variant })), [])
   const setHeaderVariant = useCallback((variant: HeaderVariant) => setState(prev => ({ ...prev, headerVariant: variant })), [])
   const setHeroVariant = useCallback((variant: HeroVariant) => setState(prev => ({ ...prev, heroVariant: variant })), [])
   const setLogosVariant = useCallback((variant: LogosVariant) => setState(prev => ({ ...prev, logosVariant: variant })), [])
@@ -208,6 +290,13 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   const value: DebugContextValue = {
     ...state,
     setColorAccentVariant,
+    setGridVariant,
+    setCornerRadiusVariant,
+    setGridThicknessVariant,
+    setDashedThicknessVariant,
+    setGridColorVariant,
+    setGridOpacityVariant,
+    setGridZIndexVariant,
     setHeaderVariant,
     setHeroVariant,
     setLogosVariant,
@@ -236,6 +325,13 @@ export function useDebug() {
 }
 
 export function useColorAccentVariant() { return useContext(DebugContext)?.colorAccentVariant ?? defaultState.colorAccentVariant }
+export function useGridVariant() { return useContext(DebugContext)?.gridVariant ?? defaultState.gridVariant }
+export function useCornerRadiusVariant() { return useContext(DebugContext)?.cornerRadiusVariant ?? defaultState.cornerRadiusVariant }
+export function useGridThicknessVariant() { return useContext(DebugContext)?.gridThicknessVariant ?? defaultState.gridThicknessVariant }
+export function useDashedThicknessVariant() { return useContext(DebugContext)?.dashedThicknessVariant ?? defaultState.dashedThicknessVariant }
+export function useGridColorVariant() { return useContext(DebugContext)?.gridColorVariant ?? defaultState.gridColorVariant }
+export function useGridOpacityVariant() { return useContext(DebugContext)?.gridOpacityVariant ?? defaultState.gridOpacityVariant }
+export function useGridZIndexVariant() { return useContext(DebugContext)?.gridZIndexVariant ?? defaultState.gridZIndexVariant }
 export function useHeaderVariant() { return useContext(DebugContext)?.headerVariant ?? defaultState.headerVariant }
 export function useHeroVariant() { return useContext(DebugContext)?.heroVariant ?? defaultState.heroVariant }
 export function useLogosVariant() { return useContext(DebugContext)?.logosVariant ?? defaultState.logosVariant }

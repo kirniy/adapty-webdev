@@ -5,13 +5,15 @@ import * as React from 'react';
 import { PricingTable } from '@workspace/billing/components/pricing-table';
 import { APP_NAME } from '@workspace/common/app';
 
+import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SiteHeading } from '~/components/fragments/site-heading';
 
 export function PricingHero(): React.JSX.Element {
   return (
-    <GridSection>
-      <div className="container space-y-12 py-20">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={800} />
+      <div className="container space-y-12 py-20 relative z-10">
         <SiteHeading
           badge="Pricing"
           title="Plans for your business"

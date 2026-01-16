@@ -13,6 +13,7 @@ import {
 
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 import { cn } from '@workspace/ui/lib/utils';
 
 // Feature data matching Adapty's core features
@@ -60,34 +61,46 @@ export function FeaturesStickyScroll(): React.JSX.Element {
   const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
+    const handleScroll = () => {
+      const viewportCenter = window.innerHeight / 2;
+      let closestIndex = 0;
+      let minDistance = Infinity;
 
-    featureRefs.current.forEach((ref, index) => {
-      if (!ref) return;
+      featureRefs.current.forEach((ref, index) => {
+        if (!ref) return;
+        const rect = ref.getBoundingClientRect();
+        
+        // Calculate distance from center of viewport to center of element
+        const center = rect.top + rect.height / 2;
+        const distance = Math.abs(center - viewportCenter);
+        
+        // If element overlaps center significantly
+        if (rect.top < viewportCenter && rect.bottom > viewportCenter) {
+            closestIndex = index;
+            minDistance = 0;
+            return;
+        }
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-              setActiveIndex(index);
-            }
-          });
-        },
-        { threshold: 0.5, rootMargin: '-20% 0px -20% 0px' }
-      );
-
-      observer.observe(ref);
-      observers.push(observer);
-    });
-
-    return () => {
-      observers.forEach((obs) => obs.disconnect());
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = index;
+        }
+      });
+      
+      setActiveIndex(closestIndex);
     };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Initial check
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <GridSection>
-      <div className="grid lg:grid-cols-2 gap-8 lg:gap-0">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={1500} />
+      <div className="grid lg:grid-cols-2 gap-8 lg:gap-0 relative z-10">
         {/* Left: Sticky navigation */}
         <div className="lg:sticky lg:top-24 lg:h-fit px-4 py-16 lg:py-24 lg:px-8 lg:border-r border-dashed">
           <BlurFade inView delay={0.1}>

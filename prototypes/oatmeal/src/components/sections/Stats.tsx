@@ -9,6 +9,7 @@ import { content } from '@/lib/content'
 import { useStatsVariant } from '@/lib/debug-context'
 import { motion } from 'motion/react'
 import { useId } from 'react'
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 /**
  * Variant A: Cards (Light Background Grid)
@@ -129,18 +130,24 @@ function StatsInline() {
  */
 function StatsWithGraph() {
   const { stats } = content
-  const pathId = useId()
+  
+  const data = [
+    { value: 30 }, { value: 35 }, { value: 45 }, { value: 40 },
+    { value: 50 }, { value: 65 }, { value: 55 }, { value: 70 },
+    { value: 85 }, { value: 80 }, { value: 95 }, { value: 110 },
+    { value: 105 }, { value: 125 }, { value: 140 }, { value: 150 }
+  ]
 
   return (
-    <Section className="py-16 sm:py-24 bg-white overflow-hidden">
+    <Section className="py-16 sm:py-24 bg-white overflow-hidden border-y border-olive-100">
       <Container>
         <div className="relative">
           {/* Stats Grid */}
-          <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16 lg:mb-0">
             {stats.map((stat, index) => (
               <FadeIn key={stat.label} delay={index * 0.1}>
-                <div className="border-l-2 border-adapty-400 pl-6">
-                  <div className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-olive-950">
+                <div className="border-l-2 border-adapty-400 pl-6 backdrop-blur-sm bg-white/50 rounded-r-lg py-2">
+                  <div className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-olive-950 font-serif">
                     <NumberTicker
                       value={stat.value}
                       prefix={stat.prefix}
@@ -148,7 +155,7 @@ function StatsWithGraph() {
                       decimals={stat.decimals}
                     />
                   </div>
-                  <p className="mt-2 text-sm text-olive-600">
+                  <p className="mt-2 text-sm text-olive-600 font-medium tracking-wide">
                     {stat.label}
                   </p>
                 </div>
@@ -158,50 +165,30 @@ function StatsWithGraph() {
 
           {/* Background Growth Graph */}
           <motion.div
-            className="absolute -bottom-12 left-0 right-0 h-32 sm:h-44 pointer-events-none"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            className="absolute -bottom-24 lg:-bottom-32 left-0 right-0 h-48 lg:h-64 pointer-events-none opacity-50 lg:opacity-100"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 0.6, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            transition={{ delay: 0.4, duration: 1 }}
           >
-            <svg
-              className="w-full h-full fill-adapty-100/50 stroke-adapty-300/50"
-              viewBox="0 0 1200 200"
-              preserveAspectRatio="none"
-            >
-              <defs>
-                <clipPath id={pathId}>
-                  <path d="M 0 200 L 0 180 C 200 170, 400 140, 600 100 C 800 60, 1000 30, 1200 10 L 1200 200 Z" />
-                </clipPath>
-                <linearGradient id={`${pathId}-gradient`} x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="rgb(var(--color-adapty-200))" stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="rgb(var(--color-adapty-50))" stopOpacity="0.2" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M 0 200 L 0 180 C 200 170, 400 140, 600 100 C 800 60, 1000 30, 1200 10 L 1200 200 Z"
-                stroke="none"
-              />
-              <g strokeWidth="1" strokeDasharray="4 3" clipPath={`url(#${pathId})`}>
-                {[...Array(14)].map((_, i) => (
-                  <line
-                    key={i}
-                    x1={i * 92}
-                    y1="200"
-                    x2={i * 92}
-                    y2="0"
-                    vectorEffect="non-scaling-stroke"
-                  />
-                ))}
-              </g>
-              <path
-                d="M 0 180 C 200 170, 400 140, 600 100 C 800 60, 1000 30, 1200 10"
-                fill="none"
-                strokeWidth="2"
-                className="stroke-adapty-400"
-                vectorEffect="non-scaling-stroke"
-              />
-            </svg>
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={data}>
+                <defs>
+                  <linearGradient id="statsGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="var(--color-adapty-500)" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="var(--color-adapty-500)" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <Area
+                  type="monotone"
+                  dataKey="value"
+                  stroke="var(--color-adapty-500)"
+                  strokeWidth={2}
+                  fill="url(#statsGradient)"
+                  animationDuration={2000}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </motion.div>
         </div>
       </Container>

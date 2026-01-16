@@ -15,6 +15,8 @@ import {
   TESTIMONIALS_VARIANTS,
   ROLE_CARDS_VARIANTS,
   INTEGRATIONS_VARIANTS,
+  OPACITY_LEVELS,
+  THICKNESS_LEVELS,
   type VariantOption,
 } from '@/lib/debug-context'
 
@@ -178,8 +180,14 @@ export function DebugMenu() {
     setHeaderVariant,
     gridLinesStyle,
     setGridLinesStyle,
+    gridLinesOpacity,
+    setGridLinesOpacity,
+    gridLinesWidth,
+    setGridLinesWidth,
     dashedGridStyle,
     setDashedGridStyle,
+    dashedGridOpacity,
+    setDashedGridOpacity,
     heroVariant,
     setHeroVariant,
     trustedByVariant,
@@ -240,19 +248,53 @@ export function DebugMenu() {
             </CollapsibleSection>
 
             <CollapsibleSection title="Section Borders" icon={<BordersIcon />} defaultOpen>
-              <VariantSelector
-                variants={GRID_LINES_VARIANTS}
-                currentValue={gridLinesStyle}
-                onChange={setGridLinesStyle}
-              />
+              <div className="space-y-3">
+                <VariantSelector
+                  variants={GRID_LINES_VARIANTS}
+                  currentValue={gridLinesStyle}
+                  onChange={setGridLinesStyle}
+                />
+                {gridLinesStyle !== 'off' && (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] uppercase font-bold text-olive-400">Opacity</span>
+                      <VariantSelector
+                        variants={OPACITY_LEVELS}
+                        currentValue={gridLinesOpacity}
+                        onChange={setGridLinesOpacity}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] uppercase font-bold text-olive-400">Width</span>
+                      <VariantSelector
+                        variants={THICKNESS_LEVELS}
+                        currentValue={gridLinesWidth}
+                        onChange={setGridLinesWidth}
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
             </CollapsibleSection>
 
             <CollapsibleSection title="Dashed Overlay" icon={<DashedIcon />} defaultOpen>
-              <VariantSelector
-                variants={DASHED_GRID_VARIANTS}
-                currentValue={dashedGridStyle}
-                onChange={setDashedGridStyle}
-              />
+              <div className="space-y-3">
+                <VariantSelector
+                  variants={DASHED_GRID_VARIANTS}
+                  currentValue={dashedGridStyle}
+                  onChange={setDashedGridStyle}
+                />
+                {dashedGridStyle !== 'off' && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] uppercase font-bold text-olive-400">Opacity</span>
+                    <VariantSelector
+                      variants={OPACITY_LEVELS}
+                      currentValue={dashedGridOpacity}
+                      onChange={setDashedGridOpacity}
+                    />
+                  </div>
+                )}
+              </div>
             </CollapsibleSection>
 
             {/* Section Variants */}

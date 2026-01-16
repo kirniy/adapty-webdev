@@ -10,6 +10,7 @@ import { Label } from '@workspace/ui/components/label';
 import { toast } from '@workspace/ui/components/sonner';
 import { Textarea } from '@workspace/ui/components/textarea';
 
+import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SiteHeading } from '~/components/fragments/site-heading';
 
@@ -18,8 +19,9 @@ export function Contact(): React.JSX.Element {
     toast.error("I'm not implemented yet.");
   };
   return (
-    <GridSection>
-      <div className="container space-y-20 py-20">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={800} />
+      <div className="container space-y-20 py-20 relative z-10">
         <SiteHeading
           badge="Contact"
           title={

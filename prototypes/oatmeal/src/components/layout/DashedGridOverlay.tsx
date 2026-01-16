@@ -1,8 +1,15 @@
 'use client'
 
-import { useDebug } from '@/lib/debug-context'
+import { useDebug, type OpacityLevel } from '@/lib/debug-context'
 import { cn } from '@/lib/cn'
 import { motion } from 'motion/react'
+
+// Opacity multipliers for the dashed grid intensity
+const OPACITY_MULTIPLIER: Record<OpacityLevel, number> = {
+  low: 0.4,
+  medium: 1,
+  high: 2,
+}
 
 /**
  * DashedGridOverlay - Achromatic-inspired decorative SVG dashed grid lines
@@ -21,16 +28,20 @@ import { motion } from 'motion/react'
  * Design reference: achromatic-template hero section
  */
 export function DashedGridOverlay() {
-  const { showDashedGrid, dashedGridStyle } = useDebug()
+  const { showDashedGrid, dashedGridStyle, dashedGridOpacity } = useDebug()
 
   // Base opacities tuned against bg-olive-100 for real contrast.
-  const intensity = dashedGridStyle === 'subtle' ? 0.5 : 1
+  const styleMultiplier = dashedGridStyle === 'subtle' ? 0.5 : 1
+  const opacityMultiplier = OPACITY_MULTIPLIER[dashedGridOpacity]
+  const intensity = styleMultiplier * opacityMultiplier
+
+  // Compute actual opacity values (clamped to reasonable range)
   const opacity = {
-    major: 0.28 * intensity,
-    mid: 0.22 * intensity,
-    minor: 0.18 * intensity,
-    support: 0.14 * intensity,
-    supportMid: 0.11 * intensity,
+    major: Math.min(0.28 * intensity, 0.8),
+    mid: Math.min(0.22 * intensity, 0.7),
+    minor: Math.min(0.18 * intensity, 0.6),
+    support: Math.min(0.14 * intensity, 0.5),
+    supportMid: Math.min(0.11 * intensity, 0.4),
   }
 
   return (
@@ -56,11 +67,10 @@ export function DashedGridOverlay() {
           y1="0"
           x2="16.67%"
           y2="100%"
-          stroke="currentColor"
+          stroke="rgb(168 162 158)"
           strokeOpacity={opacity.major}
           strokeDasharray="5 5"
           strokeLinecap="round"
-          className="text-olive-400"
         />
 
         {/* Center-left line - 33.33% from left (1/3 of viewport) */}
@@ -69,11 +79,10 @@ export function DashedGridOverlay() {
           y1="0"
           x2="33.33%"
           y2="100%"
-          stroke="currentColor"
+          stroke="rgb(168 162 158)"
           strokeOpacity={opacity.minor}
           strokeDasharray="4 6"
           strokeLinecap="round"
-          className="text-olive-400"
         />
 
         {/* Center line - 50% */}
@@ -82,11 +91,10 @@ export function DashedGridOverlay() {
           y1="0"
           x2="50%"
           y2="100%"
-          stroke="currentColor"
+          stroke="rgb(168 162 158)"
           strokeOpacity={opacity.mid}
           strokeDasharray="5 5"
           strokeLinecap="round"
-          className="text-olive-400"
         />
 
         {/* Center-right line - 66.67% from left (2/3 of viewport) */}
@@ -95,11 +103,10 @@ export function DashedGridOverlay() {
           y1="0"
           x2="66.67%"
           y2="100%"
-          stroke="currentColor"
+          stroke="rgb(168 162 158)"
           strokeOpacity={opacity.minor}
           strokeDasharray="4 6"
           strokeLinecap="round"
-          className="text-olive-400"
         />
 
         {/* Right inner line - 83.33% from left (5/6 of viewport) */}
@@ -108,11 +115,10 @@ export function DashedGridOverlay() {
           y1="0"
           x2="83.33%"
           y2="100%"
-          stroke="currentColor"
+          stroke="rgb(168 162 158)"
           strokeOpacity={opacity.major}
           strokeDasharray="5 5"
           strokeLinecap="round"
-          className="text-olive-400"
         />
       </svg>
 
@@ -131,11 +137,10 @@ export function DashedGridOverlay() {
           y1="33.33%"
           x2="100%"
           y2="33.33%"
-          stroke="currentColor"
+          stroke="rgb(168 162 158)"
           strokeOpacity={opacity.support}
           strokeDasharray="6 8"
           strokeLinecap="round"
-          className="text-olive-400"
         />
 
         {/* Center horizontal */}
@@ -144,11 +149,10 @@ export function DashedGridOverlay() {
           y1="50%"
           x2="100%"
           y2="50%"
-          stroke="currentColor"
+          stroke="rgb(168 162 158)"
           strokeOpacity={opacity.supportMid}
           strokeDasharray="8 12"
           strokeLinecap="round"
-          className="text-olive-400"
         />
 
         {/* Bottom third horizontal */}
@@ -157,11 +161,10 @@ export function DashedGridOverlay() {
           y1="66.67%"
           x2="100%"
           y2="66.67%"
-          stroke="currentColor"
+          stroke="rgb(168 162 158)"
           strokeOpacity={opacity.support}
           strokeDasharray="6 8"
           strokeLinecap="round"
-          className="text-olive-400"
         />
       </svg>
     </motion.div>

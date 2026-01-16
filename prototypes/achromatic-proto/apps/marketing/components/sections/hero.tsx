@@ -26,6 +26,8 @@ import {
 } from '@workspace/ui/components/tabs';
 import { cn } from '@workspace/ui/lib/utils';
 
+import { SectionBackground } from '~/components/fragments/section-background';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 
 function HeroPill(): React.JSX.Element {
@@ -39,8 +41,16 @@ function HeroPill(): React.JSX.Element {
       <Link href="https://adapty.io/ebooks/100k-app-playbook/">
         <Badge
           variant="outline"
-          className="group h-8 rounded-full px-3 text-xs font-medium shadow-xs duration-200 hover:bg-accent/50 sm:text-sm"
+          className="group relative h-8 overflow-hidden rounded-full px-3 text-xs font-medium shadow-xs duration-200 hover:bg-accent/50 sm:text-sm"
         >
+          <BorderBeam
+            size={40}
+            duration={4}
+            delay={0}
+            borderWidth={1.5}
+            colorFrom="#3b82f6"
+            colorTo="#8b5cf6"
+          />
           <div className="w-fit py-0.5 text-center text-xs text-blue-500 sm:text-sm">
             Ebook
           </div>
@@ -118,12 +128,48 @@ function HeroButtons(): React.JSX.Element {
   );
 }
 
+import { 
+  useDashedThicknessVariant, 
+  useGridColorVariant, 
+  useGridOpacityVariant, 
+  useGridZIndexVariant 
+} from '~/lib/debug-context';
+
 function MainDashedGridLines(): React.JSX.Element {
+  const dashedThickness = useDashedThicknessVariant();
+  const gridColor = useGridColorVariant();
+  const gridOpacity = useGridOpacityVariant();
+  const gridZIndex = useGridZIndexVariant();
+
+  const strokeWidth = dashedThickness === 'thin' ? 0.5 : dashedThickness === 'thick' ? 2 : 1;
+  
+  // Use stroke color based on variant or css variable
+  const strokeColor = 
+    gridColor === 'default' ? 'var(--border)' : 
+    gridColor === 'muted' ? 'var(--muted-foreground)' : 
+    gridColor === 'accent' ? 'var(--primary)' : 
+    gridColor === 'blue' ? '#3B82F6' : 
+    gridColor === 'purple' ? '#8B5CF6' : 
+    'var(--border)';
+
+  const opacityValue = 
+    gridOpacity === 'faint' ? 0.2 : 
+    gridOpacity === 'subtle' ? 0.5 : 
+    gridOpacity === 'visible' ? 0.8 : 
+    1.0;
+
+  const zIndexClass = 
+    gridZIndex === 'deep' ? '-z-10' : 
+    gridZIndex === 'back' ? '-z-1' : 
+    gridZIndex === 'normal' ? 'z-0' : 
+    'z-10';
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      animate={{ opacity: opacityValue }}
       transition={{ delay: 0.6, duration: 0.4 }}
+      className={zIndexClass}
     >
       <svg className="absolute left-[16.85%] top-0 hidden h-full w-px mask-[linear-gradient(to_bottom,#0000,#000_128px,#000_calc(100%-24px),#0000)] lg:block">
         <line
@@ -133,7 +179,8 @@ function MainDashedGridLines(): React.JSX.Element {
           y2="100%"
           strokeLinecap="round"
           strokeDasharray="5 5"
-          stroke="var(--border)"
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
         />
       </svg>
       <svg className="absolute right-[16.85%] top-0 hidden h-full w-px mask-[linear-gradient(to_bottom,#0000,#000_128px,#000_calc(100%-24px),#0000)] lg:block">
@@ -144,7 +191,8 @@ function MainDashedGridLines(): React.JSX.Element {
           y2="100%"
           strokeLinecap="round"
           strokeDasharray="5 5"
-          stroke="var(--border)"
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
         />
       </svg>
       <svg className="absolute bottom-[52px] left-[calc(50%-50vw)] hidden h-px w-screen mask-[linear-gradient(to_right,#0000,#000_100px,#000_calc(100%-100px),#0000)] lg:block">
@@ -155,7 +203,8 @@ function MainDashedGridLines(): React.JSX.Element {
           y2="0.5"
           strokeLinecap="round"
           strokeDasharray="5 5"
-          stroke="var(--border)"
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
         />
       </svg>
     </motion.div>
@@ -358,9 +407,10 @@ function HeroIllustration(): React.JSX.Element {
 
 export function Hero(): React.JSX.Element {
   return (
-    <GridSection className="overflow-x-hidden">
+    <GridSection className="overflow-x-hidden relative">
+      <SectionBackground height={800} />
       <MainDashedGridLines />
-      <div className="mx-auto mt-16 flex flex-col gap-6 px-2 sm:mt-20 sm:px-1 md:mt-24 lg:mt-32">
+      <div className="mx-auto mt-16 flex flex-col gap-6 px-2 sm:mt-20 sm:px-1 md:mt-24 lg:mt-32 relative z-10">
         <div className="gap-2">
           <HeroPill />
           <HeroTitle />

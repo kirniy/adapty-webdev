@@ -7,6 +7,8 @@ import {
 } from '@workspace/ui/components/avatar';
 
 import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { BlurFade } from '~/components/fragments/blur-fade';
 
 const DATA = [
   {
@@ -27,18 +29,21 @@ const DATA = [
 
 export function StoryTeam(): React.JSX.Element {
   return (
-    <GridSection>
-      <div className="container max-w-6xl py-20">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={600} />
+      <div className="container max-w-6xl py-20 relative z-10">
         <h2 className="mb-16 text-sm font-medium uppercase tracking-wider text-muted-foreground ">
           The visionaries
         </h2>
         <div className="flex flex-wrap gap-24">
           {DATA.map((person, index) => (
-            <div
+            <BlurFade
               key={index}
+              delay={0.2 + index * 0.1}
+              inView
               className="space-y-8"
             >
-              <Avatar className="size-24 border-4 border-neutral-200 dark:border-neutral-800">
+              <Avatar className="size-24 border-4 border-neutral-200 dark:border-neutral-800 shadow-xl">
                 <AvatarImage
                   src={person.image}
                   alt={person.name}
@@ -61,7 +66,7 @@ export function StoryTeam(): React.JSX.Element {
                   <p>{person.education}</p>
                 </div>
               </div>
-            </div>
+            </BlurFade>
           ))}
         </div>
       </div>

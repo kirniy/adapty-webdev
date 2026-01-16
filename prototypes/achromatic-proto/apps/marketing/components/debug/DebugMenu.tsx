@@ -5,6 +5,12 @@ import { useState } from 'react'
 import {
   useDebug,
   COLOR_ACCENT_VARIANTS,
+  GRID_VARIANTS,
+  CORNER_RADIUS_VARIANTS,
+  GRID_THICKNESS_VARIANTS,
+  GRID_COLOR_VARIANTS,
+  GRID_OPACITY_VARIANTS,
+  GRID_Z_INDEX_VARIANTS,
   HEADER_VARIANTS,
   HERO_VARIANTS,
   LOGOS_VARIANTS,
@@ -167,6 +173,13 @@ export function DebugMenu() {
     toggleDebugMenu,
     resetToDefaults,
     colorAccentVariant, setColorAccentVariant,
+    gridVariant, setGridVariant,
+    cornerRadiusVariant, setCornerRadiusVariant,
+    gridThicknessVariant, setGridThicknessVariant,
+    dashedThicknessVariant, setDashedThicknessVariant,
+    gridColorVariant, setGridColorVariant,
+    gridOpacityVariant, setGridOpacityVariant,
+    gridZIndexVariant, setGridZIndexVariant,
     headerVariant, setHeaderVariant,
     heroVariant, setHeroVariant,
     logosVariant, setLogosVariant,
@@ -202,6 +215,39 @@ export function DebugMenu() {
 
             <CollapsibleSection title="Color Accent" icon={<PaletteIcon />} defaultOpen>
               <VariantSelector variants={COLOR_ACCENT_VARIANTS} currentValue={colorAccentVariant} onChange={setColorAccentVariant} />
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Global Style" icon={<SettingsIcon />} defaultOpen>
+              <div className="space-y-3">
+                <div className="space-y-1.5">
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Background</span>
+                  <VariantSelector variants={GRID_VARIANTS} currentValue={gridVariant} onChange={setGridVariant} />
+                </div>
+                <div className="space-y-1.5">
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Corner Radius</span>
+                  <VariantSelector variants={CORNER_RADIUS_VARIANTS} currentValue={cornerRadiusVariant} onChange={setCornerRadiusVariant} />
+                </div>
+                <div className="space-y-1.5">
+                   <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Solid Grid Thickness</span>
+                   <VariantSelector variants={GRID_THICKNESS_VARIANTS} currentValue={gridThicknessVariant} onChange={setGridThicknessVariant} />
+                </div>
+                <div className="space-y-1.5">
+                   <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Dashed Grid Thickness</span>
+                   <VariantSelector variants={GRID_THICKNESS_VARIANTS} currentValue={dashedThicknessVariant} onChange={setDashedThicknessVariant} />
+                </div>
+                <div className="space-y-1.5">
+                   <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Grid Color</span>
+                   <VariantSelector variants={GRID_COLOR_VARIANTS} currentValue={gridColorVariant} onChange={setGridColorVariant} />
+                </div>
+                <div className="space-y-1.5">
+                   <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Grid Opacity</span>
+                   <VariantSelector variants={GRID_OPACITY_VARIANTS} currentValue={gridOpacityVariant} onChange={setGridOpacityVariant} />
+                </div>
+                <div className="space-y-1.5">
+                   <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Grid Z-Index</span>
+                   <VariantSelector variants={GRID_Z_INDEX_VARIANTS} currentValue={gridZIndexVariant} onChange={setGridZIndexVariant} />
+                </div>
+              </div>
             </CollapsibleSection>
 
             <CollapsibleSection title="Navbar" icon={<NavIcon />} defaultOpen>

@@ -8,7 +8,7 @@ import { cn } from '@/lib/cn'
 import { useTestimonialsVariant } from '@/lib/debug-context'
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import Image from 'next/image'
-import { useRef, useState, useCallback } from 'react'
+import { useRef, useState, useCallback, useEffect } from 'react'
 
 // Testimonial data - curated for maximum impact
 const testimonials = [
@@ -46,19 +46,6 @@ const testimonials = [
 
 /**
  * Variant A: Editorial (Magazine-Style)
- *
- * Design philosophy:
- * - Sophisticated editorial layout inspired by premium magazines
- * - Large, confident typography with proper typographic hierarchy
- * - Scroll-triggered reveal creates reading rhythm
- * - Light theme with subtle olive background
- * - Company metric badge adds credibility
- *
- * Polished details:
- * - Custom easing curves for natural motion
- * - Proper vertical rhythm with golden ratio spacing
- * - Subtle gradient background that breathes
- * - Avatar with status ring indicating verified customer
  */
 function TestimonialsEditorial() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -183,18 +170,6 @@ function TestimonialsEditorial() {
 
 /**
  * Variant B: Wall (Social Proof Volume)
- *
- * Design philosophy:
- * - Creates impression of overwhelming social proof
- * - Infinite horizontal scroll shows endless testimonials
- * - Cards have depth with layered shadows
- * - Hover pauses scroll for readability
- *
- * Polished details:
- * - Seamless loop with duplicated content
- * - Gradient masks for smooth edge fade
- * - Staggered card heights for visual interest
- * - Company logos add credibility layer
  */
 function TestimonialsWall() {
   const [isPaused, setIsPaused] = useState(false)
@@ -298,54 +273,12 @@ function TestimonialsWall() {
           ))}
         </motion.div>
       </div>
-
-      {/* Trust indicators */}
-      <Container>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 mt-12 pt-8 border-t border-olive-100"
-        >
-          <div className="flex items-center gap-2 text-olive-600">
-            <svg className="w-5 h-5 text-adapty-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="text-sm font-medium">4.9/5 average rating</span>
-          </div>
-          <div className="flex items-center gap-2 text-olive-600">
-            <svg className="w-5 h-5 text-adapty-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            <span className="text-sm font-medium">6,000+ teams</span>
-          </div>
-          <div className="flex items-center gap-2 text-olive-600">
-            <svg className="w-5 h-5 text-adapty-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-            </svg>
-            <span className="text-sm font-medium">$4B+ processed</span>
-          </div>
-        </motion.div>
-      </Container>
     </Section>
   )
 }
 
 /**
  * Variant C: Carousel (Focused Navigation)
- *
- * Design philosophy:
- * - One testimonial at a time demands attention
- * - Arrow navigation feels intentional and premium
- * - Large typography for maximum readability
- * - Cinematic transitions between testimonials
- *
- * Polished details:
- * - Keyboard navigation support (left/right arrows)
- * - Progress indicator shows position
- * - Swipe gestures on mobile
- * - Reduced motion support
  */
 function TestimonialsCarousel() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -516,11 +449,191 @@ function TestimonialsCarousel() {
   )
 }
 
+/**
+ * Variant D: Sticky Stack (Cards stacking on scroll)
+ * 
+ * Design:
+ * - Vertical layout where cards slide over each other
+ * - Sticky positioning creates a "deck of cards" feel
+ * - Very high polish, shadow depth increases as they stack
+ * - No borders, just pure card metaphor
+ */
+function TestimonialsStickyStack() {
+  return (
+    <Section className="bg-olive-50 py-24">
+      <Container>
+        <div className="text-center mb-24">
+          <Eyebrow>Stories</Eyebrow>
+          <Heading className="mt-4">Trusted by the best</Heading>
+        </div>
+        
+        <div className="relative">
+          {testimonials.map((testimonial, index) => (
+            <StickyCard key={index} testimonial={testimonial} index={index} total={testimonials.length} />
+          ))}
+        </div>
+        
+        {/* Spacer to allow scrolling past */}
+        <div className="h-[20vh]" /> 
+      </Container>
+    </Section>
+  )
+}
+
+function StickyCard({ testimonial, index, total }: { testimonial: typeof testimonials[0], index: number, total: number }) {
+  // We use sticky positioning. Top offset increases for each card so they stack visibly.
+  const topOffset = 120 + index * 20; 
+  
+  return (
+    <motion.div 
+      className="sticky mb-12 mx-auto max-w-4xl"
+      style={{ 
+        top: topOffset,
+        zIndex: index 
+      }}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+    >
+      <div className={cn(
+        "bg-white rounded-3xl p-10 md:p-14 shadow-2xl shadow-olive-900/10 border border-olive-100/50 backdrop-blur-sm",
+        "flex flex-col md:flex-row gap-10 items-start md:items-center"
+      )}>
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-6 text-adapty-600 font-medium text-sm uppercase tracking-wider">
+            <span className="size-2 rounded-full bg-adapty-500" />
+            {testimonial.company}
+          </div>
+          <p className="text-2xl md:text-3xl font-serif text-olive-900 leading-snug">
+            &ldquo;{testimonial.quote}&rdquo;
+          </p>
+          <div className="mt-8 flex items-center gap-4">
+            <div className="size-12 rounded-full overflow-hidden bg-olive-100">
+              <Image src={testimonial.avatar} alt={testimonial.author} width={48} height={48} className="object-cover" />
+            </div>
+            <div>
+              <div className="font-semibold text-olive-900">{testimonial.author}</div>
+              <div className="text-olive-500 text-sm">{testimonial.role}</div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Metric Card */}
+        <div className="shrink-0 w-full md:w-64 bg-olive-50 rounded-2xl p-8 flex flex-col items-center justify-center text-center border border-olive-100">
+          <div className="text-5xl font-bold text-adapty-600 tracking-tight mb-2">
+            {testimonial.metric}
+          </div>
+          <div className="text-sm font-medium text-olive-600 uppercase tracking-wide">
+            {testimonial.metricLabel}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+/**
+ * Variant E: Minimal Slider (Text-focused fluid transition)
+ * 
+ * Design:
+ * - No cards, just text floating in space
+ * - Extremely minimal
+ * - Click to advance (morphing effect)
+ * - Focus is purely on the words
+ */
+function TestimonialsMinimalSlider() {
+  const [index, setIndex] = useState(0);
+  const current = testimonials[index];
+  
+  const next = () => setIndex((i) => (i + 1) % testimonials.length);
+  const prev = () => setIndex((i) => (i - 1 + testimonials.length) % testimonials.length);
+
+  return (
+    <Section className="bg-white py-32 border-y border-olive-100">
+      <Container>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid lg:grid-cols-[1fr,300px] gap-16 items-center">
+            
+            {/* Left: Quote */}
+            <div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <div className="text-adapty-600 font-medium mb-6 flex items-center gap-3">
+                    <span className="h-px w-8 bg-adapty-200" />
+                    {current.company} Story
+                  </div>
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-serif text-olive-950 leading-[1.15]">
+                    {current.quote}
+                  </h3>
+                  
+                  <div className="mt-12 flex items-center gap-4">
+                    <button onClick={prev} className="p-2 rounded-full border border-olive-200 hover:bg-olive-50 transition-colors">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <div className="text-sm font-medium text-olive-400">
+                      0{index + 1} / 0{testimonials.length}
+                    </div>
+                    <button onClick={next} className="p-2 rounded-full border border-olive-200 hover:bg-olive-50 transition-colors">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Right: Author & Metric */}
+            <div className="lg:border-l lg:border-olive-100 lg:pl-16">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                >
+                  <Image 
+                    src={current.avatar} 
+                    alt={current.author} 
+                    width={80} 
+                    height={80} 
+                    className="rounded-full mb-6"
+                  />
+                  <div className="mb-8">
+                    <div className="font-semibold text-olive-900 text-lg">{current.author}</div>
+                    <div className="text-olive-500">{current.role}</div>
+                  </div>
+                  
+                  <div className="pt-8 border-t border-olive-100">
+                    <div className="text-4xl font-bold text-olive-900 mb-1">{current.metric}</div>
+                    <div className="text-sm text-olive-500 uppercase tracking-wide">{current.metricLabel}</div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+          </div>
+        </div>
+      </Container>
+    </Section>
+  )
+}
+
 // Main component that switches based on debug context
 export function Testimonials() {
   const variant = useTestimonialsVariant()
 
   switch (variant) {
+    case 'sticky-cards':
+      return <TestimonialsStickyStack />
+    case 'minimal-slider':
+      return <TestimonialsMinimalSlider />
     case 'wall':
       return <TestimonialsWall />
     case 'carousel':

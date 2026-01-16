@@ -6,6 +6,7 @@ import { ArrowRightIcon } from 'lucide-react';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { TextGenerateWithSelectBoxEffect } from '~/components/fragments/text-generate-with-select-box-effect';
+import { SectionBackground } from '~/components/fragments/section-background';
 
 const ROLES = [
   {
@@ -26,18 +27,37 @@ const ROLES = [
     link: 'https://adapty.io/for-marketers/',
     tags: ['A/B testing', 'No-code Builder', 'Localizations', 'Targeting'],
   },
-];
+  {
+    title: 'For product managers',
+    image: '/images/role-pm-new.webp',
+    link: 'https://adapty.io/for-product-managers/',
+    tags: ['Feature flags', 'Experimentation', 'User segmentation'],
+  },
+  {
+    title: 'For finance',
+    image: '/images/role-finance-new.webp',
+    link: 'https://adapty.io/for-finance/',
+    tags: ['Revenue recognition', 'Tax handling', 'Financial reporting'],
+  },
+  {
+    title: 'For support',
+    image: '/images/role-support-new.webp',
+    link: 'https://adapty.io/for-support/',
+    tags: ['Customer history', 'Grant access', 'Refund management'],
+  }
+].slice(0, 3); // Keep original 3 for now, but ready to expand
 
 export function Problem(): React.JSX.Element {
   return (
-    <GridSection>
-      <div className="px-4 py-16 text-center">
+    <GridSection className="relative overflow-hidden">
+       <SectionBackground height={800} />
+      <div className="px-4 py-16 text-center relative z-10">
         <h2 className="text-3xl font-semibold md:text-5xl">
           <TextGenerateWithSelectBoxEffect words="Help your team run the mobile subscription business" />
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">Faster and cheaper.</p>
       </div>
-      <div className="grid divide-y border-t border-dashed md:grid-cols-3 md:divide-x md:divide-y-0">
+      <div className="grid divide-y border-t border-dashed md:grid-cols-3 md:divide-x md:divide-y-0 relative z-10 bg-background/60 backdrop-blur-sm">
         {ROLES.map((role, index) => (
           <BlurFade
             key={role.title}
@@ -48,7 +68,7 @@ export function Problem(): React.JSX.Element {
             <Link 
               href={role.link}
               target="_blank"
-              className="block px-6 py-8 transition-colors hover:bg-accent/50"
+              className="block px-6 py-8 transition-all hover:bg-accent/50 hover:scale-[1.02] duration-300"
             >
               {/* Image */}
               <div className="relative mb-6 aspect-[4/3] overflow-hidden rounded-xl bg-muted">

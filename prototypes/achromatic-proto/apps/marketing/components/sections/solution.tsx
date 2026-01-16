@@ -10,12 +10,14 @@ import { BentoCustomersCard } from '~/components/cards/bento-customers-card';
 import { BentoMagicInboxCard } from '~/components/cards/bento-magic-inbox-card';
 import { BentoPipelinesCard } from '~/components/cards/bento-pipelines-card';
 import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 
 export function Solution(): React.JSX.Element {
   return (
-    <GridSection>
-      <div className="bg-diagonal-lines">
-        <div className="flex flex-col gap-24 bg-background py-20 lg:mx-12 lg:border-x">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={1200} />
+      <div>
+        <div className="flex flex-col gap-24 bg-background/50 py-20 lg:mx-12 lg:border-x relative z-10 backdrop-blur-sm">
           <div className="container relative space-y-10">
             <div>
               <h2 className="mb-2.5 text-3xl font-semibold md:text-5xl">

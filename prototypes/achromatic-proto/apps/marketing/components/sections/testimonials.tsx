@@ -9,6 +9,7 @@ import { cn } from '@workspace/ui/lib/utils';
 
 import { GridSection } from '~/components/fragments/grid-section';
 import { Marquee } from '~/components/fragments/marquee';
+import { SectionBackground } from '~/components/fragments/section-background';
 
 // Adapty testimonials with real content
 const DATA = [
@@ -140,8 +141,9 @@ const DATA = [
 
 export function Testimonials(): React.JSX.Element {
   return (
-    <GridSection hideVerticalGridLines>
-      <div className="container border-x py-20 md:border-none">
+    <GridSection hideVerticalGridLines className="relative overflow-hidden">
+      <SectionBackground height={800} />
+      <div className="container border-x py-20 md:border-none relative z-10">
         <h2 className="mb-8 text-center text-3xl font-semibold md:text-5xl lg:text-left">
           What people say
         </h2>

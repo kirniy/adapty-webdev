@@ -8,6 +8,9 @@ import { Section, SectionHeader } from '@/components/elements/Section'
 import { Subheading } from '@/components/elements/Subheading'
 import { Text } from '@/components/elements/Text'
 import { FadeIn } from '@/components/effects/FadeIn'
+import { BentoAnalyticsCard } from '../elements/bento/BentoAnalyticsCard'
+import { BentoIntegrationsCard } from '../elements/bento/BentoIntegrationsCard'
+import { BentoCard, BentoCardContent, BentoCardDescription, BentoCardHeader, BentoCardTitle } from '../elements/bento/BentoCard'
 import { content } from '@/lib/content'
 import { useCoreFeaturesVariant } from '@/lib/debug-context'
 import { cn } from '@/lib/cn'
@@ -104,9 +107,8 @@ function CoreFeaturesZigzag() {
  *
  * Design decisions:
  * - Modern bento-style layout with varied card sizes
- * - First feature is hero-sized (2x2), others are smaller
+ * - Uses specialized high-fidelity cards (Analytics, Integrations)
  * - Subtle card backgrounds with hover interactions
- * - Demo images inside cards create visual interest
  * - Best for: Quick scanning, modern aesthetic
  */
 function CoreFeaturesBento() {
@@ -126,78 +128,69 @@ function CoreFeaturesBento() {
           </FadeIn>
         </SectionHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {features.map((feature, index) => {
-            // First feature spans 2 columns and 2 rows
-            const isHero = index === 0
-            // Second feature spans 1 column and 2 rows
-            const isTall = index === 1
-
-            return (
-              <FadeIn key={feature.id} delay={index * 0.1}>
-                <motion.div
-                  className={cn(
-                    'group relative overflow-hidden rounded-2xl p-6',
-                    'bg-olive-50/50 hover:bg-olive-100/70',
-                    'ring-1 ring-olive-200/50 hover:ring-olive-300/70',
-                    'transition-all duration-300 cursor-pointer',
-                    isHero && 'md:col-span-2 lg:row-span-2',
-                    isTall && 'lg:row-span-2'
-                  )}
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {/* Content */}
-                  <div className={cn(
-                    'relative z-10',
-                    isHero ? 'mb-6' : 'mb-4'
-                  )}>
-                    <span className="inline-block text-xs font-semibold uppercase tracking-widest text-adapty-600 mb-2">
-                      {feature.eyebrow}
-                    </span>
-                    <h3 className={cn(
-                      'font-medium text-olive-950',
-                      isHero ? 'text-2xl lg:text-3xl' : 'text-lg'
-                    )}>
-                      {feature.title}
-                    </h3>
-                    <p className={cn(
-                      'mt-2 text-olive-600',
-                      isHero ? 'text-base' : 'text-sm',
-                      !isHero && !isTall && 'line-clamp-2'
-                    )}>
-                      {feature.description}
-                    </p>
-                  </div>
-
-                  {/* Demo Image */}
-                  <div className={cn(
-                    'relative overflow-hidden rounded-lg',
-                    'ring-1 ring-black/5 shadow-lg',
-                    isHero && 'aspect-video',
-                    isTall && 'aspect-[4/3]',
-                    !isHero && !isTall && 'aspect-[16/10]'
-                  )}>
-                    <Image
-                      src={feature.image}
-                      alt={feature.title}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
+          {/* 1. Paywall Builder (Large Hero) */}
+          <FadeIn delay={0} className="md:col-span-2 lg:col-span-2 row-span-2 lg:row-span-1 h-[300px] lg:h-auto">
+            <BentoCard className="h-full">
+              <div className="flex flex-col h-full">
+                <BentoCardHeader>
+                  <BentoCardTitle>Paywall Builder</BentoCardTitle>
+                  <BentoCardDescription>
+                    No-code visual builder with 50+ templates. Design, customize, and ship paywalls without developers.
+                  </BentoCardDescription>
+                </BentoCardHeader>
+                <BentoCardContent className="flex-1 min-h-[200px] lg:min-h-0 relative rounded-xl overflow-hidden ring-1 ring-olive-900/5 shadow-sm mt-2 group">
+                   <Image
+                      src={features[0].image}
+                      alt="Paywall Builder"
                       fill
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     />
-                  </div>
-
-                  {/* Hover arrow */}
-                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="w-8 h-8 rounded-full bg-adapty-500 text-white flex items-center justify-center">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                      </svg>
+                    {/* UI Overlay mock */}
+                    <div className="absolute inset-x-4 bottom-4 h-12 bg-white/90 backdrop-blur-md rounded-lg border border-olive-900/10 flex items-center px-4 justify-between animate-pulse-soft">
+                        <div className="flex gap-2">
+                            <div className="w-8 h-2 bg-olive-200 rounded-full"/>
+                            <div className="w-4 h-2 bg-olive-100 rounded-full"/>
+                        </div>
+                        <div className="w-16 h-6 bg-adapty-500 rounded-md"/>
                     </div>
+                </BentoCardContent>
+              </div>
+            </BentoCard>
+          </FadeIn>
+
+          {/* 2. Analytics (Chart) */}
+          <FadeIn delay={0.1} className="lg:col-span-1 h-[300px]">
+             <BentoAnalyticsCard className="h-full" />
+          </FadeIn>
+
+          {/* 3. A/B Testing (Split) */}
+          <FadeIn delay={0.2} className="lg:col-span-1 h-[300px]">
+            <BentoCard className="h-full">
+               <BentoCardHeader>
+                  <BentoCardTitle>A/B Testing</BentoCardTitle>
+                  <BentoCardDescription>
+                    Run multi-variant experiments with ML-powered predictions.
+                  </BentoCardDescription>
+               </BentoCardHeader>
+               <BentoCardContent className="mt-4 flex gap-4 h-[140px]">
+                  <div className="flex-1 bg-olive-50 rounded-lg border border-olive-200 flex flex-col items-center justify-center gap-2 relative overflow-hidden group">
+                      <div className="absolute top-2 left-2 text-[10px] font-bold text-olive-400">VAR A</div>
+                      <div className="w-12 h-16 bg-white rounded shadow-sm group-hover:-translate-y-1 transition-transform"/>
                   </div>
-                </motion.div>
-              </FadeIn>
-            )
-          })}
+                  <div className="flex-1 bg-adapty-50 rounded-lg border border-adapty-200 flex flex-col items-center justify-center gap-2 relative overflow-hidden group">
+                      <div className="absolute top-2 left-2 text-[10px] font-bold text-adapty-500">VAR B</div>
+                      <div className="w-12 h-16 bg-white rounded shadow-sm border-2 border-adapty-400 group-hover:-translate-y-2 transition-transform"/>
+                      <div className="absolute bottom-2 right-2 text-[10px] font-bold text-adapty-600 bg-adapty-100 px-1 rounded">+40%</div>
+                  </div>
+               </BentoCardContent>
+            </BentoCard>
+          </FadeIn>
+
+          {/* 4. Remote Config / Integrations (Wide) */}
+          <FadeIn delay={0.3} className="md:col-span-2 lg:col-span-2 h-[300px]">
+             <BentoIntegrationsCard className="h-full" />
+          </FadeIn>
         </div>
       </Container>
     </Section>

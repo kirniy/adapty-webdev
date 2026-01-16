@@ -11,6 +11,7 @@ import {
 } from '@workspace/ui/components/accordion';
 
 import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 
 const DATA = [
   {
@@ -111,8 +112,9 @@ const DATA = [
 
 export function PricingFAQ(): React.JSX.Element {
   return (
-    <GridSection>
-      <div className="container py-20">
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={800} />
+      <div className="container py-20 relative z-10">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
           <div className="text-center lg:text-left">
             <h2 className="mb-2.5 text-3xl font-semibold md:text-5xl">
