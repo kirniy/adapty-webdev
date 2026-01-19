@@ -13,14 +13,14 @@ import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 
-// Adapty testimonials with real content - static grid layout (no marquee per Sergey's feedback)
+// All 8 real testimonials from adapty.io homepage - content parity with clean variant
 const DATA = [
   {
     name: 'Cem Ortabas',
     role: 'Co-founder and CEO',
     company: 'HubX',
-    img: '/images/testimonials/cem.webp',
-    quote: "We've chosen Adapty because we believe they are a better partner as we grow. Looking back it was the right call.",
+    img: '/images/testimonials/cem-ortabas.webp',
+    quote: "Migrating off RevenueCat was not an easy decision for us. We've chosen Adapty because we believe they are a better partner as we grow. Looking back it was the right call.",
     metric: '3x',
     metricLabel: 'MRR growth'
   },
@@ -28,44 +28,62 @@ const DATA = [
     name: 'Chris Bick',
     role: 'Founder and CEO',
     company: 'Bickster',
-    img: '/images/testimonials/chris.webp',
-    quote: "They have the best analytics on the market and all the integrations you can think of. Definitely recommend Adapty.",
+    img: '/images/testimonials/chris-bick.webp',
+    quote: "We've been working with Adapty since 2021 and I couldn't be happier about it. They have the best analytics on the market and all the integrations you can think of.",
     metric: '+35%',
     metricLabel: 'conversion'
+  },
+  {
+    name: 'Yalcin Ozdemir',
+    role: 'Founder and CEO',
+    company: 'AppNation',
+    img: '/images/testimonials/asman.webp',
+    quote: "We chose Adapty for its powerful paywall A/B testing capabilities, which helped us optimize our monetization strategy effectively.",
+    metric: '2.5x',
+    metricLabel: 'ARPU'
+  },
+  {
+    name: 'Kyle Smith',
+    role: 'Head of Data',
+    company: 'Smitten Dating',
+    img: '/images/testimonials/kyle.webp',
+    quote: "Adapty's platform makes it easy for non-developers to create and manage A/B tests, paywalls, product mix and pricing structure.",
+    metric: '+40%',
+    metricLabel: 'trial CVR'
   },
   {
     name: 'Roi Mulia',
     role: 'Founder and CEO',
     company: 'SocialKit',
-    img: '/images/testimonials/roi.webp',
-    quote: "We've tested more than three hundred paywalls in four months. We managed to double our monthly revenue.",
+    img: '/images/testimonials/roi-mulia.webp',
+    quote: "We've tested more than three hundred paywalls in four months. With Adapty's A/B testing, we managed to double our monthly revenue.",
     metric: '2x',
     metricLabel: 'revenue'
   },
   {
-    name: 'Alex Johnson',
-    role: 'Head of Product',
-    company: 'AppFlow',
-    img: 'https://randomuser.me/api/portraits/men/32.jpg',
-    quote: "We can now launch and test new paywalls in minutes instead of weeks. A game-changer for our subscription business.",
+    name: 'Magnus Olafsson',
+    role: 'Chief Technology Officer',
+    company: 'Smitten',
+    img: '/images/testimonials/magnus-olafsson.webp',
+    quote: "Adapty SDK made integrating in-app purchases a walk in the park. With just a few lines of code, I was able to implement subscriptions seamlessly.",
     metric: '10x',
     metricLabel: 'faster'
   },
   {
-    name: 'Sarah Chen',
-    role: 'Mobile Lead',
-    company: 'TechStart',
-    img: 'https://randomuser.me/api/portraits/women/44.jpg',
-    quote: "The integration was seamless and their SDK is rock solid. The analytics dashboard gives us insights we never had before.",
-    metric: '+35%',
-    metricLabel: 'revenue'
+    name: 'Ilgar Tali',
+    role: 'Founder and Chief Vision Officer',
+    company: 'Smartist',
+    img: '/images/testimonials/ilgar-tali.webp',
+    quote: "Whether it's A/B testing paywalls, predicting LTV, or analyzing subscription metrics, Adapty is the ultimate toolkit for app success.",
+    metric: '+50%',
+    metricLabel: 'LTV'
   },
   {
-    name: 'Marcus Lee',
-    role: 'CTO',
-    company: 'MobileFirst',
-    img: 'https://randomuser.me/api/portraits/men/67.jpg',
-    quote: "Cross-platform sync, receipt validation, analytics - it just works. Our team can focus on building features.",
+    name: 'Mike McSweeney',
+    role: 'Chief Product Officer',
+    company: 'Moodworks Inc',
+    img: '/images/testimonials/mike-mcsweeney.webp',
+    quote: "Adapty's Paywall Builder and A/B testing tools paired together are a game changer for anyone trying to do high-velocity testing and find quick wins.",
     metric: '99.9%',
     metricLabel: 'uptime'
   }
