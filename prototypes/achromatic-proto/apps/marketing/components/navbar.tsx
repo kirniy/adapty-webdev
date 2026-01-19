@@ -31,10 +31,17 @@ import {
   DocsMegaMenu
 } from '~/components/menus';
 import {
-  COMPACT_PRODUCT_LINKS,
-  COMPACT_CASES_LINKS,
-  COMPACT_RESOURCES_LINKS,
-  COMPACT_DOCS_LINKS,
+  PRODUCT_TABS,
+  PRODUCT_FOOTER,
+  SOLUTION_ITEMS,
+  SDK_ITEMS,
+  INTEGRATIONS_ITEMS,
+  CASES_MENU,
+  RESOURCES_SECTIONS,
+  DOCS_SIDEBAR,
+  DOCS_MOBILE_SDKS,
+  DOCS_WEB_PAYMENTS,
+  DOCS_WEB_API,
   type MenuItem
 } from '~/lib/menu-data';
 import { useHeaderVariant } from '~/lib/debug-context';
@@ -56,8 +63,27 @@ function MenuIcon({ src, size = 18 }: { src: string; size?: number }) {
   );
 }
 
-function CompactMenuItem({ item }: { item: MenuItem }) {
+function CompactMenuItem({ item, compact = false }: { item: MenuItem; compact?: boolean }) {
   const isExternal = item.external || item.href.startsWith('http');
+
+  if (compact) {
+    return (
+      <Link
+        href={item.href}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noopener noreferrer' : undefined}
+        className="flex items-center gap-2 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-accent"
+      >
+        {item.icon && <MenuIcon src={item.icon} size={16} />}
+        <span className="text-foreground">{item.title}</span>
+        {item.badge && (
+          <Badge variant="secondary" className="h-4 rounded-full px-1.5 text-[9px] font-semibold uppercase">
+            {item.badge}
+          </Badge>
+        )}
+      </Link>
+    );
+  }
 
   return (
     <Link
@@ -88,42 +114,187 @@ function CompactMenuItem({ item }: { item: MenuItem }) {
   );
 }
 
-function CompactDropdown({
-  links,
-  title,
-  viewAllHref,
-  columns = 1
-}: {
-  links: MenuItem[];
-  title?: string;
-  viewAllHref?: string;
-  columns?: 1 | 2;
-}) {
+function CompactSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className={cn('p-2', columns === 2 ? 'w-[400px]' : 'w-56')}>
-      {title && (
-        <div className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          {title}
+    <div className="mb-3 last:mb-0">
+      <div className="mb-1.5 px-2.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+        {title}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// ============================================================================
+// FULL-CONTENT COMPACT DROPDOWNS (content parity with mega menus)
+// ============================================================================
+
+function CompactProductDropdown() {
+  return (
+    <div className="max-h-[70vh] w-[520px] overflow-y-auto p-3">
+      {/* Solution section */}
+      <CompactSection title="Solutions">
+        <div className="grid grid-cols-2 gap-0.5">
+          {SOLUTION_ITEMS.map((item) => (
+            <CompactMenuItem key={item.title} item={item} compact />
+          ))}
         </div>
-      )}
-      <nav className={cn(
-        'flex flex-col gap-0.5',
-        columns === 2 && 'grid grid-cols-2 gap-0.5'
-      )}>
-        {links.map((link) => (
-          <CompactMenuItem key={link.title} item={link} />
+      </CompactSection>
+
+      {/* Tech section */}
+      <CompactSection title="Tech">
+        <div className="grid grid-cols-2 gap-0.5">
+          {PRODUCT_TABS.tech.items.map((item) => (
+            <CompactMenuItem key={item.title} item={item} compact />
+          ))}
+        </div>
+      </CompactSection>
+
+      {/* Paywalls section */}
+      <CompactSection title="Paywalls">
+        <div className="grid grid-cols-2 gap-0.5">
+          {PRODUCT_TABS.paywalls.items.map((item) => (
+            <CompactMenuItem key={item.title} item={item} compact />
+          ))}
+        </div>
+      </CompactSection>
+
+      {/* Analytics section */}
+      <CompactSection title="Analytics">
+        <div className="grid grid-cols-2 gap-0.5">
+          {PRODUCT_TABS.analytics.items.map((item) => (
+            <CompactMenuItem key={item.title} item={item} compact />
+          ))}
+        </div>
+      </CompactSection>
+
+      {/* SDKs section */}
+      <CompactSection title="SDKs">
+        <div className="grid grid-cols-2 gap-0.5">
+          {SDK_ITEMS.map((item) => (
+            <CompactMenuItem key={item.title} item={item} compact />
+          ))}
+        </div>
+      </CompactSection>
+
+      {/* Integrations section */}
+      <CompactSection title="Integrations">
+        <div className="grid grid-cols-2 gap-0.5">
+          {INTEGRATIONS_ITEMS.map((item) => (
+            <CompactMenuItem key={item.title} item={item} compact />
+          ))}
+        </div>
+      </CompactSection>
+
+      {/* Footer links */}
+      <div className="mt-3 flex items-center gap-3 border-t pt-3">
+        {PRODUCT_FOOTER.map((link) => (
+          <Link
+            key={link.title}
+            href={link.href}
+            target={link.external ? '_blank' : undefined}
+            className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            {link.title === 'System status' && (
+              <span className="size-1.5 rounded-full bg-green-500" />
+            )}
+            {link.title}
+          </Link>
         ))}
-      </nav>
-      {viewAllHref && (
-        <Link
-          href={viewAllHref}
-          target="_blank"
-          className="mt-2 flex items-center gap-1 px-3 py-2 text-xs font-medium text-primary transition-colors hover:text-primary/80"
-        >
-          View all
-          <ArrowRightIcon className="size-3" />
-        </Link>
-      )}
+      </div>
+    </div>
+  );
+}
+
+function CompactCasesDropdown() {
+  return (
+    <div className="max-h-[70vh] w-[400px] overflow-y-auto p-3">
+      <CompactSection title="Customer Success Stories">
+        <div className="grid grid-cols-2 gap-0.5">
+          {CASES_MENU.map((study) => (
+            <Link
+              key={study.name}
+              href={study.href}
+              target="_blank"
+              className="flex items-center gap-2 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-accent"
+            >
+              <span className="font-medium text-primary">{study.metric}</span>
+              <span className="text-foreground">{study.name}</span>
+            </Link>
+          ))}
+        </div>
+      </CompactSection>
+      <Link
+        href="https://adapty.io/clients/"
+        target="_blank"
+        className="mt-2 flex items-center gap-1 px-2.5 text-xs font-medium text-primary transition-colors hover:text-primary/80"
+      >
+        View all case studies
+        <ArrowRightIcon className="size-3" />
+      </Link>
+    </div>
+  );
+}
+
+function CompactResourcesDropdown() {
+  return (
+    <div className="max-h-[70vh] w-[480px] overflow-y-auto p-3">
+      <div className="grid grid-cols-2 gap-x-4">
+        {RESOURCES_SECTIONS.map((section) => (
+          <CompactSection key={section.title} title={section.title}>
+            <div className="flex flex-col gap-0.5">
+              {section.items.map((item) => (
+                <CompactMenuItem key={item.title} item={item} compact />
+              ))}
+            </div>
+          </CompactSection>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CompactDocsDropdown() {
+  return (
+    <div className="max-h-[70vh] w-[400px] overflow-y-auto p-3">
+      {/* Quick links */}
+      <CompactSection title="Quick Links">
+        <div className="flex flex-col gap-0.5">
+          {DOCS_SIDEBAR.map((item) => (
+            <CompactMenuItem key={item.title} item={item} compact />
+          ))}
+        </div>
+      </CompactSection>
+
+      {/* Mobile SDKs */}
+      <CompactSection title="Mobile SDKs">
+        <div className="grid grid-cols-2 gap-0.5">
+          {DOCS_MOBILE_SDKS.map((item) => (
+            <CompactMenuItem key={item.title} item={item} compact />
+          ))}
+        </div>
+      </CompactSection>
+
+      {/* Web */}
+      <CompactSection title="Web">
+        <div className="grid grid-cols-2 gap-0.5">
+          {DOCS_WEB_PAYMENTS.map((item) => (
+            <CompactMenuItem key={item.title} item={item} compact />
+          ))}
+          {DOCS_WEB_API.map((item) => (
+            <CompactMenuItem key={item.title} item={item} compact />
+          ))}
+        </div>
+      </CompactSection>
+
+      <Link
+        href="https://adapty.io/docs/"
+        target="_blank"
+        className="mt-2 flex items-center gap-1 px-2.5 text-xs font-medium text-primary transition-colors hover:text-primary/80"
+      >
+        View all documentation
+        <ArrowRightIcon className="size-3" />
+      </Link>
     </div>
   );
 }
@@ -173,11 +344,7 @@ function FloatingPillNavbar(): React.JSX.Element {
                     Product
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <CompactDropdown
-                      links={COMPACT_PRODUCT_LINKS}
-                      viewAllHref="https://adapty.io/product/"
-                      columns={2}
-                    />
+                    <CompactProductDropdown />
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
@@ -187,38 +354,29 @@ function FloatingPillNavbar(): React.JSX.Element {
                     Cases
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <CompactDropdown
-                      links={COMPACT_CASES_LINKS}
-                      viewAllHref="https://adapty.io/clients/"
-                    />
+                    <CompactCasesDropdown />
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                  {/* Resources Menu */}
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
-                      Resources
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <CompactDropdown
-                        links={COMPACT_RESOURCES_LINKS}
-                        columns={2}
-                      />
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
+                {/* Resources Menu */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
+                    Resources
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <CompactResourcesDropdown />
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
 
-                  {/* Docs Menu */}
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
-                      Docs
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <CompactDropdown
-                        links={COMPACT_DOCS_LINKS}
-                        viewAllHref="https://adapty.io/docs/"
-                      />
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
+                {/* Docs Menu */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
+                    Docs
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <CompactDocsDropdown />
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
 
                   {/* Pricing - Direct Link */}
                   <NavigationMenuItem>
