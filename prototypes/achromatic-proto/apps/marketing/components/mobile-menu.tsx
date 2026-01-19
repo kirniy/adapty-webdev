@@ -3,65 +3,76 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
-import { motion } from 'motion/react';
+import { ChevronLeftIcon, ChevronRightIcon, XIcon } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
-import { baseUrl, getPathname, routes } from '@workspace/routes';
+import { routes } from '@workspace/routes';
 import { Button, buttonVariants } from '@workspace/ui/components/button';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger
-} from '@workspace/ui/components/collapsible';
+import { Badge } from '@workspace/ui/components/badge';
 import { Logo } from '@workspace/ui/components/logo';
 import { Portal } from '@workspace/ui/components/portal';
 import { ThemeSwitcher } from '@workspace/ui/components/theme-switcher';
 import { RemoveScroll } from '@workspace/ui/lib/remove-scroll';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { ExternalLink } from '~/components/fragments/external-link';
-import { DOCS_LINKS, MENU_LINKS } from '~/components/marketing-links';
+import { LanguageSwitcher } from '~/components/language-switcher';
+import {
+  MOBILE_MAIN_MENU,
+  MOBILE_SUBMENU_DATA,
+} from '~/lib/menu-data';
+
+// ============================================================================
+// MOBILE MENU COMPONENT
+// ============================================================================
 
 export function MobileMenu({
   className,
   ...other
 }: React.HTMLAttributes<HTMLDivElement>): React.JSX.Element {
   const [open, setOpen] = React.useState<boolean>(false);
+  const [expandedMenu, setExpandedMenu] = React.useState<string | null>(null);
   const pathname = usePathname();
-  const isDocs = pathname.startsWith(
-    getPathname(routes.marketing.Docs, baseUrl.Marketing)
-  );
 
+  // Close menu on route change
   React.useEffect(() => {
-    const handleRouteChangeStart = () => {
-      if (document.activeElement instanceof HTMLInputElement) {
-        document.activeElement.blur();
-      }
-
-      setOpen(false);
-    };
-
-    handleRouteChangeStart();
+    setOpen(false);
+    setExpandedMenu(null);
   }, [pathname]);
 
-  const handleChange = () => {
-    const mediaQueryList = window.matchMedia('(min-width: 1024px)');
-    setOpen((open) => (open ? !mediaQueryList.matches : false));
-  };
-
+  // Handle responsive breakpoint changes
   React.useEffect(() => {
-    handleChange();
+    const handleResize = () => {
+      const mediaQueryList = window.matchMedia('(min-width: 1024px)');
+      if (mediaQueryList.matches && open) {
+        setOpen(false);
+        setExpandedMenu(null);
+      }
+    };
+
     const mediaQueryList = window.matchMedia('(min-width: 1024px)');
-    mediaQueryList.addEventListener('change', handleChange);
-    return () => mediaQueryList.removeEventListener('change', handleChange);
-  }, []);
+    mediaQueryList.addEventListener('change', handleResize);
+    return () => mediaQueryList.removeEventListener('change', handleResize);
+  }, [open]);
 
   const handleToggleMobileMenu = (): void => {
-    setOpen((open) => !open);
+    setOpen((prev) => !prev);
+    if (open) {
+      setExpandedMenu(null);
+    }
+  };
+
+  const handleCloseMenu = (): void => {
+    setOpen(false);
+    setExpandedMenu(null);
+  };
+
+  const handleBackToMain = (): void => {
+    setExpandedMenu(null);
   };
 
   return (
     <>
+      {/* Mobile header with logo and toggle */}
       <div
         className={cn('flex items-center justify-between', className)}
         {...other}
@@ -75,37 +86,130 @@ export function MobileMenu({
           aria-expanded={open}
           aria-label="Toggle Mobile Menu"
           onClick={handleToggleMobileMenu}
-          className="flex aspect-square h-fit select-none flex-col items-center justify-center rounded-full"
+          className="flex aspect-square h-fit select-none flex-col items-center justify-center gap-1 rounded-full p-2"
         >
           <motion.div
             className="w-5 origin-center border-t-2 border-primary"
             animate={
               open ? { rotate: '45deg', y: '5px' } : { rotate: '0deg', y: 0 }
             }
-            transition={{ bounce: 0, duration: 0.1 }}
+            transition={{ bounce: 0, duration: 0.15 }}
           />
           <motion.div
             className="w-5 origin-center border-t-2 border-primary"
-            transition={{ bounce: 0, duration: 0.1 }}
+            transition={{ bounce: 0, duration: 0.15 }}
             animate={
               open
                 ? { rotate: '-45deg', y: '-5px' }
-                : { rotate: '0deg', scaleX: 1, y: 0 }
+                : { rotate: '0deg', y: 0 }
             }
           />
         </Button>
       </div>
+
+      {/* Mobile menu panel (portal + scroll lock) */}
       {open && (
         <Portal asChild>
-          <RemoveScroll
-            allowPinchZoom
-            enabled
-          >
-            {isDocs ? (
-              <DocsMobileMenu onLinkClicked={handleToggleMobileMenu} />
-            ) : (
-              <MainMobileMenu onLinkClicked={handleToggleMobileMenu} />
-            )}
+          <RemoveScroll allowPinchZoom enabled>
+            <AnimatePresence mode="wait">
+              {/* Backdrop */}
+              <motion.div
+                key="backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="fixed inset-0 z-50 bg-black/20"
+                onClick={handleCloseMenu}
+              />
+
+              {/* Slide-in panel */}
+              <motion.div
+                key="panel"
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="fixed inset-y-0 right-0 z-50 w-[85%] max-w-[400px] bg-background shadow-2xl"
+              >
+                <div className="flex h-full flex-col">
+                  {/* Header */}
+                  <div className="flex items-center justify-between border-b px-4 py-4">
+                    <Link
+                      href={routes.marketing.Index}
+                      className="flex items-center gap-2"
+                      onClick={handleCloseMenu}
+                    >
+                      <Logo className="h-5 w-auto" />
+                    </Link>
+                    <div className="flex items-center gap-2">
+                      <LanguageSwitcher className="h-8" />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleCloseMenu}
+                        className="size-8 rounded-lg"
+                        aria-label="Close menu"
+                      >
+                        <XIcon className="size-5" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Content (scrollable) */}
+                  <div className="flex-1 overflow-y-auto px-4 py-4">
+                    <AnimatePresence mode="wait">
+                      {!expandedMenu ? (
+                        <MainMenuView
+                          key="main"
+                          onSubmenuClick={setExpandedMenu}
+                          onLinkClick={handleCloseMenu}
+                        />
+                      ) : (
+                        <SubmenuView
+                          key={expandedMenu}
+                          menuKey={expandedMenu}
+                          onBack={handleBackToMain}
+                          onLinkClick={handleCloseMenu}
+                        />
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Footer CTAs */}
+                  <div className="flex gap-3 border-t bg-background px-4 py-4">
+                    <a
+                      href="https://app.adapty.io"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        buttonVariants({ variant: 'outline' }),
+                        'flex-1 rounded-xl'
+                      )}
+                    >
+                      Sign up
+                    </a>
+                    <a
+                      href="https://adapty.io/schedule-demo/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        buttonVariants({ variant: 'default' }),
+                        'flex-1 rounded-xl'
+                      )}
+                    >
+                      Contact sales
+                    </a>
+                  </div>
+
+                  {/* Theme switcher */}
+                  <div className="flex items-center justify-between border-t px-4 py-3">
+                    <span className="text-sm font-medium">Theme</span>
+                    <ThemeSwitcher />
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </RemoveScroll>
         </Portal>
       )}
@@ -113,218 +217,160 @@ export function MobileMenu({
   );
 }
 
-type MainMobileMenuProps = {
-  onLinkClicked: () => void;
+// ============================================================================
+// MAIN MENU VIEW
+// ============================================================================
+
+type MainMenuViewProps = {
+  onSubmenuClick: (menuKey: string) => void;
+  onLinkClick: () => void;
 };
 
-function MainMobileMenu({
-  onLinkClicked
-}: MainMobileMenuProps): React.JSX.Element {
-  const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
+function MainMenuView({ onSubmenuClick, onLinkClick }: MainMenuViewProps): React.JSX.Element {
   return (
-    <div className="fixed inset-0 z-50 mt-[69px] overflow-y-auto bg-background animate-in fade-in-0">
-      <div className="flex size-full flex-col items-start space-y-3 p-4">
-        <div className="flex w-full flex-col gap-2">
-          <Link
-            href={routes.dashboard.auth.SignUp}
-            className={cn(
-              buttonVariants({
-                variant: 'default',
-                size: 'lg'
-              }),
-              'w-full rounded-xl'
-            )}
-            onClick={onLinkClicked}
-          >
-            Start for free
-          </Link>
-          <Link
-            href={routes.dashboard.auth.SignIn}
-            onClick={onLinkClicked}
-            className={cn(
-              buttonVariants({
-                variant: 'outline',
-                size: 'lg'
-              }),
-              'w-full rounded-xl'
-            )}
-          >
-            Sign in
-          </Link>
-        </div>
-        <ul className="w-full">
-          {MENU_LINKS.map((item) => (
-            <li
-              key={item.title}
-              className="py-2"
-            >
-              {item.items ? (
-                <Collapsible
-                  open={expanded[item.title.toLowerCase()]}
-                  onOpenChange={(isOpen) =>
-                    setExpanded((prev) => ({
-                      ...prev,
-                      [item.title.toLowerCase()]: isOpen
-                    }))
-                  }
-                >
-                  <CollapsibleTrigger asChild>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      className="flex h-9 w-full items-center justify-between px-4 text-left"
-                    >
-                      <span className="text-base font-medium">
-                        {item.title}
-                      </span>
-                      {expanded[item.title.toLowerCase()] ? (
-                        <ChevronUpIcon className="size-4" />
-                      ) : (
-                        <ChevronDownIcon className="size-4" />
-                      )}
-                    </Button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <ul className="mt-2 pl-4">
-                      {item.items.map((subItem) => (
-                        <li key={subItem.title}>
-                          <Link
-                            href={subItem.href}
-                            target={subItem.external ? '_blank' : undefined}
-                            rel={
-                              subItem.external
-                                ? 'noopener noreferrer'
-                                : undefined
-                            }
-                            className={cn(
-                              buttonVariants({ variant: 'ghost' }),
-                              'm-0 h-auto w-full justify-start gap-4 p-1.5'
-                            )}
-                            onClick={onLinkClicked}
-                          >
-                            <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border bg-background text-muted-foreground transition-colors group-hover:text-foreground">
-                              {subItem.icon}
-                            </div>
-                            <div>
-                              <span className="text-sm font-medium">
-                                {subItem.title}
-                                {subItem.external && (
-                                  <ExternalLink className="-mt-2 ml-1 inline size-2 text-muted-foreground" />
-                                )}
-                              </span>
-                              {subItem.description && (
-                                <p className="text-xs text-muted-foreground">
-                                  {subItem.description}
-                                </p>
-                              )}
-                            </div>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </CollapsibleContent>
-                </Collapsible>
-              ) : (
-                <Link
-                  href={item.href}
-                  target={item.external ? '_blank' : undefined}
-                  rel={item.external ? 'noopener noreferrer' : undefined}
-                  className={cn(
-                    buttonVariants({ variant: 'ghost' }),
-                    'w-full justify-start'
-                  )}
-                  onClick={onLinkClicked}
-                >
-                  <span className="text-base">{item.title}</span>
-                </Link>
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      transition={{ duration: 0.2 }}
+    >
+      <nav className="flex flex-col">
+        {MOBILE_MAIN_MENU.map((item) => {
+          if (item.hasSubmenu) {
+            const dataKey = item.dataKey || item.label;
+            return (
+              <button
+                key={item.label}
+                onClick={() => onSubmenuClick(dataKey)}
+                className="flex w-full items-center justify-between border-b border-border/50 py-4 text-left text-[17px] font-semibold text-foreground transition-colors hover:text-primary"
+              >
+                {item.label}
+                <ChevronRightIcon className="size-5 text-muted-foreground" />
+              </button>
+            );
+          }
+
+          const isExternal = item.href?.startsWith('http');
+          return (
+            <Link
+              key={item.label}
+              href={item.href || '#'}
+              target={isExternal ? '_blank' : undefined}
+              rel={isExternal ? 'noopener noreferrer' : undefined}
+              onClick={onLinkClick}
+              className={cn(
+                'block border-b border-border/50 py-4 text-[17px] font-semibold transition-colors',
+                item.highlight
+                  ? 'text-[#FF8A00] hover:text-[#FF8A00]/80'
+                  : 'text-foreground hover:text-primary'
               )}
-            </li>
-          ))}
-        </ul>
-        <div className="flex w-full items-center justify-between gap-2 border-y border-border/40 p-4">
-          <div className="text-base font-medium">Theme</div>
-          <ThemeSwitcher />
-        </div>
-      </div>
-    </div>
+            >
+              {item.label}
+            </Link>
+          );
+        })}
+      </nav>
+    </motion.div>
   );
 }
 
-type DocsMobileMenuProps = {
-  onLinkClicked: () => void;
+// ============================================================================
+// SUBMENU VIEW
+// ============================================================================
+
+type SubmenuViewProps = {
+  menuKey: string;
+  onBack: () => void;
+  onLinkClick: () => void;
 };
 
-function DocsMobileMenu({
-  onLinkClicked
-}: DocsMobileMenuProps): React.JSX.Element {
-  const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
-  const pathname = usePathname();
+function SubmenuView({ menuKey, onBack, onLinkClick }: SubmenuViewProps): React.JSX.Element {
+  const menuData = MOBILE_SUBMENU_DATA[menuKey];
+
+  if (!menuData) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 20 }}
+        transition={{ duration: 0.2 }}
+      >
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 pb-4 font-semibold text-primary"
+        >
+          <ChevronLeftIcon className="size-4" />
+          Back
+        </button>
+        <p className="text-sm text-muted-foreground">Menu not found.</p>
+      </motion.div>
+    );
+  }
+
   return (
-    <div className="fixed inset-0 z-50 mt-[69px] overflow-y-auto bg-background animate-in fade-in-0">
-      <div className="flex size-full flex-col items-start space-y-3 p-4">
-        <ul className="w-full">
-          {DOCS_LINKS.map((item) => (
-            <li
-              key={item.title}
-              className="py-2"
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{ duration: 0.2 }}
+    >
+      {/* Back button with menu title */}
+      <button
+        onClick={onBack}
+        className="mb-4 flex w-full items-center gap-2 border-b border-border pb-4 font-semibold text-primary"
+      >
+        <ChevronLeftIcon className="size-4" />
+        {menuKey}
+      </button>
+
+      {/* Top links (if any) */}
+      {menuData.topLinks && menuData.topLinks.length > 0 && (
+        <div className="mb-6">
+          {menuData.topLinks.map((link) => (
+            <Link
+              key={link.title}
+              href={link.href}
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              onClick={onLinkClick}
+              className="flex items-center gap-2 py-2.5 text-[15px] font-semibold text-foreground transition-colors hover:text-primary"
             >
-              <Collapsible
-                open={expanded[item.title.toLowerCase()]}
-                onOpenChange={(isOpen) =>
-                  setExpanded((prev) => ({
-                    ...prev,
-                    [item.title.toLowerCase()]: isOpen
-                  }))
-                }
-              >
-                <CollapsibleTrigger asChild>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="flex h-9 w-full items-center justify-between px-4 text-left"
-                  >
-                    <div className="flex flex-row items-center gap-2 text-base font-medium">
-                      {item.icon}
-                      {item.title}
-                    </div>
-                    {expanded[item.title.toLowerCase()] ? (
-                      <ChevronUpIcon className="size-4" />
-                    ) : (
-                      <ChevronDownIcon className="size-4" />
-                    )}
-                  </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <ul className="mt-2 pl-4">
-                    {item.items.map((subItem) => (
-                      <li key={subItem.title}>
-                        <Link
-                          href={subItem.href}
-                          className={cn(
-                            buttonVariants({ variant: 'ghost' }),
-                            'm-0 h-auto w-full justify-start gap-4 p-1.5 text-sm font-medium',
-                            pathname ===
-                              getPathname(subItem.href, baseUrl.Marketing)
-                              ? 'font-medium text-foreground bg-accent'
-                              : 'text-muted-foreground'
-                          )}
-                          onClick={onLinkClicked}
-                        >
-                          {subItem.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </CollapsibleContent>
-              </Collapsible>
-            </li>
+              {link.title}
+              {link.badge && (
+                <Badge variant="secondary" className="h-5 rounded-full px-2 text-[10px] font-semibold uppercase">
+                  {link.badge}
+                </Badge>
+              )}
+            </Link>
           ))}
-        </ul>
-        <div className="flex w-full items-center justify-between gap-2 border-y border-border/40 p-4">
-          <div className="text-base font-medium">Theme</div>
-          <ThemeSwitcher />
         </div>
-      </div>
-    </div>
+      )}
+
+      {/* Sections */}
+      {menuData.sections?.map((section) => (
+        <div key={section.title} className="mb-6">
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            {section.title}
+          </h3>
+          {section.items.map((item) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              target={item.href.startsWith('http') ? '_blank' : undefined}
+              rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              onClick={onLinkClick}
+              className="flex items-center gap-2 py-2.5 text-[15px] text-foreground transition-colors hover:text-primary"
+            >
+              {item.title}
+              {item.badge && (
+                <Badge variant="secondary" className="h-5 rounded-full px-2 text-[10px] font-semibold uppercase">
+                  {item.badge}
+                </Badge>
+              )}
+            </Link>
+          ))}
+        </div>
+      ))}
+    </motion.div>
   );
 }
