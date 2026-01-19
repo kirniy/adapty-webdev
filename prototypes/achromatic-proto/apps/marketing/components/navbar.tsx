@@ -73,11 +73,11 @@ export function Navbar(): React.JSX.Element {
       <section className="fixed inset-x-0 top-4 z-40 px-4">
         <div className="mx-auto max-w-4xl rounded-full border bg-background/90 px-4 py-2 shadow-sm backdrop-blur-md">
           <nav className="flex items-center justify-between">
-            <div className="flex items-center gap-2 pl-2">
-              <Link href={routes.marketing.Index} className="flex items-center gap-2">
-                <Logo className="h-5 w-auto" />
+            <div className="flex items-center gap-3 pl-2">
+              <Link href={routes.marketing.Index} className="flex items-center">
+                <Logo className="h-6 w-auto" />
               </Link>
-              <LanguageSwitcher className="h-7 px-1.5" />
+              <LanguageSwitcher className="h-6 px-1" />
             </div>
 
             <div className="hidden items-center lg:flex">

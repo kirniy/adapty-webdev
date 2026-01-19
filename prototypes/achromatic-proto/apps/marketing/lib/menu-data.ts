@@ -56,12 +56,48 @@ export type MobileMenuItem = {
 // PRODUCT MENU DATA
 // ============================================================================
 
-export const PRODUCT_SIDEBAR: MenuItem[] = [
-  { title: 'Product', href: 'https://adapty.io/product/' },
-  { title: 'Solution', href: 'https://adapty.io/solutions/' },
-  { title: 'Adapty SDK', href: 'https://adapty.io/docs/sdk/' },
-  { title: 'Integrations', href: 'https://adapty.io/integrations/' },
+// Sidebar items with associated panel keys
+export const PRODUCT_SIDEBAR_ITEMS = [
+  { key: 'product', title: 'Product', href: 'https://adapty.io/product/' },
+  { key: 'solution', title: 'Solution', href: 'https://adapty.io/solutions/' },
+  { key: 'sdk', title: 'Adapty SDK', href: 'https://adapty.io/docs/sdk/' },
+  { key: 'integrations', title: 'Integrations', href: 'https://adapty.io/integrations/' },
+] as const;
+
+export type ProductSidebarKey = typeof PRODUCT_SIDEBAR_ITEMS[number]['key'];
+
+// Solution panel content
+export const SOLUTION_ITEMS: MenuItem[] = [
+  { title: 'For Marketers', href: 'https://adapty.io/for-marketers/', icon: '/images/menu-icons/icon-24x24-newsletter.svg', description: 'Launch paywalls without coding' },
+  { title: 'For Developers', href: 'https://adapty.io/for-developers/', icon: '/images/menu-icons/icon-20x20-sdk.svg', description: 'Focus on code, not infrastructure' },
+  { title: 'For App Owners', href: 'https://adapty.io/for-app-owners/', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Maximize subscription revenue' },
+  { title: 'For Enterprises', href: 'https://adapty.io/enterprise/', icon: '/images/menu-icons/icon-24x24-21n.svg', description: 'Scale with enterprise features' },
 ];
+
+// SDK panel content
+export const SDK_ITEMS: MenuItem[] = [
+  { title: 'iOS SDK', href: 'https://adapty.io/docs/ios-installation/', icon: '/images/menu-icons/icon-ios-64x64-1.svg', description: 'Swift & SwiftUI support' },
+  { title: 'Android SDK', href: 'https://adapty.io/docs/android-installation/', icon: '/images/menu-icons/icon-android-64x64-1.svg', description: 'Kotlin & Java support' },
+  { title: 'React Native', href: 'https://adapty.io/docs/react-native-installation/', icon: '/images/menu-icons/icon-react-native-64x64-1.svg', description: 'Cross-platform support' },
+  { title: 'Flutter', href: 'https://adapty.io/docs/flutter-installation/', icon: '/images/menu-icons/icon-flutter-64x64-1.svg', description: 'Dart plugin' },
+  { title: 'Unity', href: 'https://adapty.io/docs/unity-installation/', icon: '/images/menu-icons/icon-unity-64x64-1.svg', description: 'Game development' },
+];
+
+// Integrations panel content
+export const INTEGRATIONS_ITEMS: MenuItem[] = [
+  { title: 'Apple Search Ads', href: 'https://adapty.io/integrations/apple-search-ads/', icon: '/images/menu-icons/icon-finance-blue-20dp-300w.svg', description: 'Attribution & optimization' },
+  { title: 'Amplitude', href: 'https://adapty.io/integrations/amplitude/', icon: '/images/logos/amplitude.svg', description: 'Product analytics' },
+  { title: 'Mixpanel', href: 'https://adapty.io/integrations/mixpanel/', icon: '/images/logos/mixpanel.svg', description: 'User analytics' },
+  { title: 'Adjust', href: 'https://adapty.io/integrations/adjust/', icon: '/images/logos/adjust.svg', description: 'Mobile attribution' },
+  { title: 'AppsFlyer', href: 'https://adapty.io/integrations/appsflyer/', icon: '/images/logos/appsflyer.svg', description: 'Marketing analytics' },
+  { title: 'Webhook', href: 'https://adapty.io/integrations/webhook/', icon: '/images/menu-icons/icon-24x24-11n.svg', description: 'Custom integrations' },
+];
+
+// Legacy export for backwards compatibility
+export const PRODUCT_SIDEBAR: MenuItem[] = PRODUCT_SIDEBAR_ITEMS.map(item => ({
+  title: item.title,
+  href: item.href,
+}));
 
 export const PRODUCT_FOOTER: MenuItem[] = [
   { title: 'Why Adapty?', href: 'https://adapty.io/why-adapty/' },
