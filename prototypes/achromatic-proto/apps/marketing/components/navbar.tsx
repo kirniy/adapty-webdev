@@ -2,9 +2,12 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { ArrowRightIcon } from 'lucide-react';
 
 import { routes } from '@workspace/routes';
+import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
 import { Logo } from '@workspace/ui/components/logo';
 import {
@@ -37,24 +40,90 @@ import {
 import { useHeaderVariant } from '~/lib/debug-context';
 
 // ============================================================================
-// COMPACT DROPDOWN MENUS (for pill navbar)
+// COMPACT MENU COMPONENTS (for simple/pill navbar)
 // ============================================================================
 
-function CompactDropdown({ links }: { links: MenuItem[] }) {
+function MenuIcon({ src, size = 18 }: { src: string; size?: number }) {
   return (
-    <div className="w-48 p-2">
-      <nav className="flex flex-col gap-0.5">
+    <Image
+      src={src}
+      alt=""
+      width={size}
+      height={size}
+      className="shrink-0 object-contain dark:invert"
+      style={{ width: size, height: size }}
+    />
+  );
+}
+
+function CompactMenuItem({ item }: { item: MenuItem }) {
+  const isExternal = item.external || item.href.startsWith('http');
+
+  return (
+    <Link
+      href={item.href}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
+      className="group flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent"
+    >
+      {item.icon && (
+        <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border bg-background/80 shadow-sm">
+          <MenuIcon src={item.icon} size={16} />
+        </div>
+      )}
+      <div className="flex-1">
+        <div className="flex items-center gap-1.5">
+          <span className="font-medium text-foreground">{item.title}</span>
+          {item.badge && (
+            <Badge variant="secondary" className="h-4 rounded-full px-1.5 text-[9px] font-semibold uppercase">
+              {item.badge}
+            </Badge>
+          )}
+        </div>
+        {item.description && (
+          <p className="text-xs text-muted-foreground line-clamp-1">{item.description}</p>
+        )}
+      </div>
+    </Link>
+  );
+}
+
+function CompactDropdown({
+  links,
+  title,
+  viewAllHref,
+  columns = 1
+}: {
+  links: MenuItem[];
+  title?: string;
+  viewAllHref?: string;
+  columns?: 1 | 2;
+}) {
+  return (
+    <div className={cn('p-2', columns === 2 ? 'w-[400px]' : 'w-56')}>
+      {title && (
+        <div className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          {title}
+        </div>
+      )}
+      <nav className={cn(
+        'flex flex-col gap-0.5',
+        columns === 2 && 'grid grid-cols-2 gap-0.5'
+      )}>
         {links.map((link) => (
-          <Link
-            key={link.title}
-            href={link.href}
-            target="_blank"
-            className="rounded-lg px-3 py-2 text-sm text-foreground transition-colors hover:bg-accent"
-          >
-            {link.title}
-          </Link>
+          <CompactMenuItem key={link.title} item={link} />
         ))}
       </nav>
+      {viewAllHref && (
+        <Link
+          href={viewAllHref}
+          target="_blank"
+          className="mt-2 flex items-center gap-1 px-3 py-2 text-xs font-medium text-primary transition-colors hover:text-primary/80"
+        >
+          View all
+          <ArrowRightIcon className="size-3" />
+        </Link>
+      )}
     </div>
   );
 }
@@ -67,11 +136,11 @@ export function Navbar(): React.JSX.Element {
   const pathname = usePathname();
   const headerVariant = useHeaderVariant();
 
-  // Floating Pill Variant - with compact dropdowns
+  // Floating Pill Variant - with enhanced compact dropdowns
   if (headerVariant === 'simple') {
     return (
       <section className="fixed inset-x-0 top-4 z-40 px-4">
-        <div className="mx-auto max-w-4xl rounded-full border bg-background/90 px-4 py-2 shadow-sm backdrop-blur-md">
+        <div className="mx-auto max-w-5xl rounded-full border bg-background/95 px-4 py-2 shadow-lg backdrop-blur-xl">
           <nav className="flex items-center justify-between">
             <div className="flex items-center gap-3 pl-2">
               <Link href={routes.marketing.Index} className="flex items-center">
@@ -85,41 +154,54 @@ export function Navbar(): React.JSX.Element {
                 <NavigationMenuList className="gap-0">
                   {/* Product Menu */}
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent">
+                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
                       Product
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <CompactDropdown links={COMPACT_PRODUCT_LINKS} />
+                      <CompactDropdown
+                        links={COMPACT_PRODUCT_LINKS}
+                        viewAllHref="https://adapty.io/product/"
+                        columns={2}
+                      />
                     </NavigationMenuContent>
                   </NavigationMenuItem>
 
                   {/* Cases Menu */}
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent">
+                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
                       Cases
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <CompactDropdown links={COMPACT_CASES_LINKS} />
+                      <CompactDropdown
+                        links={COMPACT_CASES_LINKS}
+                        viewAllHref="https://adapty.io/clients/"
+                      />
                     </NavigationMenuContent>
                   </NavigationMenuItem>
 
                   {/* Resources Menu */}
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent">
+                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
                       Resources
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <CompactDropdown links={COMPACT_RESOURCES_LINKS} />
+                      <CompactDropdown
+                        links={COMPACT_RESOURCES_LINKS}
+                        columns={2}
+                      />
                     </NavigationMenuContent>
                   </NavigationMenuItem>
 
                   {/* Docs Menu */}
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent">
+                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
                       Docs
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <CompactDropdown links={COMPACT_DOCS_LINKS} />
+                      <CompactDropdown
+                        links={COMPACT_DOCS_LINKS}
+                        viewAllHref="https://adapty.io/docs/"
+                      />
                     </NavigationMenuContent>
                   </NavigationMenuItem>
 
@@ -141,7 +223,7 @@ export function Navbar(): React.JSX.Element {
                       asChild
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        'h-8 rounded-full bg-transparent px-3 text-sm font-medium text-[#FF8A00] hover:bg-accent hover:text-[#FF8A00]/80'
+                        'h-8 rounded-full bg-transparent px-3 text-sm font-medium text-[#FF8A00] hover:bg-[#FF8A00]/10 hover:text-[#FF8A00]'
                       )}
                     >
                       <Link href="https://funnelfox.com/" target="_blank" rel="noopener noreferrer">
@@ -247,7 +329,7 @@ export function Navbar(): React.JSX.Element {
                       asChild
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        'rounded-xl text-[15px] font-medium text-[#FF8A00] hover:text-[#FF8A00]/80'
+                        'rounded-xl text-[15px] font-medium text-[#FF8A00] hover:bg-[#FF8A00]/10 hover:text-[#FF8A00]'
                       )}
                     >
                       <Link href="https://funnelfox.com/" target="_blank" rel="noopener noreferrer">

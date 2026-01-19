@@ -83,13 +83,13 @@ export const SDK_ITEMS: MenuItem[] = [
   { title: 'Unity', href: 'https://adapty.io/docs/unity-installation/', icon: '/images/menu-icons/icon-unity-64x64-1.svg', description: 'Game development' },
 ];
 
-// Integrations panel content
+// Integrations panel content (using available menu icons)
 export const INTEGRATIONS_ITEMS: MenuItem[] = [
   { title: 'Apple Search Ads', href: 'https://adapty.io/integrations/apple-search-ads/', icon: '/images/menu-icons/icon-finance-blue-20dp-300w.svg', description: 'Attribution & optimization' },
-  { title: 'Amplitude', href: 'https://adapty.io/integrations/amplitude/', icon: '/images/logos/amplitude.svg', description: 'Product analytics' },
-  { title: 'Mixpanel', href: 'https://adapty.io/integrations/mixpanel/', icon: '/images/logos/mixpanel.svg', description: 'User analytics' },
-  { title: 'Adjust', href: 'https://adapty.io/integrations/adjust/', icon: '/images/logos/adjust.svg', description: 'Mobile attribution' },
-  { title: 'AppsFlyer', href: 'https://adapty.io/integrations/appsflyer/', icon: '/images/logos/appsflyer.svg', description: 'Marketing analytics' },
+  { title: 'Amplitude', href: 'https://adapty.io/integrations/amplitude/', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Product analytics' },
+  { title: 'Mixpanel', href: 'https://adapty.io/integrations/mixpanel/', icon: '/images/menu-icons/icon-24x24-5n.svg', description: 'User analytics' },
+  { title: 'Adjust', href: 'https://adapty.io/integrations/adjust/', icon: '/images/menu-icons/icon-24x24-12n.svg', description: 'Mobile attribution' },
+  { title: 'AppsFlyer', href: 'https://adapty.io/integrations/appsflyer/', icon: '/images/menu-icons/icon-24x24-21n.svg', description: 'Marketing analytics' },
   { title: 'Webhook', href: 'https://adapty.io/integrations/webhook/', icon: '/images/menu-icons/icon-24x24-11n.svg', description: 'Custom integrations' },
 ];
 
@@ -457,33 +457,36 @@ export const MOBILE_SUBMENU_DATA: Record<string, MobileSubmenuConfig> = {
 // COMPACT DROPDOWN DATA (for pill/simple navbar)
 // ============================================================================
 
+// Enhanced compact links with icons for simple pill variant
 export const COMPACT_PRODUCT_LINKS: MenuItem[] = [
-  { title: 'Product Overview', href: 'https://adapty.io/product/' },
-  { title: 'Paywall Builder', href: 'https://adapty.io/paywall-builder/' },
-  { title: 'A/B Testing', href: 'https://adapty.io/paywall-ab-testing/' },
-  { title: 'Analytics', href: 'https://adapty.io/revenue-analytics/' },
-  { title: 'SDK', href: 'https://adapty.io/sdk/' },
-  { title: 'Integrations', href: 'https://adapty.io/integrations/' },
+  { title: 'Product Overview', href: 'https://adapty.io/product/', icon: '/images/menu-icons/icon-24x24-21n.svg', description: 'Complete feature overview' },
+  { title: 'Paywall Builder', href: 'https://adapty.io/paywall-builder/', icon: '/images/menu-icons/icon-24x24-1n.svg', description: 'No-code paywall editor' },
+  { title: 'A/B Testing', href: 'https://adapty.io/paywall-ab-testing/', icon: '/images/menu-icons/icon-20x20-bug-report.svg', description: 'Optimize conversions' },
+  { title: 'Analytics', href: 'https://adapty.io/revenue-analytics/', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Revenue insights' },
+  { title: 'Adapty SDK', href: 'https://adapty.io/sdk/', icon: '/images/menu-icons/icon-20x20-sdk.svg', description: 'In-app purchases SDK' },
+  { title: 'Integrations', href: 'https://adapty.io/integrations/', icon: '/images/menu-icons/icon-24x24-11n.svg', description: 'Connect your stack' },
 ];
 
 export const COMPACT_CASES_LINKS: MenuItem[] = [
-  { title: 'All Case Studies', href: 'https://adapty.io/case-studies/' },
-  { title: 'Going Merry', href: 'https://adapty.io/clients/going-merry/' },
-  { title: 'Shmoody', href: 'https://adapty.io/clients/shmoody/' },
-  { title: 'Glam AI', href: 'https://adapty.io/clients/glam-ai/' },
+  { title: 'Going Merry', href: 'https://adapty.io/clients/going-merry/', icon: '/images/case-studies/going-merry.webp', description: '5x revenue growth' },
+  { title: 'Shmoody', href: 'https://adapty.io/clients/shmoody/', icon: '/images/case-studies/shmoody.webp', description: '$0 to $2M ARR' },
+  { title: 'Glam AI', href: 'https://adapty.io/clients/glam-ai/', icon: '/images/case-studies/glam-ai.webp', description: '3x conversion rate' },
+  { title: 'Fotorama', href: 'https://adapty.io/clients/fotorama/', icon: '/images/case-studies/fotorama.webp', description: '-40% refund rate' },
 ];
 
 export const COMPACT_RESOURCES_LINKS: MenuItem[] = [
-  { title: 'Blog', href: 'https://adapty.io/blog/' },
-  { title: 'Community', href: 'https://adapty.io/community/' },
-  { title: 'Webinars', href: 'https://adapty.io/webinars/' },
-  { title: 'Glossary', href: 'https://adapty.io/glossary/' },
+  { title: 'Blog', href: 'https://adapty.io/blog/', icon: '/images/menu-icons/icon-24x24-newsletter.svg', description: 'Latest articles' },
+  { title: 'Community', href: 'https://adapty.io/community/', icon: '/images/menu-icons/icon-20x20-bug-report.svg', description: 'Join the discussion' },
+  { title: 'Webinars', href: 'https://adapty.io/webinars/', icon: '/images/menu-icons/icon-20x20-neurology.svg', description: 'Live & recorded' },
+  { title: 'Glossary', href: 'https://adapty.io/glossary/', icon: '/images/menu-icons/icon-24x24-difference.svg', description: 'Subscription terms' },
+  { title: 'Newsletter', href: 'https://adapty.io/paywall-newsletter/', icon: '/images/menu-icons/icon-24x24-newsletter.svg', description: 'Weekly insights', badge: 'weekly' },
+  { title: 'Careers', href: 'https://adapty.io/careers/', icon: '/images/menu-icons/icon-assistant-dp24w4g0.svg', description: 'Join our team' },
 ];
 
 export const COMPACT_DOCS_LINKS: MenuItem[] = [
-  { title: 'Quick Start', href: 'https://adapty.io/docs/quickstart/' },
-  { title: 'iOS SDK', href: 'https://adapty.io/docs/ios-installation/' },
-  { title: 'Android SDK', href: 'https://adapty.io/docs/android-installation/' },
-  { title: 'React Native', href: 'https://adapty.io/docs/react-native-installation/' },
-  { title: 'Support', href: 'https://adapty.io/support/' },
+  { title: 'Quick Start', href: 'https://adapty.io/docs/quickstart/', icon: '/images/menu-icons/icon-24x24-doc.svg', description: 'Get started fast' },
+  { title: 'iOS SDK', href: 'https://adapty.io/docs/ios-installation/', icon: '/images/menu-icons/icon-ios-64x64-1.svg', description: 'Swift & SwiftUI' },
+  { title: 'Android SDK', href: 'https://adapty.io/docs/android-installation/', icon: '/images/menu-icons/icon-android-64x64-1.svg', description: 'Kotlin & Java' },
+  { title: 'React Native', href: 'https://adapty.io/docs/react-native-installation/', icon: '/images/menu-icons/icon-react-native-64x64-1.svg', description: 'Cross-platform' },
+  { title: 'Support', href: 'https://adapty.io/support/', icon: '/images/menu-icons/icon-assistant-dp24w4g0.svg', description: 'Get help' },
 ];
