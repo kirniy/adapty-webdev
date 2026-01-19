@@ -9,7 +9,7 @@ import { baseUrl } from '@workspace/routes';
 import { Toaster } from '@workspace/ui/components/sonner';
 
 import { ColorAccentApplier } from '~/components/color-accent-applier';
-import { Footer } from '~/components/footer';
+import { FooterSection } from '~/components/footer-section';
 import { CookieBanner } from '~/components/fragments/cookie-banner';
 import { Navbar } from '~/components/navbar';
 import { DebugMenu } from '~/components/debug/DebugMenu';
@@ -80,7 +80,7 @@ export default async function RootLayout({
           <div>
             <Navbar />
             {children}
-            <Footer />
+            <FooterSection />
             <CookieBanner />
             <DebugMenu />
           </div>

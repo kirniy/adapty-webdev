@@ -23,14 +23,17 @@ export type ColorAccentVariant = 'full' | 'subtle' | 'minimal'
 
 // Section variants mapped to Achromatic Template Components
 // All sections support 'off' to hide them
-export type HeroVariant = 'marketing' | 'pricing' | 'story' | 'contact' | 'off'
-export type LogosVariant = 'default' | 'off'
-export type FeaturesVariant = 'problem' | 'solution' | 'values' | 'vision' | 'benefits' | 'sticky-scroll' | 'off'
+export type HeroVariant = 'marketing' | 'split' | 'pricing' | 'story' | 'contact' | 'off'
+export type LogosVariant = 'default' | 'linear' | 'off'
+export type FeaturesVariant = 'solution' | 'roles' | 'tabbed' | 'bento-tabs' | 'off'
 export type StatsVariant = 'default' | 'timeline' | 'off'
-export type TestimonialsVariant = 'default' | 'team' | 'off'
+export type TestimonialsVariant = 'default' | 'editorial' | 'team' | 'off'
 export type FaqVariant = 'default' | 'pricing' | 'off'
 export type CtaVariant = 'default' | 'careers' | 'off'
-export type BlogVariant = 'default' | 'off'
+export type BlogVariant = 'default' | 'featured' | 'off'
+export type SdkVariant = 'default' | 'off'
+export type FooterVariant = 'default' | 'off'
+export type HeroLinesVariant = 'above' | 'below'
 
 // Variant option type for UI
 export interface VariantOption<T> {
@@ -95,7 +98,8 @@ export const COLOR_ACCENT_VARIANTS: VariantOption<ColorAccentVariant>[] = [
 
 // Section variants - each includes 'off' option to hide the section
 export const HERO_VARIANTS: VariantOption<HeroVariant>[] = [
-  { value: 'marketing', label: 'Marketing', description: 'Main landing page hero with pills and tabs' },
+  { value: 'marketing', label: 'Marketing', description: 'Centered hero with pills and tabs' },
+  { value: 'split', label: 'Split Layout', description: 'Content left, visual right - denser info' },
   { value: 'pricing', label: 'Pricing', description: 'Simple centered hero for pricing' },
   { value: 'story', label: 'Story', description: 'Text-heavy hero for about pages' },
   { value: 'contact', label: 'Contact', description: 'Hero with contact form' },
@@ -104,16 +108,15 @@ export const HERO_VARIANTS: VariantOption<HeroVariant>[] = [
 
 export const LOGOS_VARIANTS: VariantOption<LogosVariant>[] = [
   { value: 'default', label: 'Default', description: 'Standard logo strip' },
+  { value: 'linear', label: 'Linear Style', description: 'Blur-on-hover with customer story links' },
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
 
 export const FEATURES_VARIANTS: VariantOption<FeaturesVariant>[] = [
+  { value: 'bento-tabs', label: 'Bento Tabs', description: 'Tabbed bento grids with smart hover (recommended)' },
   { value: 'solution', label: 'Solution Bento', description: 'Complex bento grid layout' },
-  { value: 'problem', label: 'Problem Grid', description: '3-column icon grid' },
-  { value: 'sticky-scroll', label: 'Sticky Scroll', description: 'Apple-style scrolling showcase' },
-  { value: 'values', label: 'Values', description: 'Values list with descriptions' },
-  { value: 'vision', label: 'Vision', description: 'Large typography vision statement' },
-  { value: 'benefits', label: 'Benefits', description: 'Grid of benefit cards' },
+  { value: 'tabbed', label: 'Tabbed Features', description: 'Attio-style tab-switching feature showcase' },
+  { value: 'roles', label: 'Role Cards', description: 'For Developers/Owners/Marketers cards' },
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
 
@@ -125,6 +128,7 @@ export const STATS_VARIANTS: VariantOption<StatsVariant>[] = [
 
 export const TESTIMONIALS_VARIANTS: VariantOption<TestimonialsVariant>[] = [
   { value: 'default', label: 'Marquee', description: 'Infinite scrolling reviews' },
+  { value: 'editorial', label: 'Editorial', description: 'Featured quote with case study cards' },
   { value: 'team', label: 'Team', description: 'Team member photos' },
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
@@ -143,7 +147,23 @@ export const CTA_VARIANTS: VariantOption<CtaVariant>[] = [
 
 export const BLOG_VARIANTS: VariantOption<BlogVariant>[] = [
   { value: 'default', label: 'Latest Posts', description: 'Grid of blog posts' },
+  { value: 'featured', label: 'Featured', description: 'Featured post with smaller grid' },
   { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const SDK_VARIANTS: VariantOption<SdkVariant>[] = [
+  { value: 'default', label: 'SDK Code', description: 'Language-tabbed code snippets' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const FOOTER_VARIANTS: VariantOption<FooterVariant>[] = [
+  { value: 'default', label: 'Default', description: 'Standard footer with links' },
+  { value: 'off', label: 'Off', description: 'Hide footer' },
+]
+
+export const HERO_LINES_VARIANTS: VariantOption<HeroLinesVariant>[] = [
+  { value: 'above', label: 'Above Content', description: 'Dashed lines appear above hero content' },
+  { value: 'below', label: 'Below Content', description: 'Dashed lines hidden behind hero content' },
 ]
 
 // Debug state interface
@@ -165,6 +185,9 @@ interface DebugState {
   faqVariant: FaqVariant
   ctaVariant: CtaVariant
   blogVariant: BlogVariant
+  sdkVariant: SdkVariant
+  footerVariant: FooterVariant
+  heroLinesVariant: HeroLinesVariant
   isDebugMenuOpen: boolean
 }
 
@@ -187,6 +210,9 @@ interface DebugContextValue extends DebugState {
   setFaqVariant: (variant: FaqVariant) => void
   setCtaVariant: (variant: CtaVariant) => void
   setBlogVariant: (variant: BlogVariant) => void
+  setSdkVariant: (variant: SdkVariant) => void
+  setFooterVariant: (variant: FooterVariant) => void
+  setHeroLinesVariant: (variant: HeroLinesVariant) => void
   toggleDebugMenu: () => void
   resetToDefaults: () => void
 }
@@ -210,6 +236,9 @@ const defaultState: DebugState = {
   faqVariant: 'default',
   ctaVariant: 'default',
   blogVariant: 'default',
+  sdkVariant: 'default',
+  footerVariant: 'default',
+  heroLinesVariant: 'above',
   isDebugMenuOpen: false,
 }
 
@@ -281,6 +310,9 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   const setFaqVariant = useCallback((variant: FaqVariant) => setState(prev => ({ ...prev, faqVariant: variant })), [])
   const setCtaVariant = useCallback((variant: CtaVariant) => setState(prev => ({ ...prev, ctaVariant: variant })), [])
   const setBlogVariant = useCallback((variant: BlogVariant) => setState(prev => ({ ...prev, blogVariant: variant })), [])
+  const setSdkVariant = useCallback((variant: SdkVariant) => setState(prev => ({ ...prev, sdkVariant: variant })), [])
+  const setFooterVariant = useCallback((variant: FooterVariant) => setState(prev => ({ ...prev, footerVariant: variant })), [])
+  const setHeroLinesVariant = useCallback((variant: HeroLinesVariant) => setState(prev => ({ ...prev, heroLinesVariant: variant })), [])
   const toggleDebugMenu = useCallback(() => setState(prev => ({ ...prev, isDebugMenuOpen: !prev.isDebugMenuOpen })), [])
   const resetToDefaults = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY)
@@ -306,6 +338,9 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     setFaqVariant,
     setCtaVariant,
     setBlogVariant,
+    setSdkVariant,
+    setFooterVariant,
+    setHeroLinesVariant,
     toggleDebugMenu,
     resetToDefaults,
   }
@@ -341,3 +376,6 @@ export function useTestimonialsVariant() { return useContext(DebugContext)?.test
 export function useFaqVariant() { return useContext(DebugContext)?.faqVariant ?? defaultState.faqVariant }
 export function useCtaVariant() { return useContext(DebugContext)?.ctaVariant ?? defaultState.ctaVariant }
 export function useBlogVariant() { return useContext(DebugContext)?.blogVariant ?? defaultState.blogVariant }
+export function useSdkVariant() { return useContext(DebugContext)?.sdkVariant ?? defaultState.sdkVariant }
+export function useFooterVariant() { return useContext(DebugContext)?.footerVariant ?? defaultState.footerVariant }
+export function useHeroLinesVariant() { return useContext(DebugContext)?.heroLinesVariant ?? defaultState.heroLinesVariant }

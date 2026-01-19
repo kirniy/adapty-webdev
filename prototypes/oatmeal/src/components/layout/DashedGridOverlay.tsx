@@ -49,7 +49,7 @@ export function DashedGridOverlay() {
       initial={{ opacity: 0 }}
       animate={{ opacity: showDashedGrid ? 1 : 0 }}
       transition={{ duration: 0.3 }}
-      className="pointer-events-none fixed inset-0 z-30"
+      className="pointer-events-none fixed inset-0 z-10"
       aria-hidden="true"
     >
       {/* Main decorative grid lines - positioned at ~16% and ~84% from edges */}
@@ -67,7 +67,7 @@ export function DashedGridOverlay() {
           y1="0"
           x2="16.67%"
           y2="100%"
-          stroke="rgb(168 162 158)"
+          stroke="oklch(88% 0.011 106.6)"
           strokeOpacity={opacity.major}
           strokeDasharray="5 5"
           strokeLinecap="round"
@@ -79,7 +79,7 @@ export function DashedGridOverlay() {
           y1="0"
           x2="33.33%"
           y2="100%"
-          stroke="rgb(168 162 158)"
+          stroke="oklch(88% 0.011 106.6)"
           strokeOpacity={opacity.minor}
           strokeDasharray="4 6"
           strokeLinecap="round"
@@ -91,7 +91,7 @@ export function DashedGridOverlay() {
           y1="0"
           x2="50%"
           y2="100%"
-          stroke="rgb(168 162 158)"
+          stroke="oklch(88% 0.011 106.6)"
           strokeOpacity={opacity.mid}
           strokeDasharray="5 5"
           strokeLinecap="round"
@@ -103,7 +103,7 @@ export function DashedGridOverlay() {
           y1="0"
           x2="66.67%"
           y2="100%"
-          stroke="rgb(168 162 158)"
+          stroke="oklch(88% 0.011 106.6)"
           strokeOpacity={opacity.minor}
           strokeDasharray="4 6"
           strokeLinecap="round"
@@ -115,7 +115,7 @@ export function DashedGridOverlay() {
           y1="0"
           x2="83.33%"
           y2="100%"
-          stroke="rgb(168 162 158)"
+          stroke="oklch(88% 0.011 106.6)"
           strokeOpacity={opacity.major}
           strokeDasharray="5 5"
           strokeLinecap="round"
@@ -137,7 +137,7 @@ export function DashedGridOverlay() {
           y1="33.33%"
           x2="100%"
           y2="33.33%"
-          stroke="rgb(168 162 158)"
+          stroke="oklch(88% 0.011 106.6)"
           strokeOpacity={opacity.support}
           strokeDasharray="6 8"
           strokeLinecap="round"
@@ -149,7 +149,7 @@ export function DashedGridOverlay() {
           y1="50%"
           x2="100%"
           y2="50%"
-          stroke="rgb(168 162 158)"
+          stroke="oklch(88% 0.011 106.6)"
           strokeOpacity={opacity.supportMid}
           strokeDasharray="8 12"
           strokeLinecap="round"
@@ -161,7 +161,7 @@ export function DashedGridOverlay() {
           y1="66.67%"
           x2="100%"
           y2="66.67%"
-          stroke="rgb(168 162 158)"
+          stroke="oklch(88% 0.011 106.6)"
           strokeOpacity={opacity.support}
           strokeDasharray="6 8"
           strokeLinecap="round"

@@ -123,6 +123,8 @@ active_prototypes:
       - "Aura mega-menu header (4 dropdowns)"
       - "Font swap: Instrument Serif -> Inter"
       - "Adapty purple (#6720FF) color palette"
+      - "New Achromatic-style Hero variant (Tabbed illustration)"
+      - "Removed legacy variants: Full Wallpaper, Minimal Text"
     header_status:
       ported: "AuraHeader, 4 menu components, LanguageSwitcher"
       gap_vs_adapty_io: "Missing sidebar nav, 8 items, nav links"

@@ -28,7 +28,7 @@ export function HeroCenteredDemo() {
           width={1600}
           className="w-full h-full mask-image-gradient-b"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
+        <div className="absolute inset-0 bg-gradient-to-b from-olive-100 via-transparent to-olive-100" />
       </div>
 
       {/* Hero Content - Centered */}

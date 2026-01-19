@@ -1,5 +1,9 @@
+'use client';
+
 import * as React from 'react';
 import Link from 'next/link';
+import { ArrowRightIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 
 import {
   Accordion,
@@ -7,7 +11,9 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@workspace/ui/components/accordion';
+import { Badge } from '@workspace/ui/components/badge';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 
@@ -50,52 +56,69 @@ export function FAQ(): React.JSX.Element {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
-      <div className="container py-20 relative z-10">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
-          <div className="text-center lg:text-left">
-            <h2 className="mb-2.5 text-3xl font-semibold md:text-5xl">
-              Frequently Asked Questions
+      <div className="container py-16 lg:py-24 relative z-10">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+          {/* Left column - Header */}
+          <BlurFade className="text-center lg:text-left lg:sticky lg:top-24 lg:self-start">
+            <Badge variant="outline" className="mb-4 rounded-full">
+              FAQ
+            </Badge>
+            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl text-balance">
+              Frequently Asked
+              <br />
+              <span className="text-muted-foreground">Questions</span>
             </h2>
-            <p className="mt-6 hidden text-muted-foreground md:block lg:max-w-[75%]">
-              Have more questions? Check out our{' '}
+            <p className="mt-4 text-muted-foreground lg:max-w-[85%]">
+              Everything you need to know about Adapty. Can&apos;t find the answer you&apos;re looking for?
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col">
               <Link
                 href="https://adapty.io/docs/"
                 target="_blank"
-                className="font-normal text-inherit underline hover:text-foreground"
+                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
-                documentation
-              </Link>{' '}
-              or{' '}
+                Read documentation
+                <ArrowRightIcon className="size-4" />
+              </Link>
               <Link
                 href="https://adapty.io/schedule-demo/"
                 target="_blank"
-                className="font-normal text-inherit underline hover:text-foreground"
+                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
-                schedule a demo
-              </Link>{' '}
-              with our team.
-            </p>
-          </div>
-          <div className="mx-auto flex w-full max-w-xl flex-col">
-            <Accordion
-              type="single"
-              collapsible
-            >
-              {DATA.map((faq, index) => (
-                <AccordionItem
-                  key={index}
-                  value={index.toString()}
-                >
-                  <AccordionTrigger className="text-left text-base">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-base">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
+                Schedule a demo
+                <ArrowRightIcon className="size-4" />
+              </Link>
+            </div>
+          </BlurFade>
+
+          {/* Right column - Accordion */}
+          <BlurFade delay={0.1}>
+            <div className="rounded-xl border bg-card p-1">
+              <Accordion type="single" collapsible className="w-full">
+                {DATA.map((faq, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <AccordionItem
+                      value={index.toString()}
+                      className="border-b-0 px-4 [&[data-state=open]]:bg-muted/30 rounded-lg transition-colors"
+                    >
+                      <AccordionTrigger className="text-left text-base py-4 hover:no-underline">
+                        {faq.question}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm text-muted-foreground pb-4">
+                        {faq.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </motion.div>
+                ))}
+              </Accordion>
+            </div>
+          </BlurFade>
         </div>
       </div>
     </GridSection>

@@ -430,6 +430,60 @@ function DocsMegaMenu() {
 }
 
 // ============================================================================
+// COMPACT DROPDOWN MENUS (for pill navbar)
+// ============================================================================
+
+const COMPACT_PRODUCT_LINKS = [
+  { title: 'Product Overview', href: 'https://adapty.io/product/' },
+  { title: 'Paywall Builder', href: 'https://adapty.io/paywall-builder/' },
+  { title: 'A/B Testing', href: 'https://adapty.io/paywall-ab-testing/' },
+  { title: 'Analytics', href: 'https://adapty.io/revenue-analytics/' },
+  { title: 'SDK', href: 'https://adapty.io/sdk/' },
+  { title: 'Integrations', href: 'https://adapty.io/integrations/' },
+];
+
+const COMPACT_CASES_LINKS = [
+  { title: 'All Case Studies', href: 'https://adapty.io/case-studies/' },
+  { title: 'Going Merry', href: 'https://adapty.io/clients/going-merry/' },
+  { title: 'Shmoody', href: 'https://adapty.io/clients/shmoody/' },
+  { title: 'Glam AI', href: 'https://adapty.io/clients/glam-ai/' },
+];
+
+const COMPACT_RESOURCES_LINKS = [
+  { title: 'Blog', href: 'https://adapty.io/blog/' },
+  { title: 'Community', href: 'https://adapty.io/community/' },
+  { title: 'Webinars', href: 'https://adapty.io/webinars/' },
+  { title: 'Glossary', href: 'https://adapty.io/glossary/' },
+];
+
+const COMPACT_DOCS_LINKS = [
+  { title: 'Quick Start', href: 'https://adapty.io/docs/quickstart/' },
+  { title: 'iOS SDK', href: 'https://adapty.io/docs/ios-installation/' },
+  { title: 'Android SDK', href: 'https://adapty.io/docs/android-installation/' },
+  { title: 'React Native', href: 'https://adapty.io/docs/react-native-installation/' },
+  { title: 'Support', href: 'https://adapty.io/support/' },
+];
+
+function CompactDropdown({ links }: { links: { title: string; href: string }[] }) {
+  return (
+    <div className="w-48 p-2">
+      <nav className="flex flex-col gap-0.5">
+        {links.map((link) => (
+          <Link
+            key={link.title}
+            href={link.href}
+            target="_blank"
+            className="rounded-lg px-3 py-2 text-sm text-foreground transition-colors hover:bg-accent"
+          >
+            {link.title}
+          </Link>
+        ))}
+      </nav>
+    </div>
+  );
+}
+
+// ============================================================================
 // MAIN NAVBAR COMPONENT
 // ============================================================================
 
@@ -437,44 +491,87 @@ export function Navbar(): React.JSX.Element {
   const pathname = usePathname();
   const headerVariant = useHeaderVariant();
 
-  // Floating Pill Variant
+  // Floating Pill Variant - with compact dropdowns
   if (headerVariant === 'simple') {
     return (
       <section className="fixed inset-x-0 top-4 z-40 px-4">
-        <div className="mx-auto max-w-5xl rounded-full border bg-background/80 px-6 py-3 shadow-sm backdrop-blur-md">
+        <div className="mx-auto max-w-4xl rounded-full border bg-background/90 px-4 py-2 shadow-sm backdrop-blur-md">
           <nav className="flex items-center justify-between">
-            <Link href={routes.marketing.Index} className="flex items-center gap-2">
-              <Logo className="h-6 w-auto" />
+            <Link href={routes.marketing.Index} className="flex items-center gap-2 pl-2">
+              <Logo className="h-5 w-auto" />
             </Link>
 
-            <div className="hidden items-center gap-6 lg:flex">
-              <Link href="https://adapty.io/product/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
-                Product
-              </Link>
-              <Link href="https://adapty.io/case-studies/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
-                Cases
-              </Link>
-              <Link href="https://adapty.io/blog/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
-                Blog
-              </Link>
-              <Link href="https://adapty.io/pricing/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
-                Pricing
-              </Link>
+            <div className="hidden items-center lg:flex">
+              <NavigationMenu>
+                <NavigationMenuList className="gap-0">
+                  {/* Product Menu */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent">
+                      Product
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <CompactDropdown links={COMPACT_PRODUCT_LINKS} />
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+
+                  {/* Cases Menu */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent">
+                      Cases
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <CompactDropdown links={COMPACT_CASES_LINKS} />
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+
+                  {/* Resources Menu */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent">
+                      Resources
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <CompactDropdown links={COMPACT_RESOURCES_LINKS} />
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+
+                  {/* Docs Menu */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent">
+                      Docs
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <CompactDropdown links={COMPACT_DOCS_LINKS} />
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+
+                  {/* Pricing - Direct Link */}
+                  <NavigationMenuItem>
+                    <NavigationMenuLink
+                      asChild
+                      className={cn(navigationMenuTriggerStyle(), 'h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground')}
+                    >
+                      <Link href="https://adapty.io/pricing/" target="_blank">
+                        Pricing
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             </div>
 
-            <div className="flex items-center gap-2">
-              <ThemeToggle className="size-8 rounded-full border-none shadow-none" />
+            <div className="flex items-center gap-1.5 pr-1">
+              <ThemeToggle className="size-7 rounded-full border-none shadow-none" />
               <Link
                 href={routes.dashboard.auth.SignIn}
-                className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'h-8 rounded-full px-4')}
+                className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'h-7 rounded-full px-3 text-sm')}
               >
-                Log in
+                Sign in
               </Link>
               <Link
                 href={routes.dashboard.auth.SignUp}
-                className={cn(buttonVariants({ variant: 'default', size: 'sm' }), 'h-8 rounded-full px-4')}
+                className={cn(buttonVariants({ variant: 'default', size: 'sm' }), 'h-7 rounded-full px-3 text-sm')}
               >
-                Sign up
+                Start for free
               </Link>
             </div>
           </nav>

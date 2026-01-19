@@ -12,25 +12,38 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 /**
- * Variant A: Cards (Premium Grid)
+ * Variant A: Cards (SIMPLIFIED per GEMINI_TASKS.md)
  *
- * Design philosophy:
- * - Rich visual cards with imagery and depth
- * - Each role gets equal visual weight
- * - Hover reveals additional detail via micro-interactions
- * - Tags provide at-a-glance feature context
- *
- * Polished details:
- * - Smooth image scale on hover
- * - Gradient overlay for text readability
- * - Tag pills animate in staggered
- * - Arrow icon indicates clickability
+ * Changes from original:
+ * - REMOVED all tags/badges (Sergey: "too clunky")
+ * - Reduced visual weight (smaller images, less padding)
+ * - Simplified to: Icon/Illustration + Title + Single sentence + CTA link
+ * - Cards should "rhyme" with Feature block style
  */
 function RoleCardsCards() {
   const { roleCards } = content
 
+  // Simple icons for each role type
+  const roleIcons: Record<string, React.ReactNode> = {
+    'For Marketers': (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+      </svg>
+    ),
+    'For Developers': (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+      </svg>
+    ),
+    'For Growth': (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+      </svg>
+    ),
+  }
+
   return (
-    <Section className="bg-olive-50 py-16 sm:py-24">
+    <Section className="py-16 sm:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -43,98 +56,53 @@ function RoleCardsCards() {
           <Heading as="h2" className="mt-3">
             One platform, every team
           </Heading>
-          <p className="mt-4 text-lg text-olive-600 max-w-2xl mx-auto">
-            Whether you're optimizing paywalls, analyzing cohorts, or building integrations,
-            Adapty has the tools you need.
-          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {roleCards.map((card, index) => (
-            <motion.article
+            <motion.a
               key={card.title}
-              initial={{ opacity: 0, y: 30 }}
+              href="#"
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group cursor-pointer"
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className={cn(
+                'group flex flex-col p-6 rounded-xl',
+                'bg-olive-50/50 border border-olive-100',
+                'hover:bg-olive-50 hover:border-olive-200',
+                'transition-all duration-200'
+              )}
             >
-              <div className={cn(
-                'relative h-full overflow-hidden rounded-2xl',
-                'bg-white border border-olive-200/80',
-                'shadow-sm shadow-olive-900/5',
-                'hover:shadow-lg hover:shadow-olive-900/[0.08]',
-                'hover:border-olive-300',
-                'transition-all duration-300'
-              )}>
-                {/* Image */}
-                <div className="relative h-52 overflow-hidden">
-                  <motion.div
-                    className="absolute inset-0"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <Image
-                      src={card.image}
-                      alt={card.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </motion.div>
-
-                  {/* Gradient overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-adapty-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <h3 className="text-xl font-semibold text-olive-950 group-hover:text-adapty-600 transition-colors">
-                      {card.title}
-                    </h3>
-                    {/* Arrow icon */}
-                    <div className="flex-shrink-0 size-8 rounded-full bg-olive-100 group-hover:bg-adapty-100 flex items-center justify-center transition-colors">
-                      <svg
-                        className="w-4 h-4 text-olive-500 group-hover:text-adapty-600 transform group-hover:translate-x-0.5 transition-all"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </div>
-                  </div>
-
-                  <p className="mt-3 text-olive-600 text-[15px] leading-relaxed">
-                    {card.description}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mt-5">
-                    {card.tags.slice(0, 3).map((tag, tagIndex) => (
-                      <motion.span
-                        key={tag}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 + tagIndex * 0.05 }}
-                        className={cn(
-                          'inline-flex px-2.5 py-1 rounded-md',
-                          'bg-olive-100/80 text-olive-600',
-                          'text-xs font-medium',
-                          'group-hover:bg-adapty-50 group-hover:text-adapty-700',
-                          'transition-colors duration-200'
-                        )}
-                      >
-                        {tag}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
+              {/* Small icon */}
+              <div className="w-10 h-10 rounded-lg bg-adapty-100 text-adapty-600 flex items-center justify-center mb-4">
+                {roleIcons[card.title] || roleIcons['For Growth']}
               </div>
-            </motion.article>
+
+              {/* Title */}
+              <h3 className="text-lg font-semibold text-olive-950 mb-2">
+                {card.title}
+              </h3>
+
+              {/* Single compelling sentence */}
+              <p className="text-olive-600 text-sm leading-relaxed flex-1 mb-4">
+                {card.description.split('.')[0]}.
+              </p>
+
+              {/* CTA link (not button) */}
+              <span className="inline-flex items-center gap-2 text-sm font-medium text-adapty-600 group-hover:text-adapty-700">
+                Learn more
+                <svg
+                  className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+            </motion.a>
           ))}
         </div>
       </Container>
@@ -163,7 +131,7 @@ function RoleCardsTabs() {
   const activeCard = roleCards[activeIndex]
 
   return (
-    <Section className="bg-white py-16 sm:py-24">
+    <Section className="py-16 sm:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -309,7 +277,7 @@ function RoleCardsHorizontal() {
   const { roleCards } = content
 
   return (
-    <Section className="bg-gradient-to-b from-olive-50 to-white py-16 sm:py-24 overflow-hidden">
+    <Section className="py-16 sm:py-24 overflow-hidden">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -333,8 +301,8 @@ function RoleCardsHorizontal() {
       {/* Horizontal scroll container */}
       <div className="relative">
         {/* Gradient masks */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-olive-50 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-olive-100 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-olive-100 to-transparent z-10 pointer-events-none" />
 
         <div className="flex gap-6 overflow-x-auto pb-4 px-4 sm:px-8 lg:px-[max(2rem,calc((100vw-1280px)/2+2rem))] snap-x snap-mandatory scrollbar-hide">
           {roleCards.map((card, index) => (
@@ -414,11 +382,104 @@ function RoleCardsHorizontal() {
   )
 }
 
+/**
+ * Variant D: Minimal (NEW per GEMINI_TASKS.md)
+ *
+ * Design:
+ * - Simple horizontal layout: Icon | Title | One-liner | Arrow
+ * - No cards, just clean list items
+ * - Subtle separator between items
+ * - Hover shows arrow movement (translateX)
+ */
+function RoleCardsMinimal() {
+  const { roleCards } = content
+
+  // Simple icons for each role type
+  const roleIcons: Record<string, React.ReactNode> = {
+    'For Marketers': (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+      </svg>
+    ),
+    'For Developers': (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+      </svg>
+    ),
+    'For Growth': (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+      </svg>
+    ),
+  }
+
+  return (
+    <Section className="py-16 sm:py-24">
+      <Container>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <Eyebrow>Built for Every Role</Eyebrow>
+          <Heading as="h2" className="mt-3">
+            One platform, every team
+          </Heading>
+        </motion.div>
+
+        <div className="max-w-3xl mx-auto divide-y divide-olive-200">
+          {roleCards.map((card, index) => (
+            <motion.a
+              key={card.title}
+              href="#"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="group flex items-center gap-4 py-5 hover:bg-olive-200/30 -mx-4 px-4 rounded-lg transition-colors"
+            >
+              {/* Icon */}
+              <div className="w-10 h-10 rounded-lg bg-olive-100 text-olive-600 group-hover:bg-adapty-100 group-hover:text-adapty-600 flex items-center justify-center flex-shrink-0 transition-colors">
+                {roleIcons[card.title] || roleIcons['For Growth']}
+              </div>
+
+              {/* Title */}
+              <span className="font-medium text-olive-950 w-36 flex-shrink-0">
+                {card.title}
+              </span>
+
+              {/* One-liner */}
+              <span className="text-olive-600 text-sm flex-1 hidden sm:block">
+                {card.description.split('.')[0]}.
+              </span>
+
+              {/* Arrow */}
+              <svg
+                className="w-5 h-5 text-olive-400 group-hover:text-adapty-600 flex-shrink-0 transition-all group-hover:translate-x-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </motion.a>
+          ))}
+        </div>
+      </Container>
+    </Section>
+  )
+}
+
 // Main component that switches based on debug context
 export function RoleCards() {
   const variant = useRoleCardsVariant()
 
   switch (variant) {
+    case 'minimal':
+      return <RoleCardsMinimal />
     case 'tabs':
       return <RoleCardsTabs />
     case 'horizontal':

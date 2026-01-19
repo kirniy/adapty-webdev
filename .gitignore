@@ -29,3 +29,9 @@ npm-debug.log*
 
 # Cache
 .cache/
+
+# Moat task system
+.moat/
+
+# Claude Code configuration
+.claude/

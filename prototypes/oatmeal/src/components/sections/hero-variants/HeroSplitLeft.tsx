@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { ButtonLink } from '@/components/elements/Button'
 import { Container } from '@/components/elements/Container'
 import { Eyebrow } from '@/components/elements/Eyebrow'
@@ -8,22 +9,60 @@ import { MagneticButton } from '@/components/effects/MagneticButton'
 import { TextReveal } from '@/components/effects/TextReveal'
 import { cn } from '@/lib/cn'
 import { content } from '@/lib/content'
-import { motion } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
 
 /**
- * Hero Two-Column Split
+ * Hero Two-Column Split (IMPROVED)
  *
- * Design decisions:
- * - Equal 50/50 split creates balanced visual weight
- * - Text on left (natural reading direction for LTR languages)
- * - Demo with browser chrome for realism
- * - Full viewport height for immersive first impression
- * - Inline trust metrics for immediate credibility
- * - Decorative shapes add depth without distraction
+ * Based on Linear + Vercel patterns:
+ * - Split layout with content left, interactive visual right
+ * - Customer avatar row for social proof (Linear pattern)
+ * - Tabbed product preview showing different product areas (Vercel pattern)
+ * - Trust metrics as pills below content
+ * - Subtle animations on tab switch (opacity + y-transform only)
  */
+
+const PRODUCT_TABS = [
+  {
+    id: 'analytics',
+    label: 'Analytics',
+    image: '/images/hero-overview.webp',
+    alt: 'Adapty analytics dashboard',
+  },
+  {
+    id: 'paywalls',
+    label: 'Paywalls',
+    image: '/images/hero-overview.webp', // TODO: Replace with paywall screenshot
+    alt: 'Adapty paywall builder',
+  },
+  {
+    id: 'ab-testing',
+    label: 'A/B Testing',
+    image: '/images/hero-overview.webp', // TODO: Replace with A/B testing screenshot
+    alt: 'Adapty A/B testing interface',
+  },
+  {
+    id: 'onboarding',
+    label: 'Onboarding',
+    image: '/images/hero-overview.webp', // TODO: Replace with onboarding screenshot
+    alt: 'Adapty onboarding flows',
+  },
+]
+
+// Customer avatars for social proof (Linear pattern)
+const CUSTOMER_AVATARS = [
+  { name: 'Calm', initial: 'C', bg: 'bg-blue-500' },
+  { name: 'Babbel', initial: 'B', bg: 'bg-emerald-500' },
+  { name: 'Mimo', initial: 'M', bg: 'bg-amber-500' },
+  { name: 'Zing', initial: 'Z', bg: 'bg-rose-500' },
+  { name: 'JEFIT', initial: 'J', bg: 'bg-violet-500' },
+]
+
 export function HeroSplitLeft() {
   const { hero } = content
+  const [activeTab, setActiveTab] = useState(PRODUCT_TABS[0].id)
+  const activeProduct = PRODUCT_TABS.find((t) => t.id === activeTab) || PRODUCT_TABS[0]
 
   return (
     <section className="relative overflow-hidden min-h-[calc(100vh-80px)]">
@@ -65,28 +104,48 @@ export function HeroSplitLeft() {
               </div>
             </FadeIn>
 
-            {/* Inline Trust Metrics */}
+            {/* Customer Avatar Row (Linear pattern) */}
             <FadeIn delay={0.55}>
-              <div className="mt-12 pt-8 border-t border-olive-200/60">
-                <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-olive-950">8,000+</span>
-                    <span className="text-olive-500">apps worldwide</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-olive-950">$2B+</span>
-                    <span className="text-olive-500">revenue tracked</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-olive-950">4.9</span>
-                    <span className="text-olive-500">App Store rating</span>
-                  </div>
+              <div className="mt-8 flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  {CUSTOMER_AVATARS.map((customer) => (
+                    <div
+                      key={customer.name}
+                      className={cn(
+                        'w-8 h-8 rounded-full flex items-center justify-center',
+                        'text-white text-xs font-medium',
+                        'ring-2 ring-white',
+                        customer.bg
+                      )}
+                      title={customer.name}
+                    >
+                      {customer.initial}
+                    </div>
+                  ))}
                 </div>
+                <span className="text-sm text-olive-600">
+                  Trusted by <span className="font-semibold text-olive-900">15,000+</span> apps
+                </span>
+              </div>
+            </FadeIn>
+
+            {/* Trust Metrics as Pills */}
+            <FadeIn delay={0.65}>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-olive-100 text-sm text-olive-700">
+                  <span className="font-semibold">$2B+</span> revenue tracked
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-olive-100 text-sm text-olive-700">
+                  <span className="font-semibold">SOC 2</span> Certified
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-olive-100 text-sm text-olive-700">
+                  <span className="font-semibold">4.9</span> App Store
+                </span>
               </div>
             </FadeIn>
           </div>
 
-          {/* Right Column: Demo with Browser Chrome */}
+          {/* Right Column: Tabbed Product Preview (Vercel pattern) */}
           <FadeIn delay={0.3} direction="left">
             <div className="relative lg:ml-auto">
               {/* Decorative background element */}
@@ -101,20 +160,6 @@ export function HeroSplitLeft() {
                 transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               />
 
-              {/* Floating accent shapes */}
-              <motion.div
-                className="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-adapty-500/10"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.7, duration: 0.6, type: 'spring' }}
-              />
-              <motion.div
-                className="absolute -bottom-6 -left-6 w-16 h-16 rounded-full bg-olive-500/10"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.6, type: 'spring' }}
-              />
-
               {/* Main Demo Container */}
               <motion.div
                 className={cn(
@@ -126,31 +171,56 @@ export function HeroSplitLeft() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
-                {/* Browser Chrome */}
-                <div className="bg-olive-100/80 backdrop-blur-sm px-4 py-3 border-b border-olive-200/50">
-                  <div className="flex items-center gap-2">
-                    <div className="flex gap-1.5">
+                {/* Tab Navigation (Vercel-style) */}
+                <div className="bg-olive-100/80 backdrop-blur-sm px-4 py-2 border-b border-olive-200/50">
+                  <div className="flex items-center gap-1">
+                    {/* Browser dots */}
+                    <div className="flex gap-1.5 mr-4">
                       <div className="w-3 h-3 rounded-full bg-olive-300" />
                       <div className="w-3 h-3 rounded-full bg-olive-300" />
                       <div className="w-3 h-3 rounded-full bg-olive-300" />
                     </div>
-                    <div className="flex-1 mx-4">
-                      <div className="bg-white/60 rounded-md px-3 py-1.5 text-xs text-olive-500 text-center">
-                        app.adapty.io/dashboard
-                      </div>
+                    {/* Product tabs */}
+                    <div className="flex gap-1">
+                      {PRODUCT_TABS.map((tab) => (
+                        <button
+                          key={tab.id}
+                          onClick={() => setActiveTab(tab.id)}
+                          className={cn(
+                            'px-3 py-1.5 text-xs font-medium rounded-md transition-colors duration-150',
+                            activeTab === tab.id
+                              ? 'bg-white text-olive-900 shadow-sm'
+                              : 'text-olive-500 hover:text-olive-700 hover:bg-olive-200/50'
+                          )}
+                        >
+                          {tab.label}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Screenshot */}
-                <Image
-                  src="/images/hero-overview.webp"
-                  alt="Adapty dashboard overview"
-                  width={700}
-                  height={500}
-                  className="w-full h-auto"
-                  priority
-                />
+                {/* Screenshot with Animation */}
+                <div className="relative bg-white">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeTab}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                    >
+                      <Image
+                        src={activeProduct.image}
+                        alt={activeProduct.alt}
+                        width={700}
+                        height={500}
+                        className="w-full h-auto"
+                        priority
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               </motion.div>
             </div>
           </FadeIn>

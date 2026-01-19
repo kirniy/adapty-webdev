@@ -10,24 +10,25 @@ import {
   useFaqVariant,
   useCtaVariant,
   useBlogVariant,
+  useSdkVariant,
 } from '~/lib/debug-context';
 
 // Original Achromatic Template Hero Components
 import { Hero } from '~/components/sections/hero';
+import { HeroSplit } from '~/components/sections/hero-split';
 import { PricingHero } from '~/components/sections/pricing-hero';
 import { StoryHero } from '~/components/sections/story-hero';
 import { Contact } from '~/components/sections/contact';
 
 // Logos
 import { Logos } from '~/components/sections/logos';
+import { LogosLinear } from '~/components/sections/logos-linear';
 
-// Original Achromatic Features Components
-import { Problem } from '~/components/sections/problem';
+// Feature Section Components
 import { Solution } from '~/components/sections/solution';
-import { StoryValues } from '~/components/sections/story-values';
-import { StoryVision } from '~/components/sections/story-vision';
-import { CareersBenefits } from '~/components/sections/careers-benefits';
-import { FeaturesStickyScroll } from '~/components/sections/features-sticky-scroll';
+import { RoleCards } from '~/components/sections/role-cards';
+import { FeaturesTabbed } from '~/components/sections/features-tabbed';
+import { FeaturesBentoTabs } from '~/components/sections/features-bento-tabs';
 
 // Original Achromatic Stats Components
 import { Stats } from '~/components/sections/stats';
@@ -35,6 +36,7 @@ import { StoryTimeline } from '~/components/sections/story-timeline';
 
 // Original Achromatic Testimonials Components
 import { Testimonials } from '~/components/sections/testimonials';
+import { TestimonialsEditorial } from '~/components/sections/testimonials-editorial';
 import { StoryTeam } from '~/components/sections/story-team';
 
 // Original Achromatic FAQ Components
@@ -47,6 +49,10 @@ import { CareersPositions } from '~/components/sections/careers-positions';
 
 // Original Achromatic Blog Components
 import { BlogPosts } from '~/components/sections/blog-posts';
+import { BlogPostsFeatured } from '~/components/sections/blog-posts-featured';
+
+// SDK Code section
+import { SDKCode } from '~/components/sections/sdk-code';
 
 // ============================================================================
 // VARIANT SWITCHER COMPONENTS
@@ -58,6 +64,8 @@ function HeroSection() {
   switch (variant) {
     case 'off':
       return null;
+    case 'split':
+      return <HeroSplit />;
     case 'pricing':
       return <PricingHero />;
     case 'story':
@@ -75,6 +83,8 @@ function LogosSection() {
   switch (variant) {
     case 'off':
       return null;
+    case 'linear':
+      return <LogosLinear />;
     case 'default':
     default:
       return <Logos />;
@@ -86,16 +96,12 @@ function FeaturesSection() {
   switch (variant) {
     case 'off':
       return null;
-    case 'problem':
-      return <Problem />;
-    case 'sticky-scroll':
-      return <FeaturesStickyScroll />;
-    case 'values':
-      return <StoryValues />;
-    case 'vision':
-      return <StoryVision />;
-    case 'benefits':
-      return <CareersBenefits />;
+    case 'bento-tabs':
+      return <FeaturesBentoTabs />;
+    case 'roles':
+      return <RoleCards />;
+    case 'tabbed':
+      return <FeaturesTabbed />;
     case 'solution':
     default:
       return <Solution />;
@@ -120,6 +126,8 @@ function TestimonialsSection() {
   switch (variant) {
     case 'off':
       return null;
+    case 'editorial':
+      return <TestimonialsEditorial />;
     case 'team':
       return <StoryTeam />;
     case 'default':
@@ -159,9 +167,22 @@ function BlogSection() {
   switch (variant) {
     case 'off':
       return null;
+    case 'featured':
+      return <BlogPostsFeatured />;
     case 'default':
     default:
       return <BlogPosts />;
+  }
+}
+
+function SdkSection() {
+  const variant = useSdkVariant();
+  switch (variant) {
+    case 'off':
+      return null;
+    case 'default':
+    default:
+      return <SDKCode />;
   }
 }
 
@@ -181,19 +202,22 @@ export default function IndexPage(): React.JSX.Element {
       {/* 3. Features Section (Problem/Solution) */}
       <FeaturesSection />
 
-      {/* 4. Stats Section */}
+      {/* 4. SDK Code Section */}
+      <SdkSection />
+
+      {/* 5. Stats Section */}
       <StatsSection />
 
-      {/* 5. Testimonials Section */}
+      {/* 6. Testimonials Section */}
       <TestimonialsSection />
 
-      {/* 6. Blog Section */}
+      {/* 7. Blog Section */}
       <BlogSection />
 
-      {/* 7. FAQ Section */}
+      {/* 8. FAQ Section */}
       <FaqSection />
 
-      {/* 8. CTA Section */}
+      {/* 9. CTA Section */}
       <CtaSection />
     </>
   );

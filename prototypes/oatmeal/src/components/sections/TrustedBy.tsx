@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Container } from '@/components/elements/Container'
 import { FadeIn } from '@/components/effects/FadeIn'
 import { Marquee } from '@/components/effects/Marquee'
@@ -7,14 +8,14 @@ import { cn } from '@/lib/cn'
 import { content } from '@/lib/content'
 import { useTrustedByVariant } from '@/lib/debug-context'
 import Image from 'next/image'
-import { motion } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 
 // Variant A: Marquee - Smooth scrolling logos
 function TrustedByMarquee() {
   const { trustedBy } = content
 
   return (
-    <section className="py-16 border-y border-olive-200/50 bg-white">
+    <section className="py-16 border-y border-olive-200/50">
       <Container>
         <FadeIn>
           <p className="text-sm font-medium text-olive-600 text-center mb-10 tracking-wide">
@@ -50,7 +51,7 @@ function TrustedByStaticGrid() {
   const { trustedBy } = content
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden">
+    <section className="py-20 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0)_0%,rgba(240,240,240,0.4)_100%)] pointer-events-none" />
       
@@ -164,9 +165,9 @@ function TrustedByMinimal() {
  */
 function TrustedByPremium() {
   const { trustedBy } = content
-  
+
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden">
       {/* Subtle spotlight background */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-[radial-gradient(ellipse_at_top,rgba(103,32,255,0.03)_0%,transparent_70%)] pointer-events-none" />
       
@@ -232,7 +233,7 @@ function TrustedByPremium() {
 
 /**
  * Variant E: Lens Effect
- * 
+ *
  * Design:
  * - Interactive spotlight/lens effect
  * - Logos reveal full color and clarity only when near cursor
@@ -240,9 +241,9 @@ function TrustedByPremium() {
  */
 function TrustedByLens() {
   const { trustedBy } = content
-  
+
   return (
-    <section className="py-24 bg-white text-olive-950 relative overflow-hidden">
+    <section className="py-24 text-olive-950 relative overflow-hidden">
       <Container className="relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <FadeIn>
@@ -253,7 +254,7 @@ function TrustedByLens() {
               <p className="text-olive-600 text-lg max-w-md mb-8">
                 From indie developers to enterprise teams, thousands of apps rely on Adapty for their subscription infrastructure.
               </p>
-              
+
               <div className="flex gap-8 border-t border-olive-200 pt-8">
                 <div>
                   <div className="text-3xl font-bold text-olive-900 mb-1">15k+</div>
@@ -270,8 +271,8 @@ function TrustedByLens() {
           <FadeIn delay={0.2}>
             <div className="grid grid-cols-3 gap-8">
               {trustedBy.logos.slice(0, 9).map((logo, index) => (
-                <div 
-                  key={logo.name} 
+                <div
+                  key={logo.name}
                   className="group relative flex items-center justify-center p-6 rounded-2xl bg-olive-50/50 border border-olive-100 hover:bg-olive-50 hover:border-olive-200 transition-all duration-300"
                 >
                   <Image
@@ -291,11 +292,108 @@ function TrustedByLens() {
   )
 }
 
+/**
+ * Variant F: Linear Blur (Achromatic-style with centered CTA on hover)
+ *
+ * Design (adapted from achromatic-proto):
+ * - All logos blur together on hover (not individual)
+ * - Centered CTA button appears on hover
+ * - Clean, simple pattern
+ */
+function TrustedByLinearBlur() {
+  const { trustedBy } = content
+  const [isHovered, setIsHovered] = useState(false)
+
+  return (
+    <section className="py-20 relative overflow-hidden">
+      <Container className="relative z-10">
+        <FadeIn>
+          <div className="text-center mb-12">
+            <h2 className="text-xl sm:text-2xl font-semibold text-olive-950">
+              Powering the world's best subscription apps.
+            </h2>
+            <p className="mt-2 text-base text-olive-600">
+              From indie developers to enterprise publishers.
+            </p>
+          </div>
+        </FadeIn>
+
+        {/* Logo Grid with Achromatic-style Blur Effect */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Logos - all blur together on hover */}
+          <motion.div
+            animate={{
+              filter: isHovered ? 'blur(12px)' : 'blur(0px)',
+              opacity: isHovered ? 0.4 : 1,
+            }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12 lg:gap-16 max-w-4xl mx-auto"
+          >
+            {trustedBy.logos.slice(0, 8).map((logo, index) => (
+              <FadeIn
+                key={logo.name}
+                delay={0.05 + index * 0.03}
+                className="flex items-center justify-center"
+              >
+                <div className="flex h-12 items-center justify-center md:h-14">
+                  <Image
+                    src={logo.src}
+                    alt={logo.name}
+                    width={160}
+                    height={48}
+                    className="h-8 w-auto max-w-[140px] object-contain grayscale opacity-60 md:h-10 md:max-w-[160px]"
+                  />
+                </div>
+              </FadeIn>
+            ))}
+          </motion.div>
+
+          {/* Centered CTA button - appears on hover */}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <a
+                  href="/customers"
+                  className={cn(
+                    'inline-flex items-center gap-2 rounded-full',
+                    'bg-white/95 backdrop-blur-sm',
+                    'border border-olive-200/50 shadow-lg',
+                    'px-6 py-3 text-sm font-medium text-olive-900',
+                    'transition-all duration-200',
+                    'hover:bg-olive-50 hover:shadow-xl'
+                  )}
+                >
+                  Meet our customers
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </Container>
+    </section>
+  )
+}
+
 // Main component that switches based on debug context
 export function TrustedBy() {
   const variant = useTrustedByVariant()
 
   switch (variant) {
+    case 'linear-blur':
+      return <TrustedByLinearBlur />
     case 'static-premium':
       return <TrustedByPremium />
     case 'static-lens':

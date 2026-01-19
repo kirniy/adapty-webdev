@@ -30,7 +30,7 @@ function StatsCards() {
   const { stats } = content
 
   return (
-    <Section className="bg-olive-50/50 border-y border-olive-100 py-16 sm:py-24">
+    <Section className="border-y border-olive-200 py-16 sm:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -87,7 +87,7 @@ function StatsInline() {
   const { stats } = content
 
   return (
-    <Section className="py-10 lg:py-12 bg-white border-y border-olive-200">
+    <Section className="py-10 lg:py-12 border-y border-olive-200">
       <Container>
         <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-6 lg:gap-x-16">
           {stats.map((stat, index) => (
@@ -130,7 +130,7 @@ function StatsInline() {
  */
 function StatsWithGraph() {
   const { stats } = content
-  
+
   const data = [
     { value: 30 }, { value: 35 }, { value: 45 }, { value: 40 },
     { value: 50 }, { value: 65 }, { value: 55 }, { value: 70 },
@@ -139,14 +139,14 @@ function StatsWithGraph() {
   ]
 
   return (
-    <Section className="py-16 sm:py-24 bg-white overflow-hidden border-y border-olive-100">
+    <Section className="py-16 sm:py-24 overflow-hidden border-y border-olive-200">
       <Container>
         <div className="relative">
           {/* Stats Grid */}
           <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16 lg:mb-0">
             {stats.map((stat, index) => (
               <FadeIn key={stat.label} delay={index * 0.1}>
-                <div className="border-l-2 border-adapty-400 pl-6 backdrop-blur-sm bg-white/50 rounded-r-lg py-2">
+                <div className="border-l-2 border-adapty-400 pl-6 backdrop-blur-sm bg-olive-100/50 rounded-r-lg py-2">
                   <div className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-olive-950 font-serif">
                     <NumberTicker
                       value={stat.value}
@@ -215,7 +215,7 @@ function StatsFloatingCards() {
   const { stats } = content
 
   return (
-    <Section className="py-16 sm:py-24 bg-gradient-to-b from-white to-olive-50/70">
+    <Section className="py-16 sm:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

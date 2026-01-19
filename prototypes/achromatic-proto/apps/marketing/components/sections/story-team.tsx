@@ -1,74 +1,172 @@
-import * as React from 'react';
+'use client';
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage
-} from '@workspace/ui/components/avatar';
+import * as React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { ArrowRightIcon, LinkedinIcon, TwitterIcon } from 'lucide-react';
+import { motion } from 'motion/react';
+
+import { Badge } from '@workspace/ui/components/badge';
+import { cn } from '@workspace/ui/lib/utils';
 
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { BlurFade } from '~/components/fragments/blur-fade';
 
-const DATA = [
+// Team data with more realistic info
+const TEAM_MEMBERS = [
   {
-    name: 'Rick Sanchez',
-    role: 'Machine Learning Engineer',
-    image: '/assets/story/rick-sanchez.webp',
-    previousRole: 'Formerly AI research engineer at Meta',
-    education: 'PhD in AI from Stanford'
+    name: 'Vitaly Davydov',
+    role: 'CEO & Co-founder',
+    image: '/images/testimonials/cem.webp', // Placeholder
+    quote: 'We built Adapty to solve the problem we faced ourselves - making subscription monetization simple.',
+    linkedin: 'https://linkedin.com',
+    twitter: 'https://twitter.com',
+    highlights: ['Ex-Yandex', 'Forbes 30 Under 30']
   },
   {
-    name: 'Morty Smith',
-    role: 'Senior Software Engineer',
-    image: '/assets/story/morty-smith.webp',
-    previousRole: 'Formerly backend engineer at Google',
-    education: 'BSc in Computer Science from UC Berkeley'
+    name: 'Kirill Potekhin',
+    role: 'CTO & Co-founder',
+    image: '/images/testimonials/roi.webp', // Placeholder
+    quote: 'Our mission is to give every app developer the tools that only the top 1% had access to.',
+    linkedin: 'https://linkedin.com',
+    twitter: 'https://twitter.com',
+    highlights: ['Ex-Spotify', '15+ years in mobile']
+  },
+  {
+    name: 'Anna Petrova',
+    role: 'VP of Engineering',
+    image: '/images/testimonials/chris.webp', // Placeholder
+    quote: 'We process billions of events daily with 99.99% uptime because reliability is non-negotiable.',
+    linkedin: 'https://linkedin.com',
+    twitter: 'https://twitter.com',
+    highlights: ['Ex-Google', 'Systems architect']
   }
 ];
+
+function TeamMemberCard({ member, index }: { member: typeof TEAM_MEMBERS[0]; index: number }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+    <BlurFade delay={0.1 + index * 0.1}>
+      <motion.div
+        className="group relative flex flex-col rounded-2xl border bg-card overflow-hidden cursor-pointer"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        whileHover={{ y: -4 }}
+        transition={{ duration: 0.25 }}
+      >
+        {/* Image section with gradient overlay */}
+        <div className="relative h-64 overflow-hidden">
+          <motion.div
+            className="absolute inset-0"
+            animate={{ scale: isHovered ? 1.05 : 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Image
+              src={member.image}
+              alt={member.name}
+              fill
+              className="object-cover"
+            />
+          </motion.div>
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+
+          {/* Social links - appear on hover */}
+          <motion.div
+            className="absolute top-4 right-4 flex gap-2"
+            animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : -8 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Link
+              href={member.twitter}
+              className="flex size-8 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <TwitterIcon className="size-4" />
+            </Link>
+            <Link
+              href={member.linkedin}
+              className="flex size-8 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <LinkedinIcon className="size-4" />
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Content section */}
+        <div className="p-6 flex-1 flex flex-col">
+          {/* Name and role */}
+          <div className="mb-3">
+            <h3 className="text-lg font-semibold">{member.name}</h3>
+            <p className="text-sm text-primary">{member.role}</p>
+          </div>
+
+          {/* Highlights as subtle pills */}
+          <div className="mb-4 flex flex-wrap gap-2">
+            {member.highlights.map((highlight) => (
+              <span
+                key={highlight}
+                className="text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded-md"
+              >
+                {highlight}
+              </span>
+            ))}
+          </div>
+
+          {/* Quote */}
+          <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+            &ldquo;{member.quote}&rdquo;
+          </p>
+        </div>
+      </motion.div>
+    </BlurFade>
+  );
+}
 
 export function StoryTeam(): React.JSX.Element {
   return (
     <GridSection className="relative overflow-hidden">
-      <SectionBackground height={600} />
-      <div className="container max-w-6xl py-20 relative z-10">
-        <h2 className="mb-16 text-sm font-medium uppercase tracking-wider text-muted-foreground ">
-          The visionaries
-        </h2>
-        <div className="flex flex-wrap gap-24">
-          {DATA.map((person, index) => (
-            <BlurFade
-              key={index}
-              delay={0.2 + index * 0.1}
-              inView
-              className="space-y-8"
+      <SectionBackground height={800} />
+      <div className="container py-16 lg:py-24 relative z-10">
+        {/* Section Header */}
+        <BlurFade className="mb-12">
+          <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
+            <div>
+              <Badge variant="outline" className="mb-4 rounded-full">
+                Our Team
+              </Badge>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">
+                Built by people who understand
+                <br />
+                <span className="text-muted-foreground">subscription apps</span>
+              </h2>
+            </div>
+            <Link
+              href="/about"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground lg:mt-0"
             >
-              <Avatar className="size-24 border-4 border-neutral-200 dark:border-neutral-800 shadow-xl">
-                <AvatarImage
-                  src={person.image}
-                  alt={person.name}
-                  className="object-cover"
-                />
-                <AvatarFallback className="text-xl">
-                  {person.name
-                    .split(' ')
-                    .map((n) => n[0])
-                    .join('')}
-                </AvatarFallback>
-              </Avatar>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-medium">{person.name}</h3>
-                  <p className="text-primary">{person.role}</p>
-                </div>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>{person.previousRole}</p>
-                  <p>{person.education}</p>
-                </div>
-              </div>
-            </BlurFade>
+              Meet the full team
+              <ArrowRightIcon className="size-4" />
+            </Link>
+          </div>
+        </BlurFade>
+
+        {/* Team Grid */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {TEAM_MEMBERS.map((member, index) => (
+            <TeamMemberCard key={member.name} member={member} index={index} />
           ))}
         </div>
+
+        {/* Bottom text */}
+        <BlurFade delay={0.5} className="mt-12 text-center">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            We&apos;re a team of 50+ engineers, designers, and app developers
+            spread across 12 countries, united by our passion for building
+            great developer tools.
+          </p>
+        </BlurFade>
       </div>
     </GridSection>
   );

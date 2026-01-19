@@ -19,17 +19,18 @@ import { motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 
 /**
- * Variant A: Zigzag Alternating
+ * Variant A: Zigzag Alternating (IMPROVED)
  *
  * Design decisions:
  * - Classic alternating 50/50 layout creates reading rhythm
- * - Uses group-even pattern for automatic flow reversal
- * - Large screenshots with browser chrome add realism
- * - Generous vertical spacing creates breathing room
+ * - Line accent on eyebrow (per GEMINI_TASKS.md): [--- Paywall Builder]
+ * - Interactive screenshot with hover callouts
+ * - Numbered feature indicators (Attio pattern)
  * - Best for: Deep feature exploration, storytelling
  */
 function CoreFeaturesZigzag() {
   const { features } = content
+  const [hoveredFeature, setHoveredFeature] = useState<string | null>(null)
 
   return (
     <Section>
@@ -47,54 +48,106 @@ function CoreFeaturesZigzag() {
 
         <div className="flex flex-col gap-24 lg:gap-32">
           {features.map((feature, index) => (
-            <div
+            <motion.div
               key={feature.id}
               className={cn(
                 'group grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16 items-center',
                 // Alternate layout direction
                 index % 2 === 1 && 'lg:[&>*:first-child]:order-2'
               )}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Text Content */}
-              <FadeIn delay={0.1} direction={index % 2 === 0 ? 'right' : 'left'}>
-                <div className="max-w-lg">
-                  <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-adapty-600 mb-4">
-                    <span className="w-8 h-px bg-adapty-300" />
+              <div className="max-w-lg">
+                {/* Numbered eyebrow with line accent */}
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-xs font-bold text-adapty-500 tabular-nums">
+                    [{String(index + 1).padStart(2, '0')}]
+                  </span>
+                  <span className="w-8 h-px bg-adapty-300" />
+                  <span className="text-xs font-semibold uppercase tracking-widest text-adapty-600">
                     {feature.eyebrow}
                   </span>
-                  <h3 className="text-3xl/[1.15] sm:text-4xl/[1.15] font-medium tracking-tight text-olive-950">
-                    {feature.title}
-                  </h3>
-                  <Text size="lg" className="mt-4 text-olive-600">
-                    {feature.description}
-                  </Text>
-                  <div className="mt-6">
-                    <ButtonLink href="#" variant="ghost" className="text-adapty-600 hover:text-adapty-700 -ml-3">
-                      Learn more
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </ButtonLink>
-                  </div>
                 </div>
-              </FadeIn>
+                <h3 className="text-3xl/[1.15] sm:text-4xl/[1.15] font-medium tracking-tight text-olive-950">
+                  {feature.title}
+                </h3>
+                <Text size="lg" className="mt-4 text-olive-600">
+                  {feature.description}
+                </Text>
+                <div className="mt-6">
+                  <ButtonLink href="#" variant="ghost" className="text-adapty-600 hover:text-adapty-700 -ml-3">
+                    Learn more
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </ButtonLink>
+                </div>
+              </div>
 
-              {/* Screenshot */}
-              <FadeIn delay={0.2} direction={index % 2 === 0 ? 'left' : 'right'}>
+              {/* Interactive Screenshot with Hover Callouts */}
+              <div
+                className="relative"
+                onMouseEnter={() => setHoveredFeature(feature.id)}
+                onMouseLeave={() => setHoveredFeature(null)}
+              >
                 <Screenshot
                   wallpaper={feature.wallpaper}
                   placement={index % 2 === 0 ? 'bottom-right' : 'bottom-left'}
                 >
-                  <Image
-                    src={feature.image}
-                    alt={feature.title}
-                    width={600}
-                    height={400}
-                    className="w-full"
-                  />
+                  <div className="relative">
+                    <Image
+                      src={feature.image}
+                      alt={feature.title}
+                      width={600}
+                      height={400}
+                      className="w-full"
+                    />
+
+                    {/* Hover Callout - appears on hover */}
+                    <motion.div
+                      className={cn(
+                        'absolute top-4 right-4 px-3 py-2 rounded-lg',
+                        'bg-white/95 backdrop-blur-sm shadow-lg',
+                        'border border-olive-200/50',
+                        'pointer-events-none'
+                      )}
+                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      animate={{
+                        opacity: hoveredFeature === feature.id ? 1 : 0,
+                        y: hoveredFeature === feature.id ? 0 : 8,
+                        scale: hoveredFeature === feature.id ? 1 : 0.95,
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-adapty-500 animate-pulse" />
+                        <span className="text-xs font-medium text-olive-700">
+                          {feature.eyebrow}
+                        </span>
+                      </div>
+                    </motion.div>
+                  </div>
                 </Screenshot>
-              </FadeIn>
-            </div>
+
+                {/* Subtle pulse indicator */}
+                <motion.div
+                  className="absolute -bottom-2 -right-2 w-4 h-4 rounded-full bg-adapty-500/30"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.5, 0.2, 0.5],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+              </div>
+            </motion.div>
           ))}
         </div>
       </Container>
@@ -534,11 +587,279 @@ function CoreFeaturesCards() {
   )
 }
 
+/**
+ * Variant F: Tabbed Bento Grid (Attio-style, Sergey's Pick)
+ *
+ * Design decisions:
+ * - Addresses "product too huge for single bento grid" feedback
+ * - Tabs organize features by product area (Paywall, Experiments, Analytics, Platform)
+ * - Each tab shows focused bento grid for that area
+ * - Smooth tab transitions with motion/react
+ * - Interactive hover states on bento cards
+ * - Best for: Large product suites, organized exploration
+ */
+function CoreFeaturesTabbedBento() {
+  const { features } = content
+  const [activeTab, setActiveTab] = useState<'paywall' | 'experiments' | 'analytics' | 'platform'>('paywall')
+
+  const tabs = [
+    { id: 'paywall' as const, label: 'Paywall Builder', description: 'Visual no-code builder' },
+    { id: 'experiments' as const, label: 'Experiments', description: 'A/B testing & optimization' },
+    { id: 'analytics' as const, label: 'Analytics', description: 'Real-time insights' },
+    { id: 'platform' as const, label: 'Platform', description: 'SDK & integrations' },
+  ]
+
+  return (
+    <Section>
+      <Container>
+        <SectionHeader className="mb-12">
+          <FadeIn>
+            <Eyebrow>Features</Eyebrow>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <Subheading className="mt-2">
+              Everything you need to grow subscription revenue
+            </Subheading>
+          </FadeIn>
+        </SectionHeader>
+
+        {/* Tab Navigation - Full Width & Prominent */}
+        <FadeIn delay={0.2}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={cn(
+                  'relative px-6 py-5 rounded-xl text-base font-medium transition-all duration-300',
+                  'hover:bg-olive-50 hover:shadow-sm',
+                  'border-2',
+                  activeTab === tab.id
+                    ? 'text-adapty-700 bg-adapty-50 border-adapty-300 shadow-md'
+                    : 'text-olive-700 bg-white border-olive-200'
+                )}
+              >
+                <span className="relative z-10 flex flex-col items-start text-left">
+                  <span className="font-bold text-base mb-1">{tab.label}</span>
+                  <span className="text-xs opacity-70 font-normal">{tab.description}</span>
+                </span>
+                {activeTab === tab.id && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-adapty-50/50 rounded-xl"
+                    transition={{ type: 'spring', duration: 0.5, bounce: 0.2 }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+        </FadeIn>
+
+        {/* Tab Content: Paywall Builder */}
+        {activeTab === 'paywall' && (
+          <motion.div
+            key="paywall"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[280px]"
+          >
+            {/* Large Hero Card */}
+            <FadeIn delay={0.1} className="md:col-span-2 lg:col-span-2 row-span-2">
+              <BentoCard className="h-full">
+                <div className="flex flex-col h-full">
+                  <BentoCardHeader>
+                    <BentoCardTitle>No-Code Paywall Builder</BentoCardTitle>
+                    <BentoCardDescription>
+                      50+ templates. Drag-and-drop customization. Ship without code.
+                    </BentoCardDescription>
+                  </BentoCardHeader>
+                  <BentoCardContent className="flex-1 relative rounded-xl overflow-hidden ring-1 ring-olive-900/5 shadow-sm mt-2 group">
+                    <Image
+                      src={features[0].image}
+                      alt="Paywall Builder"
+                      fill
+                      className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-x-4 bottom-4 h-12 bg-white/90 backdrop-blur-md rounded-lg border border-olive-900/10 flex items-center px-4 justify-between animate-pulse-soft">
+                      <div className="flex gap-2">
+                        <div className="w-8 h-2 bg-olive-200 rounded-full"/>
+                        <div className="w-4 h-2 bg-olive-100 rounded-full"/>
+                      </div>
+                      <div className="w-16 h-6 bg-adapty-500 rounded-md"/>
+                    </div>
+                  </BentoCardContent>
+                </div>
+              </BentoCard>
+            </FadeIn>
+
+            {/* Templates Card */}
+            <FadeIn delay={0.2} className="lg:col-span-1">
+              <BentoCard className="h-full">
+                <BentoCardHeader>
+                  <BentoCardTitle>50+ Templates</BentoCardTitle>
+                  <BentoCardDescription>
+                    Pre-built paywalls for every use case
+                  </BentoCardDescription>
+                </BentoCardHeader>
+                <BentoCardContent className="mt-4 grid grid-cols-2 gap-2">
+                  <div className="aspect-[3/4] bg-olive-50 rounded-lg border border-olive-200 p-2 hover:border-adapty-300 hover:shadow-sm transition-all cursor-pointer group">
+                    <div className="w-full h-3 bg-white rounded mb-2"/>
+                    <div className="w-2/3 h-2 bg-olive-100 rounded mb-1"/>
+                    <div className="w-full h-2 bg-olive-100 rounded mb-2"/>
+                    <div className="w-full h-8 bg-adapty-400 rounded mt-auto"/>
+                  </div>
+                  <div className="aspect-[3/4] bg-olive-50 rounded-lg border border-olive-200 p-2 hover:border-adapty-300 hover:shadow-sm transition-all cursor-pointer">
+                    <div className="w-full h-3 bg-white rounded mb-2"/>
+                    <div className="w-3/4 h-2 bg-olive-100 rounded mb-1"/>
+                    <div className="w-full h-2 bg-olive-100 rounded mb-2"/>
+                    <div className="w-full h-8 bg-adapty-400 rounded mt-auto"/>
+                  </div>
+                </BentoCardContent>
+              </BentoCard>
+            </FadeIn>
+
+            {/* Live Preview Card */}
+            <FadeIn delay={0.3} className="lg:col-span-1">
+              <BentoCard className="h-full">
+                <BentoCardHeader>
+                  <BentoCardTitle>Live Preview</BentoCardTitle>
+                  <BentoCardDescription>
+                    See changes instantly
+                  </BentoCardDescription>
+                </BentoCardHeader>
+                <BentoCardContent className="mt-4 flex items-center justify-center">
+                  <div className="w-24 h-40 bg-olive-950 rounded-2xl shadow-xl p-3 flex flex-col">
+                    <div className="flex-1 bg-olive-800 rounded-lg animate-pulse"/>
+                    <div className="h-8 bg-adapty-500 rounded-lg mt-2"/>
+                  </div>
+                </BentoCardContent>
+              </BentoCard>
+            </FadeIn>
+          </motion.div>
+        )}
+
+        {/* Tab Content: Experiments */}
+        {activeTab === 'experiments' && (
+          <motion.div
+            key="experiments"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[280px]"
+          >
+            {/* A/B Testing Card */}
+            <FadeIn delay={0.1} className="md:col-span-2">
+              <BentoCard className="h-full">
+                <BentoCardHeader>
+                  <BentoCardTitle>A/B Testing</BentoCardTitle>
+                  <BentoCardDescription>
+                    Bayesian statistics for faster, confident decisions
+                  </BentoCardDescription>
+                </BentoCardHeader>
+                <BentoCardContent className="mt-4 flex gap-4 h-[140px]">
+                  <div className="flex-1 bg-olive-50 rounded-lg border border-olive-200 flex flex-col items-center justify-center gap-2 relative overflow-hidden group">
+                    <div className="absolute top-2 left-2 text-[10px] font-bold text-olive-400">VAR A</div>
+                    <div className="w-12 h-16 bg-white rounded shadow-sm group-hover:-translate-y-1 transition-transform"/>
+                  </div>
+                  <div className="flex-1 bg-adapty-50 rounded-lg border border-adapty-200 flex flex-col items-center justify-center gap-2 relative overflow-hidden group">
+                    <div className="absolute top-2 left-2 text-[10px] font-bold text-adapty-500">VAR B</div>
+                    <div className="w-12 h-16 bg-white rounded shadow-sm border-2 border-adapty-400 group-hover:-translate-y-2 transition-transform"/>
+                    <div className="absolute bottom-2 right-2 text-[10px] font-bold text-adapty-600 bg-adapty-100 px-1 rounded">+40%</div>
+                  </div>
+                </BentoCardContent>
+              </BentoCard>
+            </FadeIn>
+
+            {/* ML Predictions Card */}
+            <FadeIn delay={0.2} className="lg:col-span-1">
+              <BentoCard className="h-full">
+                <BentoCardHeader>
+                  <BentoCardTitle>ML Predictions</BentoCardTitle>
+                  <BentoCardDescription>
+                    Confidence intervals in real-time
+                  </BentoCardDescription>
+                </BentoCardHeader>
+                <BentoCardContent className="mt-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-24 text-xs text-olive-600">Winner</div>
+                      <div className="flex-1 h-6 bg-adapty-100 rounded-full relative overflow-hidden">
+                        <motion.div
+                          className="absolute inset-y-0 left-0 bg-adapty-500 rounded-full"
+                          initial={{ width: '0%' }}
+                          animate={{ width: '85%' }}
+                          transition={{ duration: 1.5, delay: 0.5 }}
+                        />
+                      </div>
+                      <span className="text-xs font-bold text-adapty-600 w-12 text-right">85%</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-24 text-xs text-olive-600">Control</div>
+                      <div className="flex-1 h-6 bg-olive-100 rounded-full relative overflow-hidden">
+                        <motion.div
+                          className="absolute inset-y-0 left-0 bg-olive-400 rounded-full"
+                          initial={{ width: '0%' }}
+                          animate={{ width: '15%' }}
+                          transition={{ duration: 1.5, delay: 0.5 }}
+                        />
+                      </div>
+                      <span className="text-xs font-bold text-olive-600 w-12 text-right">15%</span>
+                    </div>
+                  </div>
+                </BentoCardContent>
+              </BentoCard>
+            </FadeIn>
+          </motion.div>
+        )}
+
+        {/* Tab Content: Analytics */}
+        {activeTab === 'analytics' && (
+          <motion.div
+            key="analytics"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-[280px]"
+          >
+            {/* Analytics Chart Card */}
+            <FadeIn delay={0.1} className="md:col-span-2">
+              <BentoAnalyticsCard className="h-full" />
+            </FadeIn>
+          </motion.div>
+        )}
+
+        {/* Tab Content: Platform */}
+        {activeTab === 'platform' && (
+          <motion.div
+            key="platform"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-[280px]"
+          >
+            {/* Integrations Card */}
+            <FadeIn delay={0.1} className="md:col-span-2">
+              <BentoIntegrationsCard className="h-full" />
+            </FadeIn>
+          </motion.div>
+        )}
+      </Container>
+    </Section>
+  )
+}
+
 // Main component that switches based on debug context
 export function CoreFeatures() {
   const variant = useCoreFeaturesVariant()
 
   switch (variant) {
+    case 'tabbed-bento':
+      return <CoreFeaturesTabbedBento />
     case 'bento':
       return <CoreFeaturesBento />
     case 'large-demo':

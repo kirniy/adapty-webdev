@@ -45,7 +45,7 @@ function IntegrationsGrid() {
           width={1600}
           className="w-full h-full"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white" />
+        <div className="absolute inset-0 bg-gradient-to-t from-olive-100 via-transparent to-olive-100" />
       </div>
 
       <Container>
@@ -157,7 +157,7 @@ function IntegrationsMarquee() {
   const secondRow = integrations.slice(Math.ceil(integrations.length / 2))
 
   return (
-    <Section className="bg-gradient-to-b from-white via-olive-50/30 to-white py-16 sm:py-24 overflow-hidden">
+    <Section className="py-16 sm:py-24 overflow-hidden">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -179,8 +179,8 @@ function IntegrationsMarquee() {
       {/* Two-row marquee */}
       <div className="relative space-y-5">
         {/* Gradient masks */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-olive-100 via-olive-100/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-olive-100 via-olive-100/80 to-transparent z-10 pointer-events-none" />
 
         {/* Row 1 - Left direction */}
         <Marquee speed="slow" direction="left" pauseOnHover>
@@ -300,7 +300,7 @@ function IntegrationsCategorized() {
   const categoryOrder = ['Analytics', 'Attribution', 'Platform', 'Engagement', 'Messaging', 'Payments']
 
   return (
-    <Section className="bg-white py-16 sm:py-24">
+    <Section className="py-16 sm:py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

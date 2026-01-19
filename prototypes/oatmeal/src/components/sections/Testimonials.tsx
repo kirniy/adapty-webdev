@@ -45,124 +45,85 @@ const testimonials = [
 ]
 
 /**
- * Variant A: Editorial (Magazine-Style)
+ * Variant A: Editorial (Magazine-Style) - SIMPLIFIED
+ *
+ * Per GEMINI_TASKS.md: Removed parallax/scroll effects
+ * Focus on: ONE testimonial prominently, large LOGO, bold METRIC, short quote
  */
 function TestimonialsEditorial() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  })
-
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
-
-  // Feature the most impactful testimonial
   const featured = testimonials[0]
 
   return (
-    <Section className="relative overflow-hidden bg-olive-50 py-16 sm:py-24">
-      {/* Animated gradient background */}
-      <motion.div
-        className="absolute inset-0 opacity-40"
-        style={{ y: backgroundY }}
-      >
+    <Section className="relative overflow-hidden py-16 sm:py-24">
+      {/* Static gradient background (no parallax) */}
+      <div className="absolute inset-0 opacity-40 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-adapty-100/30 via-transparent to-olive-100/50" />
         <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-adapty-200/20 blur-3xl" />
-        <div className="absolute bottom-1/4 -left-1/4 w-[400px] h-[400px] rounded-full bg-olive-200/30 blur-3xl" />
-      </motion.div>
+      </div>
 
       <Container className="relative">
-        <motion.div
-          ref={containerRef}
-          style={{ opacity }}
-          className="max-w-4xl mx-auto"
-        >
-          {/* Eyebrow with line accent */}
+        <div className="max-w-4xl mx-auto">
+          {/* Company Logo - PRIMARY (per GEMINI_TASKS.md) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center gap-4 mb-12"
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center justify-center mb-8"
           >
-            <div className="h-px w-12 bg-adapty-500" />
-            <span className="text-sm font-medium tracking-wider uppercase text-adapty-600">
-              Customer Story
+            <div className="text-3xl font-bold text-olive-950 tracking-tight">
+              {featured.company}
+            </div>
+          </motion.div>
+
+          {/* Metric - SECONDARY (bold, prominent) */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-center mb-10"
+          >
+            <span className="text-6xl sm:text-7xl font-bold text-adapty-600 tracking-tight">
+              {featured.metric}
+            </span>
+            <span className="block mt-2 text-lg text-olive-600 uppercase tracking-wide">
+              {featured.metricLabel}
             </span>
           </motion.div>
 
-          {/* Large editorial quote */}
-          <figure>
-            <motion.blockquote
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
-            >
-              {/* Opening quote mark */}
-              <span className="absolute -top-8 -left-2 text-8xl font-serif text-adapty-300/40 select-none">
-                &ldquo;
-              </span>
-
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-medium text-olive-950 leading-[1.2] tracking-tight">
-                {featured.quote}
+          {/* Quote - TERTIARY (1-2 sentences max) */}
+          <motion.figure
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <blockquote className="text-center">
+              <p className="text-xl sm:text-2xl text-olive-700 leading-relaxed max-w-2xl mx-auto">
+                &ldquo;{featured.quote}&rdquo;
               </p>
+            </blockquote>
 
-              {/* Closing quote mark */}
-              <span className="text-8xl font-serif text-adapty-300/40 select-none leading-none">
-                &rdquo;
-              </span>
-            </motion.blockquote>
-
-            {/* Author attribution with metric */}
-            <motion.figcaption
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-8"
-            >
-              <div className="flex items-center gap-5">
-                {/* Avatar with verified ring */}
-                <div className="relative">
-                  <div className="relative size-16 rounded-full overflow-hidden ring-2 ring-adapty-400/50 ring-offset-4 ring-offset-olive-50">
-                    <Image
-                      src={featured.avatar}
-                      alt={featured.author}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  {/* Verified badge */}
-                  <div className="absolute -bottom-1 -right-1 size-6 rounded-full bg-adapty-500 flex items-center justify-center ring-2 ring-olive-50">
-                    <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-lg font-semibold text-olive-950">{featured.author}</p>
-                  <p className="text-olive-600">
-                    {featured.role} at {featured.company}
-                  </p>
-                </div>
+            {/* Author attribution (small) */}
+            <figcaption className="mt-8 flex items-center justify-center gap-4">
+              <div className="relative size-12 rounded-full overflow-hidden ring-2 ring-olive-200">
+                <Image
+                  src={featured.avatar}
+                  alt={featured.author}
+                  fill
+                  className="object-cover"
+                />
               </div>
-
-              {/* Impact metric */}
-              <div className="flex items-baseline gap-3 px-6 py-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-olive-200 shadow-sm">
-                <span className="text-4xl font-bold text-adapty-600 tracking-tight">
-                  {featured.metric}
-                </span>
-                <span className="text-sm text-olive-600 uppercase tracking-wide">
-                  {featured.metricLabel}
-                </span>
+              <div className="text-left">
+                <p className="font-medium text-olive-950">{featured.author}</p>
+                <p className="text-sm text-olive-500">
+                  {featured.role} at {featured.company}
+                </p>
               </div>
-            </motion.figcaption>
-          </figure>
-        </motion.div>
+            </figcaption>
+          </motion.figure>
+        </div>
       </Container>
     </Section>
   )
@@ -178,7 +139,7 @@ function TestimonialsWall() {
   const items = [...testimonials, ...testimonials, ...testimonials]
 
   return (
-    <Section className="bg-gradient-to-b from-white via-olive-50/30 to-white py-16 sm:py-24 overflow-hidden">
+    <Section className="py-16 sm:py-24 overflow-hidden">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -200,9 +161,9 @@ function TestimonialsWall() {
       {/* Scrolling testimonials */}
       <div className="relative">
         {/* Left gradient mask */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-olive-100 via-olive-100/80 to-transparent z-10 pointer-events-none" />
         {/* Right gradient mask */}
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-olive-100 via-olive-100/80 to-transparent z-10 pointer-events-none" />
 
         <motion.div
           className="flex gap-6 py-4"
@@ -293,7 +254,7 @@ function TestimonialsCarousel() {
   }, [])
 
   return (
-    <Section className="bg-olive-50 py-16 sm:py-24">
+    <Section className="py-16 sm:py-24">
       <Container>
         <div className="max-w-5xl mx-auto">
           {/* Header with navigation */}
@@ -460,7 +421,7 @@ function TestimonialsCarousel() {
  */
 function TestimonialsStickyStack() {
   return (
-    <Section className="bg-olive-50 py-24">
+    <Section className="py-24">
       <Container>
         <div className="text-center mb-24">
           <Eyebrow>Stories</Eyebrow>
@@ -545,12 +506,12 @@ function StickyCard({ testimonial, index, total }: { testimonial: typeof testimo
 function TestimonialsMinimalSlider() {
   const [index, setIndex] = useState(0);
   const current = testimonials[index];
-  
+
   const next = () => setIndex((i) => (i + 1) % testimonials.length);
   const prev = () => setIndex((i) => (i - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <Section className="bg-white py-32 border-y border-olive-100">
+    <Section className="py-32 border-y border-olive-200">
       <Container>
         <div className="max-w-5xl mx-auto">
           <div className="grid lg:grid-cols-[1fr,300px] gap-16 items-center">
@@ -625,13 +586,101 @@ function TestimonialsMinimalSlider() {
   )
 }
 
+/**
+ * Variant F: Metric-Focused Grid (NEW - per GEMINI_TASKS.md)
+ *
+ * Design:
+ * - Simple 3-column grid
+ * - Each card: Logo + Metric + Short quote + Link
+ * - NO animation except subtle hover lift
+ * - Cards link to full case study pages
+ */
+function TestimonialsMetricFocused() {
+  return (
+    <Section className="py-16 sm:py-24">
+      <Container>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <Eyebrow>Customer Results</Eyebrow>
+          <Heading as="h2" className="mt-3">
+            Real outcomes from real teams
+          </Heading>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <motion.a
+              key={testimonial.author}
+              href={`/customers/${testimonial.company.toLowerCase().replace(/\s+/g, '-')}`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className={cn(
+                'group flex flex-col p-8 rounded-2xl',
+                'bg-olive-50/50 border border-olive-100',
+                'hover:bg-olive-50 hover:border-olive-200 hover:shadow-lg',
+                'transition-all duration-300'
+              )}
+            >
+              {/* Company Logo/Name (grayscale) */}
+              <div className="mb-6">
+                <span className="text-xl font-bold text-olive-400 group-hover:text-olive-600 transition-colors">
+                  {testimonial.company}
+                </span>
+              </div>
+
+              {/* Metric (bold, purple) */}
+              <div className="mb-4">
+                <span className="text-4xl font-bold text-adapty-600 tracking-tight">
+                  {testimonial.metric}
+                </span>
+                <span className="block mt-1 text-sm text-olive-500 uppercase tracking-wide">
+                  {testimonial.metricLabel}
+                </span>
+              </div>
+
+              {/* Quote (1 sentence max) */}
+              <p className="text-olive-600 leading-relaxed flex-1 mb-6 line-clamp-2">
+                &ldquo;{testimonial.quote.split('.')[0]}.&rdquo;
+              </p>
+
+              {/* Learn more link */}
+              <div className="flex items-center gap-2 text-sm font-medium text-adapty-600 group-hover:text-adapty-700">
+                Read case study
+                <svg
+                  className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+      </Container>
+    </Section>
+  )
+}
+
 // Main component that switches based on debug context
 export function Testimonials() {
   const variant = useTestimonialsVariant()
 
   switch (variant) {
+    case 'metric-focused':
+      return <TestimonialsMetricFocused />
     case 'sticky-cards':
-      return <TestimonialsStickyStack />
+      // NOTE: sticky-cards is deprecated per Sergey's feedback (dated effect)
+      // Fallback to metric-focused instead
+      return <TestimonialsMetricFocused />
     case 'minimal-slider':
       return <TestimonialsMinimalSlider />
     case 'wall':

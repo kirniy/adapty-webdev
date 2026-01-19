@@ -13,13 +13,16 @@ import {
   GRID_Z_INDEX_VARIANTS,
   HEADER_VARIANTS,
   HERO_VARIANTS,
+  HERO_LINES_VARIANTS,
   LOGOS_VARIANTS,
   FEATURES_VARIANTS,
+  SDK_VARIANTS,
   STATS_VARIANTS,
   TESTIMONIALS_VARIANTS,
+  BLOG_VARIANTS,
   FAQ_VARIANTS,
   CTA_VARIANTS,
-  BLOG_VARIANTS,
+  FOOTER_VARIANTS,
   type VariantOption,
 } from '~/lib/debug-context'
 
@@ -182,13 +185,16 @@ export function DebugMenu() {
     gridZIndexVariant, setGridZIndexVariant,
     headerVariant, setHeaderVariant,
     heroVariant, setHeroVariant,
+    heroLinesVariant, setHeroLinesVariant,
     logosVariant, setLogosVariant,
     featuresVariant, setFeaturesVariant,
+    sdkVariant, setSdkVariant,
     statsVariant, setStatsVariant,
     testimonialsVariant, setTestimonialsVariant,
+    blogVariant, setBlogVariant,
     faqVariant, setFaqVariant,
     ctaVariant, setCtaVariant,
-    blogVariant, setBlogVariant,
+    footerVariant, setFooterVariant,
   } = useDebug()
 
   return (
@@ -254,16 +260,25 @@ export function DebugMenu() {
               <VariantSelector variants={HEADER_VARIANTS} currentValue={headerVariant} onChange={setHeaderVariant} />
             </CollapsibleSection>
 
+            {/* Page sections in page.tsx order */}
             <CollapsibleSection title="Hero" icon={<BlocksIcon />} defaultOpen>
               <VariantSelector variants={HERO_VARIANTS} currentValue={heroVariant} onChange={setHeroVariant} />
+              <div className="mt-3 pt-3 border-t border-border/30">
+                <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider mb-1.5 block">Dashed Lines</span>
+                <VariantSelector variants={HERO_LINES_VARIANTS} currentValue={heroLinesVariant} onChange={setHeroLinesVariant} />
+              </div>
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Logos" icon={<BlocksIcon />}>
+              <VariantSelector variants={LOGOS_VARIANTS} currentValue={logosVariant} onChange={setLogosVariant} />
             </CollapsibleSection>
 
             <CollapsibleSection title="Features" icon={<BlocksIcon />} defaultOpen>
               <VariantSelector variants={FEATURES_VARIANTS} currentValue={featuresVariant} onChange={setFeaturesVariant} />
             </CollapsibleSection>
 
-            <CollapsibleSection title="Logos" icon={<BlocksIcon />}>
-              <VariantSelector variants={LOGOS_VARIANTS} currentValue={logosVariant} onChange={setLogosVariant} />
+            <CollapsibleSection title="SDK" icon={<BlocksIcon />}>
+              <VariantSelector variants={SDK_VARIANTS} currentValue={sdkVariant} onChange={setSdkVariant} />
             </CollapsibleSection>
 
             <CollapsibleSection title="Stats" icon={<BlocksIcon />}>
@@ -274,6 +289,10 @@ export function DebugMenu() {
               <VariantSelector variants={TESTIMONIALS_VARIANTS} currentValue={testimonialsVariant} onChange={setTestimonialsVariant} />
             </CollapsibleSection>
 
+            <CollapsibleSection title="Blog" icon={<BlocksIcon />}>
+              <VariantSelector variants={BLOG_VARIANTS} currentValue={blogVariant} onChange={setBlogVariant} />
+            </CollapsibleSection>
+
             <CollapsibleSection title="FAQ" icon={<BlocksIcon />}>
               <VariantSelector variants={FAQ_VARIANTS} currentValue={faqVariant} onChange={setFaqVariant} />
             </CollapsibleSection>
@@ -282,8 +301,8 @@ export function DebugMenu() {
               <VariantSelector variants={CTA_VARIANTS} currentValue={ctaVariant} onChange={setCtaVariant} />
             </CollapsibleSection>
 
-            <CollapsibleSection title="Blog" icon={<BlocksIcon />}>
-              <VariantSelector variants={BLOG_VARIANTS} currentValue={blogVariant} onChange={setBlogVariant} />
+            <CollapsibleSection title="Footer" icon={<NavIcon />}>
+              <VariantSelector variants={FOOTER_VARIANTS} currentValue={footerVariant} onChange={setFooterVariant} />
             </CollapsibleSection>
 
             <div className="mt-4 pt-3 border-t border-border/50 space-y-2">

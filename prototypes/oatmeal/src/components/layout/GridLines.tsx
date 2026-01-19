@@ -48,7 +48,7 @@ export function GridLines() {
   const solidStyle: React.CSSProperties = {
     ...lineStyle,
     width: `${widthValue}px`,
-    backgroundColor: 'rgb(168 162 158)', // olive-300
+    backgroundColor: 'oklch(88% 0.011 106.6)', // olive-300
   }
 
   const dashedStyle: React.CSSProperties = {
@@ -56,12 +56,12 @@ export function GridLines() {
     width: 0,
     borderLeftWidth: `${widthValue}px`,
     borderLeftStyle: 'dashed',
-    borderLeftColor: 'rgb(168 162 158)', // olive-300
+    borderLeftColor: 'oklch(88% 0.011 106.6)', // olive-300
   }
 
   const leftLineStyle = gridLinesDashed ? dashedStyle : solidStyle
-  const rightLineStyle = gridLinesDashed 
-    ? { ...lineStyle, width: 0, borderRightWidth: `${widthValue}px`, borderRightStyle: 'dashed' as const, borderRightColor: 'rgb(168 162 158)' }
+  const rightLineStyle = gridLinesDashed
+    ? { ...lineStyle, width: 0, borderRightWidth: `${widthValue}px`, borderRightStyle: 'dashed' as const, borderRightColor: 'oklch(88% 0.011 106.6)' }
     : solidStyle
 
   return (
@@ -69,7 +69,7 @@ export function GridLines() {
       {/* Left vertical edge line */}
       <div
         className={cn(
-          'pointer-events-none fixed z-40',
+          'pointer-events-none fixed z-0',
           'left-4 sm:left-[max(1rem,calc((100vw_-_1280px)_/_2))]',
           'top-0 bottom-0'
         )}
@@ -80,7 +80,7 @@ export function GridLines() {
       {/* Right vertical edge line */}
       <div
         className={cn(
-          'pointer-events-none fixed z-40',
+          'pointer-events-none fixed z-0',
           'right-4 sm:right-[max(1rem,calc((100vw_-_1280px)_/_2))]',
           'top-0 bottom-0'
         )}

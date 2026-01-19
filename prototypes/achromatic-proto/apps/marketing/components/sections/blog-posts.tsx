@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { allPosts } from 'content-collections';
 import { format, isBefore } from 'date-fns';
 import { ArrowRightIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 
 import { baseUrl } from '@workspace/routes';
 import {
@@ -12,66 +13,106 @@ import {
   AvatarFallback,
   AvatarImage
 } from '@workspace/ui/components/avatar';
+import { Badge } from '@workspace/ui/components/badge';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
+import { SectionBackground } from '~/components/fragments/section-background';
 import { getInitials } from '~/lib/formatters';
 
-export function BlogPosts(): React.JSX.Element {
+function BlogCard({ post, index }: { post: typeof allPosts[0]; index: number }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+
   return (
-    <GridSection>
-      <div className="container py-20 space-y-16">
-        <SiteHeading
-          badge="Blog Posts"
-          title="Insights & News"
-          description="Learn more from members of our team and industry-leading experts."
-        />
+    <BlurFade delay={0.05 + index * 0.05}>
+      <Link href={`${baseUrl.Marketing}${post.slug}`}>
+        <motion.article
+          className="group flex h-full flex-col rounded-xl border bg-card p-5 cursor-pointer"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.2 }}
+        >
+          {/* Category and Date */}
+          <div className="mb-3 flex items-center justify-between">
+            <span className="text-xs font-medium text-primary">{post.category}</span>
+            <time dateTime={post.published} className="text-xs text-muted-foreground">
+              {format(post.published, 'MMM d, yyyy')}
+            </time>
+          </div>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {allPosts
-            .slice()
-            .sort((a, b) => (isBefore(a.published, b.published) ? 1 : -1))
-            .map((post, index) => (
-              <Link
-                key={index}
-                href={`${baseUrl.Marketing}${post.slug}`}
-                className="flex h-full flex-col justify-between rounded-2xl bg-background p-6 shadow-xs transition-all duration-300 hover:shadow-xl hover:scale-[1.02] dark:bg-accent/30 dark:hover:bg-accent/50"
-              >
-                <div className="mb-4 flex items-center justify-between text-muted-foreground text-sm">
-                  <span>{post.category}</span>
-                  <time dateTime={post.published}>
-                    {format(post.published, 'dd MMM yyyy')}
-                  </time>
-                </div>
+          {/* Title */}
+          <h3 className="mb-2 text-lg font-semibold leading-tight line-clamp-2">
+            {post.title}
+          </h3>
 
-                <h2 className="mb-3 text-lg font-semibold md:text-xl">
-                  {post.title}
-                </h2>
+          {/* Description */}
+          <p className="mb-4 flex-1 text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+            {post.description}
+          </p>
 
-                <p className="mb-4 text-muted-foreground line-clamp-3">
-                  {post.description}
-                </p>
+          {/* Author and Arrow */}
+          <div className="flex items-center justify-between pt-4 border-t border-border/50">
+            <div className="flex items-center gap-2">
+              <Avatar className="size-6">
+                <AvatarImage src={post.author?.avatar} alt={post.author?.name ?? ''} />
+                <AvatarFallback className="text-[9px]">
+                  {getInitials(post.author?.name ?? '')}
+                </AvatarFallback>
+              </Avatar>
+              <span className="text-xs text-muted-foreground">{post.author?.name ?? ''}</span>
+            </div>
 
-                <div className="mt-auto flex items-center justify-between pt-4">
-                  <div className="flex items-center gap-2">
-                    <Avatar className="size-7">
-                      <AvatarImage
-                        src={post.author?.avatar}
-                        alt="avatar"
-                      />
-                      <AvatarFallback className="text-[10px]">
-                        {getInitials(post.author?.name ?? '')}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="text-sm">{post.author?.name ?? ''}</span>
-                  </div>
-                  <div className="group flex items-center gap-2 text-sm hover:underline">
-                    Read more
-                    <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </div>
-              </Link>
-            ))}
+            <motion.div
+              className="text-muted-foreground"
+              animate={{ x: isHovered ? 4 : 0, opacity: isHovered ? 1 : 0.5 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ArrowRightIcon className="size-4" />
+            </motion.div>
+          </div>
+        </motion.article>
+      </Link>
+    </BlurFade>
+  );
+}
+
+export function BlogPosts(): React.JSX.Element {
+  const sortedPosts = allPosts
+    .slice()
+    .sort((a, b) => (isBefore(a.published, b.published) ? 1 : -1))
+    .slice(0, 6); // Limit to 6 posts
+
+  return (
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={700} />
+      <div className="container py-16 lg:py-24 relative z-10">
+        {/* Section Header */}
+        <BlurFade className="mb-12">
+          <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
+            <div>
+              <Badge variant="outline" className="mb-4 rounded-full">
+                Blog
+              </Badge>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">
+                Insights & Resources
+              </h2>
+            </div>
+            <Link
+              href="/blog"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground lg:mt-0"
+            >
+              View all posts
+              <ArrowRightIcon className="size-4" />
+            </Link>
+          </div>
+        </BlurFade>
+
+        {/* Posts Grid */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {sortedPosts.map((post, index) => (
+            <BlogCard key={post.slug} post={post} index={index} />
+          ))}
         </div>
       </div>
     </GridSection>

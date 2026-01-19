@@ -5,18 +5,15 @@ import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 
-// Show logos prominently - Sergey: "10-15 clients shown large and static, focus on each name"
+// Show 7 logos max per Sergey's "7 logos rule" to avoid overloading attention
 const LOGOS = [
   { name: 'Feeld', file: '/logos/trusted-by/feeld.svg' },
   { name: 'Bumble', file: '/logos/trusted-by/bumble.svg' },
-  { name: 'Weewoo', file: '/logos/trusted-by/weewoo.svg' },
-  { name: 'AppNation', file: '/logos/trusted-by/appnation.webp' },
-  { name: 'Almus', file: '/logos/trusted-by/almus.svg' },
-  { name: 'Impala Studios', file: '/logos/trusted-by/impala-studios.svg' },
   { name: 'HubX', file: '/logos/trusted-by/hubx.svg' },
+  { name: 'AppNation', file: '/logos/trusted-by/appnation.webp' },
+  { name: 'Impala Studios', file: '/logos/trusted-by/impala-studios.svg' },
   { name: 'SocialKit', file: '/logos/trusted-by/socialkit.svg' },
-  { name: 'Bickster', file: '/logos/trusted-by/bickster.png' },
-  { name: 'Smitten', file: '/logos/trusted-by/smitten.webp' },
+  { name: 'Almus', file: '/logos/trusted-by/almus.svg' },
 ];
 
 export function Logos(): React.JSX.Element {

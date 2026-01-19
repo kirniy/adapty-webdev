@@ -4,166 +4,234 @@ import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
+  ArrowRightIcon,
+  BarChart3Icon,
   BoxIcon,
+  CheckIcon,
   ChevronRightIcon,
   CircuitBoardIcon,
-  FileBarChartIcon,
   LayoutIcon,
   PlayIcon
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
-import { routes } from '@workspace/routes';
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
-import { ScrollArea, ScrollBar } from '@workspace/ui/components/scroll-area';
-import { Separator } from '@workspace/ui/components/separator';
-import {
-  UnderlinedTabs,
-  UnderlinedTabsContent,
-  UnderlinedTabsList,
-  UnderlinedTabsTrigger
-} from '@workspace/ui/components/tabs';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { SectionBackground } from '~/components/fragments/section-background';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
+import { BlurFade } from '~/components/fragments/blur-fade';
+import {
+  useDashedThicknessVariant,
+  useGridColorVariant,
+  useGridOpacityVariant,
+  useGridZIndexVariant,
+  useHeroLinesVariant,
+  useHeroVariant
+} from '~/lib/debug-context';
+
+// Feature tab content data
+const HERO_FEATURES = [
+  {
+    id: 'paywall-builder',
+    icon: LayoutIcon,
+    label: 'Paywall Builder',
+    headline: 'Build paywalls without code',
+    description: 'Create stunning paywalls with our visual builder. No engineering required - designers and product managers can iterate independently.',
+    highlights: [
+      'Drag-and-drop visual editor',
+      'Native iOS & Android rendering',
+      'Real-time preview on device',
+      'Template library included'
+    ],
+    lightImage: '/assets/hero/light-feature1.webp',
+    darkImage: '/assets/hero/dark-feature1.webp',
+  },
+  {
+    id: 'ab-testing',
+    icon: PlayIcon,
+    label: 'A/B Testing',
+    headline: 'Optimize with experiments',
+    description: 'Run A/B tests on paywalls, pricing, and offers. Make data-driven decisions with statistical significance.',
+    highlights: [
+      'Multi-variant experiments',
+      'Statistical significance tracking',
+      'Revenue impact analysis',
+      'Automatic winner selection'
+    ],
+    lightImage: '/assets/hero/light-feature2.webp',
+    darkImage: '/assets/hero/dark-feature2.webp',
+  },
+  {
+    id: 'analytics',
+    icon: BarChart3Icon,
+    label: 'Analytics',
+    headline: 'Understand your revenue',
+    description: 'Real-time subscription analytics with cohort analysis, funnel tracking, and predictive metrics.',
+    highlights: [
+      'Real-time revenue dashboard',
+      'Cohort retention analysis',
+      'Funnel conversion tracking',
+      'LTV predictions'
+    ],
+    lightImage: '/assets/hero/light-feature3.webp',
+    darkImage: '/assets/hero/dark-feature3.webp',
+  },
+  {
+    id: 'sdk',
+    icon: BoxIcon,
+    label: 'SDK',
+    headline: 'Integrate in minutes',
+    description: 'Production-ready SDKs for all major platforms. Handle subscriptions, purchases, and receipt validation automatically.',
+    highlights: [
+      'iOS, Android, React Native, Flutter',
+      'Server-side receipt validation',
+      'Webhook notifications',
+      'Sandbox testing support'
+    ],
+    lightImage: '/assets/hero/light-feature4.webp',
+    darkImage: '/assets/hero/dark-feature4.webp',
+  },
+  {
+    id: 'integrations',
+    icon: CircuitBoardIcon,
+    label: 'Integrations',
+    headline: 'Connect your stack',
+    description: 'Send subscription events to your analytics, marketing, and CRM tools. 30+ integrations available.',
+    highlights: [
+      'Amplitude, Mixpanel, Segment',
+      'AppsFlyer, Adjust, Branch',
+      'Slack, Webhooks, API',
+      'Custom integrations available'
+    ],
+    lightImage: '/assets/hero/light-feature5.webp',
+    darkImage: '/assets/hero/dark-feature5.webp',
+  },
+];
 
 function HeroPill(): React.JSX.Element {
+  const [isHovered, setIsHovered] = React.useState(false);
+
   return (
-    <motion.div
-      initial={{ filter: 'blur(10px)', opacity: 0, y: -20 }}
-      animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      className="flex items-center justify-center"
-    >
-      <Link href="https://adapty.io/ebooks/100k-app-playbook/">
-        <Badge
-          variant="outline"
-          className="group relative h-8 overflow-hidden rounded-full px-3 text-xs font-medium shadow-xs duration-200 hover:bg-accent/50 sm:text-sm"
-        >
-          <BorderBeam
-            size={40}
-            duration={4}
-            delay={0}
-            borderWidth={1.5}
-            colorFrom="#3b82f6"
-            colorTo="#8b5cf6"
-          />
-          <div className="w-fit py-0.5 text-center text-xs text-blue-500 sm:text-sm">
-            Ebook
-          </div>
-          <Separator
-            orientation="vertical"
-            className="mx-2"
-          />
-          $100K playbook | download
-          <ChevronRightIcon className="ml-1.5 size-3 shrink-0 text-foreground transition-transform group-hover:translate-x-0.5" />
-        </Badge>
-      </Link>
-    </motion.div>
+    <BlurFade delay={0.1}>
+      <motion.div
+        className="flex items-center justify-center"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <Link href="https://adapty.io/ebooks/100k-app-playbook/">
+          <Badge
+            variant="outline"
+            className="group relative h-8 overflow-hidden rounded-full px-3 text-xs font-medium shadow-xs transition-colors duration-200 hover:bg-accent/50 sm:text-sm cursor-pointer"
+          >
+            <BorderBeam
+              size={40}
+              duration={4}
+              delay={0}
+              borderWidth={1.5}
+              colorFrom="#3b82f6"
+              colorTo="#8b5cf6"
+            />
+            <div className="w-fit py-0.5 text-center text-xs text-blue-500 sm:text-sm">
+              Free Ebook
+            </div>
+            <span className="mx-2 h-3 w-px bg-border" />
+            <span className="text-muted-foreground">$100K playbook</span>
+            <motion.span
+              animate={{ x: isHovered ? 2 : 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <ChevronRightIcon className="ml-1 size-3 shrink-0 text-muted-foreground" />
+            </motion.span>
+          </Badge>
+        </Link>
+      </motion.div>
+    </BlurFade>
   );
 }
 
 function HeroTitle(): React.JSX.Element {
   return (
-    <motion.div
-      initial={{ filter: 'blur(10px)', opacity: 0, y: 20 }}
-      animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
-      transition={{ delay: 0.2, duration: 0.4 }}
-    >
-      <h1 className="mt-6 text-center text-[48px] font-bold leading-[54px] tracking-[-1.2px] [font-kerning:none] sm:text-[56px] md:text-[64px] lg:text-[76px] lg:leading-[74px] lg:tracking-[-2px]">
+    <BlurFade delay={0.2}>
+      <h1 className="mt-6 text-center text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-balance">
         Revenue management
-        <br /> for in-app purchases
+        <br />
+        <span className="text-muted-foreground">for in-app purchases</span>
       </h1>
-    </motion.div>
+    </BlurFade>
   );
 }
 
 function HeroDescription(): React.JSX.Element {
   return (
-    <motion.p
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.4 }}
-      className="mx-auto mt-3 max-w-[560px] text-balance text-center text-lg leading-[26px] text-muted-foreground sm:text-xl lg:mt-6"
-    >
-      Save months on integrating subscriptions and double your app revenue with paywall management.
-    </motion.p>
+    <BlurFade delay={0.3}>
+      <p className="mx-auto mt-4 max-w-2xl text-balance text-center text-lg text-muted-foreground lg:text-xl">
+        Save months on integrating subscriptions and double your app revenue with paywall management, A/B testing, and real-time analytics.
+      </p>
+    </BlurFade>
   );
 }
 
 function HeroButtons(): React.JSX.Element {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6, duration: 0.4 }}
-      className="mx-auto flex w-full flex-col gap-2 px-7 sm:w-auto sm:flex-row sm:px-0"
-    >
-      <Link
-        href="https://app.adapty.io/registration"
-        className={cn(
-          buttonVariants({
-            variant: 'default'
-          }),
-          'h-10 rounded-xl sm:h-9'
-        )}
-      >
-        Start for free
-      </Link>
-      <Link
-        href="https://adapty.io/schedule-demo/"
-        className={cn(
-          buttonVariants({
-            variant: 'outline'
-          }),
-          'h-10 rounded-xl sm:h-9'
-        )}
-      >
-        Book a demo
-      </Link>
-    </motion.div>
+    <BlurFade delay={0.4}>
+      <div className="mx-auto mt-8 flex justify-center gap-3">
+        <Link
+          href="https://app.adapty.io/registration"
+          className={cn(
+            buttonVariants({ variant: 'default' }),
+            'h-10 rounded-xl px-5'
+          )}
+        >
+          Start for free
+        </Link>
+        <Link
+          href="https://adapty.io/schedule-demo/"
+          className={cn(
+            buttonVariants({ variant: 'outline' }),
+            'h-10 rounded-xl px-5'
+          )}
+        >
+          Book a demo
+        </Link>
+      </div>
+    </BlurFade>
   );
 }
 
-import { 
-  useDashedThicknessVariant, 
-  useGridColorVariant, 
-  useGridOpacityVariant, 
-  useGridZIndexVariant 
-} from '~/lib/debug-context';
-
 function MainDashedGridLines(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
   const dashedThickness = useDashedThicknessVariant();
   const gridColor = useGridColorVariant();
   const gridOpacity = useGridOpacityVariant();
   const gridZIndex = useGridZIndexVariant();
 
   const strokeWidth = dashedThickness === 'thin' ? 0.5 : dashedThickness === 'thick' ? 2 : 1;
-  
-  // Use stroke color based on variant or css variable
-  const strokeColor = 
-    gridColor === 'default' ? 'var(--border)' : 
-    gridColor === 'muted' ? 'var(--muted-foreground)' : 
-    gridColor === 'accent' ? 'var(--primary)' : 
-    gridColor === 'blue' ? '#3B82F6' : 
-    gridColor === 'purple' ? '#8B5CF6' : 
-    'var(--border)';
+  const showHorizontalLine = heroVariant !== 'marketing';
 
-  const opacityValue = 
-    gridOpacity === 'faint' ? 0.2 : 
-    gridOpacity === 'subtle' ? 0.5 : 
-    gridOpacity === 'visible' ? 0.8 : 
-    1.0;
+  const strokeColor =
+    gridColor === 'default' ? 'var(--border)' :
+      gridColor === 'muted' ? 'var(--muted-foreground)' :
+        gridColor === 'accent' ? 'var(--primary)' :
+          gridColor === 'blue' ? '#3B82F6' :
+            gridColor === 'purple' ? '#8B5CF6' :
+              'var(--border)';
 
-  const zIndexClass = 
-    gridZIndex === 'deep' ? '-z-10' : 
-    gridZIndex === 'back' ? '-z-1' : 
-    gridZIndex === 'normal' ? 'z-0' : 
-    'z-10';
+  const opacityValue =
+    gridOpacity === 'faint' ? 0.2 :
+      gridOpacity === 'subtle' ? 0.5 :
+        gridOpacity === 'visible' ? 0.8 :
+          1.0;
 
+  const zIndexClass =
+    gridZIndex === 'deep' ? '-z-10' :
+      gridZIndex === 'back' ? '-z-1' :
+        gridZIndex === 'normal' ? 'z-0' :
+          'z-10';
+
+  // Lines end right after the tab selector bar (~700px from top)
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -171,7 +239,7 @@ function MainDashedGridLines(): React.JSX.Element {
       transition={{ delay: 0.6, duration: 0.4 }}
       className={zIndexClass}
     >
-      <svg className="absolute left-[16.85%] top-0 hidden h-full w-px mask-[linear-gradient(to_bottom,#0000,#000_128px,#000_calc(100%-24px),#0000)] lg:block">
+      <svg className="absolute left-[16.85%] top-0 hidden h-[700px] w-px mask-[linear-gradient(to_bottom,#0000,#000_128px,#000_calc(100%-24px),#0000)] lg:block">
         <line
           x1="0.5"
           y1="0"
@@ -183,7 +251,7 @@ function MainDashedGridLines(): React.JSX.Element {
           strokeWidth={strokeWidth}
         />
       </svg>
-      <svg className="absolute right-[16.85%] top-0 hidden h-full w-px mask-[linear-gradient(to_bottom,#0000,#000_128px,#000_calc(100%-24px),#0000)] lg:block">
+      <svg className="absolute right-[16.85%] top-0 hidden h-[700px] w-px mask-[linear-gradient(to_bottom,#0000,#000_128px,#000_calc(100%-24px),#0000)] lg:block">
         <line
           x1="0.5"
           y1="0"
@@ -195,229 +263,235 @@ function MainDashedGridLines(): React.JSX.Element {
           strokeWidth={strokeWidth}
         />
       </svg>
-      <svg className="absolute bottom-[52px] left-[calc(50%-50vw)] hidden h-px w-screen mask-[linear-gradient(to_right,#0000,#000_100px,#000_calc(100%-100px),#0000)] lg:block">
-        <line
-          x1="0"
-          y1="0.5"
-          x2="100%"
-          y2="0.5"
-          strokeLinecap="round"
-          strokeDasharray="5 5"
-          stroke={strokeColor}
-          strokeWidth={strokeWidth}
-        />
-      </svg>
+      {/* Horizontal line at bottom of hero header area - hidden for marketing variant */}
+      {showHorizontalLine && (
+        <svg className="absolute bottom-[52px] left-[calc(50%-50vw)] hidden h-px w-screen mask-[linear-gradient(to_right,#0000,#000_100px,#000_calc(100%-100px),#0000)] lg:block">
+          <line
+            x1="0"
+            y1="0.5"
+            x2="100%"
+            y2="0.5"
+            strokeLinecap="round"
+            strokeDasharray="5 5"
+            stroke={strokeColor}
+            strokeWidth={strokeWidth}
+          />
+        </svg>
+      )}
     </motion.div>
   );
 }
 
-function SupportiveDashedGridLines(): React.JSX.Element {
+// Feature tab component with hover state
+function FeatureTab({
+  feature,
+  isActive,
+  onClick,
+}: {
+  feature: typeof HERO_FEATURES[0];
+  isActive: boolean;
+  onClick: () => void;
+}) {
+  const Icon = feature.icon;
+
   return (
-    <>
-      <svg className="absolute left-[calc(50%-50vw)] top-[-25px] z-10 hidden h-px w-screen mask-[linear-gradient(to_right,#0000,#000_100px,#000_calc(100%-100px),#0000)] lg:block">
-        <line
-          x1="0"
-          y1="0.5"
-          x2="100%"
-          y2="0.5"
-          strokeLinecap="round"
-          strokeDasharray="5 5"
-          stroke="var(--border)"
+    <button
+      onClick={onClick}
+      className={cn(
+        'group relative flex flex-1 flex-col items-center gap-2 px-4 py-3 transition-all duration-200 cursor-pointer',
+        'border-b-2',
+        isActive
+          ? 'border-b-primary text-foreground'
+          : 'border-b-transparent text-muted-foreground hover:text-foreground hover:border-b-border'
+      )}
+    >
+      <div className={cn(
+        'flex items-center gap-2 text-sm font-medium whitespace-nowrap',
+        isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+      )}>
+        <Icon className="size-4 shrink-0" />
+        <span className="hidden sm:inline">{feature.label}</span>
+      </div>
+      {/* Active indicator dot on mobile */}
+      {isActive && (
+        <motion.div
+          layoutId="activeTab"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-8 bg-primary rounded-full sm:hidden"
+          transition={{ duration: 0.2 }}
         />
-      </svg>
-      <svg className="absolute left-[calc(50%-50vw)] top-0 z-10 hidden h-px w-screen mask-[linear-gradient(to_right,#0000,#000_100px,#000_calc(100%-100px),#0000)] lg:block">
-        <line
-          x1="0"
-          y1="0.5"
-          x2="100%"
-          y2="0.5"
-          strokeLinecap="round"
-          strokeDasharray="5 5"
-          stroke="var(--border)"
-        />
-      </svg>
-      <svg className="absolute left-[calc(50%-50vw)] top-[52px] z-10 hidden h-px w-screen mask-[linear-gradient(to_right,#0000,#000_100px,#000_calc(100%-100px),#0000)] lg:block">
-        <line
-          x1="0"
-          y1="0.5"
-          x2="100%"
-          y2="0.5"
-          strokeLinecap="round"
-          strokeDasharray="5 5"
-          stroke="var(--border)"
-        />
-      </svg>
-    </>
+      )}
+    </button>
   );
 }
 
-function HeroIllustration(): React.JSX.Element {
+// Feature content with animated transitions
+function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.6, duration: 0.4 }}
-      className="relative mt-3 lg:mt-6"
+      key={feature.id}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.3 }}
+      className="grid gap-8 lg:grid-cols-5"
     >
-      <UnderlinedTabs defaultValue="feature1">
-        <ScrollArea className="max-w-screen lg:max-w-none">
-          <UnderlinedTabsList className="relative z-20 mb-6 flex h-fit flex-row flex-wrap justify-center md:flex-nowrap">
-            <UnderlinedTabsTrigger
-              value="feature1"
-              className="mx-1 px-2.5 sm:mx-2 sm:px-3"
+      {/* Text content */}
+      <div className="flex flex-col justify-center lg:col-span-2">
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1, duration: 0.3 }}
+        >
+          <Badge variant="secondary" className="mb-4 w-fit rounded-full">
+            <feature.icon className="mr-1.5 size-3" />
+            {feature.label}
+          </Badge>
+          <h3 className="mb-3 text-2xl font-bold tracking-tight lg:text-3xl">
+            {feature.headline}
+          </h3>
+          <p className="mb-6 text-muted-foreground leading-relaxed">
+            {feature.description}
+          </p>
+        </motion.div>
+
+        {/* Highlights */}
+        <motion.ul
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+          className="space-y-3"
+        >
+          {feature.highlights.map((highlight, index) => (
+            <motion.li
+              key={highlight}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 + index * 0.05, duration: 0.2 }}
+              className="flex items-center gap-3 text-sm"
             >
-              <LayoutIcon className="mr-2 size-4 shrink-0" />
-              Paywall Builder
-            </UnderlinedTabsTrigger>
-            <UnderlinedTabsTrigger
-              value="feature2"
-              className="mx-1 px-2.5 sm:mx-2 sm:px-3"
-            >
-              <PlayIcon className="mr-2 size-4 shrink-0" />
-              A/B Testing
-            </UnderlinedTabsTrigger>
-            <UnderlinedTabsTrigger
-              value="feature3"
-              className="mx-1 px-2.5 sm:mx-2 sm:px-3"
-            >
-              <FileBarChartIcon className="mr-2 size-4 shrink-0" />
-              Analytics
-            </UnderlinedTabsTrigger>
-            <UnderlinedTabsTrigger
-              value="feature4"
-              className="mx-1 px-2.5 sm:mx-2 sm:px-3"
-            >
-              <BoxIcon className="mr-2 size-4 shrink-0" />
-              SDK
-            </UnderlinedTabsTrigger>
-            <UnderlinedTabsTrigger
-              value="feature5"
-              className="mx-1 px-2.5 sm:mx-2 sm:px-3"
-            >
-              <CircuitBoardIcon className="mr-2 size-4 shrink-0" />
-              Integrations
-            </UnderlinedTabsTrigger>
-          </UnderlinedTabsList>
-          <ScrollBar
-            orientation="horizontal"
-            className="invisible"
+              <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <CheckIcon className="size-3" />
+              </div>
+              <span className="text-muted-foreground">{highlight}</span>
+            </motion.li>
+          ))}
+        </motion.ul>
+
+        {/* Learn more link */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.3 }}
+          className="mt-6"
+        >
+          <Link
+            href={`/features/${feature.id}`}
+            className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+          >
+            Learn more about {feature.label}
+            <ArrowRightIcon className="size-4" />
+          </Link>
+        </motion.div>
+      </div>
+
+      {/* Image */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.15, duration: 0.4 }}
+        className="relative lg:col-span-3"
+      >
+        <div className="relative overflow-hidden rounded-xl border bg-gradient-to-b from-muted/30 to-muted/10 shadow-lg">
+          <Image
+            priority={feature.id === 'paywall-builder'}
+            quality={100}
+            src={feature.lightImage}
+            width={1328}
+            height={727}
+            alt={`${feature.label} screenshot`}
+            className="block dark:hidden"
           />
-        </ScrollArea>
-        <div className="relative mb-1 w-full rounded-xl dark:border-none dark:bg-background">
-          <SupportiveDashedGridLines />
-          <div className="relative z-20 bg-background">
-            <UnderlinedTabsContent value="feature1">
-              <Image
-                priority
-                quality={100}
-                src="/assets/hero/light-feature1.webp"
-                width="1328"
-                height="727"
-                alt="Adapty Paywall Builder screenshot"
-                className="block rounded-xl border shadow dark:hidden"
+          <Image
+            priority={feature.id === 'paywall-builder'}
+            quality={100}
+            src={feature.darkImage}
+            width={1328}
+            height={727}
+            alt={`${feature.label} screenshot`}
+            className="hidden dark:block"
+          />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function HeroFeatureShowcase(): React.JSX.Element {
+  const [activeFeature, setActiveFeature] = React.useState(HERO_FEATURES[0]);
+  const heroLinesVariant = useHeroLinesVariant();
+  const linesBelow = heroLinesVariant === 'below';
+
+  return (
+    <BlurFade delay={0.5}>
+      <div className="mt-12 lg:mt-16">
+        {/* Full-width tab bar */}
+        <div className={cn(
+          'mb-8 border-b border-border',
+          linesBelow && 'bg-background'
+        )}>
+          <div className="mx-auto flex w-full max-w-4xl">
+            {HERO_FEATURES.map((feature) => (
+              <FeatureTab
+                key={feature.id}
+                feature={feature}
+                isActive={activeFeature.id === feature.id}
+                onClick={() => setActiveFeature(feature)}
               />
-              <Image
-                priority
-                quality={100}
-                src="/assets/hero/dark-feature1.webp"
-                width="1328"
-                height="727"
-                alt="Adapty Paywall Builder screenshot"
-                className="hidden rounded-xl border shadow dark:block"
-              />
-            </UnderlinedTabsContent>
-            <UnderlinedTabsContent value="feature2">
-              <Image
-                quality={100}
-                src="/assets/hero/light-feature2.webp"
-                width="1328"
-                height="727"
-                alt="Adapty A/B Testing screenshot"
-                className="block rounded-xl border shadow dark:hidden"
-              />
-              <Image
-                quality={100}
-                src="/assets/hero/dark-feature2.webp"
-                width="1328"
-                height="727"
-                alt="Adapty A/B Testing screenshot"
-                className="hidden rounded-xl border shadow dark:block"
-              />
-            </UnderlinedTabsContent>
-            <UnderlinedTabsContent value="feature3">
-              <Image
-                quality={100}
-                src="/assets/hero/light-feature3.webp"
-                width="1328"
-                height="727"
-                alt="Adapty Analytics screenshot"
-                className="block rounded-xl border shadow dark:hidden"
-              />
-              <Image
-                quality={100}
-                src="/assets/hero/dark-feature3.webp"
-                width="1328"
-                height="727"
-                alt="Adapty Analytics screenshot"
-                className="hidden rounded-xl border shadow dark:block"
-              />
-            </UnderlinedTabsContent>
-            <UnderlinedTabsContent value="feature4">
-              <Image
-                quality={100}
-                src="/assets/hero/light-feature4.webp"
-                width="1328"
-                height="727"
-                alt="Adapty SDK screenshot"
-                className="block rounded-xl border shadow dark:hidden"
-              />
-              <Image
-                quality={100}
-                src="/assets/hero/dark-feature4.webp"
-                width="1328"
-                height="727"
-                alt="Adapty SDK screenshot"
-                className="hidden rounded-xl border shadow dark:block"
-              />
-            </UnderlinedTabsContent>
-            <UnderlinedTabsContent value="feature5">
-              <Image
-                quality={100}
-                src="/assets/hero/light-feature5.webp"
-                width="1328"
-                height="727"
-                alt="Adapty Integrations screenshot"
-                className="block rounded-xl border shadow dark:hidden"
-              />
-              <Image
-                quality={100}
-                src="/assets/hero/dark-feature5.webp"
-                width="1328"
-                height="727"
-                alt="Adapty Integrations screenshot"
-                className="hidden rounded-xl border shadow dark:block"
-              />
-            </UnderlinedTabsContent>
+            ))}
           </div>
         </div>
-      </UnderlinedTabs>
-    </motion.div>
+
+        {/* Content area */}
+        <div className={cn(
+          'container pb-16',
+          linesBelow && 'relative z-20 bg-background'
+        )}>
+          <AnimatePresence mode="wait">
+            <FeatureContent key={activeFeature.id} feature={activeFeature} />
+          </AnimatePresence>
+        </div>
+      </div>
+    </BlurFade>
+  );
+}
+
+// Trust signal - simple text only
+function HeroTrustSignal(): React.JSX.Element {
+  return (
+    <BlurFade delay={0.5}>
+      <p className="mt-8 text-center text-sm text-muted-foreground">
+        Trusted by <span className="font-medium text-foreground">15,000+</span> apps worldwide
+      </p>
+    </BlurFade>
   );
 }
 
 export function Hero(): React.JSX.Element {
   return (
     <GridSection className="overflow-x-hidden relative">
-      <SectionBackground height={800} />
+      <SectionBackground height={900} />
       <MainDashedGridLines />
-      <div className="mx-auto mt-16 flex flex-col gap-6 px-2 sm:mt-20 sm:px-1 md:mt-24 lg:mt-32 relative z-10">
-        <div className="gap-2">
-          <HeroPill />
-          <HeroTitle />
+      <div className="relative z-10 pt-20 sm:pt-24 md:pt-28 lg:pt-32">
+        <div className="container">
+          <div className="mx-auto max-w-4xl">
+            <HeroPill />
+            <HeroTitle />
+            <HeroDescription />
+            <HeroButtons />
+            <HeroTrustSignal />
+          </div>
         </div>
-        <HeroDescription />
-        <HeroButtons />
-        <HeroIllustration />
+        <HeroFeatureShowcase />
       </div>
     </GridSection>
   );

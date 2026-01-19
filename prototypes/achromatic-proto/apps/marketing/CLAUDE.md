@@ -5,3 +5,173 @@
 
 *No recent activity*
 </claude-mem-context>
+
+# Achromatic Marketing Prototype
+
+## Current Status (2026-01-19)
+
+**Dev Server**: http://localhost:3011
+**Deployment**: Vercel (achromatic-proto)
+
+### Completed Work
+
+| Section | Status | Variants Available |
+|---------|--------|-------------------|
+| Header/Navbar | Done | `default` (mega-menus), `simple` (pill with compact dropdowns) |
+| Hero | Done | `marketing`, `split`, `pricing`, `story`, `contact` |
+| Logos | Done | `default`, `linear` (7 logos max per feedback) |
+| Features | Done | `bento-tabs` (recommended), `solution`, `tabbed`, `roles` |
+| SDK Code | Done | `default` |
+| Stats | Done | `default`, `timeline` |
+| Testimonials | Done | `default`, `editorial`, `team` |
+| Blog | Done | `default`, `featured` |
+| FAQ | Done | `default`, `pricing` |
+| CTA | Done | `default`, `careers` |
+
+### Remaining Work
+
+- [ ] Mobile menu for pill navbar variant
+- [ ] Further polish on individual sections
+- [ ] Cross-section visual consistency check
+
+---
+
+## VARIANT IMPROVEMENT PROCESS
+
+**CRITICAL: Read this before making any changes to section variants.**
+
+### Core Principles
+
+1. **Block-by-block deep dive** - NOT one-shot rewrites
+   - Improve one section at a time
+   - Test each change before moving on
+   - Never rewrite multiple sections in one go
+
+2. **Respect the existing design system**
+   - Use existing color tokens (`primary`, `muted-foreground`, etc.)
+   - Use existing spacing scale (Tailwind defaults)
+   - Use existing typography (font sizes, weights)
+   - Use existing component primitives from `@workspace/ui`
+
+3. **Don't create unnecessary variants**
+   - Before creating a new variant, ask: "Does this serve a distinct purpose?"
+   - Prefer improving existing variants over adding new ones
+   - Remove variants that don't add value (we removed `problem`, `values`, `vision`, `benefits`, `sticky-scroll`)
+
+4. **Each variant must have distinct visual identity**
+   - Different layout structure (not just color changes)
+   - Clear use case (e.g., "bento-tabs" for feature-rich products, "roles" for audience-specific)
+   - The `features-bento-tabs.tsx` uses 4 different layouts per tab to avoid monotony
+
+### Workflow
+
+```
+1. Read feedback documents first
+   └── /Users/kirniy/dev/adapty-dev/messages/08-feedback-jan16/
+
+2. Study existing implementation
+   └── Read the current section file before modifying
+
+3. Make focused changes
+   └── One section, one improvement at a time
+
+4. Test in browser
+   └── Use debug menu to switch variants
+   └── Verify in both light and dark mode
+
+5. Verify build (when possible)
+   └── pnpm build --filter=marketing
+```
+
+### Debug Menu System
+
+The debug menu (`lib/debug-context.tsx`) controls all section variants:
+
+- Access via floating button (bottom-right corner)
+- Each section has its own variant selector
+- Variants persist in localStorage
+- `off` variant hides any section
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `lib/debug-context.tsx` | Variant types, hooks, context provider |
+| `app/page.tsx` | Section composition with variant switching |
+| `components/navbar.tsx` | Header with mega-menu and pill variants |
+| `components/sections/*.tsx` | Individual section components |
+
+### Feedback Reference Points
+
+From Sergey's Jan 16 feedback:
+- Bento grids are the winning pattern for features
+- Max 7 logos (not 10)
+- Product too big for one grid - use tabs/series
+- Linear-style role cards preferred
+- SDK code block is critical
+- Smart hover interactions needed
+
+---
+
+## Design System Reference
+
+### Colors (use these tokens, don't hardcode)
+
+```
+primary         - Brand purple (#6720FF in adapty palette)
+muted-foreground - Secondary text
+accent          - Hover backgrounds
+border          - Borders
+background      - Page/card backgrounds
+```
+
+### Typography
+
+- Headings: `font-bold`, `tracking-tight`
+- Body: Default weight
+- Small text: `text-sm`, `text-xs` for labels
+
+### Component Patterns
+
+```tsx
+// Grid section wrapper
+<GridSection className="...">
+  <SectionBackground />
+  <div className="container">...</div>
+</GridSection>
+
+// Animation wrapper
+<BlurFade delay={0.1}>
+  <Content />
+</BlurFade>
+
+// Responsive grid
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+```
+
+---
+
+## Quick Commands
+
+```bash
+# Start dev server
+pnpm dev --filter=marketing
+
+# Build (may have font error - dev server still works)
+pnpm build --filter=marketing
+
+# Check types
+pnpm tsc --filter=marketing --noEmit
+```
+
+---
+
+## Session Continuity Notes
+
+When starting a new session:
+
+1. Check current variant state via debug menu
+2. Read this file for context
+3. Read feedback files if improving sections
+4. Make incremental changes
+5. Test before marking complete

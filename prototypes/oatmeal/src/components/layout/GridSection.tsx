@@ -45,7 +45,7 @@ export function GridSection({
 
   return (
     <section className={cn('relative', className)}>
-      <div className={cn('px-4 sm:container', containerClassName)}>
+      <div className={cn('px-4 sm:container mx-auto', containerClassName)}>
         <div className="relative">
           {/* Vertical border lines on left/right edges */}
           {!hideVerticalLines && (

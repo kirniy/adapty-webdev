@@ -81,7 +81,7 @@ export function CaseStudies() {
   const { caseStudies } = content
 
   return (
-    <Section className="bg-olive-50">
+    <Section>
       <Container>
         <FadeIn className="text-center mb-12 lg:mb-16">
           <Eyebrow>Success Stories</Eyebrow>

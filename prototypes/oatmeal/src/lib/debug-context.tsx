@@ -21,12 +21,12 @@ export type OpacityLevel = 'low' | 'medium' | 'high'
 export type ThicknessLevel = 'hairline' | 'thin' | 'medium'
 
 // Section variant types - each section can have multiple design variants
-export type HeroVariant = 'centered-demo' | 'split-left' | 'wallpaper-bg' | 'minimal-text'
-export type TrustedByVariant = 'marquee' | 'static-grid' | 'static-minimal' | 'static-premium' | 'static-lens'
-export type CoreFeaturesVariant = 'zigzag' | 'bento' | 'large-demo' | 'sticky-scroll' | 'cards'
+export type HeroVariant = 'centered-demo' | 'split-left' | 'achromatic'
+export type TrustedByVariant = 'linear-blur' | 'marquee' | 'static-grid' | 'static-minimal' | 'static-premium' | 'static-lens'
+export type CoreFeaturesVariant = 'tabbed-bento' | 'zigzag' | 'bento' | 'large-demo' | 'sticky-scroll' | 'cards'
 export type StatsVariant = 'cards' | 'inline' | 'graph' | 'floating'
-export type TestimonialsVariant = 'editorial' | 'wall' | 'carousel' | 'sticky-cards' | 'minimal-slider'
-export type RoleCardsVariant = 'cards' | 'tabs' | 'horizontal'
+export type TestimonialsVariant = 'editorial' | 'wall' | 'carousel' | 'sticky-cards' | 'minimal-slider' | 'metric-focused'
+export type RoleCardsVariant = 'cards' | 'tabs' | 'horizontal' | 'minimal'
 export type IntegrationsVariant = 'marquee' | 'static-grid' | 'categorized'
 
 // Variant option type for UI
@@ -82,11 +82,11 @@ export const THICKNESS_LEVELS: VariantOption<ThicknessLevel>[] = [
 export const HERO_VARIANTS: VariantOption<HeroVariant>[] = [
   { value: 'centered-demo', label: 'Centered + Demo', description: 'Centered text with screenshot below' },
   { value: 'split-left', label: 'Split Layout', description: 'Two-column: text left, demo right' },
-  { value: 'wallpaper-bg', label: 'Full Wallpaper', description: 'Text on wallpaper background' },
-  { value: 'minimal-text', label: 'Minimal Text', description: 'Typography-focused, no screenshot' },
+  { value: 'achromatic', label: 'Achromatic', description: 'Dark/Light mode aware with tabbed features' },
 ]
 
 export const TRUSTED_BY_VARIANTS: VariantOption<TrustedByVariant>[] = [
+  { value: 'linear-blur', label: 'Linear Blur (Sergey\'s Pick)', description: 'Exact Linear.app pattern: blur on hover' },
   { value: 'static-premium', label: 'Premium Static', description: 'Breathing grid with soft focus' },
   { value: 'static-lens', label: 'Lens Effect', description: 'Fluid spotlight interaction' },
   { value: 'marquee', label: 'Scrolling Marquee', description: 'Infinite horizontal scroll' },
@@ -95,6 +95,7 @@ export const TRUSTED_BY_VARIANTS: VariantOption<TrustedByVariant>[] = [
 ]
 
 export const CORE_FEATURES_VARIANTS: VariantOption<CoreFeaturesVariant>[] = [
+  { value: 'tabbed-bento', label: 'Tabbed Bento (Sergey\'s Pick)', description: 'Attio-style: tabs + focused bento grids' },
   { value: 'zigzag', label: 'Zigzag Alternating', description: 'Classic 50/50 alternating layout' },
   { value: 'bento', label: 'Bento Grid', description: 'Modern bento-style with varied sizes' },
   { value: 'large-demo', label: 'Large Demo', description: 'Hero demo + feature grid below' },
@@ -110,15 +111,17 @@ export const STATS_VARIANTS: VariantOption<StatsVariant>[] = [
 ]
 
 export const TESTIMONIALS_VARIANTS: VariantOption<TestimonialsVariant>[] = [
-  { value: 'sticky-cards', label: 'Sticky Stack', description: 'Stacking cards on scroll' },
+  { value: 'metric-focused', label: 'Metric-Focused Grid', description: 'Logo + metric + short quote cards' },
+  { value: 'editorial', label: 'Editorial', description: 'Single featured testimonial' },
   { value: 'carousel', label: 'Carousel', description: 'Arrow navigation, one at a time' },
   { value: 'minimal-slider', label: 'Minimal Slider', description: 'Text-focused fluid transition' },
-  { value: 'editorial', label: 'Editorial', description: 'Magazine-style dark hero' },
   { value: 'wall', label: 'Social Wall', description: 'Scrolling testimonial marquee' },
+  { value: 'sticky-cards', label: 'Sticky Stack (Deprecated)', description: 'DATED - Do not use' },
 ]
 
 export const ROLE_CARDS_VARIANTS: VariantOption<RoleCardsVariant>[] = [
-  { value: 'cards', label: 'Cards Grid', description: 'Visual cards with images' },
+  { value: 'minimal', label: 'Minimal List', description: 'Clean horizontal list items' },
+  { value: 'cards', label: 'Cards Grid', description: 'Simplified cards (no tags)' },
   { value: 'tabs', label: 'Tab Panel', description: 'Interactive role switcher' },
   { value: 'horizontal', label: 'Horizontal', description: 'Scrolling card carousel' },
 ]
@@ -203,10 +206,10 @@ const defaultState: DebugState = {
   dashedGridOpacity: 'low',
   // Section defaults - start with current implementations
   heroVariant: 'centered-demo',
-  trustedByVariant: 'static-premium',
-  coreFeaturesVariant: 'zigzag',
+  trustedByVariant: 'linear-blur', // Default to Sergey's requested Linear pattern
+  coreFeaturesVariant: 'tabbed-bento', // Default to Sergey's pick: tabbed bento grid (addresses "product too huge" feedback)
   statsVariant: 'cards',
-  testimonialsVariant: 'sticky-cards',
+  testimonialsVariant: 'metric-focused', // Changed from sticky-cards (deprecated per Sergey's feedback)
   roleCardsVariant: 'cards',
   integrationsVariant: 'marquee',
   isDebugMenuOpen: false,
@@ -436,6 +439,26 @@ export function useHeaderVariant(): HeaderVariant {
 export function useHeroVariant(): HeroVariant {
   const context = useContext(DebugContext)
   return context?.heroVariant ?? defaultState.heroVariant
+}
+
+export function useDashedThicknessVariant(): ThicknessLevel {
+  const context = useContext(DebugContext)
+  return context?.gridLinesWidth ?? defaultState.gridLinesWidth
+}
+
+export function useGridColorVariant(): GridLinesStyle {
+  const context = useContext(DebugContext)
+  return context?.gridLinesStyle ?? defaultState.gridLinesStyle
+}
+
+export function useGridOpacityVariant(): OpacityLevel {
+  const context = useContext(DebugContext)
+  return context?.gridLinesOpacity ?? defaultState.gridLinesOpacity
+}
+
+export function useGridZIndexVariant(): string {
+  // We don't have z-index variant in context yet, return default
+  return 'normal'
 }
 
 export function useTrustedByVariant(): TrustedByVariant {
