@@ -3,8 +3,8 @@
 import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 import { ArrowRightIcon } from 'lucide-react';
+import { motion, useScroll, useMotionValueEvent } from 'motion/react';
 
 import { routes } from '@workspace/routes';
 import { Badge } from '@workspace/ui/components/badge';
@@ -129,55 +129,70 @@ function CompactDropdown({
 }
 
 // ============================================================================
-// MAIN NAVBAR COMPONENT
+// FLOATING PILL NAVBAR (with scroll animation)
 // ============================================================================
 
-export function Navbar(): React.JSX.Element {
-  const pathname = usePathname();
-  const headerVariant = useHeaderVariant();
+function FloatingPillNavbar(): React.JSX.Element {
+  const [isScrolled, setIsScrolled] = React.useState(false);
+  const { scrollY } = useScroll();
 
-  // Floating Pill Variant - with enhanced compact dropdowns
-  if (headerVariant === 'simple') {
-    return (
-      <section className="fixed inset-x-0 top-4 z-40 px-4">
-        <div className="mx-auto max-w-5xl rounded-full border bg-background/95 px-4 py-2 shadow-lg backdrop-blur-xl">
-          <nav className="flex items-center justify-between">
-            <div className="flex items-center gap-3 pl-2">
-              <Link href={routes.marketing.Index} className="flex items-center">
-                <Logo className="h-6 w-auto" />
-              </Link>
-              <LanguageSwitcher className="h-6 px-1" />
-            </div>
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setIsScrolled(latest > 50);
+  });
 
-            <div className="hidden items-center lg:flex">
-              <NavigationMenu>
-                <NavigationMenuList className="gap-0">
-                  {/* Product Menu */}
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
-                      Product
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <CompactDropdown
-                        links={COMPACT_PRODUCT_LINKS}
-                        viewAllHref="https://adapty.io/product/"
-                        columns={2}
-                      />
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
+  return (
+    <motion.header
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed inset-x-0 top-0 z-40 px-4 pt-4"
+    >
+      {/* Pill container - transparent until scrolled */}
+      <div
+        className={cn(
+          'mx-auto max-w-5xl rounded-full px-4 py-2 transition-all duration-300',
+          isScrolled
+            ? 'border bg-background/95 shadow-lg backdrop-blur-xl'
+            : 'bg-transparent'
+        )}
+      >
+        <nav className="flex items-center justify-between">
+          <div className="flex items-center gap-3 pl-2">
+            <Link href={routes.marketing.Index} className="flex items-center">
+              <Logo className="h-6 w-auto" />
+            </Link>
+            <LanguageSwitcher className="h-6 px-1" />
+          </div>
 
-                  {/* Cases Menu */}
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
-                      Cases
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <CompactDropdown
-                        links={COMPACT_CASES_LINKS}
-                        viewAllHref="https://adapty.io/clients/"
-                      />
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
+          <div className="hidden items-center lg:flex">
+            <NavigationMenu>
+              <NavigationMenuList className="gap-0">
+                {/* Product Menu */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
+                    Product
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <CompactDropdown
+                      links={COMPACT_PRODUCT_LINKS}
+                      viewAllHref="https://adapty.io/product/"
+                      columns={2}
+                    />
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                {/* Cases Menu */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground data-[state=open]:bg-accent data-[state=open]:text-foreground">
+                    Cases
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <CompactDropdown
+                      links={COMPACT_CASES_LINKS}
+                      viewAllHref="https://adapty.io/clients/"
+                    />
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
 
                   {/* Resources Menu */}
                   <NavigationMenuItem>
@@ -235,7 +250,8 @@ export function Navbar(): React.JSX.Element {
               </NavigationMenu>
             </div>
 
-            <div className="flex items-center gap-1.5 pr-1">
+            {/* Desktop CTA buttons - hidden on mobile */}
+            <div className="hidden items-center gap-1.5 pr-1 lg:flex">
               <ThemeToggle className="size-7 rounded-full border-none shadow-none" />
               <Link
                 href={routes.dashboard.auth.SignIn}
@@ -250,15 +266,22 @@ export function Navbar(): React.JSX.Element {
                 Start for free
               </Link>
             </div>
-          </nav>
-        </div>
-      </section>
-    );
-  }
 
-  // Default Mega Menu Variant
+            {/* Mobile menu button */}
+            <MobileMenu className="lg:hidden" />
+        </nav>
+      </div>
+    </motion.header>
+  );
+}
+
+// ============================================================================
+// DEFAULT MEGA MENU NAVBAR (sticky with border)
+// ============================================================================
+
+function DefaultMegaMenuNavbar(): React.JSX.Element {
   return (
-    <section className="sticky inset-x-0 top-0 z-40 border-b bg-background py-4">
+    <header className="sticky inset-x-0 top-0 z-40 border-b bg-background py-4">
       <div className="container">
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-x-9">
@@ -359,6 +382,20 @@ export function Navbar(): React.JSX.Element {
         </nav>
         <MobileMenu className="lg:hidden" />
       </div>
-    </section>
+    </header>
   );
+}
+
+// ============================================================================
+// MAIN NAVBAR EXPORT (variant switcher)
+// ============================================================================
+
+export function Navbar(): React.JSX.Element {
+  const headerVariant = useHeaderVariant();
+
+  if (headerVariant === 'simple') {
+    return <FloatingPillNavbar />;
+  }
+
+  return <DefaultMegaMenuNavbar />;
 }
