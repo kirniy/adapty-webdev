@@ -27,12 +27,12 @@ export type HeroVariant = 'marketing' | 'split' | 'pricing' | 'story' | 'contact
 export type LogosVariant = 'default' | 'linear' | 'off'
 export type FeaturesVariant = 'solution' | 'roles' | 'tabbed' | 'bento-tabs' | 'off'
 export type StatsVariant = 'default' | 'timeline' | 'off'
-export type TestimonialsVariant = 'default' | 'editorial' | 'team' | 'off'
+export type TestimonialsVariant = 'default' | 'editorial' | 'team' | 'clean' | 'off'
 export type FaqVariant = 'default' | 'pricing' | 'off'
 export type CtaVariant = 'default' | 'careers' | 'off'
 export type BlogVariant = 'default' | 'featured' | 'off'
 export type SdkVariant = 'default' | 'off'
-export type FooterVariant = 'default' | 'off'
+export type FooterVariant = 'default' | 'flickering' | 'off'
 export type HeroLinesVariant = 'above' | 'below'
 
 // Variant option type for UI
@@ -130,6 +130,7 @@ export const TESTIMONIALS_VARIANTS: VariantOption<TestimonialsVariant>[] = [
   { value: 'default', label: 'Marquee', description: 'Infinite scrolling reviews' },
   { value: 'editorial', label: 'Editorial', description: 'Featured quote with case study cards' },
   { value: 'team', label: 'Team', description: 'Team member photos' },
+  { value: 'clean', label: 'Clean', description: 'Minimal click-through testimonials with magnetic cursor' },
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
 
@@ -158,6 +159,7 @@ export const SDK_VARIANTS: VariantOption<SdkVariant>[] = [
 
 export const FOOTER_VARIANTS: VariantOption<FooterVariant>[] = [
   { value: 'default', label: 'Default', description: 'Standard footer with links' },
+  { value: 'flickering', label: 'Flickering', description: 'Footer with animated flickering grid' },
   { value: 'off', label: 'Off', description: 'Hide footer' },
 ]
 

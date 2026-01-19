@@ -37,6 +37,7 @@ import { StoryTimeline } from '~/components/sections/story-timeline';
 // Original Achromatic Testimonials Components
 import { Testimonials } from '~/components/sections/testimonials';
 import { TestimonialsEditorial } from '~/components/sections/testimonials-editorial';
+import { TestimonialsClean } from '~/components/sections/testimonials-clean';
 import { StoryTeam } from '~/components/sections/story-team';
 
 // Original Achromatic FAQ Components
@@ -130,6 +131,8 @@ function TestimonialsSection() {
       return <TestimonialsEditorial />;
     case 'team':
       return <StoryTeam />;
+    case 'clean':
+      return <TestimonialsClean />;
     case 'default':
     default:
       return <Testimonials />;
