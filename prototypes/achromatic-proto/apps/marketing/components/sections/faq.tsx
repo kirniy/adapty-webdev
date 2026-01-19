@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { ArrowRightIcon } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import {
   Accordion,
@@ -52,7 +52,32 @@ const DATA = [
   }
 ];
 
+// Animated link with arrow micro-interaction
+function AnimatedLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+    <Link
+      href={href}
+      target="_blank"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+    >
+      {children}
+      <motion.span
+        animate={{ x: isHovered ? 4 : 0 }}
+        transition={{ type: 'spring', duration: 0.15, bounce: 0.3 }}
+      >
+        <ArrowRightIcon className="size-4" />
+      </motion.span>
+    </Link>
+  );
+}
+
 export function FAQ(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
@@ -72,43 +97,44 @@ export function FAQ(): React.JSX.Element {
               Everything you need to know about Adapty. Can&apos;t find the answer you&apos;re looking for?
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <Link
-                href="https://adapty.io/docs/"
-                target="_blank"
-                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
+              <AnimatedLink href="https://adapty.io/docs/">
                 Read documentation
-                <ArrowRightIcon className="size-4" />
-              </Link>
-              <Link
-                href="https://adapty.io/schedule-demo/"
-                target="_blank"
-                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
+              </AnimatedLink>
+              <AnimatedLink href="https://adapty.io/schedule-demo/">
                 Schedule a demo
-                <ArrowRightIcon className="size-4" />
-              </Link>
+              </AnimatedLink>
             </div>
           </BlurFade>
 
-          {/* Right column - Accordion */}
+          {/* Right column - Accordion with enhanced animations */}
           <BlurFade delay={0.1}>
             <div className="rounded-xl border bg-card p-1">
               <Accordion type="single" collapsible className="w-full">
                 {DATA.map((faq, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 8 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
+                    transition={{
+                      type: 'spring',
+                      delay: index * 0.04,
+                      duration: 0.3,
+                      bounce: 0,
+                    }}
                   >
                     <AccordionItem
                       value={index.toString()}
-                      className="border-b-0 px-4 [&[data-state=open]]:bg-muted/30 rounded-lg transition-colors"
+                      className="border-b-0 px-4 [&[data-state=open]]:bg-muted/30 rounded-lg transition-all duration-200 hover:bg-muted/20"
                     >
-                      <AccordionTrigger className="text-left text-base py-4 hover:no-underline">
-                        {faq.question}
+                      <AccordionTrigger className="text-left text-base py-4 hover:no-underline group">
+                        <motion.span
+                          className="flex-1"
+                          whileHover={shouldReduceMotion ? undefined : { x: 4 }}
+                          transition={{ type: 'spring', duration: 0.15, bounce: 0.3 }}
+                        >
+                          {faq.question}
+                        </motion.span>
                       </AccordionTrigger>
                       <AccordionContent className="text-sm text-muted-foreground pb-4">
                         {faq.answer}

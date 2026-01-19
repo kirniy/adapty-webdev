@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { ArrowRightIcon, CheckIcon, SparklesIcon } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
@@ -20,19 +20,158 @@ const VALUE_PROPS = [
   'Cancel anytime',
 ];
 
+// Animated button component with glow and press effects
+function AnimatedButton({
+  href,
+  variant = 'default',
+  children,
+  className,
+}: {
+  href: string;
+  variant?: 'default' | 'outline';
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [isPressed, setIsPressed] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsPressed(false);
+      }}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
+      animate={{
+        y: shouldReduceMotion ? 0 : isPressed ? 1 : isHovered ? -3 : 0,
+        scale: shouldReduceMotion ? 1 : isPressed ? 0.98 : 1,
+      }}
+      transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
+      className="relative"
+    >
+      {/* Glow effect for primary button */}
+      {variant === 'default' && (
+        <motion.div
+          className="absolute inset-0 -z-10 rounded-xl bg-primary/30 blur-xl"
+          animate={{
+            opacity: isHovered ? 0.6 : 0,
+            scale: isHovered ? 1.1 : 1,
+          }}
+          transition={{ duration: 0.3 }}
+        />
+      )}
+      <Link
+        href={href}
+        target="_blank"
+        className={cn(
+          buttonVariants({ variant, size: 'lg' }),
+          'rounded-xl px-8 transition-all duration-200',
+          variant === 'default' && 'shadow-lg hover:shadow-xl',
+          className
+        )}
+      >
+        {children}
+        <motion.span
+          animate={{ x: isHovered ? 4 : 0 }}
+          transition={{ type: 'spring', duration: 0.15, bounce: 0.3 }}
+        >
+          <ArrowRightIcon className="ml-2 size-4" />
+        </motion.span>
+      </Link>
+    </motion.div>
+  );
+}
+
+// Animated value prop with stagger
+function ValueProp({ prop, index }: { prop: string; index: number }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        type: 'spring',
+        duration: 0.4,
+        delay: 0.3 + index * 0.08,
+        bounce: 0,
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="flex items-center gap-2 text-sm text-muted-foreground"
+    >
+      <motion.div
+        animate={{
+          scale: isHovered ? 1.2 : 1,
+          backgroundColor: isHovered ? 'rgb(var(--primary))' : 'transparent',
+        }}
+        transition={{ type: 'spring', duration: 0.2, bounce: 0.3 }}
+        className="flex size-5 items-center justify-center rounded-full border border-primary/30"
+      >
+        <CheckIcon className={cn(
+          'size-3 transition-colors duration-200',
+          isHovered ? 'text-primary-foreground' : 'text-primary'
+        )} />
+      </motion.div>
+      <span>{prop}</span>
+    </motion.div>
+  );
+}
+
+// Animated stat counter
+function AnimatedStat({ value, label }: { value: string; label: string }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+    <motion.div
+      className="text-center cursor-default"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: 'spring', duration: 0.25, bounce: 0.2 }}
+    >
+      <motion.div
+        className="text-2xl font-bold text-foreground"
+        animate={{
+          color: isHovered ? 'hsl(var(--primary))' : 'hsl(var(--foreground))',
+        }}
+        transition={{ duration: 0.2 }}
+      >
+        {value}
+      </motion.div>
+      <div className="text-xs text-muted-foreground">{label}</div>
+    </motion.div>
+  );
+}
+
 export function CTA(): React.JSX.Element {
-  const [primaryHovered, setPrimaryHovered] = React.useState(false);
-  const [secondaryHovered, setSecondaryHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={500} />
       <div className="container py-16 lg:py-24 relative z-10">
         <div className="mx-auto max-w-3xl">
-          {/* Badge */}
+          {/* Badge with sparkle animation */}
           <BlurFade className="flex justify-center mb-6">
-            <Badge variant="outline" className="rounded-full px-4 py-1.5">
-              <SparklesIcon className="mr-2 size-3.5" />
+            <Badge variant="outline" className="rounded-full px-4 py-1.5 group cursor-default">
+              <motion.div
+                animate={shouldReduceMotion ? {} : {
+                  rotate: [0, 15, -15, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 0.6,
+                  repeat: Infinity,
+                  repeatDelay: 3,
+                  ease: 'easeInOut',
+                }}
+              >
+                <SparklesIcon className="mr-2 size-3.5 text-primary" />
+              </motion.div>
               Start growing today
             </Badge>
           </BlurFade>
@@ -42,7 +181,25 @@ export function CTA(): React.JSX.Element {
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl text-balance">
               Ready to double your
               <br />
-              <span className="text-primary">subscription revenue?</span>
+              <motion.span
+                className="text-primary inline-block"
+                animate={shouldReduceMotion ? {} : {
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: 'linear',
+                }}
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary)/0.7), hsl(var(--primary)))',
+                  backgroundSize: '200% 100%',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                }}
+              >
+                subscription revenue?
+              </motion.span>
             </h2>
           </BlurFade>
 
@@ -53,86 +210,33 @@ export function CTA(): React.JSX.Element {
             </p>
           </BlurFade>
 
-          {/* Value Props */}
+          {/* Value Props with stagger */}
           <BlurFade delay={0.25} className="mb-8">
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              {VALUE_PROPS.map((prop) => (
-                <div key={prop} className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <CheckIcon className="size-4 text-primary" />
-                  <span>{prop}</span>
-                </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              {VALUE_PROPS.map((prop, index) => (
+                <ValueProp key={prop} prop={prop} index={index} />
               ))}
             </div>
           </BlurFade>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons with glow and press effects */}
           <BlurFade delay={0.3}>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <motion.div
-                onMouseEnter={() => setPrimaryHovered(true)}
-                onMouseLeave={() => setPrimaryHovered(false)}
-                whileHover={{ y: -2 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Link
-                  href="https://app.adapty.io/registration"
-                  target="_blank"
-                  className={cn(
-                    buttonVariants({ variant: 'default', size: 'lg' }),
-                    'rounded-xl px-8 shadow-lg hover:shadow-xl transition-all duration-200'
-                  )}
-                >
-                  Start for free
-                  <motion.span
-                    animate={{ x: primaryHovered ? 4 : 0 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <ArrowRightIcon className="ml-2 size-4" />
-                  </motion.span>
-                </Link>
-              </motion.div>
-
-              <motion.div
-                onMouseEnter={() => setSecondaryHovered(true)}
-                onMouseLeave={() => setSecondaryHovered(false)}
-                whileHover={{ y: -2 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Link
-                  href="https://adapty.io/schedule-demo/"
-                  target="_blank"
-                  className={cn(
-                    buttonVariants({ variant: 'outline', size: 'lg' }),
-                    'rounded-xl px-8 transition-all duration-200'
-                  )}
-                >
-                  Talk to sales
-                  <motion.span
-                    animate={{ x: secondaryHovered ? 4 : 0 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <ArrowRightIcon className="ml-2 size-4" />
-                  </motion.span>
-                </Link>
-              </motion.div>
+              <AnimatedButton href="https://app.adapty.io/registration" variant="default">
+                Start for free
+              </AnimatedButton>
+              <AnimatedButton href="https://adapty.io/schedule-demo/" variant="outline">
+                Talk to sales
+              </AnimatedButton>
             </div>
           </BlurFade>
 
-          {/* Social Proof Stats */}
+          {/* Social Proof Stats with hover animations */}
           <BlurFade delay={0.4} className="mt-12">
             <div className="grid grid-cols-3 gap-8 border-t pt-8">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">$2B+</div>
-                <div className="text-xs text-muted-foreground">Revenue tracked</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">15,000+</div>
-                <div className="text-xs text-muted-foreground">Apps powered</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">99.99%</div>
-                <div className="text-xs text-muted-foreground">Uptime SLA</div>
-              </div>
+              <AnimatedStat value="$2B+" label="Revenue tracked" />
+              <AnimatedStat value="15,000+" label="Apps powered" />
+              <AnimatedStat value="99.99%" label="Uptime SLA" />
             </div>
           </BlurFade>
         </div>

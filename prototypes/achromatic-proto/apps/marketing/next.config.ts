@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
       'recharts',
       'lucide-react',
       'date-fns',
+      'motion/react',
+      '@radix-ui/react-icons',
       ...INTERNAL_PACKAGES
     ]
   },

@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronLeftIcon, ChevronRightIcon, XIcon } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 import { routes } from '@workspace/routes';
 import { Button, buttonVariants } from '@workspace/ui/components/button';
@@ -70,6 +70,8 @@ export function MobileMenu({
     setExpandedMenu(null);
   };
 
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <>
       {/* Mobile header with logo and toggle */}
@@ -93,16 +95,16 @@ export function MobileMenu({
             animate={
               open ? { rotate: '45deg', y: '5px' } : { rotate: '0deg', y: 0 }
             }
-            transition={{ bounce: 0, duration: 0.15 }}
+            transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
           />
           <motion.div
             className="w-5 origin-center border-t-2 border-primary"
-            transition={{ bounce: 0, duration: 0.15 }}
             animate={
               open
                 ? { rotate: '-45deg', y: '-5px' }
                 : { rotate: '0deg', y: 0 }
             }
+            transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
           />
         </Button>
       </div>
@@ -118,18 +120,22 @@ export function MobileMenu({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="fixed inset-0 z-50 bg-black/20"
+                transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                className="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm"
                 onClick={handleCloseMenu}
               />
 
-              {/* Slide-in panel */}
+              {/* Slide-in panel with spring physics */}
               <motion.div
                 key="panel"
-                initial={{ x: '100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '100%' }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
+                initial={{ x: '100%', opacity: 0.8 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: '100%', opacity: 0.8 }}
+                transition={{
+                  type: 'spring',
+                  duration: shouldReduceMotion ? 0.01 : 0.4,
+                  bounce: 0.1,
+                }}
                 className="fixed inset-y-0 right-0 z-50 w-[85%] max-w-[400px] bg-background shadow-2xl"
               >
                 <div className="flex h-full flex-col">
@@ -229,10 +235,10 @@ type MainMenuViewProps = {
 function MainMenuView({ onSubmenuClick, onLinkClick }: MainMenuViewProps): React.JSX.Element {
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      transition={{ duration: 0.2 }}
+      initial={{ opacity: 0, x: -16, filter: 'blur(4px)' }}
+      animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+      exit={{ opacity: 0, x: -8, filter: 'blur(2px)' }}
+      transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
     >
       <nav className="flex flex-col">
         {MOBILE_MAIN_MENU.map((item) => {
@@ -290,10 +296,10 @@ function SubmenuView({ menuKey, onBack, onLinkClick }: SubmenuViewProps): React.
   if (!menuData) {
     return (
       <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 20 }}
-        transition={{ duration: 0.2 }}
+        initial={{ opacity: 0, x: 16, filter: 'blur(4px)' }}
+        animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+        exit={{ opacity: 0, x: 8, filter: 'blur(2px)' }}
+        transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
       >
         <button
           onClick={onBack}
@@ -309,10 +315,10 @@ function SubmenuView({ menuKey, onBack, onLinkClick }: SubmenuViewProps): React.
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.2 }}
+      initial={{ opacity: 0, x: 16, filter: 'blur(4px)' }}
+      animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+      exit={{ opacity: 0, x: 8, filter: 'blur(2px)' }}
+      transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
     >
       {/* Back button with menu title */}
       <button

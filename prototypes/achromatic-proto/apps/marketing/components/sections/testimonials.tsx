@@ -4,7 +4,7 @@ import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRightIcon, Star } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { cn } from '@workspace/ui/lib/utils';
@@ -91,21 +91,35 @@ const DATA = [
 
 function TestimonialCard({ testimonial, index }: { testimonial: typeof DATA[0]; index: number }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  // Jakub's shadow pattern: multi-layer shadows that deepen on hover
+  const cardShadow = isHovered
+    ? '0 0 0 1px rgba(0,0,0,0.08), 0 4px 12px -2px rgba(0,0,0,0.12), 0 8px 24px 0 rgba(0,0,0,0.08)'
+    : '0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px -1px rgba(0,0,0,0.04), 0 2px 4px 0 rgba(0,0,0,0.02)';
 
   return (
     <BlurFade delay={0.05 + index * 0.05}>
       <motion.div
-        className="group flex h-full flex-col rounded-xl border bg-card p-5 cursor-pointer"
+        className="group flex h-full flex-col rounded-xl border border-border/50 bg-card p-5 cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        whileHover={{ y: -2 }}
-        transition={{ duration: 0.2 }}
+        whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+        animate={{ boxShadow: cardShadow }}
+        transition={{
+          type: 'spring',
+          duration: 0.3,
+          bounce: 0
+        }}
       >
-        {/* Metric badge */}
+        {/* Metric badge with scale micro-interaction */}
         <motion.div
           className="mb-4 flex items-baseline gap-1.5"
-          animate={{ opacity: isHovered ? 1 : 0.8 }}
-          transition={{ duration: 0.15 }}
+          animate={{
+            scale: isHovered ? 1.02 : 1,
+            opacity: isHovered ? 1 : 0.9
+          }}
+          transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
         >
           <span className="text-2xl font-bold text-primary">{testimonial.metric}</span>
           <span className="text-xs text-muted-foreground">{testimonial.metricLabel}</span>
@@ -116,25 +130,43 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof DATA[0]; 
           &ldquo;{testimonial.quote}&rdquo;
         </p>
 
-        {/* Stars */}
+        {/* Stars with stagger animation on hover */}
         <div className="mb-4 flex gap-0.5">
           {[...Array(5)].map((_, i) => (
-            <Star key={i} className="size-3.5 fill-primary/80 text-primary/80" />
+            <motion.div
+              key={i}
+              animate={{
+                scale: isHovered ? 1.15 : 1,
+                rotate: isHovered ? (i % 2 === 0 ? 8 : -8) : 0
+              }}
+              transition={{
+                type: 'spring',
+                duration: 0.25,
+                delay: isHovered ? i * 0.03 : 0,
+                bounce: 0.4
+              }}
+            >
+              <Star className="size-3.5 fill-primary/80 text-primary/80" />
+            </motion.div>
           ))}
         </div>
 
         {/* Author */}
         <div className="flex items-center gap-3 pt-4 border-t border-border/50">
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.15 }}
+            animate={{
+              scale: isHovered ? 1.08 : 1,
+              rotate: isHovered ? 3 : 0
+            }}
+            transition={{ type: 'spring', duration: 0.25, bounce: 0.2 }}
           >
             <Image
               width={36}
               height={36}
               src={testimonial.img || ''}
               alt={testimonial.name}
-              className="size-9 rounded-full object-cover"
+              loading="lazy"
+              className="size-9 rounded-full object-cover ring-2 ring-transparent transition-all group-hover:ring-primary/20"
             />
           </motion.div>
           <div className="text-xs">

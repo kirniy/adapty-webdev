@@ -13,7 +13,7 @@ import {
   LayoutIcon,
   PlayIcon
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
@@ -113,6 +113,7 @@ const HERO_FEATURES = [
 
 function HeroPill(): React.JSX.Element {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <BlurFade delay={0.1}>
@@ -120,11 +121,14 @@ function HeroPill(): React.JSX.Element {
         className="flex items-center justify-center"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+        whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+        transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
       >
         <Link href="https://adapty.io/ebooks/100k-app-playbook/">
           <Badge
             variant="outline"
-            className="group relative h-8 overflow-hidden rounded-full px-3 text-xs font-medium shadow-xs transition-colors duration-200 hover:bg-accent/50 sm:text-sm cursor-pointer"
+            className="group relative h-8 overflow-hidden rounded-full px-3 text-xs font-medium shadow-xs transition-all duration-200 hover:bg-accent/50 hover:shadow-md sm:text-sm cursor-pointer"
           >
             <BorderBeam
               size={40}
@@ -134,14 +138,18 @@ function HeroPill(): React.JSX.Element {
               colorFrom="#3b82f6"
               colorTo="#8b5cf6"
             />
-            <div className="w-fit py-0.5 text-center text-xs text-blue-500 sm:text-sm">
+            <motion.div
+              className="w-fit py-0.5 text-center text-xs text-blue-500 sm:text-sm"
+              animate={{ scale: isHovered ? 1.05 : 1 }}
+              transition={{ type: 'spring', duration: 0.2, bounce: 0.3 }}
+            >
               Free Ebook
-            </div>
+            </motion.div>
             <span className="mx-2 h-3 w-px bg-border" />
             <span className="text-muted-foreground">$100K playbook</span>
             <motion.span
-              animate={{ x: isHovered ? 2 : 0 }}
-              transition={{ duration: 0.15 }}
+              animate={{ x: isHovered ? 3 : 0 }}
+              transition={{ type: 'spring', duration: 0.15, bounce: 0.3 }}
             >
               <ChevronRightIcon className="ml-1 size-3 shrink-0 text-muted-foreground" />
             </motion.span>
@@ -174,28 +182,71 @@ function HeroDescription(): React.JSX.Element {
   );
 }
 
+// Animated hero button with glow and press effects
+function HeroButton({
+  href,
+  variant = 'default',
+  children,
+}: {
+  href: string;
+  variant?: 'default' | 'outline';
+  children: React.ReactNode;
+}) {
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [isPressed, setIsPressed] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsPressed(false);
+      }}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
+      animate={{
+        y: shouldReduceMotion ? 0 : isPressed ? 1 : isHovered ? -2 : 0,
+        scale: shouldReduceMotion ? 1 : isPressed ? 0.97 : 1,
+      }}
+      transition={{ type: 'spring', duration: 0.15, bounce: 0 }}
+      className="relative"
+    >
+      {/* Glow effect for primary button */}
+      {variant === 'default' && (
+        <motion.div
+          className="absolute inset-0 -z-10 rounded-xl bg-primary/25 blur-lg"
+          animate={{
+            opacity: isHovered ? 0.8 : 0,
+            scale: isHovered ? 1.15 : 1,
+          }}
+          transition={{ duration: 0.25 }}
+        />
+      )}
+      <Link
+        href={href}
+        className={cn(
+          buttonVariants({ variant }),
+          'h-10 rounded-xl px-5 transition-shadow',
+          variant === 'default' && 'shadow-md hover:shadow-lg'
+        )}
+      >
+        {children}
+      </Link>
+    </motion.div>
+  );
+}
+
 function HeroButtons(): React.JSX.Element {
   return (
     <BlurFade delay={0.4}>
       <div className="mx-auto mt-8 flex justify-center gap-3">
-        <Link
-          href="https://app.adapty.io/registration"
-          className={cn(
-            buttonVariants({ variant: 'default' }),
-            'h-10 rounded-xl px-5'
-          )}
-        >
+        <HeroButton href="https://app.adapty.io/registration" variant="default">
           Start for free
-        </Link>
-        <Link
-          href="https://adapty.io/schedule-demo/"
-          className={cn(
-            buttonVariants({ variant: 'outline' }),
-            'h-10 rounded-xl px-5'
-          )}
-        >
+        </HeroButton>
+        <HeroButton href="https://adapty.io/schedule-demo/" variant="outline">
           Book a demo
-        </Link>
+        </HeroButton>
       </div>
     </BlurFade>
   );
@@ -282,7 +333,29 @@ function MainDashedGridLines(): React.JSX.Element {
   );
 }
 
-// Feature tab component with hover state
+// Learn more link with arrow animation
+function LearnMoreLink({ href, label }: { href: string; label: string }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+    <Link
+      href={href}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+    >
+      Learn more about {label}
+      <motion.span
+        animate={{ x: isHovered ? 4 : 0 }}
+        transition={{ type: 'spring', duration: 0.15, bounce: 0.3 }}
+      >
+        <ArrowRightIcon className="size-4" />
+      </motion.span>
+    </Link>
+  );
+}
+
+// Feature tab component with hover state and micro-interactions
 function FeatureTab({
   feature,
   isActive,
@@ -293,13 +366,18 @@ function FeatureTab({
   onClick: () => void;
 }) {
   const Icon = feature.icon;
+  const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <button
+    <motion.button
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
       className={cn(
-        'group relative flex flex-1 flex-col items-center gap-2 px-4 py-3 transition-all duration-200 cursor-pointer',
-        'border-b-2',
+        'group relative flex flex-1 flex-col items-center gap-2 px-4 py-3 cursor-pointer',
+        'border-b-2 transition-colors duration-150',
         isActive
           ? 'border-b-primary text-foreground'
           : 'border-b-transparent text-muted-foreground hover:text-foreground hover:border-b-border'
@@ -309,38 +387,50 @@ function FeatureTab({
         'flex items-center gap-2 text-sm font-medium whitespace-nowrap',
         isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
       )}>
-        <Icon className="size-4 shrink-0" />
+        <motion.div
+          animate={{
+            scale: isActive ? 1.1 : isHovered ? 1.05 : 1,
+            rotate: isActive ? 5 : 0,
+          }}
+          transition={{
+            type: 'spring',
+            duration: 0.3,
+            bounce: isActive ? 0.4 : 0,
+          }}
+        >
+          <Icon className="size-4 shrink-0" />
+        </motion.div>
         <span className="hidden sm:inline">{feature.label}</span>
       </div>
-      {/* Active indicator dot on mobile */}
+      {/* Active indicator with smooth layout animation */}
       {isActive && (
         <motion.div
-          layoutId="activeTab"
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-8 bg-primary rounded-full sm:hidden"
-          transition={{ duration: 0.2 }}
+          layoutId="activeTabIndicator"
+          className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+          transition={{ type: 'spring', duration: 0.3, bounce: 0.15 }}
         />
       )}
-    </button>
+    </motion.button>
   );
 }
 
-// Feature content with animated transitions
+// Feature content with animated transitions (faster, spring-based)
 function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
   return (
     <motion.div
       key={feature.id}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.3 }}
+      initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
+      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      exit={{ opacity: 0, y: -4, filter: 'blur(2px)' }}
+      transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
       className="grid gap-8 lg:grid-cols-5"
     >
       {/* Text content */}
       <div className="flex flex-col justify-center lg:col-span-2">
         <motion.div
-          initial={{ opacity: 0, x: -10 }}
+          initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
+          transition={{ type: 'spring', delay: 0.05, duration: 0.25, bounce: 0 }}
         >
           <Badge variant="secondary" className="mb-4 w-fit rounded-full">
             <feature.icon className="mr-1.5 size-3" />
@@ -354,54 +444,58 @@ function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
           </p>
         </motion.div>
 
-        {/* Highlights */}
+        {/* Highlights with stagger animation */}
         <motion.ul
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.3 }}
+          transition={{ type: 'spring', delay: 0.1, duration: 0.25, bounce: 0 }}
           className="space-y-3"
         >
           {feature.highlights.map((highlight, index) => (
             <motion.li
               key={highlight}
-              initial={{ opacity: 0, x: -10 }}
+              initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 + index * 0.05, duration: 0.2 }}
-              className="flex items-center gap-3 text-sm"
+              transition={{
+                type: 'spring',
+                delay: 0.12 + index * 0.04,
+                duration: 0.2,
+                bounce: 0.1
+              }}
+              className="flex items-center gap-3 text-sm group/item cursor-default"
             >
-              <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <CheckIcon className="size-3" />
-              </div>
-              <span className="text-muted-foreground">{highlight}</span>
+              <motion.div
+                className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary"
+                whileHover={{ scale: 1.15, backgroundColor: 'hsl(var(--primary))' }}
+                transition={{ type: 'spring', duration: 0.2, bounce: 0.3 }}
+              >
+                <CheckIcon className="size-3 group-hover/item:text-primary-foreground transition-colors" />
+              </motion.div>
+              <span className="text-muted-foreground group-hover/item:text-foreground transition-colors">{highlight}</span>
             </motion.li>
           ))}
         </motion.ul>
 
-        {/* Learn more link */}
+        {/* Learn more link with arrow animation */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.3 }}
+          transition={{ type: 'spring', delay: 0.25, duration: 0.25, bounce: 0 }}
           className="mt-6"
         >
-          <Link
-            href={`/features/${feature.id}`}
-            className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
-          >
-            Learn more about {feature.label}
-            <ArrowRightIcon className="size-4" />
-          </Link>
+          <LearnMoreLink href={`/features/${feature.id}`} label={feature.label} />
         </motion.div>
       </div>
 
-      {/* Image */}
+      {/* Image with enhanced hover effect */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.15, duration: 0.4 }}
+        initial={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
+        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+        transition={{ type: 'spring', delay: 0.08, duration: 0.35, bounce: 0 }}
         className="relative lg:col-span-3"
+        whileHover={{ scale: 1.01 }}
       >
-        <div className="relative overflow-hidden rounded-xl border bg-gradient-to-b from-muted/30 to-muted/10 shadow-lg">
+        <div className="relative overflow-hidden rounded-xl border bg-gradient-to-b from-muted/30 to-muted/10 shadow-lg transition-shadow hover:shadow-xl">
           <Image
             priority={feature.id === 'paywall-builder'}
             quality={100}

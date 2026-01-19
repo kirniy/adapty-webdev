@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon } from 'lucide-react';
-import { motion, useScroll, useMotionValueEvent } from 'motion/react';
+import { motion, useScroll, useMotionValueEvent, useReducedMotion } from 'motion/react';
 
 import { routes } from '@workspace/routes';
 import { Badge } from '@workspace/ui/components/badge';
@@ -306,6 +306,7 @@ function CompactDocsDropdown() {
 function FloatingPillNavbar(): React.JSX.Element {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const { scrollY } = useScroll();
+  const shouldReduceMotion = useReducedMotion();
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setIsScrolled(latest > 50);
@@ -313,9 +314,9 @@ function FloatingPillNavbar(): React.JSX.Element {
 
   return (
     <motion.header
-      initial={{ y: -100, opacity: 0 }}
+      initial={shouldReduceMotion ? { opacity: 1 } : { y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
       className="fixed inset-x-0 top-0 z-40 px-4 pt-4"
     >
       {/* Pill container - transparent until scrolled */}
