@@ -221,17 +221,17 @@ interface DebugContextValue extends DebugState {
 
 // Default state
 const defaultState: DebugState = {
-  colorAccentVariant: 'subtle',
+  colorAccentVariant: 'minimal',
   gridVariant: 'default',
   cornerRadiusVariant: 'default',
   gridThicknessVariant: 'default',
-  dashedThicknessVariant: 'default',
-  gridColorVariant: 'default',
+  dashedThicknessVariant: 'thin',
+  gridColorVariant: 'muted',
   gridOpacityVariant: 'subtle',
   gridZIndexVariant: 'back',
   headerVariant: 'default',
   heroVariant: 'marketing',
-  logosVariant: 'default',
+  logosVariant: 'linear',
   featuresVariant: 'solution',
   statsVariant: 'default',
   testimonialsVariant: 'default',
