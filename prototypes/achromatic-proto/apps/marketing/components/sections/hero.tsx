@@ -365,8 +365,8 @@ function LearnMoreLink({ href, label }: { href: string; label: string }) {
   );
 }
 
-// Auto-rotation interval in milliseconds
-const AUTO_ROTATE_INTERVAL = 6000;
+// Auto-rotation interval in milliseconds (8 seconds for comfortable reading)
+const AUTO_ROTATE_INTERVAL = 8000;
 
 // Feature tab component with hover state, micro-interactions, and progress indicator
 function FeatureTab({
@@ -448,18 +448,30 @@ function FeatureTab({
   );
 }
 
-// Feature content with animated transitions (faster, spring-based)
-function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
+// Feature content with smooth horizontal slide transitions
+function FeatureContent({
+  feature,
+  direction,
+}: {
+  feature: typeof HERO_FEATURES[0];
+  direction: 'left' | 'right';
+}) {
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
+
+  // Slide direction: entering from right when going forward, from left when going backward
+  const slideOffset = direction === 'right' ? 40 : -40;
 
   return (
     <motion.div
       key={feature.id}
-      initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
-      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      exit={{ opacity: 0, y: -4, filter: 'blur(2px)' }}
-      transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+      initial={{ opacity: 0, x: slideOffset, scale: 0.98 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      exit={{ opacity: 0, x: -slideOffset, scale: 0.98 }}
+      transition={{
+        duration: 0.4,
+        ease: [0.645, 0.045, 0.355, 1], // ease-in-out-cubic
+      }}
       className="grid gap-8 lg:grid-cols-5"
     >
       {/* Text content */}
@@ -561,55 +573,60 @@ function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
 }
 
 function HeroFeatureShowcase(): React.JSX.Element {
-  const [activeFeature, setActiveFeature] = React.useState(HERO_FEATURES[0]);
+  const [activeIndex, setActiveIndex] = React.useState(0);
   const [isAutoRotating, setIsAutoRotating] = React.useState(true);
   const [isPaused, setIsPaused] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
+  const [direction, setDirection] = React.useState<'left' | 'right'>('right');
   const heroLinesVariant = useHeroLinesVariant();
   const linesBelow = heroLinesVariant === 'below';
   const shouldReduceMotion = useReducedMotion();
 
+  // Use ref to track current index for interval callback
+  const activeIndexRef = React.useRef(activeIndex);
+  activeIndexRef.current = activeIndex;
+
+  const activeFeature = HERO_FEATURES[activeIndex];
+
   // Handle user click - stop auto-rotation permanently
-  const handleTabClick = React.useCallback((feature: typeof HERO_FEATURES[0]) => {
-    setActiveFeature(feature);
+  const handleTabClick = React.useCallback((index: number) => {
+    const currentIndex = activeIndexRef.current;
+    setDirection(index > currentIndex ? 'right' : 'left');
+    setActiveIndex(index);
     setIsAutoRotating(false);
     setProgress(100); // Fill the bar when user selects
   }, []);
 
-  // Auto-rotation effect
+  // Auto-rotation effect with clean interval logic
   React.useEffect(() => {
     if (!isAutoRotating || isPaused || shouldReduceMotion) {
       return;
     }
 
+    // Reset progress when starting/resuming
+    setProgress(0);
+
     const progressInterval = 50; // Update progress every 50ms for smooth animation
     const progressIncrement = (progressInterval / AUTO_ROTATE_INTERVAL) * 100;
+    let currentProgress = 0;
 
     const timer = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + progressIncrement;
-        if (next >= 100) {
-          // Move to next tab
-          setActiveFeature((current) => {
-            const currentIndex = HERO_FEATURES.findIndex((f) => f.id === current.id);
-            const nextIndex = (currentIndex + 1) % HERO_FEATURES.length;
-            return HERO_FEATURES[nextIndex];
-          });
-          return 0; // Reset progress
-        }
-        return next;
-      });
+      currentProgress += progressIncrement;
+
+      if (currentProgress >= 100) {
+        // Move to next tab in sequence
+        const currentIdx = activeIndexRef.current;
+        const nextIdx = (currentIdx + 1) % HERO_FEATURES.length;
+        setDirection('right'); // Always move forward
+        setActiveIndex(nextIdx);
+        currentProgress = 0;
+      }
+
+      setProgress(currentProgress);
     }, progressInterval);
 
     return () => clearInterval(timer);
   }, [isAutoRotating, isPaused, shouldReduceMotion]);
-
-  // Reset progress when active feature changes (for auto-rotation)
-  React.useEffect(() => {
-    if (isAutoRotating) {
-      setProgress(0);
-    }
-  }, [activeFeature.id, isAutoRotating]);
 
   return (
     <BlurFade delay={0.5}>
@@ -624,13 +641,13 @@ function HeroFeatureShowcase(): React.JSX.Element {
           onMouseLeave={() => setIsPaused(false)}
         >
           <div className="mx-auto flex w-full max-w-4xl min-w-max sm:min-w-0">
-            {HERO_FEATURES.map((feature) => (
+            {HERO_FEATURES.map((feature, index) => (
               <FeatureTab
                 key={feature.id}
                 feature={feature}
-                isActive={activeFeature.id === feature.id}
-                onClick={() => handleTabClick(feature)}
-                progress={activeFeature.id === feature.id ? progress : 0}
+                isActive={index === activeIndex}
+                onClick={() => handleTabClick(index)}
+                progress={index === activeIndex ? progress : 0}
                 isAutoRotating={isAutoRotating && !isPaused}
               />
             ))}
@@ -642,8 +659,12 @@ function HeroFeatureShowcase(): React.JSX.Element {
           'container pb-16',
           linesBelow && 'relative z-20 bg-background'
         )}>
-          <AnimatePresence mode="wait">
-            <FeatureContent key={activeFeature.id} feature={activeFeature} />
+          <AnimatePresence mode="wait" initial={false}>
+            <FeatureContent
+              key={activeFeature.id}
+              feature={activeFeature}
+              direction={direction}
+            />
           </AnimatePresence>
         </div>
       </div>
