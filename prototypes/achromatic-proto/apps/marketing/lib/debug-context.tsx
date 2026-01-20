@@ -35,6 +35,7 @@ export type SdkVariant = 'default' | 'off'
 export type FooterVariant = 'default' | 'flickering' | 'off'
 export type HeroLinesVariant = 'above' | 'below'
 export type ImageSetVariant = 'set1' | 'set2' | 'set3'
+export type MonochromeMode = boolean
 
 // Variant option type for UI
 export interface VariantOption<T> {
@@ -198,6 +199,7 @@ interface DebugState {
   footerVariant: FooterVariant
   heroLinesVariant: HeroLinesVariant
   imageSetVariant: ImageSetVariant
+  monochromeMode: boolean
   isDebugMenuOpen: boolean
 }
 
@@ -224,6 +226,7 @@ interface DebugContextValue extends DebugState {
   setFooterVariant: (variant: FooterVariant) => void
   setHeroLinesVariant: (variant: HeroLinesVariant) => void
   setImageSetVariant: (variant: ImageSetVariant) => void
+  setMonochromeMode: (enabled: boolean) => void
   toggleDebugMenu: () => void
   resetToDefaults: () => void
 }
@@ -251,6 +254,7 @@ const defaultState: DebugState = {
   footerVariant: 'default',
   heroLinesVariant: 'above',
   imageSetVariant: 'set1',
+  monochromeMode: false,
   isDebugMenuOpen: false,
 }
 
@@ -326,6 +330,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   const setFooterVariant = useCallback((variant: FooterVariant) => setState(prev => ({ ...prev, footerVariant: variant })), [])
   const setHeroLinesVariant = useCallback((variant: HeroLinesVariant) => setState(prev => ({ ...prev, heroLinesVariant: variant })), [])
   const setImageSetVariant = useCallback((variant: ImageSetVariant) => setState(prev => ({ ...prev, imageSetVariant: variant })), [])
+  const setMonochromeMode = useCallback((enabled: boolean) => setState(prev => ({ ...prev, monochromeMode: enabled })), [])
   const toggleDebugMenu = useCallback(() => setState(prev => ({ ...prev, isDebugMenuOpen: !prev.isDebugMenuOpen })), [])
   const resetToDefaults = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY)
@@ -355,6 +360,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     setFooterVariant,
     setHeroLinesVariant,
     setImageSetVariant,
+    setMonochromeMode,
     toggleDebugMenu,
     resetToDefaults,
   }
@@ -394,3 +400,4 @@ export function useSdkVariant() { return useContext(DebugContext)?.sdkVariant ??
 export function useFooterVariant() { return useContext(DebugContext)?.footerVariant ?? defaultState.footerVariant }
 export function useHeroLinesVariant() { return useContext(DebugContext)?.heroLinesVariant ?? defaultState.heroLinesVariant }
 export function useImageSetVariant() { return useContext(DebugContext)?.imageSetVariant ?? defaultState.imageSetVariant }
+export function useMonochromeMode() { return useContext(DebugContext)?.monochromeMode ?? defaultState.monochromeMode }

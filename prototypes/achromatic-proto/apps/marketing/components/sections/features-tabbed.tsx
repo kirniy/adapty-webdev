@@ -36,7 +36,7 @@ import { cn } from '@workspace/ui/lib/utils';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { useImageSetVariant, type ImageSetVariant } from '~/lib/debug-context';
+import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
 
 // Helper to get image path based on selected image set
 function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
@@ -168,6 +168,7 @@ export function FeaturesTabbed(): React.JSX.Element {
   const [activeTab, setActiveTab] = React.useState(FEATURE_TABS[0].id);
   const activeFeature = FEATURE_TABS.find(t => t.id === activeTab) ?? FEATURE_TABS[0];
   const imageSet = useImageSetVariant();
+  const monochromeMode = useMonochromeMode();
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -259,7 +260,7 @@ export function FeaturesTabbed(): React.JSX.Element {
                       transition={{ delay: 0.2, duration: 0.4 }}
                       className={cn(
                         "overflow-hidden rounded-xl border bg-card shadow-lg",
-                        imageSet === 'set2' && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+                        monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
                       )}
                     >
                       <Image

@@ -31,6 +31,7 @@ import {
   useHeroLinesVariant,
   useHeroVariant,
   useImageSetVariant,
+  useMonochromeMode,
   type ImageSetVariant
 } from '~/lib/debug-context';
 
@@ -426,6 +427,7 @@ function FeatureTab({
 // Feature content with animated transitions (faster, spring-based)
 function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
   const imageSet = useImageSetVariant();
+  const monochromeMode = useMonochromeMode();
 
   return (
     <motion.div
@@ -508,7 +510,7 @@ function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
       >
         <div className={cn(
           "relative overflow-hidden rounded-xl border bg-gradient-to-b from-muted/30 to-muted/10 shadow-lg transition-all hover:shadow-xl",
-          imageSet === 'set2' && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+          monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
         )}>
           <Image
             priority={feature.id === 'paywall-builder'}

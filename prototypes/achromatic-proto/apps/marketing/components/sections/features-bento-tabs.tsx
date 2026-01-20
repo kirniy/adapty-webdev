@@ -31,7 +31,7 @@ import { cn } from '@workspace/ui/lib/utils';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { useImageSetVariant, type ImageSetVariant } from '~/lib/debug-context';
+import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
 
 // Helper to get image path based on selected image set
 function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
@@ -181,12 +181,13 @@ function FeatureCard({ feature, index, compact = false }: { feature: FeatureItem
 function FeatureImage({ tab, className }: { tab: FeatureTab; className?: string }) {
   const [isHovered, setIsHovered] = React.useState(false);
   const imageSet = useImageSetVariant();
+  const monochromeMode = useMonochromeMode();
 
   return (
     <motion.div
       className={cn(
         'overflow-hidden rounded-xl border bg-card shadow-lg',
-        imageSet === 'set2' && 'grayscale hover:grayscale-0 transition-[filter] duration-500',
+        monochromeMode && 'grayscale hover:grayscale-0 transition-[filter] duration-500',
         className
       )}
       onMouseEnter={() => setIsHovered(true)}
@@ -291,6 +292,7 @@ function LayoutImageTop({ tab }: { tab: FeatureTab }) {
 function LayoutBentoGrid({ tab }: { tab: FeatureTab }) {
   const [hoveredCard, setHoveredCard] = React.useState<string | null>(null);
   const imageSet = useImageSetVariant();
+  const monochromeMode = useMonochromeMode();
 
   return (
     <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-2">
@@ -298,7 +300,7 @@ function LayoutBentoGrid({ tab }: { tab: FeatureTab }) {
       <motion.div
         className={cn(
           "lg:col-span-8 lg:row-span-2 overflow-hidden rounded-xl border bg-card shadow-lg",
-          imageSet === 'set2' && 'grayscale hover:grayscale-0 transition-[filter] duration-500'
+          monochromeMode && 'grayscale hover:grayscale-0 transition-[filter] duration-500'
         )}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

@@ -197,6 +197,7 @@ export function DebugMenu() {
     ctaVariant, setCtaVariant,
     footerVariant, setFooterVariant,
     imageSetVariant, setImageSetVariant,
+    monochromeMode, setMonochromeMode,
   } = useDebug()
 
   return (
@@ -272,6 +273,28 @@ export function DebugMenu() {
               <div className="mt-3 pt-3 border-t border-border/30">
                 <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider mb-1.5 block">Image Set</span>
                 <VariantSelector variants={IMAGE_SET_VARIANTS} currentValue={imageSetVariant} onChange={setImageSetVariant} />
+              </div>
+              <div className="mt-3 pt-3 border-t border-border/30">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Monochrome Effect</span>
+                  <button
+                    onClick={() => setMonochromeMode(!monochromeMode)}
+                    className={`
+                      relative w-10 h-5 rounded-full transition-colors duration-200
+                      ${monochromeMode ? 'bg-primary' : 'bg-muted'}
+                    `}
+                  >
+                    <span
+                      className={`
+                        absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200
+                        ${monochromeMode ? 'translate-x-5' : 'translate-x-0'}
+                      `}
+                    />
+                  </button>
+                </div>
+                <p className="text-[10px] text-muted-foreground mt-1">
+                  Grayscale images with color on hover
+                </p>
               </div>
             </CollapsibleSection>
 

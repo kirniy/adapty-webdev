@@ -28,7 +28,7 @@ import { cn } from '@workspace/ui/lib/utils';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
-import { useImageSetVariant, type ImageSetVariant } from '~/lib/debug-context';
+import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
 
 // Helper to get image path based on selected image set
 function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
@@ -161,6 +161,7 @@ function HeroStats(): React.JSX.Element {
 
 function HeroIllustration(): React.JSX.Element {
   const imageSet = useImageSetVariant();
+  const monochromeMode = useMonochromeMode();
 
   return (
     <motion.div
@@ -215,7 +216,7 @@ function HeroIllustration(): React.JSX.Element {
         </ScrollArea>
         <div className={cn(
           "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg",
-          imageSet === 'set2' && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+          monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
         )}>
           <UnderlinedTabsContent value="feature1" className="m-0">
             <Image
