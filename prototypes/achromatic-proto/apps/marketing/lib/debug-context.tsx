@@ -25,13 +25,14 @@ export type ColorAccentVariant = 'full' | 'subtle' | 'minimal'
 // All sections support 'off' to hide them
 export type HeroVariant = 'marketing' | 'split' | 'pricing' | 'story' | 'contact' | 'off'
 export type LogosVariant = 'default' | 'linear' | 'off'
-export type FeaturesVariant = 'solution' | 'roles' | 'tabbed' | 'bento-tabs' | 'off'
+export type FeaturesVariant = 'solution' | 'tabbed' | 'bento-tabs' | 'off'
 export type StatsVariant = 'default' | 'timeline' | 'off'
 export type TestimonialsVariant = 'default' | 'editorial' | 'team' | 'clean' | 'off'
 export type FaqVariant = 'default' | 'pricing' | 'off'
 export type CtaVariant = 'default' | 'careers' | 'off'
 export type BlogVariant = 'default' | 'featured' | 'off'
 export type SdkVariant = 'default' | 'off'
+export type RolesVariant = 'cards' | 'bento' | 'stacked' | 'off'
 export type FooterVariant = 'default' | 'flickering' | 'off'
 export type HeroLinesVariant = 'above' | 'below'
 export type ImageSetVariant = 'set1' | 'set2' | 'set3'
@@ -118,7 +119,6 @@ export const FEATURES_VARIANTS: VariantOption<FeaturesVariant>[] = [
   { value: 'bento-tabs', label: 'Bento Tabs', description: 'Tabbed bento grids with smart hover (recommended)' },
   { value: 'solution', label: 'Solution Bento', description: 'Complex bento grid layout' },
   { value: 'tabbed', label: 'Tabbed Features', description: 'Attio-style tab-switching feature showcase' },
-  { value: 'roles', label: 'Role Cards', description: 'For Developers/Owners/Marketers cards' },
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
 
@@ -159,6 +159,13 @@ export const SDK_VARIANTS: VariantOption<SdkVariant>[] = [
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
 
+export const ROLES_VARIANTS: VariantOption<RolesVariant>[] = [
+  { value: 'cards', label: 'Cards Grid', description: '3-column cards with icons and images' },
+  { value: 'bento', label: 'Bento Layout', description: 'Featured card with compact secondary cards' },
+  { value: 'stacked', label: 'Stacked Cards', description: 'Full-width alternating horizontal layouts' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
 export const FOOTER_VARIANTS: VariantOption<FooterVariant>[] = [
   { value: 'default', label: 'Default', description: 'Standard footer with links' },
   { value: 'flickering', label: 'Flickering', description: 'Footer with animated flickering grid' },
@@ -196,6 +203,7 @@ interface DebugState {
   ctaVariant: CtaVariant
   blogVariant: BlogVariant
   sdkVariant: SdkVariant
+  rolesVariant: RolesVariant
   footerVariant: FooterVariant
   heroLinesVariant: HeroLinesVariant
   imageSetVariant: ImageSetVariant
@@ -223,6 +231,7 @@ interface DebugContextValue extends DebugState {
   setCtaVariant: (variant: CtaVariant) => void
   setBlogVariant: (variant: BlogVariant) => void
   setSdkVariant: (variant: SdkVariant) => void
+  setRolesVariant: (variant: RolesVariant) => void
   setFooterVariant: (variant: FooterVariant) => void
   setHeroLinesVariant: (variant: HeroLinesVariant) => void
   setImageSetVariant: (variant: ImageSetVariant) => void
@@ -251,6 +260,7 @@ const defaultState: DebugState = {
   ctaVariant: 'default',
   blogVariant: 'default',
   sdkVariant: 'default',
+  rolesVariant: 'cards',
   footerVariant: 'default',
   heroLinesVariant: 'above',
   imageSetVariant: 'set2',
@@ -327,6 +337,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   const setCtaVariant = useCallback((variant: CtaVariant) => setState(prev => ({ ...prev, ctaVariant: variant })), [])
   const setBlogVariant = useCallback((variant: BlogVariant) => setState(prev => ({ ...prev, blogVariant: variant })), [])
   const setSdkVariant = useCallback((variant: SdkVariant) => setState(prev => ({ ...prev, sdkVariant: variant })), [])
+  const setRolesVariant = useCallback((variant: RolesVariant) => setState(prev => ({ ...prev, rolesVariant: variant })), [])
   const setFooterVariant = useCallback((variant: FooterVariant) => setState(prev => ({ ...prev, footerVariant: variant })), [])
   const setHeroLinesVariant = useCallback((variant: HeroLinesVariant) => setState(prev => ({ ...prev, heroLinesVariant: variant })), [])
   const setImageSetVariant = useCallback((variant: ImageSetVariant) => setState(prev => ({ ...prev, imageSetVariant: variant })), [])
@@ -357,6 +368,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     setCtaVariant,
     setBlogVariant,
     setSdkVariant,
+    setRolesVariant,
     setFooterVariant,
     setHeroLinesVariant,
     setImageSetVariant,
@@ -397,6 +409,7 @@ export function useFaqVariant() { return useContext(DebugContext)?.faqVariant ??
 export function useCtaVariant() { return useContext(DebugContext)?.ctaVariant ?? defaultState.ctaVariant }
 export function useBlogVariant() { return useContext(DebugContext)?.blogVariant ?? defaultState.blogVariant }
 export function useSdkVariant() { return useContext(DebugContext)?.sdkVariant ?? defaultState.sdkVariant }
+export function useRolesVariant() { return useContext(DebugContext)?.rolesVariant ?? defaultState.rolesVariant }
 export function useFooterVariant() { return useContext(DebugContext)?.footerVariant ?? defaultState.footerVariant }
 export function useHeroLinesVariant() { return useContext(DebugContext)?.heroLinesVariant ?? defaultState.heroLinesVariant }
 export function useImageSetVariant() { return useContext(DebugContext)?.imageSetVariant ?? defaultState.imageSetVariant }

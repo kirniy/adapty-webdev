@@ -4,13 +4,18 @@ import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon, CodeIcon, BarChartIcon, MegaphoneIcon } from 'lucide-react';
-import { motion } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+
+// Helper function to get image path based on image set variant
+function getRoleImagePath(roleId: string, imageSet: ImageSetVariant): string {
+  return `/images/roles/${imageSet}/${roleId}.webp`;
+}
 
 // Role cards with value propositions instead of generic feature tags
 const ROLES = [
@@ -19,7 +24,6 @@ const ROLES = [
     title: 'For Developers',
     subtitle: 'Build faster, ship sooner',
     description: 'Skip the boilerplate. Our SDK handles subscription infrastructure so you can focus on your app.',
-    image: '/images/role-developers-new.webp',
     link: 'https://adapty.io/for-developers/',
     icon: CodeIcon,
     stats: '10 lines of code',
@@ -35,7 +39,6 @@ const ROLES = [
     title: 'For App Owners',
     subtitle: 'Know your numbers',
     description: 'Real-time revenue analytics, LTV predictions, and cohort analysis to make data-driven decisions.',
-    image: '/images/role-owners-new.webp',
     link: 'https://adapty.io/for-app-owners/',
     icon: BarChartIcon,
     stats: '$2B+ tracked',
@@ -51,7 +54,6 @@ const ROLES = [
     title: 'For Marketers',
     subtitle: 'Optimize without code',
     description: 'A/B test paywalls, localize content, and target user segments - all without app updates.',
-    image: '/images/role-marketers-new.webp',
     link: 'https://adapty.io/for-marketers/',
     icon: MegaphoneIcon,
     stats: '+40% conversions',
@@ -67,10 +69,13 @@ const ROLES = [
 interface RoleCardProps {
   role: typeof ROLES[number];
   index: number;
+  imageSet: ImageSetVariant;
+  monochromeMode: boolean;
 }
 
-function RoleCard({ role, index }: RoleCardProps) {
+function RoleCard({ role, index, imageSet, monochromeMode }: RoleCardProps) {
   const Icon = role.icon;
+  const imageSrc = getRoleImagePath(role.id, imageSet);
 
   return (
     <BlurFade
@@ -103,10 +108,13 @@ function RoleCard({ role, index }: RoleCardProps) {
         {/* Image */}
         <div className="relative mb-6 aspect-[16/10] overflow-hidden rounded-xl bg-muted">
           <Image
-            src={role.image}
+            src={imageSrc}
             alt={role.title}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className={cn(
+              "object-cover transition-all duration-300 group-hover:scale-105",
+              monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+            )}
           />
         </div>
 
@@ -131,6 +139,9 @@ function RoleCard({ role, index }: RoleCardProps) {
 }
 
 export function RoleCards(): React.JSX.Element {
+  const imageSet = useImageSetVariant();
+  const monochromeMode = useMonochromeMode();
+
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
@@ -150,7 +161,13 @@ export function RoleCards(): React.JSX.Element {
         {/* Role Cards Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {ROLES.map((role, index) => (
-            <RoleCard key={role.id} role={role} index={index} />
+            <RoleCard
+              key={role.id}
+              role={role}
+              index={index}
+              imageSet={imageSet}
+              monochromeMode={monochromeMode}
+            />
           ))}
         </div>
       </div>

@@ -16,6 +16,7 @@ import {
   HERO_LINES_VARIANTS,
   LOGOS_VARIANTS,
   FEATURES_VARIANTS,
+  ROLES_VARIANTS,
   SDK_VARIANTS,
   STATS_VARIANTS,
   TESTIMONIALS_VARIANTS,
@@ -189,6 +190,7 @@ export function DebugMenu() {
     heroLinesVariant, setHeroLinesVariant,
     logosVariant, setLogosVariant,
     featuresVariant, setFeaturesVariant,
+    rolesVariant, setRolesVariant,
     sdkVariant, setSdkVariant,
     statsVariant, setStatsVariant,
     testimonialsVariant, setTestimonialsVariant,
@@ -304,6 +306,10 @@ export function DebugMenu() {
 
             <CollapsibleSection title="Features" icon={<BlocksIcon />} defaultOpen>
               <VariantSelector variants={FEATURES_VARIANTS} currentValue={featuresVariant} onChange={setFeaturesVariant} />
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Roles" icon={<BlocksIcon />} defaultOpen>
+              <VariantSelector variants={ROLES_VARIANTS} currentValue={rolesVariant} onChange={setRolesVariant} />
             </CollapsibleSection>
 
             <CollapsibleSection title="SDK" icon={<BlocksIcon />}>

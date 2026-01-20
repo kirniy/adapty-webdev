@@ -5,6 +5,7 @@ import {
   useHeroVariant,
   useLogosVariant,
   useFeaturesVariant,
+  useRolesVariant,
   useStatsVariant,
   useTestimonialsVariant,
   useFaqVariant,
@@ -26,9 +27,11 @@ import { LogosLinear } from '~/components/sections/logos-linear';
 
 // Feature Section Components
 import { Solution } from '~/components/sections/solution';
-import { RoleCards } from '~/components/sections/role-cards';
 import { FeaturesTabbed } from '~/components/sections/features-tabbed';
 import { FeaturesBentoTabs } from '~/components/sections/features-bento-tabs';
+
+// Roles Section (separate from Features)
+import { Roles } from '~/components/sections/roles';
 
 // Original Achromatic Stats Components
 import { Stats } from '~/components/sections/stats';
@@ -99,13 +102,23 @@ function FeaturesSection() {
       return null;
     case 'bento-tabs':
       return <FeaturesBentoTabs />;
-    case 'roles':
-      return <RoleCards />;
     case 'tabbed':
       return <FeaturesTabbed />;
     case 'solution':
     default:
       return <Solution />;
+  }
+}
+
+function RolesSection() {
+  const variant = useRolesVariant();
+  switch (variant) {
+    case 'off':
+      return null;
+    case 'tabs':
+    case 'cards':
+    default:
+      return <Roles />;
   }
 }
 
@@ -205,7 +218,10 @@ export default function IndexPage(): React.JSX.Element {
       {/* 3. Features Section (Problem/Solution) */}
       <FeaturesSection />
 
-      {/* 4. SDK Code Section */}
+      {/* 4. Roles Section (For Developers/Marketers/Owners) */}
+      <RolesSection />
+
+      {/* 5. SDK Code Section */}
       <SdkSection />
 
       {/* 5. Stats Section */}
