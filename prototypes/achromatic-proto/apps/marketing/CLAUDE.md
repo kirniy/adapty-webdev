@@ -9,6 +9,16 @@
 |----|------|---|-------|------|
 | #2183 | 11:20 PM | 🔵 | Shadcn configuration points to shared workspace UI package | ~299 |
 | #2181 | 11:19 PM | 🔵 | Marketing app uses Next.js with workspace UI package | ~302 |
+
+### Jan 20, 2026
+
+| ID | Time | T | Title | Read |
+|----|------|---|-------|------|
+| #2306 | 1:02 AM | ✅ | Removed marketing project from Vercel | ~246 |
+| #2305 | " | ✅ | Removed framework specification from Vercel deployment config | ~243 |
+| #2301 | 1:00 AM | ✅ | Relinked marketing app to Vercel project | ~278 |
+| #2289 | 12:57 AM | ✅ | Removed Vercel deployment configuration from marketing app | ~218 |
+| #2287 | 12:56 AM | ✅ | Configured Vercel deployment for marketing app in monorepo | ~287 |
 </claude-mem-context>
 
 # Achromatic Marketing Prototype

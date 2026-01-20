@@ -7,5 +7,21 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #2214 | 11:33 PM | 🟣 | Added flickering footer variant to debug context | ~267 |
+| #2213 | " | 🟣 | Added flickering footer variant to debug context | ~262 |
+| #2212 | " | 🔵 | Marketing app has comprehensive debug/variant system | ~366 |
 | #2072 | 6:26 PM | 🟣 | Comprehensive Debug Context System with 17 Customizable UI Parameters | ~837 |
+
+### Jan 20, 2026
+
+| ID | Time | T | Title | Read |
+|----|------|---|-------|------|
+| #2366 | 1:59 AM | ✅ | Updated marketing app default visual theme to minimal aesthetic | ~353 |
+| #2364 | 1:58 AM | 🔵 | Marketing app uses debug context for variant switching | ~319 |
+| #2261 | 12:37 AM | 🟣 | Committed flickering footer and clean testimonials components to repository | ~387 |
+| #2260 | 12:36 AM | ✅ | Modified footer variant system and added documentation | ~327 |
+| #2259 | " | 🔵 | Flickering footer component files created but not yet committed | ~304 |
+| #2237 | 12:02 AM | ✅ | Added 'clean' testimonials variant to debug context | ~300 |
+| #2236 | " | 🟣 | Added 'clean' testimonials variant to debug context | ~251 |
+| #2235 | " | 🔵 | Marketing app has debug context with footer variant switching | ~387 |
 </claude-mem-context>

@@ -25,6 +25,7 @@
     "@manypkg/cli": "0.25.1",
     "@turbo/gen": "2.6.1",
     "cross-env": "7.0.3",
+    "next": "16.0.10",
     "turbo": "2.6.1",
     "typescript": "5.9.3"
   },
