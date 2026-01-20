@@ -253,8 +253,8 @@ const defaultState: DebugState = {
   sdkVariant: 'default',
   footerVariant: 'default',
   heroLinesVariant: 'above',
-  imageSetVariant: 'set1',
-  monochromeMode: false,
+  imageSetVariant: 'set2',
+  monochromeMode: true,
   isDebugMenuOpen: false,
 }
 
