@@ -386,7 +386,7 @@ function TabButton({
     <button
       onClick={onClick}
       className={cn(
-        'group relative flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 cursor-pointer',
+        'group relative flex shrink-0 items-center gap-2 sm:gap-2.5 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer whitespace-nowrap',
         isActive
           ? 'bg-primary text-primary-foreground shadow-md'
           : 'text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -436,18 +436,20 @@ export function FeaturesBentoTabs(): React.JSX.Element {
           </p>
         </BlurFade>
 
-        {/* Prominent Tab Bar */}
+        {/* Prominent Tab Bar - scrollable on mobile */}
         <BlurFade delay={0.1}>
-          <div className="mb-10 flex justify-center">
-            <div className="inline-flex gap-2 rounded-xl bg-muted/50 p-1.5 backdrop-blur-sm">
-              {FEATURE_TABS.map((tab) => (
-                <TabButton
-                  key={tab.id}
-                  tab={tab}
-                  isActive={activeTab === tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                />
-              ))}
+          <div className="mb-10 -mx-4 px-4 overflow-x-auto scrollbar-hide sm:mx-0 sm:px-0 sm:overflow-visible">
+            <div className="flex justify-center min-w-max sm:min-w-0">
+              <div className="inline-flex gap-2 rounded-xl bg-muted/50 p-1.5 backdrop-blur-sm">
+                {FEATURE_TABS.map((tab) => (
+                  <TabButton
+                    key={tab.id}
+                    tab={tab}
+                    isActive={activeTab === tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </BlurFade>

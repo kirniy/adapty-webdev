@@ -204,6 +204,14 @@
     height: 100vh; /* Fallback */
     height: 100dvh;
   }
+  /* Hide scrollbar for mobile tab navigation */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @utility container {

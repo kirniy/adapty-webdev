@@ -386,7 +386,7 @@ function FeatureTab({
       onMouseLeave={() => setIsHovered(false)}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
       className={cn(
-        'group relative flex flex-1 flex-col items-center gap-2 px-4 py-3 cursor-pointer',
+        'group relative flex shrink-0 flex-col items-center gap-2 px-3 sm:px-4 py-3 cursor-pointer',
         'border-b-2 transition-colors duration-150',
         isActive
           ? 'border-b-primary text-foreground'
@@ -394,7 +394,7 @@ function FeatureTab({
       )}
     >
       <div className={cn(
-        'flex items-center gap-2 text-sm font-medium whitespace-nowrap',
+        'flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium whitespace-nowrap',
         isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
       )}>
         <motion.div
@@ -410,7 +410,7 @@ function FeatureTab({
         >
           <Icon className="size-4 shrink-0" />
         </motion.div>
-        <span className="hidden sm:inline">{feature.label}</span>
+        <span>{feature.label}</span>
       </div>
       {/* Active indicator with smooth layout animation */}
       {isActive && (
@@ -544,12 +544,12 @@ function HeroFeatureShowcase(): React.JSX.Element {
   return (
     <BlurFade delay={0.5}>
       <div className="mt-12 lg:mt-16">
-        {/* Full-width tab bar */}
+        {/* Full-width tab bar - scrollable on mobile */}
         <div className={cn(
-          'mb-8 border-b border-border',
+          'mb-8 border-b border-border overflow-x-auto scrollbar-hide',
           linesBelow && 'bg-background'
         )}>
-          <div className="mx-auto flex w-full max-w-4xl">
+          <div className="mx-auto flex w-full max-w-4xl min-w-max">
             {HERO_FEATURES.map((feature) => (
               <FeatureTab
                 key={feature.id}

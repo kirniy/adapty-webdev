@@ -267,14 +267,15 @@ export function SDKCode(): React.JSX.Element {
                 onValueChange={(value) => setActiveTab(value as Language)}
                 className="w-full"
               >
-                <div className="border-b bg-muted/50 px-4">
-                  <TabsList className="h-12 bg-transparent gap-1">
+                {/* Scrollable tab container for mobile */}
+                <div className="border-b bg-muted/50 overflow-x-auto scrollbar-hide">
+                  <TabsList className="h-12 bg-transparent gap-1 px-4 min-w-max">
                     {(Object.entries(SDK_SNIPPETS) as [Language, typeof SDK_SNIPPETS.swift][]).map(
                       ([key, snippet]) => (
                         <TabsTrigger
                           key={key}
                           value={key}
-                          className="data-[state=active]:bg-background rounded-md px-3 py-1.5 text-xs font-medium"
+                          className="data-[state=active]:bg-background rounded-md px-3 py-1.5 text-xs font-medium shrink-0"
                         >
                           <span className="mr-1.5">{snippet.icon}</span>
                           {snippet.label}

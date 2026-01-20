@@ -189,25 +189,27 @@ export function FeaturesTabbed(): React.JSX.Element {
           </p>
         </BlurFade>
 
-        {/* Tabs */}
+        {/* Tabs - scrollable on mobile */}
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
           className="w-full"
         >
-          <div className="mb-8 flex justify-center">
-            <TabsList className="h-auto flex-wrap gap-2 bg-muted/50 p-2">
-              {FEATURE_TABS.map((tab) => (
-                <TabsTrigger
-                  key={tab.id}
-                  value={tab.id}
-                  className="flex items-center gap-2 rounded-lg px-4 py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm"
-                >
-                  <tab.icon className="size-4" />
-                  {tab.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+          <div className="mb-8 -mx-4 px-4 overflow-x-auto scrollbar-hide sm:mx-0 sm:px-0 sm:overflow-visible">
+            <div className="flex justify-center min-w-max sm:min-w-0">
+              <TabsList className="h-auto gap-2 bg-muted/50 p-2">
+                {FEATURE_TABS.map((tab) => (
+                  <TabsTrigger
+                    key={tab.id}
+                    value={tab.id}
+                    className="flex shrink-0 items-center gap-2 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm whitespace-nowrap data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                  >
+                    <tab.icon className="size-4" />
+                    {tab.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
           </div>
 
           <AnimatePresence mode="wait">

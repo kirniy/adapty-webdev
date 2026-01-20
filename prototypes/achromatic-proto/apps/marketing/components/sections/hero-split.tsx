@@ -172,7 +172,7 @@ function HeroIllustration(): React.JSX.Element {
     >
       <UnderlinedTabs defaultValue="feature1">
         <ScrollArea className="max-w-full">
-          <UnderlinedTabsList className="relative z-20 mb-4 flex h-fit flex-row flex-wrap justify-start gap-1 lg:justify-start">
+          <UnderlinedTabsList className="relative z-20 mb-4 flex h-fit flex-row flex-nowrap justify-start gap-1 min-w-max">
             <UnderlinedTabsTrigger
               value="feature1"
               className="px-2 text-xs sm:px-2.5 sm:text-sm"
