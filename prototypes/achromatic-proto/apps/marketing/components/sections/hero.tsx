@@ -448,19 +448,24 @@ function FeatureTab({
   );
 }
 
-// Feature content with smooth horizontal slide transitions
+// Feature content with smooth horizontal slide transitions and alternating layouts
 function FeatureContent({
   feature,
   direction,
+  index,
 }: {
   feature: typeof HERO_FEATURES[0];
   direction: 'left' | 'right';
+  index: number;
 }) {
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
 
   // Slide direction: entering from right when going forward, from left when going backward
   const slideOffset = direction === 'right' ? 40 : -40;
+
+  // Alternate layout: odd indexes (1, 3) have image on left, even (0, 2, 4) have image on right
+  const isReversed = index % 2 === 1;
 
   return (
     <motion.div
@@ -474,10 +479,13 @@ function FeatureContent({
       }}
       className="grid gap-8 lg:grid-cols-5"
     >
-      {/* Text content */}
-      <div className="flex flex-col justify-center lg:col-span-2">
+      {/* Text content - on mobile always first, on desktop alternates */}
+      <div className={cn(
+        "flex flex-col justify-center lg:col-span-2",
+        isReversed && "lg:order-2"
+      )}>
         <motion.div
-          initial={{ opacity: 0, x: -8 }}
+          initial={{ opacity: 0, x: isReversed ? 8 : -8 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ type: 'spring', delay: 0.05, duration: 0.25, bounce: 0 }}
         >
@@ -500,14 +508,14 @@ function FeatureContent({
           transition={{ type: 'spring', delay: 0.1, duration: 0.25, bounce: 0 }}
           className="space-y-3"
         >
-          {feature.highlights.map((highlight, index) => (
+          {feature.highlights.map((highlight, highlightIndex) => (
             <motion.li
               key={highlight}
-              initial={{ opacity: 0, x: -8 }}
+              initial={{ opacity: 0, x: isReversed ? 8 : -8 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{
                 type: 'spring',
-                delay: 0.12 + index * 0.04,
+                delay: 0.12 + highlightIndex * 0.04,
                 duration: 0.2,
                 bounce: 0.1
               }}
@@ -536,12 +544,15 @@ function FeatureContent({
         </motion.div>
       </div>
 
-      {/* Image with enhanced hover effect */}
+      {/* Image with enhanced hover effect - on mobile always second, on desktop alternates */}
       <motion.div
         initial={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
         animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
         transition={{ type: 'spring', delay: 0.08, duration: 0.35, bounce: 0 }}
-        className="relative lg:col-span-3"
+        className={cn(
+          "relative lg:col-span-3",
+          isReversed && "lg:order-1"
+        )}
         whileHover={{ scale: 1.01 }}
       >
         <div className={cn(
@@ -664,6 +675,7 @@ function HeroFeatureShowcase(): React.JSX.Element {
               key={activeFeature.id}
               feature={activeFeature}
               direction={direction}
+              index={activeIndex}
             />
           </AnimatePresence>
         </div>
