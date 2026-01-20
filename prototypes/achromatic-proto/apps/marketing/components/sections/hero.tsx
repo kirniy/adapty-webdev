@@ -365,15 +365,22 @@ function LearnMoreLink({ href, label }: { href: string; label: string }) {
   );
 }
 
-// Feature tab component with hover state and micro-interactions
+// Auto-rotation interval in milliseconds
+const AUTO_ROTATE_INTERVAL = 6000;
+
+// Feature tab component with hover state, micro-interactions, and progress indicator
 function FeatureTab({
   feature,
   isActive,
   onClick,
+  progress,
+  isAutoRotating,
 }: {
   feature: typeof HERO_FEATURES[0];
   isActive: boolean;
   onClick: () => void;
+  progress: number; // 0-100 for progress bar
+  isAutoRotating: boolean;
 }) {
   const Icon = feature.icon;
   const [isHovered, setIsHovered] = React.useState(false);
@@ -389,7 +396,7 @@ function FeatureTab({
         'group relative flex shrink-0 sm:shrink sm:flex-1 flex-col items-center gap-2 px-3 sm:px-4 py-3 cursor-pointer',
         'border-b-2 transition-colors duration-150',
         isActive
-          ? 'border-b-primary text-foreground'
+          ? 'border-b-transparent text-foreground'
           : 'border-b-transparent text-muted-foreground hover:text-foreground hover:border-b-border'
       )}
     >
@@ -412,13 +419,30 @@ function FeatureTab({
         </motion.div>
         <span>{feature.label}</span>
       </div>
-      {/* Active indicator with smooth layout animation */}
+      {/* Active indicator - solid when user selected, animated progress when auto-rotating */}
       {isActive && (
-        <motion.div
-          layoutId="activeTabIndicator"
-          className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-          transition={{ type: 'spring', duration: 0.3, bounce: 0.15 }}
-        />
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 overflow-hidden">
+          {/* Background track */}
+          <motion.div
+            layoutId="activeTabTrack"
+            className="absolute inset-0 bg-primary/20"
+            transition={{ type: 'spring', duration: 0.3, bounce: 0.15 }}
+          />
+          {/* Progress fill */}
+          <motion.div
+            layoutId="activeTabIndicator"
+            className="absolute inset-y-0 left-0 bg-primary"
+            initial={false}
+            animate={{
+              width: isAutoRotating ? `${progress}%` : '100%',
+            }}
+            transition={
+              isAutoRotating
+                ? { duration: 0.1, ease: 'linear' }
+                : { type: 'spring', duration: 0.3, bounce: 0.15 }
+            }
+          />
+        </div>
       )}
     </motion.button>
   );
@@ -538,24 +562,76 @@ function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
 
 function HeroFeatureShowcase(): React.JSX.Element {
   const [activeFeature, setActiveFeature] = React.useState(HERO_FEATURES[0]);
+  const [isAutoRotating, setIsAutoRotating] = React.useState(true);
+  const [isPaused, setIsPaused] = React.useState(false);
+  const [progress, setProgress] = React.useState(0);
   const heroLinesVariant = useHeroLinesVariant();
   const linesBelow = heroLinesVariant === 'below';
+  const shouldReduceMotion = useReducedMotion();
+
+  // Handle user click - stop auto-rotation permanently
+  const handleTabClick = React.useCallback((feature: typeof HERO_FEATURES[0]) => {
+    setActiveFeature(feature);
+    setIsAutoRotating(false);
+    setProgress(100); // Fill the bar when user selects
+  }, []);
+
+  // Auto-rotation effect
+  React.useEffect(() => {
+    if (!isAutoRotating || isPaused || shouldReduceMotion) {
+      return;
+    }
+
+    const progressInterval = 50; // Update progress every 50ms for smooth animation
+    const progressIncrement = (progressInterval / AUTO_ROTATE_INTERVAL) * 100;
+
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        const next = prev + progressIncrement;
+        if (next >= 100) {
+          // Move to next tab
+          setActiveFeature((current) => {
+            const currentIndex = HERO_FEATURES.findIndex((f) => f.id === current.id);
+            const nextIndex = (currentIndex + 1) % HERO_FEATURES.length;
+            return HERO_FEATURES[nextIndex];
+          });
+          return 0; // Reset progress
+        }
+        return next;
+      });
+    }, progressInterval);
+
+    return () => clearInterval(timer);
+  }, [isAutoRotating, isPaused, shouldReduceMotion]);
+
+  // Reset progress when active feature changes (for auto-rotation)
+  React.useEffect(() => {
+    if (isAutoRotating) {
+      setProgress(0);
+    }
+  }, [activeFeature.id, isAutoRotating]);
 
   return (
     <BlurFade delay={0.5}>
       <div className="mt-12 lg:mt-16">
         {/* Full-width tab bar - scrollable on mobile */}
-        <div className={cn(
-          'mb-8 border-b border-border overflow-x-auto scrollbar-hide',
-          linesBelow && 'bg-background'
-        )}>
+        <div
+          className={cn(
+            'mb-8 border-b border-border overflow-x-auto scrollbar-hide',
+            linesBelow && 'bg-background'
+          )}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
           <div className="mx-auto flex w-full max-w-4xl min-w-max sm:min-w-0">
             {HERO_FEATURES.map((feature) => (
               <FeatureTab
                 key={feature.id}
                 feature={feature}
                 isActive={activeFeature.id === feature.id}
-                onClick={() => setActiveFeature(feature)}
+                onClick={() => handleTabClick(feature)}
+                progress={activeFeature.id === feature.id ? progress : 0}
+                isAutoRotating={isAutoRotating && !isPaused}
               />
             ))}
           </div>
