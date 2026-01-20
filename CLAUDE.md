@@ -1,18 +1,18 @@
 ---
 project: adapty-redesign
-version: 3.3.0
-last_updated: 2026-01-15T04:30:00Z
+version: 4.0.0
+last_updated: 2026-01-20T01:30:00Z
 owner: kirill-kholodenko
 stakeholder: sergey-muratov
-phase: oatmeal-prototype
+phase: achromatic-production
 status: active
-tags: [redesign, nextjs, tailwind, design-system, oatmeal, vanilla-tailwind]
+tags: [redesign, nextjs, tailwind, design-system, achromatic, vanilla-tailwind, monorepo]
 ---
 
 # ADAPTY Website Redesign - Navigation & Context
 
 > **IMPORTANT**: This is a living navigation document. Update after every significant change.
-> Last significant update: 2026-01-15 (evening) - Aura mega-menu header ported to Oatmeal with variant switching. Gap analysis completed vs adapty.io.
+> Last significant update: 2026-01-20 - Achromatic-proto is now the main active project. Roles section added with 3 variants. Repository cleanup completed.
 
 ---
 
@@ -30,43 +30,35 @@ tags: [redesign, nextjs, tailwind, design-system, oatmeal, vanilla-tailwind]
 
 ## SESSION START INSTRUCTIONS (READ FIRST)
 
-### Current Status: OATMEAL PROTOTYPE ACTIVE
+### Current Status: ACHROMATIC-PROTO ACTIVE
 
-**New approach: Using purchased Oatmeal template as foundation for vanilla Tailwind build.**
+**Main project: `/prototypes/achromatic-proto/`**
 
-Results so far:
-- Oatmeal (vanilla Tailwind): Quality 8/10, sophisticated olive palette, editorial typography
-- Phase A (vanilla Tailwind): Quality 7/10, good base
-- Phase B (shadcn/ui): Quality 4/10, generic, over-engineered (abandoned)
+This is a monorepo based on the Achromatic SaaS starter kit with:
+- Marketing app at `/apps/marketing/` (port 3001)
+- Comprehensive debug menu system with 20+ section variants
+- AI-generated illustrations (3 style sets)
+- Full content parity with adapty.io navigation
+
+**Production URL**: [adapty-achromatic-proto.vercel.app](https://adapty-achromatic-proto.vercel.app)
 
 ### What Exists Now
 
-| Prototype | Location | Status | Quality |
-|-----------|----------|--------|---------|
-| **Oatmeal** | `/prototypes/oatmeal/` | DEPLOYED | Best so far |
-| **AuraBuild** | `/prototypes/aura-build/` | OPTIMIZED | Performance tuned |
-| **Phase A** | `/prototypes/adapty-prototype/` | DEPLOYED | Good base |
-| **DS1-Linear (shadcn)** | `/prototypes/phase-b-shadcn/proto-ds1-linear/` | 14/14 sections | Weak |
-
-### Current Direction
-
-**Using Oatmeal template** - purchased premium template providing:
-- Olive color palette (warm, sophisticated greens/grays)
-- Instrument Serif + Inter typography (editorial elegance)
-- Motion React animations from aura-build
-- All 14 homepage sections implemented
-
-**Deployed URL**: `adapty-oatmeal-jan14-2026.vercel.app`
+| Prototype | Location | Status | Notes |
+|-----------|----------|--------|-------|
+| **Achromatic** | `/prototypes/achromatic-proto/` | PRODUCTION | Main active project |
+| Oatmeal | `/prototypes/oatmeal/` | Archived | Earlier iteration |
+| AuraBuild | `/prototypes/aura-build/` | Archived | Performance experiments |
+| Phase A | `/prototypes/adapty-prototype/` | Archived | Initial 5-way theme switcher |
 
 ### Required Skills (ALWAYS LOAD)
 
 **For ALL React/Next.js work in this project:**
 ```
 react-best-practices     - Vercel Engineering performance guidelines (MANDATORY)
-vercel-deploy            - No-auth deployment to Vercel (say "deploy my app")
 ```
 
-This skill contains priority-ordered optimization rules. Apply patterns from highest impact first:
+Apply patterns from highest impact first:
 1. **CRITICAL**: Eliminate waterfalls (`Promise.all`, defer await)
 2. **CRITICAL**: Bundle size (avoid barrel imports, dynamic imports)
 3. **HIGH**: Server performance (`React.cache()`, parallel fetching)
@@ -74,593 +66,222 @@ This skill contains priority-ordered optimization rules. Apply patterns from hig
 
 **Reference files**: `~/.claude/skills/react-best-practices/references/rules/`
 
-### Additional Skills for Next Phase
-```
-1. frontend-design        - Distinctive, production-grade UI
-2. frontend-ui-ux         - Designer-turned-developer mindset
-3. (conditional) styling-with-shadcn - Only if Option B or C chosen
-```
-
 ---
 
 ## Quick Navigation
 
 | Area | Path | Purpose | Status |
 |------|------|---------|--------|
-| **Project Root** | `/` | Main workspace | Active |
-| **Reference Source** | `/adapty-pt2/` | READ-ONLY source of truth | Locked |
-| **Design Systems** | `/design-systems/` | 5 DS variants for testing | ✅ Tokens filled |
-| **Prototypes** | `/prototypes/` | Phase A & B builds | ✅ Deployed |
-| **Skeleton** | `/skeleton/` | Shared content/assets | Complete |
-| **References** | `/references/` | Site analysis data | ✅ COMPLETE |
-| **Messages** | `/messages/` | Sergey communications | 05-daily-report-jan14 ready |
-| **Scripts** | `/scripts/` | Automation tools | Ready |
-| **Docs** | `/docs/` | Project documentation | Partial |
-| **Reports** | `/reports/` | Audits, comparisons, research | Active |
-| **Research** | `/research/` | Phase B library research | ✅ Complete |
+| **Main Prototype** | `/prototypes/achromatic-proto/` | Production build | Active |
+| **Marketing App** | `/prototypes/achromatic-proto/apps/marketing/` | Website code | Active |
+| **Design Systems** | `/design-systems/` | 5 DS variants | Reference |
+| **Skeleton** | `/skeleton/` | Shared content/assets | Reference |
+| **References** | `/references/` | Site analysis data | Complete |
+| **Messages** | `/messages/` | Sergey communications | 09-daily-report-jan19 |
 
 ---
 
-## Current State (UPDATE THIS SECTION REGULARLY)
+## Current State
 
 ```yaml
-current_phase: "Block-by-Block Iteration - Header Enhancement"
-next_phase: "Content parity with adapty.io navigation"
+current_phase: "Production iteration - Homepage complete"
+next_phase: "Additional pages (Pricing, Demo, Feature pages)"
 blocking_tasks: []
-plan_file: "~/.claude/plans/rustling-wandering-perlis.md"
 
-# Active Prototypes
-active_prototypes:
-  oatmeal:
-    status: "IN PROGRESS - Header enhancement"
-    location: "/prototypes/oatmeal/"
-    url: "adapty-oatmeal-jan14-2026.vercel.app"
-    quality: "8/10 - Now with Aura mega-menu header"
-    sections: "14/14"
-    design_dna: "Inter only, olive palette + adapty purple accent"
-    recent_additions:
-      - "Debug menu system (grid + header variant switching)"
-      - "Aura mega-menu header (4 dropdowns)"
-      - "Font swap: Instrument Serif -> Inter"
-      - "Adapty purple (#6720FF) color palette"
-      - "New Achromatic-style Hero variant (Tabbed illustration)"
-      - "Removed legacy variants: Full Wallpaper, Minimal Text"
-    header_status:
-      ported: "AuraHeader, 4 menu components, LanguageSwitcher"
-      gap_vs_adapty_io: "Missing sidebar nav, 8 items, nav links"
-      next_task: "Content parity with adapty.io"
+# Main Prototype
+achromatic_proto:
+  status: "PRODUCTION"
+  location: "/prototypes/achromatic-proto/apps/marketing/"
+  url: "adapty-achromatic-proto.vercel.app"
+  quality: "9/10"
 
-  aura_build:
-    status: "OPTIMIZED"
-    location: "/prototypes/aura-build/"
-    quality: "7/10 - Blueprint grid, premium micro-interactions"
-    sections: "14+"
-    optimizations:
-      - "optimizePackageImports for motion/react + @phosphor-icons"
-      - "Dynamic import for TheInfiniteGrid (AnimatedBackground wrapper)"
-      - "Visual polish: grain, shine, elevate, glow effects"
-    design_dna: "Light theme, editorial typography, lime accent"
+  sections_implemented:
+    - Hero (4 variants: achromatic, centered-demo, minimal-text, split-left)
+    - TrustedBy (3 variants: marquee, static-grid, static-minimal)
+    - CoreFeatures (3 variants: colorful, muted, monochrome + tabs)
+    - Roles (3 variants: cards, bento, stacked)
+    - Stats (4 variants: cards, inline, graph, floating)
+    - SDK (5-platform support)
+    - Testimonials (3 variants: editorial, wall, carousel)
+    - Integrations (3 variants: grid, marquee, categorized)
+    - CaseStudies
+    - Pricing
+    - CTA
+    - Footer
 
-# Completed Work
-completed_phases:
-  phase_a:
-    status: "COMPLETE - DEPLOYED"
-    url: "https://adapty-prototype.vercel.app"
-    quality: "7/10 - Good base"
-    verdict: "Vanilla Tailwind provides more control than shadcn/ui"
+  debug_menu_features:
+    - Grid background (cursor-tracking, slow-drift, static, off)
+    - Guide lines toggle
+    - Header variants (pill-navbar, mega-menu)
+    - All section variant switching
+    - Image set switching (set1, set2, set3)
+    - localStorage persistence
 
-  phase_b_assessment:
-    status: "EVALUATED - NOT RECOMMENDED"
-    quality: "4/10 - Generic, over-engineered"
-    conclusion: "shadcn/ui adds friction for marketing sites"
+  recent_additions:
+    - "Roles section (cards, bento, stacked variants)"
+    - "Hover-to-reveal-color effect on role cards"
+    - "Auto-rotating tabs in Hero achromatic variant"
+    - "Mobile responsiveness fixes"
+    - "AI-generated role images (3 sets)"
 
 # Key Learnings
 key_insights:
-  - "shadcn/ui is optimized for dashboards, not landing pages"
-  - "Marketing sites need pixel-perfect control"
-  - "vanilla Tailwind approach produces better results"
-  - "optimizePackageImports critical for barrel import performance"
-  - "Server Components can't use ssr:false - use Client wrapper pattern"
-  - "adapty.io header has 2-3 level nav (sidebar + content) - this is what Sergey meant"
-  - "AdaptyPT2 has 17 product items vs our 9 - content parity needed"
-  - "Server Components can't use ssr:false - use Client wrapper pattern"
+  - "Vanilla Tailwind > shadcn/ui for marketing sites"
+  - "Debug menu enables rapid iteration"
+  - "optimizePackageImports critical for barrel imports"
+  - "Content parity with adapty.io essential"
+  - "Monorepo structure (achromatic) scales better than single-app"
 ```
 
 ---
 
-## Directory Routers
-
-### `/design-systems/` - Design System Variants
+## Project Structure
 
 ```
-/design-systems/
-├── README.md                      # DS methodology guide
-├── ds-1-linear-inspired/          # Premium, micro-interactions
-│   ├── design-system.md           # Full spec (TODO: fill from extraction)
-│   ├── tokens.css                 # CSS custom properties (TODO: fill)
-│   └── tailwind.config.ts         # Tailwind extension (TODO: fill)
-├── ds-2-attio-inspired/           # Light, hierarchical
-├── ds-3-polar-minimal/            # Clean, code-focused
-├── ds-4-vercel-bold/              # Colorful, metrics
-└── ds-5-hybrid-premium/           # Best of all
-```
-
-**Local conventions:**
-- Each DS folder has identical structure
-- `design-system.md` is human-readable spec
-- `tokens.css` is CSS custom properties (copy to prototype)
-- `tailwind.config.ts` extends base Tailwind (copy to prototype)
-- Fill values from reference extraction data
-
-### `/prototypes/` - Test Builds
-
-```
-/prototypes/
-├── README.md                      # Testing methodology
-├── adapty-prototype/              # ✅ Phase A - 5-way theme switcher (DEPLOYED)
-│
-├── phase-b-shadcn/                # 🔄 Phase B Part 1 - Pure shadcn/ui (IN PROGRESS)
-│   ├── proto-ds1-linear/          # Dark, premium, 3D depth
-│   ├── proto-ds2-attio/           # Light, editorial, serif
-│   ├── proto-ds3-polar/           # Dark, minimal, code-first
-│   ├── proto-ds4-vercel/          # True black, gradient hero
-│   └── proto-ds5-clerk/           # Warm gray, pill buttons
-│
-└── phase-b-tailark/               # 📋 Phase B Part 2 - Tailark blocks (FUTURE)
-    ├── proto-ds1-linear/          # DS1 with @tailark/* components
-    ├── proto-ds2-attio/           # DS2 with @tailark/* components
-    ├── proto-ds3-polar/           # DS3 with @tailark/* components
-    ├── proto-ds4-vercel/          # DS4 with @tailark/* components
-    └── proto-ds5-clerk/           # DS5 with @tailark/* components
-```
-
-**Phase B Part 1 (Current):**
-- Each prototype is independent Next.js 15 + shadcn/ui project
-- 5 fresh implementations from scratch (not ports of Phase A)
-- Same content, different design system DNA
-- Goal: Impress with visual quality and shadcn mastery
-
-**Phase B Part 2 (Future):**
-- Uses Tailark marketing blocks (https://tailark.com/docs)
-- Integrates via shadcn CLI: `pnpm dlx shadcn add @tailark/{component}`
-- Compare development speed vs hand-crafted approach
-
-**Local conventions:**
-- Each prototype is independent Next.js 15 project
-- Content sourced from `/adapty-pt2/` (READ-ONLY reference)
-- Assets copied from adapty-pt2/public/
-
-### `/skeleton/` - Shared Test Content
-
-```
-/skeleton/
-├── SKELETON.md                    # 14-section homepage spec (COMPLETE)
-├── content/                       # JSON content files (TODO)
-├── assets/                        # Images, logos, icons
-│   ├── images/
-│   ├── logos/
-│   ├── icons/
-│   ├── sdks/
-│   └── integrations/
-└── component-specs/               # Component architecture (TODO)
-```
-
-**Local conventions:**
-- SKELETON.md is the source of truth for what to build
-- All prototypes must implement all 14 sections
-- Content must be IDENTICAL across prototypes
-- Only styling/DS differs
-
-### `/references/` - Design Analysis ✅ COMPLETE
-
-```
-/references/
-├── linear/                        # ✅ Dark theme, 67+ animations
-│   ├── analysis.md
-│   └── raw-data/01-css-variables.json
-├── attio/                         # ✅ Light theme, LAB colors
-│   ├── analysis.md
-│   └── raw-data/01-css-variables.json
-├── polar/                         # ✅ Dark, minimal, fast
-│   ├── analysis.md
-│   └── raw-data/01-css-variables.json
-├── vercel/                        # ✅ Comprehensive DS
-│   ├── analysis.md
-│   └── raw-data/01-css-variables.json
-├── clerk/                         # ✅ Light, warm gray
-│   ├── analysis.md
-│   └── raw-data/01-css-variables.json
-└── synthesis/                     # ✅ Cross-site insights
-    ├── patterns.md                # Common patterns
-    ├── differentiators.md         # Unique approaches
-    └── recommendations.md         # Adapty recommendations
-```
-
-**Extraction Summary:**
-| Site | Theme | Font | Key Feature |
-|------|-------|------|-------------|
-| Linear | Dark | Inter Variable | 67+ animations |
-| Attio | Light | Inter + 3 others | LAB color space |
-| Polar | Dark | Geist | Fast 150ms anims |
-| Vercel | Dark | Geist + Space Grotesk | Bouncy easing |
-| Clerk | Light | Suisse | Pill buttons |
-
-### `/messages/` - Sergey Communications
-
-```
-/messages/
-├── 01-roadmap/                    # Initial research roadmap
-│   └── message.md
-├── 02-gemini-audit/               # Gemini audit reports (v1-v3)
-│   ├── audit-report.md
-│   ├── audit-report-v2.md
-│   └── audit-report-v3.md
-├── 02-reference-analysis/         # Reference site analysis
-├── 03-phase-b-assessment/         # Phase B results & recommendations
-│   └── message.md                 # Russian: shadcn didn't work, options A/B/C
-├── 03-ds-results/                 # Phase A results (legacy)
-├── 04-daily-report-jan13/         # January 13 daily report
-│   ├── message.md                 # Full report
-│   ├── message-short.md           # Slack version
-│   └── 2026-01-13-REPORT-*.pdf    # PDF export
-└── 05-daily-report-jan14/         # January 14 daily report (LATEST)
-    ├── message.md                 # Full report (22 KB)
-    ├── message-short.md           # Slack version (6.3 KB)
-    └── 2026-01-14-REPORT-*.pdf    # PDF export (590 KB)
-```
-
-**Local conventions:**
-- All messages to Sergey in RUSSIAN
-- Include clear next steps and questions
-- Reference specific deliverables
-- Latest message: `/messages/05-daily-report-jan14/message.md`
-
-### `/scripts/` - Automation
-
-```
-/scripts/
-├── create-prototype.sh            # Scaffold new prototype (READY)
-├── deploy-prototype.sh            # Deploy to Vercel (READY)
-└── generate-comparison.sh         # Generate comparison report (READY)
-```
-
-**Usage:**
-```bash
-# Create Phase A prototype
-./scripts/create-prototype.sh ds1 1 a
-
-# Deploy prototype
-./scripts/deploy-prototype.sh phase-a-design-systems/proto-ds1
-
-# Generate comparison report
-./scripts/generate-comparison.sh a --lighthouse --screenshots
-```
-
-### `/reports/` - Project Reports
-
-```
-/reports/
-├── audits/                        # DS wireframe audits, code audits
-│   └── 2026-01-13-1700-ds-wireframe-comparison-audit.md
-├── comparisons/                   # Side-by-side comparisons
-└── research/                      # Research summaries
-```
-
-**Local conventions:**
-- All report files named with date-time prefix: `YYYY-MM-DD-HHMM-description.md`
-- Audits compare prototypes vs reference sites
-- Comparisons are side-by-side DS or library evaluations
-- Research contains summarized findings
-
-### `/research/` - Phase B Research
-
-```
-/research/
-├── phase-b-ui-libraries-research.md     # Opus 4.5 research summary
-├── phase-b-gemini-ui-libraries-research.md  # Gemini Deep Research
-├── phase-b-report-sergey.docx           # Russian report for stakeholder
-├── gemini-research-prompt.md            # Prompt used for Gemini research
-├── ui-libraries/                        # Individual library analysis
-└── animation-libraries/                 # Animation library research
-```
-
-**Research Conclusions (UPDATED 2026-01-13):**
-- **INITIAL**: shadcn/ui + MCP integration for Claude
-- **ACTUAL RESULT**: shadcn/ui underperformed for marketing pages
-- **Lesson**: Component libraries add friction for landing pages where every pixel matters
-- **Still worth trying**: Tailark marketing blocks (https://tailark.com/docs)
-- **Animation**: ReactBits + 21stDev for micro-interactions (if proceeding with shadcn)
-- **Recommendation**: Return to vanilla Tailwind (Phase A approach) for marketing sections
-
-**Tailark Integration:**
-```bash
-# Add to components.json registries
-"@tailark": "https://tailark.com/r"
-
-# Install components
-pnpm dlx shadcn add @tailark/hero-1
-pnpm dlx shadcn add @tailark/features-1
+adapty-webdev/
+|
++-- prototypes/
+|   +-- achromatic-proto/              # MAIN ACTIVE PROJECT
+|       +-- apps/
+|       |   +-- marketing/             # Marketing website (port 3001)
+|       |       +-- app/               # Next.js App Router
+|       |       +-- components/
+|       |       |   +-- debug/         # DebugMenu.tsx
+|       |       |   +-- fragments/     # Reusable UI fragments
+|       |       |   +-- layout/        # Header, Footer
+|       |       |   +-- sections/      # All page sections
+|       |       +-- lib/
+|       |       |   +-- content.ts     # All content/copy
+|       |       |   +-- debug-context.tsx  # Debug state
+|       |       +-- public/
+|       |           +-- assets/hero/   # AI-generated (set1, set2, set3)
+|       |           +-- assets/roles/  # Role images (set1, set2, set3)
+|       +-- packages/
+|           +-- ui/                    # Shared components
+|
++-- design-systems/                    # DS specs (reference)
++-- references/                        # Site analysis (reference)
++-- skeleton/                          # Content spec (reference)
++-- messages/                          # Stakeholder comms
+|
++-- CLAUDE.md                          # This file
++-- README.md                          # Project README
 ```
 
 ---
 
-## Stakeholder Requirements (from Slack 2026-01-13)
+## Development Commands
+
+```bash
+# Navigate to main project
+cd /Users/kirniy/dev/adapty-dev/prototypes/achromatic-proto
+
+# Start dev server (marketing on port 3001)
+pnpm --filter marketing dev
+
+# Build
+pnpm --filter marketing build
+
+# Lint
+pnpm --filter marketing lint
+```
+
+---
+
+## Stakeholder Requirements
 
 ### Priority Pages (in order)
-1. **Homepage** - most visits
-2. **Pricing**
-3. **Schedule a demo**
+1. **Homepage** - COMPLETE
+2. **Pricing** - Next
+3. **Schedule a demo** - Planned
 4. **Feature pages**: paywall-builder, paywall-ab-testing, onboarding-builder
 5. **Role pages**: for-marketers, for-developers, for-app-owners
 
-**Timeline**: Full site migration in ~1 month, starting with priority pages.
-
-### Sergey's Design Direction
-- **Theme preference**: LIGHT theme, less dense information
+### Design Direction
+- **Theme**: LIGHT theme, less dense information
 - **Primary refs**: Linear, Attio, Polar.sh, Vercel, Clerk
-- **Caution**: Stripe (outdated, over-copied before)
-- **Competitors to study**: RevenueCat, Superwall (information packaging)
-- **Additional refs**: WorkOS, Railway, Render, Fly.io, Neon, Supabase, Webflow, Raycast, Retool, Notion, Figma, Slack
-
-### External Resources
-- **Figma board**: https://www.figma.com/board/p8dkKA6wUlntwTJFjU3bMB/New-website-references
-- **Existing vibe-code**: https://next-adapty.vercel.app/
-- **Preferred style examples**:
-  - https://adapty.io/apple-ads-manager/
-  - https://adapty.io/apple-fiscal-calendar/
-
-### MCP Resources (from Sergey)
-| Resource | MCP Available | Pricing |
-|----------|---------------|---------|
-| shadcn UI | https://ui.shadcn.com/docs/mcp | FREE |
-| shadcn Blocks | https://www.shadcnblocks.com/pricing | Paid only |
-| React Bits | https://reactbits.dev/get-started/mcp | Free (Pro coming) |
-| 21st.dev | https://21st.dev/mcp | $16+ (API key) |
-| shadcn/studio | https://shadcnstudio.com/mcp/onboarding | $200 PRO |
-
-**Note**: Kirill has prior experience with 21st.dev Magic MCP from founder contact.
+- **Color**: Adapty purple (#6720FF) as primary accent
+- **Typography**: Inter throughout
 
 ---
 
-## Key Context
+## Tech Stack
 
-### Project Background
-Kirill was hired as AI-native web developer at ADAPTY. Entry task (adapty-pt2) was successful recreation of ADAPTY website. Now doing full strategic redesign using systematic A/B testing.
-
-### Core Methodology
-```
-Phase A: Test 5 Design Systems (vanilla Tailwind, NO libraries)
-    ↓ Select winner DS
-Phase B: Test 5 UI Libraries (WITH winner DS)
-    ↓ Select winner Library
-Phase C: (Optional) Cross-validation
-```
-
-### Key Meeting Insights
-- **Code-First Design**: Figma is auxiliary, code is source of truth
-- **Full Autonomy**: Kirill has carte blanche on design decisions
-- **LEGO Approach**: Use shadcn/ui as foundation
-- **Target Aesthetic**: Light, airy, modern (not "heavy luxury 2020")
-
-### Reference Sites (Priority)
-1. Linear - Micro-interactions, premium feel
-2. Attio - Light theme, hierarchy
-3. Polar.sh - Minimalism, code aesthetics
-4. Vercel - Bold visuals, metrics
-5. Clerk - Developer-friendly
-
-### Tech Stack
-- Next.js 15 (App Router)
-- Tailwind CSS 4
-- TypeScript
-- shadcn/ui ecosystem
-- Framer Motion
-- Vercel deployment
-
-### Claude Code Skills (Global)
-Located in `~/.claude/skills/`:
-| Skill | Purpose | Usage |
-|-------|---------|-------|
-| **react-best-practices** | Vercel perf guidelines | Auto-apply when writing React |
-| **vercel-deploy** | No-auth deployment | "Deploy my app" |
-| frontend-design | Production-grade UI | UI component creation |
-| frontend-ui-ux | Designer mindset | UX decisions |
-| styling-with-shadcn | shadcn patterns | When using shadcn |
-| nextjs | Next.js patterns | App Router, RSC |
-
-### Icon Libraries (January 2026 Recommendations)
-
-**Avoid**: Lucide (default shadcn) - too common, "cliche" look
-
-**Recommended Alternatives**:
-| Library | Icons | Weights | Best For | Package |
-|---------|-------|---------|----------|---------|
-| **Phosphor** | 4,500+ | 6 (thin, light, regular, bold, fill, duotone) | Premium apps, versatile | `@phosphor-icons/react` |
-| **Tabler** | 4,500+ | 1 (outline) | Dashboards, SaaS | `@tabler/icons-react` |
-| **Iconoir** | 1,500+ | 1 (outline) | Minimal, clean UI | `iconoir-react` |
-| **Hugeicons** | 40,000+ | 9 styles | Maximum variety | `hugeicons-react` |
-
-**Installation**:
-```bash
-# Phosphor (recommended for DS1 Linear - duotone weight fits premium aesthetic)
-pnpm add @phosphor-icons/react
-
-# Usage
-import { Gear, User, ArrowRight } from "@phosphor-icons/react"
-<Gear size={24} weight="duotone" />
-
-# Tabler (recommended for dashboards)
-pnpm add @tabler/icons-react
-
-# Usage
-import { IconSettings, IconUser } from "@tabler/icons-react"
-<IconSettings size={24} stroke={1.5} />
-```
-
-**DS-Specific Recommendations**:
-- **DS1 Linear**: Phosphor (duotone weight) - matches premium 3D depth aesthetic
-- **DS2 Attio**: Phosphor (regular) or Iconoir - clean editorial feel
-- **DS3 Polar**: Tabler - code/developer aesthetic
-- **DS4 Vercel**: Phosphor (bold) - matches bold visual style
-- **DS5 Clerk**: Phosphor (light/regular) - friendly, approachable
-
-### ShadCN Create (December 2025 - GAME CHANGER)
-
-**URL**: https://ui.shadcn.com/themes
-
-**What it does**: Customizes shadcn/ui components BEFORE installation. Generates pre-styled component code matching your brand.
-
-**Why it matters**: The Phase B "generic look" problem was caused by using default presets. ShadCN Create lets you bake your design system into components from the start.
-
-**Workflow**:
-1. Go to https://ui.shadcn.com/themes
-2. Select component library (Radix UI or Base UI)
-3. Choose style preset (or click "Shuffle" for random)
-4. Set base colors, fonts, border radius
-5. Preview components in real-time
-6. Click "Create Project" and copy the install command
-7. All components are pre-styled to your specifications
-
-**Available Options**:
-- **Component Library**: Radix UI (default), Base UI (newer)
-- **Presets**: Multiple built-in styles (Lyra, etc.)
-- **Colors**: Neutral, Stone, Zinc, etc.
-- **Fonts**: Roboto, Inter, etc.
-- **Border Radius**: Small, Medium, Large
-
-**Integration**:
-```bash
-# Example generated command (varies based on your choices)
-npx shadcn@latest init --style lyra --base-color neutral --css-variables
-```
-
-**Status**: NEW - not yet tested with Adapty prototypes. Recommended as Option D.
-
-### Drawbridge (Visual Debugging Tool)
-
-**GitHub**: https://github.com/breschio/drawbridge
-
-**What it does**: Visual debugging integration with Claude Code. Select UI elements visually, point at issues, get fixes.
-
-**Why it matters**: Eliminates "move button 2px left" back-and-forth. Show Claude exactly what you mean instead of describing it.
-
-**Use cases**:
-- Pixel-perfect UI adjustments
-- Visual bug identification
-- Layout debugging
-- Responsive design issues
-
-**Status**: Available for integration. Consider adding when doing polish work.
-
-### Plan Loop Methodology (Matt Pocock)
-
-**Source**: https://www.aihero.dev/my-agents-md-file-for-building-plans-you-actually-read
-
-**The Loop**: Plan → Execute → Test → Commit → Repeat
-
-**Why it matters**: Instead of asking AI to write code directly, work through a structured cycle:
-1. **Plan** with AI first - think through approach together before writing code
-2. **Execute** - AI writes code matching the plan (not guessing)
-3. **Test** together - unit tests, type safety, manual QA
-4. **Commit** and repeat
-
-**Rules for great plans**:
-- Make plans **extremely concise** - sacrifice grammar for scannability
-- End with **unresolved questions** to answer
-
-**Key insight**: Planning forces clarity. Makes AI's job easier, your code better. Without planning, you're asking AI to guess what you want.
+| Technology | Version | Purpose |
+|:-----------|:--------|:--------|
+| Next.js | 15.5 | React framework |
+| React | 19 | UI library |
+| TypeScript | 5.0 | Type safety |
+| Tailwind CSS | 4.0 | Styling |
+| motion/react | latest | Animations |
+| @phosphor-icons/react | latest | Icons |
+| Vercel | - | Deployment |
 
 ---
 
-## Task System
+## Icon Library
 
-### Active Tasks File
-Location: `/docs/TASKS.md` (create if not exists)
+**Using**: @phosphor-icons/react (4,500+ icons, 6 weights)
 
-### Task States
-- `[ ]` Pending
-- `[>]` In Progress
-- `[x]` Complete
-- `[!]` Blocked
-- `[-]` Cancelled
-
-### Phase A Completed Tasks
-```
-[x] Create repository structure
-[x] Write initial CLAUDE.md
-[x] Create SKELETON.md (14 sections)
-[x] Extract assets from adapty-pt2
-[x] Create DS templates (5 variants)
-[x] Extract reference sites via Chrome - 5/5 COMPLETE
-[x] Fill DS tokens from extraction data - ALL 5 COMPLETE
-[x] Build Phase A prototype with 5-way theme switcher
-[x] Deploy to Vercel (adapty-prototype.vercel.app)
-[x] Phase B research (Gemini + Opus 4.5) - shadcn/ui selected
-[x] DS wireframe comparison audit - all 5 variants analyzed
+```tsx
+import { Icon } from "@phosphor-icons/react"
+<Icon size={24} weight="regular" />
 ```
 
-### Current Sprint: Phase B Part 1 (2026-01-13)
-```
-[x] Update CLAUDE.md for Phase B
-[>] Create /prototypes/phase-b-shadcn/ structure
-[>] Build proto-ds1-linear (Dark, premium, 3D depth)
-[ ] Build proto-ds2-attio (Light, editorial, serif)
-[ ] Build proto-ds3-polar (Dark, minimal, code-first)
-[ ] Build proto-ds4-vercel (True black, gradient hero)
-[ ] Build proto-ds5-clerk (Warm gray, pill buttons)
-[ ] Deploy all 5 to Vercel
-[ ] Create comparison report
-[ ] Present to Sergey
-```
-
-### Future: Phase B Part 2 (Tailark)
-```
-[ ] Create /prototypes/phase-b-tailark/ structure
-[ ] Build 5 prototypes using @tailark/* blocks
-[ ] Compare dev speed vs Part 1 (hand-crafted)
-[ ] Final recommendation
-```
+Weights: thin, light, regular, bold, fill, duotone
 
 ---
 
-## Memory System (claude-mem) ✅ ACTIVE
+## Completed Work
 
-### How It Works
-Claude-mem is an MCP plugin that **automatically** saves observations from coding sessions. No manual action needed - it captures context via lifecycle hooks (session start, prompt submit, tool usage, session end).
+### Phase A (Complete)
+- 5 design system variants tested
+- Vanilla Tailwind approach validated
+- Deployed to adapty-prototype.vercel.app
 
-### What Gets Saved Automatically
-- Session summaries and discoveries
-- Files created/modified with context
-- Decisions made and rationale
-- Key technical findings
+### Phase B (Evaluated)
+- shadcn/ui tested, not recommended for marketing
+- Component libraries add friction for landing pages
 
-### MCP Tools Available
-| Tool | Purpose |
-|------|---------|
-| `search` | Query memories by text/type/date/project |
-| `timeline` | Get chronological context around an observation |
-| `get_observations` | Fetch full details by ID |
+### Achromatic Integration (Complete)
+- Premium SaaS starter kit integrated
+- Debug menu system added
+- 20+ section variants implemented
+- Content parity achieved
 
-### 3-Layer Efficient Workflow
-1. **search(query)** → Get compact index (~50-100 tokens/result)
-2. **timeline(anchor=ID)** → Get context around interesting results
-3. **get_observations([IDs])** → Fetch full details for filtered IDs only
+### January 19-20, 2026
+- Roles section with 3 variants
+- Auto-rotating tabs in Hero
+- Mobile responsiveness fixes
+- AI-generated role images
+- Repository cleanup
+- Single Vercel deployment configured
 
-### Web Viewer
-Browse memories visually at: http://localhost:37777
+---
 
-### Privacy
-Wrap sensitive content in `<private>` tags to exclude from storage.
+## Documentation Files (Update Periodically)
 
-### For AI Assistants
-**The memory system is automatic.** Context is injected at session start via the `<claude-mem-context>
-# Recent Activity
+These files should be updated at the end of significant work sessions:
 
-<!-- This section is auto-generated by claude-mem. Edit content outside the tags. -->
+| File | Purpose | Update Frequency |
+|------|---------|------------------|
+| `/docs/PROGRESS.md` | Daily work log, accomplishments | End of each session |
+| `/docs/TASKS.md` | Task tracker, sprint status | When tasks change |
+| `/CLAUDE.md` | Project navigation, current state | After significant changes |
+| `/README.md` | Public-facing project info | After major milestones |
 
-### Jan 12, 2026
+### How to Update
 
-| ID | Time | T | Title | Read |
-|----|------|---|-------|------|
-| #3 | 7:09 PM | 🔵 | Adapty Redesign Project State and Infrastructure | ~558 |
-</claude-mem-context>
+**PROGRESS.md**: Add new entry with session summary, accomplishments, metrics
+**TASKS.md**: Update task states ([x], [>], [ ]), add new tasks as needed
+**CLAUDE.md**: Update "Current State" yaml block, add new sections if needed
+
+---
+
+## Notes
+
+### Memory System (claude-mem)
+**Status**: DISABLED for this project (see `.claude/settings.json`)
+
+### Vercel Deployment
+Only `adapty-achromatic-proto` auto-deploys. Other projects disconnected.

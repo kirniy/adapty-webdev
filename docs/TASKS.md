@@ -2,7 +2,7 @@
 project: adapty-redesign
 type: task-tracker
 status: active
-last_updated: 2026-01-12
+last_updated: 2026-01-20
 tags: [tasks, tracking, sprint]
 ---
 
@@ -24,119 +24,100 @@ tags: [tasks, tracking, sprint]
 
 ---
 
-## Current Sprint: 2026-01-12 (Setup)
+## Current Status
 
-### Phase 0: Project Setup
-
-#### Infrastructure
-- [x] Create repository folder structure
-- [x] Write CLAUDE.md (initial)
-- [x] Write README.md
-- [x] Extract assets from adapty-pt2 to skeleton/
-- [x] Create SKELETON.md (14 sections)
-
-#### Design Systems
-- [x] Create DS1 template (Linear-inspired)
-- [x] Create DS2 template (Attio-inspired)
-- [x] Create DS3 template (Polar-minimal)
-- [x] Create DS4 template (Vercel-bold)
-- [x] Create DS5 template (Hybrid-premium)
-
-#### Automation
-- [x] Create create-prototype.sh
-- [x] Create deploy-prototype.sh
-- [x] Create generate-comparison.sh
-
-#### Documentation
-- [x] Write message 01-roadmap for Sergey
-- [x] Restructure CLAUDE.md as navigation layer
-- [x] Create task system (this file)
-- [x] Create PROGRESS.md
-- [x] Create DECISIONS.md
-
-#### Memory & Tools
-- [ ] Install claude-mem plugin (USER ACTION REQUIRED)
-- [x] Set up tag-based document querying
-- [x] Create local docs for key libraries (T3, shadcn/ui)
+**Main Project**: `/prototypes/achromatic-proto/`
+**Production URL**: [adapty-achromatic-proto.vercel.app](https://adapty-achromatic-proto.vercel.app)
+**Current Phase**: Homepage complete, preparing for additional pages
 
 ---
 
-## Next Sprint: Reference Analysis
+## Completed Phases
 
-### Reference Site Extraction (via Chrome)
-- [ ] Extract Linear design DNA
-- [ ] Extract Attio design DNA
-- [ ] Extract Polar.sh design DNA
-- [ ] Extract Vercel design DNA
-- [ ] Extract Clerk design DNA
-- [ ] Synthesize patterns across all sites
-- [ ] Document differentiators
-- [ ] Write recommendations
+### Phase 0: Project Setup [COMPLETE]
+- [x] Repository structure
+- [x] CLAUDE.md navigation
+- [x] SKELETON.md (14 sections)
+- [x] Asset extraction from adapty-pt2
+- [x] 5 design system templates
 
-### Design System Completion
-- [ ] Fill DS1 tokens from Linear extraction
-- [ ] Fill DS2 tokens from Attio extraction
-- [ ] Fill DS3 tokens from Polar extraction
-- [ ] Fill DS4 tokens from Vercel extraction
-- [ ] Create DS5 hybrid tokens
+### Phase A: Design System Testing [COMPLETE]
+- [x] Reference site extraction (5 sites)
+- [x] DS tokens filled
+- [x] Phase A prototype built
+- [x] Deployed to adapty-prototype.vercel.app
 
----
+### Phase B: Library Testing [EVALUATED]
+- [x] shadcn/ui tested
+- [x] Result: Not recommended for marketing sites
+- [-] Additional library testing (cancelled - vanilla Tailwind preferred)
 
-## Future Sprints
+### Oatmeal/Aura Iteration [COMPLETE]
+- [x] Oatmeal template integrated
+- [x] AuraBuild prototype created
+- [x] Debug menu system
+- [x] Mega-menu header ported
 
-### Phase A: Design System Testing
-- [ ] Build proto-ds1 (Linear-inspired)
-- [ ] Build proto-ds2 (Attio-inspired)
-- [ ] Build proto-ds3 (Polar-minimal)
-- [ ] Build proto-ds4 (Vercel-bold)
-- [ ] Build proto-ds5 (Hybrid-premium)
-- [ ] Deploy all 5 to Vercel
-- [ ] Generate comparison report
-- [ ] Select winner DS
-- [ ] Write message 03-ds-results for Sergey
-
-### Phase B: Library Testing
-- [ ] Build proto-shadcn-ui
-- [ ] Build proto-shadcn-blocks
-- [ ] Build proto-21st-dev
-- [ ] Build proto-react-bits
-- [ ] Build proto-custom-mix
-- [ ] Deploy all 5 to Vercel
-- [ ] Generate comparison report
-- [ ] Select winner library
-- [ ] Write message 04-library-results for Sergey
-
-### Phase C: Production
-- [ ] Build final homepage with winner stack
-- [ ] Build remaining 8 MVP pages
-- [ ] QA and testing
-- [ ] Production deployment
+### Achromatic-Proto Integration [COMPLETE]
+- [x] Achromatic SaaS starter kit integrated
+- [x] Marketing app configured
+- [x] Debug menu system with 20+ variants
+- [x] All homepage sections implemented
+- [x] Deployed to adapty-achromatic-proto.vercel.app
 
 ---
 
-## Blocked Tasks
+## Current Sprint: Homepage Polish (2026-01-20)
 
-| Task | Blocker | Since | Notes |
-|------|---------|-------|-------|
-| Fill DS tokens | Reference extraction | 2026-01-12 | Waiting for Chrome analysis |
-| Build prototypes | DS tokens incomplete | 2026-01-12 | Depends on extraction |
+### Completed This Sprint
+- [x] Roles section (3 variants: cards, bento, stacked)
+- [x] Hover-to-reveal-color effect
+- [x] Auto-rotating tabs in Hero
+- [x] Mobile responsiveness fixes
+- [x] AI-generated role images (3 sets)
+- [x] Repository cleanup
+- [x] Documentation update
+
+### Remaining
+- [ ] Review all section variants for quality
+- [ ] Final polish pass
+- [ ] Stakeholder presentation
 
 ---
 
-## Completed Tasks Archive
+## Next Sprint: Additional Pages
 
-### 2026-01-12
-- Repository structure created
-- CLAUDE.md v1.0 and v2.0
-- SKELETON.md complete
-- All 5 DS templates created
-- All 3 automation scripts created
-- Message 01-roadmap ready
+### Priority Pages (in order)
+1. [ ] Pricing page
+2. [ ] Schedule a demo page
+3. [ ] Feature pages
+   - [ ] paywall-builder
+   - [ ] paywall-ab-testing
+   - [ ] onboarding-builder
+4. [ ] Role pages
+   - [ ] for-marketers
+   - [ ] for-developers
+   - [ ] for-app-owners
+
+---
+
+## Infrastructure Tasks
+
+### Completed
+- [x] Single Vercel deployment configured (adapty-achromatic-proto)
+- [x] Removed old .vercel directories
+- [x] claude-mem disabled
+- [x] Documentation updated
+
+### Pending
+- [ ] Consider removing archived prototypes (oatmeal, aura-build, adapty-prototype)
+- [ ] Clean up /docs folder (old docx generation scripts)
 
 ---
 
 ## Notes
 
-- **Priority**: Reference extraction is blocking next phase
-- **User action needed**: Run claude-mem plugin install commands
-- **User action needed**: Use Chrome extension for reference extraction
+- **Main project**: achromatic-proto (monorepo structure)
+- **Marketing app**: `/apps/marketing/` on port 3001
+- **Vercel**: Only adapty-achromatic-proto auto-deploys
+- **claude-mem**: Disabled for this project

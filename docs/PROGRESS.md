@@ -2,7 +2,7 @@
 project: adapty-redesign
 type: progress-log
 status: active
-last_updated: 2026-01-15
+last_updated: 2026-01-20
 tags: [progress, log, history]
 ---
 
@@ -12,681 +12,138 @@ tags: [progress, log, history]
 
 ---
 
-## 2026-01-12 - Project Setup Day
+## 2026-01-20 - Repository Cleanup & Documentation Update
 
 ### Session Summary
-First full working day on the redesign project. Focused on establishing infrastructure and methodology.
+Comprehensive repository cleanup, switched to achromatic-proto as main project, updated all documentation to reflect current state.
 
 ### Accomplishments
 
-#### 1. Repository Structure
-Created complete folder structure for the A/B testing methodology:
-- `/design-systems/` - 5 DS variant folders
-- `/prototypes/` - Phase A and B build directories
-- `/skeleton/` - Shared content and assets
-- `/references/` - Site analysis storage
-- `/messages/` - Sergey communications
-- `/scripts/` - Automation tools
-- `/docs/` - Project documentation
+#### 1. Repository Cleanup
+- Deleted garbage nested directories created by claude-mem
+- Removed unnecessary `.vercel` directories from old prototypes
+- Configured single Vercel deployment (adapty-achromatic-proto only)
+- Disabled claude-mem plugin for this project
 
-#### 2. Skeleton Specification
-Wrote comprehensive SKELETON.md defining all 14 homepage sections:
-1. Header/Navigation
-2. Hero Section
-3. Trusted By
-4. Feature Sections (6 variants)
-5. Integrations Marquee
-6. Role Cards
-7. Stats Section
-8. SDK Code Snippet
-9. Testimonials Carousel
-10. G2 Badges
-11. Case Studies
-12. Enterprise Section
-13. Final CTA
-14. Footer
+#### 2. Documentation Updates
+- Updated root README.md with achromatic-proto as main project
+- Updated CLAUDE.md with current state and references
+- Updated PROGRESS.md and TASKS.md
 
-#### 3. Design System Templates
-Created template structure for all 5 DS variants:
-- `design-system.md` - Full specification document
-- `tokens.css` - CSS custom properties
-- `tailwind.config.ts` - Tailwind configuration
-
-Templates ready to be filled after reference extraction.
-
-#### 4. Automation Scripts
-Built three automation scripts:
-- `create-prototype.sh` - Scaffolds new Next.js prototype with DS
-- `deploy-prototype.sh` - Deploys to Vercel
-- `generate-comparison.sh` - Creates comparison reports with optional Lighthouse/screenshots
-
-#### 5. Documentation
-- CLAUDE.md restructured as navigation layer (v2.0)
-- README.md for project overview
-- All subdirectory README files
-- Message 01-roadmap for Sergey (Russian)
-
-#### 6. Asset Extraction
-Copied all relevant assets from adapty-pt2 to skeleton/assets/:
-- Images (hero, features, case studies)
-- Logos (adapty, trusted-by partners)
-- Icons
-- SDK platform icons
-- Integration partner logos
-
-### Blockers
-- Reference site extraction requires Claude Code Chrome extension
-- User needs to install claude-mem plugin for persistent memory
-
-### Next Steps
-1. User: Install claude-mem plugin
-2. User: Extract reference sites via Chrome
-3. AI: Fill DS tokens from extraction data
-4. AI: Build Phase A prototypes
+#### 3. Vercel Configuration
+- Only `adapty-achromatic-proto` auto-deploys now
+- Removed .vercel from: aura-build, adapty-prototype, oatmeal, marketing app
+- Production URL: adapty-achromatic-proto.vercel.app
 
 ### Metrics
-- Files created: ~25
-- Lines of spec: ~1500
-- Time estimate saved by templates: ~4 hours per prototype
+- Garbage directories deleted: 6+
+- .vercel directories removed: 5
+- Documentation files updated: 4 (README, CLAUDE.md, PROGRESS.md, TASKS.md)
 
 ---
 
-## 2026-01-13 - Reference Extraction & Wireframe Audit Complete
+## 2026-01-19/20 - Roles Section & Mobile Responsiveness
 
 ### Session Summary
-Major milestone day. Completed all 5 reference site extractions with comprehensive wireframes, built and deployed Phase A prototype, conducted Phase B library research, and performed DS wireframe comparison audit.
+Added Roles section with 3 variants, fixed hover effects, mobile responsiveness, and auto-rotating tabs in Hero.
 
 ### Accomplishments
 
-#### 1. Reference Site Extraction (100% Complete)
-All 5 reference sites fully analyzed with CSS variables, typography, colors, and page structure:
-| Site | Theme | Key Insight |
-|------|-------|-------------|
-| Linear | Dark | 67+ animations, Inter Variable, layered backgrounds |
-| Attio | Light | LAB colors, 4-font system (Inter, Display, Tiempos, JetBrains) |
-| Polar | Dark | Geist fonts, fast 150ms animations, minimal aesthetic |
-| Vercel | True black | Bouncy easing, compound shadows, signature gradients |
-| Clerk | Light warm gray | Suisse font, purple accent (#6C47FF), pill buttons |
+#### 1. Roles Section Created
+New section at `/apps/marketing/components/sections/roles.tsx` with 3 variants:
 
-#### 2. ASCII Wireframes Added
-Comprehensive page structure documentation with ASCII art for all 5 sites:
-- Linear: Hero with overlapping windows, feature cards with animations
-- Attio: Serif headlines, gradient text, section numbering
-- Polar: Minimalist hero, embedded mini-UIs, gradient code blocks
-- Vercel: Signature gradient prism hero, 3D globe, AI Gateway leaderboard
-- Clerk: Circuit pattern background, interactive component showcase, alternating sections
+| Variant | Layout | Features |
+|---------|--------|----------|
+| Cards | 3-column grid | Icons, images with hover-to-reveal-color |
+| Bento | Asymmetric grid | Featured large card + compact cards |
+| Stacked | Full-width rows | Alternating left/right layouts |
 
-#### 3. DS Token Implementation (All 5 Complete)
-Filled design system tokens in `/prototypes/adapty-prototype/src/styles/globals.css`:
-- DS1 Linear: 8px buttons, 30px cards, tight letter-spacing
-- DS2 Attio: 10px buttons, ghost buttons, serif emphasis
-- DS3 Polar: 10px buttons, 150ms animations, gradient code blocks
-- DS4 Vercel: 6px buttons, compound shadows
-- DS5 Clerk: 24px pill buttons, purple accent, background pattern
-
-#### 4. Phase A Prototype Deployed
-- Location: `/prototypes/adapty-prototype/`
-- URL: `adapty-prototype.vercel.app`
-- Features: 5-way theme switcher, URL params (`?ds=ds1-5`), localStorage persistence
-- All 14 skeleton sections implemented
-
-#### 5. Phase B Library Research
-Comprehensive research using Gemini Deep Research + Opus 4.5:
-- **Primary recommendation**: shadcn/ui + MCP integration for Claude
-- **Animation**: ReactBits + 21stDev for micro-interactions
-- **Alternative**: Shadcn Blocks for pre-built components
-- Deliverable: Russian report for Sergey (`/research/phase-b-report-sergey.docx`)
-
-#### 6. DS Wireframe Comparison Audit
-Analyzed all 5 DS variants against reference site wireframes:
-| DS | Match % | Critical Gaps |
-|----|---------|---------------|
-| DS1 Linear | 45% | Missing layered hero, animated cards |
-| DS2 Attio | 55% | Missing serif font emphasis |
-| DS3 Polar | 40% | Missing embedded mini-UIs |
-| DS4 Vercel | 30% | Missing signature gradient hero |
-| DS5 Clerk | 60% | Missing background pattern |
-
-Audit report: `/reports/audits/2026-01-13-1700-ds-wireframe-comparison-audit.md`
-
-#### 7. Repository Cleanup
-- Removed duplicate folders and scattered CLAUDE.md files
-- Organized reports in `/reports/audits/`, `/reports/comparisons/`
-- Organized research in `/research/`
-
-### Blockers
-- None - infrastructure complete
-
-### Next Steps
-1. Improve DS variants based on audit findings (priority: DS4 gradient, DS1 animations)
-2. Present findings to Sergey
-3. Gather stakeholder feedback
-4. Begin Phase B library testing with winner DS
-
-### Metrics
-- Reference sites analyzed: 5/5 (100%)
-- DS variants with tokens: 5/5 (100%)
-- Prototype sections: 14/14 (100%)
-- Average DS match to reference: 46%
-- ASCII wireframes created: 5
-- Research documents: 4 (Gemini, Opus, DOCX, prompt)
-
----
-
-## 2026-01-13 (Evening) - Phase B Assessment & New Discoveries
-
-### Session Summary
-Built Phase B shadcn/ui prototypes, evaluated results against Phase A, discovered ShadCN Create tool that may change the equation.
-
-### Accomplishments
-
-#### 1. Phase B Prototype Development
-Built shadcn/ui prototypes to test component library approach:
-| Prototype | Sections | Assessment |
-|-----------|----------|------------|
-| proto-ds1-linear | 14/14 | Generic look, over-engineered |
-| proto-ds2-attio | 10/14 | Same issues |
-| proto-ds3-polar | Scaffolded | Not built |
-
-**Tech stack used**: Next.js 15 + shadcn/ui + Framer Motion + Phosphor Icons
-
-#### 2. Phase B Assessment
-**Key finding**: shadcn/ui underperformed vs Phase A (vanilla Tailwind)
-
-| Criterion | Phase A | Phase B |
-|-----------|---------|---------|
-| Visual quality | 7/10 | 4/10 |
-| Uniqueness | High | Low (generic) |
-| Development time | Medium | Medium+ (many overrides) |
-| Customization | Full | Limited by defaults |
-| Marketing suitability | Yes | No |
-
-**Root cause**: Using default shadcn presets. Components look "generic" because all AI models trained on same defaults.
-
-#### 3. ShadCN Create Discovery (Game Changer)
-Discovered ShadCN Create (https://ui.shadcn.com/themes) - launched Dec 12, 2025:
-- Customizes shadcn/ui components BEFORE installation
-- Set fonts, colors, border radius, presets visually
-- Components generated with YOUR brand DNA baked in
-- May solve the "generic look" problem
-
-**Status**: New Option D - recommended to test before abandoning shadcn.
-
-#### 4. Drawbridge Tool Discovery
-Found Drawbridge (https://github.com/breschio/drawbridge):
-- Visual debugging integration with Claude Code
-- Select UI elements visually instead of describing
-- Eliminates "move button 2px" back-and-forth
-- Useful for polish phase
-
-#### 5. Plan Loop Methodology (Matt Pocock)
-Source: https://www.aihero.dev/my-agents-md-file-for-building-plans-you-actually-read
-
-The Plan Loop: Plan → Execute → Test → Commit → Repeat
-
-**Key rules added to ~/.claude/CLAUDE.md**:
-- Make plans extremely concise (sacrifice grammar for scannability)
-- End plans with unresolved questions to answer
-
-**Why it matters**: Planning forces clarity. Without it, AI guesses what you want.
-
-#### 6. Documentation Updates
-Updated all documentation with new findings:
-- `/CLAUDE.md` - Added Stakeholder Requirements, ShadCN Create, Drawbridge sections
-- `/messages/03-phase-b-assessment/message.md` - Russian message for Sergey with options A/B/C/D
-- Research conclusions updated to reflect actual findings
-
-#### 7. Stakeholder Context Captured
-Documented Sergey's requirements from Slack:
-- **Theme preference**: Light, less dense information
-- **Priority pages**: Homepage, Pricing, Schedule Demo, Feature pages, Role pages
-- **Design refs**: Linear, Attio, Polar, Vercel, Clerk (Stripe with caution)
-- **Preferred style**: apple-ads-manager, apple-fiscal-calendar landing pages
-- **MCP resources**: shadcn UI (free), shadcn Blocks (paid), React Bits, 21st.dev, shadcn/studio
-
-### Options Proposed to Sergey
-
-| Option | Description | Recommendation |
-|--------|-------------|----------------|
-| A | Enhance Phase A prototype | Safe choice |
-| B | Try Tailark marketing blocks | Worth testing |
-| C | Hybrid (vanilla + shadcn) | Complex |
-| D | ShadCN Create with custom preset | **Try first** |
-
-### Blockers
-- Awaiting Sergey's decision on direction
-
-### Next Steps
-1. Test ShadCN Create (Option D) - 1-2 hours
-2. If successful: rebuild one DS prototype with custom preset
-3. If not: proceed with Option A (enhance Phase A)
-4. Consider Drawbridge for visual polish phase
-
-### Metrics
-- Phase B prototypes built: 2.5/5
-- Phase B sections complete: 24/70 (~34%)
-- New tools/methodologies discovered: 3 (ShadCN Create, Drawbridge, Plan Loop)
-- Documentation files updated: 4 (CLAUDE.md, message.md, PROGRESS.md, ~/.claude/CLAUDE.md)
-- Options proposed: 4
-
-### Key Learning
-> shadcn/ui's "generic look" problem stems from using default presets, not the library itself. ShadCN Create may be the solution - customize BEFORE installing.
-
----
-
-## 2026-01-14/15 - Aura-Build Prototype & Performance Optimization
-
-### Session Summary
-Pivoted to new aura-build prototype with fresh visual direction. Applied comprehensive visual polish and react-best-practices performance optimizations.
-
-### Accomplishments
-
-#### 1. Aura-Build Prototype Created
-New prototype at `/prototypes/aura-build/` with distinct visual identity:
-- **Tech stack**: Next.js 15 + Tailwind CSS 4 + Framer Motion + Phosphor Icons
-- **Design DNA**: Light theme, editorial typography, blueprint-inspired grid
-- **Key features**: TheInfiniteGrid animated background, glassmorphism panels, premium micro-interactions
-- **Sections**: 14+ sections implemented (Hero through Footer)
-
-#### 2. Visual Polish System
-Added premium CSS utilities to globals.css:
-| Utility | Effect |
-|---------|--------|
-| `.grain-overlay` | Subtle noise texture |
-| `.card-shine` | Diagonal highlight on hover |
-| `.card-elevate` | Lift + shadow elevation |
-| `.hover-glow` | Lime glow for interactive elements |
-| `.glass-panel-premium` | Enhanced frosted glass |
-| `.text-shimmer` | Text highlight animation |
-| `.grid-stagger` | Staggered entrance animation |
-
-Applied to: Testimonials, CaseStudies, IntegrationsMarquee sections
-
-#### 3. react-best-practices Optimizations
-Applied Vercel Engineering performance guidelines:
-
-| Optimization | Impact |
-|--------------|--------|
-| `optimizePackageImports` in next.config | Reduces bundle size for motion/react and @phosphor-icons |
-| AnimatedBackground wrapper | Fixes ssr:false in Server Component |
-| Removed unused imports | Clean code |
-
-**Key patterns verified:**
-- IntersectionObserver for scroll animations (not scroll events)
-- Static data hoisted at module level (all sections)
-- Small lists don't need content-visibility
-
-#### 4. Build Fixes
-- Created `AnimatedBackground.tsx` client wrapper to fix `ssr: false` error in Server Components
-- Proper dynamic import pattern for heavy canvas animations
-- Build passes successfully
-
-### Commits
-- `e021708` - Add premium visual polish to Testimonials, CaseStudies, Integrations
-- `ceb0654` - Fix dynamic import for Server Components, add optimizePackageImports
-
-### Metrics
-- Sections implemented: 14+
-- CSS utilities added: 7
-- Performance optimizations: 3 (optimizePackageImports, dynamic import, dead code removal)
-- Build status: Passing
-
-### Next Steps
-1. Deploy aura-build to Vercel
-2. Continue visual polish based on client feedback
-3. Apply remaining micro-interactions
-4. Present to stakeholder for review
-
----
-
-## 2026-01-15 - Oatmeal Prototype Build & Optimization
-
-### Session Summary
-Built complete Adapty homepage using purchased Oatmeal template (Tailwind Plus). Applied comprehensive react-best-practices optimizations. Deployed to Vercel.
-
-### Accomplishments
-
-#### 1. Oatmeal Prototype Built
-New prototype using premium Oatmeal template:
-- **Location**: `/prototypes/oatmeal/`
-- **URL**: `adapty-oatmeal-jan14-2026.vercel.app`
-- **Sections**: All 14 homepage sections complete
-
-**Design System**:
-| Element | Value |
-|---------|-------|
-| Palette | Olive (warm sophisticated greens/grays) |
-| Display Font | Instrument Serif |
-| Body Font | Inter |
-| Template | Oatmeal from Tailwind Plus |
-
-**Key Components Used**:
-- Button, Container, Heading, Eyebrow, Text, Section
-- Screenshot with Wallpaper backgrounds (green, blue, purple, olive)
-- FadeIn, TextReveal, NumberTicker animations
-- Marquee for integrations
-
-#### 2. react-best-practices Applied
-Following Vercel Engineering performance guidelines:
-
-| Priority | Optimization | File |
-|----------|--------------|------|
-| CRITICAL | `optimizePackageImports` for motion/react, clsx, tailwind-merge | next.config.ts |
-| CRITICAL | Dynamic import AnimatedGrid with `ssr: false` | PageFrame.tsx |
-| MEDIUM | `startTransition` for scroll state | Navbar.tsx |
-| MEDIUM | Hoisted static SVGs to module scope | Footer, Testimonials, Enterprise |
-
-#### 3. Bug Fixes
-- Case study logos: `logo-*.png` -> `*.webp` (paths didn't match actual files)
-- Footer logo: purple -> black Adapty logo
-
-### Commits
-- `3f236c6` - Apply react-best-practices performance optimizations
-- `f3ac9da` - Fix case study logo paths to match actual assets
-
-### Build Stats
-```
-Route         Size      First Load JS
-/             69.8 kB   172 kB
-Shared        102 kB
+#### 2. Hover-to-Reveal-Color Effect
+Fixed grayscale hover effect on role cards:
+```tsx
+className="grayscale hover:grayscale-0 transition-[filter] duration-500"
 ```
 
-### Metrics
-- Sections complete: 14/14
-- First Load JS: 172 kB
-- Optimizations applied: 4 patterns
-- Commits pushed: 2
+#### 3. Image Fixes
+- Changed `object-cover` to `object-contain` to prevent cropping
+- Changed image backgrounds from `bg-muted/50` to `bg-white`
 
-### Next Steps
-1. Polish based on stakeholder feedback
-2. Add remaining micro-interactions
-3. Compare with AuraBuild prototype
+#### 4. Hero Enhancements
+- Added auto-rotating tabs with 7-second interval
+- Pauses on hover
+- Mobile responsiveness fixes for tabs
 
----
-
-## 2026-01-15 (Early AM) - January 14 Daily Report & Documentation
-
-### Session Summary
-Created comprehensive daily report for January 14 work. Documented breakthrough day with Oatmeal/AuraBuild prototypes, Claude Skills integration, and toolset finalization.
-
-### Accomplishments
-
-#### 1. Daily Report Created
-Generated complete report package at `/messages/05-daily-report-jan14/`:
-
-| File | Size | Purpose |
-|------|------|---------|
-| `message-short.md` | 6.3 KB | Slack message (concise) |
-| `message.md` | 22 KB | Full detailed report |
-| `2026-01-14-REPORT-Daily-Update.pdf` | 590 KB | PDF for stakeholder |
-
-#### 2. Key January 14 Work Documented
-
-**Claude Skills Added**:
-- `react-best-practices` - Vercel Engineering performance guidelines (CRITICAL optimizations for barrel imports, bundle size)
-- `UI UX Pro Max` - 50+ styles, 21 palettes, 50+ font pairings
-
-**Aura.build Assessment**:
-- Tested for SaaS landing pages
-- Result: Good for single pages, NOT suitable as UI component library
-- Created AuraBuild prototype: https://adapty-aura-build-jan-14-2026.vercel.app/
-
-**Oatmeal Template Discovery**:
-- Found premium Tailwind CSS kit (~$100) on GitHub
-- 50+ components, 30+ sections, React 19, Next.js 16, Tailwind 4.1
-- Created best prototype yet (8/10): https://adapty-oatmeal-jan14-2026.vercel.app/
-- Showcase page: https://oatmeal-template-showcase.vercel.app/showcase/
-
-#### 3. Quality Progression Documented
-
-| Day | Prototype | Quality |
-|-----|-----------|---------|
-| Monday | Phase B shadcn | 4/10 |
-| Tuesday | Phase A improved | 7/10 |
-| Wednesday | AuraBuild | 7/10 |
-| Thursday | Oatmeal | **8/10** |
-
-#### 4. Performance Optimizations Applied
-Documented react-best-practices patterns:
-- `optimizePackageImports` for motion/react, @phosphor-icons
-- Dynamic imports with `ssr: false` wrapper pattern
-- `startTransition` for non-blocking updates
-- Hoisted static SVGs to module scope
-
-### Report Sections
-1. Claude Skills (react-best-practices, UI UX Pro Max)
-2. Aura.build Test Results
-3. Oatmeal Discovery
-4. Technical Improvements
-5. Plan for Tomorrow
-6. Weekly Progress Summary
-
-### Metrics
-- Report files created: 3 (md short, md full, PDF)
-- Memory observations synthesized: 47
-- Git commits documented: 30+
-- Prototype quality rating: 8/10 (best yet)
-
-### Next Steps (Friday)
-1. Live block switching for A/B comparison
-2. Test 1-2 additional libraries
-3. Final polish on chosen prototype
-4. Select ONE prototype for stakeholder presentation
-
----
-
-## 2026-01-15 (Evening) - Sergey Video Feedback & Debug Menu System
-
-### Session Summary
-Received and analyzed Sergey's video feedback on prototypes. Built component variant system with debug menu for A/B block comparison. Shifted from "full-site rebuilds" to block-by-block iteration.
-
-### Accomplishments
-
-#### 1. Video Feedback Analysis
-Sergey's video review of Oatmeal and AuraBuild prototypes revealed:
-
-| Feedback | Original AI Interpretation | Actual Meaning |
-|----------|---------------------------|----------------|
-| "Grid following cursor is cheesy" | Remove grid entirely | Keep grid, remove cursor-tracking |
-| "Take header from Aura" | Copy Aura header | Match adapty.io complexity, new style |
-| "Too gray on gray" | Just swap colors | Need structural contrast changes |
-
-**Key insight**: This is the LAST full-site review. Future work must be block-by-block.
-
-#### 2. Strategic Pivot: Debug Menu System
-Instead of picking ONE solution per block, built infrastructure for variant switching:
-
-| Feature | Description |
-|---------|-------------|
-| DebugProvider | React context storing variant selections |
-| DebugMenu | Floating panel (bottom-right), collapsible |
-| localStorage | Persists selections across refresh |
-| Grid variants | cursor-tracking, slow-drift, static, off |
-
-This transforms the prototype into a **living design system demo** for stakeholder review.
-
-#### 3. Font Swap
-- Removed `Instrument_Serif` (editorial serif)
-- Using `Inter` for both display and body
-- Sergey: "Design shouldn't look like a newspaper"
-
-#### 4. Color Palette Added
-Added Adapty purple (#6720FF) in OKLCH format:
-```css
---color-adapty-500: oklch(52% 0.22 285);
-```
-Kept olive palette for gradual phase-out.
-
-#### 5. AnimatedGrid Refactored
-Four variant modes implemented:
-
-| Mode | Mouse Tracking | Animation |
-|------|----------------|-----------|
-| cursor-tracking | Yes | Continuous |
-| slow-drift | No | Continuous |
-| static | No | None |
-| off | N/A | Not rendered |
-
-#### 6. Documentation Updated
-- `/messages/06-feedback-jan15/planaccordingtosergeysvideo.md` - Complete action plan
-- `/docs/PROGRESS.md` - This entry
-- Verified corrections to AI-generated summary
+#### 5. AI-Generated Role Images
+Generated images for 3 style sets:
+- `set1/` - White grid style
+- `set2/` - Monochrome style
+- `set3/` - Warm gray style
 
 ### Files Created/Modified
+- CREATE: `/apps/marketing/components/sections/roles.tsx`
+- EDIT: `/apps/marketing/lib/debug-context.tsx` (added RolesVariant)
+- EDIT: `/apps/marketing/components/debug/DebugMenu.tsx` (added Roles section)
+- EDIT: `/apps/marketing/app/page.tsx` (added RolesSection)
 
-| Action | Path |
-|--------|------|
-| EDIT | `/prototypes/oatmeal/src/app/layout.tsx` |
-| EDIT | `/prototypes/oatmeal/src/app/globals.css` |
-| CREATE | `/prototypes/oatmeal/src/lib/debug-context.tsx` |
-| CREATE | `/prototypes/oatmeal/src/components/debug/DebugMenu.tsx` |
-| EDIT | `/prototypes/oatmeal/src/components/effects/AnimatedGrid.tsx` |
-| EDIT | `/prototypes/oatmeal/src/components/layout/PageFrame.tsx` |
-| EDIT | `/messages/06-feedback-jan15/planaccordingtosergeysvideo.md` |
-
-### Key Learnings
-
-1. **Verify AI summaries**: The AI-generated plan had errors (e.g., "remove grid" vs "remove cursor-tracking")
-2. **Block-by-block > full rebuilds**: Sergey explicitly stated this is the last full-site review
-3. **Variant systems enable iteration**: Building switchable variants is faster than rebuilding
-4. **Header complexity matters**: AdaptyPT2 header is 621 lines with 4 mega-menus; prototypes have ~100 lines
-
-### Next Steps
-1. Complete debug menu integration
-2. Build header mega-menu (Phase 2 priority)
-3. Add more block variants (TrustedBy, Features, etc.)
-4. Sticky-scroll feature section (critical requirement)
+### Commits
+- `324fbdd` - Add Roles section with 3 variants
+- `54c7718` - Comprehensive motion improvements and micro-interactions
+- `19ee879` - Update default variants
+- `7b4d450` - Update default testimonials with real quotes
 
 ### Metrics
-- Video transcript analyzed: 13 minutes
-- Corrections to AI plan: 3 major
-- Grid variants implemented: 4
-- New components created: 2 (DebugProvider, DebugMenu)
-- Files modified: 7
+- New section variants: 3
+- Images generated: 9 (3 roles x 3 sets)
+- Mobile fixes applied: 5+ components
 
 ---
 
-## 2026-01-15 (Late Evening) - Aura Header Port & Navigation Gap Analysis
+## 2026-01-18/19 - Achromatic-Proto Development
 
 ### Session Summary
-Ported full Aura mega-menu header to Oatmeal prototype with variant switching. Conducted comprehensive gap analysis comparing adapty.io navigation vs our implementation.
+Major development on achromatic-proto marketing app. SDK section, Features tabs, Stats variants, comprehensive motion improvements.
 
 ### Accomplishments
 
-#### 1. Aura Header Ported to Oatmeal
-Successfully ported all mega-menu components from AuraBuild prototype:
+#### 1. SDK Section
+- 5-platform support (iOS, Android, React Native, Flutter, Web)
+- Code snippet display with syntax highlighting
+- Platform switching
 
-| Component | Lines | Purpose |
-|-----------|-------|---------|
-| AuraHeader.tsx | ~300 | Full mega-menu header with 4 dropdowns |
-| HeaderSwitch.tsx | ~23 | Variant switcher (Simple vs Mega) |
-| LanguageSwitcher.tsx | ~92 | Flag-based language selector |
-| LanguageSwitcher.module.css | ~55 | Component-scoped styles |
-| ProductMenu.tsx | ~128 | Tech/Paywalls/Analytics columns |
-| CasesMenu.tsx | ~107 | Case studies grid |
-| ResourcesMenu.tsx | ~100 | Learn/Connect/Discover sections |
-| DocsMenu.tsx | ~150 | Sidebar + SDK grid |
+#### 2. Features Section Tabs
+- 3 color variants: colorful, muted, monochrome
+- Tab-based navigation
+- Smooth animations
 
-**Key changes from Aura:**
-- stone palette -> olive palette
-- brand-lime (#c1ff72) -> adapty purple (#6720ff)
-- Added @phosphor-icons/react (with optimizePackageImports)
+#### 3. Stats Section
+- 4 variants: cards, inline, graph, floating
+- Spring physics animations
+- Parallax effects
 
-#### 2. Navigation Gap Analysis (adapty.io vs Oatmeal vs PT2)
-
-Analyzed live adapty.io screenshots and compared with implementations:
-
-**Product Menu Comparison:**
-| Feature | adapty.io | AdaptyPT2 | Oatmeal |
-|---------|-----------|-----------|---------|
-| Layout | Sidebar + 3-col | Sidebar + 3-col | 3-col only |
-| Sidebar items | Product, Solution, Adapty SDK, Integrations | Same | **MISSING** |
-| Secondary links | Why Adapty?, Changelog, Status | Same | **MISSING** |
-| TECH items | 4 (SDK, Sync, Fallback, Refund) | 4 | 3 |
-| PAYWALLS items | 8 (Builder, Onboarding, AI, A/B, Autopilot, Targeting, Localizations, Remote) | 8 | 3 |
-| ANALYTICS items | 5 (Revenue, LTV, AI predictions, LTV model, Apple ads) | 5 | 3 |
-| Width | ~900px | 900px | 720px |
-
-**Cases Menu Comparison:**
-| Feature | adapty.io | AdaptyPT2 | Oatmeal |
-|---------|-----------|-----------|---------|
-| Grid columns | 4 | 3 | 3 |
-| Items shown | 12 (Welmi, Productivity, Text on Pic, Trip planning, Going Merry, Shmoody, Lively, Glam AI, Pepapp, Fotorama, Wave + more) | 11 | 9 |
-| Metrics shown | Yes (MRR tripled, +50% revenue, etc.) | Yes | Generic descriptions |
-| View all link | Yes | Yes | Yes |
-| Width | ~1000px | 1000px | 640px |
-
-**Docs Menu Comparison:**
-| Feature | adapty.io | AdaptyPT2 | Oatmeal |
-|---------|-----------|-----------|---------|
-| Layout | Sidebar + SDK grid | Sidebar + SDK grid | Sidebar + SDK grid |
-| Sidebar items | Quick start, Migrate, Status, Support, All docs | Same | Same |
-| SDK platforms | 8 (iOS, React Native, Flutter, Capacitor, Android, Unity, FlutterFlow, Kotlin) | 8 | 8 |
-| Web payments | Stripe | Stripe | Stripe |
-| API | Server-side | Server-side | Server-side |
-| Status | **MATCHES** | **MATCHES** | **MATCHES** |
-
-**Critical Gaps (High Priority):**
-1. **Missing sidebar navigation** in Product menu (this is the "2-3 levels" Sergey mentioned)
-2. **Fewer items** in all menus - content parity needed
-3. **Missing metrics** on case studies (actual results vs generic descriptions)
-4. **Smaller dropdown widths** (720px vs 900px)
-
-#### 3. Sergey's Feedback Context (From Plan)
-Re-examined plan file for header requirements:
-- "Aura header is simpler than needed; needs 2-3 levels like current site"
-- "AdaptyPT2 header is 621 lines with 4 mega-menus"
-- The sidebar in Product/Docs menus IS the second level
-- Clicking sidebar items would change the right-side content
-
-#### 4. Commits Pushed
-- `4fc9081` - Port Aura mega-menu header to Oatmeal with variant switching
-
-### Key Findings
-
-**What AdaptyPT2 Has That Oatmeal Doesn't:**
-1. SIDEBAR navigation in Product and Docs menus
-2. More product items (17 vs 9 items in Product menu)
-3. More case studies with actual metrics
-4. 900-1000px wide dropdowns vs 640-720px
-5. `web2app` highlighted link in nav
-
-**What We Need to Do:**
-1. Add sidebar to ProductMenu (mirror PT2 structure)
-2. Add all product items (full content parity)
-3. Update CasesMenu with real metrics and missing cases
-4. Increase dropdown widths
-5. Add highlighted nav items (web2app)
-
-### Files Created/Modified
-
-| Action | Path |
-|--------|------|
-| CREATE | `src/components/layout/AuraHeader.tsx` |
-| CREATE | `src/components/layout/HeaderSwitch.tsx` |
-| CREATE | `src/components/layout/LanguageSwitcher.tsx` |
-| CREATE | `src/components/layout/LanguageSwitcher.module.css` |
-| CREATE | `src/components/layout/menus/ProductMenu.tsx` |
-| CREATE | `src/components/layout/menus/CasesMenu.tsx` |
-| CREATE | `src/components/layout/menus/ResourcesMenu.tsx` |
-| CREATE | `src/components/layout/menus/DocsMenu.tsx` |
-| EDIT | `src/app/page.tsx` |
-| EDIT | `next.config.ts` |
-| EDIT | `package.json` |
-
-### Next Steps
-1. **Phase 2A: Content Parity** - Copy exact content from PT2 menus to Oatmeal
-2. **Phase 2B: Sidebar Navigation** - Add sidebar to ProductMenu matching adapty.io structure
-3. **Phase 2C: Metrics Update** - Update CasesMenu with actual result metrics
-4. **Phase 2D: Polish** - Match dropdown widths, add web2app link
+#### 4. Motion Improvements
+- Comprehensive micro-interactions across all sections
+- Scroll-triggered animations
+- Hover states with spring physics
 
 ### Metrics
-- Components ported: 8
-- Lines of code added: ~1000
-- Build size increase: 8kB (172kB -> 180kB)
-- Product items (Oatmeal vs PT2): 9 vs 17 (53% coverage)
-- Case studies (Oatmeal vs PT2): 9 vs 11 (82% coverage)
-- Docs menu: 100% parity
+- Section variants added: 10+
+- Animation patterns: 20+
+- Build passing: Yes
+
+---
+
+## Previous Entries (January 12-17)
+
+See archived entries in git history. Key milestones:
+
+| Date | Milestone |
+|------|-----------|
+| Jan 12 | Project setup, repository structure |
+| Jan 13 | Reference extraction complete (5 sites) |
+| Jan 13 | Phase A prototype deployed |
+| Jan 14 | AuraBuild and Oatmeal prototypes |
+| Jan 15 | Debug menu system, Aura header port |
+| Jan 16-17 | Achromatic template integration |
 
 ---
 
