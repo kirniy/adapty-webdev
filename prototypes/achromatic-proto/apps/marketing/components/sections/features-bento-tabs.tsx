@@ -31,6 +31,12 @@ import { cn } from '@workspace/ui/lib/utils';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { useImageSetVariant, type ImageSetVariant } from '~/lib/debug-context';
+
+// Helper to get image path based on selected image set
+function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
+  return basePath.replace('/assets/hero/', `/assets/hero/${imageSet}/`);
+}
 
 // Layout types for visual variety
 type LayoutType = 'image-right' | 'image-left' | 'image-top' | 'bento-grid';
@@ -174,10 +180,15 @@ function FeatureCard({ feature, index, compact = false }: { feature: FeatureItem
 // Image component with hover effect
 function FeatureImage({ tab, className }: { tab: FeatureTab; className?: string }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const imageSet = useImageSetVariant();
 
   return (
     <motion.div
-      className={cn('overflow-hidden rounded-xl border bg-card shadow-lg', className)}
+      className={cn(
+        'overflow-hidden rounded-xl border bg-card shadow-lg',
+        imageSet === 'set2' && 'grayscale hover:grayscale-0 transition-[filter] duration-500',
+        className
+      )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       initial={{ opacity: 0, scale: 0.98 }}
@@ -189,14 +200,14 @@ function FeatureImage({ tab, className }: { tab: FeatureTab; className?: string 
         transition={{ duration: 0.3 }}
       >
         <Image
-          src={tab.image}
+          src={getImagePath(tab.image, imageSet)}
           alt={`${tab.label} screenshot`}
           width={1328}
           height={727}
           className="w-full dark:hidden"
         />
         <Image
-          src={tab.imageDark}
+          src={getImagePath(tab.imageDark, imageSet)}
           alt={`${tab.label} screenshot`}
           width={1328}
           height={727}
@@ -279,12 +290,16 @@ function LayoutImageTop({ tab }: { tab: FeatureTab }) {
 // Layout: Bento Grid - mixed sizes, image prominent
 function LayoutBentoGrid({ tab }: { tab: FeatureTab }) {
   const [hoveredCard, setHoveredCard] = React.useState<string | null>(null);
+  const imageSet = useImageSetVariant();
 
   return (
     <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-2">
       {/* Large: Main image spanning 8 cols, 2 rows */}
       <motion.div
-        className="lg:col-span-8 lg:row-span-2 overflow-hidden rounded-xl border bg-card shadow-lg"
+        className={cn(
+          "lg:col-span-8 lg:row-span-2 overflow-hidden rounded-xl border bg-card shadow-lg",
+          imageSet === 'set2' && 'grayscale hover:grayscale-0 transition-[filter] duration-500'
+        )}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -296,14 +311,14 @@ function LayoutBentoGrid({ tab }: { tab: FeatureTab }) {
         </div>
         <div className="p-5">
           <Image
-            src={tab.image}
+            src={getImagePath(tab.image, imageSet)}
             alt={`${tab.label} screenshot`}
             width={1328}
             height={727}
             className="w-full rounded-lg border dark:hidden"
           />
           <Image
-            src={tab.imageDark}
+            src={getImagePath(tab.imageDark, imageSet)}
             alt={`${tab.label} screenshot`}
             width={1328}
             height={727}

@@ -36,6 +36,12 @@ import { cn } from '@workspace/ui/lib/utils';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { useImageSetVariant, type ImageSetVariant } from '~/lib/debug-context';
+
+// Helper to get image path based on selected image set
+function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
+  return basePath.replace('/assets/hero/', `/assets/hero/${imageSet}/`);
+}
 
 // Feature tabs configuration
 const FEATURE_TABS = [
@@ -161,6 +167,7 @@ function StatItem({ stat, index }: { stat: { value: string; label: string }; ind
 export function FeaturesTabbed(): React.JSX.Element {
   const [activeTab, setActiveTab] = React.useState(FEATURE_TABS[0].id);
   const activeFeature = FEATURE_TABS.find(t => t.id === activeTab) ?? FEATURE_TABS[0];
+  const imageSet = useImageSetVariant();
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -250,17 +257,20 @@ export function FeaturesTabbed(): React.JSX.Element {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.2, duration: 0.4 }}
-                      className="overflow-hidden rounded-xl border bg-card shadow-lg"
+                      className={cn(
+                        "overflow-hidden rounded-xl border bg-card shadow-lg",
+                        imageSet === 'set2' && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+                      )}
                     >
                       <Image
-                        src={tab.image}
+                        src={getImagePath(tab.image, imageSet)}
                         alt={`${tab.label} screenshot`}
                         width={1328}
                         height={727}
                         className="block w-full dark:hidden"
                       />
                       <Image
-                        src={tab.imageDark}
+                        src={getImagePath(tab.imageDark, imageSet)}
                         alt={`${tab.label} screenshot`}
                         width={1328}
                         height={727}

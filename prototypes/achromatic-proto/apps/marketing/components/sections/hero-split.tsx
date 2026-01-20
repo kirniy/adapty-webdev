@@ -28,6 +28,12 @@ import { cn } from '@workspace/ui/lib/utils';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
+import { useImageSetVariant, type ImageSetVariant } from '~/lib/debug-context';
+
+// Helper to get image path based on selected image set
+function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
+  return basePath.replace('/assets/hero/', `/assets/hero/${imageSet}/`);
+}
 
 function HeroPill(): React.JSX.Element {
   return (
@@ -154,6 +160,8 @@ function HeroStats(): React.JSX.Element {
 }
 
 function HeroIllustration(): React.JSX.Element {
+  const imageSet = useImageSetVariant();
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -205,12 +213,15 @@ function HeroIllustration(): React.JSX.Element {
             className="invisible"
           />
         </ScrollArea>
-        <div className="relative w-full overflow-hidden rounded-xl border bg-background shadow-lg">
+        <div className={cn(
+          "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg",
+          imageSet === 'set2' && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+        )}>
           <UnderlinedTabsContent value="feature1" className="m-0">
             <Image
               priority
               quality={100}
-              src="/assets/hero/light-feature1.webp"
+              src={getImagePath('/assets/hero/light-feature1.webp', imageSet)}
               width="1328"
               height="727"
               alt="Adapty Paywall Builder screenshot"
@@ -219,7 +230,7 @@ function HeroIllustration(): React.JSX.Element {
             <Image
               priority
               quality={100}
-              src="/assets/hero/dark-feature1.webp"
+              src={getImagePath('/assets/hero/dark-feature1.webp', imageSet)}
               width="1328"
               height="727"
               alt="Adapty Paywall Builder screenshot"
@@ -229,7 +240,7 @@ function HeroIllustration(): React.JSX.Element {
           <UnderlinedTabsContent value="feature2" className="m-0">
             <Image
               quality={100}
-              src="/assets/hero/light-feature2.webp"
+              src={getImagePath('/assets/hero/light-feature2.webp', imageSet)}
               width="1328"
               height="727"
               alt="Adapty A/B Testing screenshot"
@@ -237,7 +248,7 @@ function HeroIllustration(): React.JSX.Element {
             />
             <Image
               quality={100}
-              src="/assets/hero/dark-feature2.webp"
+              src={getImagePath('/assets/hero/dark-feature2.webp', imageSet)}
               width="1328"
               height="727"
               alt="Adapty A/B Testing screenshot"
@@ -247,7 +258,7 @@ function HeroIllustration(): React.JSX.Element {
           <UnderlinedTabsContent value="feature3" className="m-0">
             <Image
               quality={100}
-              src="/assets/hero/light-feature3.webp"
+              src={getImagePath('/assets/hero/light-feature3.webp', imageSet)}
               width="1328"
               height="727"
               alt="Adapty Analytics screenshot"
@@ -255,7 +266,7 @@ function HeroIllustration(): React.JSX.Element {
             />
             <Image
               quality={100}
-              src="/assets/hero/dark-feature3.webp"
+              src={getImagePath('/assets/hero/dark-feature3.webp', imageSet)}
               width="1328"
               height="727"
               alt="Adapty Analytics screenshot"
@@ -265,7 +276,7 @@ function HeroIllustration(): React.JSX.Element {
           <UnderlinedTabsContent value="feature4" className="m-0">
             <Image
               quality={100}
-              src="/assets/hero/light-feature4.webp"
+              src={getImagePath('/assets/hero/light-feature4.webp', imageSet)}
               width="1328"
               height="727"
               alt="Adapty SDK screenshot"
@@ -273,7 +284,7 @@ function HeroIllustration(): React.JSX.Element {
             />
             <Image
               quality={100}
-              src="/assets/hero/dark-feature4.webp"
+              src={getImagePath('/assets/hero/dark-feature4.webp', imageSet)}
               width="1328"
               height="727"
               alt="Adapty SDK screenshot"
@@ -283,7 +294,7 @@ function HeroIllustration(): React.JSX.Element {
           <UnderlinedTabsContent value="feature5" className="m-0">
             <Image
               quality={100}
-              src="/assets/hero/light-feature5.webp"
+              src={getImagePath('/assets/hero/light-feature5.webp', imageSet)}
               width="1328"
               height="727"
               alt="Adapty Integrations screenshot"
@@ -291,7 +302,7 @@ function HeroIllustration(): React.JSX.Element {
             />
             <Image
               quality={100}
-              src="/assets/hero/dark-feature5.webp"
+              src={getImagePath('/assets/hero/dark-feature5.webp', imageSet)}
               width="1328"
               height="727"
               alt="Adapty Integrations screenshot"

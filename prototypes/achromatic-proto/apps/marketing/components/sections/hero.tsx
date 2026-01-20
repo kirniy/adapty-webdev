@@ -29,8 +29,17 @@ import {
   useGridOpacityVariant,
   useGridZIndexVariant,
   useHeroLinesVariant,
-  useHeroVariant
+  useHeroVariant,
+  useImageSetVariant,
+  type ImageSetVariant
 } from '~/lib/debug-context';
+
+// Helper to get image path based on selected image set
+function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
+  // basePath is like '/assets/hero/light-feature1.webp'
+  // We need to transform it to '/assets/hero/set1/light-feature1.webp'
+  return basePath.replace('/assets/hero/', `/assets/hero/${imageSet}/`);
+}
 
 // Feature tab content data
 const HERO_FEATURES = [
@@ -416,6 +425,8 @@ function FeatureTab({
 
 // Feature content with animated transitions (faster, spring-based)
 function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
+  const imageSet = useImageSetVariant();
+
   return (
     <motion.div
       key={feature.id}
@@ -495,11 +506,14 @@ function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
         className="relative lg:col-span-3"
         whileHover={{ scale: 1.01 }}
       >
-        <div className="relative overflow-hidden rounded-xl border bg-gradient-to-b from-muted/30 to-muted/10 shadow-lg transition-shadow hover:shadow-xl">
+        <div className={cn(
+          "relative overflow-hidden rounded-xl border bg-gradient-to-b from-muted/30 to-muted/10 shadow-lg transition-all hover:shadow-xl",
+          imageSet === 'set2' && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+        )}>
           <Image
             priority={feature.id === 'paywall-builder'}
             quality={100}
-            src={feature.lightImage}
+            src={getImagePath(feature.lightImage, imageSet)}
             width={1328}
             height={727}
             alt={`${feature.label} screenshot`}
@@ -508,7 +522,7 @@ function FeatureContent({ feature }: { feature: typeof HERO_FEATURES[0] }) {
           <Image
             priority={feature.id === 'paywall-builder'}
             quality={100}
-            src={feature.darkImage}
+            src={getImagePath(feature.darkImage, imageSet)}
             width={1328}
             height={727}
             alt={`${feature.label} screenshot`}

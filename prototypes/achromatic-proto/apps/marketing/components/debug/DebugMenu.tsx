@@ -23,6 +23,7 @@ import {
   FAQ_VARIANTS,
   CTA_VARIANTS,
   FOOTER_VARIANTS,
+  IMAGE_SET_VARIANTS,
   type VariantOption,
 } from '~/lib/debug-context'
 
@@ -195,6 +196,7 @@ export function DebugMenu() {
     faqVariant, setFaqVariant,
     ctaVariant, setCtaVariant,
     footerVariant, setFooterVariant,
+    imageSetVariant, setImageSetVariant,
   } = useDebug()
 
   return (
@@ -266,6 +268,10 @@ export function DebugMenu() {
               <div className="mt-3 pt-3 border-t border-border/30">
                 <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider mb-1.5 block">Dashed Lines</span>
                 <VariantSelector variants={HERO_LINES_VARIANTS} currentValue={heroLinesVariant} onChange={setHeroLinesVariant} />
+              </div>
+              <div className="mt-3 pt-3 border-t border-border/30">
+                <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider mb-1.5 block">Image Set</span>
+                <VariantSelector variants={IMAGE_SET_VARIANTS} currentValue={imageSetVariant} onChange={setImageSetVariant} />
               </div>
             </CollapsibleSection>
 

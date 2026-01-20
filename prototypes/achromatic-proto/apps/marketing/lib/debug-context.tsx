@@ -34,6 +34,7 @@ export type BlogVariant = 'default' | 'featured' | 'off'
 export type SdkVariant = 'default' | 'off'
 export type FooterVariant = 'default' | 'flickering' | 'off'
 export type HeroLinesVariant = 'above' | 'below'
+export type ImageSetVariant = 'set1' | 'set2' | 'set3'
 
 // Variant option type for UI
 export interface VariantOption<T> {
@@ -168,6 +169,12 @@ export const HERO_LINES_VARIANTS: VariantOption<HeroLinesVariant>[] = [
   { value: 'below', label: 'Below Content', description: 'Dashed lines hidden behind hero content' },
 ]
 
+export const IMAGE_SET_VARIANTS: VariantOption<ImageSetVariant>[] = [
+  { value: 'set1', label: 'White Grid', description: 'White background with diagonal grid lines' },
+  { value: 'set2', label: 'Monochrome', description: 'Strict monochrome with thin purple accents' },
+  { value: 'set3', label: 'Warm Gray', description: 'Warm gray gradient with purple highlights' },
+]
+
 // Debug state interface
 interface DebugState {
   colorAccentVariant: ColorAccentVariant
@@ -190,6 +197,7 @@ interface DebugState {
   sdkVariant: SdkVariant
   footerVariant: FooterVariant
   heroLinesVariant: HeroLinesVariant
+  imageSetVariant: ImageSetVariant
   isDebugMenuOpen: boolean
 }
 
@@ -215,6 +223,7 @@ interface DebugContextValue extends DebugState {
   setSdkVariant: (variant: SdkVariant) => void
   setFooterVariant: (variant: FooterVariant) => void
   setHeroLinesVariant: (variant: HeroLinesVariant) => void
+  setImageSetVariant: (variant: ImageSetVariant) => void
   toggleDebugMenu: () => void
   resetToDefaults: () => void
 }
@@ -241,6 +250,7 @@ const defaultState: DebugState = {
   sdkVariant: 'default',
   footerVariant: 'default',
   heroLinesVariant: 'above',
+  imageSetVariant: 'set1',
   isDebugMenuOpen: false,
 }
 
@@ -315,6 +325,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   const setSdkVariant = useCallback((variant: SdkVariant) => setState(prev => ({ ...prev, sdkVariant: variant })), [])
   const setFooterVariant = useCallback((variant: FooterVariant) => setState(prev => ({ ...prev, footerVariant: variant })), [])
   const setHeroLinesVariant = useCallback((variant: HeroLinesVariant) => setState(prev => ({ ...prev, heroLinesVariant: variant })), [])
+  const setImageSetVariant = useCallback((variant: ImageSetVariant) => setState(prev => ({ ...prev, imageSetVariant: variant })), [])
   const toggleDebugMenu = useCallback(() => setState(prev => ({ ...prev, isDebugMenuOpen: !prev.isDebugMenuOpen })), [])
   const resetToDefaults = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY)
@@ -343,6 +354,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     setSdkVariant,
     setFooterVariant,
     setHeroLinesVariant,
+    setImageSetVariant,
     toggleDebugMenu,
     resetToDefaults,
   }
@@ -381,3 +393,4 @@ export function useBlogVariant() { return useContext(DebugContext)?.blogVariant 
 export function useSdkVariant() { return useContext(DebugContext)?.sdkVariant ?? defaultState.sdkVariant }
 export function useFooterVariant() { return useContext(DebugContext)?.footerVariant ?? defaultState.footerVariant }
 export function useHeroLinesVariant() { return useContext(DebugContext)?.heroLinesVariant ?? defaultState.heroLinesVariant }
+export function useImageSetVariant() { return useContext(DebugContext)?.imageSetVariant ?? defaultState.imageSetVariant }

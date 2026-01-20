@@ -20,7 +20,7 @@ const CUSTOMER_LOGOS = [
   { name: 'HubX', file: '/logos/trusted-by/hubx.svg' },
   { name: 'Almus', file: '/logos/trusted-by/almus.svg' },
   { name: 'Impala Studios', file: '/logos/trusted-by/impala-studios.svg' },
-  { name: 'Feeld 2', file: '/logos/trusted-by/feeld.svg' }, // Repeated Feeld before Bickster
+  { name: 'WeWoo', file: '/logos/trusted-by/weewoo.svg' },
   { name: 'Bickster', file: '/logos/trusted-by/bickster.png' },
 ];
 
