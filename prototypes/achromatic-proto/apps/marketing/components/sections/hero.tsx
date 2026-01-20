@@ -386,7 +386,7 @@ function FeatureTab({
       onMouseLeave={() => setIsHovered(false)}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
       className={cn(
-        'group relative flex shrink-0 flex-col items-center gap-2 px-3 sm:px-4 py-3 cursor-pointer',
+        'group relative flex shrink-0 sm:shrink sm:flex-1 flex-col items-center gap-2 px-3 sm:px-4 py-3 cursor-pointer',
         'border-b-2 transition-colors duration-150',
         isActive
           ? 'border-b-primary text-foreground'
@@ -549,7 +549,7 @@ function HeroFeatureShowcase(): React.JSX.Element {
           'mb-8 border-b border-border overflow-x-auto scrollbar-hide',
           linesBelow && 'bg-background'
         )}>
-          <div className="mx-auto flex w-full max-w-4xl min-w-max">
+          <div className="mx-auto flex w-full max-w-4xl min-w-max sm:min-w-0">
             {HERO_FEATURES.map((feature) => (
               <FeatureTab
                 key={feature.id}
