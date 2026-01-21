@@ -17,6 +17,14 @@ import {
   FileTextIcon,
   CalculatorIcon,
   BarChartIcon,
+  UserIcon,
+  WrenchIcon,
+  BuildingIcon,
+  RocketIcon,
+  ScaleIcon,
+  FileBarChart2Icon,
+  PlugIcon,
+  HeartHandshakeIcon,
 } from 'lucide-react';
 
 import { baseUrl, routes } from '@workspace/routes';
@@ -307,6 +315,21 @@ export const MENU_LINKS = [
         href: '/paywall-library',
         external: false
       },
+      {
+        title: 'State of Subscriptions',
+        description: 'Annual industry report',
+        icon: <FileBarChart2Icon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/state-of-in-app-subscriptions',
+        external: false,
+        badge: '2025'
+      },
+      {
+        title: 'Integrations',
+        description: 'Connect with your stack',
+        icon: <PlugIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/integrations',
+        external: false
+      },
     ]
   },
   // DOCS MENU - SDK documentation
@@ -371,6 +394,91 @@ export const MENU_LINKS = [
       },
     ]
   },
+  // SOLUTIONS - Role pages and comparisons
+  {
+    title: 'Solutions',
+    items: [
+      // BY ROLE
+      {
+        title: 'For Marketers',
+        description: 'Optimize paywalls without code',
+        icon: <UserIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/for-marketers',
+        external: false
+      },
+      {
+        title: 'For Developers',
+        description: 'SDK integration and APIs',
+        icon: <WrenchIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/for-developers',
+        external: false
+      },
+      {
+        title: 'For App Owners',
+        description: 'Grow subscription revenue',
+        icon: <BuildingIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/for-app-owners',
+        external: false
+      },
+      {
+        title: 'For Indie Developers',
+        description: 'Start free, scale as you grow',
+        icon: <RocketIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/for-indie',
+        external: false
+      },
+      // COMPARE
+      {
+        title: 'Why Adapty',
+        description: 'See how we compare',
+        icon: <HeartHandshakeIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/why-adapty',
+        external: false
+      },
+      {
+        title: 'Adapty vs RevenueCat',
+        description: 'Feature comparison',
+        icon: <ScaleIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/compare/revenuecat',
+        external: false
+      },
+      {
+        title: 'Adapty vs Qonversion',
+        description: 'Feature comparison',
+        icon: <ScaleIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/compare/qonversion',
+        external: false
+      },
+      {
+        title: 'Adapty vs Superwall',
+        description: 'Feature comparison',
+        icon: <ScaleIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/compare/superwall',
+        external: false
+      },
+      {
+        title: 'Adapty vs Purchasely',
+        description: 'Feature comparison',
+        icon: <ScaleIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/compare/purchasely',
+        external: false
+      },
+      {
+        title: 'Adapty vs In-house',
+        description: 'Build vs buy analysis',
+        icon: <ScaleIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/compare/in-house-development',
+        external: false
+      },
+      {
+        title: 'All comparisons',
+        description: 'View all competitor comparisons',
+        icon: <FileTextIcon className="size-5 shrink-0 text-muted-foreground" />,
+        href: '/compare',
+        external: false
+      },
+    ]
+  },
   // PRICING - Direct link
   {
     title: 'Pricing',
@@ -389,19 +497,47 @@ export const FOOTER_LINKS = [
     links: [
       { name: 'Paywall Builder', href: '/paywall-builder', external: false },
       { name: 'A/B Testing', href: '/paywall-ab-testing', external: false },
-      { name: 'Analytics', href: '/revenue-growth', external: false },
+      { name: 'Onboarding Builder', href: '/onboarding-builder', external: false },
+      { name: 'AI Paywall Generator', href: '/ai-paywall-generator', external: false },
+      { name: 'Autopilot', href: '/autopilot', external: false },
+      { name: 'Revenue Analytics', href: '/revenue-growth', external: false },
+      { name: 'LTV Analytics', href: '/ltv-analytics', external: false },
+      { name: 'Predictive Analytics', href: '/predictive-analytics', external: false },
       { name: 'Subscriptions SDK', href: '/sdk', external: false },
       { name: 'Refund Saver', href: '/refund-saver', external: false },
       { name: 'Remote Config', href: '/remote-config', external: false },
-      { name: 'Integrations', href: '/integrations', external: false }
+      { name: 'Fallback Paywalls', href: '/fallback-paywalls', external: false },
+      { name: 'Paywall Targeting', href: '/paywall-targeting', external: false },
+      { name: 'Paywall Localization', href: '/paywall-localization', external: false },
+      { name: 'Integrations', href: '/integrations', external: false },
+      { name: 'Pricing', href: '/pricing', external: false }
+    ]
+  },
+  {
+    title: 'Solutions',
+    links: [
+      { name: 'For Marketers', href: '/for-marketers', external: false },
+      { name: 'For Developers', href: '/for-developers', external: false },
+      { name: 'For App Owners', href: '/for-app-owners', external: false },
+      { name: 'For Indie Developers', href: '/for-indie', external: false },
+      { name: 'Why Adapty', href: '/why-adapty', external: false },
+      { name: 'Compare Adapty', href: '/compare', external: false },
+      { name: 'vs RevenueCat', href: '/compare/revenuecat', external: false },
+      { name: 'vs Qonversion', href: '/compare/qonversion', external: false },
+      { name: 'vs Superwall', href: '/compare/superwall', external: false },
+      { name: 'vs Purchasely', href: '/compare/purchasely', external: false },
+      { name: 'vs In-house', href: '/compare/in-house-development', external: false }
     ]
   },
   {
     title: 'Resources',
     links: [
       { name: 'Documentation', href: 'https://docs.adapty.io', external: true },
-      { name: 'Blog', href: 'https://adapty.io/blog/', external: true },
+      { name: 'Blog', href: '/blog', external: false },
       { name: 'Case Studies', href: '/case-studies', external: false },
+      { name: 'Paywall Library', href: '/paywall-library', external: false },
+      { name: 'Apple Fiscal Calendar', href: '/apple-fiscal-calendar', external: false },
+      { name: 'State of Subscriptions', href: '/state-of-in-app-subscriptions', external: false },
       { name: 'Community', href: 'https://adapty.io/community/', external: true },
       { name: 'Webinars', href: 'https://adapty.io/webinars/', external: true },
       { name: 'Help Center', href: 'https://adapty.io/support/', external: true }
@@ -410,9 +546,10 @@ export const FOOTER_LINKS = [
   {
     title: 'Company',
     links: [
-      { name: 'About', href: '/story', external: false },
+      { name: 'About Adapty', href: '/story', external: false },
       { name: 'Careers', href: '/careers', external: false },
       { name: 'Contact', href: '/contact', external: false },
+      { name: 'Schedule Demo', href: '/schedule-demo', external: false },
       { name: 'System Status', href: 'https://status.adapty.io/', external: true }
     ]
   },

@@ -66,12 +66,24 @@ export const PRODUCT_SIDEBAR_ITEMS = [
 
 export type ProductSidebarKey = typeof PRODUCT_SIDEBAR_ITEMS[number]['key'];
 
-// Solution panel content
+// Solution panel content (by role)
 export const SOLUTION_ITEMS: MenuItem[] = [
   { title: 'For Marketers', href: '/for-marketers', icon: '/images/menu-icons/icon-24x24-newsletter.svg', description: 'Launch paywalls without coding' },
   { title: 'For Developers', href: '/for-developers', icon: '/images/menu-icons/icon-20x20-sdk.svg', description: 'Focus on code, not infrastructure' },
   { title: 'For App Owners', href: '/for-app-owners', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Maximize subscription revenue' },
+  { title: 'For Indie Developers', href: '/for-indie', icon: '/images/menu-icons/icon-assistant-dp24w4g0.svg', description: 'Start free, scale as you grow' },
   { title: 'For Enterprises', href: 'https://adapty.io/enterprise/', icon: '/images/menu-icons/icon-24x24-21n.svg', description: 'Scale with enterprise features', external: true },
+];
+
+// Compare panel content (competitor comparisons)
+export const COMPARE_ITEMS: MenuItem[] = [
+  { title: 'Why Adapty', href: '/why-adapty', icon: '/images/menu-icons/icon-24x24-difference.svg', description: 'See how we compare' },
+  { title: 'vs RevenueCat', href: '/compare/revenuecat', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Feature comparison' },
+  { title: 'vs Qonversion', href: '/compare/qonversion', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Feature comparison' },
+  { title: 'vs Superwall', href: '/compare/superwall', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Feature comparison' },
+  { title: 'vs Purchasely', href: '/compare/purchasely', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Feature comparison' },
+  { title: 'vs In-house', href: '/compare/in-house-development', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Build vs buy analysis' },
+  { title: 'All Comparisons', href: '/compare', icon: '/images/menu-icons/icon-24x24-difference.svg', description: 'View all comparisons' },
 ];
 
 // SDK panel content
@@ -177,7 +189,9 @@ export const RESOURCES_SECTIONS: MenuSection[] = [
       { title: 'Community', href: 'https://adapty.io/community/', icon: '/images/menu-icons/icon-20x20-bug-report.svg' },
       { title: 'Webinars', href: 'https://adapty.io/webinars/', icon: '/images/menu-icons/icon-20x20-neurology.svg' },
       { title: 'Events', href: 'https://adapty.io/events/', icon: '/images/menu-icons/icon-24x24-23n.svg' },
-      { title: 'Careers', href: 'https://adapty.io/careers/', icon: '/images/menu-icons/icon-assistant-dp24w4g0.svg' },
+      { title: 'Careers', href: '/careers', icon: '/images/menu-icons/icon-assistant-dp24w4g0.svg' },
+      { title: 'Contact', href: '/contact', icon: '/images/menu-icons/icon-24x24-newsletter.svg' },
+      { title: 'Schedule Demo', href: '/schedule-demo', icon: '/images/menu-icons/icon-mobile-menu-dp24w4g0.svg' },
     ]
   },
   {
@@ -206,8 +220,8 @@ export const RESOURCES_SECTIONS: MenuSection[] = [
   {
     title: 'Research',
     items: [
-      { title: 'Onboarding A/B test ideas checklist', href: 'https://adapty.io/ebooks/onboarding-ab-test-ideas/', icon: '/images/menu-icons/icon-mobile-menu-dp24w4g0.svg', badge: 'new' },
-      { title: 'State of in-app subscriptions 2025', href: 'https://adapty.io/ebooks/state-of-in-app-subscriptions-2024/', icon: '/images/menu-icons/icon-24x24-doc.svg' },
+      { title: 'State of In-App Subscriptions', href: '/state-of-in-app-subscriptions', icon: '/images/menu-icons/icon-24x24-doc.svg', badge: 'new' },
+      { title: 'Onboarding A/B test ideas checklist', href: 'https://adapty.io/ebooks/onboarding-ab-test-ideas/', icon: '/images/menu-icons/icon-mobile-menu-dp24w4g0.svg' },
       { title: 'Adapty pricing index', href: 'https://adapty.io/ebooks/pricing-index/', icon: '/images/menu-icons/icon-24x24-10n.svg' },
     ]
   }
@@ -267,16 +281,16 @@ export const LANGUAGES: Language[] = [
 // ============================================================================
 
 export const MOBILE_MAIN_MENU: MobileMenuItem[] = [
-  { label: 'Company', href: '/story' },
   { label: 'Product', hasSubmenu: true },
-  { label: 'Solution', href: 'https://adapty.io/solutions/' },
+  { label: 'Solutions', hasSubmenu: true, dataKey: 'Solutions' },
   { label: 'Resources', hasSubmenu: true },
-  { label: 'Integrations', href: '/integrations' },
-  { label: 'Subscriptions SDK', href: '/sdk' },
   { label: 'Case Studies', hasSubmenu: true, dataKey: 'Cases' },
   { label: 'Docs', hasSubmenu: true },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Company', href: '/story' },
   { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Schedule Demo', href: '/schedule-demo' },
   { label: 'web2app', href: 'https://funnelfox.com/', highlight: true },
 ];
 
@@ -297,6 +311,32 @@ export type MobileSubmenuConfig = {
 };
 
 export const MOBILE_SUBMENU_DATA: Record<string, MobileSubmenuConfig> = {
+  Solutions: {
+    sections: [
+      {
+        title: 'BY ROLE',
+        items: [
+          { title: 'For Marketers', href: '/for-marketers' },
+          { title: 'For Developers', href: '/for-developers' },
+          { title: 'For App Owners', href: '/for-app-owners' },
+          { title: 'For Indie Developers', href: '/for-indie' },
+          { title: 'For Enterprises', href: 'https://adapty.io/enterprise/' },
+        ],
+      },
+      {
+        title: 'COMPARE',
+        items: [
+          { title: 'Why Adapty', href: '/why-adapty' },
+          { title: 'vs RevenueCat', href: '/compare/revenuecat' },
+          { title: 'vs Qonversion', href: '/compare/qonversion' },
+          { title: 'vs Superwall', href: '/compare/superwall' },
+          { title: 'vs Purchasely', href: '/compare/purchasely' },
+          { title: 'vs In-house Development', href: '/compare/in-house-development' },
+          { title: 'All Comparisons', href: '/compare' },
+        ],
+      },
+    ],
+  },
   Product: {
     topLinks: [
       { title: 'Product', href: 'https://adapty.io/product/' },
@@ -379,7 +419,9 @@ export const MOBILE_SUBMENU_DATA: Record<string, MobileSubmenuConfig> = {
           { title: 'Community', href: 'https://adapty.io/community/' },
           { title: 'Webinars', href: 'https://adapty.io/webinars/' },
           { title: 'Events', href: 'https://adapty.io/events/' },
-          { title: 'Careers', href: 'https://adapty.io/careers/' },
+          { title: 'Careers', href: '/careers' },
+          { title: 'Contact', href: '/contact' },
+          { title: 'Schedule Demo', href: '/schedule-demo' },
         ],
       },
       {
@@ -408,8 +450,8 @@ export const MOBILE_SUBMENU_DATA: Record<string, MobileSubmenuConfig> = {
       {
         title: 'RESEARCH',
         items: [
-          { title: 'Onboarding A/B test ideas checklist', href: 'https://adapty.io/ebooks/onboarding-ab-test-ideas/', badge: 'new' },
-          { title: 'State of in-app subscriptions 2025', href: 'https://adapty.io/ebooks/state-of-in-app-subscriptions-2024/' },
+          { title: 'State of In-App Subscriptions', href: '/state-of-in-app-subscriptions', badge: 'new' },
+          { title: 'Onboarding A/B test ideas checklist', href: 'https://adapty.io/ebooks/onboarding-ab-test-ideas/' },
           { title: 'Adapty pricing index', href: 'https://adapty.io/ebooks/pricing-index/' },
         ],
       },
