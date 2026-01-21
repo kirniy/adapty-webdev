@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
 
 // Grid animation variants
 export type GridVariant = 'default' | 'flickering' | 'cursor-tracking' | 'slow-drift' | 'off'
@@ -287,8 +288,48 @@ const defaultState: DebugState = {
   isDebugMenuOpen: false,
 }
 
-// Storage key
-const STORAGE_KEY = 'achromatic-debug-state'
+// Storage keys
+const GLOBAL_STORAGE_KEY = 'achromatic-debug-global'
+const PAGE_STORAGE_PREFIX = 'achromatic-debug-page-'
+
+// Keys that are global across all pages
+const GLOBAL_KEYS: (keyof DebugState)[] = [
+  'colorAccentVariant',
+  'gridVariant',
+  'cornerRadiusVariant',
+  'gridThicknessVariant',
+  'dashedThicknessVariant',
+  'gridColorVariant',
+  'gridOpacityVariant',
+  'gridZIndexVariant',
+  'headerVariant',
+  'footerVariant',
+  'heroLinesVariant',
+  'imageSetVariant',
+  'monochromeMode',
+]
+
+// Keys that are page-specific
+const PAGE_KEYS: (keyof DebugState)[] = [
+  'heroVariant',
+  'logosVariant',
+  'featuresVariant',
+  'statsVariant',
+  'testimonialsVariant',
+  'faqVariant',
+  'ctaVariant',
+  'blogVariant',
+  'sdkVariant',
+  'rolesVariant',
+  'customizationVariant',
+]
+
+// Helper to get page storage key
+function getPageStorageKey(pathname: string): string {
+  // Normalize pathname (remove trailing slash, use / for homepage)
+  const normalized = pathname === '/' ? '/' : pathname.replace(/\/$/, '')
+  return `${PAGE_STORAGE_PREFIX}${normalized}`
+}
 
 // Create context
 const DebugContext = createContext<DebugContextValue | null>(null)
@@ -297,35 +338,54 @@ const DebugContext = createContext<DebugContextValue | null>(null)
 export function DebugProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<DebugState>(defaultState)
   const [isHydrated, setIsHydrated] = useState(false)
+  const pathname = usePathname()
 
-  // Load state from localStorage on mount
+  // Load state from localStorage on mount and when pathname changes
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY)
-      if (stored) {
-        const parsed = JSON.parse(stored) as Partial<DebugState>
-        setState(prev => ({
-          ...prev,
-          ...parsed,
-          isDebugMenuOpen: false // Always start closed
-        }))
-      }
+      // Load global settings
+      const globalStored = localStorage.getItem(GLOBAL_STORAGE_KEY)
+      const globalParsed = globalStored ? JSON.parse(globalStored) as Partial<DebugState> : {}
+
+      // Load page-specific settings
+      const pageKey = getPageStorageKey(pathname)
+      const pageStored = localStorage.getItem(pageKey)
+      const pageParsed = pageStored ? JSON.parse(pageStored) as Partial<DebugState> : {}
+
+      setState(prev => ({
+        ...prev,
+        ...globalParsed,
+        ...pageParsed,
+        isDebugMenuOpen: prev.isDebugMenuOpen // Preserve menu state during navigation
+      }))
     } catch {
       // Ignore parse errors
     }
     setIsHydrated(true)
-  }, [])
+  }, [pathname])
 
   // Save state to localStorage when it changes
   useEffect(() => {
     if (!isHydrated) return
     try {
-      const { isDebugMenuOpen, ...persistedState } = state
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(persistedState))
+      // Save global settings
+      const globalState: Partial<DebugState> = {}
+      for (const key of GLOBAL_KEYS) {
+        (globalState as Record<string, unknown>)[key] = state[key]
+      }
+      localStorage.setItem(GLOBAL_STORAGE_KEY, JSON.stringify(globalState))
+
+      // Save page-specific settings
+      const pageKey = getPageStorageKey(pathname)
+      const pageState: Partial<DebugState> = {}
+      for (const key of PAGE_KEYS) {
+        (pageState as Record<string, unknown>)[key] = state[key]
+      }
+      localStorage.setItem(pageKey, JSON.stringify(pageState))
     } catch {
       // Ignore storage errors
     }
-  }, [state, isHydrated])
+  }, [state, isHydrated, pathname])
 
   // Apply corner radius to root
   useEffect(() => {
@@ -364,9 +424,13 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   const setMonochromeMode = useCallback((enabled: boolean) => setState(prev => ({ ...prev, monochromeMode: enabled })), [])
   const toggleDebugMenu = useCallback(() => setState(prev => ({ ...prev, isDebugMenuOpen: !prev.isDebugMenuOpen })), [])
   const resetToDefaults = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY)
+    // Clear global settings
+    localStorage.removeItem(GLOBAL_STORAGE_KEY)
+    // Clear page-specific settings for current page
+    const pageKey = getPageStorageKey(pathname)
+    localStorage.removeItem(pageKey)
     setState({ ...defaultState, isDebugMenuOpen: true })
-  }, [])
+  }, [pathname])
 
   const value: DebugContextValue = {
     ...state,

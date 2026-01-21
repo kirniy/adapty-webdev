@@ -459,7 +459,7 @@ function CollapsibleSection({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.2, ease: [0.165, 0.84, 0.44, 1] }} // ease-out-quart
             className="overflow-hidden"
           >
             <div className="pt-2.5">
@@ -531,6 +531,11 @@ export function DebugMenu() {
               </button>
             </div>
 
+            {/* GLOBAL SETTINGS LABEL */}
+            <div className="mb-2">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-widest">Global Settings</span>
+            </div>
+
             {/* GLOBAL SECTIONS - Always visible */}
             <CollapsibleSection title="Color Accent" icon={<PaletteIcon />} defaultOpen>
               <VariantSelector variants={COLOR_ACCENT_VARIANTS} currentValue={colorAccentVariant} onChange={setColorAccentVariant} />
@@ -572,6 +577,11 @@ export function DebugMenu() {
             <CollapsibleSection title="Navbar" icon={<NavIcon />} defaultOpen>
               <VariantSelector variants={HEADER_VARIANTS} currentValue={headerVariant} onChange={setHeaderVariant} />
             </CollapsibleSection>
+
+            {/* PAGE SETTINGS LABEL */}
+            <div className="mt-4 mb-2 pt-3 border-t border-border/30">
+              <span className="text-[10px] uppercase font-bold text-primary/80 tracking-widest">Page: {pageName}</span>
+            </div>
 
             {/* PAGE-SPECIFIC SECTIONS - Conditional */}
             {sections.hero && (
@@ -670,7 +680,10 @@ export function DebugMenu() {
               </CollapsibleSection>
             )}
 
-            {/* GLOBAL - Footer always visible */}
+            {/* GLOBAL SETTINGS - Footer */}
+            <div className="mt-4 mb-2 pt-3 border-t border-border/30">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-widest">Global Settings</span>
+            </div>
             <CollapsibleSection title="Footer" icon={<NavIcon />}>
               <VariantSelector variants={FOOTER_VARIANTS} currentValue={footerVariant} onChange={setFooterVariant} />
             </CollapsibleSection>
