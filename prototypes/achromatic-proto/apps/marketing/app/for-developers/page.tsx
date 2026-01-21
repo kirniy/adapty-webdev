@@ -6,6 +6,8 @@ import { useHeroVariant, useFeaturesVariant, useLogosVariant, useSdkVariant, use
 import { ForDevelopersHero } from '~/components/sections/for-developers-hero';
 import { ForDevelopersFeatures } from '~/components/sections/for-developers-features';
 import { Logos } from '~/components/sections/logos';
+import { LogosLinear } from '~/components/sections/logos-linear';
+import { LogosMarquee } from '~/components/sections/logos-marquee';
 import { SDKCode } from '~/components/sections/sdk-code';
 import { Testimonials } from '~/components/sections/testimonials';
 import { CTA } from '~/components/sections/cta';
@@ -21,7 +23,9 @@ export default function ForDevelopersPage(): React.JSX.Element {
   return (
     <>
       {heroVariant !== 'off' && <ForDevelopersHero />}
-      {logosVariant !== 'off' && <Logos />}
+      {logosVariant === 'linear' && <LogosLinear />}
+      {logosVariant === 'marquee' && <LogosMarquee />}
+      {logosVariant === 'default' && <Logos />}
       {featuresVariant !== 'off' && <ForDevelopersFeatures />}
       {sdkVariant !== 'off' && <SDKCode />}
       {testimonialsVariant !== 'off' && <Testimonials />}

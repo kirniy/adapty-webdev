@@ -7,6 +7,8 @@ import { ForMarketersHero } from '~/components/sections/for-marketers-hero';
 import { ForMarketersFeatures } from '~/components/sections/for-marketers-features';
 import { ForMarketersStats } from '~/components/sections/for-marketers-stats';
 import { Logos } from '~/components/sections/logos';
+import { LogosLinear } from '~/components/sections/logos-linear';
+import { LogosMarquee } from '~/components/sections/logos-marquee';
 import { Testimonials } from '~/components/sections/testimonials';
 import { CTA } from '~/components/sections/cta';
 
@@ -45,7 +47,9 @@ export default function ForMarketersPage(): React.JSX.Element {
   return (
     <>
       {heroVariant !== 'off' && <ForMarketersHero variant={mapHeroVariant(heroVariant)} />}
-      {logosVariant !== 'off' && <Logos />}
+      {logosVariant === 'linear' && <LogosLinear />}
+      {logosVariant === 'marquee' && <LogosMarquee />}
+      {logosVariant === 'default' && <Logos />}
       {featuresVariant !== 'off' && <ForMarketersFeatures variant={mapFeaturesVariant(featuresVariant)} />}
       {statsVariant !== 'off' && <ForMarketersStats />}
       {testimonialsVariant !== 'off' && <Testimonials />}

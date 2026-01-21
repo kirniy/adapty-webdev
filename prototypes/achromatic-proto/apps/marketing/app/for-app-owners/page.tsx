@@ -6,6 +6,8 @@ import { useHeroVariant, useFeaturesVariant, useLogosVariant, useStatsVariant, u
 import { ForAppOwnersHero } from '~/components/sections/for-app-owners-hero';
 import { ForAppOwnersFeatures } from '~/components/sections/for-app-owners-features';
 import { Logos } from '~/components/sections/logos';
+import { LogosLinear } from '~/components/sections/logos-linear';
+import { LogosMarquee } from '~/components/sections/logos-marquee';
 import { Stats } from '~/components/sections/stats';
 import { Testimonials } from '~/components/sections/testimonials';
 import { CTA } from '~/components/sections/cta';
@@ -21,7 +23,9 @@ export default function ForAppOwnersPage(): React.JSX.Element {
   return (
     <>
       {heroVariant !== 'off' && <ForAppOwnersHero />}
-      {logosVariant !== 'off' && <Logos />}
+      {logosVariant === 'linear' && <LogosLinear />}
+      {logosVariant === 'marquee' && <LogosMarquee />}
+      {logosVariant === 'default' && <Logos />}
       {featuresVariant !== 'off' && <ForAppOwnersFeatures />}
       {statsVariant !== 'off' && <Stats />}
       {testimonialsVariant !== 'off' && <Testimonials />}

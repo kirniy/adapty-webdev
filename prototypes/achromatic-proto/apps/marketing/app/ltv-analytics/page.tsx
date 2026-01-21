@@ -6,6 +6,8 @@ import { useHeroVariant, useFeaturesVariant, useLogosVariant, useTestimonialsVar
 import { LTVAnalyticsHero } from '~/components/sections/ltv-analytics-hero';
 import { LTVAnalyticsFeatures } from '~/components/sections/ltv-analytics-features';
 import { Logos } from '~/components/sections/logos';
+import { LogosLinear } from '~/components/sections/logos-linear';
+import { LogosMarquee } from '~/components/sections/logos-marquee';
 import { Testimonials } from '~/components/sections/testimonials';
 import { CTA } from '~/components/sections/cta';
 
@@ -21,7 +23,9 @@ export default function LTVAnalyticsPage(): React.JSX.Element {
     <>
       {heroVariant !== 'off' && <LTVAnalyticsHero />}
       {featuresVariant !== 'off' && <LTVAnalyticsFeatures />}
-      {logosVariant !== 'off' && <Logos />}
+      {logosVariant === 'linear' && <LogosLinear />}
+      {logosVariant === 'marquee' && <LogosMarquee />}
+      {logosVariant === 'default' && <Logos />}
       {testimonialsVariant !== 'off' && <Testimonials />}
       {ctaVariant !== 'off' && <CTA />}
     </>

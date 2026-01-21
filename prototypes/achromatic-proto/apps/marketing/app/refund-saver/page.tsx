@@ -7,6 +7,8 @@ import { RefundSaverHero } from '~/components/sections/refund-saver-hero';
 import { RefundSaverFeatures } from '~/components/sections/refund-saver-features';
 import { RefundSaverFAQ } from '~/components/sections/refund-saver-faq';
 import { Logos } from '~/components/sections/logos';
+import { LogosLinear } from '~/components/sections/logos-linear';
+import { LogosMarquee } from '~/components/sections/logos-marquee';
 import { Testimonials } from '~/components/sections/testimonials';
 import { CTA } from '~/components/sections/cta';
 
@@ -22,7 +24,9 @@ export default function RefundSaverPage(): React.JSX.Element {
   return (
     <>
       {heroVariant !== 'off' && <RefundSaverHero />}
-      {logosVariant !== 'off' && <Logos />}
+      {logosVariant === 'linear' && <LogosLinear />}
+      {logosVariant === 'marquee' && <LogosMarquee />}
+      {logosVariant === 'default' && <Logos />}
       {featuresVariant !== 'off' && <RefundSaverFeatures />}
       {faqVariant !== 'off' && <RefundSaverFAQ />}
       {testimonialsVariant !== 'off' && <Testimonials />}

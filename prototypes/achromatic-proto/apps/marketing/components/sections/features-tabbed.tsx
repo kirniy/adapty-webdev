@@ -36,6 +36,7 @@ import { cn } from '@workspace/ui/lib/utils';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { ScaleOnHover } from '~/components/fragments/scale-on-hover';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
 
 // Helper to get image path based on selected image set
@@ -139,15 +140,16 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURE_TABS[0]['feat
       initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 15 }}
       animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
       transition={{ delay: shouldReduceMotion ? 0 : 0.05 + index * 0.05, duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
-      className="flex gap-4 rounded-lg border bg-card p-4 transition-colors hover:bg-accent/50"
     >
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-        <feature.icon className="size-5" />
-      </div>
-      <div>
-        <h4 className="font-medium">{feature.title}</h4>
-        <p className="text-sm text-muted-foreground">{feature.description}</p>
-      </div>
+      <ScaleOnHover className="flex gap-4 rounded-lg border bg-card p-4 transition-colors hover:bg-accent/50 cursor-default">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <feature.icon className="size-5" />
+        </div>
+        <div>
+          <h4 className="font-medium">{feature.title}</h4>
+          <p className="text-sm text-muted-foreground">{feature.description}</p>
+        </div>
+      </ScaleOnHover>
     </motion.div>
   );
 }

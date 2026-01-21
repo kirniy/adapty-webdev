@@ -4,6 +4,8 @@ import * as React from 'react';
 
 import { useHeroVariant, useFaqVariant, useLogosVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
 import { Logos } from '~/components/sections/logos';
+import { LogosLinear } from '~/components/sections/logos-linear';
+import { LogosMarquee } from '~/components/sections/logos-marquee';
 import { PricingComparison } from '~/components/sections/pricing-comparison';
 import { PricingFAQ } from '~/components/sections/pricing-faq';
 import { PricingHero } from '~/components/sections/pricing-hero';
@@ -35,7 +37,9 @@ export default function PricingPage(): React.JSX.Element {
     <>
       {heroVariant !== 'off' && <PricingHero variant={mapHeroVariant(heroVariant)} />}
       <StartupCallout />
-      {logosVariant !== 'off' && <Logos />}
+      {logosVariant === 'linear' && <LogosLinear />}
+      {logosVariant === 'marquee' && <LogosMarquee />}
+      {logosVariant === 'default' && <Logos />}
       <PricingComparison />
       {faqVariant !== 'off' && <PricingFAQ />}
       {testimonialsVariant !== 'off' && <Testimonials />}

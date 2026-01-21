@@ -6,6 +6,8 @@ import { useHeroVariant, useFeaturesVariant, useLogosVariant, useTestimonialsVar
 import { AutopilotHero } from '~/components/sections/autopilot-hero';
 import { AutopilotFeatures } from '~/components/sections/autopilot-features';
 import { Logos } from '~/components/sections/logos';
+import { LogosLinear } from '~/components/sections/logos-linear';
+import { LogosMarquee } from '~/components/sections/logos-marquee';
 import { Testimonials } from '~/components/sections/testimonials';
 import { CTA } from '~/components/sections/cta';
 
@@ -20,7 +22,9 @@ export default function AutopilotPage(): React.JSX.Element {
   return (
     <>
       {heroVariant !== 'off' && <AutopilotHero />}
-      {logosVariant !== 'off' && <Logos />}
+      {logosVariant === 'linear' && <LogosLinear />}
+      {logosVariant === 'marquee' && <LogosMarquee />}
+      {logosVariant === 'default' && <Logos />}
       {featuresVariant !== 'off' && <AutopilotFeatures />}
       {testimonialsVariant !== 'off' && <Testimonials />}
       {ctaVariant !== 'off' && <CTA />}

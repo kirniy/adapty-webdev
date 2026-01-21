@@ -7,6 +7,8 @@ import { OnboardingBuilderHero } from '~/components/sections/onboarding-builder-
 import { OnboardingBuilderFeatures } from '~/components/sections/onboarding-builder-features';
 import { OnboardingBuilderFAQ } from '~/components/sections/onboarding-builder-faq';
 import { Logos } from '~/components/sections/logos';
+import { LogosLinear } from '~/components/sections/logos-linear';
+import { LogosMarquee } from '~/components/sections/logos-marquee';
 import { Testimonials } from '~/components/sections/testimonials';
 import { CTA } from '~/components/sections/cta';
 
@@ -22,7 +24,9 @@ export default function OnboardingBuilderPage(): React.JSX.Element {
   return (
     <>
       {heroVariant !== 'off' && <OnboardingBuilderHero />}
-      {logosVariant !== 'off' && <Logos />}
+      {logosVariant === 'linear' && <LogosLinear />}
+      {logosVariant === 'marquee' && <LogosMarquee />}
+      {logosVariant === 'default' && <Logos />}
       {featuresVariant !== 'off' && <OnboardingBuilderFeatures />}
       {faqVariant !== 'off' && <OnboardingBuilderFAQ />}
       {testimonialsVariant !== 'off' && <Testimonials />}
