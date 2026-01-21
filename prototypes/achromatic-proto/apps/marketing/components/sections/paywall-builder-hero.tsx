@@ -3,8 +3,16 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, MousePointerClickIcon, PaletteIcon, RocketIcon, SparklesIcon, PlayIcon, CheckIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowRightIcon,
+  MousePointerClickIcon,
+  PaletteIcon,
+  RocketIcon,
+  SparklesIcon,
+  PlayIcon,
+  CheckIcon
+} from 'lucide-react';
+import { motion, useReducedMotion, AnimatePresence, useInView } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
@@ -13,32 +21,221 @@ import { cn } from '@workspace/ui/lib/utils';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+import { paywallBuilderContent } from '~/lib/content';
 
-// Content from adapty.io/paywall-builder
-const BENEFITS = [
-  { icon: MousePointerClickIcon, text: 'No coding required' },
-  { icon: PaletteIcon, text: 'Visual drag-and-drop editor' },
-  { icon: RocketIcon, text: 'Deploy in minutes' },
-  { icon: SparklesIcon, text: 'Native performance' },
-];
+// Animation constants following Emil Kowalski principles
+const EASE_OUT_QUART = [0.165, 0.84, 0.44, 1] as const;
+const EASE_OUT_EXPO = [0.19, 1, 0.22, 1] as const;
 
-const STATS = [
-  { value: '$13M+', label: 'revenue generated' },
-  { value: '50K+', label: 'paywalls created' },
-  { value: '15K+', label: 'apps' },
-  { value: '8K+', label: 'clients' },
-];
+// Content from centralized content file
+// Icon mapping
+// Map string icons to Lucide components
+const ICON_MAP: Record<string, React.ElementType> = {
+  MousePointerClick: MousePointerClickIcon,
+  Palette: PaletteIcon,
+  Rocket: RocketIcon,
+  Sparkles: SparklesIcon,
+  Check: CheckIcon,
+};
 
-const CHECKLIST = [
-  'No designer or developer needed',
-  'Native iOS & Android performance',
-  'Real-time updates without app release',
-  'Built-in A/B testing',
-];
+const BENEFITS = paywallBuilderContent.hero.benefits.map(b => ({
+  ...b,
+  icon: ICON_MAP[b.icon] || SparklesIcon
+}));
+
+const STATS = paywallBuilderContent.stats;
+
+const CHECKLIST = paywallBuilderContent.hero.checklist;
 
 function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
   return basePath.replace('/assets/hero/', `/assets/hero/${imageSet}/`);
+}
+
+// Animated number counter component
+function AnimatedCounter({
+  value,
+  suffix = '',
+  prefix = '',
+  duration = 2,
+}: {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  duration?: number;
+}) {
+  const [count, setCount] = React.useState(0);
+  const ref = React.useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const shouldReduceMotion = useReducedMotion();
+
+  React.useEffect(() => {
+    if (!isInView) return;
+    if (shouldReduceMotion) {
+      setCount(value);
+      return;
+    }
+
+    let startTime: number;
+    let animationFrame: number;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+
+      // Ease out quart for smooth deceleration
+      const eased = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(eased * value));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        setCount(value);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isInView, value, duration, shouldReduceMotion]);
+
+  // Format number with proper display
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(0)}M`;
+    }
+    if (num >= 1000) {
+      return `${(num / 1000).toFixed(0)}K`;
+    }
+    return num.toString();
+  };
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {prefix}{formatNumber(count)}{suffix}
+    </span>
+  );
+}
+
+// Stat card with hover effect
+function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      transition={{ delay: 0.3 + index * 0.05, duration: 0.2, ease: EASE_OUT_QUART }}
+      className="text-left cursor-default"
+    >
+      <motion.p
+        animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.05 : 1 }}
+        transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
+        className="text-xl font-bold text-foreground"
+      >
+        {stat.value}
+      </motion.p>
+      <p className="text-xs text-muted-foreground">{stat.label}</p>
+    </motion.div>
+  );
+}
+
+// Benefit item with icon animation
+function BenefitItem({ benefit, index }: { benefit: typeof BENEFITS[0]; index: number }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const Icon = benefit.icon;
+
+  return (
+    <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -10 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+      transition={{ delay: 0.15 + index * 0.05, duration: 0.2, ease: EASE_OUT_QUART }}
+      className="flex items-center gap-3 text-sm text-muted-foreground cursor-default group"
+    >
+      <motion.div
+        animate={shouldReduceMotion ? undefined : {
+          scale: isHovered ? 1.1 : 1,
+          rotate: isHovered ? 5 : 0,
+        }}
+        transition={{ type: 'spring', duration: 0.25, bounce: 0.3 }}
+        className="flex size-8 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/15 transition-colors"
+      >
+        <Icon className="size-4 text-primary" />
+      </motion.div>
+      <span className="group-hover:text-foreground transition-colors">{benefit.text}</span>
+    </motion.div>
+  );
+}
+
+// Hero button with glow effect (BLACK for primary, following monochrome philosophy)
+function HeroButton({
+  href,
+  variant = 'default',
+  children,
+  external = false,
+}: {
+  href: string;
+  variant?: 'default' | 'outline';
+  children: React.ReactNode;
+  external?: boolean;
+}) {
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [isPressed, setIsPressed] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  const linkProps = external
+    ? { target: '_blank', rel: 'noopener noreferrer' }
+    : {};
+
+  return (
+    <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsPressed(false);
+      }}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
+      animate={{
+        y: shouldReduceMotion ? 0 : isPressed ? 1 : isHovered ? -2 : 0,
+        scale: shouldReduceMotion ? 1 : isPressed ? 0.97 : 1,
+      }}
+      transition={{ type: 'spring', duration: 0.15, bounce: 0 }}
+      className="relative"
+    >
+      {/* Glow effect for primary button */}
+      {variant === 'default' && (
+        <motion.div
+          className="absolute inset-0 -z-10 rounded-xl bg-foreground/20 blur-lg"
+          animate={{
+            opacity: isHovered ? 0.6 : 0,
+            scale: isHovered ? 1.15 : 1,
+          }}
+          transition={{ duration: 0.25 }}
+        />
+      )}
+      <Link
+        href={href}
+        {...linkProps}
+        className={cn(
+          buttonVariants({ variant, size: 'lg' }),
+          'rounded-xl px-6 transition-all duration-150',
+          // PRIMARY BUTTON: Black background (monochrome philosophy)
+          variant === 'default' && 'bg-foreground text-background hover:bg-foreground/90 shadow-md hover:shadow-lg',
+          // SECONDARY BUTTON: Outline style
+          variant === 'outline' && 'hover:bg-muted/50'
+        )}
+      >
+        {children}
+      </Link>
+    </motion.div>
+  );
 }
 
 // =============================================================================
@@ -48,7 +245,7 @@ function SplitHero() {
   const shouldReduceMotion = useReducedMotion();
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
+  const [imageHovered, setImageHovered] = React.useState(false);
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -58,96 +255,223 @@ function SplitHero() {
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
             <BlurFade delay={0.05}>
-              <Badge variant="outline" className="w-fit rounded-full px-4 py-1.5">
-                Paywall Management
+              <Badge
+                variant="outline"
+                className="group relative w-fit overflow-hidden rounded-full px-4 py-1.5 cursor-default"
+              >
+                <BorderBeam
+                  size={40}
+                  duration={4}
+                  borderWidth={1.5}
+                  colorFrom="#3b82f6"
+                  colorTo="#8b5cf6"
+                />
+                <span className="relative z-10">{paywallBuilderContent.hero.badge}</span>
               </Badge>
             </BlurFade>
 
             <BlurFade delay={0.1}>
               <h1 className="text-left text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-[52px] lg:leading-[1.1]">
-                Build money-making paywalls without coding
+                {paywallBuilderContent.hero.headline}
               </h1>
             </BlurFade>
 
             <BlurFade delay={0.15}>
               <p className="max-w-xl text-left text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Create, edit, and release payment screens in minutes. No designer or developer needed. Our visual editor lets you build native paywalls that convert.
+                {paywallBuilderContent.hero.description}
               </p>
             </BlurFade>
 
             <BlurFade delay={0.2}>
               <div className="grid grid-cols-2 gap-4">
                 {BENEFITS.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
-                      <benefit.icon className="size-4 text-primary" />
-                    </div>
-                    {benefit.text}
-                  </div>
+                  <BenefitItem key={index} benefit={benefit} index={index} />
                 ))}
               </div>
             </BlurFade>
 
             <BlurFade delay={0.25}>
               <div className="flex flex-col sm:flex-row items-start gap-4 pt-2">
-                <motion.div
-                  onMouseEnter={() => setIsHovered('demo')}
-                  onMouseLeave={() => setIsHovered(null)}
-                  animate={{ y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0 }}
-                  transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
-                >
-                  <Link
-                    href="/schedule-demo"
-                    className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8 transition-all duration-150 ease-out')}
-                  >
-                    Book a demo
-                    <motion.span
-                      animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                      transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                    >
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </motion.span>
-                  </Link>
-                </motion.div>
-
-                <motion.div
-                  onMouseEnter={() => setIsHovered('start')}
-                  onMouseLeave={() => setIsHovered(null)}
-                  animate={{ y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0 }}
-                  transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
-                >
-                  <Link
-                    href="https://app.adapty.io/registration"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'rounded-xl px-8 transition-all duration-150 ease-out')}
-                  >
-                    Start for free
-                  </Link>
-                </motion.div>
+                <HeroButton href={paywallBuilderContent.hero.primaryCtaHref} variant="default">
+                  {paywallBuilderContent.hero.primaryCta}
+                  <ArrowRightIcon className="ml-2 size-4" />
+                </HeroButton>
+                <HeroButton href={paywallBuilderContent.hero.secondaryCtaHref} variant="outline" external>
+                  {paywallBuilderContent.hero.secondaryCta}
+                </HeroButton>
               </div>
             </BlurFade>
 
             <BlurFade delay={0.3}>
               <div className="flex flex-wrap gap-6 pt-4 border-t">
                 {STATS.map((stat, index) => (
-                  <div key={index} className="text-left">
-                    <p className="text-xl font-bold text-foreground">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground">{stat.label}</p>
-                  </div>
+                  <StatCard key={index} stat={stat} index={index} />
                 ))}
               </div>
             </BlurFade>
           </div>
 
-          {/* Right: Screenshot */}
+          {/* Right: Screenshot with hover effect */}
           <BlurFade delay={0.2}>
             <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+              onMouseEnter={() => setImageHovered(true)}
+              onMouseLeave={() => setImageHovered(false)}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 20 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.4, ease: EASE_OUT_EXPO }}
+              className="relative"
+            >
+              {/* Shadow layer */}
+              <motion.div
+                animate={{
+                  y: imageHovered ? 8 : 4,
+                  opacity: imageHovered ? 0.15 : 0.1,
+                  scale: imageHovered ? 1.02 : 1,
+                }}
+                transition={{ duration: 0.3, ease: EASE_OUT_QUART }}
+                className="absolute inset-0 rounded-xl bg-foreground blur-xl -z-10"
+              />
+
+              <motion.div
+                animate={shouldReduceMotion ? undefined : {
+                  y: imageHovered ? -4 : 0,
+                  scale: imageHovered ? 1.01 : 1,
+                }}
+                transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
+                className={cn(
+                  "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg transition-shadow duration-300",
+                  imageHovered && "shadow-2xl",
+                  monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+                )}
+              >
+                <Image
+                  priority
+                  quality={100}
+                  src={getImagePath('/assets/hero/light-feature1.webp', imageSet)}
+                  width="1328"
+                  height="727"
+                  alt="Adapty Paywall Builder"
+                  className="block w-full dark:hidden"
+                />
+                <Image
+                  priority
+                  quality={100}
+                  src={getImagePath('/assets/hero/dark-feature1.webp', imageSet)}
+                  width="1328"
+                  height="727"
+                  alt="Adapty Paywall Builder"
+                  className="hidden w-full dark:block"
+                />
+              </motion.div>
+            </motion.div>
+          </BlurFade>
+        </div>
+      </div>
+    </GridSection>
+  );
+}
+
+// =============================================================================
+// VARIANT: CENTERED - Classic centered layout with large image below
+// =============================================================================
+function CenteredHero() {
+  const shouldReduceMotion = useReducedMotion();
+  const imageSet = useImageSetVariant();
+  const monochromeMode = useMonochromeMode();
+  const [imageHovered, setImageHovered] = React.useState(false);
+
+  return (
+    <GridSection className="relative overflow-hidden">
+      <SectionBackground height={900} />
+      <div className="container py-16 sm:py-20 md:py-24 relative z-10">
+        <div className="mx-auto max-w-4xl text-center">
+          <BlurFade delay={0.05}>
+            <Badge
+              variant="outline"
+              className="group relative mx-auto overflow-hidden rounded-full px-4 py-1.5 cursor-default"
+            >
+              <BorderBeam
+                size={40}
+                duration={4}
+                borderWidth={1.5}
+                colorFrom="#3b82f6"
+                colorTo="#8b5cf6"
+              />
+              <span className="relative z-10">{paywallBuilderContent.hero.badge}</span>
+            </Badge>
+          </BlurFade>
+
+          <BlurFade delay={0.1}>
+            <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
+              {paywallBuilderContent.hero.headline}
+            </h1>
+          </BlurFade>
+
+          <BlurFade delay={0.15}>
+            <p className="mt-6 mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              {paywallBuilderContent.hero.description}
+            </p>
+          </BlurFade>
+
+          <BlurFade delay={0.2}>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <HeroButton href={paywallBuilderContent.hero.primaryCtaHref} variant="default">
+                {paywallBuilderContent.hero.primaryCta}
+                <ArrowRightIcon className="ml-2 size-4" />
+              </HeroButton>
+              <HeroButton href={paywallBuilderContent.hero.secondaryCtaHref} variant="outline" external>
+                {paywallBuilderContent.hero.secondaryCta}
+              </HeroButton>
+            </div>
+          </BlurFade>
+
+          {/* Stats row */}
+          <BlurFade delay={0.25}>
+            <div className="mt-12 flex flex-wrap justify-center gap-8 border-t pt-8">
+              {STATS.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+                  animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.05, duration: 0.2, ease: EASE_OUT_QUART }}
+                  className="text-center"
+                >
+                  <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-xs text-muted-foreground">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+          </BlurFade>
+        </div>
+
+        {/* Large screenshot below */}
+        <BlurFade delay={0.3}>
+          <motion.div
+            onMouseEnter={() => setImageHovered(true)}
+            onMouseLeave={() => setImageHovered(false)}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40, scale: 0.95 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.5, ease: EASE_OUT_EXPO }}
+            className="relative mt-16 mx-auto max-w-6xl"
+          >
+            {/* Shadow layer */}
+            <motion.div
+              animate={{
+                y: imageHovered ? 12 : 6,
+                opacity: imageHovered ? 0.2 : 0.1,
+              }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 rounded-xl bg-foreground blur-2xl -z-10"
+            />
+
+            <motion.div
+              animate={shouldReduceMotion ? undefined : {
+                y: imageHovered ? -6 : 0,
+              }}
+              transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg",
+                "overflow-hidden rounded-xl border bg-background shadow-2xl transition-shadow",
+                imageHovered && "shadow-[0_32px_64px_-16px_rgba(0,0,0,0.25)]",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
@@ -170,127 +494,6 @@ function SplitHero() {
                 className="hidden w-full dark:block"
               />
             </motion.div>
-          </BlurFade>
-        </div>
-      </div>
-    </GridSection>
-  );
-}
-
-// =============================================================================
-// VARIANT: CENTERED - Classic centered layout with large image below
-// =============================================================================
-function CenteredHero() {
-  const shouldReduceMotion = useReducedMotion();
-  const imageSet = useImageSetVariant();
-  const monochromeMode = useMonochromeMode();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
-
-  return (
-    <GridSection className="relative overflow-hidden">
-      <SectionBackground height={900} />
-      <div className="container py-16 sm:py-20 md:py-24 relative z-10">
-        <div className="mx-auto max-w-4xl text-center">
-          <BlurFade delay={0.05}>
-            <Badge variant="outline" className="mx-auto rounded-full px-4 py-1.5">
-              Paywall Management
-            </Badge>
-          </BlurFade>
-
-          <BlurFade delay={0.1}>
-            <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
-              Build money-making paywalls without coding
-            </h1>
-          </BlurFade>
-
-          <BlurFade delay={0.15}>
-            <p className="mt-6 mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Create, edit, and release payment screens in minutes. No designer or developer needed. Our visual editor lets you build native paywalls that convert.
-            </p>
-          </BlurFade>
-
-          <BlurFade delay={0.2}>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <motion.div
-                onMouseEnter={() => setIsHovered('demo')}
-                onMouseLeave={() => setIsHovered(null)}
-                animate={{ y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0 }}
-                transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
-              >
-                <Link
-                  href="/schedule-demo"
-                  className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
-                >
-                  Book a demo
-                  <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                    transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                  >
-                    <ArrowRightIcon className="ml-2 size-4" />
-                  </motion.span>
-                </Link>
-              </motion.div>
-
-              <motion.div
-                onMouseEnter={() => setIsHovered('start')}
-                onMouseLeave={() => setIsHovered(null)}
-                animate={{ y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0 }}
-                transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
-              >
-                <Link
-                  href="https://app.adapty.io/registration"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'rounded-xl px-8')}
-                >
-                  Start for free
-                </Link>
-              </motion.div>
-            </div>
-          </BlurFade>
-
-          {/* Stats row */}
-          <BlurFade delay={0.25}>
-            <div className="mt-12 flex flex-wrap justify-center gap-8 border-t pt-8">
-              {STATS.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-                  <p className="text-xs text-muted-foreground">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </BlurFade>
-        </div>
-
-        {/* Large screenshot below */}
-        <BlurFade delay={0.3}>
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40, scale: 0.95 }}
-            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-            className={cn(
-              "mt-16 mx-auto max-w-6xl overflow-hidden rounded-xl border bg-background shadow-2xl",
-              monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
-            )}
-          >
-            <Image
-              priority
-              quality={100}
-              src={getImagePath('/assets/hero/light-feature1.webp', imageSet)}
-              width="1328"
-              height="727"
-              alt="Adapty Paywall Builder"
-              className="block w-full dark:hidden"
-            />
-            <Image
-              priority
-              quality={100}
-              src={getImagePath('/assets/hero/dark-feature1.webp', imageSet)}
-              width="1328"
-              height="727"
-              alt="Adapty Paywall Builder"
-              className="hidden w-full dark:block"
-            />
           </motion.div>
         </BlurFade>
       </div>
@@ -315,20 +518,30 @@ function ShowcaseHero() {
         {/* Top: Compact header */}
         <div className="mx-auto max-w-3xl text-center mb-12">
           <BlurFade delay={0.05}>
-            <Badge variant="outline" className="mx-auto rounded-full px-4 py-1.5">
-              Paywall Management
+            <Badge
+              variant="outline"
+              className="group relative mx-auto overflow-hidden rounded-full px-4 py-1.5 cursor-default"
+            >
+              <BorderBeam
+                size={40}
+                duration={4}
+                borderWidth={1.5}
+                colorFrom="#3b82f6"
+                colorTo="#8b5cf6"
+              />
+              <span className="relative z-10">{paywallBuilderContent.hero.badge}</span>
             </Badge>
           </BlurFade>
 
           <BlurFade delay={0.1}>
             <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
-              Build money-making paywalls without coding
+              {paywallBuilderContent.hero.headline}
             </h1>
           </BlurFade>
 
           <BlurFade delay={0.15}>
             <p className="mt-4 mx-auto max-w-xl text-base leading-relaxed text-muted-foreground">
-              Create, edit, and release payment screens in minutes.
+              {paywallBuilderContent.hero.description}
             </p>
           </BlurFade>
         </div>
@@ -338,7 +551,7 @@ function ShowcaseHero() {
           <motion.div
             initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.96 }}
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 0.1, duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+            transition={{ delay: 0.1, duration: 0.4, ease: EASE_OUT_EXPO }}
             className="relative mx-auto max-w-5xl"
           >
             <div
@@ -376,14 +589,19 @@ function ShowcaseHero() {
                     onClick={() => setShowVideo(true)}
                     onMouseEnter={() => setIsHovered('play')}
                     onMouseLeave={() => setIsHovered(null)}
-                    className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px] transition-colors hover:bg-black/30"
+                    className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px] transition-colors hover:bg-black/30 cursor-pointer"
                   >
                     <motion.div
-                      animate={shouldReduceMotion ? undefined : { scale: isHovered === 'play' ? 1.1 : 1 }}
+                      animate={shouldReduceMotion ? undefined : {
+                        scale: isHovered === 'play' ? 1.1 : 1,
+                        boxShadow: isHovered === 'play'
+                          ? '0 20px 40px -10px rgba(0,0,0,0.3)'
+                          : '0 10px 20px -5px rgba(0,0,0,0.2)',
+                      }}
                       transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
                       className="flex size-20 items-center justify-center rounded-full bg-white shadow-lg"
                     >
-                      <PlayIcon className="size-8 text-primary ml-1" />
+                      <PlayIcon className="size-8 text-foreground ml-1" />
                     </motion.div>
                   </motion.button>
                 )}
@@ -403,54 +621,29 @@ function ShowcaseHero() {
                     key={index}
                     initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -10 }}
                     animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
-                    transition={{ delay: 0.35 + index * 0.05, duration: 0.2 }}
-                    className="flex items-center gap-3 text-sm text-muted-foreground"
+                    transition={{ delay: 0.35 + index * 0.05, duration: 0.2, ease: EASE_OUT_QUART }}
+                    className="flex items-center gap-3 text-sm text-muted-foreground group cursor-default"
                   >
-                    <div className="flex size-5 items-center justify-center rounded-full bg-green-500/10">
+                    <motion.div
+                      whileHover={shouldReduceMotion ? undefined : { scale: 1.1 }}
+                      className="flex size-5 items-center justify-center rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition-colors"
+                    >
                       <CheckIcon className="size-3 text-green-600 dark:text-green-400" />
-                    </div>
-                    {item}
+                    </motion.div>
+                    <span className="group-hover:text-foreground transition-colors">{item}</span>
                   </motion.div>
                 ))}
               </div>
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-end">
-                <motion.div
-                  onMouseEnter={() => setIsHovered('demo')}
-                  onMouseLeave={() => setIsHovered(null)}
-                  animate={{ y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0 }}
-                  transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
-                >
-                  <Link
-                    href="/schedule-demo"
-                    className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
-                  >
-                    Book a demo
-                    <motion.span
-                      animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                      transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                    >
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </motion.span>
-                  </Link>
-                </motion.div>
-
-                <motion.div
-                  onMouseEnter={() => setIsHovered('start')}
-                  onMouseLeave={() => setIsHovered(null)}
-                  animate={{ y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0 }}
-                  transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
-                >
-                  <Link
-                    href="https://app.adapty.io/registration"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'rounded-xl px-8')}
-                  >
-                    Start for free
-                  </Link>
-                </motion.div>
+                <HeroButton href={paywallBuilderContent.hero.primaryCtaHref} variant="default">
+                  {paywallBuilderContent.hero.primaryCta}
+                  <ArrowRightIcon className="ml-2 size-4" />
+                </HeroButton>
+                <HeroButton href={paywallBuilderContent.hero.secondaryCtaHref} variant="outline" external>
+                  {paywallBuilderContent.hero.secondaryCta}
+                </HeroButton>
               </div>
             </div>
           </BlurFade>

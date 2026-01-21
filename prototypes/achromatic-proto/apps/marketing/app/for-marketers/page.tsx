@@ -1,30 +1,55 @@
-import * as React from 'react';
-import type { Metadata } from 'next';
+'use client';
 
-import { Logos } from '~/components/sections/logos';
+import * as React from 'react';
+
+import { useHeroVariant, useFeaturesVariant, useLogosVariant, useStatsVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
 import { ForMarketersHero } from '~/components/sections/for-marketers-hero';
 import { ForMarketersFeatures } from '~/components/sections/for-marketers-features';
 import { ForMarketersStats } from '~/components/sections/for-marketers-stats';
+import { Logos } from '~/components/sections/logos';
 import { Testimonials } from '~/components/sections/testimonials';
 import { CTA } from '~/components/sections/cta';
-import { createTitle } from '~/lib/formatters';
 
-export const metadata: Metadata = {
-  title: createTitle('For Marketers'),
-  description: "Optimize your marketing strategy with Adapty's comprehensive dashboard for paywall management. Test, target, and personalize paywalls for diverse audiences."
-};
+// Map global Hero variant to local variants
+type ForMarketersHeroVariant = 'split' | 'centered' | 'video';
 
-// Page structure matches adapty.io/for-marketers (scraped 2026-01-21)
-// Sections: Hero, Features, Stats, Logos, Testimonials, CTA
+function mapHeroVariant(globalVariant: string): ForMarketersHeroVariant {
+  switch (globalVariant) {
+    case 'marketing': return 'centered';
+    case 'story': return 'video';
+    case 'split': return 'split';
+    default: return 'split';
+  }
+}
+
+// Map global Features variant to local variants
+type ForMarketersFeaturesVariant = 'grid' | 'bento' | 'tabs';
+
+function mapFeaturesVariant(globalVariant: string): ForMarketersFeaturesVariant {
+  switch (globalVariant) {
+    case 'bento-tabs': return 'bento';
+    case 'tabbed': return 'tabs';
+    case 'solution': return 'grid';
+    default: return 'grid';
+  }
+}
+
 export default function ForMarketersPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+  const logosVariant = useLogosVariant();
+  const statsVariant = useStatsVariant();
+  const testimonialsVariant = useTestimonialsVariant();
+  const ctaVariant = useCtaVariant();
+
   return (
     <>
-      <ForMarketersHero />
-      <ForMarketersFeatures />
-      <ForMarketersStats />
-      <Logos />
-      <Testimonials />
-      <CTA />
+      {heroVariant !== 'off' && <ForMarketersHero variant={mapHeroVariant(heroVariant)} />}
+      {logosVariant !== 'off' && <Logos />}
+      {featuresVariant !== 'off' && <ForMarketersFeatures variant={mapFeaturesVariant(featuresVariant)} />}
+      {statsVariant !== 'off' && <ForMarketersStats />}
+      {testimonialsVariant !== 'off' && <Testimonials />}
+      {ctaVariant !== 'off' && <CTA />}
     </>
   );
 }

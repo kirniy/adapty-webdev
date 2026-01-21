@@ -1,30 +1,31 @@
-import * as React from 'react';
-import type { Metadata } from 'next';
+'use client';
 
-import { Logos } from '~/components/sections/logos';
+import * as React from 'react';
+
+import { useHeroVariant, useFeaturesVariant, useLogosVariant, useSdkVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
 import { ForDevelopersHero } from '~/components/sections/for-developers-hero';
 import { ForDevelopersFeatures } from '~/components/sections/for-developers-features';
-import { ForMarketersStats } from '~/components/sections/for-marketers-stats';
+import { Logos } from '~/components/sections/logos';
+import { SDKCode } from '~/components/sections/sdk-code';
 import { Testimonials } from '~/components/sections/testimonials';
 import { CTA } from '~/components/sections/cta';
-import { createTitle } from '~/lib/formatters';
 
-export const metadata: Metadata = {
-  title: createTitle('For Developers'),
-  description: 'Save hours of coding with quick IAPs integration and just five SDK methods, while enjoying well-maintained SDKs and seamless cross-platform sync.'
-};
-
-// Page structure matches adapty.io/for-developers (scraped 2026-01-21)
-// Sections: Hero, Features, SDKs, Stats, Logos, Testimonials, CTA
 export default function ForDevelopersPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+  const logosVariant = useLogosVariant();
+  const sdkVariant = useSdkVariant();
+  const testimonialsVariant = useTestimonialsVariant();
+  const ctaVariant = useCtaVariant();
+
   return (
     <>
-      <ForDevelopersHero />
-      <ForDevelopersFeatures />
-      <ForMarketersStats />
-      <Logos />
-      <Testimonials />
-      <CTA />
+      {heroVariant !== 'off' && <ForDevelopersHero />}
+      {logosVariant !== 'off' && <Logos />}
+      {featuresVariant !== 'off' && <ForDevelopersFeatures />}
+      {sdkVariant !== 'off' && <SDKCode />}
+      {testimonialsVariant !== 'off' && <Testimonials />}
+      {ctaVariant !== 'off' && <CTA />}
     </>
   );
 }

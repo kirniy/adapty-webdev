@@ -236,3 +236,290 @@ export const content = {
     },
   },
 }
+
+// =============================================================================
+// PAYWALL BUILDER PAGE - Content from adapty.io/paywall-builder
+// =============================================================================
+export const paywallBuilderContent = {
+  hero: {
+    badge: 'Paywall Management',
+    headline: 'Build money-making paywalls without coding',
+    description: 'Create, edit, and release payment screens in minutes. No designer or developer needed. Our visual editor lets you build native paywalls that convert.',
+    primaryCta: 'Book a demo',
+    secondaryCta: 'Start for free',
+    primaryCtaHref: '/schedule-demo',
+    secondaryCtaHref: 'https://app.adapty.io/registration',
+    checklist: [
+      'No designer or developer needed',
+      'Native iOS & Android performance',
+      'Real-time updates without app release',
+      'Built-in A/B testing',
+    ],
+    benefits: [
+      { icon: 'MousePointerClick', text: 'No coding required' },
+      { icon: 'Palette', text: 'Visual drag-and-drop editor' },
+      { icon: 'Rocket', text: 'Deploy in minutes' },
+      { icon: 'Sparkles', text: 'Native performance' },
+    ],
+  },
+
+  stats: [
+    { value: '$13M+', label: 'revenue generated' },
+    { value: '50K+', label: 'paywalls created' },
+    { value: '15K+', label: 'apps' },
+    { value: '8K+', label: 'clients' },
+  ],
+
+  features: {
+    headline: 'Powerful features for every need',
+    description: 'Everything you need to create, test, and optimize your paywalls. Pick one of our pre-made industry-tested templates or start from a blank page.',
+    items: [
+      {
+        id: 'scale-paywall',
+        icon: 'RefreshCw',
+        title: 'Scale your current paywall',
+        description: "Re-create your paywall with the builder to be able to iterate faster: quickly adjust any of its elements, clone it, or launch an A/B test within minutes.",
+        category: 'builder',
+      },
+      {
+        id: 'real-time-changes',
+        icon: 'Zap',
+        title: 'Apply changes in real-time',
+        description: "Changes to any element of the paywall made with the builder can be applied right away - there's no need to wait for the next app release.",
+        category: 'builder',
+      },
+      {
+        id: 'ab-testing',
+        icon: 'FlaskConical',
+        title: 'Seamless A/B testing integration',
+        description: "Create a paywall pair with the builder and launch A/B tests with advanced analytics right away to find the most profitable variant.",
+        category: 'testing',
+      },
+      {
+        id: 'customizable-structure',
+        icon: 'LayoutGrid',
+        title: 'Deeply customizable structure',
+        description: "Use the vertical layout structure and paywall preview to compose the very paywall you have in mind. Add multiple elements or keep it minimalistic.",
+        category: 'builder',
+      },
+      {
+        id: 'flexible-adjustments',
+        icon: 'SlidersHorizontal',
+        title: 'Flexible element adjustments',
+        description: "Customize elements by adjusting color, size, alignment, opacity, and more. Choose among numerous popular fonts or upload custom ones.",
+        category: 'customization',
+      },
+      {
+        id: 'localization',
+        icon: 'Globe',
+        title: 'Localization and personalization',
+        description: "Boost your app's LTV by personalizing paywalls based on country or user properties. Localize multiple strings with a convenient table view.",
+        category: 'localization',
+      },
+      {
+        id: 'multi-screen',
+        icon: 'Smartphone',
+        title: 'Multi-screen support',
+        description: "Paywalls autoscale to any phone screen size and can be previewed for numerous iOS and Android devices before publishing.",
+        category: 'builder',
+      },
+      {
+        id: 'native-experience',
+        icon: 'Box',
+        title: 'Truly native experience',
+        description: "Adapty paywalls are built using native components, not webviews. They are platform-native, just like the rest of your app screens.",
+        category: 'performance',
+      },
+    ],
+  },
+
+  testimonials: [
+    {
+      quote: "The no-code paywall builder saved us months of development time. We can now iterate on our monetization strategy in real-time without waiting for app releases.",
+      author: "Chris Bick",
+      role: "CEO",
+      company: "Shmoody",
+      avatar: '/images/testimonials/chris-bick.webp',
+    },
+    {
+      quote: "Adapty's paywall builder allows us to test new pricing models and designs weekly. The ROI has been incredible.",
+      author: "Sarah Brown",
+      role: "Product Manager",
+      company: "Fitness Pro",
+      avatar: '/images/testimonials/sarah-brown.webp',
+    },
+    {
+      quote: "We increased our revenue by 30% just by testing different paywall layouts with Adapty. It's an essential tool for any subscription app.",
+      author: "David Williams",
+      role: "Founder",
+      company: "Yoga Daily",
+      avatar: '/images/testimonials/david-williams.webp',
+    }
+  ],
+
+  faq: [
+    {
+      question: "Do paywalls work on both iOS and Android?",
+      answer: "Yes, paywalls created with Adapty are natively rendered on both iOS and Android devices, ensuring high performance and a perfect look on any screen size."
+    },
+    {
+      question: "Can I use my own design?",
+      answer: "Absolutely. You can start with one of our high-converting templates or build your paywall from scratch to match your app's branding perfectly."
+    },
+    {
+      question: "Do I need to update my app to change prices?",
+      answer: "No. With Adapty's Remote Config, you can change products, prices, and paywall designs instantly without submitting a new app version to the stores."
+    },
+    {
+      question: "Is it possible to A/B test paywalls?",
+      answer: "Yes, seamless A/B testing is built right into the product. You can create multiple paywall variants and test them against each other to find the best performing one."
+    }
+  ],
+
+  customization: {
+    headline: 'Endless customization possibilities',
+    description: 'Each paywall is composed of separate widget elements that can be placed to your liking.',
+    items: [
+      {
+        id: 'hard-soft-paywall',
+        icon: 'Layout',
+        title: 'Hard/Soft paywall',
+        description: 'See if your users are willing to pay right away.',
+        details: 'Test whether users convert better with a hard paywall (must subscribe to continue) or a soft paywall (can dismiss and access limited content). Our data shows the optimal approach varies by app category.',
+      },
+      {
+        id: 'headline-benefits',
+        icon: 'Type',
+        title: 'Headline and benefits',
+        description: "Test your creative hypotheses by changing the title catchphrase along with your app's benefits.",
+        details: 'Experiment with different value propositions, emotional triggers, and benefit lists. We have seen headline changes alone increase conversion by up to 30%.',
+      },
+      {
+        id: 'cta-button',
+        icon: 'MousePointerClick',
+        title: 'CTA-button text',
+        description: '"Subscribe", "Continue", or any other variant - see which one brings higher conversion.',
+        details: 'The right call-to-action can significantly impact your conversion. Test urgency-driven ("Start Now"), benefit-driven ("Unlock All Features"), or simple ("Continue") approaches.',
+      },
+      {
+        id: 'background-color',
+        icon: 'Palette',
+        title: 'Background and color scheme',
+        description: 'Upload any background image or video, choose matching color schemes, and select between dark or light mode.',
+        details: 'Visual design affects trust and conversion. Support for gradients, images, videos, and animated backgrounds. Automatic color extraction for consistent theming.',
+      },
+      {
+        id: 'extra-elements',
+        icon: 'Sliders',
+        title: 'Extra elements',
+        description: 'Experiment with money-making widgets like free trial toggle, carousel, and timer.',
+        details: 'Add conversion-boosting elements: countdown timers create urgency, carousels showcase features, toggles let users choose their plan. Mix and match for maximum impact.',
+      },
+      {
+        id: 'product-combinations',
+        icon: 'Tag',
+        title: 'Product combinations',
+        description: 'Test Weekly, 6 months, Annual, Monthly and other types of subscription along with prices to get the best result.',
+        details: 'Find the optimal price points and duration combinations. Test introductory offers, family plans, and bundled products. Our ML suggests winning combinations based on your user data.',
+      },
+    ],
+  },
+
+  cta: {
+    badge: 'Ready to grow?',
+    headline: 'Start building better paywalls today',
+    description: 'Join thousands of mobile apps using Adapty to increase their revenue.',
+    primaryCta: 'Start free trial',
+    secondaryCta: 'Book a demo',
+  },
+
+  enterpriseStats: [
+    { value: '240M', label: 'subscription events / month' },
+    { value: '1.5B', label: 'users' },
+    { value: '2.1M', label: 'subscribers / month' },
+    { value: '4B', label: 'API calls / month' },
+  ],
+
+  relatedPages: [
+    { title: 'A/B testing', href: '/paywall-ab-testing', description: 'Test paywall variants to find what converts best' },
+    { title: 'Localization', href: '/paywall-localization', description: 'Localize paywalls for global audiences' },
+    { title: 'Targeting', href: '/paywall-targeting', description: 'Show the right paywall to the right users' },
+    { title: 'Adapty SDK', href: '/sdk', description: 'Native SDKs for iOS, Android, and more' },
+  ],
+
+  templateGallery: {
+    headline: 'Start with a template or from scratch',
+    description: 'Pick one of our pre-made industry-tested templates or start from a blank page.',
+    templates: [
+      '/assets/paywall-templates/template-1.webp',
+      '/assets/paywall-templates/template-2.webp',
+      '/assets/paywall-templates/template-3.webp',
+      '/assets/paywall-templates/template-4.webp',
+      '/assets/paywall-templates/template-5.webp',
+    ],
+  },
+}
+
+export const PAYWALL_AB_TESTING_CONTENT = {
+  hero: {
+    badge: 'A/B Testing',
+    headline: 'A/B test paywalls without coding',
+    description: 'Test subscription pricing, durations, promotional offers, number of offers, layouts — all without coding. Use UI builder for changing paywall UI remotely.',
+    primaryCta: 'Start for free',
+    secondaryCta: 'Book a demo',
+  },
+
+  features: {
+    headline: 'Powerful A/B testing features',
+    description: 'Everything you need to optimize your app revenue through experimentation.',
+    items: [
+      {
+        id: 'machine-learning',
+        icon: 'BrainCircuit',
+        title: 'Powered by machine learning',
+        description: 'Adapty uses advanced ML models to predict test outcomes and automatically identify winning variants faster.',
+      },
+      {
+        id: 'control',
+        icon: 'ToggleRight',
+        title: 'Start and stop test at any time',
+        description: 'Full control over your experiments. Run tests as long as needed and stop them instantly when you have a winner.',
+      },
+      {
+        id: 'segments',
+        icon: 'Users',
+        title: 'Target specific segments',
+        description: 'Run experiments for specific audiences based on country, device, or custom user attributes.',
+      },
+    ],
+  },
+
+  cases: [
+    {
+      company: 'Welmi',
+      result: '3x growth in MRR',
+      description: 'Steady growth with Adapty UA',
+      href: 'https://adapty.io/case-studies/welmi/',
+    },
+    {
+      company: 'Productivity App',
+      result: '+50% in total revenue',
+      description: "How pricing tests unlocked app's potential",
+      href: 'https://adapty.io/case-studies/productivity-app-and-autopilot/',
+    },
+    {
+      company: 'Text on Pic',
+      result: 'Over 30% MRR growth',
+      description: 'How to boost revenue with the right experiments',
+      href: 'https://adapty.io/case-studies/photo-editing-app-and-autopilot/',
+    },
+  ],
+
+  cta: {
+    badge: 'Ready to optimize?',
+    headline: 'Get started today',
+    description: 'Join thousands of mobile apps using Adapty to increase their revenue.',
+    primaryCta: 'Start for free',
+    secondaryCta: 'Book a demo',
+  },
+}

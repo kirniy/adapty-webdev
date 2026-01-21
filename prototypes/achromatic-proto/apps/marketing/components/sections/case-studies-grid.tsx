@@ -3,6 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { ArrowRightIcon, TrendingUpIcon } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { Card, CardContent } from '@workspace/ui/components/card';
 
@@ -182,32 +183,116 @@ const G2_AWARDS = [
   'Most Implementable'
 ];
 
+// Featured testimonial card with hover animation
+function TestimonialCard({ testimonial, index }: { testimonial: typeof FEATURED_TESTIMONIALS[0]; index: number }) {
+  const shouldReduceMotion = useReducedMotion();
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+    <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.01 }}
+      transition={{ type: 'spring', duration: 0.25, bounce: 0.1 }}
+    >
+      <Card
+        className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-150 ease-out motion-reduce:transition-none"
+      >
+        <CardContent className="p-6">
+          <motion.p
+            className="font-semibold text-primary mb-2"
+            animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.02 : 1 }}
+            transition={{ duration: 0.15 }}
+          >
+            {testimonial.company}
+          </motion.p>
+          {testimonial.appType && (
+            <p className="text-xs text-muted-foreground mb-3">{testimonial.appType}</p>
+          )}
+          <p className="text-foreground italic mb-4">"{testimonial.quote}"</p>
+          <p className="font-semibold text-sm">{testimonial.name}</p>
+          <p className="text-xs text-muted-foreground">{testimonial.title}</p>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+}
+
+// Case study card with enhanced hover animation
+function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index: number }) {
+  const shouldReduceMotion = useReducedMotion();
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+    <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+      transition={{ type: 'spring', duration: 0.25, bounce: 0.1 }}
+    >
+      <Link href={`https://adapty.io${study.link}`} target="_blank" rel="noopener noreferrer" className="block h-full">
+        <Card interactive className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg group cursor-pointer transition-shadow duration-150">
+          <CardContent className="p-6">
+            <motion.div
+              animate={shouldReduceMotion ? undefined : {
+                scale: isHovered ? 1.1 : 1,
+                rotate: isHovered ? 5 : 0,
+              }}
+              transition={{ type: 'spring', duration: 0.25, bounce: 0.2 }}
+              className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4"
+            >
+              <TrendingUpIcon className="size-6" />
+            </motion.div>
+            <h3 className="font-semibold text-lg mb-1">{study.name}</h3>
+            <p className="text-xs text-muted-foreground mb-3">{study.category}</p>
+            <p className="text-lg font-bold text-primary mb-2">{study.result}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+              {study.description}
+            </p>
+            <motion.span
+              className="text-sm text-primary inline-flex items-center gap-1"
+              animate={shouldReduceMotion ? undefined : { x: isHovered ? 4 : 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              Read more
+              <ArrowRightIcon className="size-3" />
+            </motion.span>
+          </CardContent>
+        </Card>
+      </Link>
+    </motion.div>
+  );
+}
+
+// G2 Award badge with hover animation
+function G2AwardBadge({ award }: { award: string }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.03 }}
+      transition={{ type: 'spring', duration: 0.2, bounce: 0.1 }}
+      className="px-6 py-3 rounded-lg bg-muted/50 border border-border/50 font-medium text-sm hover:border-primary/20 hover:shadow-md transition-all duration-150 cursor-default"
+    >
+      G2 Award: {award}
+    </motion.div>
+  );
+}
+
 export function CaseStudiesGrid(): React.JSX.Element {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={3000} />
       <div className="container py-20 relative z-10">
         {/* Featured testimonials */}
-        <BlurFade delay={0.05}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
-            {FEATURED_TESTIMONIALS.map((testimonial, index) => (
-              <Card
-                key={index}
-                className="bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-colors duration-150 ease-out motion-reduce:transition-none"
-              >
-                <CardContent className="p-6">
-                  <p className="font-semibold text-primary mb-2">{testimonial.company}</p>
-                  {testimonial.appType && (
-                    <p className="text-xs text-muted-foreground mb-3">{testimonial.appType}</p>
-                  )}
-                  <p className="text-foreground italic mb-4">"{testimonial.quote}"</p>
-                  <p className="font-semibold text-sm">{testimonial.name}</p>
-                  <p className="text-xs text-muted-foreground">{testimonial.title}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </BlurFade>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
+          {FEATURED_TESTIMONIALS.map((testimonial, index) => (
+            <BlurFade key={index} delay={0.05 + index * 0.05}>
+              <TestimonialCard testimonial={testimonial} index={index} />
+            </BlurFade>
+          ))}
+        </div>
 
         {/* Case studies grid */}
         <BlurFade delay={0.1}>
@@ -220,25 +305,7 @@ export function CaseStudiesGrid(): React.JSX.Element {
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {CASE_STUDIES.map((study, index) => (
             <BlurFade key={index} delay={0.15 + index * 0.02}>
-              <Link href={`https://adapty.io${study.link}`} target="_blank" rel="noopener noreferrer">
-                <Card interactive className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 group cursor-pointer">
-                  <CardContent className="p-6">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4">
-                      <TrendingUpIcon className="size-6" />
-                    </div>
-                    <h3 className="font-semibold text-lg mb-1">{study.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-3">{study.category}</p>
-                    <p className="text-lg font-bold text-primary mb-2">{study.result}</p>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                      {study.description}
-                    </p>
-                    <span className="text-sm text-primary group-hover:underline inline-flex items-center gap-1">
-                      Read more
-                      <ArrowRightIcon className="size-3" />
-                    </span>
-                  </CardContent>
-                </Card>
-              </Link>
+              <CaseStudyCard study={study} index={index} />
             </BlurFade>
           ))}
         </div>
@@ -252,12 +319,7 @@ export function CaseStudiesGrid(): React.JSX.Element {
             />
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               {G2_AWARDS.map((award, index) => (
-                <div
-                  key={index}
-                  className="px-6 py-3 rounded-lg bg-muted/50 border border-border/50 font-medium text-sm"
-                >
-                  G2 Award: {award}
-                </div>
+                <G2AwardBadge key={index} award={award} />
               ))}
             </div>
           </div>

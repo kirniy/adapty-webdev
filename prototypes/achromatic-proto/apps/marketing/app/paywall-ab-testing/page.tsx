@@ -1,27 +1,61 @@
-import * as React from 'react';
-import type { Metadata } from 'next';
+'use client'
 
-import { Logos } from '~/components/sections/logos';
-import { ABTestingHero } from '~/components/sections/ab-testing-hero';
-import { ABTestingFeatures } from '~/components/sections/ab-testing-features';
-import { Testimonials } from '~/components/sections/testimonials';
-import { CTA } from '~/components/sections/cta';
-import { createTitle } from '~/lib/formatters';
+import * as React from 'react'
 
-export const metadata: Metadata = {
-  title: createTitle('A/B Testing'),
-  description: 'A/B test paywalls without coding. Compare paywalls without leaving Adapty Dashboard and find the winner without data analysis.'
-};
+// Components
+import { ABTestingHero, type ABTestingHeroVariant } from '~/components/sections/ab-testing-hero'
+import { ABTestingFeatures, type ABTestingFeaturesVariant } from '~/components/sections/ab-testing-features'
+import { CaseStudiesGrid } from '~/components/sections/case-studies-grid'
+import { CTA } from '~/components/sections/cta'
 
-// Page structure matches adapty.io/paywall-ab-testing (scraped 2026-01-21)
-export default function PaywallABTestingPage(): React.JSX.Element {
+// Content
+import { PAYWALL_AB_TESTING_CONTENT } from '~/lib/content'
+
+// Debug
+import {
+  useHeroVariant,
+  useFeaturesVariant,
+  useCtaVariant
+} from '~/lib/debug-context'
+
+// Map global Hero variant to ABTestingHero variant
+function mapHeroVariant(globalVariant: string): ABTestingHeroVariant {
+  switch (globalVariant) {
+    case 'marketing': return 'centered'
+    case 'split': return 'split'
+    case 'pricing': return 'showcase'
+    default: return 'split'
+  }
+}
+
+// Map global Features variant to ABTestingFeatures variant
+function mapFeaturesVariant(globalVariant: string): ABTestingFeaturesVariant {
+  switch (globalVariant) {
+    case 'solution': return 'grid'
+    case 'tabbed': return 'tabs'
+    case 'bento-tabs': return 'bento'
+    default: return 'grid'
+  }
+}
+
+export default function PaywallAbTestingPage() {
+  const heroVariant = useHeroVariant()
+  const featuresVariant = useFeaturesVariant()
+  const ctaVariant = useCtaVariant()
+
   return (
     <>
-      <ABTestingHero />
-      <Logos />
-      <ABTestingFeatures />
-      <Testimonials />
-      <CTA />
+      {heroVariant !== 'off' && (
+        <ABTestingHero variant={mapHeroVariant(heroVariant)} />
+      )}
+
+      {featuresVariant !== 'off' && (
+        <ABTestingFeatures variant={mapFeaturesVariant(featuresVariant)} />
+      )}
+
+      <CaseStudiesGrid />
+
+      {ctaVariant !== 'off' && <CTA />}
     </>
-  );
+  )
 }

@@ -64,12 +64,12 @@ function SplitText({ text, shouldReduceMotion }: { text: string; shouldReduceMot
       {words.map((word, i) => (
         <motion.span
           key={i}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{
-            duration: 0.3,
-            delay: i * 0.02,
-            ease: [0.32, 0.72, 0, 1],
+            duration: 0.4,
+            delay: i * 0.03,
+            ease: [0.22, 1, 0.36, 1],
           }}
           className="inline-block mr-[0.25em]"
         >

@@ -33,7 +33,8 @@ export type CtaVariant = 'default' | 'careers' | 'off'
 export type BlogVariant = 'default' | 'featured' | 'off'
 export type SdkVariant = 'default' | 'off'
 export type RolesVariant = 'cards' | 'bento' | 'stacked' | 'off'
-export type FooterVariant = 'default' | 'flickering' | 'off'
+// FooterVariant moved below to keep with constants
+export type CustomizationVariant = 'grid' | 'carousel' | 'expandable' | 'off'
 export type HeroLinesVariant = 'above' | 'below'
 export type ImageSetVariant = 'set1' | 'set2' | 'set3'
 export type MonochromeMode = boolean
@@ -169,10 +170,19 @@ export const ROLES_VARIANTS: VariantOption<RolesVariant>[] = [
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
 
+export type FooterVariant = 'default' | 'flickering' | 'off'
+
 export const FOOTER_VARIANTS: VariantOption<FooterVariant>[] = [
   { value: 'default', label: 'Default', description: 'Standard footer with links' },
   { value: 'flickering', label: 'Flickering', description: 'Footer with animated flickering grid' },
   { value: 'off', label: 'Off', description: 'Hide footer' },
+]
+
+export const CUSTOMIZATION_VARIANTS: VariantOption<CustomizationVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '3-column grid of cards' },
+  { value: 'carousel', label: 'Carousel', description: 'Horizontally scrolling cards' },
+  { value: 'expandable', label: 'Expandable', description: 'Accordion-style list with sticky header' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
 
 export const HERO_LINES_VARIANTS: VariantOption<HeroLinesVariant>[] = [
@@ -208,6 +218,7 @@ interface DebugState {
   sdkVariant: SdkVariant
   rolesVariant: RolesVariant
   footerVariant: FooterVariant
+  customizationVariant: CustomizationVariant
   heroLinesVariant: HeroLinesVariant
   imageSetVariant: ImageSetVariant
   monochromeMode: boolean
@@ -236,6 +247,7 @@ interface DebugContextValue extends DebugState {
   setSdkVariant: (variant: SdkVariant) => void
   setRolesVariant: (variant: RolesVariant) => void
   setFooterVariant: (variant: FooterVariant) => void
+  setCustomizationVariant: (variant: CustomizationVariant) => void
   setHeroLinesVariant: (variant: HeroLinesVariant) => void
   setImageSetVariant: (variant: ImageSetVariant) => void
   setMonochromeMode: (enabled: boolean) => void
@@ -265,6 +277,7 @@ const defaultState: DebugState = {
   sdkVariant: 'default',
   rolesVariant: 'cards',
   footerVariant: 'default',
+  customizationVariant: 'expandable',
   heroLinesVariant: 'above',
   imageSetVariant: 'set2',
   monochromeMode: true,
@@ -315,10 +328,10 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isHydrated) return
     const root = document.documentElement
-    const radius = 
-      state.cornerRadiusVariant === 'round' ? '1rem' : 
-      state.cornerRadiusVariant === 'sharp' ? '0' : 
-      '0.5rem'
+    const radius =
+      state.cornerRadiusVariant === 'round' ? '1rem' :
+        state.cornerRadiusVariant === 'sharp' ? '0' :
+          '0.5rem'
     root.style.setProperty('--radius', radius)
   }, [state.cornerRadiusVariant, isHydrated])
 
@@ -342,6 +355,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   const setSdkVariant = useCallback((variant: SdkVariant) => setState(prev => ({ ...prev, sdkVariant: variant })), [])
   const setRolesVariant = useCallback((variant: RolesVariant) => setState(prev => ({ ...prev, rolesVariant: variant })), [])
   const setFooterVariant = useCallback((variant: FooterVariant) => setState(prev => ({ ...prev, footerVariant: variant })), [])
+  const setCustomizationVariant = useCallback((variant: CustomizationVariant) => setState(prev => ({ ...prev, customizationVariant: variant })), [])
   const setHeroLinesVariant = useCallback((variant: HeroLinesVariant) => setState(prev => ({ ...prev, heroLinesVariant: variant })), [])
   const setImageSetVariant = useCallback((variant: ImageSetVariant) => setState(prev => ({ ...prev, imageSetVariant: variant })), [])
   const setMonochromeMode = useCallback((enabled: boolean) => setState(prev => ({ ...prev, monochromeMode: enabled })), [])
@@ -373,6 +387,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     setSdkVariant,
     setRolesVariant,
     setFooterVariant,
+    setCustomizationVariant,
     setHeroLinesVariant,
     setImageSetVariant,
     setMonochromeMode,
@@ -414,6 +429,7 @@ export function useBlogVariant() { return useContext(DebugContext)?.blogVariant 
 export function useSdkVariant() { return useContext(DebugContext)?.sdkVariant ?? defaultState.sdkVariant }
 export function useRolesVariant() { return useContext(DebugContext)?.rolesVariant ?? defaultState.rolesVariant }
 export function useFooterVariant() { return useContext(DebugContext)?.footerVariant ?? defaultState.footerVariant }
+export function useCustomizationVariant() { return useContext(DebugContext)?.customizationVariant ?? defaultState.customizationVariant }
 export function useHeroLinesVariant() { return useContext(DebugContext)?.heroLinesVariant ?? defaultState.heroLinesVariant }
 export function useImageSetVariant() { return useContext(DebugContext)?.imageSetVariant ?? defaultState.imageSetVariant }
 export function useMonochromeMode() { return useContext(DebugContext)?.monochromeMode ?? defaultState.monochromeMode }

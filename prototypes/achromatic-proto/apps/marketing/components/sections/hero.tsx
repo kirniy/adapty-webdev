@@ -23,6 +23,8 @@ import { SectionBackground } from '~/components/fragments/section-background';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { SlideIn } from '~/components/fragments/slide-in';
+import { ScaleOnHover } from '~/components/fragments/scale-on-hover';
 import {
   useDashedThicknessVariant,
   useGridColorVariant,
@@ -172,23 +174,23 @@ function HeroPill(): React.JSX.Element {
 
 function HeroTitle(): React.JSX.Element {
   return (
-    <BlurFade delay={0.2}>
+    <SlideIn delay={0.2} duration={0.6} direction="up">
       <h1 className="mt-6 text-center text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-balance">
         Revenue management
         <br />
         <span className="text-muted-foreground">for in-app purchases</span>
       </h1>
-    </BlurFade>
+    </SlideIn>
   );
 }
 
 function HeroDescription(): React.JSX.Element {
   return (
-    <BlurFade delay={0.3}>
+    <SlideIn delay={0.3} duration={0.6} direction="up">
       <p className="mx-auto mt-4 max-w-2xl text-balance text-center text-lg text-muted-foreground lg:text-xl">
         Save months on integrating subscriptions and double your app revenue with paywall management, A/B testing, and real-time analytics.
       </p>
-    </BlurFade>
+    </SlideIn>
   );
 }
 
@@ -203,25 +205,9 @@ function HeroButton({
   children: React.ReactNode;
 }) {
   const [isHovered, setIsHovered] = React.useState(false);
-  const [isPressed, setIsPressed] = React.useState(false);
-  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setIsPressed(false);
-      }}
-      onMouseDown={() => setIsPressed(true)}
-      onMouseUp={() => setIsPressed(false)}
-      animate={{
-        y: shouldReduceMotion ? 0 : isPressed ? 1 : isHovered ? -2 : 0,
-        scale: shouldReduceMotion ? 1 : isPressed ? 0.97 : 1,
-      }}
-      transition={{ type: 'spring', duration: 0.15, bounce: 0 }}
-      className="relative"
-    >
+    <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       {/* Glow effect for primary button */}
       {variant === 'default' && (
         <motion.div
@@ -233,23 +219,25 @@ function HeroButton({
           transition={{ duration: 0.25 }}
         />
       )}
-      <Link
-        href={href}
-        className={cn(
-          buttonVariants({ variant }),
-          'h-10 rounded-xl px-5 transition-shadow',
-          variant === 'default' && 'shadow-md hover:shadow-lg'
-        )}
-      >
-        {children}
-      </Link>
-    </motion.div>
+      <ScaleOnHover>
+        <Link
+          href={href}
+          className={cn(
+            buttonVariants({ variant }),
+            'h-10 rounded-xl px-5 transition-shadow flex items-center justify-center',
+            variant === 'default' && 'shadow-md hover:shadow-lg'
+          )}
+        >
+          {children}
+        </Link>
+      </ScaleOnHover>
+    </div>
   );
 }
 
 function HeroButtons(): React.JSX.Element {
   return (
-    <BlurFade delay={0.4}>
+    <SlideIn delay={0.4} duration={0.6} direction="up">
       <div className="mx-auto mt-8 flex justify-center gap-3">
         <HeroButton href="https://app.adapty.io/registration" variant="default">
           Start for free
@@ -258,7 +246,7 @@ function HeroButtons(): React.JSX.Element {
           Book a demo
         </HeroButton>
       </div>
-    </BlurFade>
+    </SlideIn>
   );
 }
 
@@ -388,11 +376,7 @@ function FeatureTab({
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.button
-      onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+    <ScaleOnHover
       className={cn(
         'group relative flex shrink-0 sm:shrink sm:flex-1 flex-col items-center gap-2 px-3 sm:px-4 py-3 cursor-pointer',
         'border-b-2 transition-colors duration-150',
@@ -400,6 +384,9 @@ function FeatureTab({
           ? 'border-b-transparent text-foreground'
           : 'border-b-transparent text-muted-foreground hover:text-foreground hover:border-b-border'
       )}
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div className={cn(
         'flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium whitespace-nowrap',
@@ -445,7 +432,7 @@ function FeatureTab({
           />
         </div>
       )}
-    </motion.button>
+    </ScaleOnHover>
   );
 }
 
@@ -690,11 +677,11 @@ function HeroFeatureShowcase(): React.JSX.Element {
 // Trust signal - simple text only
 function HeroTrustSignal(): React.JSX.Element {
   return (
-    <BlurFade delay={0.5}>
+    <SlideIn delay={0.5} duration={0.6} direction="up">
       <p className="mt-8 text-center text-sm text-muted-foreground">
         Trusted by <span className="font-medium text-foreground">15,000+</span> apps worldwide
       </p>
-    </BlurFade>
+    </SlideIn>
   );
 }
 

@@ -173,7 +173,12 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof DATA[0]; 
   );
 }
 
-export function Testimonials(): React.JSX.Element {
+
+interface TestimonialsProps {
+  items?: typeof DATA;
+}
+
+export function Testimonials({ items = DATA }: TestimonialsProps): React.JSX.Element {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={700} />
@@ -201,7 +206,7 @@ export function Testimonials(): React.JSX.Element {
 
         {/* Static Grid - 3 columns on desktop */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {DATA.map((testimonial, index) => (
+          {items.map((testimonial, index) => (
             <TestimonialCard key={testimonial.name} testimonial={testimonial} index={index} />
           ))}
         </div>

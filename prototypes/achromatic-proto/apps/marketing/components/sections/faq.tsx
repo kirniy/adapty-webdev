@@ -76,7 +76,12 @@ function AnimatedLink({ href, children }: { href: string; children: React.ReactN
   );
 }
 
-export function FAQ(): React.JSX.Element {
+
+interface FAQProps {
+  items?: typeof DATA;
+}
+
+export function FAQ({ items = DATA }: FAQProps): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -111,7 +116,7 @@ export function FAQ(): React.JSX.Element {
           <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
             <div className="rounded-xl border bg-card p-1">
               <Accordion type="single" collapsible className="w-full">
-                {DATA.map((faq, index) => (
+                {items.map((faq, index) => (
                   <motion.div
                     key={index}
                     initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}

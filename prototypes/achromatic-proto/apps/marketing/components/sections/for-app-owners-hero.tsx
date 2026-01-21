@@ -13,6 +13,7 @@ import { cn } from '@workspace/ui/lib/utils';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
 
 // EXACT content from adapty.io/for-app-owners (scraped 2026-01-21)
@@ -74,7 +75,14 @@ function SplitHero(): React.JSX.Element {
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
             <BlurFade delay={0.05}>
-              <Badge variant="outline" className="w-fit rounded-full px-4 py-1.5">
+              <Badge variant="outline" className="relative w-fit overflow-hidden rounded-full px-4 py-1.5">
+                <BorderBeam
+                  size={40}
+                  duration={4}
+                  borderWidth={1.5}
+                  colorFrom="#3b82f6"
+                  colorTo="#8b5cf6"
+                />
                 {HERO_CONTENT.badge}
               </Badge>
             </BlurFade>

@@ -3,6 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { ArrowRightIcon } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { Card, CardContent } from '@workspace/ui/components/card';
 
@@ -63,6 +64,64 @@ const EVENT_TYPES = [
   'Loses access to premium'
 ];
 
+// Integration card with hover animation
+function IntegrationCard({ integration, index }: { integration: typeof INTEGRATIONS[0]; index: number }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+      transition={{ type: 'spring', duration: 0.2, bounce: 0.1 }}
+    >
+      <Link href={integration.link} className="group block h-full">
+        <Card interactive className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-150">
+          <CardContent className="p-4 text-center">
+            <p className="font-medium text-sm group-hover:text-primary transition-colors">
+              {integration.name}
+            </p>
+          </CardContent>
+        </Card>
+      </Link>
+    </motion.div>
+  );
+}
+
+// SDK badge with hover animation
+function SDKBadge({ sdk }: { sdk: typeof SDKS[0] }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.03 }}
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+      transition={{ type: 'spring', duration: 0.2, bounce: 0.1 }}
+    >
+      <Link
+        href={sdk.link}
+        className="block px-4 py-2 rounded-lg bg-muted/50 border border-border/50 text-sm font-medium hover:border-primary/30 hover:text-primary hover:shadow-md transition-all duration-150 ease-out motion-reduce:transition-none"
+      >
+        {sdk.name}
+      </Link>
+    </motion.div>
+  );
+}
+
+// Event type badge with hover animation
+function EventBadge({ event }: { event: string }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.span
+      whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.03 }}
+      transition={{ type: 'spring', duration: 0.2, bounce: 0.1 }}
+      className="inline-block px-4 py-2 rounded-full bg-muted/50 border border-border/50 text-sm cursor-default hover:border-primary/20 transition-colors duration-150"
+    >
+      {event}
+    </motion.span>
+  );
+}
+
 export function IntegrationsGrid(): React.JSX.Element {
   // Group integrations by category
   const groupedIntegrations = INTEGRATIONS.reduce((acc, integration) => {
@@ -107,15 +166,7 @@ export function IntegrationsGrid(): React.JSX.Element {
                 <h3 className="text-lg font-semibold mb-4 text-muted-foreground">{category}</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                   {integrations.map((integration, index) => (
-                    <Link key={index} href={integration.link} className="group">
-                      <Card interactive className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30">
-                        <CardContent className="p-4 text-center">
-                          <p className="font-medium text-sm group-hover:text-primary transition-colors">
-                            {integration.name}
-                          </p>
-                        </CardContent>
-                      </Card>
-                    </Link>
+                    <IntegrationCard key={index} integration={integration} index={index} />
                   ))}
                 </div>
               </div>
@@ -131,12 +182,7 @@ export function IntegrationsGrid(): React.JSX.Element {
             />
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               {EVENT_TYPES.map((event, index) => (
-                <span
-                  key={index}
-                  className="px-4 py-2 rounded-full bg-muted/50 border border-border/50 text-sm"
-                >
-                  {event}
-                </span>
+                <EventBadge key={index} event={event} />
               ))}
             </div>
           </div>
@@ -171,13 +217,7 @@ export function IntegrationsGrid(): React.JSX.Element {
             />
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               {SDKS.map((sdk, index) => (
-                <Link
-                  key={index}
-                  href={sdk.link}
-                  className="px-4 py-2 rounded-lg bg-muted/50 border border-border/50 text-sm font-medium hover:border-primary/30 hover:text-primary transition-colors duration-150 ease-out motion-reduce:transition-none"
-                >
-                  {sdk.name}
-                </Link>
+                <SDKBadge key={index} sdk={sdk} />
               ))}
             </div>
           </div>

@@ -1,25 +1,29 @@
-import type { Metadata } from 'next';
+'use client';
 
+import * as React from 'react';
+
+import { useHeroVariant, useFeaturesVariant, useLogosVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
 import { LTVAnalyticsHero } from '~/components/sections/ltv-analytics-hero';
 import { LTVAnalyticsFeatures } from '~/components/sections/ltv-analytics-features';
 import { Logos } from '~/components/sections/logos';
 import { Testimonials } from '~/components/sections/testimonials';
 import { CTA } from '~/components/sections/cta';
 
-export const metadata: Metadata = {
-  title: 'App LTV Analytics: Maximize ROI with LTV Prediction',
-  description:
-    "Gain valuable insights into subscriber lifetime value with Adapty's real-time LTV chart. Break down LTV by user groups, paywalls, or A/B tests."
-};
-
+// Page structure matches adapty.io/ltv-analytics (scraped 2026-01-21)
 export default function LTVAnalyticsPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+  const logosVariant = useLogosVariant();
+  const testimonialsVariant = useTestimonialsVariant();
+  const ctaVariant = useCtaVariant();
+
   return (
     <>
-      <LTVAnalyticsHero />
-      <LTVAnalyticsFeatures />
-      <Logos />
-      <Testimonials />
-      <CTA />
+      {heroVariant !== 'off' && <LTVAnalyticsHero />}
+      {featuresVariant !== 'off' && <LTVAnalyticsFeatures />}
+      {logosVariant !== 'off' && <Logos />}
+      {testimonialsVariant !== 'off' && <Testimonials />}
+      {ctaVariant !== 'off' && <CTA />}
     </>
   );
 }

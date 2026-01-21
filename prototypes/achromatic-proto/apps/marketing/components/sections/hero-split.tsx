@@ -28,6 +28,7 @@ import { cn } from '@workspace/ui/lib/utils';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
+import { SlideIn } from '~/components/fragments/slide-in';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
 
 // Helper to get image path based on selected image set
@@ -39,10 +40,10 @@ function HeroPill(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.div
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
-      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
-      transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+    <SlideIn
+      direction="left"
+      delay={shouldReduceMotion ? 0 : 0}
+      duration={0.5}
       className="flex items-center justify-start"
     >
       <Link href="https://adapty.io/ebooks/100k-app-playbook/">
@@ -69,7 +70,7 @@ function HeroPill(): React.JSX.Element {
           <ChevronRightIcon className="ml-1.5 size-3 shrink-0 text-foreground transition-transform group-hover:translate-x-0.5" />
         </Badge>
       </Link>
-    </motion.div>
+    </SlideIn>
   );
 }
 
@@ -77,16 +78,16 @@ function HeroTitle(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.div
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
-      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
-      transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+    <SlideIn
+      direction="left"
+      delay={shouldReduceMotion ? 0 : 0.1}
+      duration={0.5}
     >
       <h1 className="text-left text-[40px] font-bold leading-[46px] tracking-[-1px] [font-kerning:none] sm:text-[48px] sm:leading-[54px] md:text-[56px] md:leading-[60px] lg:text-[64px] lg:leading-[68px] lg:tracking-[-1.5px]">
         Revenue management
         <br /> for in-app purchases
       </h1>
-    </motion.div>
+    </SlideIn>
   );
 }
 
@@ -94,14 +95,16 @@ function HeroDescription(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.p
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
-      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
-      transition={{ delay: shouldReduceMotion ? 0 : 0.2, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-      className="max-w-[480px] text-pretty text-left text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl"
+    <SlideIn
+      direction="left"
+      delay={shouldReduceMotion ? 0 : 0.2}
+      duration={0.5}
+      className="max-w-[480px]"
     >
-      Save months on integrating subscriptions and double your app revenue with paywall management.
-    </motion.p>
+      <p className="text-pretty text-left text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl">
+        Save months on integrating subscriptions and double your app revenue with paywall management.
+      </p>
+    </SlideIn>
   );
 }
 
@@ -109,10 +112,10 @@ function HeroButtons(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.div
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
-      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
-      transition={{ delay: shouldReduceMotion ? 0 : 0.3, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+    <SlideIn
+      direction="left"
+      delay={shouldReduceMotion ? 0 : 0.3}
+      duration={0.5}
       className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
     >
       <Link
@@ -139,7 +142,7 @@ function HeroButtons(): React.JSX.Element {
       >
         Book a demo
       </Link>
-    </motion.div>
+    </SlideIn>
   );
 }
 
@@ -147,10 +150,10 @@ function HeroStats(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.div
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-      transition={{ delay: shouldReduceMotion ? 0 : 0.4, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+    <SlideIn
+      direction="up"
+      delay={shouldReduceMotion ? 0 : 0.4}
+      duration={0.5}
       className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 pt-4 text-sm text-muted-foreground"
     >
       <div className="flex items-center gap-2">
@@ -165,7 +168,7 @@ function HeroStats(): React.JSX.Element {
         <span className="font-semibold text-foreground">2.5B+</span>
         <span>users served</span>
       </div>
-    </motion.div>
+    </SlideIn>
   );
 }
 
