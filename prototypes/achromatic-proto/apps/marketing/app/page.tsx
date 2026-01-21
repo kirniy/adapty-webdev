@@ -24,6 +24,7 @@ import { Contact } from '~/components/sections/contact';
 // Logos
 import { Logos } from '~/components/sections/logos';
 import { LogosLinear } from '~/components/sections/logos-linear';
+import { LogosMarquee } from '~/components/sections/logos-marquee';
 
 // Feature Section Components
 import { Solution } from '~/components/sections/solution';
@@ -89,6 +90,8 @@ function LogosSection() {
       return null;
     case 'linear':
       return <LogosLinear />;
+    case 'marquee':
+      return <LogosMarquee />;
     case 'default':
     default:
       return <Logos />;

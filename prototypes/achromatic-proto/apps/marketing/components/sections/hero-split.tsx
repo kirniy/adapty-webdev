@@ -128,7 +128,7 @@ function HeroButtons(): React.JSX.Element {
         Start for free
       </Link>
       <Link
-        href="https://adapty.io/schedule-demo/"
+        href="/schedule-demo"
         className={cn(
           buttonVariants({
             variant: 'outline',

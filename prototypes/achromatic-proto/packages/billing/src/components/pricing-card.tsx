@@ -52,9 +52,11 @@ export function PricingCard({
       )}
       {...other}
     >
-      {product.recommended && (
+      {(product.recommended || product.badgeText) && (
         <div className="absolute -top-2.5 left-0 flex w-full justify-center">
-          <Badge>Recommended</Badge>
+          <Badge variant="default">
+            {product.badgeText || 'Recommended'}
+          </Badge>
         </div>
       )}
       <div className="flex flex-col gap-y-5">
@@ -63,11 +65,13 @@ export function PricingCard({
           description={product.description}
           trialDays={plan.trialDays}
         />
-        {primaryPrice && (
+        {(primaryPrice || product.priceDisplay) && (
           <PriceInfo
             isEnterprise={product.isEnterprise}
             primaryPrice={primaryPrice}
             selectedInterval={selectedInterval}
+            priceDisplay={product.priceDisplay}
+            priceUnit={product.priceUnit}
           />
         )}
         <CheckoutButton
@@ -129,36 +133,33 @@ function ProductDetails({ name, description, trialDays }: ProductDetailsProps) {
 
 type PriceInfoProps = {
   isEnterprise?: boolean;
-  primaryPrice: Price;
+  primaryPrice?: Price;
   selectedInterval: PriceInterval;
+  priceDisplay?: string;
+  priceUnit?: string;
 };
 
 function PriceInfo({
   isEnterprise,
   primaryPrice,
-  selectedInterval
+  selectedInterval,
+  priceDisplay,
+  priceUnit
 }: PriceInfoProps) {
+  // Use custom priceDisplay if provided, otherwise fall back to calculated price
+  const displayPrice = priceDisplay || (primaryPrice ? formatPrice(primaryPrice, selectedInterval) : 'Custom');
+  const displayUnit = priceUnit !== undefined ? priceUnit : (primaryPrice?.type === PriceType.Recurring ? '/ month' : '');
+
   return (
     <div className="mt-2 flex flex-col">
-      <div className="animate-in slide-in-from-left-4 fade-in flex items-end gap-1 duration-500">
+      <div className="animate-in slide-in-from-left-4 fade-in flex items-baseline gap-1 duration-500">
         <span className="font-heading flex items-center text-3xl font-medium tracking-tighter">
-          {isEnterprise
-            ? 'Custom'
-            : formatPrice(primaryPrice, selectedInterval)}
+          {displayPrice}
         </span>
-        {!isEnterprise && (
-          <>
-            {primaryPrice.type === PriceType.Recurring && (
-              <span className="text-muted-foreground text-sm leading-loose">
-                / month
-              </span>
-            )}
-            {primaryPrice.model === PriceModel.PerSeat && (
-              <span className="text-muted-foreground text-sm leading-loose">
-                / seat
-              </span>
-            )}
-          </>
+        {displayUnit && (
+          <span className="text-muted-foreground text-sm leading-loose">
+            {displayUnit}
+          </span>
         )}
       </div>
     </div>

@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
 
 // Grid animation variants
-export type GridVariant = 'default' | 'flickering' | 'off'
+export type GridVariant = 'default' | 'flickering' | 'cursor-tracking' | 'slow-drift' | 'off'
 
 // Corner radius variants
 export type CornerRadiusVariant = 'default' | 'round' | 'sharp'
@@ -24,7 +24,7 @@ export type ColorAccentVariant = 'full' | 'subtle' | 'minimal'
 // Section variants mapped to Achromatic Template Components
 // All sections support 'off' to hide them
 export type HeroVariant = 'marketing' | 'split' | 'pricing' | 'story' | 'contact' | 'off'
-export type LogosVariant = 'default' | 'linear' | 'off'
+export type LogosVariant = 'default' | 'linear' | 'marquee' | 'off'
 export type FeaturesVariant = 'solution' | 'tabbed' | 'bento-tabs' | 'off'
 export type StatsVariant = 'default' | 'timeline' | 'off'
 export type TestimonialsVariant = 'default' | 'editorial' | 'team' | 'clean' | 'off'
@@ -49,6 +49,8 @@ export interface VariantOption<T> {
 export const GRID_VARIANTS: VariantOption<GridVariant>[] = [
   { value: 'default', label: 'Diagonal Lines', description: 'Classic diagonal static pattern' },
   { value: 'flickering', label: 'Flickering Grid', description: 'Animated pixel grid' },
+  { value: 'cursor-tracking', label: 'Cursor Tracking', description: 'Gradient follows mouse position' },
+  { value: 'slow-drift', label: 'Slow Drift', description: 'Subtle animated gradient drift' },
   { value: 'off', label: 'Off', description: 'No background grid' },
 ]
 
@@ -112,6 +114,7 @@ export const HERO_VARIANTS: VariantOption<HeroVariant>[] = [
 export const LOGOS_VARIANTS: VariantOption<LogosVariant>[] = [
   { value: 'default', label: 'Default', description: 'Standard logo strip' },
   { value: 'linear', label: 'Linear Style', description: 'Blur-on-hover with customer story links' },
+  { value: 'marquee', label: 'Marquee', description: 'Scrolling logos with pause on hover' },
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
 

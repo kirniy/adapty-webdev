@@ -60,18 +60,18 @@ export type MobileMenuItem = {
 export const PRODUCT_SIDEBAR_ITEMS = [
   { key: 'product', title: 'Product', href: 'https://adapty.io/product/' },
   { key: 'solution', title: 'Solution', href: 'https://adapty.io/solutions/' },
-  { key: 'sdk', title: 'Adapty SDK', href: 'https://adapty.io/docs/sdk/' },
-  { key: 'integrations', title: 'Integrations', href: 'https://adapty.io/integrations/' },
+  { key: 'sdk', title: 'Adapty SDK', href: '/sdk' },
+  { key: 'integrations', title: 'Integrations', href: '/integrations' },
 ] as const;
 
 export type ProductSidebarKey = typeof PRODUCT_SIDEBAR_ITEMS[number]['key'];
 
 // Solution panel content
 export const SOLUTION_ITEMS: MenuItem[] = [
-  { title: 'For Marketers', href: 'https://adapty.io/for-marketers/', icon: '/images/menu-icons/icon-24x24-newsletter.svg', description: 'Launch paywalls without coding' },
-  { title: 'For Developers', href: 'https://adapty.io/for-developers/', icon: '/images/menu-icons/icon-20x20-sdk.svg', description: 'Focus on code, not infrastructure' },
-  { title: 'For App Owners', href: 'https://adapty.io/for-app-owners/', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Maximize subscription revenue' },
-  { title: 'For Enterprises', href: 'https://adapty.io/enterprise/', icon: '/images/menu-icons/icon-24x24-21n.svg', description: 'Scale with enterprise features' },
+  { title: 'For Marketers', href: '/for-marketers', icon: '/images/menu-icons/icon-24x24-newsletter.svg', description: 'Launch paywalls without coding' },
+  { title: 'For Developers', href: '/for-developers', icon: '/images/menu-icons/icon-20x20-sdk.svg', description: 'Focus on code, not infrastructure' },
+  { title: 'For App Owners', href: '/for-app-owners', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Maximize subscription revenue' },
+  { title: 'For Enterprises', href: 'https://adapty.io/enterprise/', icon: '/images/menu-icons/icon-24x24-21n.svg', description: 'Scale with enterprise features', external: true },
 ];
 
 // SDK panel content
@@ -100,7 +100,7 @@ export const PRODUCT_SIDEBAR: MenuItem[] = PRODUCT_SIDEBAR_ITEMS.map(item => ({
 }));
 
 export const PRODUCT_FOOTER: MenuItem[] = [
-  { title: 'Why Adapty?', href: 'https://adapty.io/why-adapty/' },
+  { title: 'Why Adapty?', href: '/why-adapty' },
   { title: 'Product changelog', href: 'https://adapty.io/changelog/' },
   { title: 'System status', href: 'https://status.adapty.io/', external: true },
 ];
@@ -109,33 +109,33 @@ export const PRODUCT_TABS: Record<'tech' | 'paywalls' | 'analytics', ProductTab>
   tech: {
     label: 'Tech',
     items: [
-      { title: 'Subscriptions SDK', href: 'https://adapty.io/sdk/', icon: '/images/menu-icons/icon-20x20-sdk.svg', description: 'Integrate in-app purchases easily' },
-      { title: 'Subscribers sync', href: 'https://adapty.io/subscription-sync/', icon: '/images/menu-icons/icon-24x24-2n.svg', description: 'Sync data across all platforms' },
-      { title: 'Fallback paywalls', href: 'https://adapty.io/fallback-paywalls/', icon: '/images/menu-icons/icon-24x24-3n.svg', description: 'Never lose a conversion' },
-      { title: 'Refund saver', href: 'https://adapty.io/refund-saver/', icon: '/images/menu-icons/icon-20x20-currency-exchange.svg', description: 'Reduce refunds automatically' },
+      { title: 'Subscriptions SDK', href: '/sdk', icon: '/images/menu-icons/icon-20x20-sdk.svg', description: 'Integrate in-app purchases easily' },
+      { title: 'Subscribers sync', href: 'https://adapty.io/subscription-sync/', icon: '/images/menu-icons/icon-24x24-2n.svg', description: 'Sync data across all platforms', external: true },
+      { title: 'Fallback paywalls', href: '/fallback-paywalls', icon: '/images/menu-icons/icon-24x24-3n.svg', description: 'Never lose a conversion' },
+      { title: 'Refund saver', href: '/refund-saver', icon: '/images/menu-icons/icon-20x20-currency-exchange.svg', description: 'Reduce refunds automatically' },
     ]
   },
   paywalls: {
     label: 'Paywalls',
     items: [
-      { title: 'Paywall builder', href: 'https://adapty.io/paywall-builder/', icon: '/images/menu-icons/icon-24x24-1n.svg', description: 'No-code visual paywall editor' },
-      { title: 'Onboarding builder', href: 'https://adapty.io/onboarding-builder/', icon: '/images/menu-icons/icon-mobile-menu-dp24w4g0.svg', description: 'Create converting onboardings' },
-      { title: 'AI generator', href: 'https://adapty.io/ai-paywall-generator/', icon: '/images/menu-icons/icon-20x20-neurology.svg', description: 'Generate paywalls with AI', badge: 'new' },
-      { title: 'A/B testing', href: 'https://adapty.io/paywall-ab-testing/', icon: '/images/menu-icons/icon-20x20-bug-report.svg', description: 'Test and optimize paywalls' },
-      { title: 'Autopilot', href: 'https://adapty.io/autopilot/', icon: '/images/menu-icons/icon-assistant-dp24w4g0.svg', description: 'AI-powered optimization', badge: 'new' },
-      { title: 'Targeting', href: 'https://adapty.io/paywall-targeting/', icon: '/images/menu-icons/icon-24x24-9n.svg', description: 'Show right paywall to right user' },
-      { title: 'Localizations', href: 'https://adapty.io/paywall-localization/', icon: '/images/menu-icons/icon-24x24-10n.svg', description: 'Localize paywalls for any market' },
-      { title: 'Remote config', href: 'https://adapty.io/remote-config/', icon: '/images/menu-icons/icon-24x24-11n.svg', description: 'Update app behavior remotely' },
+      { title: 'Paywall builder', href: '/paywall-builder', icon: '/images/menu-icons/icon-24x24-1n.svg', description: 'No-code visual paywall editor' },
+      { title: 'Onboarding builder', href: '/onboarding-builder', icon: '/images/menu-icons/icon-mobile-menu-dp24w4g0.svg', description: 'Create converting onboardings' },
+      { title: 'AI generator', href: '/ai-paywall-generator', icon: '/images/menu-icons/icon-20x20-neurology.svg', description: 'Generate paywalls with AI', badge: 'new' },
+      { title: 'A/B testing', href: '/paywall-ab-testing', icon: '/images/menu-icons/icon-20x20-bug-report.svg', description: 'Test and optimize paywalls' },
+      { title: 'Autopilot', href: '/autopilot', icon: '/images/menu-icons/icon-assistant-dp24w4g0.svg', description: 'AI-powered optimization', badge: 'new' },
+      { title: 'Targeting', href: '/paywall-targeting', icon: '/images/menu-icons/icon-24x24-9n.svg', description: 'Show right paywall to right user' },
+      { title: 'Localizations', href: '/paywall-localization', icon: '/images/menu-icons/icon-24x24-10n.svg', description: 'Localize paywalls for any market' },
+      { title: 'Remote config', href: '/remote-config', icon: '/images/menu-icons/icon-24x24-11n.svg', description: 'Update app behavior remotely' },
     ]
   },
   analytics: {
     label: 'Analytics',
     items: [
-      { title: 'Revenue analytics', href: 'https://adapty.io/revenue-analytics/', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Track MRR, ARR, and revenue' },
-      { title: 'LTV analytics', href: 'https://adapty.io/ltv-analytics/', icon: '/images/menu-icons/icon-24x24-5n.svg', description: 'Understand user lifetime value' },
-      { title: 'AI LTV predictions', href: 'https://adapty.io/predictive-analytics/', icon: '/images/menu-icons/icon-24x24-12n.svg', description: 'Predict future revenue' },
-      { title: 'LTV prediction model', href: 'https://adapty.io/ltv-prediction-model/', icon: '/images/menu-icons/icon-24x24-21n.svg', description: 'Custom prediction models' },
-      { title: 'Apple ads manager', href: 'https://adapty.io/apple-ads-manager/', icon: '/images/menu-icons/icon-finance-blue-20dp-300w.svg', description: 'Connect ads to subscriptions' },
+      { title: 'Revenue analytics', href: '/revenue-growth', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Track MRR, ARR, and revenue' },
+      { title: 'LTV analytics', href: '/ltv-analytics', icon: '/images/menu-icons/icon-24x24-5n.svg', description: 'Understand user lifetime value' },
+      { title: 'AI LTV predictions', href: '/predictive-analytics', icon: '/images/menu-icons/icon-24x24-12n.svg', description: 'Predict future revenue' },
+      { title: 'LTV prediction model', href: 'https://adapty.io/ltv-prediction-model/', icon: '/images/menu-icons/icon-24x24-21n.svg', description: 'Custom prediction models', external: true },
+      { title: 'Apple ads manager', href: 'https://adapty.io/apple-ads-manager/', icon: '/images/menu-icons/icon-finance-blue-20dp-300w.svg', description: 'Connect ads to subscriptions', external: true },
     ]
   }
 };
@@ -185,12 +185,12 @@ export const RESOURCES_SECTIONS: MenuSection[] = [
     items: [
       { title: 'Paywall newsletter', href: 'https://adapty.io/paywall-newsletter/', icon: '/images/menu-icons/icon-24x24-newsletter.svg', badge: 'weekly' },
       { title: 'Apple receipt validation', href: 'https://adapty.io/apple-receipt-validation/', icon: '/images/menu-icons/icon-20x20-receipt.svg' },
-      { title: 'Apple fiscal calendar', href: 'https://adapty.io/apple-fiscal-calendar/', icon: '/images/menu-icons/icon-24x24-newsletter.svg' },
+      { title: 'Apple fiscal calendar', href: '/apple-fiscal-calendar', icon: '/images/menu-icons/icon-24x24-newsletter.svg' },
       { title: 'Apple ads manager', href: 'https://adapty.io/apple-ads-manager/', icon: '/images/menu-icons/icon-finance-blue-20dp-300w.svg' },
       { title: 'LTV prediction model', href: 'https://adapty.io/ltv-prediction-model/', icon: '/images/menu-icons/icon-24x24-21n.svg' },
       { title: 'Subscription calculator', href: 'https://adapty.io/subscription-calculator/', icon: '/images/menu-icons/icon-24x24-4n.svg' },
       { title: 'Refund calculator', href: 'https://adapty.io/refund-calculator/', icon: '/images/menu-icons/icon-20x20-currency-exchange.svg' },
-      { title: 'Paywall library', href: 'https://adapty.io/paywall-library/', icon: '/images/menu-icons/icon-24x24-1n.svg' },
+      { title: 'Paywall library', href: '/paywall-library', icon: '/images/menu-icons/icon-24x24-1n.svg' },
       { title: 'Comparing alternatives', href: 'https://adapty.io/alternative-comparison/', icon: '/images/menu-icons/icon-24x24-difference.svg' },
     ]
   },
@@ -267,15 +267,15 @@ export const LANGUAGES: Language[] = [
 // ============================================================================
 
 export const MOBILE_MAIN_MENU: MobileMenuItem[] = [
-  { label: 'Company', href: 'https://adapty.io/about/' },
+  { label: 'Company', href: '/story' },
   { label: 'Product', hasSubmenu: true },
   { label: 'Solution', href: 'https://adapty.io/solutions/' },
   { label: 'Resources', hasSubmenu: true },
-  { label: 'Integrations', href: 'https://adapty.io/integrations/' },
-  { label: 'Subscriptions SDK', href: 'https://adapty.io/sdk/' },
+  { label: 'Integrations', href: '/integrations' },
+  { label: 'Subscriptions SDK', href: '/sdk' },
   { label: 'Case Studies', hasSubmenu: true, dataKey: 'Cases' },
   { label: 'Docs', hasSubmenu: true },
-  { label: 'Pricing', href: 'https://adapty.io/pricing/' },
+  { label: 'Pricing', href: '/pricing' },
   { label: 'Blog', href: '/blog' },
   { label: 'web2app', href: 'https://funnelfox.com/', highlight: true },
 ];
@@ -302,8 +302,8 @@ export const MOBILE_SUBMENU_DATA: Record<string, MobileSubmenuConfig> = {
       { title: 'Product', href: 'https://adapty.io/product/' },
       { title: 'Solution', href: 'https://adapty.io/solutions/' },
       { title: 'Adapty SDK', href: 'https://adapty.io/docs/sdk/' },
-      { title: 'Integrations', href: 'https://adapty.io/integrations/' },
-      { title: 'Why Adapty?', href: 'https://adapty.io/why-adapty/' },
+      { title: 'Integrations', href: '/integrations' },
+      { title: 'Why Adapty?', href: '/why-adapty' },
       { title: 'Product changelog', href: 'https://adapty.io/changelog/' },
       { title: 'System status', href: 'https://status.adapty.io/' },
     ],
@@ -311,31 +311,31 @@ export const MOBILE_SUBMENU_DATA: Record<string, MobileSubmenuConfig> = {
       {
         title: 'TECH',
         items: [
-          { title: 'Subscriptions SDK', href: 'https://adapty.io/sdk/' },
+          { title: 'Subscriptions SDK', href: '/sdk' },
           { title: 'Subscribers sync', href: 'https://adapty.io/subscription-sync/' },
-          { title: 'Fallback paywalls', href: 'https://adapty.io/fallback-paywalls/' },
-          { title: 'Refund saver', href: 'https://adapty.io/refund-saver/' },
+          { title: 'Fallback paywalls', href: '/fallback-paywalls' },
+          { title: 'Refund saver', href: '/refund-saver' },
         ],
       },
       {
         title: 'PAYWALLS',
         items: [
-          { title: 'Paywall builder', href: 'https://adapty.io/paywall-builder/' },
-          { title: 'Onboarding builder', href: 'https://adapty.io/onboarding-builder/' },
-          { title: 'AI generator', href: 'https://adapty.io/ai-paywall-generator/' },
-          { title: 'A/B testing', href: 'https://adapty.io/paywall-ab-testing/' },
-          { title: 'Autopilot', href: 'https://adapty.io/autopilot/', badge: 'new' },
-          { title: 'Targeting', href: 'https://adapty.io/paywall-targeting/' },
-          { title: 'Localizations', href: 'https://adapty.io/paywall-localization/' },
-          { title: 'Remote config', href: 'https://adapty.io/remote-config/' },
+          { title: 'Paywall builder', href: '/paywall-builder' },
+          { title: 'Onboarding builder', href: '/onboarding-builder' },
+          { title: 'AI generator', href: '/ai-paywall-generator' },
+          { title: 'A/B testing', href: '/paywall-ab-testing' },
+          { title: 'Autopilot', href: '/autopilot', badge: 'new' },
+          { title: 'Targeting', href: '/paywall-targeting' },
+          { title: 'Localizations', href: '/paywall-localization' },
+          { title: 'Remote config', href: '/remote-config' },
         ],
       },
       {
         title: 'ANALYTICS',
         items: [
-          { title: 'Revenue analytics', href: 'https://adapty.io/revenue-analytics/' },
-          { title: 'LTV analytics', href: 'https://adapty.io/ltv-analytics/' },
-          { title: 'AI LTV and revenue predictions', href: 'https://adapty.io/predictive-analytics/' },
+          { title: 'Revenue analytics', href: '/revenue-growth' },
+          { title: 'LTV analytics', href: '/ltv-analytics' },
+          { title: 'AI LTV and revenue predictions', href: '/predictive-analytics' },
           { title: 'LTV prediction model', href: 'https://adapty.io/ltv-prediction-model/' },
           { title: 'Apple ads manager', href: 'https://adapty.io/apple-ads-manager/' },
         ],
@@ -387,12 +387,12 @@ export const MOBILE_SUBMENU_DATA: Record<string, MobileSubmenuConfig> = {
         items: [
           { title: 'Paywall newsletter', href: 'https://adapty.io/paywall-newsletter/' },
           { title: 'Apple receipt validation', href: 'https://adapty.io/apple-receipt-validation/' },
-          { title: 'Apple fiscal calendar', href: 'https://adapty.io/apple-fiscal-calendar/' },
+          { title: 'Apple fiscal calendar', href: '/apple-fiscal-calendar' },
           { title: 'Apple ads manager', href: 'https://adapty.io/apple-ads-manager/' },
           { title: 'LTV prediction model', href: 'https://adapty.io/ltv-prediction-model/' },
           { title: 'Subscription calculator', href: 'https://adapty.io/subscription-calculator/' },
           { title: 'Refund calculator', href: 'https://adapty.io/refund-calculator/' },
-          { title: 'Paywall library', href: 'https://adapty.io/paywall-library/' },
+          { title: 'Paywall library', href: '/paywall-library' },
           { title: 'Comparing alternatives', href: 'https://adapty.io/alternative-comparison/' },
         ],
       },
@@ -459,12 +459,12 @@ export const MOBILE_SUBMENU_DATA: Record<string, MobileSubmenuConfig> = {
 
 // Enhanced compact links with icons for simple pill variant
 export const COMPACT_PRODUCT_LINKS: MenuItem[] = [
-  { title: 'Product Overview', href: 'https://adapty.io/product/', icon: '/images/menu-icons/icon-24x24-21n.svg', description: 'Complete feature overview' },
-  { title: 'Paywall Builder', href: 'https://adapty.io/paywall-builder/', icon: '/images/menu-icons/icon-24x24-1n.svg', description: 'No-code paywall editor' },
-  { title: 'A/B Testing', href: 'https://adapty.io/paywall-ab-testing/', icon: '/images/menu-icons/icon-20x20-bug-report.svg', description: 'Optimize conversions' },
-  { title: 'Analytics', href: 'https://adapty.io/revenue-analytics/', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Revenue insights' },
-  { title: 'Adapty SDK', href: 'https://adapty.io/sdk/', icon: '/images/menu-icons/icon-20x20-sdk.svg', description: 'In-app purchases SDK' },
-  { title: 'Integrations', href: 'https://adapty.io/integrations/', icon: '/images/menu-icons/icon-24x24-11n.svg', description: 'Connect your stack' },
+  { title: 'Product Overview', href: 'https://adapty.io/product/', icon: '/images/menu-icons/icon-24x24-21n.svg', description: 'Complete feature overview', external: true },
+  { title: 'Paywall Builder', href: '/paywall-builder', icon: '/images/menu-icons/icon-24x24-1n.svg', description: 'No-code paywall editor' },
+  { title: 'A/B Testing', href: '/paywall-ab-testing', icon: '/images/menu-icons/icon-20x20-bug-report.svg', description: 'Optimize conversions' },
+  { title: 'Analytics', href: '/revenue-growth', icon: '/images/menu-icons/icon-24x24-4n.svg', description: 'Revenue insights' },
+  { title: 'Adapty SDK', href: '/sdk', icon: '/images/menu-icons/icon-20x20-sdk.svg', description: 'In-app purchases SDK' },
+  { title: 'Integrations', href: '/integrations', icon: '/images/menu-icons/icon-24x24-11n.svg', description: 'Connect your stack' },
 ];
 
 export const COMPACT_CASES_LINKS: MenuItem[] = [
@@ -475,12 +475,12 @@ export const COMPACT_CASES_LINKS: MenuItem[] = [
 ];
 
 export const COMPACT_RESOURCES_LINKS: MenuItem[] = [
-  { title: 'Blog', href: 'https://adapty.io/blog/', icon: '/images/menu-icons/icon-24x24-newsletter.svg', description: 'Latest articles' },
-  { title: 'Community', href: 'https://adapty.io/community/', icon: '/images/menu-icons/icon-20x20-bug-report.svg', description: 'Join the discussion' },
-  { title: 'Webinars', href: 'https://adapty.io/webinars/', icon: '/images/menu-icons/icon-20x20-neurology.svg', description: 'Live & recorded' },
-  { title: 'Glossary', href: 'https://adapty.io/glossary/', icon: '/images/menu-icons/icon-24x24-difference.svg', description: 'Subscription terms' },
-  { title: 'Newsletter', href: 'https://adapty.io/paywall-newsletter/', icon: '/images/menu-icons/icon-24x24-newsletter.svg', description: 'Weekly insights', badge: 'weekly' },
-  { title: 'Careers', href: 'https://adapty.io/careers/', icon: '/images/menu-icons/icon-assistant-dp24w4g0.svg', description: 'Join our team' },
+  { title: 'Blog', href: 'https://adapty.io/blog/', icon: '/images/menu-icons/icon-24x24-newsletter.svg', description: 'Latest articles', external: true },
+  { title: 'Community', href: 'https://adapty.io/community/', icon: '/images/menu-icons/icon-20x20-bug-report.svg', description: 'Join the discussion', external: true },
+  { title: 'Webinars', href: 'https://adapty.io/webinars/', icon: '/images/menu-icons/icon-20x20-neurology.svg', description: 'Live & recorded', external: true },
+  { title: 'Glossary', href: 'https://adapty.io/glossary/', icon: '/images/menu-icons/icon-24x24-difference.svg', description: 'Subscription terms', external: true },
+  { title: 'Newsletter', href: 'https://adapty.io/paywall-newsletter/', icon: '/images/menu-icons/icon-24x24-newsletter.svg', description: 'Weekly insights', badge: 'weekly', external: true },
+  { title: 'Careers', href: '/careers', icon: '/images/menu-icons/icon-assistant-dp24w4g0.svg', description: 'Join our team' },
 ];
 
 export const COMPACT_DOCS_LINKS: MenuItem[] = [

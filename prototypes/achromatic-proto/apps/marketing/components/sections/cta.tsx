@@ -226,7 +226,7 @@ export function CTA(): React.JSX.Element {
               <AnimatedButton href="https://app.adapty.io/registration" variant="default">
                 Start for free
               </AnimatedButton>
-              <AnimatedButton href="https://adapty.io/schedule-demo/" variant="outline">
+              <AnimatedButton href="/schedule-demo" variant="outline">
                 Talk to sales
               </AnimatedButton>
             </div>

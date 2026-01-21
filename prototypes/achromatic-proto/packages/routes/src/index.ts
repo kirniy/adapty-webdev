@@ -92,6 +92,7 @@ export const routes = {
     Pricing: `${baseUrl.Marketing}/pricing`,
     PrivacyPolicy: `${baseUrl.Marketing}/privacy-policy`,
     Roadmap: 'https://achromatic.canny.io',
+    ScheduleDemo: `${baseUrl.Marketing}/schedule-demo`,
     Story: `${baseUrl.Marketing}/story`,
     TermsOfUse: `${baseUrl.Marketing}/terms-of-use`
   }

@@ -53,7 +53,7 @@ export const MENU_LINKS = [
         title: 'Subscriptions SDK',
         description: 'Integrate in-app purchases easily',
         icon: <MenuIcon src="/images/menu-icons/icon-20x20-sdk.svg" />,
-        href: 'https://adapty.io/sdk/',
+        href: '/sdk',
         external: false
       },
       {
@@ -61,20 +61,20 @@ export const MENU_LINKS = [
         description: 'Keep subscriber data in sync',
         icon: <MenuIcon src="/images/menu-icons/icon-24x24-2n.svg" />,
         href: 'https://adapty.io/subscription-sync/',
-        external: false
+        external: true
       },
       {
         title: 'Fallback paywalls',
         description: 'Never lose a sale',
         icon: <MenuIcon src="/images/menu-icons/icon-24x24-3n.svg" />,
-        href: 'https://adapty.io/fallback-paywalls/',
+        href: '/fallback-paywalls',
         external: false
       },
       {
         title: 'Refund saver',
         description: 'Reduce refund rates',
         icon: <MenuIcon src="/images/menu-icons/icon-20x20-currency-exchange.svg" />,
-        href: 'https://adapty.io/refund-saver/',
+        href: '/refund-saver',
         external: false
       },
       // PAYWALLS section
@@ -82,21 +82,21 @@ export const MENU_LINKS = [
         title: 'Paywall builder',
         description: 'No-code visual paywall editor',
         icon: <MenuIcon src="/images/menu-icons/icon-24x24-1n.svg" />,
-        href: 'https://adapty.io/paywall-builder/',
+        href: '/paywall-builder',
         external: false
       },
       {
         title: 'Onboarding builder',
         description: 'Create engaging onboarding flows',
         icon: <MenuIcon src="/images/menu-icons/icon-mobile-menu-dp24w4g0.svg" />,
-        href: 'https://adapty.io/onboarding-builder/',
+        href: '/onboarding-builder',
         external: false
       },
       {
         title: 'AI generator',
         description: 'Generate paywalls with AI',
         icon: <MenuIcon src="/images/menu-icons/icon-20x20-neurology.svg" />,
-        href: 'https://adapty.io/ai-paywall-generator/',
+        href: '/ai-paywall-generator',
         external: false,
         badge: 'new'
       },
@@ -104,14 +104,14 @@ export const MENU_LINKS = [
         title: 'A/B testing',
         description: 'Optimize with experiments',
         icon: <MenuIcon src="/images/menu-icons/icon-20x20-bug-report.svg" />,
-        href: 'https://adapty.io/paywall-ab-testing/',
+        href: '/paywall-ab-testing',
         external: false
       },
       {
         title: 'Autopilot',
         description: 'AI-powered optimization',
         icon: <MenuIcon src="/images/menu-icons/icon-assistant-dp24w4g0.svg" />,
-        href: 'https://adapty.io/autopilot/',
+        href: '/autopilot',
         external: false,
         badge: 'new'
       },
@@ -119,21 +119,21 @@ export const MENU_LINKS = [
         title: 'Targeting',
         description: 'Show right paywall to right users',
         icon: <MenuIcon src="/images/menu-icons/icon-24x24-9n.svg" />,
-        href: 'https://adapty.io/paywall-targeting/',
+        href: '/paywall-targeting',
         external: false
       },
       {
         title: 'Localizations',
         description: 'Localize paywalls globally',
         icon: <MenuIcon src="/images/menu-icons/icon-24x24-10n.svg" />,
-        href: 'https://adapty.io/paywall-localization/',
+        href: '/paywall-localization',
         external: false
       },
       {
         title: 'Remote config',
         description: 'Update app without releases',
         icon: <MenuIcon src="/images/menu-icons/icon-24x24-11n.svg" />,
-        href: 'https://adapty.io/remote-config/',
+        href: '/remote-config',
         external: false
       },
       // ANALYTICS section
@@ -141,21 +141,21 @@ export const MENU_LINKS = [
         title: 'Revenue analytics',
         description: 'Track MRR, ARR, and revenue',
         icon: <MenuIcon src="/images/menu-icons/icon-24x24-4n.svg" />,
-        href: 'https://adapty.io/revenue-analytics/',
+        href: '/revenue-growth',
         external: false
       },
       {
         title: 'LTV analytics',
         description: 'Understand customer lifetime value',
         icon: <MenuIcon src="/images/menu-icons/icon-24x24-5n.svg" />,
-        href: 'https://adapty.io/ltv-analytics/',
+        href: '/ltv-analytics',
         external: false
       },
       {
         title: 'AI LTV predictions',
         description: 'Predict future revenue',
         icon: <MenuIcon src="/images/menu-icons/icon-24x24-12n.svg" />,
-        href: 'https://adapty.io/predictive-analytics/',
+        href: '/predictive-analytics',
         external: false
       },
       {
@@ -163,14 +163,14 @@ export const MENU_LINKS = [
         description: 'Custom prediction models',
         icon: <MenuIcon src="/images/menu-icons/icon-24x24-21n.svg" />,
         href: 'https://adapty.io/ltv-prediction-model/',
-        external: false
+        external: true
       },
       {
         title: 'Apple ads manager',
         description: 'Optimize Apple Search Ads',
         icon: <MenuIcon src="/images/menu-icons/icon-finance-blue-20dp-300w.svg" />,
         href: 'https://adapty.io/apple-ads-manager/',
-        external: false
+        external: true
       },
     ]
   },
@@ -217,8 +217,8 @@ export const MENU_LINKS = [
         title: 'View all case studies',
         description: 'See more customer success stories',
         icon: <FileTextIcon className="size-5 shrink-0 text-muted-foreground" />,
-        href: 'https://adapty.io/case-studies/',
-        external: true
+        href: '/case-studies',
+        external: false
       },
     ]
   },
@@ -274,8 +274,8 @@ export const MENU_LINKS = [
         title: 'Careers',
         description: 'Join our team',
         icon: <BriefcaseIcon className="size-5 shrink-0 text-muted-foreground" />,
-        href: 'https://adapty.io/careers/',
-        external: true
+        href: '/careers',
+        external: false
       },
       // DISCOVER
       {
@@ -290,8 +290,8 @@ export const MENU_LINKS = [
         title: 'Apple fiscal calendar',
         description: 'Plan your releases',
         icon: <CalendarIcon className="size-5 shrink-0 text-muted-foreground" />,
-        href: 'https://adapty.io/apple-fiscal-calendar/',
-        external: true
+        href: '/apple-fiscal-calendar',
+        external: false
       },
       {
         title: 'Subscription calculator',
@@ -304,8 +304,8 @@ export const MENU_LINKS = [
         title: 'Paywall library',
         description: 'Browse paywall examples',
         icon: <LayoutIcon className="size-5 shrink-0 text-muted-foreground" />,
-        href: 'https://adapty.io/paywall-library/',
-        external: true
+        href: '/paywall-library',
+        external: false
       },
     ]
   },
@@ -374,7 +374,7 @@ export const MENU_LINKS = [
   // PRICING - Direct link
   {
     title: 'Pricing',
-    href: 'https://adapty.io/pricing/',
+    href: '/pricing',
     external: false
   }
 ];
@@ -387,13 +387,13 @@ export const FOOTER_LINKS = [
   {
     title: 'Product',
     links: [
-      { name: 'Paywall Builder', href: 'https://adapty.io/paywall-builder/', external: false },
-      { name: 'A/B Testing', href: 'https://adapty.io/paywall-ab-testing/', external: false },
-      { name: 'Analytics', href: 'https://adapty.io/revenue-analytics/', external: false },
-      { name: 'Subscriptions SDK', href: 'https://adapty.io/sdk/', external: false },
-      { name: 'Refund Saver', href: 'https://adapty.io/refund-saver/', external: false },
-      { name: 'Remote Config', href: 'https://adapty.io/remote-config/', external: false },
-      { name: 'Integrations', href: 'https://adapty.io/integrations/', external: false }
+      { name: 'Paywall Builder', href: '/paywall-builder', external: false },
+      { name: 'A/B Testing', href: '/paywall-ab-testing', external: false },
+      { name: 'Analytics', href: '/revenue-growth', external: false },
+      { name: 'Subscriptions SDK', href: '/sdk', external: false },
+      { name: 'Refund Saver', href: '/refund-saver', external: false },
+      { name: 'Remote Config', href: '/remote-config', external: false },
+      { name: 'Integrations', href: '/integrations', external: false }
     ]
   },
   {
@@ -401,7 +401,7 @@ export const FOOTER_LINKS = [
     links: [
       { name: 'Documentation', href: 'https://docs.adapty.io', external: true },
       { name: 'Blog', href: 'https://adapty.io/blog/', external: true },
-      { name: 'Case Studies', href: 'https://adapty.io/case-studies/', external: true },
+      { name: 'Case Studies', href: '/case-studies', external: false },
       { name: 'Community', href: 'https://adapty.io/community/', external: true },
       { name: 'Webinars', href: 'https://adapty.io/webinars/', external: true },
       { name: 'Help Center', href: 'https://adapty.io/support/', external: true }
@@ -410,19 +410,19 @@ export const FOOTER_LINKS = [
   {
     title: 'Company',
     links: [
-      { name: 'About', href: 'https://adapty.io/about/', external: false },
-      { name: 'Careers', href: 'https://adapty.io/careers/', external: false },
-      { name: 'Contact', href: 'https://adapty.io/contact/', external: false },
+      { name: 'About', href: '/story', external: false },
+      { name: 'Careers', href: '/careers', external: false },
+      { name: 'Contact', href: '/contact', external: false },
       { name: 'System Status', href: 'https://status.adapty.io/', external: true }
     ]
   },
   {
     title: 'Legal',
     links: [
-      { name: 'Terms of Use', href: 'https://adapty.io/terms/', external: false },
-      { name: 'Privacy Policy', href: 'https://adapty.io/privacy/', external: false },
-      { name: 'Cookie Policy', href: 'https://adapty.io/cookies/', external: false },
-      { name: 'Security', href: 'https://adapty.io/security/', external: false }
+      { name: 'Terms of Use', href: '/terms-of-use', external: false },
+      { name: 'Privacy Policy', href: '/privacy-policy', external: false },
+      { name: 'Cookie Policy', href: '/cookie-policy', external: false },
+      { name: 'Security', href: 'https://adapty.io/security/', external: true }
     ]
   }
 ];

@@ -79,7 +79,7 @@ const FEATURE_TABS: FeatureTab[] = [
       { id: 'instant-updates', title: 'Instant Updates', description: 'Change paywalls without app store review', icon: ZapIcon, stat: '<1s load' },
       { id: 'native', title: 'Native Experience', description: 'Fully native on iOS and Android', icon: SmartphoneIcon, stat: '30% avg lift' },
     ],
-    cta: { label: 'Explore Paywall Builder', href: 'https://adapty.io/paywall-builder/' }
+    cta: { label: 'Explore Paywall Builder', href: '/paywall-builder' }
   },
   {
     id: 'ab-testing',

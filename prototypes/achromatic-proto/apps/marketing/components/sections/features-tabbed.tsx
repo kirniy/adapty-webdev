@@ -64,7 +64,7 @@ const FEATURE_TABS = [
     ],
     image: '/assets/hero/light-feature1.webp',
     imageDark: '/assets/hero/dark-feature1.webp',
-    cta: { label: 'Explore Paywall Builder', href: 'https://adapty.io/paywall-builder/' }
+    cta: { label: 'Explore Paywall Builder', href: '/paywall-builder' }
   },
   {
     id: 'ab-testing',

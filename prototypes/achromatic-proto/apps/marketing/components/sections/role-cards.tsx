@@ -24,7 +24,7 @@ const ROLES = [
     title: 'For Developers',
     subtitle: 'Build faster, ship sooner',
     description: 'Skip the boilerplate. Our SDK handles subscription infrastructure so you can focus on your app.',
-    link: 'https://adapty.io/for-developers/',
+    link: '/for-developers',
     icon: CodeIcon,
     stats: '10 lines of code',
     features: [
@@ -39,7 +39,7 @@ const ROLES = [
     title: 'For App Owners',
     subtitle: 'Know your numbers',
     description: 'Real-time revenue analytics, LTV predictions, and cohort analysis to make data-driven decisions.',
-    link: 'https://adapty.io/for-app-owners/',
+    link: '/for-app-owners',
     icon: BarChartIcon,
     stats: '$2B+ tracked',
     features: [
@@ -54,7 +54,7 @@ const ROLES = [
     title: 'For Marketers',
     subtitle: 'Optimize without code',
     description: 'A/B test paywalls, localize content, and target user segments - all without app updates.',
-    link: 'https://adapty.io/for-marketers/',
+    link: '/for-marketers',
     icon: MegaphoneIcon,
     stats: '+40% conversions',
     features: [

@@ -6,34 +6,66 @@ import {
   PriceType
 } from './schema';
 
+// Adapty-specific features (EXACT from adapty.io/pricing)
 enum Feature {
-  AICustomerScoring = 'AI Contact Scoring',
-  SmartEmailAnalysis = 'Smart Email Analysis',
-  LeadPredictions = 'Lead Predictions',
-  SentimentAnalysis = 'Sentiment Analysis',
-  DataStorage = 'Data Storage',
-  ExtendedSupport = 'Extended Support'
+  // Free tier
+  PurchaseSDKs = 'Purchase SDKs for all platforms',
+  SubscriptionAnalytics = 'Subscription analytics',
+  RemotePaywallEditing = 'Remote paywall editing',
+  NoCodePaywallBuilder = 'No-code paywall builder',
+
+  // Pro tier additions
+  BuilderAdvancedFeatures = 'Builder advanced features',
+  ABTesting = 'A/B testing for paywalls',
+  LTVAnalytics = 'LTV and advanced analytics',
+  Integrations = 'Integrations',
+  Localization = 'Localization',
+  ChatSupport = 'Chat support',
+
+  // Pro+ tier additions
+  ETLIntegrations = 'ETL integrations',
+  PredictionLTV = 'Prediction of LTV and revenue',
+  PriorityChatSupport = 'Priority chat support',
+
+  // Enterprise tier additions
+  CustomPricing = 'Custom pricing',
+  DataInsights = 'Data insights for your app',
+  CustomSLA = 'Custom SLA',
+  DedicatedSlackSupport = 'Dedicated support manager in Slack'
 }
 
 const currency = 'USD';
+
+// Adapty uses percentage-based pricing (% of revenue)
+// From adapty.io/pricing (scraped 2026-01-21):
+// - Free: $0/month, up to $10K revenue
+// - Pro: 1% of revenue, min $99 per month (Most popular)
+// - Pro+: 1.2% of revenue, min $499 per month
+// - Enterprise: Custom
 
 export const billingConfig = createBillingConfig({
   products: [
     {
       id: 'free',
       name: 'Free',
-      description: 'Start for free.',
-      label: 'Get started',
+      description: 'up to $10K revenue',
+      priceDisplay: '$0',
+      priceUnit: '/month',
+      label: 'Start for free',
       isFree: true,
-      features: [Feature.AICustomerScoring, Feature.SmartEmailAnalysis],
-      // Even if it is free, keep the plans and prices to display the interval and currency correctly
+      features: [
+        Feature.PurchaseSDKs,
+        Feature.SubscriptionAnalytics,
+        Feature.RemotePaywallEditing,
+        Feature.NoCodePaywallBuilder
+      ],
       plans: [
         {
           id: 'plan-free-month',
           displayIntervals: [PriceInterval.Month],
           prices: [
             {
-              id: 'price-free-month-id', // a placebo ID is fine here
+              id: 'price-free-month-id',
               type: PriceType.Recurring,
               model: PriceModel.Flat,
               interval: PriceInterval.Month,
@@ -47,7 +79,7 @@ export const billingConfig = createBillingConfig({
           displayIntervals: [PriceInterval.Year],
           prices: [
             {
-              id: 'price-free-year-id', // a placebo ID is fine here
+              id: 'price-free-year-id',
               interval: PriceInterval.Year,
               type: PriceType.Recurring,
               model: PriceModel.Flat,
@@ -61,29 +93,38 @@ export const billingConfig = createBillingConfig({
     {
       id: 'pro',
       name: 'Pro',
-      description: 'Best for most teams.',
-      label: 'Get started',
+      description: 'min $99 per month',
+      priceDisplay: '1%',
+      priceUnit: 'of revenue',
+      label: 'Start with Pro',
+      badgeText: 'Most popular',
       recommended: true,
       features: [
-        Feature.AICustomerScoring,
-        Feature.SmartEmailAnalysis,
-        Feature.SentimentAnalysis,
-        Feature.LeadPredictions
+        Feature.PurchaseSDKs,
+        Feature.SubscriptionAnalytics,
+        Feature.RemotePaywallEditing,
+        Feature.NoCodePaywallBuilder,
+        Feature.BuilderAdvancedFeatures,
+        Feature.ABTesting,
+        Feature.LTVAnalytics,
+        Feature.Integrations,
+        Feature.Localization,
+        Feature.ChatSupport
       ],
       plans: [
         {
           id: 'plan-pro-month',
           displayIntervals: [PriceInterval.Month],
-          trialDays: 7,
+          trialDays: 14,
           prices: [
             {
               id:
                 keys().NEXT_PUBLIC_BILLING_PRICE_PRO_MONTH_ID ||
-                'price-pro-month-id', // keep for marketing pages, so you only need to specify id in dashboard
+                'price-pro-month-id',
               interval: PriceInterval.Month,
               type: PriceType.Recurring,
               model: PriceModel.Flat,
-              cost: 24,
+              cost: 99, // Minimum $99/mo (1% of MTR)
               currency
             }
           ]
@@ -91,16 +132,16 @@ export const billingConfig = createBillingConfig({
         {
           id: 'plan-pro-year',
           displayIntervals: [PriceInterval.Year],
-          trialDays: 7,
+          trialDays: 14,
           prices: [
             {
               id:
                 keys().NEXT_PUBLIC_BILLING_PRICE_PRO_YEAR_ID ||
-                'price-pro-year-id', // keep for marketing pages, so you only need to specify id in dashboard
+                'price-pro-year-id',
               interval: PriceInterval.Year,
               type: PriceType.Recurring,
               model: PriceModel.Flat,
-              cost: 199,
+              cost: 990, // ~$82.50/mo equivalent
               currency
             }
           ]
@@ -108,29 +149,56 @@ export const billingConfig = createBillingConfig({
       ]
     },
     {
-      id: 'lifetime',
-      name: 'Lifetime',
-      description: 'Buy once. Use forever.',
-      label: 'Get started',
+      id: 'pro-plus',
+      name: 'Pro+',
+      description: 'min $499 per month',
+      priceDisplay: '1.2%',
+      priceUnit: 'of revenue',
+      label: 'Start with Pro+',
       features: [
-        Feature.AICustomerScoring,
-        Feature.SmartEmailAnalysis,
-        Feature.SentimentAnalysis,
-        Feature.LeadPredictions
+        Feature.PurchaseSDKs,
+        Feature.SubscriptionAnalytics,
+        Feature.RemotePaywallEditing,
+        Feature.NoCodePaywallBuilder,
+        Feature.BuilderAdvancedFeatures,
+        Feature.ABTesting,
+        Feature.LTVAnalytics,
+        Feature.Integrations,
+        Feature.Localization,
+        Feature.ChatSupport,
+        Feature.ETLIntegrations,
+        Feature.PredictionLTV,
+        Feature.PriorityChatSupport
       ],
       plans: [
         {
-          id: 'lifetime',
-          displayIntervals: [PriceInterval.Month, PriceInterval.Year],
+          id: 'plan-pro-plus-month',
+          displayIntervals: [PriceInterval.Month],
+          trialDays: 14,
           prices: [
             {
               id:
                 keys().NEXT_PUBLIC_BILLING_PRICE_LIFETIME_ID ||
-                'price-lifetime-id', // keep for marketing pages, so you only need to specify id in dashboard
-              type: PriceType.OneTime,
-              model: PriceModel.Flat, // only flat is supported for PriceType.OneTime
-              interval: undefined,
-              cost: 699,
+                'price-pro-plus-month-id',
+              interval: PriceInterval.Month,
+              type: PriceType.Recurring,
+              model: PriceModel.Flat,
+              cost: 499, // Minimum $499/mo (1.2% of MTR)
+              currency
+            }
+          ]
+        },
+        {
+          id: 'plan-pro-plus-year',
+          displayIntervals: [PriceInterval.Year],
+          trialDays: 14,
+          prices: [
+            {
+              id: 'price-pro-plus-year-id',
+              interval: PriceInterval.Year,
+              type: PriceType.Recurring,
+              model: PriceModel.Flat,
+              cost: 4990, // ~$416/mo equivalent
               currency
             }
           ]
@@ -140,19 +208,30 @@ export const billingConfig = createBillingConfig({
     {
       id: 'enterprise',
       name: 'Enterprise',
-      description: 'Best for tailored requirements.',
+      description: 'For large-scale apps',
+      priceDisplay: 'Custom',
+      priceUnit: '',
       label: 'Contact us',
       isEnterprise: true,
       features: [
-        Feature.AICustomerScoring,
-        Feature.SmartEmailAnalysis,
-        Feature.SentimentAnalysis,
-        Feature.LeadPredictions,
-        Feature.DataStorage,
-        Feature.ExtendedSupport
+        Feature.PurchaseSDKs,
+        Feature.SubscriptionAnalytics,
+        Feature.RemotePaywallEditing,
+        Feature.NoCodePaywallBuilder,
+        Feature.BuilderAdvancedFeatures,
+        Feature.ABTesting,
+        Feature.LTVAnalytics,
+        Feature.Integrations,
+        Feature.Localization,
+        Feature.ChatSupport,
+        Feature.ETLIntegrations,
+        Feature.PredictionLTV,
+        Feature.PriorityChatSupport,
+        Feature.CustomPricing,
+        Feature.DataInsights,
+        Feature.CustomSLA,
+        Feature.DedicatedSlackSupport
       ],
-      // The idea is to keep the product and prices and use an admin panel to update the customer to enterprise.
-      // For enterprise you can have multiple products, you just need to set hidden: true on the other enterprise products.
       plans: [
         {
           id: 'plan-enterprise-month',
@@ -161,11 +240,11 @@ export const billingConfig = createBillingConfig({
             {
               id:
                 keys().NEXT_PUBLIC_BILLING_PRICE_ENTERPRISE_MONTH_ID ||
-                'price-enterprise-month-id', // keep for marketing pages, so you only need to specify id in dashboard
+                'price-enterprise-month-id',
               interval: PriceInterval.Month,
               type: PriceType.Recurring,
               model: PriceModel.Flat,
-              cost: 39,
+              cost: 0, // Custom pricing
               currency
             }
           ]
@@ -177,11 +256,11 @@ export const billingConfig = createBillingConfig({
             {
               id:
                 keys().NEXT_PUBLIC_BILLING_PRICE_ENTERPRISE_YEAR_ID ||
-                'price-enterprise-year-id', // keep for marketing pages, so you only need to specify id in dashboard
+                'price-enterprise-year-id',
               interval: PriceInterval.Year,
               type: PriceType.Recurring,
               model: PriceModel.Flat,
-              cost: 399,
+              cost: 0, // Custom pricing
               currency
             }
           ]

@@ -21,7 +21,7 @@ export const hero = {
   },
   cta: {
     primary: { text: 'Start for free', href: '#' },
-    secondary: { text: 'Schedule a demo', href: 'https://adapty.io/schedule-demo/' },
+    secondary: { text: 'Schedule a demo', href: '/schedule-demo' },
   },
   image: {
     dashboard: '/images/hero-overview.webp',
@@ -217,19 +217,19 @@ export const roleCards = {
     {
       title: 'For developers',
       image: '/images/role-developers-new.webp',
-      link: 'https://adapty.io/for-developers/',
+      link: '/for-developers',
       tags: ['Subscriptions SDK', 'Refund Saver', 'Remote config', 'Fallback paywalls'],
     },
     {
       title: 'For app owners',
       image: '/images/role-owners-new.webp',
-      link: 'https://adapty.io/for-app-owners/',
+      link: '/for-app-owners',
       tags: ['Revenue analytics', 'LTV analytics', 'AI LTV and revenue predictions'],
     },
     {
       title: 'For marketers',
       image: '/images/role-marketers-new.webp',
-      link: 'https://adapty.io/for-marketers/',
+      link: '/for-marketers',
       tags: ['A/B testing', 'No-code Builder', 'Localizations', 'Targeting'],
     },
   ],
@@ -424,7 +424,7 @@ export const finalCta = {
   },
   cta: {
     primary: { text: 'Start for free', href: '#' },
-    secondary: { text: 'Or schedule a demo', href: 'https://adapty.io/schedule-demo/' },
+    secondary: { text: 'Or schedule a demo', href: '/schedule-demo' },
   },
 } as const;
 
@@ -438,12 +438,12 @@ export const footer = {
     {
       title: 'Product',
       links: [
-        { text: 'Paywall A/B Testing', href: 'https://adapty.io/paywall-ab-testing/' },
-        { text: 'Paywall Builder', href: 'https://adapty.io/paywall-builder/' },
-        { text: 'Subscription Analytics', href: 'https://adapty.io/ltv-analytics/' },
-        { text: 'Refund Saver', href: 'https://adapty.io/refund-saver/' },
-        { text: 'SDK', href: 'https://adapty.io/sdk/' },
-        { text: 'Integrations', href: 'https://adapty.io/integrations/' },
+        { text: 'Paywall A/B Testing', href: '/paywall-ab-testing' },
+        { text: 'Paywall Builder', href: '/paywall-builder' },
+        { text: 'Subscription Analytics', href: '/ltv-analytics' },
+        { text: 'Refund Saver', href: '/refund-saver' },
+        { text: 'SDK', href: '/sdk' },
+        { text: 'Integrations', href: '/integrations' },
       ],
     },
     {
@@ -451,7 +451,7 @@ export const footer = {
       links: [
         { text: 'Documentation', href: 'https://docs.adapty.io/' },
         { text: 'Blog', href: 'https://adapty.io/blog/' },
-        { text: 'Case Studies', href: 'https://adapty.io/case-studies/' },
+        { text: 'Case Studies', href: '/case-studies' },
         { text: 'Ebooks', href: 'https://adapty.io/ebooks/' },
       ],
     },

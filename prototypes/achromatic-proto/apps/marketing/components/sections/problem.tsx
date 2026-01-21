@@ -12,19 +12,19 @@ const ROLES = [
   {
     title: 'For developers',
     image: '/images/role-developers-new.webp',
-    link: 'https://adapty.io/for-developers/',
+    link: '/for-developers',
     tags: ['Subscriptions SDK', 'Refund Saver', 'Remote config', 'Fallback paywalls'],
   },
   {
     title: 'For app owners',
     image: '/images/role-owners-new.webp',
-    link: 'https://adapty.io/for-app-owners/',
+    link: '/for-app-owners',
     tags: ['Revenue analytics', 'LTV analytics', 'AI LTV predictions'],
   },
   {
     title: 'For marketers',
     image: '/images/role-marketers-new.webp',
-    link: 'https://adapty.io/for-marketers/',
+    link: '/for-marketers',
     tags: ['A/B testing', 'No-code Builder', 'Localizations', 'Targeting'],
   },
   {

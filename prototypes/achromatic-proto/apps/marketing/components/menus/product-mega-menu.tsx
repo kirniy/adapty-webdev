@@ -157,8 +157,7 @@ function IntegrationsPanel() {
       </h3>
       <SimpleItemGrid items={INTEGRATIONS_ITEMS} columns={2} />
       <Link
-        href="https://adapty.io/integrations/"
-        target="_blank"
+        href="/integrations"
         className="mt-4 flex items-center gap-1 text-sm font-medium text-primary hover:underline"
       >
         View all integrations

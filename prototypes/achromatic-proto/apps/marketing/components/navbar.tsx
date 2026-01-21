@@ -385,7 +385,7 @@ function FloatingPillNavbar(): React.JSX.Element {
                       asChild
                       className={cn(navigationMenuTriggerStyle(), 'h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground')}
                     >
-                      <Link href="https://adapty.io/pricing/" target="_blank">
+                      <Link href="/pricing">
                         Pricing
                       </Link>
                     </NavigationMenuLink>
@@ -499,7 +499,7 @@ function DefaultMegaMenuNavbar(): React.JSX.Element {
                       asChild
                       className={cn(navigationMenuTriggerStyle(), 'rounded-xl text-[15px] font-normal')}
                     >
-                      <Link href="https://adapty.io/pricing/" target="_blank">
+                      <Link href="/pricing">
                         Pricing
                       </Link>
                     </NavigationMenuLink>

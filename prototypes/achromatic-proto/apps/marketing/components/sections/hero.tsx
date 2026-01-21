@@ -254,7 +254,7 @@ function HeroButtons(): React.JSX.Element {
         <HeroButton href="https://app.adapty.io/registration" variant="default">
           Start for free
         </HeroButton>
-        <HeroButton href="https://adapty.io/schedule-demo/" variant="outline">
+        <HeroButton href="/schedule-demo" variant="outline">
           Book a demo
         </HeroButton>
       </div>

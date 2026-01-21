@@ -101,7 +101,7 @@ export function FAQ(): React.JSX.Element {
               <AnimatedLink href="https://adapty.io/docs/">
                 Read documentation
               </AnimatedLink>
-              <AnimatedLink href="https://adapty.io/schedule-demo/">
+              <AnimatedLink href="/schedule-demo">
                 Schedule a demo
               </AnimatedLink>
             </div>

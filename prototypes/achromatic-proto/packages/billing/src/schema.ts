@@ -94,8 +94,12 @@ const planSchema = z.object({
 const productSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
-  description: z.string().min(1),
+  description: z.string(),
   label: z.string().min(1),
+  // Custom price display for non-flat pricing (e.g., "1%" for percentage-based)
+  priceDisplay: z.string().optional(),
+  priceUnit: z.string().optional(),
+  badgeText: z.string().optional(),
   enableDiscounts: z.boolean().optional(),
   recommended: z.boolean().optional(),
   hidden: z.boolean().optional(),

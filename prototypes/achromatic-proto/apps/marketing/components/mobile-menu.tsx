@@ -196,7 +196,7 @@ export function MobileMenu({
                       Sign up
                     </a>
                     <a
-                      href="https://adapty.io/schedule-demo/"
+                      href="/schedule-demo"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={cn(
