@@ -47,6 +47,9 @@ type PageSections = {
 
 // Mapping of pages to their available sections
 const PAGE_SECTIONS: Record<string, PageSections> = {
+  // ============================================================================
+  // MAIN PAGES
+  // ============================================================================
   '/': {
     hero: true,
     logos: true,
@@ -59,28 +62,23 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     faq: true,
     cta: true,
   },
-  '/paywall-builder': {
+  '/pricing': {
     hero: true,
     logos: true,
-    features: true,
-    customization: true,
-    testimonials: true,
     faq: true,
+    testimonials: true,
     cta: true,
   },
-  '/paywall-ab-testing': {
-    hero: true,
-    features: true,
-    cta: true,
-  },
-  '/onboarding-builder': {
+  '/schedule-demo': {
     hero: true,
     logos: true,
-    features: true,
     testimonials: true,
-    faq: true,
     cta: true,
   },
+
+  // ============================================================================
+  // ROLE/PERSONA PAGES
+  // ============================================================================
   '/for-marketers': {
     hero: true,
     logos: true,
@@ -112,35 +110,44 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     testimonials: true,
     cta: true,
   },
-  '/pricing': {
+
+  // ============================================================================
+  // PRODUCT FEATURE PAGES
+  // ============================================================================
+  '/paywall-builder': {
     hero: true,
     logos: true,
+    features: true,
+    customization: true,
+    testimonials: true,
     faq: true,
+    cta: true,
+  },
+  '/paywall-ab-testing': {
+    hero: true,
+    logos: true,
+    features: true,
     testimonials: true,
     cta: true,
   },
-  '/schedule-demo': {
+  '/onboarding-builder': {
     hero: true,
     logos: true,
+    features: true,
     testimonials: true,
-  },
-  '/sdk': {
-    hero: true,
-    sdk: true,
+    faq: true,
     cta: true,
   },
-  '/integrations': {
+  '/autopilot': {
     hero: true,
     logos: true,
-    cta: true,
-  },
-  '/case-studies': {
-    hero: true,
+    features: true,
     testimonials: true,
     cta: true,
   },
   '/ltv-analytics': {
     hero: true,
+    logos: true,
     features: true,
     stats: true,
     testimonials: true,
@@ -148,27 +155,174 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
   },
   '/predictive-analytics': {
     hero: true,
+    logos: true,
     features: true,
     testimonials: true,
     cta: true,
   },
   '/refund-saver': {
     hero: true,
+    logos: true,
     features: true,
     stats: true,
     faq: true,
     testimonials: true,
     cta: true,
   },
-  '/autopilot': {
+  '/ai-paywall-generator': {
     hero: true,
+    logos: true,
     features: true,
     testimonials: true,
     cta: true,
   },
+  '/paywall-library': {
+    hero: true,
+    logos: true,
+    features: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/paywall-localization': {
+    hero: true,
+    logos: true,
+    features: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/paywall-targeting': {
+    hero: true,
+    logos: true,
+    features: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/remote-config': {
+    hero: true,
+    logos: true,
+    features: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/fallback-paywalls': {
+    hero: true,
+    logos: true,
+    features: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/revenue-growth': {
+    hero: true,
+    logos: true,
+    features: true,
+    stats: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/apple-fiscal-calendar': {
+    hero: true,
+    logos: true,
+    features: true,
+    cta: true,
+  },
+  '/state-of-in-app-subscriptions': {
+    hero: true,
+    logos: true,
+    features: true,
+    cta: true,
+  },
+
+  // ============================================================================
+  // SDK & INTEGRATIONS
+  // ============================================================================
+  '/sdk': {
+    hero: true,
+    logos: true,
+    sdk: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/integrations': {
+    hero: true,
+    logos: true,
+    testimonials: true,
+    cta: true,
+  },
+
+  // ============================================================================
+  // COMPANY PAGES
+  // ============================================================================
   '/why-adapty': {
     hero: true,
+    logos: true,
     features: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/story': {
+    hero: true,
+    stats: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/careers': {
+    hero: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/case-studies': {
+    hero: true,
+    logos: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/blog': {
+    hero: true,
+    blog: true,
+    cta: true,
+  },
+  '/contact': {
+    hero: true,
+    logos: true,
+    cta: true,
+  },
+
+  // ============================================================================
+  // COMPARISON PAGES
+  // ============================================================================
+  '/compare': {
+    hero: true,
+    logos: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/compare/revenuecat': {
+    hero: true,
+    logos: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/compare/qonversion': {
+    hero: true,
+    logos: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/compare/superwall': {
+    hero: true,
+    logos: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/compare/purchasely': {
+    hero: true,
+    logos: true,
+    testimonials: true,
+    cta: true,
+  },
+  '/compare/in-house-development': {
+    hero: true,
+    logos: true,
     testimonials: true,
     cta: true,
   },
