@@ -81,70 +81,7 @@ function AnimatedCounter({
   return <span ref={ref}>{prefix}0{suffix}</span>;
 }
 
-// Orbital ring animation
-function OrbitalRing({ delay, size, duration }: { delay: number; size: number; duration: number }) {
-  const shouldReduceMotion = useReducedMotion();
-
-  return (
-    <motion.div
-      className="absolute rounded-full border border-border/20"
-      style={{
-        width: size,
-        height: size,
-        left: '50%',
-        top: '50%',
-        x: '-50%',
-        y: '-50%',
-      }}
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={shouldReduceMotion ? { opacity: 0.3 } : {
-        opacity: [0.1, 0.3, 0.1],
-        scale: [0.95, 1, 0.95],
-        rotate: [0, 360],
-      }}
-      transition={shouldReduceMotion ? { duration: 0.3 } : {
-        opacity: { duration: duration / 2, repeat: Infinity, ease: 'easeInOut' },
-        scale: { duration: duration / 2, repeat: Infinity, ease: 'easeInOut' },
-        rotate: { duration, repeat: Infinity, ease: 'linear', delay },
-      }}
-    />
-  );
-}
-
-// Floating particle
-function FloatingParticle({ index }: { index: number }) {
-  const shouldReduceMotion = useReducedMotion();
-  const angle = (index * 72) * (Math.PI / 180);
-  const radius = 120 + Math.random() * 40;
-  const x = Math.cos(angle) * radius;
-  const y = Math.sin(angle) * radius;
-
-  if (shouldReduceMotion) return null;
-
-  return (
-    <motion.div
-      className="absolute w-1 h-1 rounded-full bg-primary/40"
-      style={{
-        left: '50%',
-        top: '50%',
-      }}
-      initial={{ x, y, opacity: 0 }}
-      animate={{
-        x: [x, x + 20, x],
-        y: [y, y - 20, y],
-        opacity: [0.2, 0.6, 0.2],
-      }}
-      transition={{
-        duration: 3 + index * 0.5,
-        repeat: Infinity,
-        ease: 'easeInOut',
-        delay: index * 0.3,
-      }}
-    />
-  );
-}
-
-// Single stat card with orbital design
+// Single stat card - clean design with animated counter
 function StatCard({
   stat,
   index,
@@ -159,78 +96,43 @@ function StatCard({
   return (
     <BlurFade delay={shouldReduceMotion ? 0 : 0.1 + index * 0.1}>
       <motion.div
-        className="relative group cursor-default"
+        className="relative group"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
-        transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
       >
-        {/* Card background with gradient border on hover */}
+        {/* Card */}
         <div className={cn(
-          'relative overflow-hidden rounded-2xl border bg-card/80 backdrop-blur-sm p-8 h-full',
-          'transition-all duration-300',
-          isHovered && 'border-primary/30 shadow-lg shadow-primary/5'
+          'relative rounded-2xl border bg-card p-8 h-full',
+          'transition-all duration-200',
+          isHovered && 'border-border/80 shadow-lg'
         )}>
-          {/* Orbital rings background */}
-          <div className="absolute inset-0 overflow-hidden">
-            <OrbitalRing delay={0} size={200} duration={20} />
-            <OrbitalRing delay={5} size={280} duration={30} />
-            <OrbitalRing delay={10} size={360} duration={40} />
-            {[...Array(5)].map((_, i) => (
-              <FloatingParticle key={i} index={i} />
-            ))}
-          </div>
-
-          {/* Gradient glow on hover */}
-          <motion.div
-            className={cn(
-              'absolute inset-0 opacity-0 blur-2xl transition-opacity duration-500',
-              `bg-gradient-to-br ${stat.color}`
-            )}
-            animate={{ opacity: isHovered ? 0.1 : 0 }}
-          />
-
           {/* Content */}
           <div className="relative z-10">
             {/* Large number */}
-            <motion.div
-              className="text-5xl md:text-6xl font-bold tracking-tight mb-2"
-              animate={shouldReduceMotion ? undefined : {
-                color: isHovered ? 'hsl(var(--primary))' : 'hsl(var(--foreground))',
-              }}
-              transition={{ duration: 0.2 }}
-            >
+            <div className="text-5xl md:text-6xl font-bold tracking-tight mb-3">
               <AnimatedCounter
                 value={stat.value}
                 prefix={stat.prefix}
                 suffix={stat.suffix}
                 decimals={decimals}
               />
-            </motion.div>
+            </div>
 
             {/* Label */}
             <h3 className="text-lg font-semibold mb-2">{stat.label}</h3>
 
-            {/* Description - reveals on hover */}
-            <motion.p
-              className="text-sm text-muted-foreground leading-relaxed"
-              initial={{ opacity: 0.6, height: 0 }}
-              animate={{
-                opacity: isHovered ? 1 : 0.6,
-                height: isHovered ? 'auto' : 0,
-              }}
-              transition={{ duration: 0.2 }}
-            >
-              {stat.description}
-            </motion.p>
-
-            {/* Decorative line */}
-            <motion.div
-              className={cn('h-0.5 mt-4 rounded-full bg-gradient-to-r', stat.color)}
-              initial={{ width: 0 }}
-              animate={{ width: isHovered ? '100%' : '30%' }}
-              transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-            />
+            {/* Description - always visible */}
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              <span className={cn(
+                'bg-gradient-to-r bg-clip-text',
+                stat.color,
+                'text-transparent'
+              )}>
+                {stat.description.split(' ').slice(0, 2).join(' ')}
+              </span>
+              {' '}
+              {stat.description.split(' ').slice(2).join(' ')}
+            </p>
           </div>
         </div>
       </motion.div>
