@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useInView, useMotionValue, useSpring } from 'motion/react';
+import { useInView, useMotionValue, useSpring, useReducedMotion } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
 
@@ -26,10 +26,12 @@ export function NumberTicker({
 }: NumberTickerProps): React.JSX.Element {
   const ref = React.useRef<HTMLSpanElement>(null);
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const shouldReduceMotion = useReducedMotion();
   const motionValue = useMotionValue(direction === 'down' ? value : 0);
+  // Faster spring for snappier animation
   const springValue = useSpring(motionValue, {
-    damping: 60,
-    stiffness: 100
+    damping: 50,
+    stiffness: 120
   });
   const isInView = useInView(ref, { once: true, margin: '0px' });
   const formatter = React.useMemo(
@@ -43,6 +45,17 @@ export function NumberTicker({
 
   React.useEffect(() => {
     if (!isInView) return;
+
+    // If reduced motion, show final value immediately
+    if (shouldReduceMotion) {
+      if (ref.current) {
+        ref.current.textContent = formatter.format(
+          Number((direction === 'down' ? 0 : value).toFixed(decimalPlaces))
+        );
+      }
+      return;
+    }
+
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -56,18 +69,18 @@ export function NumberTicker({
         timeoutRef.current = null;
       }
     };
-  }, [motionValue, isInView, delay, value, direction]);
+  }, [motionValue, isInView, delay, value, direction, shouldReduceMotion, formatter, decimalPlaces]);
 
   React.useEffect(
     () =>
       springValue.on('change', (latest) => {
-        if (ref.current) {
+        if (ref.current && !shouldReduceMotion) {
           ref.current.textContent = formatter.format(
             Number(latest.toFixed(decimalPlaces))
           );
         }
       }),
-    [springValue, decimalPlaces, formatter]
+    [springValue, decimalPlaces, formatter, shouldReduceMotion]
   );
 
   return (
@@ -76,7 +89,7 @@ export function NumberTicker({
       className={cn('inline-block tabular-nums tracking-wider', className)}
       {...other}
     >
-      0
+      {shouldReduceMotion ? formatter.format(Number((direction === 'down' ? 0 : value).toFixed(decimalPlaces))) : '0'}
     </span>
   );
 }

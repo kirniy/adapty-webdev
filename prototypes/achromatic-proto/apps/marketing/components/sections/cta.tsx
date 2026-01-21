@@ -53,14 +53,14 @@ function AnimatedButton({
       className="relative"
     >
       {/* Glow effect for primary button */}
-      {variant === 'default' && (
+      {variant === 'default' && !shouldReduceMotion && (
         <motion.div
           className="absolute inset-0 -z-10 rounded-xl bg-primary/30 blur-xl"
           animate={{
             opacity: isHovered ? 0.6 : 0,
-            scale: isHovered ? 1.1 : 1,
+            scale: isHovered ? 1.08 : 1,
           }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
         />
       )}
       <Link
@@ -68,15 +68,15 @@ function AnimatedButton({
         target="_blank"
         className={cn(
           buttonVariants({ variant, size: 'lg' }),
-          'rounded-xl px-8 transition-all duration-200',
+          'rounded-xl px-8 transition-all duration-150 ease-out motion-reduce:transition-none',
           variant === 'default' && 'shadow-lg hover:shadow-xl',
           className
         )}
       >
         {children}
         <motion.span
-          animate={{ x: isHovered ? 4 : 0 }}
-          transition={{ type: 'spring', duration: 0.15, bounce: 0.3 }}
+          animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }}
+          transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
         >
           <ArrowRightIcon className="ml-2 size-4" />
         </motion.span>
@@ -88,31 +88,31 @@ function AnimatedButton({
 // Animated value prop with stagger
 function ValueProp({ prop, index }: { prop: string; index: number }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{
-        type: 'spring',
-        duration: 0.4,
-        delay: 0.3 + index * 0.08,
-        bounce: 0,
+      transition={shouldReduceMotion ? undefined : {
+        duration: 0.25,
+        delay: 0.2 + index * 0.05,
+        ease: [0.32, 0.72, 0, 1],
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="flex items-center gap-2 text-sm text-muted-foreground"
     >
       <motion.div
-        animate={{
-          scale: isHovered ? 1.2 : 1,
+        animate={shouldReduceMotion ? undefined : {
+          scale: isHovered ? 1.1 : 1,
           backgroundColor: isHovered ? 'rgb(var(--primary))' : 'transparent',
         }}
-        transition={{ type: 'spring', duration: 0.2, bounce: 0.3 }}
+        transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
         className="flex size-5 items-center justify-center rounded-full border border-primary/30"
       >
         <CheckIcon className={cn(
-          'size-3 transition-colors duration-200',
+          'size-3 transition-colors duration-150 motion-reduce:transition-none',
           isHovered ? 'text-primary-foreground' : 'text-primary'
         )} />
       </motion.div>
@@ -124,21 +124,22 @@ function ValueProp({ prop, index }: { prop: string; index: number }) {
 // Animated stat counter
 function AnimatedStat({ value, label }: { value: string; label: string }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
       className="text-center cursor-default"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ scale: 1.05 }}
-      transition={{ type: 'spring', duration: 0.25, bounce: 0.2 }}
+      whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
+      transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
     >
       <motion.div
         className="text-2xl font-bold text-foreground"
-        animate={{
+        animate={shouldReduceMotion ? undefined : {
           color: isHovered ? 'hsl(var(--primary))' : 'hsl(var(--foreground))',
         }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
       >
         {value}
       </motion.div>

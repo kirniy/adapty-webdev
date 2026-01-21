@@ -21,7 +21,7 @@ import {
   ShieldCheckIcon,
   SmartphoneIcon
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@workspace/ui/components/card';
@@ -132,11 +132,13 @@ const FEATURE_TABS = [
 ];
 
 function FeatureCard({ feature, index }: { feature: typeof FEATURE_TABS[0]['features'][0]; index: number }) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1 + index * 0.1 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 15 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      transition={{ delay: shouldReduceMotion ? 0 : 0.05 + index * 0.05, duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
       className="flex gap-4 rounded-lg border bg-card p-4 transition-colors hover:bg-accent/50"
     >
       <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
@@ -151,11 +153,13 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURE_TABS[0]['feat
 }
 
 function StatItem({ stat, index }: { stat: { value: string; label: string }; index: number }) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.3 + index * 0.1 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+      transition={{ delay: shouldReduceMotion ? 0 : 0.15 + index * 0.05, duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
       className="text-center"
     >
       <div className="text-2xl font-bold text-primary">{stat.value}</div>
@@ -169,6 +173,7 @@ export function FeaturesTabbed(): React.JSX.Element {
   const activeFeature = FEATURE_TABS.find(t => t.id === activeTab) ?? FEATURE_TABS[0];
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -216,10 +221,10 @@ export function FeaturesTabbed(): React.JSX.Element {
             {FEATURE_TABS.map((tab) => (
               <TabsContent key={tab.id} value={tab.id} className="m-0">
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                  animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -20 }}
+                  transition={{ duration: shouldReduceMotion ? 0.15 : 0.3, ease: [0.32, 0.72, 0, 1] }}
                   className="grid gap-8 lg:grid-cols-2 lg:gap-12"
                 >
                   {/* Left: Content */}
@@ -257,9 +262,9 @@ export function FeaturesTabbed(): React.JSX.Element {
                   {/* Right: Image */}
                   <div className="relative">
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.2, duration: 0.4 }}
+                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+                      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+                      transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
                       className={cn(
                         "overflow-hidden rounded-xl border bg-card shadow-lg",
                         monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"

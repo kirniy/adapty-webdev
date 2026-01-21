@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
 
@@ -40,9 +40,10 @@ const DATA = [
 
 function StatCard({ stat, index }: { stat: typeof DATA[0]; index: number }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <BlurFade delay={0.1 + index * 0.1}>
+    <BlurFade delay={shouldReduceMotion ? 0 : 0.05 + index * 0.05}>
       <motion.div
         className={cn(
           'flex flex-col items-center justify-center p-6 text-center lg:p-8 cursor-default',
@@ -51,13 +52,13 @@ function StatCard({ stat, index }: { stat: typeof DATA[0]; index: number }) {
         )}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        whileHover={{ y: -2 }}
-        transition={{ duration: 0.2 }}
+        whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+        transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
       >
         <motion.p
           className="whitespace-nowrap text-3xl font-bold md:text-4xl"
-          animate={{ scale: isHovered ? 1.02 : 1 }}
-          transition={{ duration: 0.15 }}
+          animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.02 : 1 }}
+          transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
         >
           <span className="text-primary">
             {stat.prefix}
@@ -67,8 +68,8 @@ function StatCard({ stat, index }: { stat: typeof DATA[0]; index: number }) {
         </motion.p>
         <motion.p
           className="mt-2 whitespace-nowrap text-sm text-muted-foreground"
-          animate={{ opacity: isHovered ? 1 : 0.7 }}
-          transition={{ duration: 0.15 }}
+          animate={shouldReduceMotion ? undefined : { opacity: isHovered ? 1 : 0.7 }}
+          transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
         >
           {stat.description}
         </motion.p>

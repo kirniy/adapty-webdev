@@ -4,7 +4,7 @@ import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRightIcon, LinkedinIcon, TwitterIcon } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { cn } from '@workspace/ui/lib/utils';
@@ -46,22 +46,23 @@ const TEAM_MEMBERS = [
 
 function TeamMemberCard({ member, index }: { member: typeof TEAM_MEMBERS[0]; index: number }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <BlurFade delay={0.1 + index * 0.1}>
+    <BlurFade delay={shouldReduceMotion ? 0 : 0.05 + index * 0.05}>
       <motion.div
         className="group relative flex flex-col rounded-2xl border bg-card overflow-hidden cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.25 }}
+        whileHover={shouldReduceMotion ? undefined : { y: -3 }}
+        transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
       >
         {/* Image section with gradient overlay */}
         <div className="relative h-64 overflow-hidden">
           <motion.div
             className="absolute inset-0"
-            animate={{ scale: isHovered ? 1.05 : 1 }}
-            transition={{ duration: 0.4 }}
+            animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.03 : 1 }}
+            transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
           >
             <Image
               src={member.image}
@@ -76,18 +77,18 @@ function TeamMemberCard({ member, index }: { member: typeof TEAM_MEMBERS[0]; ind
           {/* Social links - appear on hover */}
           <motion.div
             className="absolute top-4 right-4 flex gap-2"
-            animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : -8 }}
-            transition={{ duration: 0.2 }}
+            animate={shouldReduceMotion ? { opacity: isHovered ? 1 : 0 } : { opacity: isHovered ? 1 : 0, y: isHovered ? 0 : -6 }}
+            transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
           >
             <Link
               href={member.twitter}
-              className="flex size-8 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="flex size-8 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors duration-150 ease-out motion-reduce:transition-none"
             >
               <TwitterIcon className="size-4" />
             </Link>
             <Link
               href={member.linkedin}
-              className="flex size-8 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="flex size-8 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors duration-150 ease-out motion-reduce:transition-none"
             >
               <LinkedinIcon className="size-4" />
             </Link>
@@ -125,12 +126,14 @@ function TeamMemberCard({ member, index }: { member: typeof TEAM_MEMBERS[0]; ind
 }
 
 export function StoryTeam(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
       <div className="container py-16 lg:py-24 relative z-10">
         {/* Section Header */}
-        <BlurFade className="mb-12">
+        <BlurFade delay={shouldReduceMotion ? 0 : 0.05} className="mb-12">
           <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
             <div>
               <Badge variant="outline" className="mb-4 rounded-full">
@@ -144,7 +147,7 @@ export function StoryTeam(): React.JSX.Element {
             </div>
             <Link
               href="/about"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground lg:mt-0"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors duration-150 ease-out hover:text-foreground lg:mt-0 motion-reduce:transition-none"
             >
               Meet the full team
               <ArrowRightIcon className="size-4" />
@@ -160,7 +163,7 @@ export function StoryTeam(): React.JSX.Element {
         </div>
 
         {/* Bottom text */}
-        <BlurFade delay={0.5} className="mt-12 text-center">
+        <BlurFade delay={shouldReduceMotion ? 0 : 0.2} className="mt-12 text-center">
           <p className="text-muted-foreground max-w-2xl mx-auto">
             We&apos;re a team of 50+ engineers, designers, and app developers
             spread across 12 countries, united by our passion for building

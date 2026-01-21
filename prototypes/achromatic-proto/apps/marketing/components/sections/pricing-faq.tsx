@@ -124,7 +124,7 @@ export function PricingFAQ(): React.JSX.Element {
               Have questions about our pricing or plans?{' '}
               <Link
                 href={routes.marketing.Contact}
-                className="font-normal text-inherit underline hover:text-foreground"
+                className="font-normal text-inherit underline transition-colors duration-150 ease-out hover:text-foreground motion-reduce:transition-none"
               >
                 Contact us
               </Link>{' '}

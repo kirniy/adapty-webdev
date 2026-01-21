@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { allPosts } from 'content-collections';
 import { format, isBefore } from 'date-fns';
 import { ArrowRightIcon, CalendarIcon, ClockIcon } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { baseUrl } from '@workspace/routes';
 import {
@@ -24,23 +24,24 @@ import { getInitials } from '~/lib/formatters';
 // Featured card - larger, more prominent
 function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <BlurFade delay={0.1}>
+    <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
       <Link href={`${baseUrl.Marketing}${post.slug}`}>
         <motion.article
           className="group relative flex flex-col rounded-2xl border bg-card overflow-hidden cursor-pointer lg:flex-row"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          whileHover={{ y: -4 }}
-          transition={{ duration: 0.25 }}
+          whileHover={shouldReduceMotion ? undefined : { y: -3 }}
+          transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
         >
           {/* Image */}
           <div className="relative h-48 lg:h-auto lg:w-2/5 overflow-hidden">
             <motion.div
               className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5"
-              animate={{ opacity: isHovered ? 0.8 : 1 }}
-              transition={{ duration: 0.3 }}
+              animate={shouldReduceMotion ? undefined : { opacity: isHovered ? 0.8 : 1 }}
+              transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-6xl font-bold text-primary/10">
@@ -88,8 +89,8 @@ function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
 
               <motion.div
                 className="flex items-center gap-2 text-sm font-medium text-primary"
-                animate={{ x: isHovered ? 4 : 0 }}
-                transition={{ duration: 0.2 }}
+                animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }}
+                transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
               >
                 Read article
                 <ArrowRightIcon className="size-4" />
@@ -105,16 +106,17 @@ function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
 // Smaller card for secondary posts
 function SmallCard({ post, index }: { post: typeof allPosts[0]; index: number }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <BlurFade delay={0.2 + index * 0.05}>
+    <BlurFade delay={shouldReduceMotion ? 0 : 0.1 + index * 0.05}>
       <Link href={`${baseUrl.Marketing}${post.slug}`}>
         <motion.article
           className="group flex h-full flex-col rounded-xl border bg-card p-5 cursor-pointer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          whileHover={{ y: -2 }}
-          transition={{ duration: 0.2 }}
+          whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+          transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
         >
           {/* Category */}
           <div className="mb-2">
@@ -138,8 +140,8 @@ function SmallCard({ post, index }: { post: typeof allPosts[0]; index: number })
             </time>
             <motion.div
               className="text-muted-foreground"
-              animate={{ x: isHovered ? 4 : 0, opacity: isHovered ? 1 : 0.5 }}
-              transition={{ duration: 0.2 }}
+              animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0, opacity: isHovered ? 1 : 0.5 }}
+              transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
             >
               <ArrowRightIcon className="size-4" />
             </motion.div>
@@ -179,7 +181,7 @@ export function BlogPostsFeatured(): React.JSX.Element {
             </div>
             <Link
               href="/blog"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground lg:mt-0"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors duration-150 ease-out hover:text-foreground lg:mt-0 motion-reduce:transition-none"
             >
               View all posts
               <ArrowRightIcon className="size-4" />

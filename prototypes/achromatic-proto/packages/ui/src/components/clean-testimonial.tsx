@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useCallback, useRef, useEffect } from "react"
-import { motion, useMotionValue, useSpring, AnimatePresence } from "motion/react"
+import { motion, useMotionValue, useSpring, AnimatePresence, useReducedMotion } from "motion/react"
 
 export interface TestimonialItem {
   quote: string
@@ -51,20 +51,25 @@ function usePreloadImages(images: string[]) {
   }, [images])
 }
 
-function SplitText({ text }: { text: string }) {
+function SplitText({ text, shouldReduceMotion }: { text: string; shouldReduceMotion: boolean | null }) {
   const words = text.split(" ")
+
+  // If reduced motion, show all text at once
+  if (shouldReduceMotion) {
+    return <span className="inline">{text}</span>
+  }
 
   return (
     <span className="inline">
       {words.map((word, i) => (
         <motion.span
           key={i}
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.4,
-            delay: i * 0.03,
-            ease: [0.22, 1, 0.36, 1],
+            duration: 0.3,
+            delay: i * 0.02,
+            ease: [0.32, 0.72, 0, 1],
           }}
           className="inline-block mr-[0.25em]"
         >
@@ -79,6 +84,7 @@ export function CleanTestimonial({ testimonials = defaultTestimonials, className
   const [activeIndex, setActiveIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const shouldReduceMotion = useReducedMotion()
 
   usePreloadImages(testimonials.map((t) => t.avatar))
 
@@ -109,56 +115,58 @@ export function CleanTestimonial({ testimonials = defaultTestimonials, className
     <div
       ref={containerRef}
       className={`relative w-full ${className || ''}`}
-      style={{ cursor: "none" }}
-      onMouseMove={handleMouseMove}
+      style={{ cursor: shouldReduceMotion ? "pointer" : "none" }}
+      onMouseMove={shouldReduceMotion ? undefined : handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleNext}
     >
       {/* Custom magnetic cursor - in outer container for full-width tracking */}
-      <motion.div
-        className="pointer-events-none absolute z-50 mix-blend-difference"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      >
+      {!shouldReduceMotion && (
         <motion.div
-          className="rounded-full bg-foreground flex items-center justify-center"
-          animate={{
-            width: isHovered ? 80 : 0,
-            height: isHovered ? 80 : 0,
-            opacity: isHovered ? 1 : 0,
+          className="pointer-events-none absolute z-50 mix-blend-difference"
+          style={{
+            x: cursorX,
+            y: cursorY,
+            translateX: "-50%",
+            translateY: "-50%",
           }}
-          transition={{ type: "spring", damping: 20, stiffness: 200 }}
         >
-          <motion.span
-            className="text-background text-xs font-medium tracking-wider uppercase"
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ delay: 0.1 }}
+          <motion.div
+            className="rounded-full bg-foreground flex items-center justify-center"
+            animate={{
+              width: isHovered ? 80 : 0,
+              height: isHovered ? 80 : 0,
+              opacity: isHovered ? 1 : 0,
+            }}
+            transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
           >
-            Next
-          </motion.span>
+            <motion.span
+              className="text-background text-xs font-medium tracking-wider uppercase"
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.1 }}
+            >
+              Next
+            </motion.span>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
 
       {/* Inner content wrapper - constrained width with all visual elements */}
       <div className="relative max-w-3xl mx-auto py-16 px-8">
         {/* Floating index indicator */}
         <motion.div
           className="absolute top-8 right-8 flex items-baseline gap-1 text-xs"
-          initial={{ opacity: 0 }}
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          transition={shouldReduceMotion ? undefined : { delay: 0.3 }}
         >
           <motion.span
             className="text-2xl font-light text-foreground"
             key={activeIndex}
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.3 }}
+            initial={shouldReduceMotion ? { opacity: 1 } : { y: 8, opacity: 0 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
+            transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
           >
             {String(activeIndex + 1).padStart(2, "0")}
           </motion.span>
@@ -169,9 +177,9 @@ export function CleanTestimonial({ testimonials = defaultTestimonials, className
         {/* Stacked avatar previews for other testimonials */}
         <motion.div
           className="absolute top-8 left-8 flex -space-x-2"
-          initial={{ opacity: 0 }}
+          initial={shouldReduceMotion ? { opacity: 0.6 } : { opacity: 0 }}
           animate={{ opacity: 0.6 }}
-          transition={{ delay: 0.6 }}
+          transition={shouldReduceMotion ? undefined : { delay: 0.4 }}
         >
           {testimonials.map((t, i) => (
             <motion.div
@@ -179,7 +187,7 @@ export function CleanTestimonial({ testimonials = defaultTestimonials, className
               className={`w-6 h-6 rounded-full border-2 border-background overflow-hidden transition-all duration-300 ${
                 i === activeIndex ? "ring-1 ring-accent ring-offset-1 ring-offset-background" : "grayscale opacity-50"
               }`}
-              whileHover={{ scale: 1.1, opacity: 1 }}
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.05, opacity: 1 }}
             >
               <img src={t.avatar || "/placeholder.svg"} alt={t.author} className="w-full h-full object-cover" />
             </motion.div>
@@ -193,23 +201,23 @@ export function CleanTestimonial({ testimonials = defaultTestimonials, className
               key={activeIndex}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0.2 } }}
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
               className="text-2xl md:text-3xl lg:text-4xl font-light leading-relaxed tracking-tight text-foreground"
             >
-              <SplitText text={currentTestimonial.quote} />
+              <SplitText text={currentTestimonial.quote} shouldReduceMotion={shouldReduceMotion} />
             </motion.blockquote>
           </AnimatePresence>
 
           {/* Author with reveal line */}
-          <motion.div className="mt-12 relative" layout>
+          <motion.div className="mt-12 relative" layout={!shouldReduceMotion}>
             <div className="flex items-center gap-4">
               {/* Avatar container with all images stacked */}
               <div className="relative w-12 h-12">
                 <motion.div
                   className="absolute -inset-1.5 rounded-full border border-accent/40"
-                  initial={{ opacity: 0 }}
+                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
+                  transition={shouldReduceMotion ? undefined : { duration: 0.3 }}
                 />
                 {testimonials.map((t, i) => (
                   <motion.img
@@ -221,7 +229,7 @@ export function CleanTestimonial({ testimonials = defaultTestimonials, className
                       opacity: i === activeIndex ? 1 : 0,
                       zIndex: i === activeIndex ? 1 : 0,
                     }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: [0.32, 0.72, 0, 1] }}
                   />
                 ))}
               </div>
@@ -231,16 +239,16 @@ export function CleanTestimonial({ testimonials = defaultTestimonials, className
                 <motion.div
                   key={activeIndex}
                   className="relative pl-4"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
-                  transition={{ duration: 0.3 }}
+                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -8 }}
+                  animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 8 }}
+                  transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
                 >
                   <motion.div
                     className="absolute left-0 top-0 bottom-0 w-px bg-accent"
-                    initial={{ scaleY: 0 }}
+                    initial={shouldReduceMotion ? { scaleY: 1 } : { scaleY: 0 }}
                     animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.25, delay: 0.05, ease: [0.32, 0.72, 0, 1] }}
                     style={{ originY: 0 }}
                   />
                   <span className="block text-sm font-medium text-foreground tracking-wide">
@@ -260,7 +268,7 @@ export function CleanTestimonial({ testimonials = defaultTestimonials, className
               className="absolute inset-y-0 left-0 bg-accent"
               initial={{ width: "0%" }}
               animate={{ width: `${((activeIndex + 1) / testimonials.length) * 100}%` }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.35, ease: [0.32, 0.72, 0, 1] }}
             />
           </div>
         </div>
@@ -268,9 +276,9 @@ export function CleanTestimonial({ testimonials = defaultTestimonials, className
         {/* Keyboard hint */}
         <motion.div
           className="absolute bottom-8 left-8 flex items-center gap-2"
-          initial={{ opacity: 0 }}
+          initial={shouldReduceMotion ? { opacity: 0.2 } : { opacity: 0 }}
           animate={{ opacity: isHovered ? 0.4 : 0.2 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2 }}
         >
           <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Click anywhere</span>
         </motion.div>

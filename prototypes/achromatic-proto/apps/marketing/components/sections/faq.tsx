@@ -55,6 +55,7 @@ const DATA = [
 // Animated link with arrow micro-interaction
 function AnimatedLink({ href, children }: { href: string; children: React.ReactNode }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <Link
@@ -62,12 +63,12 @@ function AnimatedLink({ href, children }: { href: string; children: React.ReactN
       target="_blank"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+      className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors duration-150 ease-out hover:text-foreground motion-reduce:transition-none"
     >
       {children}
       <motion.span
-        animate={{ x: isHovered ? 4 : 0 }}
-        transition={{ type: 'spring', duration: 0.15, bounce: 0.3 }}
+        animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }}
+        transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
       >
         <ArrowRightIcon className="size-4" />
       </motion.span>
@@ -84,7 +85,7 @@ export function FAQ(): React.JSX.Element {
       <div className="container py-16 lg:py-24 relative z-10">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Left column - Header */}
-          <BlurFade className="text-center lg:text-left lg:sticky lg:top-24 lg:self-start">
+          <BlurFade delay={shouldReduceMotion ? 0 : 0.05} className="text-center lg:text-left lg:sticky lg:top-24 lg:self-start">
             <Badge variant="outline" className="mb-4 rounded-full">
               FAQ
             </Badge>
@@ -107,31 +108,30 @@ export function FAQ(): React.JSX.Element {
           </BlurFade>
 
           {/* Right column - Accordion with enhanced animations */}
-          <BlurFade delay={0.1}>
+          <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
             <div className="rounded-xl border bg-card p-1">
               <Accordion type="single" collapsible className="w-full">
                 {DATA.map((faq, index) => (
                   <motion.div
                     key={index}
-                    initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 8 }}
+                    initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{
-                      type: 'spring',
-                      delay: index * 0.04,
-                      duration: 0.3,
-                      bounce: 0,
+                    transition={shouldReduceMotion ? undefined : {
+                      delay: index * 0.03,
+                      duration: 0.25,
+                      ease: [0.32, 0.72, 0, 1],
                     }}
                   >
                     <AccordionItem
                       value={index.toString()}
-                      className="border-b-0 px-4 [&[data-state=open]]:bg-muted/30 rounded-lg transition-all duration-200 hover:bg-muted/20"
+                      className="border-b-0 px-4 [&[data-state=open]]:bg-muted/30 rounded-lg transition-colors duration-150 ease-out hover:bg-muted/20 motion-reduce:transition-none"
                     >
                       <AccordionTrigger className="text-left text-base py-4 hover:no-underline group">
                         <motion.span
                           className="flex-1"
-                          whileHover={shouldReduceMotion ? undefined : { x: 4 }}
-                          transition={{ type: 'spring', duration: 0.15, bounce: 0.3 }}
+                          whileHover={shouldReduceMotion ? undefined : { x: 3 }}
+                          transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
                         >
                           {faq.question}
                         </motion.span>

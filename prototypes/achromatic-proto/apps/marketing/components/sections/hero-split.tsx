@@ -11,7 +11,7 @@ import {
   LayoutIcon,
   PlayIcon
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
@@ -36,11 +36,13 @@ function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
 }
 
 function HeroPill(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ filter: 'blur(10px)', opacity: 0, x: -20 }}
-      animate={{ filter: 'blur(0px)', opacity: 1, x: 0 }}
-      transition={{ duration: 0.8 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+      transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
       className="flex items-center justify-start"
     >
       <Link href="https://adapty.io/ebooks/100k-app-playbook/">
@@ -72,11 +74,13 @@ function HeroPill(): React.JSX.Element {
 }
 
 function HeroTitle(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ filter: 'blur(10px)', opacity: 0, x: -20 }}
-      animate={{ filter: 'blur(0px)', opacity: 1, x: 0 }}
-      transition={{ delay: 0.15, duration: 0.4 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+      transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
     >
       <h1 className="text-left text-[40px] font-bold leading-[46px] tracking-[-1px] [font-kerning:none] sm:text-[48px] sm:leading-[54px] md:text-[56px] md:leading-[60px] lg:text-[64px] lg:leading-[68px] lg:tracking-[-1.5px]">
         Revenue management
@@ -87,11 +91,13 @@ function HeroTitle(): React.JSX.Element {
 }
 
 function HeroDescription(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.p
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.3, duration: 0.4 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+      transition={{ delay: shouldReduceMotion ? 0 : 0.2, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
       className="max-w-[480px] text-pretty text-left text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl"
     >
       Save months on integrating subscriptions and double your app revenue with paywall management.
@@ -100,11 +106,13 @@ function HeroDescription(): React.JSX.Element {
 }
 
 function HeroButtons(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.45, duration: 0.4 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+      transition={{ delay: shouldReduceMotion ? 0 : 0.3, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
       className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
     >
       <Link
@@ -136,11 +144,13 @@ function HeroButtons(): React.JSX.Element {
 }
 
 function HeroStats(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6, duration: 0.4 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      transition={{ delay: shouldReduceMotion ? 0 : 0.4, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
       className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 pt-4 text-sm text-muted-foreground"
     >
       <div className="flex items-center gap-2">
@@ -162,12 +172,13 @@ function HeroStats(): React.JSX.Element {
 function HeroIllustration(): React.JSX.Element {
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.3, duration: 0.5 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+      transition={{ delay: shouldReduceMotion ? 0 : 0.2, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
       className="relative w-full"
     >
       <UnderlinedTabs defaultValue="feature1">

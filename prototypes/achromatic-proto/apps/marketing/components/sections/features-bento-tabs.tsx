@@ -23,7 +23,7 @@ import {
   SparklesIcon,
   LineChartIcon
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { cn } from '@workspace/ui/lib/utils';
@@ -138,12 +138,13 @@ const FEATURE_TABS: FeatureTab[] = [
 function FeatureCard({ feature, index, compact = false }: { feature: FeatureItem; index: number; compact?: boolean }) {
   const [isHovered, setIsHovered] = React.useState(false);
   const Icon = feature.icon;
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1 + index * 0.05, duration: 0.3 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 15 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      transition={{ delay: shouldReduceMotion ? 0 : 0.05 + index * 0.05, duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
       className={cn(
         'group flex gap-4 rounded-xl border bg-card p-4 transition-all duration-200 cursor-pointer',
         isHovered && 'border-primary/30 shadow-md',
@@ -157,7 +158,7 @@ function FeatureCard({ feature, index, compact = false }: { feature: FeatureItem
           'flex shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary',
           compact ? 'size-9' : 'size-10'
         )}
-        animate={{ scale: isHovered ? 1.05 : 1 }}
+        animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.05 : 1 }}
         transition={{ duration: 0.15 }}
       >
         <Icon className={compact ? 'size-4' : 'size-5'} />
@@ -182,6 +183,7 @@ function FeatureImage({ tab, className }: { tab: FeatureTab; className?: string 
   const [isHovered, setIsHovered] = React.useState(false);
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
@@ -192,13 +194,13 @@ function FeatureImage({ tab, className }: { tab: FeatureTab; className?: string 
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.15, duration: 0.4 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+      transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
     >
       <motion.div
-        animate={{ scale: isHovered ? 1.02 : 1 }}
-        transition={{ duration: 0.3 }}
+        animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.02 : 1 }}
+        transition={{ duration: 0.25 }}
       >
         <Image
           src={getImagePath(tab.image, imageSet)}
@@ -293,6 +295,7 @@ function LayoutBentoGrid({ tab }: { tab: FeatureTab }) {
   const [hoveredCard, setHoveredCard] = React.useState<string | null>(null);
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-2">
@@ -302,9 +305,9 @@ function LayoutBentoGrid({ tab }: { tab: FeatureTab }) {
           "lg:col-span-8 lg:row-span-2 overflow-hidden rounded-xl border bg-card shadow-lg",
           monochromeMode && 'grayscale hover:grayscale-0 transition-[filter] duration-500'
         )}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+        transition={{ duration: shouldReduceMotion ? 0.15 : 0.35, ease: [0.32, 0.72, 0, 1] }}
       >
         <div className="p-5 pb-0">
           <p className="text-sm font-medium text-primary mb-1">{tab.tagline}</p>
@@ -341,16 +344,16 @@ function LayoutBentoGrid({ tab }: { tab: FeatureTab }) {
               'lg:col-span-4 flex flex-col gap-2 rounded-xl border bg-card p-4 transition-all duration-200 cursor-pointer',
               isHovered && 'border-primary/30 shadow-md'
             )}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 + index * 0.05, duration: 0.3 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 15 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={{ delay: shouldReduceMotion ? 0 : 0.1 + index * 0.05, duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
             onMouseEnter={() => setHoveredCard(feature.id)}
             onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="flex items-start justify-between">
               <motion.div
                 className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary"
-                animate={{ scale: isHovered ? 1.05 : 1 }}
+                animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.05 : 1 }}
                 transition={{ duration: 0.15 }}
               >
                 <Icon className="size-4" />
@@ -416,6 +419,7 @@ function TabContent({ tab }: { tab: FeatureTab }) {
 export function FeaturesBentoTabs(): React.JSX.Element {
   const [activeTab, setActiveTab] = React.useState(FEATURE_TABS[0].id);
   const activeFeature = FEATURE_TABS.find(t => t.id === activeTab) ?? FEATURE_TABS[0];
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -458,10 +462,10 @@ export function FeaturesBentoTabs(): React.JSX.Element {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeFeature.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -20 }}
+            transition={{ duration: shouldReduceMotion ? 0.15 : 0.3, ease: [0.32, 0.72, 0, 1] }}
           >
             <TabContent tab={activeFeature} />
 

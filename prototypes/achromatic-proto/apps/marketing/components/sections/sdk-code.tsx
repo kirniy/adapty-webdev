@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import {
   ArrowRightIcon,
   CopyIcon,
@@ -183,6 +183,7 @@ function CodeBlock({ code, language }: { code: string; language: string }) {
 
 export function SDKCode(): React.JSX.Element {
   const [activeTab, setActiveTab] = React.useState<Language>('swift');
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -191,13 +192,13 @@ export function SDKCode(): React.JSX.Element {
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
-            <BlurFade>
+            <BlurFade delay={shouldReduceMotion ? 0 : 0.05}>
               <Badge variant="outline" className="w-fit rounded-full">
                 Developer-First SDK
               </Badge>
             </BlurFade>
 
-            <BlurFade delay={0.1}>
+            <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
                 10 lines of code.
                 <br />
@@ -205,14 +206,14 @@ export function SDKCode(): React.JSX.Element {
               </h2>
             </BlurFade>
 
-            <BlurFade delay={0.2}>
+            <BlurFade delay={shouldReduceMotion ? 0 : 0.15}>
               <p className="max-w-md text-lg text-muted-foreground">
                 Integrate in-app purchases in minutes with our battle-tested SDKs.
                 Works seamlessly across iOS, Android, React Native, Flutter, and Unity.
               </p>
             </BlurFade>
 
-            <BlurFade delay={0.3}>
+            <BlurFade delay={shouldReduceMotion ? 0 : 0.2}>
               <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2">
                   <CheckIcon className="size-4 text-primary" />
@@ -233,12 +234,12 @@ export function SDKCode(): React.JSX.Element {
               </ul>
             </BlurFade>
 
-            <BlurFade delay={0.4}>
+            <BlurFade delay={shouldReduceMotion ? 0 : 0.25}>
               <div className="flex flex-wrap gap-3 pt-2">
                 <Link
                   href="https://docs.adapty.io/"
                   className={cn(
-                    'inline-flex h-10 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90'
+                    'inline-flex h-10 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground transition-all duration-150 ease-out hover:bg-primary/90 motion-reduce:transition-none'
                   )}
                 >
                   View Documentation
@@ -246,7 +247,7 @@ export function SDKCode(): React.JSX.Element {
                 </Link>
                 <Link
                   href={SDK_SNIPPETS[activeTab].docsUrl}
-                  className="inline-flex h-10 items-center gap-2 rounded-lg border px-4 text-sm font-medium transition-colors hover:bg-accent"
+                  className="inline-flex h-10 items-center gap-2 rounded-lg border px-4 text-sm font-medium transition-all duration-150 ease-out hover:bg-accent motion-reduce:transition-none"
                 >
                   {SDK_SNIPPETS[activeTab].name} SDK Guide
                 </Link>
@@ -255,11 +256,11 @@ export function SDKCode(): React.JSX.Element {
           </div>
 
           {/* Right: Code */}
-          <BlurFade delay={0.2}>
+          <BlurFade delay={shouldReduceMotion ? 0 : 0.15}>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              transition={shouldReduceMotion ? undefined : { delay: 0.2, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
               className="rounded-xl border bg-card shadow-lg overflow-hidden"
             >
               <Tabs
@@ -298,7 +299,7 @@ export function SDKCode(): React.JSX.Element {
         </div>
 
         {/* SDK Platform Links */}
-        <BlurFade delay={0.5}>
+        <BlurFade delay={shouldReduceMotion ? 0 : 0.3}>
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
             <span className="font-medium">Available for:</span>
             {[
@@ -313,7 +314,7 @@ export function SDKCode(): React.JSX.Element {
                 {i > 0 && <span className="text-border">|</span>}
                 <Link
                   href={platform.href}
-                  className="transition-colors hover:text-foreground"
+                  className="transition-colors duration-150 ease-out hover:text-foreground motion-reduce:transition-none"
                 >
                   {platform.name}
                 </Link>

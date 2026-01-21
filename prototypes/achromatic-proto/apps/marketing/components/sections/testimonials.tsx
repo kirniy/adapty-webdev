@@ -99,27 +99,23 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof DATA[0]; 
     : '0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px -1px rgba(0,0,0,0.04), 0 2px 4px 0 rgba(0,0,0,0.02)';
 
   return (
-    <BlurFade delay={0.05 + index * 0.05}>
+    <BlurFade delay={shouldReduceMotion ? 0 : 0.05 + index * 0.05}>
       <motion.div
         className="group flex h-full flex-col rounded-xl border border-border/50 bg-card p-5 cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-        animate={{ boxShadow: cardShadow }}
-        transition={{
-          type: 'spring',
-          duration: 0.3,
-          bounce: 0
-        }}
+        whileHover={shouldReduceMotion ? undefined : { y: -3 }}
+        animate={shouldReduceMotion ? undefined : { boxShadow: cardShadow }}
+        transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
       >
         {/* Metric badge with scale micro-interaction */}
         <motion.div
           className="mb-4 flex items-baseline gap-1.5"
-          animate={{
+          animate={shouldReduceMotion ? undefined : {
             scale: isHovered ? 1.02 : 1,
             opacity: isHovered ? 1 : 0.9
           }}
-          transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+          transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
         >
           <span className="text-2xl font-bold text-primary">{testimonial.metric}</span>
           <span className="text-xs text-muted-foreground">{testimonial.metricLabel}</span>
@@ -135,15 +131,14 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof DATA[0]; 
           {[...Array(5)].map((_, i) => (
             <motion.div
               key={i}
-              animate={{
-                scale: isHovered ? 1.15 : 1,
-                rotate: isHovered ? (i % 2 === 0 ? 8 : -8) : 0
+              animate={shouldReduceMotion ? undefined : {
+                scale: isHovered ? 1.06 : 1,
+                rotate: isHovered ? (i % 2 === 0 ? 3 : -3) : 0
               }}
               transition={{
-                type: 'spring',
-                duration: 0.25,
-                delay: isHovered ? i * 0.03 : 0,
-                bounce: 0.4
+                duration: 0.15,
+                delay: shouldReduceMotion ? 0 : (isHovered ? i * 0.02 : 0),
+                ease: [0.32, 0.72, 0, 1]
               }}
             >
               <Star className="size-3.5 fill-primary/80 text-primary/80" />
@@ -154,11 +149,10 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof DATA[0]; 
         {/* Author */}
         <div className="flex items-center gap-3 pt-4 border-t border-border/50">
           <motion.div
-            animate={{
-              scale: isHovered ? 1.08 : 1,
-              rotate: isHovered ? 3 : 0
+            animate={shouldReduceMotion ? undefined : {
+              scale: isHovered ? 1.05 : 1
             }}
-            transition={{ type: 'spring', duration: 0.25, bounce: 0.2 }}
+            transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
           >
             <Image
               width={36}

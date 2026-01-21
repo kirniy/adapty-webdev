@@ -115,8 +115,9 @@ function RolesSection() {
   switch (variant) {
     case 'off':
       return null;
-    case 'tabs':
     case 'cards':
+    case 'bento':
+    case 'stacked':
     default:
       return <Roles />;
   }

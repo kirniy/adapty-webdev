@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
@@ -28,6 +28,8 @@ const DATA = [
 ];
 
 export function StoryTimeline(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
@@ -41,10 +43,10 @@ export function StoryTimeline(): React.JSX.Element {
             {DATA.map((milestone, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: -20 }}
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -12 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                transition={shouldReduceMotion ? undefined : { duration: 0.3, delay: index * 0.05, ease: [0.32, 0.72, 0, 1] }}
                 className="relative pl-12"
               >
                 <div className="absolute left-0 top-1 flex size-8 items-center justify-center rounded-full border bg-background shadow-sm">

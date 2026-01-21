@@ -40,7 +40,7 @@ export function Logos(): React.JSX.Element {
                 alt={logo.name}
                 width={120}
                 height={48}
-                className="h-8 w-auto object-contain opacity-50 transition-opacity duration-300 hover:opacity-100 dark:invert md:h-10 hover:scale-110"
+                className="h-8 w-auto object-contain opacity-50 transition-all duration-200 ease-out hover:opacity-100 hover:scale-105 dark:invert md:h-10 motion-reduce:transition-none motion-reduce:hover:transform-none"
               />
             </BlurFade>
           ))}

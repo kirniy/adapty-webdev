@@ -4,7 +4,7 @@ import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRightIcon, QuoteIcon } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { cn } from '@workspace/ui/lib/utils';
@@ -64,31 +64,32 @@ const FEATURED = CASE_STUDIES[1]; // SocialKit - impressive metric
 
 function FeaturedTestimonial() {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <BlurFade delay={0.1}>
+    <BlurFade delay={shouldReduceMotion ? 0 : 0.05}>
       <motion.div
         className="group relative rounded-2xl border bg-card p-8 lg:p-12 cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        whileHover={{ y: -2 }}
-        transition={{ duration: 0.2 }}
+        whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+        transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
       >
         {/* Subtle gradient border on hover */}
         <motion.div
           className="absolute inset-0 rounded-2xl border-2 border-primary/0 pointer-events-none"
-          animate={{ borderColor: isHovered ? 'hsl(var(--primary) / 0.2)' : 'hsl(var(--primary) / 0)' }}
-          transition={{ duration: 0.2 }}
+          animate={shouldReduceMotion ? undefined : { borderColor: isHovered ? 'hsl(var(--primary) / 0.2)' : 'hsl(var(--primary) / 0)' }}
+          transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
         />
 
         {/* Quote icon with micro-animation */}
         <motion.div
           className="absolute right-8 top-8"
-          animate={{
+          animate={shouldReduceMotion ? undefined : {
             opacity: isHovered ? 0.15 : 0.05,
-            scale: isHovered ? 1.05 : 1
+            scale: isHovered ? 1.03 : 1
           }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
         >
           <QuoteIcon className="size-16 text-muted-foreground" />
         </motion.div>
@@ -96,8 +97,8 @@ function FeaturedTestimonial() {
         {/* Company logo + Metric - logos are grayscale */}
         <div className="mb-6 flex items-center justify-between">
           <motion.div
-            animate={{ opacity: isHovered ? 1 : 0.7 }}
-            transition={{ duration: 0.2 }}
+            animate={shouldReduceMotion ? undefined : { opacity: isHovered ? 1 : 0.7 }}
+            transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
           >
             <Image
               src={FEATURED.logo}
@@ -109,8 +110,8 @@ function FeaturedTestimonial() {
           </motion.div>
           <motion.div
             className="flex items-baseline gap-1.5 rounded-full border bg-muted/50 px-4 py-2"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.15 }}
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+            transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
           >
             <span className="text-xl font-bold text-primary">{FEATURED.metric}</span>
             <span className="text-sm text-muted-foreground">{FEATURED.metricLabel}</span>
@@ -128,8 +129,8 @@ function FeaturedTestimonial() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.15 }}
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
+              transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
             >
               <Image
                 src={FEATURED.person.image}
@@ -152,8 +153,8 @@ function FeaturedTestimonial() {
           >
             Read story
             <motion.span
-              animate={{ x: isHovered ? 4 : 0 }}
-              transition={{ duration: 0.2 }}
+              animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }}
+              transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
             >
               <ArrowRightIcon className="size-4" />
             </motion.span>
@@ -166,23 +167,24 @@ function FeaturedTestimonial() {
 
 function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index: number }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <BlurFade delay={0.2 + index * 0.1}>
+    <BlurFade delay={shouldReduceMotion ? 0 : 0.1 + index * 0.05}>
       <Link href={study.link}>
         <motion.div
           className="group flex h-full flex-col rounded-xl border bg-card p-6 cursor-pointer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          whileHover={{ y: -2 }}
-          transition={{ duration: 0.2 }}
+          whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+          transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
         >
           {/* Top row: Logo + Metric */}
           <div className="mb-4 flex items-center justify-between">
             {/* Logo - grayscale */}
             <motion.div
-              animate={{ opacity: isHovered ? 1 : 0.6 }}
-              transition={{ duration: 0.2 }}
+              animate={shouldReduceMotion ? undefined : { opacity: isHovered ? 1 : 0.6 }}
+              transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
             >
               <Image
                 src={study.logo}
@@ -208,8 +210,8 @@ function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index:
           <div className="flex items-center justify-between pt-4 border-t border-border/50">
             <div className="flex items-center gap-3">
               <motion.div
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.15 }}
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
+                transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
               >
                 <Image
                   src={study.person.image}
@@ -228,8 +230,8 @@ function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index:
             {/* Arrow indicator */}
             <motion.div
               className="text-muted-foreground"
-              animate={{ x: isHovered ? 4 : 0, opacity: isHovered ? 1 : 0.5 }}
-              transition={{ duration: 0.2 }}
+              animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0, opacity: isHovered ? 1 : 0.5 }}
+              transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
             >
               <ArrowRightIcon className="size-4" />
             </motion.div>

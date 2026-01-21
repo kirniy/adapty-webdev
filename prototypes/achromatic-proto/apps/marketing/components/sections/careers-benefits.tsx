@@ -44,7 +44,7 @@ export function CareersBenefits(): React.JSX.Element {
           {DATA.map((benefit, index) => (
             <div
               key={index}
-              className="border-dashed px-8 py-12 transition-all hover:bg-accent/50 hover:scale-[1.02] duration-300"
+              className="border-dashed px-8 py-12 transition-colors duration-150 ease-out hover:bg-accent/50 motion-reduce:transition-none"
             >
               <div className="mb-7 flex size-12 items-center justify-center rounded-2xl border bg-background shadow">
                 {benefit.icon}

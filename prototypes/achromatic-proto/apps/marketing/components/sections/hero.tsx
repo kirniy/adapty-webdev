@@ -151,7 +151,7 @@ function HeroPill(): React.JSX.Element {
             <motion.div
               className="w-fit py-0.5 text-center text-xs text-blue-500 sm:text-sm"
               animate={{ scale: isHovered ? 1.05 : 1 }}
-              transition={{ type: 'spring', duration: 0.2, bounce: 0.3 }}
+              transition={{ type: 'spring', duration: 0.2, bounce: 0.15 }}
             >
               Free Ebook
             </motion.div>
@@ -159,7 +159,7 @@ function HeroPill(): React.JSX.Element {
             <span className="text-muted-foreground">$100K playbook</span>
             <motion.span
               animate={{ x: isHovered ? 3 : 0 }}
-              transition={{ type: 'spring', duration: 0.15, bounce: 0.3 }}
+              transition={{ type: 'spring', duration: 0.15, bounce: 0.15 }}
             >
               <ChevronRightIcon className="ml-1 size-3 shrink-0 text-muted-foreground" />
             </motion.span>
@@ -346,6 +346,7 @@ function MainDashedGridLines(): React.JSX.Element {
 // Learn more link with arrow animation
 function LearnMoreLink({ href, label }: { href: string; label: string }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <Link
@@ -356,8 +357,8 @@ function LearnMoreLink({ href, label }: { href: string; label: string }) {
     >
       Learn more about {label}
       <motion.span
-        animate={{ x: isHovered ? 4 : 0 }}
-        transition={{ type: 'spring', duration: 0.15, bounce: 0.3 }}
+        animate={{ x: shouldReduceMotion ? 0 : isHovered ? 4 : 0 }}
+        transition={{ type: 'spring', duration: 0.15, bounce: 0.15 }}
       >
         <ArrowRightIcon className="size-4" />
       </motion.span>
@@ -411,8 +412,8 @@ function FeatureTab({
           }}
           transition={{
             type: 'spring',
-            duration: 0.3,
-            bounce: isActive ? 0.4 : 0,
+            duration: 0.25,
+            bounce: isActive ? 0.2 : 0,
           }}
         >
           <Icon className="size-4 shrink-0" />
@@ -460,9 +461,11 @@ function FeatureContent({
 }) {
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
+  const shouldReduceMotion = useReducedMotion();
 
   // Slide direction: entering from right when going forward, from left when going backward
-  const slideOffset = direction === 'right' ? 40 : -40;
+  // Respect reduced motion preference
+  const slideOffset = shouldReduceMotion ? 0 : direction === 'right' ? 40 : -40;
 
   // Alternate layout: odd indexes (1, 3) have image on left, even (0, 2, 4) have image on right
   const isReversed = index % 2 === 1;
@@ -470,12 +473,12 @@ function FeatureContent({
   return (
     <motion.div
       key={feature.id}
-      initial={{ opacity: 0, x: slideOffset, scale: 0.98 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0, x: -slideOffset, scale: 0.98 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: slideOffset, scale: 0.98 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0, scale: 1 }}
+      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -slideOffset, scale: 0.98 }}
       transition={{
-        duration: 0.4,
-        ease: [0.645, 0.045, 0.355, 1], // ease-in-out-cubic
+        duration: shouldReduceMotion ? 0.15 : 0.35,
+        ease: [0.32, 0.72, 0, 1], // ease-out-expo for enter/exit
       }}
       className="grid gap-8 lg:grid-cols-5"
     >
@@ -546,14 +549,14 @@ function FeatureContent({
 
       {/* Image with enhanced hover effect - on mobile always second, on desktop alternates */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
-        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-        transition={{ type: 'spring', delay: 0.08, duration: 0.35, bounce: 0 }}
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+        transition={{ type: 'spring', delay: 0.08, duration: 0.3, bounce: 0 }}
         className={cn(
           "relative lg:col-span-3",
           isReversed && "lg:order-1"
         )}
-        whileHover={{ scale: 1.01 }}
+        whileHover={shouldReduceMotion ? undefined : { scale: 1.01 }}
       >
         <div className={cn(
           "relative overflow-hidden rounded-xl border bg-gradient-to-b from-muted/30 to-muted/10 shadow-lg transition-all hover:shadow-xl",

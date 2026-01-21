@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon, CodeIcon, BarChartIcon, MegaphoneIcon } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
 
@@ -394,6 +394,7 @@ function RolesBento() {
 function RolesStacked() {
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -421,13 +422,13 @@ function RolesStacked() {
             return (
               <motion.div
                 key={role.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
+                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{
-                  duration: 0.6,
-                  ease: [0.22, 1, 0.36, 1],
-                  delay: index * 0.1
+                  duration: shouldReduceMotion ? 0.15 : 0.4,
+                  ease: [0.32, 0.72, 0, 1],
+                  delay: shouldReduceMotion ? 0 : index * 0.08
                 }}
               >
                 <Link
@@ -459,10 +460,10 @@ function RolesStacked() {
                   <div className="flex flex-col p-6 lg:p-10 lg:w-1/2 justify-center">
                     {/* Icon badge with animation */}
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
+                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+                      whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
-                      transition={{ delay: 0.2 + index * 0.1, duration: 0.4 }}
+                      transition={{ delay: shouldReduceMotion ? 0 : 0.15 + index * 0.08, duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
                       className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 w-fit"
                     >
                       <Icon className="size-4" />
@@ -485,10 +486,10 @@ function RolesStacked() {
                       {role.tags.map((tag, tagIndex) => (
                         <motion.span
                           key={tag}
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
+                          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -10 }}
+                          whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
                           viewport={{ once: true }}
-                          transition={{ delay: 0.3 + tagIndex * 0.1, duration: 0.3 }}
+                          transition={{ delay: shouldReduceMotion ? 0 : 0.2 + tagIndex * 0.05, duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted text-sm text-muted-foreground"
                         >
                           <svg className="w-3.5 h-3.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -502,14 +503,7 @@ function RolesStacked() {
                     {/* CTA with arrow animation */}
                     <div className="flex items-center gap-2 text-sm font-medium text-primary group-hover:text-primary/80 transition-colors">
                       <span>Learn more</span>
-                      <motion.span
-                        className="inline-block"
-                        initial={{ x: 0 }}
-                        whileHover={{ x: 4 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                      >
-                        <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
-                      </motion.span>
+                      <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
                     </div>
                   </div>
                 </Link>

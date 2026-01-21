@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { allPosts } from 'content-collections';
 import { format, isBefore } from 'date-fns';
 import { ArrowRightIcon } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { baseUrl } from '@workspace/routes';
 import {
@@ -22,16 +22,17 @@ import { getInitials } from '~/lib/formatters';
 
 function BlogCard({ post, index }: { post: typeof allPosts[0]; index: number }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <BlurFade delay={0.05 + index * 0.05}>
+    <BlurFade delay={shouldReduceMotion ? 0 : 0.05 + index * 0.05}>
       <Link href={`${baseUrl.Marketing}${post.slug}`}>
         <motion.article
           className="group flex h-full flex-col rounded-xl border bg-card p-5 cursor-pointer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          whileHover={{ y: -2 }}
-          transition={{ duration: 0.2 }}
+          whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+          transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
         >
           {/* Category and Date */}
           <div className="mb-3 flex items-center justify-between">
@@ -65,8 +66,8 @@ function BlogCard({ post, index }: { post: typeof allPosts[0]; index: number }) 
 
             <motion.div
               className="text-muted-foreground"
-              animate={{ x: isHovered ? 4 : 0, opacity: isHovered ? 1 : 0.5 }}
-              transition={{ duration: 0.2 }}
+              animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0, opacity: isHovered ? 1 : 0.5 }}
+              transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
             >
               <ArrowRightIcon className="size-4" />
             </motion.div>
@@ -100,7 +101,7 @@ export function BlogPosts(): React.JSX.Element {
             </div>
             <Link
               href="/blog"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground lg:mt-0"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors duration-150 ease-out hover:text-foreground lg:mt-0 motion-reduce:transition-none"
             >
               View all posts
               <ArrowRightIcon className="size-4" />
