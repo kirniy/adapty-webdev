@@ -1,25 +1,28 @@
-import type { Metadata } from 'next';
+'use client';
+
+/**
+ * Integrations Page - Third-party integrations showcase
+ *
+ * Displays 20+ supported integrations for analytics, messaging, and cloud tools.
+ * Helps users create convenient workflows with their existing tools.
+ */
 
 import { IntegrationsHero } from '~/components/sections/integrations-hero';
 import { IntegrationsGrid } from '~/components/sections/integrations-grid';
-import { Logos } from '~/components/sections/logos';
-import { Testimonials } from '~/components/sections/testimonials';
-import { CTA } from '~/components/sections/cta';
-
-export const metadata: Metadata = {
-  title: 'Integrate Adapty with 3rd-party tools and services | Adapty',
-  description:
-    "Adapty supports 20+ integrations of 3rd-party services. Integrate your favorite analytics, messaging, cloud tools to create the most convenient workflow."
-};
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
 export default function IntegrationsPage(): React.JSX.Element {
   return (
     <>
       <IntegrationsHero />
       <IntegrationsGrid />
-      <Logos />
-      <Testimonials />
-      <CTA />
+      <LogosSwitcher />
+      <TestimonialsSwitcher />
+      <CTASwitcher />
     </>
   );
 }

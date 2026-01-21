@@ -1,20 +1,36 @@
-import type { Metadata } from "next";
+'use client';
 
-import { CompareRevenueCat } from "~/components/sections/compare-revenuecat";
-import { CTA } from "~/components/sections/cta";
+import * as React from 'react';
 
-export const metadata: Metadata = {
-  title: "Best RevenueCat Alternative for App Revenue Growth | Adapty",
-  description:
-    "Looking for a RevenueCat alternative? Compare Adapty vs RevenueCat to see why Adapty is the best choice for tracking in-app purchases, subscription analytics, and paywall optimization.",
-};
+import { useFeaturesVariant } from '~/lib/debug-context';
+import { CompareRevenueCat } from '~/components/sections/compare-revenuecat';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-// Page structure matches adapty.io/compare/revenuecat (scraped 2026-01-21)
+// Adapty vs RevenueCat comparison page
 export default function CompareRevenueCatPage(): React.JSX.Element {
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <CompareRevenueCat />
-      <CTA />
+      {/* Feature comparison */}
+      {featuresVariant !== 'off' && <CompareRevenueCat />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

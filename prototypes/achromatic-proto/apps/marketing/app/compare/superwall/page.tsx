@@ -1,20 +1,36 @@
-import type { Metadata } from "next";
+'use client';
 
-import { CompareSuperwall } from "~/components/sections/compare-superwall";
-import { CTA } from "~/components/sections/cta";
+import * as React from 'react';
 
-export const metadata: Metadata = {
-  title: "Superwall Alternative for App Revenue Growth | Adapty",
-  description:
-    "Looking for a Superwall alternative? Compare Adapty vs Superwall to see why Adapty is the best choice for app revenue growth, subscription analytics, and paywall optimization.",
-};
+import { useFeaturesVariant } from '~/lib/debug-context';
+import { CompareSuperwall } from '~/components/sections/compare-superwall';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-// Page structure matches adapty.io/compare/superwall (scraped 2026-01-21)
+// Adapty vs Superwall comparison page
 export default function CompareSuperwallPage(): React.JSX.Element {
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <CompareSuperwall />
-      <CTA />
+      {/* Feature comparison */}
+      {featuresVariant !== 'off' && <CompareSuperwall />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

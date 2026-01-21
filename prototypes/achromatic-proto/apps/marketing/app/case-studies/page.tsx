@@ -1,21 +1,37 @@
-import type { Metadata } from 'next';
+'use client';
 
+import * as React from 'react';
+
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { CaseStudiesHero } from '~/components/sections/case-studies-hero';
 import { CaseStudiesGrid } from '~/components/sections/case-studies-grid';
-import { CTA } from '~/components/sections/cta';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-export const metadata: Metadata = {
-  title: 'Adapty Case Studies and User Stories',
-  description:
-    'Check out the success stories of our clients who managed to achieve high results with the help of Adapty. Learn how easily you can grow too!'
-};
-
+// Case Studies page: Customer success stories
 export default function CaseStudiesPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <CaseStudiesHero />
-      <CaseStudiesGrid />
-      <CTA />
+      {/* Case studies hero */}
+      {heroVariant !== 'off' && <CaseStudiesHero />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Case studies grid */}
+      {featuresVariant !== 'off' && <CaseStudiesGrid />}
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

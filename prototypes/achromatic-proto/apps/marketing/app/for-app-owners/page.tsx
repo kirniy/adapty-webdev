@@ -2,16 +2,16 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant, useLogosVariant, useStatsVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { ForAppOwnersHero } from '~/components/sections/for-app-owners-hero';
 import { ForAppOwnersFeatures } from '~/components/sections/for-app-owners-features';
-import { Logos } from '~/components/sections/logos';
-import { LogosLinear } from '~/components/sections/logos-linear';
-import { LogosMarquee } from '~/components/sections/logos-marquee';
-import { Stats } from '~/components/sections/stats';
-import { Testimonials } from '~/components/sections/testimonials';
-import { CTA } from '~/components/sections/cta';
 import type { ForAppOwnersHeroVariant } from '~/components/sections/for-app-owners-hero';
+import {
+  LogosSwitcher,
+  StatsSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
 // Map global Hero variant to page-specific variants
 function mapHeroVariant(globalVariant: string): ForAppOwnersHeroVariant {
@@ -23,24 +23,30 @@ function mapHeroVariant(globalVariant: string): ForAppOwnersHeroVariant {
   }
 }
 
+// For App Owners page: Business-focused features and metrics
 export default function ForAppOwnersPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
   const featuresVariant = useFeaturesVariant();
-  const logosVariant = useLogosVariant();
-  const statsVariant = useStatsVariant();
-  const testimonialsVariant = useTestimonialsVariant();
-  const ctaVariant = useCtaVariant();
 
   return (
     <>
+      {/* App owner focused hero */}
       {heroVariant !== 'off' && <ForAppOwnersHero variant={mapHeroVariant(heroVariant)} />}
-      {logosVariant === 'linear' && <LogosLinear />}
-      {logosVariant === 'marquee' && <LogosMarquee />}
-      {logosVariant === 'default' && <Logos />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Business features */}
       {featuresVariant !== 'off' && <ForAppOwnersFeatures />}
-      {statsVariant !== 'off' && <Stats />}
-      {testimonialsVariant !== 'off' && <Testimonials />}
-      {ctaVariant !== 'off' && <CTA />}
+
+      {/* Stats - shared switcher (uses orbital, timeline, default) */}
+      <StatsSwitcher />
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

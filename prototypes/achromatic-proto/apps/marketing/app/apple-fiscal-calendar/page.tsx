@@ -1,21 +1,33 @@
-import type { Metadata } from 'next';
+'use client';
 
+import * as React from 'react';
+
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { AppleFiscalCalendarHero } from '~/components/sections/apple-fiscal-calendar-hero';
 import { AppleFiscalCalendarFeatures } from '~/components/sections/apple-fiscal-calendar-features';
-import { CTA } from '~/components/sections/cta';
+import {
+  LogosSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-export const metadata: Metadata = {
-  title: 'Apple Fiscal Calendar and Payment Dates 2026',
-  description:
-    "Plan your finances with Apple's Fiscal Calendar for 2026. Track payment dates and set up Apple payment notifications for the next payout."
-};
-
+// Apple Fiscal Calendar page: Payment dates and calendar
 export default function AppleFiscalCalendarPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <AppleFiscalCalendarHero />
-      <AppleFiscalCalendarFeatures />
-      <CTA />
+      {/* Calendar hero */}
+      {heroVariant !== 'off' && <AppleFiscalCalendarHero />}
+
+      {/* Calendar features */}
+      {featuresVariant !== 'off' && <AppleFiscalCalendarFeatures />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

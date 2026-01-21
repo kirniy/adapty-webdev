@@ -1,19 +1,30 @@
-import * as React from 'react';
-import type { Metadata } from 'next';
+'use client';
 
+import * as React from 'react';
+
+import { useFeaturesVariant, useCtaVariant } from '~/lib/debug-context';
 import { CareersBenefits } from '~/components/sections/careers-benefits';
 import { CareersPositions } from '~/components/sections/careers-positions';
-import { createTitle } from '~/lib/formatters';
+import { TestimonialsSwitcher, FAQSwitcher } from '~/components/sections/section-switchers';
 
-export const metadata: Metadata = {
-  title: createTitle('Careers')
-};
-
+// Careers page: Benefits and open positions
 export default function CareersPage(): React.JSX.Element {
+  const featuresVariant = useFeaturesVariant();
+  const ctaVariant = useCtaVariant();
+
   return (
     <>
-      <CareersBenefits />
-      <CareersPositions />
+      {/* Benefits section (controlled by features variant) */}
+      {featuresVariant !== 'off' && <CareersBenefits />}
+
+      {/* Testimonials - team culture */}
+      <TestimonialsSwitcher />
+
+      {/* Open positions (controlled by CTA variant) */}
+      {ctaVariant !== 'off' && <CareersPositions />}
+
+      {/* FAQ about working here */}
+      <FAQSwitcher />
     </>
   );
 }

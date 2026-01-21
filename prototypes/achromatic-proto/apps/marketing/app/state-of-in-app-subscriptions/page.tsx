@@ -1,21 +1,37 @@
-import type { Metadata } from 'next';
+'use client';
 
+import * as React from 'react';
+
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { StateOfSubscriptionsHero } from '~/components/sections/state-of-subscriptions-hero';
 import { StateOfSubscriptionsFeatures } from '~/components/sections/state-of-subscriptions-features';
-import { CTA } from '~/components/sections/cta';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-export const metadata: Metadata = {
-  title: 'State of In-App Subscriptions 2025 | Adapty Report',
-  description:
-    "Download Adapty's 2025 State of in-app subscriptions report powered by $1.9B in revenue from 15,000+ apps to uncover pricing, monetization & growth benchmarks."
-};
-
+// State of In-App Subscriptions page: Annual industry report
 export default function StateOfInAppSubscriptionsPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <StateOfSubscriptionsHero />
-      <StateOfSubscriptionsFeatures />
-      <CTA />
+      {/* Report hero */}
+      {heroVariant !== 'off' && <StateOfSubscriptionsHero />}
+
+      {/* Report features/highlights */}
+      {featuresVariant !== 'off' && <StateOfSubscriptionsFeatures />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

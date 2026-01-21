@@ -1,25 +1,41 @@
-import type { Metadata } from 'next';
+'use client';
 
+import * as React from 'react';
+
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { PaywallLibraryHero } from '~/components/sections/paywall-library-hero';
 import { PaywallLibraryFeatures } from '~/components/sections/paywall-library-features';
-import { Logos } from '~/components/sections/logos';
-import { Testimonials } from '~/components/sections/testimonials';
-import { CTA } from '~/components/sections/cta';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-export const metadata: Metadata = {
-  title: 'Mobile Paywall Library: 10,000+ App Paywall Examples',
-  description:
-    'Get inspired by 10,000+ app paywalls. Learn how to design the best paywall for your app from top-grossing apps like YouTube, TikTok, and Duolingo.'
-};
-
+// Paywall Library page: 10,000+ paywall examples
 export default function PaywallLibraryPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <PaywallLibraryHero />
-      <PaywallLibraryFeatures />
-      <Logos />
-      <Testimonials />
-      <CTA />
+      {/* Paywall library hero */}
+      {heroVariant !== 'off' && <PaywallLibraryHero />}
+
+      {/* Library features */}
+      {featuresVariant !== 'off' && <PaywallLibraryFeatures />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

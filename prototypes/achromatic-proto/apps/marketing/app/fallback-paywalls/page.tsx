@@ -1,23 +1,41 @@
-import type { Metadata } from "next";
+'use client';
 
-import { FallbackPaywallsHero } from "~/components/sections/fallback-paywalls-hero";
-import { FallbackPaywallsFeatures } from "~/components/sections/fallback-paywalls-features";
-import { Testimonials } from "~/components/sections/testimonials";
-import { CTA } from "~/components/sections/cta";
+import * as React from 'react';
 
-export const metadata: Metadata = {
-  title: "Fallback Paywalls to Ensure 100% Uptime for Your Users | Adapty",
-  description:
-    "Adapty's fallback paywalls guarantee 100% uptime by allowing you to save paywalls offline on-device, ensuring subscriber access even without internet.",
-};
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
+import { FallbackPaywallsHero } from '~/components/sections/fallback-paywalls-hero';
+import { FallbackPaywallsFeatures } from '~/components/sections/fallback-paywalls-features';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
+// Fallback Paywalls page: Offline paywall reliability
 export default function FallbackPaywallsPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <FallbackPaywallsHero />
-      <FallbackPaywallsFeatures />
-      <Testimonials />
-      <CTA />
+      {/* Fallback paywalls hero */}
+      {heroVariant !== 'off' && <FallbackPaywallsHero />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Fallback features */}
+      {featuresVariant !== 'off' && <FallbackPaywallsFeatures />}
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

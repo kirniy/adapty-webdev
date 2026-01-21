@@ -1,19 +1,25 @@
+'use client';
+
 import * as React from 'react';
-import type { Metadata } from 'next';
 
+import { useHeroVariant } from '~/lib/debug-context';
 import { Contact } from '~/components/sections/contact';
-import { FAQ } from '~/components/sections/faq';
-import { createTitle } from '~/lib/formatters';
+import { FAQSwitcher, CTASwitcher } from '~/components/sections/section-switchers';
 
-export const metadata: Metadata = {
-  title: createTitle('Contact')
-};
-
+// Contact page: Contact form with FAQ support
 export default function ContactPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+
   return (
     <>
-      <Contact />
-      <FAQ />
+      {/* Contact form (hero section) */}
+      {heroVariant !== 'off' && <Contact />}
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

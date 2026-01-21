@@ -2,35 +2,41 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant, useLogosVariant, useFaqVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
+import { useHeroVariant, useFeaturesVariant, useFaqVariant } from '~/lib/debug-context';
 import { OnboardingBuilderHero } from '~/components/sections/onboarding-builder-hero';
 import { OnboardingBuilderFeatures } from '~/components/sections/onboarding-builder-features';
 import { OnboardingBuilderFAQ } from '~/components/sections/onboarding-builder-faq';
-import { Logos } from '~/components/sections/logos';
-import { LogosLinear } from '~/components/sections/logos-linear';
-import { LogosMarquee } from '~/components/sections/logos-marquee';
-import { Testimonials } from '~/components/sections/testimonials';
-import { CTA } from '~/components/sections/cta';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-// Page structure matches adapty.io/onboarding-builder (scraped 2026-01-21)
+// Onboarding Builder page: No-code onboarding flow creation
 export default function OnboardingBuilderPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
   const featuresVariant = useFeaturesVariant();
-  const logosVariant = useLogosVariant();
   const faqVariant = useFaqVariant();
-  const testimonialsVariant = useTestimonialsVariant();
-  const ctaVariant = useCtaVariant();
 
   return (
     <>
+      {/* Onboarding Builder hero */}
       {heroVariant !== 'off' && <OnboardingBuilderHero />}
-      {logosVariant === 'linear' && <LogosLinear />}
-      {logosVariant === 'marquee' && <LogosMarquee />}
-      {logosVariant === 'default' && <Logos />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Onboarding features */}
       {featuresVariant !== 'off' && <OnboardingBuilderFeatures />}
+
+      {/* Page-specific FAQ (uses OnboardingBuilderFAQ when not 'off') */}
       {faqVariant !== 'off' && <OnboardingBuilderFAQ />}
-      {testimonialsVariant !== 'off' && <Testimonials />}
-      {ctaVariant !== 'off' && <CTA />}
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

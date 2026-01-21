@@ -2,15 +2,15 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant, useLogosVariant, useStatsVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
+import { useHeroVariant, useFeaturesVariant, useStatsVariant } from '~/lib/debug-context';
 import { ForMarketersHero } from '~/components/sections/for-marketers-hero';
 import { ForMarketersFeatures } from '~/components/sections/for-marketers-features';
 import { ForMarketersStats } from '~/components/sections/for-marketers-stats';
-import { Logos } from '~/components/sections/logos';
-import { LogosLinear } from '~/components/sections/logos-linear';
-import { LogosMarquee } from '~/components/sections/logos-marquee';
-import { Testimonials } from '~/components/sections/testimonials';
-import { CTA } from '~/components/sections/cta';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
 // Map global Hero variant to local variants
 type ForMarketersHeroVariant = 'split' | 'centered' | 'video';
@@ -36,24 +36,31 @@ function mapFeaturesVariant(globalVariant: string): ForMarketersFeaturesVariant 
   }
 }
 
+// For Marketers page: Marketing-focused features and stats
 export default function ForMarketersPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
   const featuresVariant = useFeaturesVariant();
-  const logosVariant = useLogosVariant();
   const statsVariant = useStatsVariant();
-  const testimonialsVariant = useTestimonialsVariant();
-  const ctaVariant = useCtaVariant();
 
   return (
     <>
+      {/* Marketer-focused hero */}
       {heroVariant !== 'off' && <ForMarketersHero variant={mapHeroVariant(heroVariant)} />}
-      {logosVariant === 'linear' && <LogosLinear />}
-      {logosVariant === 'marquee' && <LogosMarquee />}
-      {logosVariant === 'default' && <Logos />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Marketing features */}
       {featuresVariant !== 'off' && <ForMarketersFeatures variant={mapFeaturesVariant(featuresVariant)} />}
+
+      {/* Marketing stats */}
       {statsVariant !== 'off' && <ForMarketersStats />}
-      {testimonialsVariant !== 'off' && <Testimonials />}
-      {ctaVariant !== 'off' && <CTA />}
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

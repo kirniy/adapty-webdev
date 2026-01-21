@@ -2,32 +2,40 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant, useLogosVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { LTVAnalyticsHero } from '~/components/sections/ltv-analytics-hero';
 import { LTVAnalyticsFeatures } from '~/components/sections/ltv-analytics-features';
-import { Logos } from '~/components/sections/logos';
-import { LogosLinear } from '~/components/sections/logos-linear';
-import { LogosMarquee } from '~/components/sections/logos-marquee';
-import { Testimonials } from '~/components/sections/testimonials';
-import { CTA } from '~/components/sections/cta';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-// Page structure matches adapty.io/ltv-analytics (scraped 2026-01-21)
+// LTV Analytics page: Revenue prediction and analytics features
 export default function LTVAnalyticsPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
   const featuresVariant = useFeaturesVariant();
-  const logosVariant = useLogosVariant();
-  const testimonialsVariant = useTestimonialsVariant();
-  const ctaVariant = useCtaVariant();
 
   return (
     <>
+      {/* LTV Analytics hero */}
       {heroVariant !== 'off' && <LTVAnalyticsHero />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Analytics features */}
       {featuresVariant !== 'off' && <LTVAnalyticsFeatures />}
-      {logosVariant === 'linear' && <LogosLinear />}
-      {logosVariant === 'marquee' && <LogosMarquee />}
-      {logosVariant === 'default' && <Logos />}
-      {testimonialsVariant !== 'off' && <Testimonials />}
-      {ctaVariant !== 'off' && <CTA />}
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

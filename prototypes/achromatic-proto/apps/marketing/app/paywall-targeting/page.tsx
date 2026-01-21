@@ -1,25 +1,41 @@
-import type { Metadata } from "next";
+'use client';
 
-import { PaywallTargetingHero } from "~/components/sections/paywall-targeting-hero";
-import { PaywallTargetingFeatures } from "~/components/sections/paywall-targeting-features";
-import { Logos } from "~/components/sections/logos";
-import { Testimonials } from "~/components/sections/testimonials";
-import { CTA } from "~/components/sections/cta";
+import * as React from 'react';
 
-export const metadata: Metadata = {
-  title: "Customize paywalls for targeted user segments with Adapty",
-  description:
-    "Create custom segments, personalize offers, and conduct A/B tests to optimize conversion rates without the need for coding.",
-};
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
+import { PaywallTargetingHero } from '~/components/sections/paywall-targeting-hero';
+import { PaywallTargetingFeatures } from '~/components/sections/paywall-targeting-features';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
+// Paywall Targeting page: Segment-based paywall customization
 export default function PaywallTargetingPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <PaywallTargetingHero />
-      <Logos />
-      <PaywallTargetingFeatures />
-      <Testimonials />
-      <CTA />
+      {/* Targeting hero */}
+      {heroVariant !== 'off' && <PaywallTargetingHero />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Targeting features */}
+      {featuresVariant !== 'off' && <PaywallTargetingFeatures />}
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

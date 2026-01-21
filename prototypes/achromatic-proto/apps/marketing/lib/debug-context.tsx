@@ -26,10 +26,10 @@ export type ColorAccentVariant = 'full' | 'subtle' | 'minimal'
 export type HeroVariant = 'marketing' | 'split' | 'pricing' | 'story' | 'contact' | 'off'
 export type LogosVariant = 'default' | 'linear' | 'marquee' | 'off'
 export type FeaturesVariant = 'solution' | 'tabbed' | 'bento-tabs' | 'off'
-export type StatsVariant = 'default' | 'timeline' | 'off'
+export type StatsVariant = 'default' | 'orbital' | 'timeline' | 'off'
 export type TestimonialsVariant = 'default' | 'editorial' | 'team' | 'clean' | 'off'
-export type FaqVariant = 'default' | 'pricing' | 'off'
-export type CtaVariant = 'default' | 'careers' | 'off'
+export type FaqVariant = 'default' | 'cards' | 'pricing' | 'off'
+export type CtaVariant = 'default' | 'beam' | 'careers' | 'off'
 export type BlogVariant = 'default' | 'featured' | 'off'
 export type SdkVariant = 'default' | 'off'
 export type RolesVariant = 'cards' | 'bento' | 'stacked' | 'off'
@@ -128,6 +128,7 @@ export const FEATURES_VARIANTS: VariantOption<FeaturesVariant>[] = [
 
 export const STATS_VARIANTS: VariantOption<StatsVariant>[] = [
   { value: 'default', label: 'Default', description: '4-column number ticker' },
+  { value: 'orbital', label: 'Orbital', description: 'Animated cards with orbital rings and counters' },
   { value: 'timeline', label: 'Timeline', description: 'Vertical timeline view' },
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
@@ -142,12 +143,14 @@ export const TESTIMONIALS_VARIANTS: VariantOption<TestimonialsVariant>[] = [
 
 export const FAQ_VARIANTS: VariantOption<FaqVariant>[] = [
   { value: 'default', label: 'General', description: 'Standard accordion' },
+  { value: 'cards', label: 'Cards', description: 'Animated card-based FAQ with categories' },
   { value: 'pricing', label: 'Pricing', description: 'Pricing specific questions' },
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
 
 export const CTA_VARIANTS: VariantOption<CtaVariant>[] = [
   { value: 'default', label: 'Standard', description: 'Simple text and button' },
+  { value: 'beam', label: 'Beam', description: 'Magnetic buttons with beam animations' },
   { value: 'careers', label: 'Careers', description: 'List of open positions' },
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]

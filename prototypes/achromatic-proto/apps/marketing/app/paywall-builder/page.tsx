@@ -6,10 +6,6 @@ import {
   useHeroVariant,
   useFeaturesVariant,
   useCustomizationVariant,
-  useLogosVariant,
-  useFaqVariant,
-  useTestimonialsVariant,
-  useCtaVariant
 } from '~/lib/debug-context';
 
 // Page-specific components
@@ -17,17 +13,13 @@ import { PaywallBuilderHero, type PaywallBuilderHeroVariant } from '~/components
 import { PaywallBuilderFeatures, type PaywallBuilderFeaturesVariant } from '~/components/sections/paywall-builder-features';
 import { PaywallBuilderCustomization } from '~/components/sections/paywall-builder-customization';
 
-// Global components with variants
-import { Logos } from '~/components/sections/logos';
-import { LogosLinear } from '~/components/sections/logos-linear';
-import { LogosMarquee } from '~/components/sections/logos-marquee';
-import { FAQ } from '~/components/sections/faq';
-import { PricingFAQ } from '~/components/sections/pricing-faq';
-import { Testimonials } from '~/components/sections/testimonials';
-import { TestimonialsEditorial } from '~/components/sections/testimonials-editorial';
-import { TestimonialsClean } from '~/components/sections/testimonials-clean';
-import { CTA } from '~/components/sections/cta';
-import { CareersPositions } from '~/components/sections/careers-positions';
+// Shared section switchers
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
 // Map global hero variants to PaywallBuilderHero variants
 function mapHeroVariant(globalVariant: string): PaywallBuilderHeroVariant {
@@ -51,63 +43,7 @@ function mapFeaturesVariant(globalVariant: string): PaywallBuilderFeaturesVarian
   }
 }
 
-// Section wrapper components (same pattern as homepage)
-function LogosSection() {
-  const variant = useLogosVariant();
-  switch (variant) {
-    case 'off':
-      return null;
-    case 'linear':
-      return <LogosLinear />;
-    case 'marquee':
-      return <LogosMarquee />;
-    case 'default':
-    default:
-      return <Logos />;
-  }
-}
-
-function TestimonialsSection() {
-  const variant = useTestimonialsVariant();
-  switch (variant) {
-    case 'off':
-      return null;
-    case 'editorial':
-      return <TestimonialsEditorial />;
-    case 'clean':
-      return <TestimonialsClean />;
-    case 'default':
-    default:
-      return <Testimonials />;
-  }
-}
-
-function FaqSection() {
-  const variant = useFaqVariant();
-  switch (variant) {
-    case 'off':
-      return null;
-    case 'pricing':
-      return <PricingFAQ />;
-    case 'default':
-    default:
-      return <FAQ />;
-  }
-}
-
-function CtaSection() {
-  const variant = useCtaVariant();
-  switch (variant) {
-    case 'off':
-      return null;
-    case 'careers':
-      return <CareersPositions />;
-    case 'default':
-    default:
-      return <CTA />;
-  }
-}
-
+// Paywall Builder page: No-code paywall creation features
 export default function PaywallBuilderPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
   const featuresVariant = useFeaturesVariant();
@@ -115,8 +51,13 @@ export default function PaywallBuilderPage(): React.JSX.Element {
 
   return (
     <>
+      {/* Paywall Builder hero */}
       {heroVariant !== 'off' && <PaywallBuilderHero variant={mapHeroVariant(heroVariant)} />}
-      <LogosSection />
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Features and customization */}
       {featuresVariant !== 'off' && (
         <>
           <PaywallBuilderFeatures variant={mapFeaturesVariant(featuresVariant)} />
@@ -125,9 +66,15 @@ export default function PaywallBuilderPage(): React.JSX.Element {
           )}
         </>
       )}
-      <TestimonialsSection />
-      <FaqSection />
-      <CtaSection />
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

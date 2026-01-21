@@ -2,15 +2,16 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant, useLogosVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { ForIndieHero } from '~/components/sections/for-indie-hero';
 import { ForIndieFeatures } from '~/components/sections/for-indie-features';
-import { Logos } from '~/components/sections/logos';
-import { LogosLinear } from '~/components/sections/logos-linear';
-import { LogosMarquee } from '~/components/sections/logos-marquee';
-import { Testimonials } from '~/components/sections/testimonials';
-import { CTA } from '~/components/sections/cta';
 import type { ForIndieHeroVariant } from '~/components/sections/for-indie-hero';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+  FAQSwitcher,
+} from '~/components/sections/section-switchers';
 
 // Map global Hero variant to page-specific variants
 function mapHeroVariant(globalVariant: string): ForIndieHeroVariant {
@@ -22,22 +23,30 @@ function mapHeroVariant(globalVariant: string): ForIndieHeroVariant {
   }
 }
 
+// For Indie Developers page: Startup-friendly features
 export default function ForIndiePage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
   const featuresVariant = useFeaturesVariant();
-  const logosVariant = useLogosVariant();
-  const testimonialsVariant = useTestimonialsVariant();
-  const ctaVariant = useCtaVariant();
 
   return (
     <>
+      {/* Indie developer focused hero */}
       {heroVariant !== 'off' && <ForIndieHero variant={mapHeroVariant(heroVariant)} />}
-      {logosVariant === 'linear' && <LogosLinear />}
-      {logosVariant === 'marquee' && <LogosMarquee />}
-      {logosVariant === 'default' && <Logos />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Indie-friendly features */}
       {featuresVariant !== 'off' && <ForIndieFeatures />}
-      {testimonialsVariant !== 'off' && <Testimonials />}
-      {ctaVariant !== 'off' && <CTA />}
+
+      {/* FAQ - pricing questions for indie devs */}
+      <FAQSwitcher />
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

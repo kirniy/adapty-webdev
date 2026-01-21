@@ -1,25 +1,41 @@
-import type { Metadata } from "next";
+'use client';
 
-import { RemoteConfigHero } from "~/components/sections/remote-config-hero";
-import { RemoteConfigFeatures } from "~/components/sections/remote-config-features";
-import { Logos } from "~/components/sections/logos";
-import { Testimonials } from "~/components/sections/testimonials";
-import { CTA } from "~/components/sections/cta";
+import * as React from 'react';
 
-export const metadata: Metadata = {
-  title: "Customize paywalls on-the-fly without app updates | Adapty",
-  description:
-    "Adapty's Remote Config empowers you to customize paywalls and run A/B tests seamlessly, with automatic measurement of subscription metrics.",
-};
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
+import { RemoteConfigHero } from '~/components/sections/remote-config-hero';
+import { RemoteConfigFeatures } from '~/components/sections/remote-config-features';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
+// Remote Config page: On-the-fly paywall customization
 export default function RemoteConfigPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <RemoteConfigHero />
-      <Logos />
-      <RemoteConfigFeatures />
-      <Testimonials />
-      <CTA />
+      {/* Remote config hero */}
+      {heroVariant !== 'off' && <RemoteConfigHero />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Remote config features */}
+      {featuresVariant !== 'off' && <RemoteConfigFeatures />}
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

@@ -2,16 +2,16 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFaqVariant, useLogosVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
-import { Logos } from '~/components/sections/logos';
-import { LogosLinear } from '~/components/sections/logos-linear';
-import { LogosMarquee } from '~/components/sections/logos-marquee';
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { PricingComparison } from '~/components/sections/pricing-comparison';
-import { PricingFAQ } from '~/components/sections/pricing-faq';
 import { PricingHero } from '~/components/sections/pricing-hero';
 import { StartupCallout } from '~/components/sections/startup-callout';
-import { Testimonials } from '~/components/sections/testimonials';
-import { CTA } from '~/components/sections/cta';
+import {
+  LogosSwitcher,
+  FAQSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
 // Map global Hero variant to PricingHero variant
 type PricingHeroVariant = 'table' | 'cards' | 'compact';
@@ -25,25 +25,34 @@ function mapHeroVariant(globalVariant: string): PricingHeroVariant {
   }
 }
 
-// Page structure matches adapty.io/pricing (scraped 2026-01-22)
+// Pricing page: Plans, comparison, and FAQ
+// Page structure matches adapty.io/pricing
 export default function PricingPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
-  const logosVariant = useLogosVariant();
-  const faqVariant = useFaqVariant();
-  const testimonialsVariant = useTestimonialsVariant();
-  const ctaVariant = useCtaVariant();
+  const featuresVariant = useFeaturesVariant();
 
   return (
     <>
+      {/* Pricing Hero with plans */}
       {heroVariant !== 'off' && <PricingHero variant={mapHeroVariant(heroVariant)} />}
+
+      {/* Startup discount callout */}
       <StartupCallout />
-      {logosVariant === 'linear' && <LogosLinear />}
-      {logosVariant === 'marquee' && <LogosMarquee />}
-      {logosVariant === 'default' && <Logos />}
-      <PricingComparison />
-      {faqVariant !== 'off' && <PricingFAQ />}
-      {testimonialsVariant !== 'off' && <Testimonials />}
-      {ctaVariant !== 'off' && <CTA />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Feature comparison table */}
+      {featuresVariant !== 'off' && <PricingComparison />}
+
+      {/* FAQ - uses pricing variant by default on this page */}
+      <FAQSwitcher />
+
+      {/* Social proof */}
+      <TestimonialsSwitcher />
+
+      {/* CTA */}
+      <CTASwitcher />
     </>
   );
 }

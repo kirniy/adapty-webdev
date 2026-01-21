@@ -1,13 +1,21 @@
+'use client';
+
 import * as React from 'react';
-import type { Metadata } from 'next';
 
-import { BlogPosts } from '~/components/sections/blog-posts';
-import { createTitle } from '~/lib/formatters';
+import {
+  BlogSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-export const metadata: Metadata = {
-  title: createTitle('Blog')
-};
-
+// Blog listing page: All blog posts
 export default function BlogPage(): React.JSX.Element {
-  return <BlogPosts />;
+  return (
+    <>
+      {/* Blog posts - shared switcher (default or featured variants) */}
+      <BlogSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
+    </>
+  );
 }

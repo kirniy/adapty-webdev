@@ -1,36 +1,34 @@
 'use client';
 
-import * as React from 'react';
+/**
+ * Refund Saver Page - Automated refund recovery
+ *
+ * Page structure matches adapty.io/refund-saver (scraped 2026-01-21).
+ * Reduces subscription refunds with automated win-back flows.
+ */
 
-import { useHeroVariant, useFeaturesVariant, useLogosVariant, useFaqVariant, useTestimonialsVariant, useCtaVariant } from '~/lib/debug-context';
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { RefundSaverHero } from '~/components/sections/refund-saver-hero';
 import { RefundSaverFeatures } from '~/components/sections/refund-saver-features';
 import { RefundSaverFAQ } from '~/components/sections/refund-saver-faq';
-import { Logos } from '~/components/sections/logos';
-import { LogosLinear } from '~/components/sections/logos-linear';
-import { LogosMarquee } from '~/components/sections/logos-marquee';
-import { Testimonials } from '~/components/sections/testimonials';
-import { CTA } from '~/components/sections/cta';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-// Page structure matches adapty.io/refund-saver (scraped 2026-01-21)
 export default function RefundSaverPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
   const featuresVariant = useFeaturesVariant();
-  const logosVariant = useLogosVariant();
-  const faqVariant = useFaqVariant();
-  const testimonialsVariant = useTestimonialsVariant();
-  const ctaVariant = useCtaVariant();
 
   return (
     <>
       {heroVariant !== 'off' && <RefundSaverHero />}
-      {logosVariant === 'linear' && <LogosLinear />}
-      {logosVariant === 'marquee' && <LogosMarquee />}
-      {logosVariant === 'default' && <Logos />}
+      <LogosSwitcher />
       {featuresVariant !== 'off' && <RefundSaverFeatures />}
-      {faqVariant !== 'off' && <RefundSaverFAQ />}
-      {testimonialsVariant !== 'off' && <Testimonials />}
-      {ctaVariant !== 'off' && <CTA />}
+      <RefundSaverFAQ />
+      <TestimonialsSwitcher />
+      <CTASwitcher />
     </>
   );
 }

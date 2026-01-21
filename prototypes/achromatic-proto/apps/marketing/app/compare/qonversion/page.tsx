@@ -1,20 +1,36 @@
-import type { Metadata } from "next";
+'use client';
 
-import { CompareQonversion } from "~/components/sections/compare-qonversion";
-import { CTA } from "~/components/sections/cta";
+import * as React from 'react';
 
-export const metadata: Metadata = {
-  title: "Top Qonversion Alternative in 2025 | Adapty",
-  description:
-    "Discover Adapty - the leading alternative to Qonversion for accelerating app revenue growth. Unleash powerful analytics, A/B testing, and in-app subscription management tools designed to optimize your mobile app's performance and maximize earnings.",
-};
+import { useFeaturesVariant } from '~/lib/debug-context';
+import { CompareQonversion } from '~/components/sections/compare-qonversion';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-// Page structure matches adapty.io/compare/qonversion (scraped 2026-01-21)
+// Adapty vs Qonversion comparison page
 export default function CompareQonversionPage(): React.JSX.Element {
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <CompareQonversion />
-      <CTA />
+      {/* Feature comparison */}
+      {featuresVariant !== 'off' && <CompareQonversion />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

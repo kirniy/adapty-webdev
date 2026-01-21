@@ -1,25 +1,41 @@
-import type { Metadata } from "next";
+'use client';
 
-import { AIPaywallGeneratorHero } from "~/components/sections/ai-paywall-generator-hero";
-import { AIPaywallGeneratorFeatures } from "~/components/sections/ai-paywall-generator-features";
-import { Logos } from "~/components/sections/logos";
-import { Testimonials } from "~/components/sections/testimonials";
-import { CTA } from "~/components/sections/cta";
+import * as React from 'react';
 
-export const metadata: Metadata = {
-  title: "AI Paywall Generator - Build and Test Paywalls in Minutes | Adapty",
-  description:
-    "Generate 5 custom paywalls for your app in seconds. No code, no design tools, no release needed. Pick, edit, and test directly in Adapty.",
-};
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
+import { AIPaywallGeneratorHero } from '~/components/sections/ai-paywall-generator-hero';
+import { AIPaywallGeneratorFeatures } from '~/components/sections/ai-paywall-generator-features';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
+// AI Paywall Generator page: Generate paywalls with AI
 export default function AIPaywallGeneratorPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <AIPaywallGeneratorHero />
-      <Logos />
-      <AIPaywallGeneratorFeatures />
-      <Testimonials />
-      <CTA />
+      {/* AI Generator hero */}
+      {heroVariant !== 'off' && <AIPaywallGeneratorHero />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* AI features */}
+      {featuresVariant !== 'off' && <AIPaywallGeneratorFeatures />}
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

@@ -1,23 +1,28 @@
-import type { Metadata } from "next";
+'use client';
 
-import { PredictiveAnalyticsHero } from "~/components/sections/predictive-analytics-hero";
-import { PredictiveAnalyticsFeatures } from "~/components/sections/predictive-analytics-features";
-import { Testimonials } from "~/components/sections/testimonials";
-import { CTA } from "~/components/sections/cta";
+/**
+ * Predictive Analytics Page - AI-driven LTV forecasting
+ *
+ * Adapty's predictive LTV analytics for forecasting future revenue streams.
+ * Uses AI-driven insights to help drive revenue growth.
+ */
 
-export const metadata: Metadata = {
-  title: "Predictive LTV Analytics with AI-Driven Insights | Adapty",
-  description:
-    "Adapty's predictive LTV analytics empower you to drive revenue growth by forecasting future revenue streams with precision.",
-};
+import { PredictiveAnalyticsHero } from '~/components/sections/predictive-analytics-hero';
+import { PredictiveAnalyticsFeatures } from '~/components/sections/predictive-analytics-features';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
 export default function PredictiveAnalyticsPage(): React.JSX.Element {
   return (
     <>
       <PredictiveAnalyticsHero />
       <PredictiveAnalyticsFeatures />
-      <Testimonials />
-      <CTA />
+      <LogosSwitcher />
+      <TestimonialsSwitcher />
+      <CTASwitcher />
     </>
   );
 }

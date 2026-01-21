@@ -1,23 +1,45 @@
-import type { Metadata } from "next";
+'use client';
 
-import { RevenueGrowthHero } from "~/components/sections/revenue-growth-hero";
-import { RevenueGrowthFeatures } from "~/components/sections/revenue-growth-features";
-import { Testimonials } from "~/components/sections/testimonials";
-import { CTA } from "~/components/sections/cta";
+import * as React from 'react';
 
-export const metadata: Metadata = {
-  title: "Double Your Subscription Revenue in 3 Months | Adapty",
-  description:
-    "With Adapty's no-code paywall builder, A/B testing, and analytics, turn your paywalls into powerful revenue tools and maximize subscription growth.",
-};
+import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
+import { RevenueGrowthHero } from '~/components/sections/revenue-growth-hero';
+import { RevenueGrowthFeatures } from '~/components/sections/revenue-growth-features';
+import {
+  LogosSwitcher,
+  StatsSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
+// Revenue Growth page: Maximize subscription revenue
 export default function RevenueGrowthPage(): React.JSX.Element {
+  const heroVariant = useHeroVariant();
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <RevenueGrowthHero />
-      <RevenueGrowthFeatures />
-      <Testimonials />
-      <CTA />
+      {/* Revenue growth hero */}
+      {heroVariant !== 'off' && <RevenueGrowthHero />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Revenue features */}
+      {featuresVariant !== 'off' && <RevenueGrowthFeatures />}
+
+      {/* Stats - shared switcher */}
+      <StatsSwitcher />
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

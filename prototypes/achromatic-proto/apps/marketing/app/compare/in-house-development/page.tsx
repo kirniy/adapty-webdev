@@ -1,37 +1,36 @@
-import type { Metadata } from "next";
+'use client';
 
-import { CompareInHouse } from "~/components/sections/compare-in-house";
-import { CTA } from "~/components/sections/cta";
+import * as React from 'react';
 
-export const metadata: Metadata = {
-  title: "Compare In-House Development vs Adapty",
-  description:
-    "Discover the pros and cons of in-house development vs. using Adapty's platform for app monetization. Learn which approach best suits your business goals, budget, and timeline to drive growth effectively.",
-  openGraph: {
-    title: "Compare In-House Development vs Adapty",
-    description:
-      "Discover the pros and cons of in-house development vs. using Adapty's platform for app monetization. Learn which approach best suits your business goals, budget, and timeline to drive growth effectively.",
-    url: "https://adapty.io/compare/in-house-development/",
-    siteName: "Adapty",
-    locale: "en_US",
-    type: "article",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Compare In-House Development vs Adapty",
-    description:
-      "Discover the pros and cons of in-house development vs. using Adapty's platform for app monetization. Learn which approach best suits your business goals, budget, and timeline to drive growth effectively.",
-    site: "@AdaptyTeam",
-    creator: "@AdaptyTeam",
-  },
-};
+import { useFeaturesVariant } from '~/lib/debug-context';
+import { CompareInHouse } from '~/components/sections/compare-in-house';
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  FAQSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-// Page structure matches adapty.io/compare/in-house-development (scraped 2026-01-21)
+// Adapty vs In-House Development comparison page
 export default function CompareInHousePage(): React.JSX.Element {
+  const featuresVariant = useFeaturesVariant();
+
   return (
     <>
-      <CompareInHouse />
-      <CTA />
+      {/* Feature comparison */}
+      {featuresVariant !== 'off' && <CompareInHouse />}
+
+      {/* Logos - shared switcher */}
+      <LogosSwitcher />
+
+      {/* Testimonials - shared switcher */}
+      <TestimonialsSwitcher />
+
+      {/* FAQ - shared switcher */}
+      <FAQSwitcher />
+
+      {/* CTA - shared switcher */}
+      <CTASwitcher />
     </>
   );
 }

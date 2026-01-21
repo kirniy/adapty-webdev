@@ -1,4 +1,6 @@
-import type { Metadata } from "next";
+'use client';
+
+import * as React from 'react';
 
 import { GridSection } from "~/components/fragments/grid-section";
 import { SiteHeading } from "~/components/fragments/site-heading";
@@ -6,15 +8,13 @@ import { BlurFade } from "~/components/fragments/blur-fade";
 import { Button } from "@workspace/ui/components/button";
 import { ArrowRight, CheckIcon, XIcon } from "lucide-react";
 import Link from "next/link";
-import { Logos } from "~/components/sections/logos";
-import { Testimonials } from "~/components/sections/testimonials";
-import { CTA } from "~/components/sections/cta";
+import {
+  LogosSwitcher,
+  TestimonialsSwitcher,
+  CTASwitcher,
+} from '~/components/sections/section-switchers';
 
-export const metadata: Metadata = {
-  title: "Why Adapty?",
-  description:
-    "Explore Adapty's features and discover why it's the most powerful choice over any alternative.",
-};
+// Why Adapty page: Feature comparison and benefits
 
 const FEATURES = [
   {
@@ -214,9 +214,9 @@ export default function WhyAdaptyPage(): React.JSX.Element {
         </div>
       </GridSection>
 
-      <Logos />
-      <Testimonials />
-      <CTA />
+      <LogosSwitcher />
+      <TestimonialsSwitcher />
+      <CTASwitcher />
     </>
   );
 }
