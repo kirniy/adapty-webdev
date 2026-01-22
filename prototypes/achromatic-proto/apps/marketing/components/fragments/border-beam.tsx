@@ -14,6 +14,29 @@ interface BorderBeamProps {
   delay?: number;
 }
 
+// Adapty brand purple - used when hsl(var(--primary)) is passed
+const ADAPTY_PRIMARY = '#6720FF';
+
+// Resolve CSS variable references to actual colors
+function resolveColor(color: string): string {
+  // Handle transparent/0 opacity cases first (including hsl(var(--primary)/0))
+  if (color.includes('/0)') || color.includes('/0 )') || color.match(/\/\s*0\s*\)/)) {
+    return 'transparent';
+  }
+  // Handle hsl(var(--primary)) or similar patterns
+  if (color.includes('var(--primary)')) {
+    // Check for opacity modifier like hsl(var(--primary)/0.3)
+    const opacityMatch = color.match(/\/\s*([\d.]+)/);
+    if (opacityMatch) {
+      const opacity = parseFloat(opacityMatch[1]);
+      // Convert hex to rgba with opacity
+      return `rgba(103, 32, 255, ${opacity})`;
+    }
+    return ADAPTY_PRIMARY;
+  }
+  return color;
+}
+
 export function BorderBeam({
   className,
   size = 200,
@@ -24,6 +47,10 @@ export function BorderBeam({
   colorTo = '#9c40ff',
   delay = 0,
 }: BorderBeamProps) {
+  // Resolve CSS variable references
+  const resolvedColorFrom = resolveColor(colorFrom);
+  const resolvedColorTo = resolveColor(colorTo);
+
   return (
     <>
       <style dangerouslySetInnerHTML={{__html: `
@@ -45,8 +72,8 @@ export function BorderBeam({
             '--duration': duration,
             '--anchor': anchor,
             '--border-width': borderWidth,
-            '--color-from': colorFrom,
-            '--color-to': colorTo,
+            '--color-from': resolvedColorFrom,
+            '--color-to': resolvedColorTo,
             '--delay': delay,
           } as React.CSSProperties
         }
