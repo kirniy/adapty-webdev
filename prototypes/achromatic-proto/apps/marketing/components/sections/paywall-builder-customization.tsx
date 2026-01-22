@@ -16,6 +16,7 @@ import {
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
+import { Badge } from '@workspace/ui/components/badge';
 
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
@@ -387,6 +388,9 @@ function CarouselCustomization() {
 // =============================================================================
 // VARIANT: EXPANDABLE - Accordion with split layout
 // =============================================================================
+// =============================================================================
+// VARIANT: EXPANDABLE - Accordion with split layout
+// =============================================================================
 function ExpandableCustomization() {
   const shouldReduceMotion = useReducedMotion();
   const [expandedIndex, setExpandedIndex] = React.useState<number | null>(0);
@@ -425,7 +429,7 @@ function ExpandableCustomization() {
                         width: expandedIndex === index ? 40 : 12,
                         backgroundColor:
                           expandedIndex === index
-                            ? 'hsl(var(--foreground))'
+                            ? 'hsl(var(--primary))'
                             : 'hsl(var(--muted-foreground) / 0.2)',
                       }}
                       transition={{ duration: 0.3, ease: EASE_OUT_QUART }}
@@ -452,16 +456,20 @@ function ExpandableCustomization() {
                 >
                   <motion.div
                     layout={!shouldReduceMotion}
+                    initial={false}
+                    animate={{
+                      borderColor: isExpanded ? 'hsl(var(--primary) / 0.3)' : 'hsl(var(--border) / 0.5)',
+                      backgroundColor: isExpanded ? 'hsl(var(--background) / 0.8)' : 'hsl(var(--background) / 0.4)',
+                      boxShadow: isExpanded ? '0 10px 30px -10px hsl(var(--primary) / 0.1)' : 'none',
+                    }}
+                    transition={{ duration: 0.2 }}
                     className={cn(
-                      'overflow-hidden rounded-xl border bg-background/60 backdrop-blur-sm transition-colors duration-200',
-                      isExpanded
-                        ? 'border-foreground/20 shadow-lg'
-                        : 'border-border/50'
+                      'overflow-hidden rounded-xl border backdrop-blur-sm transition-all'
                     )}
                   >
                     <motion.button
                       onClick={() => toggleExpanded(index)}
-                      className="flex w-full items-center gap-4 p-5 text-left"
+                      className="flex w-full items-center gap-4 p-5 text-left focus:outline-none"
                     >
                       {/* Icon */}
                       <motion.div
@@ -480,7 +488,7 @@ function ExpandableCustomization() {
                         className={cn(
                           'flex size-11 shrink-0 items-center justify-center rounded-xl transition-colors duration-200',
                           isExpanded
-                            ? 'bg-foreground text-background'
+                            ? 'bg-primary text-primary-foreground'
                             : 'bg-muted/50 text-foreground'
                         )}
                       >
@@ -489,10 +497,10 @@ function ExpandableCustomization() {
 
                       {/* Text */}
                       <div className="min-w-0 flex-1">
-                        <h3 className="font-semibold tracking-tight">
+                        <h3 className={cn("font-semibold tracking-tight transition-colors", isExpanded && "text-primary")}>
                           {item.title}
                         </h3>
-                        <p className="line-clamp-1 text-sm text-muted-foreground">
+                        <p className={cn("line-clamp-1 text-sm text-muted-foreground", isExpanded && "line-clamp-none")}>
                           {item.description}
                         </p>
                       </div>
@@ -506,7 +514,7 @@ function ExpandableCustomization() {
                         }}
                         className="shrink-0"
                       >
-                        <ChevronDownIcon className="size-5 text-muted-foreground" />
+                        <ChevronDownIcon className={cn("size-5 transition-colors", isExpanded ? "text-primary" : "text-muted-foreground")} />
                       </motion.div>
                     </motion.button>
 
@@ -535,11 +543,22 @@ function ExpandableCustomization() {
                           }}
                         >
                           <div className="px-5 pb-5">
-                            <div className="ml-15 border-l-2 border-foreground/10 pl-4">
+                            <motion.div
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.1 }}
+                              className="ml-[60px] pl-4 border-l-2 border-primary/10"
+                            >
                               <p className="text-sm leading-relaxed text-muted-foreground">
                                 {item.details}
                               </p>
-                            </div>
+                              {/* Imaginary interactive preview could go here */}
+                              <div className="mt-4 flex gap-2">
+                                <Badge variant="outline" className="text-[10px] opacity-70">
+                                  Feature Preview
+                                </Badge>
+                              </div>
+                            </motion.div>
                           </div>
                         </motion.div>
                       )}
