@@ -29,8 +29,10 @@ import { Badge } from '@workspace/ui/components/badge';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
 
 // Helper to get image path based on selected image set
@@ -60,6 +62,56 @@ interface FeatureTab {
   imageDark: string;
   features: FeatureItem[];
   cta: { label: string; href: string };
+}
+
+// Magic animation: Platform features counter
+function PlatformFeaturesMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const totalFeatures = FEATURE_TABS.reduce((acc, tab) => acc + tab.features.length, 0);
+  const [count, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setCount(totalFeatures);
+      return;
+    }
+    const interval = setInterval(() => {
+      setCount(prev => {
+        if (prev >= totalFeatures) return totalFeatures;
+        return prev + 1;
+      });
+    }, 100);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion, totalFeatures]);
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-primary"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.span
+        key={count}
+        initial={shouldReduceMotion ? {} : { y: -5, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.1 }}
+      >
+        {count}+ capabilities
+      </motion.span>
+    </motion.div>
+  );
 }
 
 // Feature tabs with DIFFERENT layouts for visual variety
@@ -188,7 +240,7 @@ function FeatureImage({ tab, className }: { tab: FeatureTab; className?: string 
   return (
     <motion.div
       className={cn(
-        'overflow-hidden rounded-xl border bg-card shadow-lg',
+        'overflow-hidden rounded-xl border bg-card shadow-lg relative',
         monochromeMode && 'grayscale hover:grayscale-0 transition-[filter] duration-500',
         className
       )}
@@ -198,6 +250,15 @@ function FeatureImage({ tab, className }: { tab: FeatureTab; className?: string 
       animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
       transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
     >
+      {isHovered && (
+        <BorderBeam
+          size={200}
+          duration={10}
+          borderWidth={1.5}
+          colorFrom="hsl(var(--primary))"
+          colorTo="hsl(var(--primary)/0)"
+        />
+      )}
       <motion.div
         animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.02 : 1 }}
         transition={{ duration: 0.25 }}
@@ -425,6 +486,7 @@ export function FeaturesBentoTabs(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1000} />
       <div className="container py-16 lg:py-24 relative z-10">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={400} />
         {/* Section Header */}
         <BlurFade className="mb-10 text-center">
           <Badge variant="outline" className="mb-4 rounded-full">
@@ -438,6 +500,9 @@ export function FeaturesBentoTabs(): React.JSX.Element {
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             From no-code paywall design to AI-powered analytics, Adapty gives you the complete toolkit.
           </p>
+          <div className="mt-4">
+            <PlatformFeaturesMagic />
+          </div>
         </BlurFade>
 
         {/* Prominent Tab Bar - scrollable on mobile */}

@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from 'motion/react';
 
 import { Card, CardContent } from '@workspace/ui/components/card';
 
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
@@ -68,16 +69,28 @@ const EVENT_TYPES = [
 // Integration card with hover animation
 function IntegrationCard({ integration, index }: { integration: typeof INTEGRATIONS[0]; index: number }) {
   const shouldReduceMotion = useReducedMotion();
+  const [isHovered, setIsHovered] = React.useState(false);
 
   return (
     <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
       transition={{ type: 'spring', duration: 0.2, bounce: 0.1 }}
       className="group h-full"
     >
       <Link href={integration.link} className="block h-full relative">
-        <div className="relative h-full overflow-hidden rounded-xl border border-border/50 bg-background/50 p-4 text-center transition-colors hover:border-border/80">
+        <div className="relative h-full overflow-hidden rounded-xl border border-border/50 bg-background/50 p-4 text-center transition-colors hover:border-primary/30 hover:shadow-md">
+          {isHovered && (
+            <BorderBeam
+              size={80}
+              duration={6}
+              borderWidth={1.5}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary)/0)"
+            />
+          )}
           <Spotlight
             className="from-primary/20 via-primary/10 to-transparent"
             size={120}
@@ -126,6 +139,57 @@ function EventBadge({ event }: { event: string }) {
   );
 }
 
+// Magic animation: Integration count badge
+function IntegrationCountMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [count, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setCount(30);
+      return;
+    }
+    const interval = setInterval(() => {
+      setCount(prev => {
+        if (prev >= 30) return 30;
+        return prev + 1;
+      });
+    }, 50);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.2 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-emerald-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.6, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.span
+        key={count}
+        initial={shouldReduceMotion ? {} : { y: -5, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.1 }}
+      >
+        {count}+
+      </motion.span>
+      <span>integrations</span>
+    </motion.div>
+  );
+}
+
 export function IntegrationsGrid(): React.JSX.Element {
   // Group integrations by category
   const groupedIntegrations = INTEGRATIONS.reduce((acc, integration) => {
@@ -146,6 +210,9 @@ export function IntegrationsGrid(): React.JSX.Element {
             title="One-click integrations"
             description="Forward subscription events to analytics, attribution, and ad services without coding."
           />
+          <div className="mt-4 flex justify-center">
+            <IntegrationCountMagic />
+          </div>
         </BlurFade>
 
         <BlurFade delay={0.1}>
@@ -195,16 +262,25 @@ export function IntegrationsGrid(): React.JSX.Element {
         {/* Event feed section */}
         <BlurFade delay={0.45}>
           <div className="mt-20 text-center">
-            <div className="inline-block p-8 rounded-2xl bg-muted/50 border border-border/50 max-w-2xl">
-              <h3 className="text-xl font-semibold mb-2">Event feed</h3>
-              <p className="text-muted-foreground mb-4">
+            <div className="relative inline-block p-8 rounded-2xl bg-muted/50 border border-border/50 max-w-2xl overflow-hidden">
+              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
+              <BorderBeam
+                size={200}
+                duration={12}
+                borderWidth={1.5}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+                className="opacity-50"
+              />
+              <h3 className="text-xl font-semibold mb-2 relative z-10">Event feed</h3>
+              <p className="text-muted-foreground mb-4 relative z-10">
                 Track purchase events, verify SDK installation, check integrations and A/B tests - all with Adapty SDK.
               </p>
               <Link
                 href="https://adapty.io/docs/event-feed"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary font-medium hover:underline inline-flex items-center gap-1"
+                className="text-primary font-medium hover:underline inline-flex items-center gap-1 relative z-10"
               >
                 Read the docs
                 <ArrowRightIcon className="size-4" />

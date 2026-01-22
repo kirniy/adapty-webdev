@@ -1,9 +1,45 @@
+'use client';
+
 import * as React from 'react';
 import Image from 'next/image';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// Magic animation: Trust counter
+function TrustCounterMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [count, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setCount(15000);
+      return;
+    }
+    const interval = setInterval(() => {
+      setCount(prev => {
+        if (prev >= 15000) return 15000;
+        return prev + 500;
+      });
+    }, 40);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <motion.span
+      key={count}
+      initial={shouldReduceMotion ? {} : { y: -3, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.1 }}
+      className="font-semibold text-foreground"
+    >
+      {count.toLocaleString()}+
+    </motion.span>
+  );
+}
 
 // Show 7 logos max per Sergey's "7 logos rule" to avoid overloading attention
 const LOGOS = [
@@ -21,9 +57,10 @@ export function Logos(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={200} />
       <div className="container py-12 lg:py-16 relative z-10">
+        <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={300} />
         <BlurFade className="mb-8 text-center">
-          <p className="text-lg font-medium text-foreground">
-            Trusted by 15,000+ apps and the world&apos;s largest app publishers
+          <p className="text-lg font-medium text-muted-foreground">
+            Trusted by <TrustCounterMagic /> apps and the world&apos;s largest app publishers
           </p>
         </BlurFade>
         

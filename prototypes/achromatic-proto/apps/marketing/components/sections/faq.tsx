@@ -14,8 +14,10 @@ import {
 import { Badge } from '@workspace/ui/components/badge';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 const DATA = [
   {
@@ -51,6 +53,48 @@ const DATA = [
     answer: 'We offer multiple support channels: dedicated customer success manager, direct Slack communication, live chat on the website, and comprehensive documentation. Enterprise customers get priority support with guaranteed response times.'
   }
 ];
+
+// Magic animation: Quick response badge
+function QuickResponseMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [hours, setHours] = React.useState(24);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setHours(2);
+      return;
+    }
+    const interval = setInterval(() => {
+      setHours(prev => {
+        if (prev <= 2) return 2;
+        return prev - 2;
+      });
+    }, 80);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.3 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-emerald-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>{`<${hours}h avg response`}</span>
+    </motion.div>
+  );
+}
 
 // Animated link with arrow micro-interaction
 function AnimatedLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -102,6 +146,9 @@ export function FAQ({ items = DATA }: FAQProps): React.JSX.Element {
             <p className="mt-4 text-muted-foreground lg:max-w-[85%]">
               Everything you need to know about Adapty. Can&apos;t find the answer you&apos;re looking for?
             </p>
+            <div className="mt-4">
+              <QuickResponseMagic />
+            </div>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col">
               <AnimatedLink href="https://adapty.io/docs/">
                 Read documentation
@@ -114,7 +161,16 @@ export function FAQ({ items = DATA }: FAQProps): React.JSX.Element {
 
           {/* Right column - Accordion with enhanced animations */}
           <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
-            <div className="rounded-xl border bg-card p-1">
+            <div className="rounded-xl border bg-card p-1 relative overflow-hidden">
+              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+              <BorderBeam
+                size={200}
+                duration={15}
+                borderWidth={1.5}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+                className="opacity-40"
+              />
               <Accordion type="single" collapsible className="w-full">
                 {items.map((faq, index) => (
                   <motion.div

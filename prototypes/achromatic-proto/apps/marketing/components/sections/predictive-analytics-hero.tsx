@@ -3,8 +3,8 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, BrainCircuitIcon, TrendingUpIcon, DollarSignIcon, LineChartIcon } from 'lucide-react';
-import { motion, useReducedMotion } from 'motion/react';
+import { ArrowRightIcon, BrainCircuitIcon, TrendingUpIcon, DollarSignIcon, LineChartIcon, SparklesIcon, TargetIcon } from 'lucide-react';
+import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
@@ -13,7 +13,112 @@ import { cn } from '@workspace/ui/lib/utils';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+
+// Magic animation: AI prediction accuracy
+function AIPredictionMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [accuracy, setAccuracy] = React.useState(0);
+  const targetAccuracy = 94;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setAccuracy(targetAccuracy);
+      return;
+    }
+    const duration = 1500;
+    const steps = 50;
+    const increment = targetAccuracy / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += increment;
+      if (current >= targetAccuracy) {
+        setAccuracy(targetAccuracy);
+        clearInterval(interval);
+      } else {
+        setAccuracy(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute top-4 right-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+      >
+        <div className="size-6 rounded-full bg-primary/10 flex items-center justify-center">
+          <TargetIcon className="size-3 text-primary" />
+        </div>
+        <div className="text-left">
+          <p className="text-sm font-bold text-primary">{accuracy}%</p>
+          <p className="text-[10px] text-muted-foreground">Accuracy</p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// Magic animation: LTV prediction chart
+function LTVPredictionMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [step, setStep] = React.useState(0);
+
+  const predictions = [
+    { month: 'M1', actual: '$12', predicted: '$12' },
+    { month: 'M6', actual: '$45', predicted: '$48' },
+    { month: 'M12', actual: null, predicted: '$89' },
+  ];
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setStep((prev) => (prev + 1) % predictions.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion, predictions.length]);
+
+  return (
+    <div className="absolute bottom-4 left-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+      >
+        <div className="flex items-center gap-2 mb-1.5">
+          <SparklesIcon className="size-3 text-primary" />
+          <span className="text-[10px] font-medium text-muted-foreground">AI LTV Prediction</span>
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -10 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center gap-3"
+          >
+            <span className="text-xs font-medium text-foreground">{predictions[step].month}</span>
+            <div className="flex flex-col">
+              <span className="text-xs font-bold text-primary">{predictions[step].predicted}</span>
+              {predictions[step].actual && (
+                <span className="text-[9px] text-muted-foreground">actual: {predictions[step].actual}</span>
+              )}
+              {!predictions[step].actual && (
+                <span className="text-[9px] text-primary/60">predicted</span>
+              )}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+    </div>
+  );
+}
 
 // Content from adapty.io/predictive-analytics
 // Badge: "AI LTV and revenue predictions"
@@ -142,6 +247,17 @@ export function PredictiveAnalyticsHero(): React.JSX.Element {
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
+              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <AIPredictionMagic />
+              <LTVPredictionMagic />
+              <BorderBeam
+                size={200}
+                duration={12}
+                delay={9}
+                borderWidth={1.5}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+              />
               <Image
                 priority
                 quality={100}

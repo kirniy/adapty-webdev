@@ -15,6 +15,103 @@ import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// Magic animation: MRR growth counter
+function MRRGrowthMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [mrr, setMrr] = React.useState(0);
+  const targetMrr = 10;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setMrr(targetMrr);
+      return;
+    }
+    const duration = 2000;
+    const steps = 20;
+    const stepValue = targetMrr / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += stepValue;
+      if (current >= targetMrr) {
+        setMrr(targetMrr);
+        clearInterval(interval);
+      } else {
+        setMrr(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute top-4 right-4 flex items-center gap-2 rounded-lg border bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+      <RocketIcon className="size-4 text-primary" />
+      <div className="flex flex-col">
+        <motion.span
+          className="text-lg font-bold tabular-nums"
+          key={mrr}
+          initial={shouldReduceMotion ? undefined : { scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        >
+          ${mrr}K
+        </motion.span>
+        <span className="text-[10px] text-muted-foreground">MRR milestone</span>
+      </div>
+    </div>
+  );
+}
+
+// Magic animation: Setup time counter
+function SetupTimeMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [minutes, setMinutes] = React.useState(0);
+  const targetMinutes = 10;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setMinutes(targetMinutes);
+      return;
+    }
+    const duration = 1500;
+    const steps = 20;
+    const stepValue = targetMinutes / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += stepValue;
+      if (current >= targetMinutes) {
+        setMinutes(targetMinutes);
+        clearInterval(interval);
+      } else {
+        setMinutes(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-lg border bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+      <ClockIcon className="size-4 text-green-500" />
+      <div className="flex flex-col">
+        <motion.span
+          className="text-lg font-bold tabular-nums text-green-500"
+          key={minutes}
+          initial={shouldReduceMotion ? undefined : { scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        >
+          {minutes} min
+        </motion.span>
+        <span className="text-[10px] text-muted-foreground">to integrate</span>
+      </div>
+    </div>
+  );
+}
 
 // EXACT content from adapty.io/for-indie (scraped 2026-01-21)
 // Badge: "For Indie"
@@ -191,8 +288,9 @@ function SplitHero() {
               initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
-              className="relative w-full overflow-hidden rounded-xl border bg-background shadow-lg"
+              className="group relative w-full overflow-hidden rounded-xl border bg-background shadow-lg"
             >
+              <Spotlight className="from-primary/20 via-purple-500/10 to-transparent" size={350} />
               <Image
                 priority
                 quality={100}
@@ -211,6 +309,9 @@ function SplitHero() {
                 alt="Adapty SDK integration - simple setup for indie developers"
                 className="hidden w-full dark:block"
               />
+              {/* Magic animations */}
+              <MRRGrowthMagic />
+              <SetupTimeMagic />
             </motion.div>
           </BlurFade>
         </div>

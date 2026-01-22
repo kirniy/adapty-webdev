@@ -22,8 +22,115 @@ import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
 import { paywallBuilderContent } from '~/lib/content';
+
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// Magic animation: Paywall builder progress
+function PaywallBuilderMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [step, setStep] = React.useState(0);
+
+  const steps = [
+    { label: 'Choose template...', icon: '1' },
+    { label: 'Customize design...', icon: '2' },
+    { label: 'Launch paywall!', icon: '3' },
+  ];
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setStep((prev) => (prev + 1) % steps.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion, steps.length]);
+
+  return (
+    <div className="absolute bottom-4 right-4 flex flex-col gap-2 rounded-lg border bg-background/95 p-3 shadow-lg backdrop-blur-sm">
+      <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+        <PaletteIcon className="size-3" />
+        Builder
+      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={step}
+          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+          transition={{ duration: 0.2 }}
+          className="flex items-center gap-2"
+        >
+          <div className="flex size-5 items-center justify-center rounded bg-primary text-[10px] font-bold text-primary-foreground">
+            {steps[step].icon}
+          </div>
+          <span className="text-xs">{steps[step].label}</span>
+        </motion.div>
+      </AnimatePresence>
+      <div className="flex gap-1">
+        {steps.map((_, i) => (
+          <motion.div
+            key={i}
+            className="h-1 flex-1 rounded-full"
+            animate={{
+              backgroundColor: i <= step ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
+            }}
+            transition={{ duration: 0.3 }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Magic animation: Conversion boost badge
+function ConversionBadgeMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [conversion, setConversion] = React.useState(0);
+  const targetConversion = 25;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setConversion(targetConversion);
+      return;
+    }
+    const duration = 2000;
+    const steps = 25;
+    const stepValue = targetConversion / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += stepValue;
+      if (current >= targetConversion) {
+        setConversion(targetConversion);
+        clearInterval(interval);
+      } else {
+        setConversion(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute top-4 right-4 flex items-center gap-2 rounded-lg border bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+      <SparklesIcon className="size-4 text-green-500" />
+      <div className="flex flex-col">
+        <motion.span
+          className="text-lg font-bold tabular-nums text-green-500"
+          key={conversion}
+          initial={shouldReduceMotion ? undefined : { scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        >
+          +{conversion}%
+        </motion.span>
+        <span className="text-[10px] text-muted-foreground">conversion lift</span>
+      </div>
+    </div>
+  );
+}
 
 // Animation constants following Emil Kowalski principles
 const EASE_OUT_QUART = [0.165, 0.84, 0.44, 1] as const;
@@ -364,10 +471,11 @@ function SplitHero() {
 
               <div
                 className={cn(
-                  "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg transition-all duration-300",
+                  "group relative w-full overflow-hidden rounded-xl border bg-background shadow-lg transition-all duration-300",
                   monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
                 )}
               >
+                <Spotlight className="from-primary/20 via-purple-500/10 to-transparent" size={350} />
                 <Image
                   priority
                   quality={100}
@@ -389,6 +497,10 @@ function SplitHero() {
 
                 {/* Glossy reflection */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+
+                {/* Magic animations */}
+                <PaywallBuilderMagic />
+                <ConversionBadgeMagic />
               </div>
             </motion.div>
           </BlurFade>

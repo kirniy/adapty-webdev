@@ -1,11 +1,43 @@
 'use client';
 
 import * as React from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { CleanTestimonial, type TestimonialItem } from '@workspace/ui/components/clean-testimonial';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// Magic animation: Customer count badge
+function CustomerCountMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const totalCustomers = ADAPTY_TESTIMONIALS.length;
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.7, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>{totalCustomers}+ happy customers</span>
+    </motion.div>
+  );
+}
 
 // All testimonials from adapty.io homepage
 const ADAPTY_TESTIMONIALS: TestimonialItem[] = [
@@ -71,7 +103,11 @@ export function TestimonialsClean(): React.JSX.Element {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={500} />
-      <div className="container py-16 lg:py-24 relative z-10 flex items-center justify-center">
+      <div className="container py-16 lg:py-24 relative z-10 flex flex-col items-center justify-center gap-8">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+        <BlurFade>
+          <CustomerCountMagic />
+        </BlurFade>
         <CleanTestimonial testimonials={ADAPTY_TESTIMONIALS} />
       </div>
     </GridSection>

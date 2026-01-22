@@ -13,6 +13,36 @@ import { NumberTicker } from '~/components/fragments/number-ticket';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { SlideIn } from '~/components/fragments/slide-in';
+import { Spotlight } from '~/components/fragments/spotlight';
+import { BorderBeam } from '~/components/fragments/border-beam';
+
+// Magic animation: Enterprise scale badge
+function EnterpriseScaleMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.7, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>Live infrastructure</span>
+    </motion.div>
+  );
+}
 
 // EXACT stats from adapty.io/for-marketers (scraped 2026-01-21)
 // "Enterprise-grade battle-tested solution"
@@ -68,11 +98,15 @@ function CardsStats(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={400} />
       <div className="container py-16 lg:py-20 relative z-10">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={300} />
         {/* Heading */}
         <SlideIn className="mb-10 text-center" direction="up">
           <SiteHeading
             title="Enterprise-grade battle-tested solution"
           />
+          <div className="mt-4 flex justify-center">
+            <EnterpriseScaleMagic />
+          </div>
         </SlideIn>
 
         {/* Stats Grid */}
@@ -259,10 +293,19 @@ function GraphStats(): React.JSX.Element {
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <Card className={cn(
-                    "bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 overflow-hidden",
+                    "relative bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 overflow-hidden",
                     hoveredIndex === index && "border-primary/30 shadow-lg"
                   )}>
-                    <CardContent className="p-4">
+                    {hoveredIndex === index && (
+                      <BorderBeam
+                        size={120}
+                        duration={8}
+                        borderWidth={1.5}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary)/0)"
+                      />
+                    )}
+                    <CardContent className="relative z-10 p-4">
                       {/* Bar */}
                       <AnimatedBar
                         value={stat.value}

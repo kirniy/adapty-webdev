@@ -10,8 +10,10 @@ import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // Magnetic button that follows cursor (interaction-driven, not continuous)
 function MagneticButton({
@@ -75,6 +77,22 @@ function MagneticButton({
         />
       )}
 
+      {/* Pulsing ring effect for primary button */}
+      {variant === 'default' && !shouldReduceMotion && !isHovered && (
+        <motion.div
+          className="absolute inset-0 rounded-xl border-2 border-primary/50"
+          animate={{
+            scale: [1, 1.04, 1],
+            opacity: [0.6, 0, 0.6],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      )}
+
       <Link
         href={href}
         className={cn(
@@ -98,6 +116,50 @@ function MagneticButton({
   );
 }
 
+// Magic animation: Active users counter
+function ActiveUsersMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [count, setCount] = React.useState(14890);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setCount(prev => prev + Math.floor(Math.random() * 3) + 1);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.7, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.span
+        key={count}
+        initial={shouldReduceMotion ? {} : { y: -3, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.15 }}
+      >
+        {count.toLocaleString()} active users
+      </motion.span>
+    </motion.div>
+  );
+}
+
 // Trust indicator - simple hover effect
 function TrustIndicator({ children }: { children: React.ReactNode }) {
   return (
@@ -116,9 +178,21 @@ export function CTABeam(): React.JSX.Element {
       <SectionBackground height={600} />
 
       <div className="container py-20 lg:py-32 relative z-10">
-        <div className="mx-auto max-w-3xl text-center">
+        <Spotlight className="from-primary/20 via-primary/5 to-transparent" size={400} />
+        <div className="mx-auto max-w-3xl text-center relative">
+          {/* Decorative container with BorderBeam */}
+          <div className="absolute -inset-8 rounded-3xl border border-border/30 bg-background/30 backdrop-blur-sm overflow-hidden -z-10">
+            <BorderBeam
+              size={200}
+              duration={15}
+              borderWidth={1}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary)/0)"
+              className="opacity-40"
+            />
+          </div>
           {/* Badge */}
-          <BlurFade className="flex justify-center mb-8">
+          <BlurFade className="flex flex-col items-center gap-3 mb-8">
             <Badge
               variant="outline"
               className="rounded-full px-5 py-2 text-sm font-medium"
@@ -126,6 +200,7 @@ export function CTABeam(): React.JSX.Element {
               <SparklesIcon className="mr-2 size-4 text-primary" />
               Start your growth journey
             </Badge>
+            <ActiveUsersMagic />
           </BlurFade>
 
           {/* Headline */}

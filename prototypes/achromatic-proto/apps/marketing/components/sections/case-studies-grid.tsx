@@ -7,10 +7,12 @@ import { motion, useReducedMotion } from 'motion/react';
 
 import { Card, CardContent } from '@workspace/ui/components/card';
 
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT content from adapty.io/case-studies (scraped 2026-01-21)
 
@@ -183,6 +185,84 @@ const G2_AWARDS = [
   'Most Implementable'
 ];
 
+// Magic animation: Success stories counter
+function SuccessStoriesMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [count, setCount] = React.useState(0);
+  const totalStories = CASE_STUDIES.length;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setCount(totalStories);
+      return;
+    }
+    const interval = setInterval(() => {
+      setCount(prev => {
+        if (prev >= totalStories) return totalStories;
+        return prev + 1;
+      });
+    }, 80);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion, totalStories]);
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.2 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-primary"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.span
+        key={count}
+        initial={shouldReduceMotion ? {} : { y: -5, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.1 }}
+      >
+        {count}+ success stories
+      </motion.span>
+    </motion.div>
+  );
+}
+
+// Magic animation: G2 rating badge
+function G2RatingBadgeMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.span
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.15, 1],
+        }}
+        transition={{
+          duration: 0.6,
+          repeat: Infinity,
+          repeatDelay: 2.5,
+        }}
+      >
+        500+
+      </motion.span>
+      <span>reviews on G2</span>
+    </motion.div>
+  );
+}
+
 // Featured testimonial card with hover animation
 function TestimonialCard({ testimonial, index }: { testimonial: typeof FEATURED_TESTIMONIALS[0]; index: number }) {
   const shouldReduceMotion = useReducedMotion();
@@ -196,9 +276,19 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof FEATURED_
       transition={{ type: 'spring', duration: 0.25, bounce: 0.1 }}
     >
       <Card
-        className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-150 ease-out motion-reduce:transition-none"
+        className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-150 ease-out motion-reduce:transition-none relative overflow-hidden"
       >
-        <CardContent className="p-6">
+        {isHovered && (
+          <BorderBeam
+            size={150}
+            duration={8}
+            borderWidth={1.5}
+            colorFrom="hsl(var(--primary))"
+            colorTo="hsl(var(--primary)/0)"
+          />
+        )}
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
+        <CardContent className="p-6 relative">
           <motion.p
             className="font-semibold text-primary mb-2"
             animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.02 : 1 }}
@@ -232,8 +322,18 @@ function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index:
       transition={{ type: 'spring', duration: 0.25, bounce: 0.1 }}
     >
       <Link href={`https://adapty.io${study.link}`} target="_blank" rel="noopener noreferrer" className="block h-full">
-        <Card interactive className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg group cursor-pointer transition-shadow duration-150">
-          <CardContent className="p-6">
+        <Card interactive className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg group cursor-pointer transition-shadow duration-150 relative overflow-hidden">
+          {isHovered && (
+            <BorderBeam
+              size={120}
+              duration={8}
+              borderWidth={1.5}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary)/0)"
+            />
+          )}
+          <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={180} />
+          <CardContent className="p-6 relative">
             <motion.div
               animate={shouldReduceMotion ? undefined : {
                 scale: isHovered ? 1.1 : 1,
@@ -300,6 +400,9 @@ export function CaseStudiesGrid(): React.JSX.Element {
             title="Success stories"
             description="See how apps of all sizes grow their subscription revenue with Adapty."
           />
+          <div className="mt-4 flex justify-center">
+            <SuccessStoriesMagic />
+          </div>
         </BlurFade>
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -315,8 +418,10 @@ export function CaseStudiesGrid(): React.JSX.Element {
           <div className="mt-20 text-center">
             <SiteHeading
               title="Trusted for usability and customer service"
-              description="Based on 500+ reviews on G2"
             />
+            <div className="mt-4 flex justify-center">
+              <G2RatingBadgeMagic />
+            </div>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               {G2_AWARDS.map((award, index) => (
                 <G2AwardBadge key={index} award={award} />

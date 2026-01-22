@@ -34,14 +34,43 @@ import {
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { ScaleOnHover } from '~/components/fragments/scale-on-hover';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
 
 // Helper to get image path based on selected image set
 function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
   return basePath.replace('/assets/hero/', `/assets/hero/${imageSet}/`);
+}
+
+// Magic animation: Platform capabilities badge
+function PlatformCapabilitiesMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-primary"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>4 core capabilities</span>
+    </motion.div>
+  );
 }
 
 // Feature tabs configuration
@@ -194,6 +223,9 @@ export function FeaturesTabbed(): React.JSX.Element {
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             From no-code paywall design to AI-powered analytics, Adapty gives you the complete toolkit for subscription success.
           </p>
+          <div className="mt-4">
+            <PlatformCapabilitiesMagic />
+          </div>
         </BlurFade>
 
         {/* Tabs - scrollable on mobile */}
@@ -297,10 +329,18 @@ export function FeaturesTabbed(): React.JSX.Element {
                       animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, rotate: 0 }}
                       transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
                       className={cn(
-                        "overflow-hidden rounded-xl border bg-card shadow-lg ring-1 ring-border/50",
+                        "overflow-hidden rounded-xl border bg-card shadow-lg ring-1 ring-border/50 relative",
                         monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
                       )}
                     >
+                      <BorderBeam
+                        size={200}
+                        duration={12}
+                        borderWidth={1.5}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary)/0)"
+                        className="opacity-50"
+                      />
                       <Image
                         src={getImagePath(tab.image, imageSet)}
                         alt={`${tab.label} screenshot`}

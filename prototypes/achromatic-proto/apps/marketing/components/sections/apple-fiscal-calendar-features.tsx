@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ExternalLinkIcon, CalendarDaysIcon, DollarSignIcon, ClockIcon } from 'lucide-react';
+import { ExternalLinkIcon, CalendarDaysIcon, DollarSignIcon, ClockIcon, ArrowRightIcon, ChevronRightIcon } from 'lucide-react';
+import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Card, CardContent } from '@workspace/ui/components/card';
 import {
@@ -11,11 +12,14 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@workspace/ui/components/accordion';
+import { cn } from '@workspace/ui/lib/utils';
 
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { Spotlight } from '~/components/fragments/spotlight';
+import { BorderBeam } from '~/components/fragments/border-beam';
 
 // EXACT content from adapty.io/apple-fiscal-calendar (scraped 2026-01-21)
 
@@ -63,7 +67,177 @@ const FAQS = [
   }
 ];
 
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// Calendar cycling through fiscal months
+function CalendarMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const months = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
+  const [currentMonth, setCurrentMonth] = React.useState(0);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setCurrentMonth((prev) => (prev + 1) % months.length);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion, months.length]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex justify-center">
+        <div className="w-16 h-16 rounded-lg bg-primary/10 flex flex-col items-center justify-center">
+          <span className="text-[10px] text-muted-foreground">FY</span>
+          <span className="text-lg font-bold text-primary">{months[0]}</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex justify-center">
+      <div className="w-16 h-16 rounded-lg bg-primary/10 flex flex-col items-center justify-center overflow-hidden">
+        <span className="text-[10px] text-muted-foreground">FY</span>
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={currentMonth}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="text-lg font-bold text-primary"
+          >
+            {months[currentMonth]}
+          </motion.span>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
+// 33-day countdown timer animation
+function CountdownMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [days, setDays] = React.useState(33);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setDays((prev) => (prev <= 1 ? 33 : prev - 1));
+    }, 200);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex justify-center items-center gap-2">
+        <div className="text-2xl font-bold text-primary">33</div>
+        <div className="text-xs text-muted-foreground">days</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex justify-center items-center gap-2">
+      <motion.div
+        key={days}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="text-2xl font-bold text-primary"
+      >
+        {days}
+      </motion.div>
+      <div className="text-xs text-muted-foreground">days</div>
+    </div>
+  );
+}
+
+// Thursday payment indicator
+function PaydayMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  const [activeDay, setActiveDay] = React.useState(3); // Thursday
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setActiveDay((prev) => {
+        // Bounce between days then settle on Thursday
+        if (prev < 3) return prev + 1;
+        if (prev === 3) return 0;
+        return 3;
+      });
+    }, 600);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex justify-center gap-1">
+        {days.map((day, i) => (
+          <div
+            key={day}
+            className={cn(
+              "w-8 h-6 rounded text-[10px] flex items-center justify-center font-medium",
+              i === 3 ? "bg-emerald-500/20 text-emerald-600" : "bg-muted/50 text-muted-foreground"
+            )}
+          >
+            {day}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex justify-center gap-1">
+      {days.map((day, i) => (
+        <motion.div
+          key={day}
+          animate={{
+            scale: activeDay === i ? 1.1 : 1,
+            opacity: activeDay === i ? 1 : 0.5,
+          }}
+          transition={{ type: 'spring', duration: 0.2, bounce: 0.3 }}
+          className={cn(
+            "w-8 h-6 rounded text-[10px] flex items-center justify-center font-medium",
+            activeDay === i && i === 3 ? "bg-emerald-500/20 text-emerald-600" : "bg-muted/50 text-muted-foreground"
+          )}
+        >
+          {day}
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+const STAT_CARDS = [
+  {
+    icon: CalendarDaysIcon,
+    title: '364 Days',
+    description: "Apple's fiscal year uses a 5-4-4 week system with 13 weeks per quarter",
+    magic: CalendarMagic,
+  },
+  {
+    icon: ClockIcon,
+    title: '33 Day Delay',
+    description: 'Apple pays 33 days after each fiscal month ends',
+    magic: CountdownMagic,
+  },
+  {
+    icon: DollarSignIcon,
+    title: 'Thursday Payments',
+    description: 'Payments typically arrive on Thursdays throughout the year',
+    magic: PaydayMagic,
+  },
+];
+
 export function AppleFiscalCalendarFeatures(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+  const [hoveredCard, setHoveredCard] = React.useState<number | null>(null);
+  const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={2500} />
@@ -76,43 +250,54 @@ export function AppleFiscalCalendarFeatures(): React.JSX.Element {
           />
         </BlurFade>
 
-        <BlurFade delay={0.1}>
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="bg-background/50 backdrop-blur-sm border-border/50">
-              <CardContent className="p-6 text-center">
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary mx-auto mb-4">
-                  <CalendarDaysIcon className="size-6" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">364 Days</h3>
-                <p className="text-sm text-muted-foreground">
-                  Apple's fiscal year uses a 4-4-5 week system with 13 weeks per quarter
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-background/50 backdrop-blur-sm border-border/50">
-              <CardContent className="p-6 text-center">
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary mx-auto mb-4">
-                  <ClockIcon className="size-6" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">33 Day Delay</h3>
-                <p className="text-sm text-muted-foreground">
-                  Apple pays 33 days after each fiscal month ends
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-background/50 backdrop-blur-sm border-border/50">
-              <CardContent className="p-6 text-center">
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary mx-auto mb-4">
-                  <DollarSignIcon className="size-6" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Thursday Payments</h3>
-                <p className="text-sm text-muted-foreground">
-                  Payments typically arrive on Thursdays throughout the year
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </BlurFade>
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {STAT_CARDS.map((card, index) => {
+            const isHovered = hoveredCard === index;
+            const MagicComponent = card.magic;
+
+            return (
+              <BlurFade key={index} delay={0.1 + index * 0.03}>
+                <motion.div
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                  animate={shouldReduceMotion ? undefined : {
+                    y: isHovered ? -6 : 0,
+                    scale: isHovered ? 1.02 : 1,
+                  }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                  className={cn(
+                    "group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-200",
+                    isHovered && "border-primary/30 shadow-lg shadow-primary/5"
+                  )}
+                >
+                  <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
+
+                  <div className="relative p-6 text-center">
+                    <motion.div
+                      animate={shouldReduceMotion ? undefined : {
+                        scale: isHovered ? 1.15 : 1,
+                        rotate: isHovered ? 8 : 0,
+                      }}
+                      transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
+                      className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary mx-auto mb-4"
+                    >
+                      <card.icon className="size-6" />
+                    </motion.div>
+                    <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{card.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {card.description}
+                    </p>
+
+                    {/* Magic animation */}
+                    <div className="pt-4 border-t border-border/30">
+                      <MagicComponent />
+                    </div>
+                  </div>
+                </motion.div>
+              </BlurFade>
+            );
+          })}
+        </div>
 
         {/* Payment dates table */}
         <BlurFade delay={0.15}>
@@ -122,10 +307,10 @@ export function AppleFiscalCalendarFeatures(): React.JSX.Element {
               description="In case you prefer to have the Apple fiscal calendar in spreadsheet format, we've got you covered."
             />
 
-            <div className="mt-8 overflow-x-auto">
+            <div className="mt-8 overflow-x-auto rounded-xl border border-border/50 bg-background/50 backdrop-blur-sm">
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="border-b border-border/50">
+                  <tr className="border-b border-border/50 bg-muted/30">
                     <th className="text-left py-4 px-4 font-semibold">Payment Date</th>
                     <th className="text-left py-4 px-4 font-semibold">Fiscal Month</th>
                     <th className="text-left py-4 px-4 font-semibold">Period</th>
@@ -133,14 +318,29 @@ export function AppleFiscalCalendarFeatures(): React.JSX.Element {
                 </thead>
                 <tbody>
                   {PAYMENT_DATES.map((row, index) => (
-                    <tr
+                    <motion.tr
                       key={index}
-                      className="border-b border-border/30 hover:bg-muted/30 transition-colors duration-150 ease-out motion-reduce:transition-none"
+                      onMouseEnter={() => setHoveredRow(index)}
+                      onMouseLeave={() => setHoveredRow(null)}
+                      animate={shouldReduceMotion ? undefined : {
+                        backgroundColor: hoveredRow === index ? 'hsl(var(--primary) / 0.05)' : 'transparent',
+                      }}
+                      transition={{ duration: 0.15 }}
+                      className="border-b border-border/30"
                     >
-                      <td className="py-4 px-4 font-medium">{row.paymentDate}</td>
+                      <td className="py-4 px-4">
+                        <motion.span
+                          animate={shouldReduceMotion ? undefined : {
+                            color: hoveredRow === index ? 'hsl(var(--primary))' : 'hsl(var(--foreground))',
+                          }}
+                          className="font-medium"
+                        >
+                          {row.paymentDate}
+                        </motion.span>
+                      </td>
                       <td className="py-4 px-4 text-muted-foreground">{row.fiscalMonth}</td>
                       <td className="py-4 px-4 text-muted-foreground">{row.period}</td>
-                    </tr>
+                    </motion.tr>
                   ))}
                 </tbody>
               </table>
@@ -151,21 +351,42 @@ export function AppleFiscalCalendarFeatures(): React.JSX.Element {
         {/* Adapty Finance CTA */}
         <BlurFade delay={0.2}>
           <div className="mt-20 text-center">
-            <div className="inline-block p-8 rounded-2xl bg-muted/50 border border-border/50 max-w-2xl">
-              <h3 className="text-xl font-semibold mb-2">Get up to 85% of your Apple & Google revenue tomorrow</h3>
-              <p className="text-muted-foreground mb-4">
-                Start scaling without limits with Adapty Finance.
-              </p>
-              <Link
-                href="https://adapty.io/finance/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary font-medium hover:underline inline-flex items-center gap-1"
-              >
-                Learn more about Adapty Finance
-                <ExternalLinkIcon className="size-4" />
-              </Link>
-            </div>
+            <motion.div
+              whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.01 }}
+              transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+              className="relative inline-block p-8 rounded-2xl bg-gradient-to-br from-primary/5 via-background/80 to-background/50 border border-primary/20 max-w-2xl overflow-hidden"
+            >
+              <Spotlight className="from-primary/20 via-primary/5 to-transparent" size={300} />
+              <BorderBeam
+                size={200}
+                duration={12}
+                borderWidth={1.5}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+                className="opacity-60"
+              />
+
+              <div className="relative">
+                <h3 className="text-xl font-semibold mb-2">Get up to 85% of your Apple and Google revenue tomorrow</h3>
+                <p className="text-muted-foreground mb-4">
+                  Start scaling without limits with Adapty Finance.
+                </p>
+                <Link
+                  href="https://adapty.io/finance/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group text-primary font-medium hover:underline inline-flex items-center gap-2"
+                >
+                  Learn more about Adapty Finance
+                  <motion.span
+                    animate={shouldReduceMotion ? undefined : { x: [0, 3, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRightIcon className="size-4" />
+                  </motion.span>
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </BlurFade>
 

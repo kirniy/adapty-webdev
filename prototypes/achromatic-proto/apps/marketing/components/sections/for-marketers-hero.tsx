@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, CheckIcon, PlayIcon, PaletteIcon, TestTube2Icon, TargetIcon, BarChart3Icon } from 'lucide-react';
+import { ArrowRightIcon, CheckIcon, PlayIcon, PaletteIcon, TestTube2Icon, TargetIcon, BarChart3Icon, SparklesIcon, TrendingUpIcon } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -15,9 +15,122 @@ import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { SlideIn } from '~/components/fragments/slide-in';
 import { ScaleOnHover } from '~/components/fragments/scale-on-hover';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+
+// Magic animation: No-code builder progress
+function NoCodeBuilderMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [step, setStep] = React.useState(0);
+
+  const steps = [
+    { label: 'Designing paywall...', progress: 40 },
+    { label: 'Adding pricing...', progress: 70 },
+    { label: 'Published!', progress: 100 },
+  ];
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setStep((prev) => (prev + 1) % steps.length);
+    }, 1800);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion, steps.length]);
+
+  return (
+    <div className="absolute top-4 right-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg w-36"
+      >
+        <div className="flex items-center gap-2 mb-1.5">
+          <SparklesIcon className="size-3 text-primary" />
+          <span className="text-[10px] font-medium text-muted-foreground">No-code</span>
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden mb-1">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${steps[step].progress}%` }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+                className={cn(
+                  "h-full rounded-full",
+                  step === 2 ? "bg-green-500" : "bg-primary"
+                )}
+              />
+            </div>
+            <p className={cn(
+              "text-[10px] font-medium",
+              step === 2 ? "text-green-600" : "text-muted-foreground"
+            )}>
+              {steps[step].label}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+    </div>
+  );
+}
+
+// Magic animation: Conversion boost badge
+function ConversionBoostMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [conversion, setConversion] = React.useState(0);
+  const targetConversion = 32;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setConversion(targetConversion);
+      return;
+    }
+    const timeout = setTimeout(() => {
+      const duration = 1500;
+      const steps = 50;
+      const increment = targetConversion / steps;
+      let current = 0;
+      const interval = setInterval(() => {
+        current += increment;
+        if (current >= targetConversion) {
+          setConversion(targetConversion);
+          clearInterval(interval);
+        } else {
+          setConversion(Math.floor(current));
+        }
+      }, duration / steps);
+      return () => clearInterval(interval);
+    }, 600);
+    return () => clearTimeout(timeout);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute bottom-4 left-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+      >
+        <div className="size-5 rounded-full bg-green-500/10 flex items-center justify-center">
+          <TrendingUpIcon className="size-3 text-green-600" />
+        </div>
+        <div>
+          <p className="text-xs font-bold text-green-600">+{conversion}%</p>
+          <p className="text-[10px] text-muted-foreground">Conversion</p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 // EXACT content from adapty.io/for-marketers (scraped 2026-01-21)
 const HERO_CONTENT = {
@@ -159,6 +272,9 @@ function SplitHero(): React.JSX.Element {
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
+              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <NoCodeBuilderMagic />
+              <ConversionBoostMagic />
               <Image
                 priority
                 quality={100}

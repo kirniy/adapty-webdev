@@ -25,6 +25,7 @@ import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { SlideIn } from '~/components/fragments/slide-in';
 import { ScaleOnHover } from '~/components/fragments/scale-on-hover';
+import { Spotlight } from '~/components/fragments/spotlight';
 import {
   useDashedThicknessVariant,
   useGridColorVariant,
@@ -42,6 +43,56 @@ function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
   // basePath is like '/assets/hero/light-feature1.webp'
   // We need to transform it to '/assets/hero/set1/light-feature1.webp'
   return basePath.replace('/assets/hero/', `/assets/hero/${imageSet}/`);
+}
+
+// Magic animation: Live apps counter
+function LiveAppsMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [count, setCount] = React.useState(14950);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setCount(15000);
+      return;
+    }
+    const interval = setInterval(() => {
+      setCount(prev => {
+        if (prev >= 15000) return 15000;
+        return prev + Math.floor(Math.random() * 3) + 1;
+      });
+    }, 150);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.1 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.7, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.span
+        key={count}
+        initial={shouldReduceMotion ? {} : { y: -3, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.1 }}
+      >
+        {count.toLocaleString()}+ apps powered
+      </motion.span>
+    </motion.div>
+  );
 }
 
 // Feature tab content data
@@ -194,7 +245,7 @@ function HeroDescription(): React.JSX.Element {
   );
 }
 
-// Animated hero button with glow and press effects
+// Animated hero button with glow, pulse, and press effects
 function HeroButton({
   href,
   variant = 'default',
@@ -205,6 +256,7 @@ function HeroButton({
   children: React.ReactNode;
 }) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
@@ -217,6 +269,32 @@ function HeroButton({
             scale: isHovered ? 1.15 : 1,
           }}
           transition={{ duration: 0.25 }}
+        />
+      )}
+      {/* Pulsing ring effect for primary button */}
+      {variant === 'default' && !shouldReduceMotion && (
+        <motion.div
+          className="absolute inset-0 rounded-xl border-2 border-primary/40"
+          animate={{
+            scale: [1, 1.06, 1],
+            opacity: [0.4, 0, 0.4],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      )}
+      {/* BorderBeam for premium look */}
+      {variant === 'default' && (
+        <BorderBeam
+          size={80}
+          duration={5}
+          borderWidth={1.5}
+          colorFrom="hsl(var(--primary))"
+          colorTo="hsl(var(--primary)/0)"
+          className="opacity-60"
         />
       )}
       <ScaleOnHover>
@@ -238,13 +316,16 @@ function HeroButton({
 function HeroButtons(): React.JSX.Element {
   return (
     <SlideIn delay={0.4} duration={0.6} direction="up">
-      <div className="mx-auto mt-8 flex justify-center gap-3">
-        <HeroButton href="https://app.adapty.io/registration" variant="default">
-          Start for free
-        </HeroButton>
-        <HeroButton href="/schedule-demo" variant="outline">
-          Book a demo
-        </HeroButton>
+      <div className="mx-auto mt-8 flex flex-col items-center gap-4">
+        <div className="flex justify-center gap-3">
+          <HeroButton href="https://app.adapty.io/registration" variant="default">
+            Start for free
+          </HeroButton>
+          <HeroButton href="/schedule-demo" variant="outline">
+            Book a demo
+          </HeroButton>
+        </div>
+        <LiveAppsMagic />
       </div>
     </SlideIn>
   );
@@ -674,13 +755,65 @@ function HeroFeatureShowcase(): React.JSX.Element {
   );
 }
 
-// Trust signal - simple text only
+// Magic animation: Live apps counter
+function LiveAppsCounter(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+  const [count, setCount] = React.useState(15000);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+
+    // Gradually increase to show live growth
+    const interval = setInterval(() => {
+      setCount(prev => prev + Math.floor(Math.random() * 2) + 1);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <motion.span
+      key={count}
+      initial={shouldReduceMotion ? {} : { y: -5, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.2 }}
+      className="font-medium text-foreground"
+    >
+      {count.toLocaleString()}+
+    </motion.span>
+  );
+}
+
+// Trust signal with live counter
 function HeroTrustSignal(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <SlideIn delay={0.5} duration={0.6} direction="up">
-      <p className="mt-8 text-center text-sm text-muted-foreground">
-        Trusted by <span className="font-medium text-foreground">15,000+</span> apps worldwide
-      </p>
+      <div className="mt-8 flex flex-col items-center gap-2">
+        <p className="text-center text-sm text-muted-foreground">
+          Trusted by <LiveAppsCounter /> apps worldwide
+        </p>
+        <motion.div
+          className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400"
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.3 }}
+        >
+          <motion.div
+            className="size-1.5 rounded-full bg-emerald-500"
+            animate={shouldReduceMotion ? {} : {
+              scale: [1, 1.3, 1],
+              opacity: [1, 0.7, 1],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+          <span>Growing daily</span>
+        </motion.div>
+      </div>
     </SlideIn>
   );
 }
@@ -691,6 +824,7 @@ export function Hero(): React.JSX.Element {
       <SectionBackground height={900} />
       <MainDashedGridLines />
       <div className="relative z-10 pt-20 sm:pt-24 md:pt-28 lg:pt-32">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={450} />
         <div className="container">
           <div className="mx-auto max-w-4xl">
             <HeroPill />

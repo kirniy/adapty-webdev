@@ -18,10 +18,12 @@ import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 import { cn } from '@workspace/ui/lib/utils';
 import { Badge } from '@workspace/ui/components/badge';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
-import { BlurFade } from '~/components/fragments/blur-fade';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { paywallBuilderContent } from '~/lib/content';
 
 // =============================================================================
@@ -70,6 +72,33 @@ const CUSTOMIZATION_FEATURES = paywallBuilderContent.customization.items.map(ite
 // CONTENT
 // =============================================================================
 const { customization } = paywallBuilderContent;
+
+// Magic animation: Customization options counter
+function CustomizationMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>{CUSTOMIZATION_FEATURES.length} options</span>
+    </motion.div>
+  );
+}
 
 // =============================================================================
 // SHARED COMPONENTS
@@ -122,12 +151,25 @@ function CustomizationCard({
 
       <div
         className={cn(
-          'relative h-full rounded-2xl border bg-background/60 backdrop-blur-sm p-6 transition-all duration-200',
+          'relative h-full rounded-2xl border bg-background/60 backdrop-blur-sm p-6 transition-all duration-200 overflow-hidden',
           isHovered
             ? 'border-foreground/20 shadow-xl shadow-foreground/5'
             : 'border-border/50'
         )}
       >
+        <Spotlight
+          className="from-primary/15 via-primary/5 to-transparent"
+          size={200}
+        />
+        {isHovered && (
+          <BorderBeam
+            size={120}
+            duration={8}
+            borderWidth={1.5}
+            colorFrom="hsl(var(--primary))"
+            colorTo="hsl(var(--primary)/0)"
+          />
+        )}
         {/* Icon with micro-interaction */}
         <motion.div
           animate={
@@ -143,7 +185,7 @@ function CustomizationCard({
             ease: ANIMATION.icon.ease,
           }}
           className={cn(
-            'mb-4 flex size-12 items-center justify-center rounded-xl transition-colors duration-200',
+            'mb-4 flex size-12 items-center justify-center rounded-xl transition-colors duration-200 relative z-10',
             isHovered
               ? 'bg-foreground text-background'
               : 'bg-muted/50 text-foreground'
@@ -153,14 +195,14 @@ function CustomizationCard({
         </motion.div>
 
         {/* Content */}
-        <h3 className="mb-2 text-lg font-semibold tracking-tight">{title}</h3>
-        <p className="text-sm leading-relaxed text-muted-foreground">
+        <h3 className="mb-2 text-lg font-semibold tracking-tight relative z-10">{title}</h3>
+        <p className="text-sm leading-relaxed text-muted-foreground relative z-10">
           {description}
         </p>
 
         {/* Subtle indicator line */}
         <motion.div
-          className="mt-4 h-px bg-gradient-to-r from-foreground/20 to-transparent"
+          className="mt-4 h-px bg-gradient-to-r from-foreground/20 to-transparent relative z-10"
           initial={{ scaleX: 0, originX: 0 }}
           animate={{ scaleX: isHovered ? 1 : 0 }}
           transition={{ duration: 0.3, ease: EASE_OUT_QUART }}
@@ -181,11 +223,15 @@ function GridCustomization() {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
       <div className="container relative z-10 py-20">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
         <BlurFade delay={ANIMATION.stagger.base}>
           <SiteHeading
             title={customization.headline}
             description={customization.description}
           />
+          <div className="mt-4 flex justify-center">
+            <CustomizationMagic />
+          </div>
         </BlurFade>
 
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -239,11 +285,15 @@ function CarouselCustomization() {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={700} />
       <div className="container relative z-10 py-20">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
         <BlurFade delay={ANIMATION.stagger.base}>
           <SiteHeading
             title={customization.headline}
             description={customization.description}
           />
+          <div className="mt-4 flex justify-center">
+            <CustomizationMagic />
+          </div>
         </BlurFade>
 
         <BlurFade delay={ANIMATION.stagger.base * 2}>
@@ -319,12 +369,25 @@ function CarouselCustomization() {
                     >
                       <div
                         className={cn(
-                          'h-full rounded-2xl border bg-background/60 backdrop-blur-sm p-6 transition-all duration-200',
+                          'h-full rounded-2xl border bg-background/60 backdrop-blur-sm p-6 transition-all duration-200 overflow-hidden relative',
                           isCardHovered
                             ? 'border-foreground/20 shadow-xl'
                             : 'border-border/50'
                         )}
                       >
+                        <Spotlight
+                          className="from-primary/15 via-primary/5 to-transparent"
+                          size={200}
+                        />
+                        {isCardHovered && (
+                          <BorderBeam
+                            size={120}
+                            duration={8}
+                            borderWidth={1.5}
+                            colorFrom="hsl(var(--primary))"
+                            colorTo="hsl(var(--primary)/0)"
+                          />
+                        )}
                         <motion.div
                           animate={
                             shouldReduceMotion
@@ -339,7 +402,7 @@ function CarouselCustomization() {
                             ease: ANIMATION.icon.ease,
                           }}
                           className={cn(
-                            'mb-4 flex size-14 items-center justify-center rounded-xl transition-colors duration-200',
+                            'mb-4 flex size-14 items-center justify-center rounded-xl transition-colors duration-200 relative z-10',
                             isCardHovered
                               ? 'bg-foreground text-background'
                               : 'bg-muted/50 text-foreground'
@@ -347,10 +410,10 @@ function CarouselCustomization() {
                         >
                           <IconComponent className="size-7" strokeWidth={1.5} />
                         </motion.div>
-                        <h3 className="mb-2 text-lg font-semibold">
+                        <h3 className="mb-2 text-lg font-semibold relative z-10">
                           {item.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground relative z-10">
                           {item.description}
                         </p>
                       </div>
@@ -403,6 +466,7 @@ function ExpandableCustomization() {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={900} />
       <div className="container relative z-10 py-20">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
         <div className="grid items-start gap-12 lg:grid-cols-2">
           {/* Left: Sticky heading */}
           <div className="lg:sticky lg:top-24">
@@ -414,6 +478,9 @@ function ExpandableCustomization() {
                 <p className="text-lg text-muted-foreground">
                   {paywallBuilderContent.customization.description} Click each option to learn more.
                 </p>
+                <div className="mt-2">
+                  <CustomizationMagic />
+                </div>
               </div>
             </BlurFade>
 

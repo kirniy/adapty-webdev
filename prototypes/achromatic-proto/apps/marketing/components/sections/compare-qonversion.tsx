@@ -2,18 +2,22 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon } from "lucide-react";
+import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon, TrendingUpIcon, ZapIcon, ShieldCheckIcon } from "lucide-react";
+import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 
 import { Button } from "@workspace/ui/components/button";
 import {
   Card,
   CardContent,
 } from "@workspace/ui/components/card";
+import { cn } from "@workspace/ui/lib/utils";
 
+import { BorderBeam } from "~/components/fragments/border-beam";
 import { GridSection } from "~/components/fragments/grid-section";
 import { SectionBackground } from "~/components/fragments/section-background";
 import { SiteHeading } from "~/components/fragments/site-heading";
 import { BlurFade } from "~/components/fragments/blur-fade";
+import { Spotlight } from "~/components/fragments/spotlight";
 
 // EXACT content from adapty.io/compare/qonversion (scraped 2026-01-21)
 
@@ -310,6 +314,137 @@ const TESTIMONIALS = [
   },
 ];
 
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// Revenue multiplier animation
+function RevenueMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [multiplier, setMultiplier] = React.useState(1);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setMultiplier((prev) => (prev >= 3 ? 1 : prev + 0.5));
+    }, 1200);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-center justify-center gap-2 py-4">
+        <span className="text-xl font-bold text-primary">+3x MRR</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center gap-2 py-4">
+      <motion.span
+        className="text-xl font-bold text-primary"
+        key={multiplier}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+      >
+        +{multiplier.toFixed(1)}x MRR
+      </motion.span>
+    </div>
+  );
+}
+
+// A/B Testing visualization
+function ABTestMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [winner, setWinner] = React.useState(0);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setWinner((prev) => (prev + 1) % 3);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  const variants = ['A', 'B', 'C'];
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-center justify-center gap-2 py-4">
+        {variants.map((v, i) => (
+          <div
+            key={i}
+            className={cn(
+              "w-8 h-8 rounded flex items-center justify-center text-sm font-bold",
+              i === 0 ? "bg-primary text-white" : "bg-muted text-muted-foreground"
+            )}
+          >
+            {v}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center gap-2 py-4">
+      {variants.map((v, i) => (
+        <motion.div
+          key={i}
+          className={cn(
+            "w-8 h-8 rounded flex items-center justify-center text-sm font-bold transition-colors duration-300",
+            winner === i ? "bg-primary text-white" : "bg-muted text-muted-foreground"
+          )}
+          animate={{
+            scale: winner === i ? 1.15 : 1,
+            y: winner === i ? -4 : 0,
+          }}
+          transition={{ type: 'spring', duration: 0.3 }}
+        >
+          {v}
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+// Growth chart animation
+function GrowthMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const bars = [20, 35, 30, 50, 45, 70, 65, 85];
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-end gap-1 h-8 justify-center">
+        {bars.map((h, i) => (
+          <div key={i} className="w-2 bg-primary/60 rounded-sm" style={{ height: `${h}%` }} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-end gap-1 h-8 justify-center">
+      {bars.map((height, i) => (
+        <motion.div
+          key={i}
+          className="w-2 bg-primary/60 rounded-sm"
+          initial={{ height: 0 }}
+          animate={{ height: `${height}%` }}
+          transition={{
+            duration: 0.5,
+            delay: i * 0.08,
+            repeat: Infinity,
+            repeatType: "reverse",
+            repeatDelay: 2,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function StatusIcon({
   status,
 }: {
@@ -338,6 +473,11 @@ function StatusIcon({
 }
 
 export function CompareQonversion(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+  const [hoveredBenefit, setHoveredBenefit] = React.useState<number | null>(null);
+  const [hoveredFeature, setHoveredFeature] = React.useState<number | null>(null);
+  const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
+
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={6000} />
@@ -353,21 +493,46 @@ export function CompareQonversion(): React.JSX.Element {
           </BlurFade>
           <BlurFade delay={0.1}>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg">
-                <Link href="/schedule-demo">Schedule A Demo</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="https://app.adapty.io/registration">
-                  Start for free
-                </Link>
-              </Button>
+              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button asChild size="lg">
+                  <Link href="/schedule-demo">Schedule A Demo</Link>
+                </Button>
+              </motion.div>
+              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button asChild variant="outline" size="lg">
+                  <Link href="https://app.adapty.io/registration">
+                    Start for free
+                  </Link>
+                </Button>
+              </motion.div>
             </div>
           </BlurFade>
+          <BlurFade delay={0.12}>
+            <ABTestMagic />
+          </BlurFade>
           <BlurFade delay={0.15}>
-            <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm">
-              <span className="rounded-full bg-muted px-4 py-2">No-code paywall A/B testing</span>
-              <span className="rounded-full bg-muted px-4 py-2">+3x MRR with Adapty</span>
-              <span className="rounded-full bg-muted px-4 py-2">Advanced subscription analytics</span>
+            <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
+              <motion.span
+                className="rounded-full bg-muted px-4 py-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                No-code paywall A/B testing
+              </motion.span>
+              <motion.span
+                className="rounded-full bg-muted px-4 py-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+              >
+                +3x MRR with Adapty
+              </motion.span>
+              <motion.span
+                className="rounded-full bg-muted px-4 py-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+              >
+                Advanced subscription analytics
+              </motion.span>
             </div>
           </BlurFade>
         </div>
@@ -380,12 +545,36 @@ export function CompareQonversion(): React.JSX.Element {
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               {BENEFITS.map((benefit, index) => (
-                <Card key={index} className="bg-card/50">
-                  <CardContent className="p-6">
-                    <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
-                    <p className="text-sm text-muted-foreground">{benefit.description}</p>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  onMouseEnter={() => setHoveredBenefit(index)}
+                  onMouseLeave={() => setHoveredBenefit(null)}
+                  animate={shouldReduceMotion ? undefined : {
+                    y: hoveredBenefit === index ? -6 : 0,
+                    scale: hoveredBenefit === index ? 1.02 : 1,
+                  }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className={cn(
+                    "h-full relative overflow-hidden transition-all duration-200",
+                    hoveredBenefit === index && "border-primary/50 shadow-lg"
+                  )}>
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
+                    {hoveredBenefit === index && (
+                      <BorderBeam
+                        size={120}
+                        duration={8}
+                        borderWidth={1.5}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary)/0)"
+                      />
+                    )}
+                    <CardContent className="p-6 relative z-10">
+                      <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
+                      <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -462,11 +651,19 @@ export function CompareQonversion(): React.JSX.Element {
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               {CHOOSE_REASONS.map((reason, index) => (
-                <Card key={index} className="bg-card/50">
-                  <CardContent className="p-6">
-                    <p className="text-muted-foreground">{reason}</p>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-200">
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={220} />
+                    <CardContent className="p-6 relative">
+                      <CheckIcon className="size-6 text-green-500 mb-3" />
+                      <p className="text-muted-foreground">{reason}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -493,15 +690,27 @@ export function CompareQonversion(): React.JSX.Element {
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-              {MIGRATION_STEPS.map((step) => (
-                <Card key={step.step} className="bg-card/50">
-                  <CardContent className="p-6">
-                    <div className="text-sm font-medium text-primary mb-2">
-                      Step {step.step}
-                    </div>
-                    <p className="text-sm text-muted-foreground">{step.description}</p>
-                  </CardContent>
-                </Card>
+              {MIGRATION_STEPS.map((step, index) => (
+                <motion.div
+                  key={step.step}
+                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-200">
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
+                    <CardContent className="p-6 relative">
+                      <motion.div
+                        className="text-sm font-medium text-primary mb-2"
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        Step {step.step}
+                      </motion.div>
+                      <p className="text-sm text-muted-foreground">{step.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -514,10 +723,18 @@ export function CompareQonversion(): React.JSX.Element {
               Adapty vs Qonversion feature comparison
             </h2>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-xl border bg-card/50 relative">
+              <BorderBeam
+                size={200}
+                duration={15}
+                borderWidth={1}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+                className="opacity-40"
+              />
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="border-b">
+                  <tr className="border-b bg-muted/30">
                     <th className="text-left py-4 px-4 font-semibold">Features</th>
                     <th className="text-left py-4 px-4 font-semibold text-primary">Adapty</th>
                     <th className="text-left py-4 px-4 font-semibold text-muted-foreground">
@@ -527,10 +744,24 @@ export function CompareQonversion(): React.JSX.Element {
                 </thead>
                 <tbody>
                   {COMPARISON_ITEMS.map((item, index) => (
-                    <tr key={index} className="border-b border-border/50">
+                    <motion.tr
+                      key={index}
+                      onMouseEnter={() => setHoveredRow(index)}
+                      onMouseLeave={() => setHoveredRow(null)}
+                      className={cn(
+                        "border-b border-border/50 transition-colors cursor-default",
+                        hoveredRow === index && "bg-primary/5"
+                      )}
+                    >
                       <td className="py-4 px-4 font-medium">{item.feature}</td>
                       <td className="py-4 px-4">
-                        <div className="flex items-start gap-3">
+                        <motion.div
+                          className="flex items-start gap-3"
+                          animate={shouldReduceMotion ? undefined : {
+                            x: hoveredRow === index ? 4 : 0,
+                          }}
+                          transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
+                        >
                           <StatusIcon
                             status={item.adapty.status as "check" | "partial" | "no"}
                           />
@@ -539,7 +770,7 @@ export function CompareQonversion(): React.JSX.Element {
                               {item.adapty.description}
                             </span>
                           )}
-                        </div>
+                        </motion.div>
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex items-start gap-3">
@@ -553,7 +784,7 @@ export function CompareQonversion(): React.JSX.Element {
                           )}
                         </div>
                       </td>
-                    </tr>
+                    </motion.tr>
                   ))}
                 </tbody>
               </table>
@@ -568,24 +799,34 @@ export function CompareQonversion(): React.JSX.Element {
         {/* Testimonials */}
         <BlurFade delay={0.6}>
           <div className="py-16">
-            <h2 className="text-2xl font-bold text-center mb-12">
+            <h2 className="text-2xl font-bold text-center mb-4">
               Marketers use Adapty to grow revenue fast
             </h2>
+            <div className="flex justify-center mb-8">
+              <GrowthMagic />
+            </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {TESTIMONIALS.slice(0, 3).map((testimonial, index) => (
-                <Card key={index} className="bg-card/50">
-                  <CardContent className="p-6">
-                    <blockquote className="text-sm text-muted-foreground italic mb-4">
-                      "{testimonial.quote}"
-                    </blockquote>
-                    <div>
-                      <p className="font-semibold">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {testimonial.title}, {testimonial.company}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
+                    <CardContent className="p-6 relative">
+                      <blockquote className="text-sm text-muted-foreground italic mb-4">
+                        "{testimonial.quote}"
+                      </blockquote>
+                      <div>
+                        <p className="font-semibold">{testimonial.name}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {testimonial.title}, {testimonial.company}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>

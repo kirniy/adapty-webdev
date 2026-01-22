@@ -11,6 +11,7 @@ import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // Feature comparison data from adapty.io/pricing (scraped 2026-01-21)
 // Each category with features and tier availability: Free, Pro, Pro+, Enterprise
@@ -138,6 +139,56 @@ const TIERS = [
   { id: 'enterprise', name: 'Enterprise' },
 ] as const;
 
+// Magic animation: Features count badge
+function FeaturesCountMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const totalFeatures = COMPARISON_DATA.reduce((acc, cat) => acc + cat.features.length, 0);
+  const [count, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setCount(totalFeatures);
+      return;
+    }
+    const interval = setInterval(() => {
+      setCount(prev => {
+        if (prev >= totalFeatures) return totalFeatures;
+        return prev + 1;
+      });
+    }, 30);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion, totalFeatures]);
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.2 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-primary"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.span
+        key={count}
+        initial={shouldReduceMotion ? {} : { y: -5, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.1 }}
+      >
+        {count}+ features
+      </motion.span>
+    </motion.div>
+  );
+}
+
 function FeatureCell({ value, delay = 0 }: { value: FeatureAvailability, delay?: number }) {
   const shouldReduceMotion = useReducedMotion();
 
@@ -173,11 +224,15 @@ export function PricingComparison(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1200} />
       <div className="container py-20 relative z-10">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
         <BlurFade delay={0.05}>
           <SiteHeading
             title="Choose a plan that works for you"
             description="Compare features across all plans"
           />
+          <div className="mt-4 flex justify-center">
+            <FeaturesCountMagic />
+          </div>
         </BlurFade>
         <BlurFade delay={0.1}>
           <div className="mt-12 overflow-x-auto pb-4">

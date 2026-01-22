@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon } from "lucide-react";
+import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon, TrendingUpIcon, ZapIcon, ShieldCheckIcon } from "lucide-react";
+import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -21,11 +22,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@workspace/ui/components/accordion";
+import { cn } from "@workspace/ui/lib/utils";
 
+import { BorderBeam } from "~/components/fragments/border-beam";
 import { GridSection } from "~/components/fragments/grid-section";
 import { SectionBackground } from "~/components/fragments/section-background";
 import { SiteHeading } from "~/components/fragments/site-heading";
 import { BlurFade } from "~/components/fragments/blur-fade";
+import { Spotlight } from "~/components/fragments/spotlight";
 
 // EXACT content from adapty.io/compare/superwall (scraped 2026-01-21)
 
@@ -336,6 +340,132 @@ const CASE_STUDY = {
   link: "/case-studies/wave/",
 };
 
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// All-in-one platform visualization
+function AllInOneMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const items = ['Paywalls', 'Analytics', 'A/B Tests', 'SDK'];
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-center justify-center gap-2 py-4">
+        {items.map((item, i) => (
+          <div key={i} className="px-2 py-1 text-xs bg-primary/10 rounded text-primary">
+            {item}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center gap-2 py-4">
+      {items.map((item, i) => (
+        <motion.div
+          key={i}
+          className="px-2 py-1 text-xs bg-primary/10 rounded text-primary"
+          animate={{
+            scale: [1, 1.05, 1],
+            opacity: [0.7, 1, 0.7],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            delay: i * 0.3,
+            ease: "easeInOut",
+          }}
+        >
+          {item}
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+// Speedometer showing faster loading
+function SpeedMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-center justify-center gap-4 py-4">
+        <div className="text-center">
+          <div className="text-xl font-bold text-primary">200ms</div>
+          <div className="text-xs text-muted-foreground">Adapty</div>
+        </div>
+        <div className="text-muted-foreground">vs</div>
+        <div className="text-center">
+          <div className="text-xl font-bold text-muted-foreground">1000ms</div>
+          <div className="text-xs text-muted-foreground">WebView</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center gap-4 py-4">
+      <motion.div
+        className="text-center"
+        animate={{ scale: [1, 1.05, 1] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      >
+        <motion.div
+          className="text-xl font-bold text-primary"
+          animate={{ opacity: [0.8, 1, 0.8] }}
+          transition={{ duration: 1, repeat: Infinity }}
+        >
+          200ms
+        </motion.div>
+        <div className="text-xs text-muted-foreground">Adapty</div>
+      </motion.div>
+      <div className="text-muted-foreground">vs</div>
+      <div className="text-center opacity-50">
+        <div className="text-xl font-bold text-muted-foreground">1000ms</div>
+        <div className="text-xs text-muted-foreground">WebView</div>
+      </div>
+    </div>
+  );
+}
+
+// Revenue chart animation
+function RevenueMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const bars = [25, 40, 35, 55, 50, 70, 65, 90];
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-end gap-1 h-8 justify-center">
+        {bars.map((h, i) => (
+          <div key={i} className="w-2 bg-primary/60 rounded-sm" style={{ height: `${h}%` }} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-end gap-1 h-8 justify-center">
+      {bars.map((height, i) => (
+        <motion.div
+          key={i}
+          className="w-2 bg-primary/60 rounded-sm"
+          initial={{ height: 0 }}
+          animate={{ height: `${height}%` }}
+          transition={{
+            duration: 0.5,
+            delay: i * 0.08,
+            repeat: Infinity,
+            repeatType: "reverse",
+            repeatDelay: 2,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function StatusIcon({
   status,
 }: {
@@ -364,6 +494,11 @@ function StatusIcon({
 }
 
 export function CompareSuperwall(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+  const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
+  const [hoveredFeature, setHoveredFeature] = React.useState<number | null>(null);
+  const [hoveredQuote, setHoveredQuote] = React.useState<number | null>(null);
+
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={6000} />
@@ -379,28 +514,59 @@ export function CompareSuperwall(): React.JSX.Element {
           </BlurFade>
           <BlurFade delay={0.1}>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg">
-                <Link href="/schedule-demo">Book a demo</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="https://app.adapty.io/registration">Start for free</Link>
-              </Button>
+              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button asChild size="lg">
+                  <Link href="/schedule-demo">Book a demo</Link>
+                </Button>
+              </motion.div>
+              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button asChild variant="outline" size="lg">
+                  <Link href="https://app.adapty.io/registration">Start for free</Link>
+                </Button>
+              </motion.div>
             </div>
           </BlurFade>
+          <BlurFade delay={0.12}>
+            <AllInOneMagic />
+          </BlurFade>
           <BlurFade delay={0.15}>
-            <p className="mt-8 text-sm text-muted-foreground">
-              Trusted by 15,000+ apps generating $1.9B+ in revenue
-            </p>
+            <div className="mt-4 flex items-center justify-center gap-6 text-sm text-muted-foreground">
+              <motion.div
+                className="flex items-center gap-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <TrendingUpIcon className="size-4 text-primary" />
+                <span>15,000+ apps</span>
+              </motion.div>
+              <motion.div
+                className="flex items-center gap-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+              >
+                <ZapIcon className="size-4 text-primary" />
+                <span>$1.9B+ revenue</span>
+              </motion.div>
+              <motion.div
+                className="flex items-center gap-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+              >
+                <ShieldCheckIcon className="size-4 text-primary" />
+                <span>All-in-one</span>
+              </motion.div>
+            </div>
           </BlurFade>
         </div>
 
         {/* Problem statement */}
         <BlurFade delay={0.2}>
           <div className="py-16 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-center mb-8">
+            <h2 className="text-2xl font-bold text-center mb-4">
               Superwall works great. Until it doesn't
             </h2>
-            <p className="text-muted-foreground text-center">
+            <SpeedMagic />
+            <p className="text-muted-foreground text-center mt-4">
               With Superwall, you're only solving half the problem. You still need additional
               infrastructure tools for subscription management meaning two SDKs, two dashboards, two
               support teams, and zero unified view of your revenue.
@@ -417,23 +583,45 @@ export function CompareSuperwall(): React.JSX.Element {
         {/* Comparison Table */}
         <BlurFade delay={0.25}>
           <div className="py-16">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-xl border bg-card/50 relative">
+              <BorderBeam
+                size={200}
+                duration={15}
+                borderWidth={1}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+                className="opacity-40"
+              />
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-4 px-4 font-semibold">Feature</th>
-                    <th className="text-left py-4 px-4 font-semibold text-primary">Adapty</th>
-                    <th className="text-left py-4 px-4 font-semibold text-muted-foreground">
+                  <tr className="border-b bg-muted/30">
+                    <th className="text-left py-4 px-6 font-semibold">Feature</th>
+                    <th className="text-left py-4 px-6 font-semibold text-primary">Adapty</th>
+                    <th className="text-left py-4 px-6 font-semibold text-muted-foreground">
                       Superwall
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {COMPARISON_ITEMS.map((item, index) => (
-                    <tr key={index} className="border-b border-border/50">
-                      <td className="py-4 px-4 font-medium">{item.feature}</td>
-                      <td className="py-4 px-4">
-                        <div className="flex items-start gap-3">
+                    <motion.tr
+                      key={index}
+                      onMouseEnter={() => setHoveredRow(index)}
+                      onMouseLeave={() => setHoveredRow(null)}
+                      className={cn(
+                        "border-b border-border/50 transition-colors cursor-default",
+                        hoveredRow === index && "bg-primary/5"
+                      )}
+                    >
+                      <td className="py-4 px-6 font-medium">{item.feature}</td>
+                      <td className="py-4 px-6">
+                        <motion.div
+                          className="flex items-start gap-3"
+                          animate={shouldReduceMotion ? undefined : {
+                            x: hoveredRow === index ? 4 : 0,
+                          }}
+                          transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
+                        >
                           <StatusIcon
                             status={item.adapty.status as "check" | "partial" | "no"}
                           />
@@ -442,9 +630,9 @@ export function CompareSuperwall(): React.JSX.Element {
                               {item.adapty.description}
                             </span>
                           )}
-                        </div>
+                        </motion.div>
                       </td>
-                      <td className="py-4 px-4">
+                      <td className="py-4 px-6">
                         <div className="flex items-start gap-3">
                           <StatusIcon
                             status={item.competitor.status as "check" | "partial" | "no"}
@@ -456,7 +644,7 @@ export function CompareSuperwall(): React.JSX.Element {
                           )}
                         </div>
                       </td>
-                    </tr>
+                    </motion.tr>
                   ))}
                 </tbody>
               </table>
@@ -528,34 +716,77 @@ export function CompareSuperwall(): React.JSX.Element {
             </h2>
             <div className="space-y-16">
               {FEATURE_SECTIONS.map((section, index) => (
-                <div key={index} className="grid md:grid-cols-2 gap-8 items-center">
+                <motion.div
+                  key={index}
+                  onMouseEnter={() => setHoveredFeature(index)}
+                  onMouseLeave={() => setHoveredFeature(null)}
+                  className="grid md:grid-cols-2 gap-8 items-center"
+                >
                   <div className={index % 2 === 1 ? "md:order-2" : ""}>
                     <h3 className="text-xl font-semibold mb-4">{section.title}</h3>
                     <p className="text-muted-foreground mb-4">{section.description}</p>
                     <ul className="space-y-2 mb-6">
                       {section.bullets.map((bullet, bulletIndex) => (
-                        <li key={bulletIndex} className="flex items-start gap-3">
+                        <motion.li
+                          key={bulletIndex}
+                          className="flex items-start gap-3"
+                          animate={shouldReduceMotion ? undefined : {
+                            x: hoveredFeature === index ? 4 : 0,
+                          }}
+                          transition={{ type: 'spring', duration: 0.2, bounce: 0, delay: bulletIndex * 0.05 }}
+                        >
                           <CheckIcon className="size-5 text-green-500 shrink-0 mt-0.5" />
                           <span className="text-muted-foreground">{bullet}</span>
-                        </li>
+                        </motion.li>
                       ))}
                     </ul>
                     <Link
                       href={section.link}
-                      className="inline-flex items-center gap-2 text-primary hover:underline"
+                      className="inline-flex items-center gap-2 text-primary hover:underline group"
                     >
                       {section.linkText}
-                      <ArrowRightIcon className="size-4" />
+                      <motion.span
+                        animate={shouldReduceMotion ? undefined : {
+                          x: hoveredFeature === index ? 4 : 0,
+                        }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <ArrowRightIcon className="size-4" />
+                      </motion.span>
                     </Link>
                   </div>
-                  <div
-                    className={`h-64 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center ${index % 2 === 1 ? "md:order-1" : ""}`}
+                  <motion.div
+                    animate={shouldReduceMotion ? undefined : {
+                      scale: hoveredFeature === index ? 1.02 : 1,
+                    }}
+                    transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
+                    className={cn(
+                      "relative h-64 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center overflow-hidden",
+                      index % 2 === 1 ? "md:order-1" : "",
+                      hoveredFeature === index && "shadow-lg"
+                    )}
                   >
-                    <div className="text-4xl font-bold text-primary/20">
+                    <Spotlight className="from-primary/20 via-primary/10 to-transparent" size={300} />
+                    {hoveredFeature === index && (
+                      <BorderBeam
+                        size={160}
+                        duration={10}
+                        borderWidth={1.5}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary)/0)"
+                      />
+                    )}
+                    <motion.div
+                      className="text-4xl font-bold text-primary/30 relative z-10"
+                      animate={shouldReduceMotion ? undefined : {
+                        scale: hoveredFeature === index ? 1.1 : 1,
+                      }}
+                      transition={{ type: 'spring', duration: 0.3 }}
+                    >
                       {index === 0 ? "Paywalls" : index === 1 ? "A/B Tests" : "Onboarding"}
-                    </div>
-                  </div>
-                </div>
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -679,12 +910,27 @@ export function CompareSuperwall(): React.JSX.Element {
 
             <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
               {SUPPORT_QUOTES.slice(0, 3).map((item, index) => (
-                <Card key={index} className="bg-card/50">
-                  <CardContent className="p-4">
-                    <p className="text-sm text-muted-foreground italic mb-2">"{item.quote}"</p>
-                    <p className="text-sm font-semibold">{item.name}</p>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  onMouseEnter={() => setHoveredQuote(index)}
+                  onMouseLeave={() => setHoveredQuote(null)}
+                  animate={shouldReduceMotion ? undefined : {
+                    y: hoveredQuote === index ? -4 : 0,
+                    scale: hoveredQuote === index ? 1.02 : 1,
+                  }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className={cn(
+                    "h-full relative overflow-hidden transition-all duration-200",
+                    hoveredQuote === index && "border-primary/50 shadow-lg"
+                  )}>
+                    <Spotlight className="from-primary/10 via-transparent to-transparent" size={200} />
+                    <CardContent className="p-4 relative">
+                      <p className="text-sm text-muted-foreground italic mb-2">"{item.quote}"</p>
+                      <p className="text-sm font-semibold">{item.name}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -693,7 +939,10 @@ export function CompareSuperwall(): React.JSX.Element {
         {/* Case Study */}
         <BlurFade delay={0.55}>
           <div className="py-16">
-            <h2 className="text-2xl font-bold text-center mb-8">You'll never look back</h2>
+            <h2 className="text-2xl font-bold text-center mb-4">You'll never look back</h2>
+            <div className="flex justify-center mb-8">
+              <RevenueMagic />
+            </div>
             <Card className="max-w-3xl mx-auto bg-card/50">
               <CardContent className="p-8">
                 <div className="flex items-center gap-4 mb-6">

@@ -2,18 +2,22 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon } from "lucide-react";
+import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon, TrendingUpIcon, ZapIcon, ShieldCheckIcon, ClockIcon, CodeIcon } from "lucide-react";
+import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 
 import { Button } from "@workspace/ui/components/button";
 import {
   Card,
   CardContent,
 } from "@workspace/ui/components/card";
+import { cn } from "@workspace/ui/lib/utils";
 
+import { BorderBeam } from "~/components/fragments/border-beam";
 import { GridSection } from "~/components/fragments/grid-section";
 import { SectionBackground } from "~/components/fragments/section-background";
 import { SiteHeading } from "~/components/fragments/site-heading";
 import { BlurFade } from "~/components/fragments/blur-fade";
+import { Spotlight } from "~/components/fragments/spotlight";
 
 // EXACT content from adapty.io/compare/in-house-development (scraped 2026-01-21)
 
@@ -168,6 +172,151 @@ const TESTIMONIALS = [
   },
 ];
 
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// Time comparison visualization - 1 hour vs months
+function TimeSavingMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-center justify-center gap-6 py-4">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-primary">1 hour</div>
+          <div className="text-xs text-muted-foreground">with Adapty</div>
+        </div>
+        <span className="text-muted-foreground">vs</span>
+        <div className="text-center opacity-50">
+          <div className="text-2xl font-bold text-muted-foreground">Months</div>
+          <div className="text-xs text-muted-foreground">in-house</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center gap-6 py-4">
+      <motion.div
+        className="text-center"
+        animate={{ scale: [1, 1.08, 1] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <motion.div
+          className="text-2xl font-bold text-primary"
+          animate={{ opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        >
+          1 hour
+        </motion.div>
+        <div className="text-xs text-muted-foreground">with Adapty</div>
+      </motion.div>
+      <motion.span
+        className="text-muted-foreground"
+        animate={{ opacity: [0.5, 1, 0.5] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        vs
+      </motion.span>
+      <div className="text-center opacity-50">
+        <div className="text-2xl font-bold text-muted-foreground">Months</div>
+        <div className="text-xs text-muted-foreground">in-house</div>
+      </div>
+    </div>
+  );
+}
+
+// Cost savings animation
+function CostSavingMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [savings, setSavings] = React.useState(0);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setSavings(100000);
+      return;
+    }
+
+    let frame: number;
+    const duration = 2000;
+    const targetValue = 100000;
+    const startTime = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setSavings(Math.floor(targetValue * eased));
+
+      if (progress < 1) {
+        frame = requestAnimationFrame(animate);
+      }
+    };
+
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-center justify-center gap-2 py-2">
+        <span className="text-lg font-bold text-green-500">Save $100k+</span>
+        <span className="text-sm text-muted-foreground">on development</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center gap-2 py-2">
+      <motion.span
+        className="text-lg font-bold text-green-500"
+        animate={{ scale: [1, 1.05, 1] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      >
+        Save ${savings.toLocaleString()}+
+      </motion.span>
+      <span className="text-sm text-muted-foreground">on development</span>
+    </div>
+  );
+}
+
+// Growth bar chart animation
+function GrowthMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const bars = [25, 40, 35, 55, 50, 75, 70, 90];
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-end gap-1 h-10 justify-center">
+        {bars.map((h, i) => (
+          <div key={i} className="w-2 bg-primary/60 rounded-sm" style={{ height: `${h}%` }} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-end gap-1 h-10 justify-center">
+      {bars.map((height, i) => (
+        <motion.div
+          key={i}
+          className="w-2 bg-primary/60 rounded-sm"
+          initial={{ height: 0 }}
+          animate={{ height: `${height}%` }}
+          transition={{
+            duration: 0.5,
+            delay: i * 0.08,
+            repeat: Infinity,
+            repeatType: "reverse",
+            repeatDelay: 2.5,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function StatusIcon({
   status,
 }: {
@@ -196,6 +345,12 @@ function StatusIcon({
 }
 
 export function CompareInHouse(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+  const [hoveredBenefit, setHoveredBenefit] = React.useState<number | null>(null);
+  const [hoveredFeature, setHoveredFeature] = React.useState<number | null>(null);
+  const [hoveredDrawback, setHoveredDrawback] = React.useState<number | null>(null);
+  const [hoveredAdvantage, setHoveredAdvantage] = React.useState<number | null>(null);
+
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={6000} />
@@ -211,21 +366,49 @@ export function CompareInHouse(): React.JSX.Element {
           </BlurFade>
           <BlurFade delay={0.1}>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg">
-                <Link href="/schedule-demo">Schedule A Demo</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="https://app.adapty.io/registration">
-                  Start for free
-                </Link>
-              </Button>
+              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button asChild size="lg">
+                  <Link href="/schedule-demo">Schedule A Demo</Link>
+                </Button>
+              </motion.div>
+              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button asChild variant="outline" size="lg">
+                  <Link href="https://app.adapty.io/registration">
+                    Start for free
+                  </Link>
+                </Button>
+              </motion.div>
             </div>
           </BlurFade>
+          <BlurFade delay={0.12}>
+            <TimeSavingMagic />
+          </BlurFade>
           <BlurFade delay={0.15}>
-            <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm">
-              <span className="rounded-full bg-muted px-4 py-2">No-code paywall A/B testing</span>
-              <span className="rounded-full bg-muted px-4 py-2">+3x MRR with Adapty</span>
-              <span className="rounded-full bg-muted px-4 py-2">Flexible subscription SDK</span>
+            <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
+              <motion.span
+                className="rounded-full bg-muted px-4 py-2 flex items-center gap-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <CodeIcon className="size-4" />
+                No-code paywall A/B testing
+              </motion.span>
+              <motion.span
+                className="rounded-full bg-muted px-4 py-2 flex items-center gap-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+              >
+                <TrendingUpIcon className="size-4" />
+                +3x MRR with Adapty
+              </motion.span>
+              <motion.span
+                className="rounded-full bg-muted px-4 py-2 flex items-center gap-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+              >
+                <ClockIcon className="size-4" />
+                Flexible subscription SDK
+              </motion.span>
             </div>
           </BlurFade>
         </div>
@@ -233,17 +416,42 @@ export function CompareInHouse(): React.JSX.Element {
         {/* Why pick Adapty */}
         <BlurFade delay={0.2}>
           <div className="py-16">
-            <h2 className="text-2xl font-bold text-center mb-12">
+            <h2 className="text-2xl font-bold text-center mb-4">
               Why pick Adapty over your in-house solution?
             </h2>
+            <CostSavingMagic />
             <div className="grid md:grid-cols-3 gap-8">
               {BENEFITS.map((benefit, index) => (
-                <Card key={index} className="bg-card/50">
-                  <CardContent className="p-6">
-                    <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
-                    <p className="text-sm text-muted-foreground">{benefit.description}</p>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  onMouseEnter={() => setHoveredBenefit(index)}
+                  onMouseLeave={() => setHoveredBenefit(null)}
+                  animate={shouldReduceMotion ? undefined : {
+                    y: hoveredBenefit === index ? -6 : 0,
+                    scale: hoveredBenefit === index ? 1.02 : 1,
+                  }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className={cn(
+                    "h-full relative overflow-hidden transition-all duration-200",
+                    hoveredBenefit === index && "border-primary/50 shadow-lg"
+                  )}>
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
+                    {hoveredBenefit === index && (
+                      <BorderBeam
+                        size={120}
+                        duration={8}
+                        borderWidth={1.5}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary)/0)"
+                      />
+                    )}
+                    <CardContent className="p-6 relative z-10">
+                      <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
+                      <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -312,34 +520,70 @@ export function CompareInHouse(): React.JSX.Element {
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               {/* In-house drawbacks */}
-              <Card className="bg-card/50 border-red-500/20">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold mb-6">In-house solution</h3>
-                  <ul className="space-y-3">
-                    {INHOUSE_DRAWBACKS.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <StatusIcon status="no" />
-                        <span className="text-muted-foreground">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              <motion.div
+                whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+                transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+              >
+                <Card className="h-full bg-card/50 border-red-500/20 relative overflow-hidden hover:shadow-lg transition-all duration-200">
+                  <Spotlight className="from-red-500/10 via-red-500/5 to-transparent" size={300} />
+                  <CardContent className="p-6 relative">
+                    <h3 className="text-lg font-semibold mb-6">In-house solution</h3>
+                    <ul className="space-y-3">
+                      {INHOUSE_DRAWBACKS.map((item, index) => (
+                        <motion.li
+                          key={index}
+                          className="flex items-start gap-3"
+                          onMouseEnter={() => setHoveredDrawback(index)}
+                          onMouseLeave={() => setHoveredDrawback(null)}
+                        >
+                          <motion.div
+                            animate={shouldReduceMotion ? undefined : {
+                              scale: hoveredDrawback === index ? 1.2 : 1,
+                            }}
+                            transition={{ type: 'spring', duration: 0.2 }}
+                          >
+                            <StatusIcon status="no" />
+                          </motion.div>
+                          <span className="text-muted-foreground">{item}</span>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </motion.div>
 
               {/* Adapty advantages */}
-              <Card className="bg-card/50 border-green-500/20">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold mb-6 text-primary">Adapty</h3>
-                  <ul className="space-y-3">
-                    {ADAPTY_ADVANTAGES.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <StatusIcon status="check" />
-                        <span className="text-muted-foreground">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              <motion.div
+                whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+                transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+              >
+                <Card className="h-full bg-card/50 border-green-500/20 relative overflow-hidden hover:shadow-lg transition-all duration-200">
+                  <Spotlight className="from-green-500/10 via-green-500/5 to-transparent" size={300} />
+                  <CardContent className="p-6 relative">
+                    <h3 className="text-lg font-semibold mb-6 text-primary">Adapty</h3>
+                    <ul className="space-y-3">
+                      {ADAPTY_ADVANTAGES.map((item, index) => (
+                        <motion.li
+                          key={index}
+                          className="flex items-start gap-3"
+                          onMouseEnter={() => setHoveredAdvantage(index)}
+                          onMouseLeave={() => setHoveredAdvantage(null)}
+                        >
+                          <motion.div
+                            animate={shouldReduceMotion ? undefined : {
+                              scale: hoveredAdvantage === index ? 1.2 : 1,
+                            }}
+                            transition={{ type: 'spring', duration: 0.2 }}
+                          >
+                            <StatusIcon status="check" />
+                          </motion.div>
+                          <span className="text-muted-foreground">{item}</span>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </motion.div>
             </div>
           </div>
         </BlurFade>
@@ -349,14 +593,20 @@ export function CompareInHouse(): React.JSX.Element {
           <div className="py-16">
             <div className="flex flex-wrap justify-center gap-4">
               {SDK_PLATFORMS.map((platform, index) => (
-                <Link
+                <motion.div
                   key={index}
-                  href={platform.href}
-                  className="inline-flex items-center gap-2 rounded-lg border bg-card/50 px-4 py-3 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                  whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.05 }}
+                  transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
-                  {platform.name}
-                  <ArrowRightIcon className="size-4 text-primary" />
-                </Link>
+                  <Link
+                    href={platform.href}
+                    className="relative inline-flex items-center gap-2 rounded-lg border bg-card/50 px-4 py-3 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground overflow-hidden group"
+                  >
+                    <Spotlight className="from-primary/20 via-primary/5 to-transparent" size={120} />
+                    <span className="relative">{platform.name}</span>
+                    <ArrowRightIcon className="relative size-4 text-primary group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -370,11 +620,19 @@ export function CompareInHouse(): React.JSX.Element {
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               {CHOOSE_REASONS.map((reason, index) => (
-                <Card key={index} className="bg-card/50">
-                  <CardContent className="p-6">
-                    <p className="text-muted-foreground">{reason}</p>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-200">
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={220} />
+                    <CardContent className="p-6 relative">
+                      <CheckIcon className="size-6 text-green-500 mb-3" />
+                      <p className="text-muted-foreground">{reason}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -400,24 +658,34 @@ export function CompareInHouse(): React.JSX.Element {
         {/* Testimonials */}
         <BlurFade delay={0.6}>
           <div className="py-16">
-            <h2 className="text-2xl font-bold text-center mb-12">
+            <h2 className="text-2xl font-bold text-center mb-4">
               Marketers use Adapty to grow revenue fast
             </h2>
+            <div className="flex justify-center mb-8">
+              <GrowthMagic />
+            </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {TESTIMONIALS.slice(0, 3).map((testimonial, index) => (
-                <Card key={index} className="bg-card/50">
-                  <CardContent className="p-6">
-                    <blockquote className="text-sm text-muted-foreground italic mb-4">
-                      "{testimonial.quote}"
-                    </blockquote>
-                    <div>
-                      <p className="font-semibold">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {testimonial.title}, {testimonial.company}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
+                    <CardContent className="p-6 relative">
+                      <blockquote className="text-sm text-muted-foreground italic mb-4">
+                        "{testimonial.quote}"
+                      </blockquote>
+                      <div>
+                        <p className="font-semibold">{testimonial.name}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {testimonial.title}, {testimonial.company}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>

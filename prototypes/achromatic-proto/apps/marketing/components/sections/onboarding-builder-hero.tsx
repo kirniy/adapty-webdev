@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, MousePointerClickIcon, FlaskConicalIcon, RefreshCwIcon, ZapIcon, CheckIcon, PlayIcon } from 'lucide-react';
+import { ArrowRightIcon, MousePointerClickIcon, FlaskConicalIcon, RefreshCwIcon, ZapIcon, CheckIcon, PlayIcon, SparklesIcon, LayersIcon } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -15,7 +15,93 @@ import { GridSection } from '~/components/fragments/grid-section';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+
+// Magic animation: Onboarding step progress
+function OnboardingStepMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [step, setStep] = React.useState(1);
+  const totalSteps = 4;
+
+  const stepLabels = ['Welcome', 'Features', 'Plan', 'Start'];
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setStep((prev) => (prev % totalSteps) + 1);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute top-4 right-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+      >
+        <div className="flex items-center gap-2 mb-1.5">
+          <LayersIcon className="size-3 text-primary" />
+          <span className="text-[10px] font-medium text-muted-foreground">Onboarding flow</span>
+        </div>
+        <div className="flex items-center gap-1">
+          {Array.from({ length: totalSteps }).map((_, i) => (
+            <motion.div
+              key={i}
+              animate={shouldReduceMotion ? undefined : {
+                scale: i + 1 === step ? 1.2 : 1,
+                backgroundColor: i + 1 <= step ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
+              }}
+              transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
+              className="size-2 rounded-full"
+            />
+          ))}
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={step}
+              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 5 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -5 }}
+              transition={{ duration: 0.15 }}
+              className="ml-2 text-xs font-medium text-foreground"
+            >
+              {stepLabels[step - 1]}
+            </motion.span>
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// Magic animation: No-code badge
+function NoCodeBadgeMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <div className="absolute bottom-4 left-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+      >
+        <motion.div
+          animate={shouldReduceMotion ? undefined : { rotate: [0, 10, -10, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+          className="size-5 rounded-full bg-primary/10 flex items-center justify-center"
+        >
+          <SparklesIcon className="size-3 text-primary" />
+        </motion.div>
+        <div>
+          <p className="text-xs font-medium text-foreground">No code required</p>
+          <p className="text-[10px] text-muted-foreground">Ship in minutes</p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 // EXACT content from adapty.io/onboarding-builder (scraped 2026-01-21)
 const HERO_CONTENT = {
@@ -179,6 +265,17 @@ function SplitHero(): React.JSX.Element {
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
+              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <OnboardingStepMagic />
+              <NoCodeBadgeMagic />
+              <BorderBeam
+                size={200}
+                duration={12}
+                delay={9}
+                borderWidth={1.5}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+              />
               <Image
                 priority
                 quality={100}

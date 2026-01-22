@@ -33,6 +33,7 @@ import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { paywallBuilderContent } from '~/lib/content';
 import { Spotlight } from '~/components/fragments/spotlight';
+import { BorderBeam } from '~/components/fragments/border-beam';
 
 // Animation constants following Emil Kowalski principles
 const EASE_OUT_QUART = [0.165, 0.84, 0.44, 1] as const;
@@ -107,10 +108,19 @@ function FeatureCard({
         transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
       >
         <Card className={cn(
-          "h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer group",
+          "relative h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer group overflow-hidden",
           isHovered && "border-primary/40 shadow-lg shadow-primary/5"
         )}>
-          <CardContent className={cn("p-6", compact && "p-4")}>
+          {isHovered && (
+            <BorderBeam
+              size={120}
+              duration={8}
+              borderWidth={1.5}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary)/0)"
+            />
+          )}
+          <CardContent className={cn("relative z-10 p-6", compact && "p-4")}>
             <div className="flex items-start gap-4">
               <motion.div
                 animate={shouldReduceMotion ? undefined : {
@@ -462,6 +472,15 @@ function BentoFeatures() {
                       size={350}
                       fill="white"
                     />
+                    {isHovered && (
+                      <BorderBeam
+                        size={160}
+                        duration={10}
+                        borderWidth={1.5}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary)/0)"
+                      />
+                    )}
 
                     <div className="p-8 pb-0 relative z-10 flex-1">
                       <motion.div
@@ -514,6 +533,15 @@ function BentoFeatures() {
                       className="from-primary/20 via-primary/10 to-transparent"
                       size={200}
                     />
+                    {isHovered && (
+                      <BorderBeam
+                        size={120}
+                        duration={8}
+                        borderWidth={1.5}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary)/0)"
+                      />
+                    )}
                     <div className="p-6 relative z-10 flex-1">
                       <div className="flex flex-col gap-4">
                         <motion.div
@@ -631,10 +659,19 @@ function TabsFeatures() {
                     transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                   >
                     <Card className={cn(
-                      "h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer group",
+                      "relative h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer group overflow-hidden",
                       isHovered && "border-primary/40 shadow-lg shadow-primary/5"
                     )}>
-                      <CardContent className="p-6">
+                      {isHovered && (
+                        <BorderBeam
+                          size={120}
+                          duration={8}
+                          borderWidth={1.5}
+                          colorFrom="hsl(var(--primary))"
+                          colorTo="hsl(var(--primary)/0)"
+                        />
+                      )}
+                      <CardContent className="relative z-10 p-6">
                         <div className="flex flex-col gap-4">
                           <div className="flex items-center justify-between">
                             <motion.div

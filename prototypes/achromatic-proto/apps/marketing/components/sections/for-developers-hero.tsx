@@ -13,6 +13,113 @@ import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// Magic animation: SDK integration progress
+function SDKIntegrationMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [step, setStep] = React.useState(0);
+
+  const steps = [
+    { label: 'npm install adapty-sdk', icon: '1' },
+    { label: 'Adapty.activate()', icon: '2' },
+    { label: 'Ready to monetize!', icon: '3' },
+  ];
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setStep((prev) => (prev + 1) % steps.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion, steps.length]);
+
+  return (
+    <div className="absolute bottom-4 right-4 flex flex-col gap-2 rounded-lg border bg-background/95 p-3 shadow-lg backdrop-blur-sm">
+      <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+        <TerminalIcon className="size-3" />
+        Integration
+      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={step}
+          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+          transition={{ duration: 0.2 }}
+          className="flex items-center gap-2"
+        >
+          <div className="flex size-5 items-center justify-center rounded bg-primary text-[10px] font-bold text-primary-foreground">
+            {steps[step].icon}
+          </div>
+          <span className="text-xs font-mono">{steps[step].label}</span>
+        </motion.div>
+      </AnimatePresence>
+      <div className="flex gap-1">
+        {steps.map((_, i) => (
+          <motion.div
+            key={i}
+            className="h-1 flex-1 rounded-full"
+            animate={{
+              backgroundColor: i <= step ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
+            }}
+            transition={{ duration: 0.3 }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Magic animation: Lines of code counter
+function LinesOfCodeMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [lines, setLines] = React.useState(0);
+  const targetLines = 12;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setLines(targetLines);
+      return;
+    }
+    const duration = 1500;
+    const steps = 20;
+    const stepValue = targetLines / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += stepValue;
+      if (current >= targetLines) {
+        setLines(targetLines);
+        clearInterval(interval);
+      } else {
+        setLines(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute top-4 right-4 flex items-center gap-2 rounded-lg border bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+      <CodeIcon className="size-4 text-primary" />
+      <div className="flex flex-col">
+        <motion.span
+          className="text-lg font-bold tabular-nums"
+          key={lines}
+          initial={shouldReduceMotion ? undefined : { scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        >
+          {lines}
+        </motion.span>
+        <span className="text-[10px] text-muted-foreground">lines to integrate</span>
+      </div>
+    </div>
+  );
+}
 
 // EXACT content from adapty.io/for-developers (scraped 2026-01-21)
 const BENEFITS = [
@@ -166,8 +273,9 @@ function SplitHero() {
               initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
               transition={{ delay: 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
-              className="relative w-full overflow-hidden rounded-xl border bg-zinc-950 shadow-lg"
+              className="group relative w-full overflow-hidden rounded-xl border bg-zinc-950 shadow-lg"
             >
+              <Spotlight className="from-blue-500/20 via-purple-500/10 to-transparent" size={300} />
               {/* Platform tabs */}
               <div className="flex items-center gap-1 border-b border-zinc-800 px-4 py-2">
                 {(Object.keys(CODE_SNIPPETS) as Platform[]).map((p) => (
@@ -226,6 +334,10 @@ function SplitHero() {
                   </code>
                 </motion.pre>
               </AnimatePresence>
+
+              {/* Magic animations */}
+              <SDKIntegrationMagic />
+              <LinesOfCodeMagic />
             </motion.div>
           </BlurFade>
         </div>
@@ -394,8 +506,9 @@ function TerminalHero() {
               initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
               transition={{ delay: 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
-              className="relative w-full overflow-hidden rounded-xl border bg-zinc-950 shadow-2xl"
+              className="group relative w-full overflow-hidden rounded-xl border bg-zinc-950 shadow-2xl"
             >
+              <Spotlight className="from-green-500/20 via-emerald-500/10 to-transparent" size={300} />
               {/* Terminal header */}
               <div className="flex items-center gap-2 border-b border-zinc-800 px-4 py-3">
                 <div className="flex gap-1.5">

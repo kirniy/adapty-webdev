@@ -21,9 +21,11 @@ import { Card, CardContent } from '@workspace/ui/components/card';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 const FEATURES = [
   {
@@ -96,6 +98,180 @@ const STARTUP_BENEFITS = [
 ];
 
 // =============================================================================
+// MAGIC ANIMATIONS - Feature-specific animated visualizations
+// =============================================================================
+
+// Rocket launch animation for "Turn your indie project into a business"
+function RocketMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="mt-4 flex justify-center">
+        <RocketIcon className="size-8 text-primary" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-4 flex justify-center relative h-12">
+      <motion.div
+        animate={{
+          y: [0, -8, 0],
+          rotate: [0, 5, -5, 0],
+        }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <RocketIcon className="size-8 text-primary" />
+      </motion.div>
+      {/* Trail particles */}
+      {[...Array(3)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute bottom-0 left-1/2 size-2 rounded-full bg-primary/30"
+          animate={{
+            y: [0, 12],
+            x: [(i - 1) * 4, (i - 1) * 8],
+            opacity: [0.6, 0],
+            scale: [1, 0.5],
+          }}
+          transition={{
+            duration: 0.8,
+            repeat: Infinity,
+            delay: i * 0.15,
+            ease: 'easeOut',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Email report notification animation
+function EmailMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [showBadge, setShowBadge] = React.useState(false);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setShowBadge(true);
+      setTimeout(() => setShowBadge(false), 2000);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="mt-4 flex justify-center">
+        <MailIcon className="size-8 text-primary" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-4 flex justify-center relative">
+      <motion.div
+        animate={{ rotate: showBadge ? [0, -10, 10, -5, 5, 0] : 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <MailIcon className="size-8 text-primary" />
+      </motion.div>
+      <AnimatePresence>
+        {showBadge && (
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            className="absolute -top-1 -right-1 size-4 rounded-full bg-green-500 flex items-center justify-center"
+          >
+            <span className="text-[8px] text-white font-bold">1</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// User profiles animation
+function UsersMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="mt-4 flex justify-center">
+        <UsersIcon className="size-8 text-primary" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-4 flex justify-center gap-1">
+      {[0, 1, 2].map((i) => (
+        <motion.div
+          key={i}
+          className="size-6 rounded-full bg-primary/20 border-2 border-primary/40 flex items-center justify-center"
+          style={{ marginLeft: i > 0 ? -8 : 0, zIndex: 3 - i }}
+          animate={{
+            scale: [1, 1.1, 1],
+            borderColor: ['rgba(103, 32, 255, 0.4)', 'rgba(103, 32, 255, 0.8)', 'rgba(103, 32, 255, 0.4)'],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            delay: i * 0.3,
+          }}
+        >
+          <span className="text-[10px] font-bold text-primary">{i + 1}</span>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+// Analytics chart animation
+function ChartMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const bars = [40, 65, 45, 80, 60];
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="mt-4 flex justify-center">
+        <BarChart3Icon className="size-8 text-primary" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-4 flex items-end justify-center gap-1 h-10">
+      {bars.map((height, i) => (
+        <motion.div
+          key={i}
+          className="w-2 bg-primary/60 rounded-sm"
+          animate={{
+            height: [`${height * 0.3}%`, `${height}%`, `${height * 0.7}%`, `${height}%`],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            delay: i * 0.15,
+            ease: 'easeInOut',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Feature magic mapping
+const FEATURE_MAGIC: Record<string, React.FC> = {
+  'Turn your indie/pet project into a business': RocketMagic,
+  'Get regular overview email reports': EmailMagic,
+  'Know your customers. Each of them': UsersMagic,
+  'Keep track of your revenue, subscribers, cohorts, and other metrics': ChartMagic,
+};
+
+// =============================================================================
 // VARIANT: GRID - Classic 2-column grid with cards
 // =============================================================================
 function GridFeatures() {
@@ -135,52 +311,66 @@ function GridFeatures() {
 
         {/* Features */}
         <div className="mt-16 grid gap-8 md:grid-cols-2">
-          {FEATURES.map((feature, index) => (
-            <BlurFade key={feature.title} delay={0.2 + index * 0.05}>
-              <motion.div
-                onMouseEnter={() => setHoveredFeature(index)}
-                onMouseLeave={() => setHoveredFeature(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredFeature === index ? -4 : 0,
-                  scale: hoveredFeature === index ? 1.02 : 1,
-                }}
-                transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
-              >
-                <Card className={cn(
-                  "h-full transition-all duration-200",
-                  hoveredFeature === index && "border-primary/50 shadow-lg"
-                )}>
-                  <CardContent className="p-8">
-                    <motion.div
-                      animate={shouldReduceMotion ? undefined : {
-                        scale: hoveredFeature === index ? 1.1 : 1,
-                        rotate: hoveredFeature === index ? 5 : 0,
-                      }}
-                      transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
-                    >
-                      <feature.icon className={cn(
-                        "h-10 w-10 transition-colors duration-200",
-                        hoveredFeature === index ? "text-primary" : "text-primary/70"
-                      )} />
-                    </motion.div>
-                    <h3 className="mt-4 text-xl font-semibold">{feature.title}</h3>
-                    <p className="mt-2 flex-1 text-muted-foreground">
-                      {feature.description}
-                    </p>
-                    {feature.link && (
-                      <Link
-                        href={feature.link}
-                        className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-                      >
-                        {feature.linkText}
-                        <ArrowRightIcon className="h-4 w-4" />
-                      </Link>
+          {FEATURES.map((feature, index) => {
+            const MagicComponent = FEATURE_MAGIC[feature.title];
+            return (
+              <BlurFade key={feature.title} delay={0.2 + index * 0.05}>
+                <motion.div
+                  onMouseEnter={() => setHoveredFeature(index)}
+                  onMouseLeave={() => setHoveredFeature(null)}
+                  animate={shouldReduceMotion ? undefined : {
+                    y: hoveredFeature === index ? -8 : 0,
+                    scale: hoveredFeature === index ? 1.02 : 1,
+                  }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className={cn(
+                    "h-full transition-all duration-200 relative overflow-hidden group",
+                    hoveredFeature === index && "border-primary/50 shadow-lg"
+                  )}>
+                    {hoveredFeature === index && (
+                      <BorderBeam
+                        size={120}
+                        duration={8}
+                        borderWidth={1.5}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary)/0)"
+                      />
                     )}
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </BlurFade>
-          ))}
+                    <Spotlight className="from-primary/20 via-primary/5 to-transparent" />
+                    <CardContent className="p-8 relative z-10">
+                      <motion.div
+                        animate={shouldReduceMotion ? undefined : {
+                          scale: hoveredFeature === index ? 1.15 : 1,
+                          rotate: hoveredFeature === index ? 8 : 0,
+                        }}
+                        transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                      >
+                        <feature.icon className={cn(
+                          "h-10 w-10 transition-colors duration-200",
+                          hoveredFeature === index ? "text-primary" : "text-primary/70"
+                        )} />
+                      </motion.div>
+                      <h3 className="mt-4 text-xl font-semibold">{feature.title}</h3>
+                      <p className="mt-2 flex-1 text-muted-foreground">
+                        {feature.description}
+                      </p>
+                      {MagicComponent && <MagicComponent />}
+                      {feature.link && (
+                        <Link
+                          href={feature.link}
+                          className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                        >
+                          {feature.linkText}
+                          <ArrowRightIcon className="h-4 w-4" />
+                        </Link>
+                      )}
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </BlurFade>
+            );
+          })}
         </div>
 
         {/* Testimonial */}
@@ -329,18 +519,19 @@ function BentoFeatures() {
               onMouseEnter={() => setHoveredIndex(0)}
               onMouseLeave={() => setHoveredIndex(null)}
               animate={shouldReduceMotion ? undefined : {
-                y: hoveredIndex === 0 ? -4 : 0,
+                y: hoveredIndex === 0 ? -8 : 0,
                 scale: hoveredIndex === 0 ? 1.01 : 1,
               }}
-              transition={{ type: 'spring', duration: 0.3, bounce: 0.1 }}
+              transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
               className={cn(
-                "md:col-span-2 md:row-span-2 rounded-2xl border-2 p-8 flex flex-col justify-between transition-all duration-300",
+                "md:col-span-2 md:row-span-2 rounded-2xl border-2 p-8 flex flex-col justify-between transition-all duration-300 relative overflow-hidden group",
                 hoveredIndex === 0
                   ? "border-primary bg-primary/5 shadow-xl"
                   : "border-primary/30 bg-gradient-to-br from-primary/10 to-purple-500/5"
               )}
             >
-              <div>
+              <Spotlight className="from-primary/25 via-purple-500/10 to-transparent" />
+              <div className="relative z-10">
                 <span className="text-sm font-medium text-primary">Startup Program</span>
                 <h3 className="mt-2 text-3xl font-bold">Get Adapty free for 1 year</h3>
                 <p className="mt-4 text-muted-foreground max-w-lg">
@@ -348,14 +539,20 @@ function BentoFeatures() {
                 </p>
                 <ul className="mt-6 grid grid-cols-2 gap-3">
                   {STARTUP_BENEFITS.map((benefit, index) => (
-                    <li key={index} className="flex items-center gap-2 text-sm">
+                    <motion.li
+                      key={index}
+                      className="flex items-center gap-2 text-sm"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2 + index * 0.05 }}
+                    >
                       <CheckIcon className="size-4 text-green-500 shrink-0" />
                       {benefit}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </div>
-              <div className="mt-8">
+              <div className="mt-8 relative z-10">
                 <Link
                   href="https://startups.adapty.io/en/startup-plan-application"
                   target="_blank"
@@ -369,35 +566,44 @@ function BentoFeatures() {
           </BlurFade>
 
           {/* Feature cards */}
-          {FEATURES.slice(0, 3).map((feature, index) => (
-            <BlurFade key={feature.title} delay={0.15 + index * 0.05}>
-              <motion.div
-                onMouseEnter={() => setHoveredIndex(index + 1)}
-                onMouseLeave={() => setHoveredIndex(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredIndex === index + 1 ? -4 : 0,
-                }}
-                transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
-                className={cn(
-                  "h-full rounded-xl border bg-card p-6 transition-all duration-200",
-                  hoveredIndex === index + 1 && "border-primary/50 shadow-lg"
-                )}
-              >
+          {FEATURES.slice(0, 3).map((feature, index) => {
+            const MagicComponent = FEATURE_MAGIC[feature.title];
+            return (
+              <BlurFade key={feature.title} delay={0.15 + index * 0.05}>
                 <motion.div
+                  onMouseEnter={() => setHoveredIndex(index + 1)}
+                  onMouseLeave={() => setHoveredIndex(null)}
                   animate={shouldReduceMotion ? undefined : {
-                    scale: hoveredIndex === index + 1 ? 1.1 : 1,
+                    y: hoveredIndex === index + 1 ? -8 : 0,
+                    scale: hoveredIndex === index + 1 ? 1.02 : 1,
                   }}
-                  transition={{ type: 'spring', duration: 0.2 }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                  className={cn(
+                    "h-full rounded-xl border bg-card p-6 transition-all duration-200 relative overflow-hidden group",
+                    hoveredIndex === index + 1 && "border-primary/50 shadow-lg"
+                  )}
                 >
-                  <feature.icon className="size-8 text-primary" />
+                  <Spotlight className="from-primary/20 via-primary/5 to-transparent" />
+                  <div className="relative z-10">
+                    <motion.div
+                      animate={shouldReduceMotion ? undefined : {
+                        scale: hoveredIndex === index + 1 ? 1.15 : 1,
+                        rotate: hoveredIndex === index + 1 ? 8 : 0,
+                      }}
+                      transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                    >
+                      <feature.icon className="size-8 text-primary" />
+                    </motion.div>
+                    <h3 className="mt-4 font-semibold">{feature.title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground line-clamp-3">
+                      {feature.description}
+                    </p>
+                    {MagicComponent && <MagicComponent />}
+                  </div>
                 </motion.div>
-                <h3 className="mt-4 font-semibold">{feature.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground line-clamp-3">
-                  {feature.description}
-                </p>
-              </motion.div>
-            </BlurFade>
-          ))}
+              </BlurFade>
+            );
+          })}
 
           {/* Stats row */}
           <BlurFade delay={0.3}>
@@ -405,11 +611,15 @@ function BentoFeatures() {
               {STATS.map((stat, index) => (
                 <motion.div
                   key={stat.label}
-                  whileHover={shouldReduceMotion ? undefined : { y: -2 }}
-                  className="rounded-lg border bg-card p-4 text-center"
+                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                  className="rounded-lg border bg-card p-4 text-center relative overflow-hidden group"
                 >
-                  <div className="text-2xl font-bold text-primary">{stat.value}</div>
-                  <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
+                  <Spotlight className="from-primary/15 via-primary/5 to-transparent" />
+                  <div className="relative z-10">
+                    <div className="text-2xl font-bold text-primary">{stat.value}</div>
+                    <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -418,8 +628,13 @@ function BentoFeatures() {
 
         {/* Testimonial */}
         <BlurFade delay={0.35}>
-          <div className="mt-12 rounded-2xl border bg-muted/30 p-8 md:p-12">
-            <div className="flex flex-col md:flex-row md:items-center gap-6">
+          <motion.div
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.01 }}
+            transition={{ type: 'spring', duration: 0.3 }}
+            className="mt-12 rounded-2xl border bg-muted/30 p-8 md:p-12 relative overflow-hidden group"
+          >
+            <Spotlight className="from-purple-500/15 via-primary/5 to-transparent" />
+            <div className="flex flex-col md:flex-row md:items-center gap-6 relative z-10">
               <div className="flex-1">
                 <blockquote className="text-xl italic">
                   "Adapty is the ultimate toolkit for app success."
@@ -439,7 +654,7 @@ function BentoFeatures() {
                 </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
         </BlurFade>
 
         {/* Related Roles */}
@@ -447,20 +662,26 @@ function BentoFeatures() {
           <div className="mt-16">
             <h2 className="text-xl font-semibold mb-6">Explore by role</h2>
             <div className="grid gap-4 md:grid-cols-3">
-              {RELATED_ROLES.map((role) => (
-                <Link
+              {RELATED_ROLES.map((role, index) => (
+                <motion.div
                   key={role.href}
-                  href={role.href}
-                  className="flex items-center gap-4 rounded-xl border bg-card p-4 hover:border-primary/50 hover:shadow-lg transition-all duration-200"
+                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10">
-                    <role.icon className="size-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">{role.title}</h3>
-                    <p className="text-sm text-muted-foreground line-clamp-1">{role.description}</p>
-                  </div>
-                </Link>
+                  <Link
+                    href={role.href}
+                    className="flex items-center gap-4 rounded-xl border bg-card p-4 hover:border-primary/50 hover:shadow-lg transition-all duration-200 relative overflow-hidden group h-full"
+                  >
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" />
+                    <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10 relative z-10">
+                      <role.icon className="size-6 text-primary" />
+                    </div>
+                    <div className="relative z-10">
+                      <h3 className="font-semibold">{role.title}</h3>
+                      <p className="text-sm text-muted-foreground line-clamp-1">{role.description}</p>
+                    </div>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -556,47 +777,50 @@ function TimelineFeatures() {
                     animate={shouldReduceMotion ? undefined : {
                       y: expandedIndex === index ? -4 : 0,
                     }}
-                    transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
+                    transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                     className={cn(
-                      "rounded-xl border bg-card p-6 cursor-pointer transition-all duration-200",
+                      "rounded-xl border bg-card p-6 cursor-pointer transition-all duration-200 relative overflow-hidden group",
                       expandedIndex === index && "border-primary/50 shadow-lg"
                     )}
                   >
-                    <div className="flex items-start justify-between">
-                      <h3 className="font-semibold text-lg">{step.title}</h3>
-                      <motion.div
-                        animate={{ rotate: expandedIndex === index ? 180 : 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <ChevronDownIcon className="size-5 text-muted-foreground" />
-                      </motion.div>
-                    </div>
-
-                    <AnimatePresence>
-                      {expandedIndex === index && (
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" />
+                    <div className="relative z-10">
+                      <div className="flex items-start justify-between">
+                        <h3 className="font-semibold text-lg">{step.title}</h3>
                         <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+                          animate={{ rotate: expandedIndex === index ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
                         >
-                          <p className="mt-4 text-muted-foreground">
-                            {step.description}
-                          </p>
-                          <div className="mt-4">
-                            <Link
-                              href={step.cta.href}
-                              target={step.cta.href.startsWith('http') ? '_blank' : undefined}
-                              className={cn(buttonVariants({ size: 'sm' }), 'rounded-lg')}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              {step.cta.label}
-                              <ArrowRightIcon className="ml-2 size-3" />
-                            </Link>
-                          </div>
+                          <ChevronDownIcon className="size-5 text-muted-foreground" />
                         </motion.div>
-                      )}
-                    </AnimatePresence>
+                      </div>
+
+                      <AnimatePresence>
+                        {expandedIndex === index && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+                          >
+                            <p className="mt-4 text-muted-foreground">
+                              {step.description}
+                            </p>
+                            <div className="mt-4">
+                              <Link
+                                href={step.cta.href}
+                                target={step.cta.href.startsWith('http') ? '_blank' : undefined}
+                                className={cn(buttonVariants({ size: 'sm' }), 'rounded-lg')}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {step.cta.label}
+                                <ArrowRightIcon className="ml-2 size-3" />
+                              </Link>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </motion.div>
                 </motion.div>
               </BlurFade>
@@ -606,44 +830,63 @@ function TimelineFeatures() {
 
         {/* Stats */}
         <BlurFade delay={0.4}>
-          <div className="mt-20 rounded-2xl border bg-muted/30 p-8">
-            <h3 className="text-center text-lg font-semibold mb-6">
-              Enterprise-grade infrastructure you can trust
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {STATS.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-2xl font-bold text-primary">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
-                </div>
-              ))}
+          <motion.div
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.01 }}
+            transition={{ type: 'spring', duration: 0.3 }}
+            className="mt-20 rounded-2xl border bg-muted/30 p-8 relative overflow-hidden group"
+          >
+            <Spotlight className="from-primary/15 via-primary/5 to-transparent" />
+            <div className="relative z-10">
+              <h3 className="text-center text-lg font-semibold mb-6">
+                Enterprise-grade infrastructure you can trust
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {STATS.map((stat) => (
+                  <div key={stat.label} className="text-center">
+                    <div className="text-2xl font-bold text-primary">{stat.value}</div>
+                    <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </motion.div>
         </BlurFade>
 
         {/* Testimonial + Discord */}
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           <BlurFade delay={0.45}>
-            <div className="rounded-2xl border bg-card p-8 h-full">
-              <blockquote className="text-lg italic text-muted-foreground">
-                "Whether it is A/B testing paywalls, predicting LTV, or analyzing subscription metrics, Adapty is the ultimate toolkit for app success."
-              </blockquote>
-              <div className="mt-6">
-                <div className="font-semibold">Ilgar Tali</div>
-                <div className="text-sm text-muted-foreground">Founder & Chief Vision Officer at Smartist</div>
+            <motion.div
+              whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.01 }}
+              transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+              className="rounded-2xl border bg-card p-8 h-full relative overflow-hidden group"
+            >
+              <Spotlight className="from-purple-500/15 via-primary/5 to-transparent" />
+              <div className="relative z-10">
+                <blockquote className="text-lg italic text-muted-foreground">
+                  "Whether it is A/B testing paywalls, predicting LTV, or analyzing subscription metrics, Adapty is the ultimate toolkit for app success."
+                </blockquote>
+                <div className="mt-6">
+                  <div className="font-semibold">Ilgar Tali</div>
+                  <div className="text-sm text-muted-foreground">Founder & Chief Vision Officer at Smartist</div>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </BlurFade>
 
           <BlurFade delay={0.5}>
-            <div className="rounded-2xl border bg-card p-8 h-full flex flex-col justify-between">
-              <div>
+            <motion.div
+              whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.01 }}
+              transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+              className="rounded-2xl border bg-card p-8 h-full flex flex-col justify-between relative overflow-hidden group"
+            >
+              <Spotlight className="from-primary/15 via-primary/5 to-transparent" />
+              <div className="relative z-10">
                 <h3 className="font-semibold text-lg">Join the community</h3>
                 <p className="mt-2 text-muted-foreground">
                   Connect with thousands of indie developers on SubHub Discord. Share insights, get help, and grow together.
                 </p>
               </div>
-              <div className="mt-6">
+              <div className="mt-6 relative z-10">
                 <Link
                   href="https://discord.gg/subscriptions-hub"
                   target="_blank"
@@ -652,7 +895,7 @@ function TimelineFeatures() {
                   Join SubHub Discord
                 </Link>
               </div>
-            </div>
+            </motion.div>
           </BlurFade>
         </div>
 
@@ -662,20 +905,26 @@ function TimelineFeatures() {
             <h2 className="text-xl font-semibold mb-6">Explore by role</h2>
             <div className="grid gap-4 md:grid-cols-3">
               {RELATED_ROLES.map((role) => (
-                <Link
+                <motion.div
                   key={role.href}
-                  href={role.href}
-                  className="flex items-center gap-4 rounded-xl border bg-card p-5 hover:border-primary/50 hover:shadow-lg transition-all duration-200 group"
+                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <role.icon className="size-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold">{role.title}</h3>
-                    <p className="text-sm text-muted-foreground line-clamp-1">{role.description}</p>
-                  </div>
-                  <ArrowRightIcon className="size-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                </Link>
+                  <Link
+                    href={role.href}
+                    className="flex items-center gap-4 rounded-xl border bg-card p-5 hover:border-primary/50 hover:shadow-lg transition-all duration-200 group relative overflow-hidden h-full"
+                  >
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" />
+                    <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors relative z-10">
+                      <role.icon className="size-6 text-primary" />
+                    </div>
+                    <div className="flex-1 relative z-10">
+                      <h3 className="font-semibold">{role.title}</h3>
+                      <p className="text-sm text-muted-foreground line-clamp-1">{role.description}</p>
+                    </div>
+                    <ArrowRightIcon className="size-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all relative z-10" />
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>

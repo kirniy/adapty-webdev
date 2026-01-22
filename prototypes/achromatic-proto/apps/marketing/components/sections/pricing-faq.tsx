@@ -1,5 +1,9 @@
+'use client';
+
 import * as React from 'react';
 import Link from 'next/link';
+import { motion, useReducedMotion } from 'motion/react';
+import { HelpCircleIcon } from 'lucide-react';
 
 import { APP_NAME } from '@workspace/common/app';
 import { routes } from '@workspace/routes';
@@ -10,9 +14,11 @@ import {
   AccordionTrigger
 } from '@workspace/ui/components/accordion';
 
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT FAQs from adapty.io/pricing (only 4 questions)
 const DATA = [
@@ -50,14 +56,46 @@ const DATA = [
   }
 ];
 
+// Magic animation: FAQ count badge
+function FAQCountMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        animate={shouldReduceMotion ? {} : {
+          rotate: [0, 10, -10, 0],
+        }}
+        transition={{
+          duration: 0.5,
+          repeat: Infinity,
+          repeatDelay: 3,
+        }}
+      >
+        <HelpCircleIcon className="size-3.5" />
+      </motion.div>
+      <span>Quick answers</span>
+    </motion.div>
+  );
+}
+
 export function PricingFAQ(): React.JSX.Element {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
       <div className="container py-20 relative z-10">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
           <BlurFade delay={0.05}>
             <div className="text-center lg:text-left">
+              <div className="mb-4">
+                <FAQCountMagic />
+              </div>
               <h2 className="mb-2.5 text-3xl font-semibold md:text-5xl">
                 Frequently Asked Questions
               </h2>
@@ -74,10 +112,20 @@ export function PricingFAQ(): React.JSX.Element {
             </div>
           </BlurFade>
           <BlurFade delay={0.1}>
-            <div className="mx-auto flex w-full max-w-xl flex-col">
+            <div className="mx-auto flex w-full max-w-xl flex-col relative rounded-xl border bg-card p-1 overflow-hidden">
+              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={300} />
+              <BorderBeam
+                size={180}
+                duration={12}
+                borderWidth={1.5}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+                className="opacity-40"
+              />
               <Accordion
                 type="single"
                 collapsible
+                className="relative z-10"
               >
                 {DATA.map((faq, index) => (
                   <AccordionItem

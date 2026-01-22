@@ -14,7 +14,104 @@ import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// Magic animation: Revenue growth tracker
+function RevenueGrowthMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [revenue, setRevenue] = React.useState(0);
+  const targetRevenue = 247;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setRevenue(targetRevenue);
+      return;
+    }
+    const duration = 2000;
+    const steps = 30;
+    const stepValue = targetRevenue / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += stepValue;
+      if (current >= targetRevenue) {
+        setRevenue(targetRevenue);
+        clearInterval(interval);
+      } else {
+        setRevenue(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute top-4 right-4 flex items-center gap-2 rounded-lg border bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+      <TrendingUpIcon className="size-4 text-green-500" />
+      <div className="flex flex-col">
+        <motion.span
+          className="text-lg font-bold tabular-nums text-green-500"
+          key={revenue}
+          initial={shouldReduceMotion ? undefined : { scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        >
+          +{revenue}%
+        </motion.span>
+        <span className="text-[10px] text-muted-foreground">revenue growth</span>
+      </div>
+    </div>
+  );
+}
+
+// Magic animation: Apps powered counter
+function AppsPoweredMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [apps, setApps] = React.useState(0);
+  const targetApps = 15000;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setApps(targetApps);
+      return;
+    }
+    const duration = 2500;
+    const steps = 40;
+    const stepValue = targetApps / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += stepValue;
+      if (current >= targetApps) {
+        setApps(targetApps);
+        clearInterval(interval);
+      } else {
+        setApps(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-lg border bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+      <UsersIcon className="size-4 text-primary" />
+      <div className="flex flex-col">
+        <motion.span
+          className="text-lg font-bold tabular-nums"
+          key={apps}
+          initial={shouldReduceMotion ? undefined : { scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        >
+          {apps.toLocaleString()}+
+        </motion.span>
+        <span className="text-[10px] text-muted-foreground">apps powered</span>
+      </div>
+    </div>
+  );
+}
 
 // EXACT content from adapty.io/for-app-owners (scraped 2026-01-21)
 const HERO_CONTENT = {
@@ -175,10 +272,11 @@ function SplitHero(): React.JSX.Element {
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg",
+                "group relative w-full overflow-hidden rounded-xl border bg-background shadow-lg",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
+              <Spotlight className="from-primary/20 via-purple-500/10 to-transparent" size={350} />
               <Image
                 priority
                 quality={100}
@@ -197,6 +295,9 @@ function SplitHero(): React.JSX.Element {
                 alt="Adapty Analytics Dashboard - real-time revenue tracking for app owners"
                 className="hidden w-full dark:block"
               />
+              {/* Magic animations */}
+              <RevenueGrowthMagic />
+              <AppsPoweredMagic />
             </motion.div>
           </BlurFade>
         </div>

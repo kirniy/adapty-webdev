@@ -12,6 +12,36 @@ import { cn } from '@workspace/ui/lib/utils';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { Spotlight } from '~/components/fragments/spotlight';
+import { BorderBeam } from '~/components/fragments/border-beam';
+
+// Magic animation: Team size counter
+function TeamSizeMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.7, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>50+ team members</span>
+    </motion.div>
+  );
+}
 
 // Team data with more realistic info
 const TEAM_MEMBERS = [
@@ -57,6 +87,15 @@ function TeamMemberCard({ member, index }: { member: typeof TEAM_MEMBERS[0]; ind
         whileHover={shouldReduceMotion ? undefined : { y: -3 }}
         transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
       >
+        {isHovered && (
+          <BorderBeam
+            size={160}
+            duration={10}
+            borderWidth={1.5}
+            colorFrom="hsl(var(--primary))"
+            colorTo="hsl(var(--primary)/0)"
+          />
+        )}
         {/* Image section with gradient overlay */}
         <div className="relative h-64 overflow-hidden">
           <motion.div
@@ -144,6 +183,12 @@ export function StoryTeam(): React.JSX.Element {
                 <br />
                 <span className="text-muted-foreground">subscription apps</span>
               </h2>
+              <div className="mt-3 lg:hidden">
+                <TeamSizeMagic />
+              </div>
+            </div>
+            <div className="hidden lg:block lg:mb-2">
+              <TeamSizeMagic />
             </div>
             <Link
               href="/about"

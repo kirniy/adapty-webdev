@@ -9,14 +9,166 @@ import { motion, useReducedMotion } from 'motion/react';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
 import {
   useImageSetVariant,
   useMonochromeMode,
   useRolesVariant,
   type ImageSetVariant,
 } from '~/lib/debug-context';
+
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// Magic animation: Code lines counter for developers
+function DevCodeMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [lines, setLines] = React.useState(0);
+  const targetLines = 10;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setLines(targetLines);
+      return;
+    }
+    const duration = 1500;
+    const steps = 20;
+    const stepValue = targetLines / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += stepValue;
+      if (current >= targetLines) {
+        setLines(targetLines);
+        clearInterval(interval);
+      } else {
+        setLines(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-lg border bg-background/95 px-2.5 py-1.5 shadow-sm backdrop-blur-sm">
+      <CodeIcon className="size-3.5 text-primary" />
+      <motion.span
+        className="text-sm font-bold tabular-nums"
+        key={lines}
+        initial={shouldReduceMotion ? undefined : { scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      >
+        {lines}
+      </motion.span>
+      <span className="text-[10px] text-muted-foreground">lines</span>
+    </div>
+  );
+}
+
+// Magic animation: Revenue tracked counter for owners
+function RevenueTrackedMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [revenue, setRevenue] = React.useState(0);
+  const targetRevenue = 2;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setRevenue(targetRevenue);
+      return;
+    }
+    const duration = 2000;
+    const steps = 20;
+    const stepValue = targetRevenue / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += stepValue;
+      if (current >= targetRevenue) {
+        setRevenue(targetRevenue);
+        clearInterval(interval);
+      } else {
+        setRevenue(Number(current.toFixed(1)));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-lg border bg-background/95 px-2.5 py-1.5 shadow-sm backdrop-blur-sm">
+      <BarChartIcon className="size-3.5 text-green-500" />
+      <motion.span
+        className="text-sm font-bold tabular-nums text-green-500"
+        key={revenue}
+        initial={shouldReduceMotion ? undefined : { scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      >
+        ${revenue}B+
+      </motion.span>
+      <span className="text-[10px] text-muted-foreground">tracked</span>
+    </div>
+  );
+}
+
+// Magic animation: Conversion boost for marketers
+function ConversionMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [conversion, setConversion] = React.useState(0);
+  const targetConversion = 40;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setConversion(targetConversion);
+      return;
+    }
+    const duration = 1800;
+    const steps = 20;
+    const stepValue = targetConversion / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += stepValue;
+      if (current >= targetConversion) {
+        setConversion(targetConversion);
+        clearInterval(interval);
+      } else {
+        setConversion(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-lg border bg-background/95 px-2.5 py-1.5 shadow-sm backdrop-blur-sm">
+      <MegaphoneIcon className="size-3.5 text-primary" />
+      <motion.span
+        className="text-sm font-bold tabular-nums text-primary"
+        key={conversion}
+        initial={shouldReduceMotion ? undefined : { scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      >
+        +{conversion}%
+      </motion.span>
+      <span className="text-[10px] text-muted-foreground">conversion</span>
+    </div>
+  );
+}
+
+// Helper to get magic component for each role
+function RoleMagic({ roleId }: { roleId: string }) {
+  switch (roleId) {
+    case 'developers':
+      return <DevCodeMagic />;
+    case 'owners':
+      return <RevenueTrackedMagic />;
+    case 'marketers':
+      return <ConversionMagic />;
+    default:
+      return null;
+  }
+}
 
 // Helper function to get image path based on image set variant
 function getRoleImagePath(roleId: string, imageSet: ImageSetVariant): string {
@@ -89,6 +241,7 @@ interface RoleCardProps {
 function RoleCard({ role, index, imageSet, monochromeMode }: RoleCardProps) {
   const Icon = role.icon;
   const imageSrc = getRoleImagePath(role.id, imageSet);
+  const [isHovered, setIsHovered] = React.useState(false);
 
   return (
     <BlurFade
@@ -99,8 +252,19 @@ function RoleCard({ role, index, imageSet, monochromeMode }: RoleCardProps) {
       <Link
         href={role.link}
         target="_blank"
-        className="flex h-full flex-col rounded-2xl border bg-card p-6 transition-all duration-300 hover:border-primary/20 hover:shadow-lg cursor-pointer"
+        className="relative flex h-full flex-col rounded-2xl border bg-card p-6 transition-all duration-300 hover:border-primary/20 hover:shadow-lg cursor-pointer overflow-hidden"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
+        {isHovered && (
+          <BorderBeam
+            size={150}
+            duration={8}
+            borderWidth={1.5}
+            colorFrom="hsl(var(--primary))"
+            colorTo="hsl(var(--primary)/0)"
+          />
+        )}
         {/* Icon and Stats */}
         <div className="mb-4 flex items-start justify-between">
           <div className="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -120,6 +284,7 @@ function RoleCard({ role, index, imageSet, monochromeMode }: RoleCardProps) {
 
         {/* Image - using object-contain to prevent cropping */}
         <div className="relative mb-6 aspect-[16/10] overflow-hidden rounded-xl bg-white">
+          <Spotlight className="from-primary/20 via-purple-500/10 to-transparent" size={200} />
           <Image
             src={imageSrc}
             alt={role.title}
@@ -129,6 +294,7 @@ function RoleCard({ role, index, imageSet, monochromeMode }: RoleCardProps) {
               monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
             )}
           />
+          <RoleMagic roleId={role.id} />
         </div>
 
         {/* Features List */}
@@ -203,6 +369,7 @@ interface BentoCardProps {
 function BentoCard({ role, index, imageSet, monochromeMode, featured = false }: BentoCardProps) {
   const Icon = role.icon;
   const imageSrc = getRoleImagePath(role.id, imageSet);
+  const [isHovered, setIsHovered] = React.useState(false);
 
   if (featured) {
     // Featured card - large horizontal layout
@@ -215,10 +382,22 @@ function BentoCard({ role, index, imageSet, monochromeMode, featured = false }: 
         <Link
           href={role.link}
           target="_blank"
-          className="flex h-full flex-col lg:flex-row rounded-2xl border bg-card overflow-hidden transition-all duration-300 hover:border-primary/20 hover:shadow-lg cursor-pointer"
+          className="relative flex h-full flex-col lg:flex-row rounded-2xl border bg-card overflow-hidden transition-all duration-300 hover:border-primary/20 hover:shadow-lg cursor-pointer"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
+          {isHovered && (
+            <BorderBeam
+              size={200}
+              duration={10}
+              borderWidth={1.5}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary)/0)"
+            />
+          )}
           {/* Image - larger on featured */}
           <div className="relative lg:w-1/2 aspect-[16/10] lg:aspect-auto bg-white">
+            <Spotlight className="from-primary/20 via-purple-500/10 to-transparent" size={300} />
             <Image
               src={imageSrc}
               alt={role.title}
@@ -228,6 +407,7 @@ function BentoCard({ role, index, imageSet, monochromeMode, featured = false }: 
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             />
+            <RoleMagic roleId={role.id} />
           </div>
 
           {/* Content */}
@@ -280,10 +460,22 @@ function BentoCard({ role, index, imageSet, monochromeMode, featured = false }: 
       <Link
         href={role.link}
         target="_blank"
-        className="flex h-full flex-col rounded-2xl border bg-card overflow-hidden transition-all duration-300 hover:border-primary/20 hover:shadow-lg cursor-pointer"
+        className="relative flex h-full flex-col rounded-2xl border bg-card overflow-hidden transition-all duration-300 hover:border-primary/20 hover:shadow-lg cursor-pointer"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
+        {isHovered && (
+          <BorderBeam
+            size={120}
+            duration={8}
+            borderWidth={1.5}
+            colorFrom="hsl(var(--primary))"
+            colorTo="hsl(var(--primary)/0)"
+          />
+        )}
         {/* Image */}
         <div className="relative aspect-[16/10] bg-white">
+          <Spotlight className="from-primary/20 via-purple-500/10 to-transparent" size={200} />
           <Image
             src={imageSrc}
             alt={role.title}
@@ -293,6 +485,7 @@ function BentoCard({ role, index, imageSet, monochromeMode, featured = false }: 
               monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
             )}
           />
+          <RoleMagic roleId={role.id} />
         </div>
 
         {/* Content */}
@@ -443,6 +636,7 @@ function RolesStacked() {
                 >
                   {/* Image */}
                   <div className="relative lg:w-1/2 aspect-[16/10] lg:aspect-[4/3] bg-white overflow-hidden">
+                    <Spotlight className="from-primary/20 via-purple-500/10 to-transparent" size={300} />
                     <Image
                       src={imageSrc}
                       alt={role.title}
@@ -454,6 +648,7 @@ function RolesStacked() {
                     />
                     {/* Gradient overlay on hover */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:to-transparent transition-all duration-500 pointer-events-none" />
+                    <RoleMagic roleId={role.id} />
                   </div>
 
                   {/* Content */}

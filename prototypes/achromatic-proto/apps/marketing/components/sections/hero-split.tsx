@@ -29,6 +29,7 @@ import { SectionBackground } from '~/components/fragments/section-background';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SlideIn } from '~/components/fragments/slide-in';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
 
 // Helper to get image path based on selected image set
@@ -118,18 +119,33 @@ function HeroButtons(): React.JSX.Element {
       duration={0.5}
       className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
     >
-      <Link
-        href="https://app.adapty.io/registration"
-        className={cn(
-          buttonVariants({
-            variant: 'default',
-            size: 'lg'
-          }),
-          'h-11 rounded-xl px-6'
-        )}
-      >
-        Start for free
-      </Link>
+      <div className="relative">
+        {/* Pulsing ring effect */}
+        <motion.div
+          className="absolute inset-0 rounded-xl border-2 border-primary/50"
+          animate={{
+            scale: [1, 1.04, 1],
+            opacity: [0.6, 0, 0.6],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+        <Link
+          href="https://app.adapty.io/registration"
+          className={cn(
+            buttonVariants({
+              variant: 'default',
+              size: 'lg'
+            }),
+            'h-11 rounded-xl px-6 relative'
+          )}
+        >
+          Start for free
+        </Link>
+      </div>
       <Link
         href="/schedule-demo"
         className={cn(
@@ -146,6 +162,61 @@ function HeroButtons(): React.JSX.Element {
   );
 }
 
+// Magic animation: Growing revenue counter
+function RevenueTrackedMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [revenue, setRevenue] = React.useState(1.9);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setRevenue(2.0);
+      return;
+    }
+    const interval = setInterval(() => {
+      setRevenue(prev => {
+        if (prev >= 2.0) return 2.0;
+        return Math.min(2.0, prev + 0.01);
+      });
+    }, 50);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <motion.span
+      key={revenue.toFixed(1)}
+      className="font-semibold text-foreground"
+      initial={shouldReduceMotion ? {} : { scale: 1.1 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 0.15 }}
+    >
+      ${revenue.toFixed(1)}B+
+    </motion.span>
+  );
+}
+
+// Magic animation: Live uptime indicator
+function UptimeMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <span className="flex items-center gap-1.5 font-semibold text-foreground">
+      <motion.span
+        className="size-1.5 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.7, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      99.99%
+    </span>
+  );
+}
+
 function HeroStats(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
@@ -157,11 +228,11 @@ function HeroStats(): React.JSX.Element {
       className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 pt-4 text-sm text-muted-foreground"
     >
       <div className="flex items-center gap-2">
-        <span className="font-semibold text-foreground">$2B+</span>
+        <RevenueTrackedMagic />
         <span>tracked revenue</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-semibold text-foreground">99.99%</span>
+        <UptimeMagic />
         <span>uptime</span>
       </div>
       <div className="flex items-center gap-2">
@@ -335,6 +406,7 @@ export function HeroSplit(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
       <div className="container relative z-10 py-16 sm:py-20 md:py-24 lg:py-28">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={400} />
         <div className="grid items-center gap-12 lg:grid-cols-[1fr,1.2fr] lg:gap-16">
           {/* Left: Content */}
           <div className="flex flex-col gap-6">

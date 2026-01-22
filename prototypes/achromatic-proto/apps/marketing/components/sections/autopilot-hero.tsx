@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, BrainCircuitIcon, TrendingUpIcon, ZapIcon, SparklesIcon, CheckIcon, BarChart3Icon, RocketIcon } from 'lucide-react';
+import { ArrowRightIcon, BrainCircuitIcon, TrendingUpIcon, ZapIcon, SparklesIcon, CheckIcon, BarChart3Icon, RocketIcon, ArrowUpIcon } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -14,7 +14,126 @@ import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+
+// Magic animation: AI optimization progress
+function AIOptimizationMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [step, setStep] = React.useState(0);
+
+  const steps = [
+    { label: 'Analyzing paywalls...', progress: 30 },
+    { label: 'Running experiments...', progress: 60 },
+    { label: 'Optimizing...', progress: 90 },
+    { label: 'Revenue +80%', progress: 100 },
+  ];
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setStep((prev) => (prev + 1) % steps.length);
+    }, 1800);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion, steps.length]);
+
+  return (
+    <div className="absolute top-4 right-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg w-40"
+      >
+        <div className="flex items-center gap-2 mb-1.5">
+          <motion.div
+            animate={shouldReduceMotion ? undefined : { rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 3, ease: 'linear' }}
+          >
+            <BrainCircuitIcon className="size-3 text-primary" />
+          </motion.div>
+          <span className="text-[10px] font-medium text-muted-foreground">AI Autopilot</span>
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden mb-1">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${steps[step].progress}%` }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+                className={cn(
+                  "h-full rounded-full",
+                  step === 3 ? "bg-green-500" : "bg-primary"
+                )}
+              />
+            </div>
+            <p className={cn(
+              "text-[10px] font-medium",
+              step === 3 ? "text-green-600" : "text-muted-foreground"
+            )}>
+              {steps[step].label}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+    </div>
+  );
+}
+
+// Magic animation: Revenue boost badge
+function RevenueBoostMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [boost, setBoost] = React.useState(0);
+  const targetBoost = 80;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setBoost(targetBoost);
+      return;
+    }
+    const timeout = setTimeout(() => {
+      const duration = 1500;
+      const steps = 50;
+      const increment = targetBoost / steps;
+      let current = 0;
+      const interval = setInterval(() => {
+        current += increment;
+        if (current >= targetBoost) {
+          setBoost(targetBoost);
+          clearInterval(interval);
+        } else {
+          setBoost(Math.floor(current));
+        }
+      }, duration / steps);
+      return () => clearInterval(interval);
+    }, 800);
+    return () => clearTimeout(timeout);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute bottom-4 left-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+      >
+        <div className="size-6 rounded-full bg-green-500/10 flex items-center justify-center">
+          <ArrowUpIcon className="size-3 text-green-600" />
+        </div>
+        <div className="text-left">
+          <p className="text-sm font-bold text-green-600">+{boost}%</p>
+          <p className="text-[10px] text-muted-foreground">Revenue boost</p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 // =============================================================================
 // SHARED CONTENT
@@ -190,6 +309,17 @@ function SplitHero() {
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
+              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <AIOptimizationMagic />
+              <RevenueBoostMagic />
+              <BorderBeam
+                size={200}
+                duration={12}
+                delay={9}
+                borderWidth={1.5}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+              />
               <Image
                 priority
                 quality={100}

@@ -10,8 +10,57 @@ import { Badge } from '@workspace/ui/components/badge';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// Magic animation: Average rating counter
+function RatingMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [rating, setRating] = React.useState(4.0);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setRating(4.9);
+      return;
+    }
+    const interval = setInterval(() => {
+      setRating(prev => {
+        if (prev >= 4.9) return 4.9;
+        return Math.min(4.9, prev + 0.1);
+      });
+    }, 100);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.2 }}
+    >
+      <motion.svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="size-4"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 0.5,
+          repeat: Infinity,
+          repeatDelay: 2,
+        }}
+      >
+        <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
+      </motion.svg>
+      <span>{rating.toFixed(1)} avg rating</span>
+    </motion.div>
+  );
+}
 
 // All 8 real testimonials from adapty.io homepage - content parity with clean variant
 const DATA = [
@@ -159,9 +208,10 @@ export function Testimonials({ items = DATA }: TestimonialsProps): React.JSX.Ele
           <Badge variant="outline" className="mb-4 rounded-full">
             Testimonials
           </Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl text-balance">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl text-balance mb-4">
             Loved by developers worldwide
           </h2>
+          <RatingMagic />
         </BlurFade>
 
         {/* Interactive Testimonial Area */}
@@ -207,6 +257,8 @@ export function Testimonials({ items = DATA }: TestimonialsProps): React.JSX.Ele
           )}
 
           <div className="relative z-10 p-8 md:p-12 lg:p-16 rounded-3xl border bg-background/50 backdrop-blur-sm shadow-sm overflow-hidden group hover:border-primary/20 transition-colors duration-500">
+            <BorderBeam size={250} duration={12} borderWidth={1.5} colorFrom="hsl(var(--primary))" colorTo="hsl(var(--primary)/0.3)" />
+            <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={400} />
             {/* Progress bar */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-muted">
               <motion.div

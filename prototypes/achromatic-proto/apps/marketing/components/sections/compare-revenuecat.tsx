@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon } from "lucide-react";
+import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon, TrendingUpIcon, ZapIcon, ShieldCheckIcon } from "lucide-react";
+import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -21,11 +22,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@workspace/ui/components/accordion";
+import { cn } from "@workspace/ui/lib/utils";
 
+import { BorderBeam } from "~/components/fragments/border-beam";
 import { GridSection } from "~/components/fragments/grid-section";
 import { SectionBackground } from "~/components/fragments/section-background";
 import { SiteHeading } from "~/components/fragments/site-heading";
 import { BlurFade } from "~/components/fragments/blur-fade";
+import { Spotlight } from "~/components/fragments/spotlight";
 
 // EXACT content from adapty.io/compare/revenuecat (scraped 2026-01-21)
 
@@ -304,6 +308,136 @@ const SUPPORT_QUOTES = [
   { quote: "Amazing. Fast and helpful.", name: "Poliany" },
 ];
 
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// Comparison scale animation showing Adapty winning
+function CompareScaleMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-center gap-2 justify-center py-4">
+        <div className="w-20 h-3 bg-primary rounded-full" />
+        <span className="text-xs text-muted-foreground">vs</span>
+        <div className="w-12 h-3 bg-muted-foreground/30 rounded-full" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-2 justify-center py-4">
+      <motion.div
+        className="h-3 bg-primary rounded-full"
+        animate={{ width: [60, 80, 70, 80] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <span className="text-xs text-muted-foreground">vs</span>
+      <motion.div
+        className="h-3 bg-muted-foreground/30 rounded-full"
+        animate={{ width: [50, 40, 45, 40] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </div>
+  );
+}
+
+// Migration progress animation
+function MigrationMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [progress, setProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setProgress((prev) => (prev >= 100 ? 0 : prev + 5));
+    }, 150);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-center gap-2">
+        <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
+          <div className="h-full w-full bg-primary" />
+        </div>
+        <CheckIcon className="size-4 text-green-500" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-2">
+      <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
+        <motion.div
+          className="h-full bg-primary"
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.1 }}
+        />
+      </div>
+      <AnimatePresence mode="wait">
+        {progress >= 100 ? (
+          <motion.div
+            key="check"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+          >
+            <CheckIcon className="size-4 text-green-500" />
+          </motion.div>
+        ) : (
+          <motion.span
+            key="percent"
+            className="text-xs text-muted-foreground tabular-nums"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {progress}%
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// Revenue growth visualization
+function RevenueMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const bars = [30, 45, 40, 60, 55, 80, 75, 95];
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex items-end gap-1 h-8">
+        {bars.map((h, i) => (
+          <div key={i} className="w-2 bg-primary/60 rounded-sm" style={{ height: `${h}%` }} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-end gap-1 h-8">
+      {bars.map((height, i) => (
+        <motion.div
+          key={i}
+          className="w-2 bg-primary/60 rounded-sm"
+          initial={{ height: 0 }}
+          animate={{ height: `${height}%` }}
+          transition={{
+            duration: 0.5,
+            delay: i * 0.08,
+            repeat: Infinity,
+            repeatType: "reverse",
+            repeatDelay: 2,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function StatusIcon({
   status,
 }: {
@@ -332,6 +466,11 @@ function StatusIcon({
 }
 
 export function CompareRevenueCat(): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+  const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
+  const [hoveredCaseStudy, setHoveredCaseStudy] = React.useState<number | null>(null);
+  const [hoveredQuote, setHoveredQuote] = React.useState<number | null>(null);
+
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={4000} />
@@ -347,20 +486,50 @@ export function CompareRevenueCat(): React.JSX.Element {
           </BlurFade>
           <BlurFade delay={0.1}>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg">
-                <Link href="/schedule-demo">Book a demo</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="https://app.adapty.io/registration">
-                  Start for free
-                </Link>
-              </Button>
+              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button asChild size="lg">
+                  <Link href="/schedule-demo">Book a demo</Link>
+                </Button>
+              </motion.div>
+              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button asChild variant="outline" size="lg">
+                  <Link href="https://app.adapty.io/registration">
+                    Start for free
+                  </Link>
+                </Button>
+              </motion.div>
             </div>
           </BlurFade>
+          <BlurFade delay={0.12}>
+            <CompareScaleMagic />
+          </BlurFade>
           <BlurFade delay={0.15}>
-            <p className="mt-8 text-sm text-muted-foreground">
-              Trusted by 15,000+ apps generating $1.9B+ in revenue
-            </p>
+            <div className="mt-4 flex items-center justify-center gap-6 text-sm text-muted-foreground">
+              <motion.div
+                className="flex items-center gap-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <TrendingUpIcon className="size-4 text-primary" />
+                <span>15,000+ apps</span>
+              </motion.div>
+              <motion.div
+                className="flex items-center gap-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+              >
+                <ZapIcon className="size-4 text-primary" />
+                <span>$1.9B+ revenue</span>
+              </motion.div>
+              <motion.div
+                className="flex items-center gap-2"
+                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+              >
+                <ShieldCheckIcon className="size-4 text-primary" />
+                <span>Enterprise-ready</span>
+              </motion.div>
+            </div>
           </BlurFade>
         </div>
 
@@ -377,36 +546,58 @@ export function CompareRevenueCat(): React.JSX.Element {
               choose Adapty.
             </p>
 
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
+            <div className="overflow-x-auto rounded-xl border bg-card/50 relative">
+              <BorderBeam
+                size={200}
+                duration={15}
+                borderWidth={1}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+                className="opacity-40"
+              />
+              <table className="w-full border-collapse relative z-10">
                 <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-4 px-4 font-semibold">
+                  <tr className="border-b bg-muted/30">
+                    <th className="text-left py-4 px-6 font-semibold">
                       Feature
                     </th>
-                    <th className="text-left py-4 px-4 font-semibold text-primary">
+                    <th className="text-left py-4 px-6 font-semibold text-primary">
                       Adapty
                     </th>
-                    <th className="text-left py-4 px-4 font-semibold text-muted-foreground">
+                    <th className="text-left py-4 px-6 font-semibold text-muted-foreground">
                       RevenueCat
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {COMPARISON_ITEMS.map((item, index) => (
-                    <tr key={index} className="border-b border-border/50">
-                      <td className="py-4 px-4 font-medium">{item.feature}</td>
-                      <td className="py-4 px-4">
-                        <div className="flex items-start gap-3">
+                    <motion.tr
+                      key={index}
+                      onMouseEnter={() => setHoveredRow(index)}
+                      onMouseLeave={() => setHoveredRow(null)}
+                      className={cn(
+                        "border-b border-border/50 transition-colors cursor-default",
+                        hoveredRow === index && "bg-primary/5"
+                      )}
+                    >
+                      <td className="py-4 px-6 font-medium">{item.feature}</td>
+                      <td className="py-4 px-6">
+                        <motion.div
+                          className="flex items-start gap-3"
+                          animate={shouldReduceMotion ? undefined : {
+                            x: hoveredRow === index ? 4 : 0,
+                          }}
+                          transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
+                        >
                           <StatusIcon
                             status={item.adapty.status as "check" | "partial" | "no"}
                           />
                           <span className="text-sm text-muted-foreground">
                             {item.adapty.description}
                           </span>
-                        </div>
+                        </motion.div>
                       </td>
-                      <td className="py-4 px-4">
+                      <td className="py-4 px-6">
                         <div className="flex items-start gap-3">
                           <StatusIcon
                             status={item.competitor.status as "check" | "partial" | "no"}
@@ -416,7 +607,7 @@ export function CompareRevenueCat(): React.JSX.Element {
                           </span>
                         </div>
                       </td>
-                    </tr>
+                    </motion.tr>
                   ))}
                 </tbody>
               </table>
@@ -493,9 +684,12 @@ export function CompareRevenueCat(): React.JSX.Element {
             <h2 className="text-2xl font-bold text-center mb-4">
               Migrate from RevenueCat in one day
             </h2>
-            <h3 className="text-xl font-semibold text-center mb-8">
+            <h3 className="text-xl font-semibold text-center mb-4">
               No worries, we'll guide you
             </h3>
+            <div className="flex justify-center mb-6">
+              <MigrationMagic />
+            </div>
             <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
               Many RevenueCat customers have already switched to Adapty. Most
               migrations take less than 24 hours, made even faster with our
@@ -556,14 +750,38 @@ export function CompareRevenueCat(): React.JSX.Element {
 
             <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
               {SUPPORT_QUOTES.slice(0, 3).map((item, index) => (
-                <Card key={index} className="bg-card/50">
-                  <CardContent className="p-4">
-                    <p className="text-sm text-muted-foreground italic mb-2">
-                      "{item.quote}"
-                    </p>
-                    <p className="text-sm font-semibold">{item.name}</p>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  onMouseEnter={() => setHoveredQuote(index)}
+                  onMouseLeave={() => setHoveredQuote(null)}
+                  animate={shouldReduceMotion ? undefined : {
+                    y: hoveredQuote === index ? -4 : 0,
+                    scale: hoveredQuote === index ? 1.02 : 1,
+                  }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className={cn(
+                    "h-full relative overflow-hidden transition-all duration-200",
+                    hoveredQuote === index && "border-primary/50 shadow-lg"
+                  )}>
+                    {hoveredQuote === index && (
+                      <BorderBeam
+                        size={100}
+                        duration={6}
+                        borderWidth={1.5}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary)/0)"
+                      />
+                    )}
+                    <Spotlight className="from-primary/10 via-transparent to-transparent" size={200} />
+                    <CardContent className="p-4 relative z-10">
+                      <p className="text-sm text-muted-foreground italic mb-2">
+                        "{item.quote}"
+                      </p>
+                      <p className="text-sm font-semibold">{item.name}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -572,47 +790,92 @@ export function CompareRevenueCat(): React.JSX.Element {
         {/* Case Studies */}
         <BlurFade delay={0.4}>
           <div className="py-16">
-            <h2 className="text-2xl font-bold text-center mb-8">
+            <h2 className="text-2xl font-bold text-center mb-4">
               You'll never look back
             </h2>
+            <div className="flex justify-center mb-8">
+              <RevenueMagic />
+            </div>
 
             <div className="grid md:grid-cols-2 gap-8">
               {CASE_STUDIES.map((study, index) => (
-                <Card key={index} className="bg-card/50">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="size-12 rounded-xl bg-muted flex items-center justify-center font-bold text-lg">
-                        {study.name.charAt(0)}
+                <motion.div
+                  key={index}
+                  onMouseEnter={() => setHoveredCaseStudy(index)}
+                  onMouseLeave={() => setHoveredCaseStudy(null)}
+                  animate={shouldReduceMotion ? undefined : {
+                    y: hoveredCaseStudy === index ? -8 : 0,
+                    scale: hoveredCaseStudy === index ? 1.02 : 1,
+                  }}
+                  transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                >
+                  <Card className={cn(
+                    "h-full relative overflow-hidden transition-all duration-200",
+                    hoveredCaseStudy === index && "border-primary/50 shadow-xl"
+                  )}>
+                    {hoveredCaseStudy === index && (
+                      <BorderBeam
+                        size={150}
+                        duration={8}
+                        borderWidth={1.5}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary)/0)"
+                      />
+                    )}
+                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+                    <CardContent className="p-6 relative z-10">
+                      <div className="flex items-center gap-4 mb-4">
+                        <motion.div
+                          className="size-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center font-bold text-lg text-primary"
+                          animate={shouldReduceMotion ? undefined : {
+                            scale: hoveredCaseStudy === index ? 1.1 : 1,
+                          }}
+                          transition={{ type: 'spring', duration: 0.2 }}
+                        >
+                          {study.name.charAt(0)}
+                        </motion.div>
+                        <div>
+                          <h3 className="font-semibold">{study.name}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {study.category}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-semibold">{study.name}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {study.category}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-lg font-bold text-primary mb-4">
-                      {study.result}
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {study.description}
-                    </p>
-                    <blockquote className="border-l-2 border-primary pl-4 italic text-sm text-muted-foreground mb-4">
-                      "{study.quote}"
-                    </blockquote>
-                    <p className="text-sm font-semibold">{study.author}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {study.authorTitle}
-                    </p>
-                    <Link
-                      href={study.link}
-                      className="mt-4 inline-flex items-center gap-1 text-sm text-primary hover:underline"
-                    >
-                      Read full story
-                      <ArrowRightIcon className="size-4" />
-                    </Link>
-                  </CardContent>
-                </Card>
+                      <motion.div
+                        className="text-lg font-bold text-primary mb-4"
+                        animate={shouldReduceMotion ? undefined : {
+                          scale: hoveredCaseStudy === index ? 1.02 : 1,
+                        }}
+                      >
+                        {study.result}
+                      </motion.div>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        {study.description}
+                      </p>
+                      <blockquote className="border-l-2 border-primary pl-4 italic text-sm text-muted-foreground mb-4">
+                        "{study.quote}"
+                      </blockquote>
+                      <p className="text-sm font-semibold">{study.author}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {study.authorTitle}
+                      </p>
+                      <Link
+                        href={study.link}
+                        className="mt-4 inline-flex items-center gap-1 text-sm text-primary hover:underline group"
+                      >
+                        Read full story
+                        <motion.span
+                          animate={shouldReduceMotion ? undefined : {
+                            x: hoveredCaseStudy === index ? 4 : 0,
+                          }}
+                          transition={{ duration: 0.15 }}
+                        >
+                          <ArrowRightIcon className="size-4" />
+                        </motion.span>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>

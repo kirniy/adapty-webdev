@@ -22,6 +22,35 @@ import { cn } from '@workspace/ui/lib/utils';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// Magic animation: SDK platforms counter
+function SDKPlatformsMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const platformCount = Object.keys(SDK_SNIPPETS).length;
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-primary"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>{platformCount}+ platforms</span>
+    </motion.div>
+  );
+}
 
 // SDK Languages with their code snippets
 const SDK_SNIPPETS = {
@@ -170,12 +199,58 @@ function CopyButton({ code }: { code: string }) {
   );
 }
 
-function CodeBlock({ code, language }: { code: string; language: string }) {
+// Typewriter effect for code
+function TypewriterCode({ code, isActive }: { code: string; isActive: boolean }) {
+  const shouldReduceMotion = useReducedMotion();
+  const [displayedCode, setDisplayedCode] = React.useState('');
+  const [isTyping, setIsTyping] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!isActive || shouldReduceMotion) {
+      setDisplayedCode(code);
+      return;
+    }
+
+    setIsTyping(true);
+    setDisplayedCode('');
+    let currentIndex = 0;
+    const typingSpeed = 8; // ms per character
+
+    const interval = setInterval(() => {
+      if (currentIndex < code.length) {
+        setDisplayedCode(code.slice(0, currentIndex + 1));
+        currentIndex++;
+      } else {
+        setIsTyping(false);
+        clearInterval(interval);
+      }
+    }, typingSpeed);
+
+    return () => clearInterval(interval);
+  }, [code, isActive, shouldReduceMotion]);
+
+  return (
+    <span>
+      {displayedCode}
+      {isTyping && !shouldReduceMotion && (
+        <motion.span
+          className="inline-block w-2 h-4 bg-primary ml-0.5"
+          animate={{ opacity: [1, 0, 1] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+        />
+      )}
+    </span>
+  );
+}
+
+function CodeBlock({ code, language, isActive }: { code: string; language: string; isActive: boolean }) {
   return (
     <div className="relative">
       <CopyButton code={code} />
       <pre className="overflow-x-auto rounded-lg bg-zinc-950 p-4 text-sm leading-relaxed text-zinc-100 dark:bg-zinc-900">
-        <code className="font-mono">{code}</code>
+        <code className="font-mono">
+          <TypewriterCode code={code} isActive={isActive} />
+        </code>
       </pre>
     </div>
   );
@@ -193,9 +268,12 @@ export function SDKCode(): React.JSX.Element {
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
             <BlurFade delay={shouldReduceMotion ? 0 : 0.05}>
-              <Badge variant="outline" className="w-fit rounded-full">
-                Developer-First SDK
-              </Badge>
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge variant="outline" className="rounded-full">
+                  Developer-First SDK
+                </Badge>
+                <SDKPlatformsMagic />
+              </div>
             </BlurFade>
 
             <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
@@ -289,7 +367,7 @@ export function SDKCode(): React.JSX.Element {
                 {(Object.entries(SDK_SNIPPETS) as [Language, typeof SDK_SNIPPETS.swift][]).map(
                   ([key, snippet]) => (
                     <TabsContent key={key} value={key} className="m-0">
-                      <CodeBlock code={snippet.code} language={key} />
+                      <CodeBlock code={snippet.code} language={key} isActive={activeTab === key} />
                     </TabsContent>
                   )
                 )}

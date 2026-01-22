@@ -10,6 +10,35 @@ import { cn } from '@workspace/ui/lib/utils';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// Magic animation: FAQ response time badge
+function FAQResponseMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        animate={shouldReduceMotion ? {} : {
+          rotate: [0, 10, -10, 0],
+        }}
+        transition={{
+          duration: 0.6,
+          repeat: Infinity,
+          repeatDelay: 3,
+        }}
+      >
+        <MessageCircleQuestionIcon className="size-3.5" />
+      </motion.div>
+      <span>Quick answers</span>
+    </motion.div>
+  );
+}
 
 const FAQ_ITEMS = [
   {
@@ -179,6 +208,9 @@ export function FAQCards(): React.JSX.Element {
                 Contact our team
               </a>
             </p>
+            <div className="mt-4">
+              <FAQResponseMagic />
+            </div>
           </BlurFade>
 
           {/* FAQ cards */}

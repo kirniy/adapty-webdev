@@ -16,9 +16,39 @@ import {
 import { Badge } from '@workspace/ui/components/badge';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { getInitials } from '~/lib/formatters';
+
+// Magic animation: Article count badge
+function ArticleCountMagic({ count }: { count: number }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.7, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>{count} articles</span>
+    </motion.div>
+  );
+}
 
 function BlogCard({ post, index }: { post: typeof allPosts[0]; index: number }) {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -28,14 +58,24 @@ function BlogCard({ post, index }: { post: typeof allPosts[0]; index: number }) 
     <BlurFade delay={shouldReduceMotion ? 0 : 0.05 + index * 0.05}>
       <Link href={`${baseUrl.Marketing}${post.slug}`}>
         <motion.article
-          className="group flex h-full flex-col rounded-xl border bg-card p-5 cursor-pointer"
+          className="group relative flex h-full flex-col rounded-xl border bg-card p-5 cursor-pointer overflow-hidden"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           whileHover={shouldReduceMotion ? undefined : { y: -2 }}
           transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
         >
+          {isHovered && (
+            <BorderBeam
+              size={100}
+              duration={6}
+              borderWidth={1.5}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary)/0)"
+            />
+          )}
+          <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={150} />
           {/* Category and Date */}
-          <div className="mb-3 flex items-center justify-between">
+          <div className="mb-3 flex items-center justify-between relative z-10">
             <span className="text-xs font-medium text-primary">{post.category}</span>
             <time dateTime={post.published} className="text-xs text-muted-foreground">
               {format(post.published, 'MMM d, yyyy')}
@@ -43,17 +83,17 @@ function BlogCard({ post, index }: { post: typeof allPosts[0]; index: number }) 
           </div>
 
           {/* Title */}
-          <h3 className="mb-2 text-lg font-semibold leading-tight line-clamp-2">
+          <h3 className="mb-2 text-lg font-semibold leading-tight line-clamp-2 relative z-10">
             {post.title}
           </h3>
 
           {/* Description */}
-          <p className="mb-4 flex-1 text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+          <p className="mb-4 flex-1 text-sm text-muted-foreground line-clamp-2 leading-relaxed relative z-10">
             {post.description}
           </p>
 
           {/* Author and Arrow */}
-          <div className="flex items-center justify-between pt-4 border-t border-border/50">
+          <div className="flex items-center justify-between pt-4 border-t border-border/50 relative z-10">
             <div className="flex items-center gap-2">
               <Avatar className="size-6">
                 <AvatarImage src={post.author?.avatar} alt={post.author?.name ?? ''} />
@@ -88,6 +128,7 @@ export function BlogPosts(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={700} />
       <div className="container py-16 lg:py-24 relative z-10">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
         {/* Section Header */}
         <BlurFade className="mb-12">
           <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
@@ -98,6 +139,9 @@ export function BlogPosts(): React.JSX.Element {
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">
                 Insights & Resources
               </h2>
+              <div className="mt-3">
+                <ArticleCountMagic count={allPosts.length} />
+              </div>
             </div>
             <Link
               href="/blog"

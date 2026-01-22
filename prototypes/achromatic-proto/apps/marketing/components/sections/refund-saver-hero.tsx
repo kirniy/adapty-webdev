@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, ShieldCheckIcon, DollarSignIcon, TrendingDownIcon, ZapIcon, CheckIcon } from 'lucide-react';
+import { ArrowRightIcon, ShieldCheckIcon, DollarSignIcon, TrendingDownIcon, ZapIcon, CheckIcon, ArrowDownIcon } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -14,7 +14,104 @@ import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+
+// Magic animation: Refund reduction counter
+function RefundReductionMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [percentage, setPercentage] = React.useState(0);
+  const targetPercentage = 50;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setPercentage(targetPercentage);
+      return;
+    }
+    const duration = 1500;
+    const steps = 50;
+    const increment = targetPercentage / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += increment;
+      if (current >= targetPercentage) {
+        setPercentage(targetPercentage);
+        clearInterval(interval);
+      } else {
+        setPercentage(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute top-4 right-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+      >
+        <div className="size-6 rounded-full bg-green-500/10 flex items-center justify-center">
+          <ArrowDownIcon className="size-3 text-green-600" />
+        </div>
+        <div className="text-left">
+          <p className="text-sm font-bold text-green-600">-{percentage}%</p>
+          <p className="text-[10px] text-muted-foreground">Refunds reduced</p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// Magic animation: Revenue saved counter
+function RevenueSavedMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [saved, setSaved] = React.useState(0);
+  const targetSaved = 576;
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setSaved(targetSaved);
+      return;
+    }
+    const timeout = setTimeout(() => {
+      const duration = 2000;
+      const steps = 60;
+      const increment = targetSaved / steps;
+      let current = 0;
+      const interval = setInterval(() => {
+        current += increment;
+        if (current >= targetSaved) {
+          setSaved(targetSaved);
+          clearInterval(interval);
+        } else {
+          setSaved(Math.floor(current));
+        }
+      }, duration / steps);
+      return () => clearInterval(interval);
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute bottom-4 left-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+      >
+        <div className="size-5 rounded-full bg-primary/10 flex items-center justify-center">
+          <DollarSignIcon className="size-3 text-primary" />
+        </div>
+        <div>
+          <p className="text-xs font-bold text-foreground">${saved}K</p>
+          <p className="text-[10px] text-muted-foreground">Saved weekly</p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 // EXACT content from adapty.io/refund-saver (scraped 2026-01-21)
 const HERO_CONTENT = {
@@ -189,6 +286,17 @@ function SplitHero(): React.JSX.Element {
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
+              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <RefundReductionMagic />
+              <RevenueSavedMagic />
+              <BorderBeam
+                size={200}
+                duration={12}
+                delay={9}
+                borderWidth={1.5}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+              />
               <Image
                 priority
                 quality={100}

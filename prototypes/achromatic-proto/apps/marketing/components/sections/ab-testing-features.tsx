@@ -17,10 +17,12 @@ import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { cn } from '@workspace/ui/lib/utils';
 
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // MATCHES ADAPTY.IO CONTENT EXACTLY
 const FEATURES = [
@@ -97,44 +99,103 @@ const RELATED_FEATURES = [
 // MAGIC ANIMATIONS
 // =============================================================================
 
-// 1. A/B/C TESTING MAGIC
+// 1. A/B/C TESTING MAGIC - Enhanced with winner animation
 function ABCMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [winner, setWinner] = React.useState(1);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setWinner((prev) => (prev + 1) % 3);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="mt-4 flex gap-3 justify-center items-end h-[60px]">
+        {['A', 'B', 'C'].map((variant, i) => (
+          <div
+            key={variant}
+            className={cn(
+              "w-12 h-[60%] rounded-t-md border border-b-0 flex items-center justify-center text-xs font-bold",
+              i === 1 ? "bg-primary/20 border-primary/50 text-primary" : "bg-muted/50 border-border"
+            )}
+          >
+            {variant}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="mt-4 flex gap-3 justify-center items-end h-[60px]">
       {['A', 'B', 'C'].map((variant, i) => (
         <motion.div
           key={variant}
-          initial={{ height: '40%' }}
           animate={{
-            height: i === 1 ? '100%' : '40%',
-            filter: i === 1 ? 'grayscale(0%)' : 'grayscale(100%)',
-            opacity: i === 1 ? 1 : 0.5
+            height: winner === i ? '100%' : '45%',
+            opacity: winner === i ? 1 : 0.5
           }}
-          transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: i * 0.2 }}
+          transition={{ type: 'spring', duration: 0.5, bounce: 0.2 }}
           className={cn(
-            "w-12 rounded-t-md border border-b-0 flex items-center justify-center text-xs font-bold",
-            i === 1 ? "bg-primary/20 border-primary/50 text-primary" : "bg-muted/50 border-border"
+            "w-12 rounded-t-md border border-b-0 flex items-center justify-center text-xs font-bold relative overflow-hidden",
+            winner === i ? "bg-primary/20 border-primary/50 text-primary" : "bg-muted/50 border-border"
           )}
         >
           {variant}
+          {winner === i && (
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          )}
         </motion.div>
       ))}
     </div>
   );
 }
 
-// 2. METRICS MAGIC
+// 2. METRICS MAGIC - Enhanced with real metric names
 function MetricsMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const metrics = [
+    { label: 'Conv.', value: '+12%', width: 75 },
+    { label: 'ARPU', value: '+8%', width: 60 },
+  ];
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="mt-4 grid grid-cols-2 gap-2">
+        {metrics.map((m, i) => (
+          <div key={i} className="bg-background/50 rounded p-2 border flex flex-col gap-1">
+            <div className="text-[9px] text-muted-foreground">{m.label}</div>
+            <div className="h-1.5 bg-muted rounded-full">
+              <div className="h-full bg-primary rounded-full" style={{ width: `${m.width}%` }} />
+            </div>
+            <div className="text-[9px] font-mono text-primary text-right">{m.value}</div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="mt-4 grid grid-cols-2 gap-2">
-      {[1, 2].map((i) => (
+      {metrics.map((m, i) => (
         <div key={i} className="bg-background/50 rounded p-2 border flex flex-col gap-1">
-          <div className="h-1.5 w-12 bg-muted rounded-full" />
-          <motion.div
-            animate={{ width: ["0%", "70%", "50%", "80%"] }}
-            transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
-            className="h-1 bg-primary rounded-full"
-          />
+          <div className="text-[9px] text-muted-foreground">{m.label}</div>
+          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+            <motion.div
+              animate={{ width: ['0%', `${m.width}%`, `${m.width - 10}%`, `${m.width + 5}%`] }}
+              transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+              className="h-full bg-primary rounded-full"
+            />
+          </div>
           <div className="flex justify-between items-end mt-1">
             <div className="h-3 w-8 bg-muted/30 rounded" />
             <motion.div
@@ -142,7 +203,7 @@ function MetricsMagic() {
               transition={{ duration: 1.5, repeat: Infinity }}
               className="text-[9px] font-mono text-primary"
             >
-              +12%
+              {m.value}
             </motion.div>
           </div>
         </div>
@@ -151,52 +212,134 @@ function MetricsMagic() {
   );
 }
 
-// 3. BAYESIAN MAGIC
+// 3. BAYESIAN MAGIC - Enhanced with confidence building
 function BayesianMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [confidence, setConfidence] = React.useState(75);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setConfidence((prev) => {
+        if (prev >= 99) return 75;
+        return prev + Math.floor(Math.random() * 5) + 1;
+      });
+    }, 800);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="mt-4 relative h-[50px] w-full flex items-end justify-center px-4">
+        <div className="absolute bottom-0 left-[20%] w-[30%] h-[80%] bg-muted rounded-t-full blur-sm opacity-30" />
+        <div className="absolute bottom-0 right-[20%] w-[30%] h-full bg-primary/20 border-t-2 border-primary rounded-t-full" />
+        <div className="absolute top-0 right-[35%] bg-primary text-[9px] text-white px-1.5 py-0.5 rounded-full">99%</div>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-4 relative h-[50px] w-full flex items-end justify-center px-4">
-      {/* Curve 1 */}
+      {/* Curve 1 - Loser */}
       <motion.div
-        initial={{ opacity: 0.3, scaleY: 0.8 }}
-        animate={{ opacity: 0.3, scaleY: 0.9 }}
-        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-        className="absolute bottom-0 left-[20%] w-[30%] h-full bg-muted rounded-t-full blur-sm"
-      />
-      {/* Curve 2 (Winner) */}
-      <motion.div
-        initial={{ opacity: 0.6, scaleY: 0.9 }}
-        animate={{ opacity: 0.8, scaleY: 1.1 }}
-        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
-        className="absolute bottom-0 right-[20%] w-[30%] h-full bg-primary/20 border-t-2 border-primary rounded-t-full"
-      />
-      <motion.div
-        animate={{ y: [0, -5, 0] }}
+        animate={{ opacity: 0.3, scaleY: [0.8, 0.9, 0.8] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute top-0 right-[35%] bg-primary text-[9px] text-white px-1.5 py-0.5 rounded-full"
+        className="absolute bottom-0 left-[20%] w-[30%] h-full bg-muted rounded-t-full blur-sm origin-bottom"
+      />
+      {/* Curve 2 - Winner */}
+      <motion.div
+        animate={{ scaleY: [0.9, 1.1, 0.9] }}
+        transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+        className="absolute bottom-0 right-[20%] w-[30%] h-full bg-primary/20 border-t-2 border-primary rounded-t-full origin-bottom"
+      />
+      <motion.div
+        animate={{ y: [0, -3, 0], scale: confidence >= 95 ? [1, 1.1, 1] : 1 }}
+        transition={{ duration: 1, repeat: Infinity }}
+        className={cn(
+          "absolute top-0 right-[35%] text-[9px] text-white px-1.5 py-0.5 rounded-full",
+          confidence >= 95 ? "bg-emerald-500" : "bg-primary"
+        )}
       >
-        99%
+        {Math.min(confidence, 99)}%
       </motion.div>
     </div>
   );
 }
 
-// 4. CONTROL MAGIC
+// 4. CONTROL MAGIC - Enhanced with state transitions
 function ControlMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [state, setState] = React.useState<'playing' | 'paused' | 'stopped'>('playing');
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setState((prev) => {
+        if (prev === 'playing') return 'paused';
+        if (prev === 'paused') return 'stopped';
+        return 'playing';
+      });
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className="mt-4 flex justify-center gap-4 items-center">
+        <button className="size-8 rounded-full bg-muted flex items-center justify-center opacity-50">
+          <div className="size-3 bg-foreground rounded-[1px]" />
+        </button>
+        <button className="size-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
+          <PlayIcon className="size-4 fill-current" />
+        </button>
+        <button className="size-8 rounded-full bg-muted flex items-center justify-center opacity-50">
+          <div className="size-3 bg-foreground rounded-full" />
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-4 flex justify-center gap-4 items-center">
-      <button className="size-8 rounded-full bg-muted flex items-center justify-center opacity-50">
-        <div className="size-3 bg-foreground rounded-[1px]" />
-      </button>
-      <motion.button
-        animate={{ scale: [1, 1.1, 1], boxShadow: ["0 0 0 0px rgba(0,0,0,0)", "0 0 0 4px rgba(59, 130, 246, 0.2)", "0 0 0 0px rgba(0,0,0,0)"] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="size-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg"
+      {/* Stop button */}
+      <motion.div
+        animate={{ opacity: state === 'stopped' ? 1 : 0.5, scale: state === 'stopped' ? 1.1 : 1 }}
+        className={cn(
+          "size-8 rounded-full flex items-center justify-center transition-colors",
+          state === 'stopped' ? "bg-red-500/20" : "bg-muted"
+        )}
       >
-        <PlayIcon className="size-4 fill-current" />
-      </motion.button>
-      <button className="size-8 rounded-full bg-muted flex items-center justify-center opacity-50">
+        <div className={cn("size-3 rounded-[1px]", state === 'stopped' ? "bg-red-500" : "bg-foreground")} />
+      </motion.div>
+
+      {/* Play/Pause button */}
+      <motion.div
+        animate={{
+          scale: state === 'playing' ? [1, 1.1, 1] : 1,
+          boxShadow: state === 'playing'
+            ? ["0 0 0 0px rgba(0,0,0,0)", "0 0 0 4px rgba(var(--primary), 0.2)", "0 0 0 0px rgba(0,0,0,0)"]
+            : "0 0 0 0px rgba(0,0,0,0)"
+        }}
+        transition={{ duration: 1.5, repeat: state === 'playing' ? Infinity : 0 }}
+        className={cn(
+          "size-10 rounded-full flex items-center justify-center shadow-lg",
+          state === 'playing' ? "bg-primary" : state === 'paused' ? "bg-amber-500" : "bg-muted"
+        )}
+      >
+        {state === 'paused' ? (
+          <div className="flex gap-0.5">
+            <div className="w-1 h-4 bg-white rounded-sm" />
+            <div className="w-1 h-4 bg-white rounded-sm" />
+          </div>
+        ) : (
+          <PlayIcon className={cn("size-4", state === 'playing' ? "text-primary-foreground fill-current" : "text-foreground")} />
+        )}
+      </motion.div>
+
+      {/* Reset button */}
+      <div className="size-8 rounded-full bg-muted flex items-center justify-center opacity-50">
         <div className="size-3 bg-foreground rounded-full" />
-      </button>
+      </div>
     </div>
   );
 }
@@ -329,15 +472,16 @@ function MagicArea({ id }: { id: string }) {
 }
 
 // =============================================================================
-// VARIANT: GRID - Classic 2-column grid of cards
+// VARIANT: GRID - Classic 2-column grid of cards with magic animations
 // =============================================================================
+
 function GridFeatures() {
   const shouldReduceMotion = useReducedMotion();
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
 
   return (
     <GridSection className="relative overflow-hidden">
-      <SectionBackground height={1000} />
+      <SectionBackground height={1200} />
       <div className="container py-20 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
@@ -353,34 +497,40 @@ function GridFeatures() {
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 animate={shouldReduceMotion ? undefined : {
-                  y: hoveredIndex === index ? -4 : 0,
+                  y: hoveredIndex === index ? -8 : 0,
                   scale: hoveredIndex === index ? 1.02 : 1,
                 }}
-                transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
+                transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
+                className={cn(
+                  "group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-150 ease-out cursor-pointer",
+                  hoveredIndex === index && "border-primary/50 shadow-lg shadow-primary/5"
+                )}
               >
-                <Card className={cn(
-                  "h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-150 ease-out cursor-pointer",
-                  hoveredIndex === index && "border-primary/50 shadow-lg"
-                )}>
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <motion.div
-                        animate={shouldReduceMotion ? undefined : {
-                          scale: hoveredIndex === index ? 1.1 : 1,
-                          rotate: hoveredIndex === index ? 5 : 0,
-                        }}
-                        transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
-                        className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
-                      >
-                        <feature.icon className="size-6" />
-                      </motion.div>
-                      <div>
-                        <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
-                      </div>
+                <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+
+                <div className="relative p-6">
+                  <div className="flex items-start gap-4">
+                    <motion.div
+                      animate={shouldReduceMotion ? undefined : {
+                        scale: hoveredIndex === index ? 1.15 : 1,
+                        rotate: hoveredIndex === index ? 8 : 0,
+                      }}
+                      transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
+                      className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
+                    >
+                      <feature.icon className="size-6" />
+                    </motion.div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+
+                  {/* Magic animation area */}
+                  <div className="mt-4 pt-4 border-t border-border/30">
+                    <MagicArea id={feature.id} />
+                  </div>
+                </div>
               </motion.div>
             </BlurFade>
           ))}
@@ -411,7 +561,6 @@ function GridFeatures() {
 // =============================================================================
 // VARIANT: BENTO - Asymmetric bento grid with featured cards
 // =============================================================================
-import { Spotlight } from '~/components/fragments/spotlight';
 
 function BentoFeatures() {
   const shouldReduceMotion = useReducedMotion();
@@ -454,6 +603,15 @@ function BentoFeatures() {
                   hoveredIndex === index && "border-primary/50 shadow-xl",
                   index === 0 && "min-h-[300px]"
                 )}>
+                  {hoveredIndex === index && (
+                    <BorderBeam
+                      size={200}
+                      duration={10}
+                      borderWidth={1.5}
+                      colorFrom="hsl(var(--primary))"
+                      colorTo="hsl(var(--primary)/0)"
+                    />
+                  )}
                   <Spotlight
                     className="from-primary/20 via-primary/10 to-transparent"
                     size={350}

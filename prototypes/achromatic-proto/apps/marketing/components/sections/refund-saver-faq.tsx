@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import {
   Accordion,
@@ -13,6 +14,34 @@ import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// Magic animation: FAQ help badge
+function RefundFAQMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>Quick answers</span>
+    </motion.div>
+  );
+}
 
 // EXACT FAQs from adapty.io/refund-saver (scraped 2026-01-21)
 const FAQS = [
@@ -35,10 +64,14 @@ export function RefundSaverFAQ(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={600} />
       <div className="container py-20 relative z-10">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
         <BlurFade delay={0.05}>
           <SiteHeading
             title="Got questions?"
           />
+          <div className="mt-4 flex justify-center">
+            <RefundFAQMagic />
+          </div>
         </BlurFade>
 
         <BlurFade delay={0.1}>

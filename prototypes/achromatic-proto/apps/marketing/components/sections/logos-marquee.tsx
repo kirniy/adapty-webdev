@@ -2,11 +2,64 @@
 
 import * as React from 'react';
 import Image from 'next/image';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { Marquee } from '~/components/fragments/marquee';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// Magic animation: Trusted apps counter
+function TrustedAppsMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [count, setCount] = React.useState(14950);
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) {
+      setCount(15000);
+      return;
+    }
+    const interval = setInterval(() => {
+      setCount(prev => {
+        if (prev >= 15000) return 15000;
+        return prev + Math.floor(Math.random() * 5) + 1;
+      });
+    }, 100);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <motion.span
+      className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.1 }}
+    >
+      <motion.span
+        className="size-1.5 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.7, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.span
+        key={count}
+        initial={shouldReduceMotion ? {} : { y: -3, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.1 }}
+      >
+        {count.toLocaleString()}+
+      </motion.span>
+    </motion.span>
+  );
+}
 
 // Customer logos for marquee display
 const CUSTOMER_LOGOS = [
@@ -40,15 +93,24 @@ export function LogosMarquee(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={250} />
       <div className="container py-12 lg:py-16 relative z-10">
+        <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={300} />
         {/* Header text */}
         <BlurFade className="mb-8 text-center">
           <p className="text-lg font-medium text-foreground">
-            Trusted by 15,000+ apps and the world&apos;s largest app publishers
+            Trusted by <TrustedAppsMagic /> apps and the world&apos;s largest app publishers
           </p>
         </BlurFade>
 
         {/* Marquee with pause on hover */}
-        <div className="relative">
+        <div className="relative rounded-2xl border border-border/30 bg-background/50 overflow-hidden">
+          <BorderBeam
+            size={150}
+            duration={20}
+            borderWidth={1}
+            colorFrom="hsl(var(--primary))"
+            colorTo="hsl(var(--primary)/0)"
+            className="opacity-30"
+          />
           {/* Fade edges */}
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent md:w-24" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent md:w-24" />

@@ -6,8 +6,38 @@ import { motion, useReducedMotion, useInView, useMotionValue, useSpring, animate
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// Magic animation: Platform scale badge
+function PlatformScaleMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-green-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.7, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>Live data</span>
+    </motion.div>
+  );
+}
 
 const STATS = [
   {
@@ -102,10 +132,11 @@ function StatCard({
       >
         {/* Card */}
         <div className={cn(
-          'relative rounded-2xl border bg-card p-8 h-full',
+          'relative rounded-2xl border bg-card p-8 h-full overflow-hidden',
           'transition-all duration-200',
           isHovered && 'border-border/80 shadow-lg'
         )}>
+          {isHovered && <BorderBeam size={150} duration={8} borderWidth={1.5} />}
           {/* Content */}
           <div className="relative z-10">
             {/* Large number */}
@@ -145,6 +176,7 @@ export function StatsOrbital(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={600} />
       <div className="container py-16 lg:py-24 relative z-10">
+        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
         {/* Section header */}
         <BlurFade className="text-center mb-12">
           <p className="text-sm font-medium text-primary mb-2">Platform Scale</p>
@@ -154,6 +186,9 @@ export function StatsOrbital(): React.JSX.Element {
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Powering subscription revenue for thousands of applications worldwide
           </p>
+          <div className="mt-4">
+            <PlatformScaleMagic />
+          </div>
         </BlurFade>
 
         {/* Stats grid */}

@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, ShieldCheckIcon, RefreshCwIcon, ServerIcon, BellIcon } from 'lucide-react';
-import { motion, useReducedMotion } from 'motion/react';
+import { ArrowRightIcon, ShieldCheckIcon, RefreshCwIcon, ServerIcon, BellIcon, CheckIcon, AppleIcon, SmartphoneIcon, MonitorIcon, DownloadIcon } from 'lucide-react';
+import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
@@ -12,6 +12,112 @@ import { cn } from '@workspace/ui/lib/utils';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
+import { Spotlight } from '~/components/fragments/spotlight';
+
+// Magic animation: SDK installation progress
+function SDKInstallMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [step, setStep] = React.useState(0);
+
+  const steps = [
+    { label: 'Installing SDK...', icon: DownloadIcon },
+    { label: 'Configuring API key...', icon: ShieldCheckIcon },
+    { label: 'SDK ready!', icon: CheckIcon },
+  ];
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setStep((prev) => (prev + 1) % 3);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
+  return (
+    <div className="absolute top-4 right-4 z-10">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -5 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center gap-2"
+          >
+            {step === 2 ? (
+              <div className="size-4 rounded-full bg-green-500/20 flex items-center justify-center">
+                <CheckIcon className="size-2.5 text-green-600" />
+              </div>
+            ) : (
+              <motion.div
+                animate={shouldReduceMotion ? undefined : { rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+                className="size-4"
+              >
+                {React.createElement(steps[step].icon, { className: 'size-4 text-primary' })}
+              </motion.div>
+            )}
+            <span className={cn(
+              "text-xs font-medium",
+              step === 2 ? "text-green-600" : "text-muted-foreground"
+            )}>
+              {steps[step].label}
+            </span>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+    </div>
+  );
+}
+
+// Magic animation: Platform support badges
+function PlatformBadgesMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const [activePlatform, setActivePlatform] = React.useState(0);
+
+  const platforms = [
+    { name: 'iOS', icon: AppleIcon },
+    { name: 'Android', icon: SmartphoneIcon },
+    { name: 'React Native', icon: MonitorIcon },
+    { name: 'Flutter', icon: SmartphoneIcon },
+  ];
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setActivePlatform((prev) => (prev + 1) % platforms.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion, platforms.length]);
+
+  return (
+    <div className="absolute bottom-4 left-4 z-10 flex gap-1.5">
+      {platforms.map((platform, index) => (
+        <motion.div
+          key={platform.name}
+          animate={shouldReduceMotion ? undefined : {
+            scale: activePlatform === index ? 1.1 : 1,
+            opacity: activePlatform === index ? 1 : 0.5,
+          }}
+          transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
+          className={cn(
+            "flex items-center gap-1.5 rounded-full px-2 py-1 text-[10px] font-medium border bg-background/95 backdrop-blur-sm",
+            activePlatform === index && "border-primary/50"
+          )}
+        >
+          <platform.icon className="size-3" />
+          <span className="hidden sm:inline">{platform.name}</span>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
 
 // EXACT content from adapty.io/sdk (scraped 2026-01-21)
 // Badge: "Subscriptions SDK"
@@ -147,6 +253,17 @@ export function SDKHero(): React.JSX.Element {
               transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
               className="relative w-full overflow-hidden rounded-xl border bg-zinc-950 shadow-lg"
             >
+              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <SDKInstallMagic />
+              <PlatformBadgesMagic />
+              <BorderBeam
+                size={200}
+                duration={12}
+                delay={9}
+                borderWidth={1.5}
+                colorFrom="hsl(var(--primary))"
+                colorTo="hsl(var(--primary)/0)"
+              />
               {/* Code header */}
               <div className="flex items-center gap-2 border-b border-zinc-800 px-4 py-3">
                 <div className="flex gap-1.5">

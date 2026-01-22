@@ -17,9 +17,39 @@ import {
 import { Badge } from '@workspace/ui/components/badge';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
 import { getInitials } from '~/lib/formatters';
+
+// Magic animation: Blog articles counter
+function ArticleCountMagic() {
+  const shouldReduceMotion = useReducedMotion();
+  const totalArticles = allPosts.length;
+
+  return (
+    <motion.div
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.15 }}
+    >
+      <motion.div
+        className="size-2 rounded-full bg-primary"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>{totalArticles}+ articles</span>
+    </motion.div>
+  );
+}
 
 // Featured card - larger, more prominent
 function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
@@ -36,6 +66,16 @@ function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
           whileHover={shouldReduceMotion ? undefined : { y: -3 }}
           transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
         >
+          {isHovered && (
+            <BorderBeam
+              size={180}
+              duration={10}
+              borderWidth={1.5}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary)/0)"
+            />
+          )}
+          <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={300} />
           {/* Image */}
           <div className="relative h-48 lg:h-auto lg:w-2/5 overflow-hidden">
             <motion.div
@@ -112,12 +152,22 @@ function SmallCard({ post, index }: { post: typeof allPosts[0]; index: number })
     <BlurFade delay={shouldReduceMotion ? 0 : 0.1 + index * 0.05}>
       <Link href={`${baseUrl.Marketing}${post.slug}`}>
         <motion.article
-          className="group flex h-full flex-col rounded-xl border bg-card p-5 cursor-pointer"
+          className="group relative flex h-full flex-col rounded-xl border bg-card p-5 cursor-pointer overflow-hidden"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           whileHover={shouldReduceMotion ? undefined : { y: -2 }}
           transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
         >
+          {isHovered && (
+            <BorderBeam
+              size={100}
+              duration={6}
+              borderWidth={1.5}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary)/0)"
+            />
+          )}
+          <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={150} />
           {/* Category */}
           <div className="mb-2">
             <span className="text-xs font-medium text-primary">{post.category}</span>
@@ -178,6 +228,12 @@ export function BlogPostsFeatured(): React.JSX.Element {
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">
                 Latest from the blog
               </h2>
+              <div className="mt-3 lg:hidden">
+                <ArticleCountMagic />
+              </div>
+            </div>
+            <div className="hidden lg:block lg:mb-2">
+              <ArticleCountMagic />
             </div>
             <Link
               href="/blog"

@@ -6,9 +6,11 @@ import { motion, useReducedMotion } from 'motion/react';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { NumberTicker } from '~/components/fragments/number-ticket';
 import { SectionBackground } from '~/components/fragments/section-background';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 const DATA = [
   {
@@ -17,26 +19,58 @@ const DATA = [
     suffix: 'B+',
     description: 'tracked revenue',
     decimalPlaces: 0,
+    icon: 'revenue',
   },
   {
     value: 99.99,
     suffix: '%',
     description: 'historical uptime',
     decimalPlaces: 2,
+    icon: 'uptime',
   },
   {
     value: 2.5,
     suffix: 'B+',
     description: 'users served',
     decimalPlaces: 1,
+    icon: 'users',
   },
   {
     value: 60,
     suffix: 'B+',
     description: 'API calls / month',
     decimalPlaces: 0,
+    icon: 'api',
   }
 ];
+
+// Magic animation: Pulsing indicator showing live data
+function LiveIndicatorMagic() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="flex items-center gap-1.5 text-xs text-muted-foreground"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, delay: 0.5 }}
+    >
+      <motion.div
+        className="size-1.5 rounded-full bg-emerald-500"
+        animate={shouldReduceMotion ? {} : {
+          scale: [1, 1.3, 1],
+          opacity: [1, 0.7, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+      <span>Live data</span>
+    </motion.div>
+  );
+}
 
 function StatCard({ stat, index }: { stat: typeof DATA[0]; index: number }) {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -91,11 +125,27 @@ export function Stats(): React.JSX.Element {
         </BlurFade>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 rounded-xl border bg-card/50 backdrop-blur-sm overflow-hidden">
-          {DATA.map((stat, index) => (
-            <StatCard key={index} stat={stat} index={index} />
-          ))}
+        <div className="relative">
+          <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+          <div className="grid grid-cols-2 lg:grid-cols-4 rounded-xl border bg-card/50 backdrop-blur-sm overflow-hidden relative">
+            <BorderBeam
+              size={150}
+              duration={15}
+              borderWidth={1}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary)/0)"
+              className="opacity-40"
+            />
+            {DATA.map((stat, index) => (
+              <StatCard key={index} stat={stat} index={index} />
+            ))}
+          </div>
         </div>
+
+        {/* Live indicator */}
+        <BlurFade delay={0.3} className="mt-4 flex justify-center">
+          <LiveIndicatorMagic />
+        </BlurFade>
       </div>
     </GridSection>
   );
