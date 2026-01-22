@@ -26,7 +26,6 @@ import { MobileMenu } from '~/components/mobile-menu';
 import { LanguageSwitcher } from '~/components/language-switcher';
 import {
   ProductMegaMenu,
-  SolutionsMegaMenu,
   CasesMegaMenu,
   ResourcesMegaMenu,
   DocsMegaMenu
@@ -461,16 +460,6 @@ function DefaultMegaMenuNavbar(): React.JSX.Element {
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ProductMegaMenu />
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-
-                  {/* Solutions Menu */}
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="rounded-xl text-[15px] font-normal">
-                      Solutions
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <SolutionsMegaMenu />
                     </NavigationMenuContent>
                   </NavigationMenuItem>
 

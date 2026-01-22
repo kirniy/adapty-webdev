@@ -21,6 +21,7 @@ import {
   PRODUCT_FOOTER,
   PRODUCT_TABS,
   SOLUTION_ITEMS,
+  COMPARE_ITEMS,
   SDK_ITEMS,
   INTEGRATIONS_ITEMS,
   type ProductSidebarKey,
@@ -121,11 +122,19 @@ function SimpleItemGrid({ items, columns = 2 }: { items: MenuItem[]; columns?: 1
 
 function SolutionPanel() {
   return (
-    <div>
-      <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-        Solutions by role
-      </h3>
-      <SimpleItemGrid items={SOLUTION_ITEMS} columns={2} />
+    <div className="flex gap-8">
+      <div className="flex-1">
+        <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          By Role
+        </h3>
+        <SimpleItemGrid items={SOLUTION_ITEMS} columns={1} />
+      </div>
+      <div className="flex-1">
+        <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Compare Adapty
+        </h3>
+        <SimpleItemGrid items={COMPARE_ITEMS} columns={1} />
+      </div>
     </div>
   );
 }
