@@ -1,7 +1,7 @@
 ---
 project: adapty-redesign
-version: 4.0.0
-last_updated: 2026-01-20T01:30:00Z
+version: 4.1.0
+last_updated: 2026-01-22T12:00:00Z
 owner: kirill-kholodenko
 stakeholder: sergey-muratov
 phase: achromatic-production
@@ -12,7 +12,7 @@ tags: [redesign, nextjs, tailwind, design-system, achromatic, vanilla-tailwind, 
 # ADAPTY Website Redesign - Navigation & Context
 
 > **IMPORTANT**: This is a living navigation document. Update after every significant change.
-> Last significant update: 2026-01-20 - Achromatic-proto is now the main active project. Roles section added with 3 variants. Repository cleanup completed.
+> Last significant update: 2026-01-22 - Debug system fully wired with 24+ variant types. Page-specific feature hooks added. Logos removed from product pages. Dead code cleanup complete.
 
 ---
 
@@ -66,6 +66,24 @@ Apply patterns from highest impact first:
 
 **Reference files**: `~/.claude/skills/react-best-practices/references/rules/`
 
+### Skills Used in This Project
+
+| Skill | Purpose | When to Use |
+|-------|---------|-------------|
+| `react-best-practices` | Performance patterns | All React/Next.js code changes |
+| `Explore` subagent | Codebase analysis | Finding files, understanding architecture |
+| `Task` with parallel agents | Comprehensive audits | Multi-file analysis, finding inconsistencies |
+
+### Codebase Analysis Best Practices
+
+When auditing the codebase, launch **parallel Task agents** for:
+1. **Section consistency** - Pages using correct hooks and sections
+2. **Unused components** - Dead code to remove
+3. **Debug menu completeness** - All variants properly wired
+4. **Content issues** - Placeholders, broken links
+5. **Type consistency** - Variant types matching debug context
+6. **Import/export issues** - Unused imports, missing exports
+
 ---
 
 ## Quick Navigation
@@ -77,15 +95,15 @@ Apply patterns from highest impact first:
 | **Design Systems** | `/design-systems/` | 5 DS variants | Reference |
 | **Skeleton** | `/skeleton/` | Shared content/assets | Reference |
 | **References** | `/references/` | Site analysis data | Complete |
-| **Messages** | `/messages/` | Sergey communications | 09-daily-report-jan19 |
+| **Messages** | `/messages/` | Sergey communications | 11-daily-report-jan21 |
 
 ---
 
 ## Current State
 
 ```yaml
-current_phase: "Production iteration - Homepage complete"
-next_phase: "Additional pages (Pricing, Demo, Feature pages)"
+current_phase: "Production iteration - All pages scaffolded"
+next_phase: "Content refinement, form implementations"
 blocking_tasks: []
 
 # Main Prototype
@@ -94,6 +112,9 @@ achromatic_proto:
   location: "/prototypes/achromatic-proto/apps/marketing/"
   url: "adapty-achromatic-proto.vercel.app"
   quality: "9/10"
+
+  pages_complete: 42
+  sections_with_variants: 24+
 
   sections_implemented:
     - Hero (4 variants: achromatic, centered-demo, minimal-text, split-left)
@@ -107,7 +128,8 @@ achromatic_proto:
     - CaseStudies
     - Pricing
     - CTA
-    - Footer
+    - Footer (2 variants: default, flickering)
+    - Page-specific features (10 pages with dedicated variants)
 
   debug_menu_features:
     - Grid background (cursor-tracking, slow-drift, static, off)
@@ -116,13 +138,14 @@ achromatic_proto:
     - All section variant switching
     - Image set switching (set1, set2, set3)
     - localStorage persistence
+    - Page-specific section configs (42 pages mapped)
 
   recent_additions:
-    - "Roles section (cards, bento, stacked variants)"
-    - "Hover-to-reveal-color effect on role cards"
-    - "Auto-rotating tabs in Hero achromatic variant"
-    - "Mobile responsiveness fixes"
-    - "AI-generated role images (3 sets)"
+    - "Page-specific feature variant hooks (10 pages)"
+    - "Removed logos from product feature pages"
+    - "Bento as default variant for all feature sections"
+    - "Deleted 6 unused/orphan components (~1000 lines)"
+    - "Build fix with --webpack flag for Next.js 16"
 
 # Key Learnings
 key_insights:
@@ -131,6 +154,10 @@ key_insights:
   - "optimizePackageImports critical for barrel imports"
   - "Content parity with adapty.io essential"
   - "Monorepo structure (achromatic) scales better than single-app"
+  - "Page-specific hooks for multi-variant sections, generic hooks for single-variant"
+  - "Section components that support variants export their own type"
+  - "Debug context 'off' option handled by switchers, not components"
+  - "Next.js 16 with Turbopack has font issues - use --webpack flag"
 ```
 
 ---
@@ -167,6 +194,76 @@ adapty-webdev/
 +-- CLAUDE.md                          # This file
 +-- README.md                          # Project README
 ```
+
+---
+
+## Debug Context Architecture
+
+The debug menu system is the core of rapid prototyping in this project.
+
+### Key Files
+- `lib/debug-context.tsx` - All variant types, state, hooks
+- `components/debug/DebugMenu.tsx` - UI controls, page configs
+- `components/sections/section-switchers.tsx` - Wrapper components
+
+### Pattern: Page-Specific vs Generic Hooks
+
+**Use page-specific hooks when:**
+- Component supports multiple variants (grid, bento, tabs)
+- Component exports its own variant type
+- Example: `usePaywallBuilderFeaturesVariant()` for `PaywallBuilderFeatures`
+
+**Use generic hooks when:**
+- Component is single-variant (no switching needed)
+- Only need the 'off' option to hide/show
+- Example: `useFeaturesVariant()` for `AIPaywallGeneratorFeatures`
+
+### Adding a New Page-Specific Variant
+
+1. **In debug-context.tsx:**
+   ```typescript
+   // Add type (include 'off')
+   export type MyPageFeaturesVariant = 'grid' | 'bento' | 'tabs' | 'off'
+
+   // Add options array
+   export const MY_PAGE_FEATURES_VARIANTS = ['grid', 'bento', 'tabs', 'off'] as const
+
+   // Add to DebugState interface
+   myPageFeaturesVariant: MyPageFeaturesVariant
+
+   // Add to DebugContextValue (setter)
+   setMyPageFeaturesVariant: (v: MyPageFeaturesVariant) => void
+
+   // Add default value
+   myPageFeaturesVariant: 'bento',
+
+   // Add to PAGE_KEYS
+   'myPageFeaturesVariant',
+
+   // Add setter callback
+   const setMyPageFeaturesVariant = useCallback(...)
+
+   // Add to context value
+   myPageFeaturesVariant, setMyPageFeaturesVariant,
+
+   // Export hook
+   export function useMyPageFeaturesVariant() { ... }
+   ```
+
+2. **In DebugMenu.tsx:**
+   - Import variant array
+   - Add to PageSections type
+   - Add page config in PAGE_SECTIONS
+   - Add UI section in render
+
+3. **In page file:**
+   - Import and use dedicated hook
+   - Pass variant to component (switcher handles 'off')
+
+### Section Without Logos
+
+Product feature pages (paywall-ab-testing, autopilot, ltv-analytics, etc.) don't show logos.
+Role pages and main pages (homepage, pricing, schedule-demo) do show logos for credibility.
 
 ---
 
@@ -209,13 +306,23 @@ pnpm --filter marketing lint
 
 | Technology | Version | Purpose |
 |:-----------|:--------|:--------|
-| Next.js | 15.5 | React framework |
-| React | 19 | UI library |
+| Next.js | 16.0.10 | React framework |
+| React | 19.1 | UI library |
 | TypeScript | 5.0 | Type safety |
 | Tailwind CSS | 4.0 | Styling |
-| motion/react | latest | Animations |
-| @phosphor-icons/react | latest | Icons |
+| motion/react | 12.x | Animations (formerly framer-motion) |
+| lucide-react | latest | Icons (primary) |
+| @phosphor-icons/react | latest | Icons (secondary) |
 | Vercel | - | Deployment |
+
+### Build Configuration
+
+```bash
+# IMPORTANT: Use --webpack flag due to Turbopack font issues in Next.js 16
+pnpm --filter marketing build  # Uses webpack (configured in package.json)
+```
+
+The `package.json` has `"build": "content-collections build && next build --webpack"` to avoid Turbopack font loading errors.
 
 ---
 
@@ -256,6 +363,24 @@ Weights: thin, light, regular, bold, fill, duotone
 - AI-generated role images
 - Repository cleanup
 - Single Vercel deployment configured
+
+### January 21-22, 2026
+- **Debug System Overhaul**:
+  - Added 10 page-specific feature variant hooks
+  - Wired all 42 pages to debug menu PAGE_SECTIONS
+  - Set 'bento' as default for all feature sections
+- **Product Page Cleanup**:
+  - Removed logos from 14 product feature pages
+  - Logos remain on role pages and main pages for credibility
+- **Dead Code Removal**:
+  - Deleted 6 unused/orphan components (~1000 lines)
+  - compare-inhouse.tsx (duplicate), problem.tsx, features-sticky-scroll.tsx
+  - role-cards.tsx, text-link.tsx, text-generate-effect.tsx
+- **Build Configuration**:
+  - Fixed Turbopack font issue with --webpack flag
+- **Comprehensive Audit**:
+  - Launched 6 parallel agents for codebase analysis
+  - Documented all patterns and learnings
 
 ---
 

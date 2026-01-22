@@ -10,6 +10,82 @@ This changelog transforms technical commits into user-friendly updates for stake
 
 ---
 
+## [4.1.0] - 2026-01-22
+
+### Debug System & Architecture Improvements
+
+Major overhaul of the debug context system and comprehensive codebase cleanup.
+
+#### New Features
+
+- **Page-Specific Feature Variants** - Added 10 dedicated feature variant hooks:
+  - `usePaywallBuilderFeaturesVariant()`
+  - `useAbTestingFeaturesVariant()`
+  - `useOnboardingBuilderFeaturesVariant()`
+  - `useAutopilotFeaturesVariant()`
+  - `useLtvAnalyticsFeaturesVariant()`
+  - `useRefundSaverFeaturesVariant()`
+  - `useForMarketersFeaturesVariant()`
+  - `useForAppOwnersFeaturesVariant()`
+  - `useForDevelopersFeaturesVariant()`
+  - `useForIndieFeaturesVariant()`
+
+- **Debug Menu PAGE_SECTIONS** - All 42 pages now have explicit section configs
+
+#### Improvements
+
+- **Default Variant Change** - All feature sections now default to 'bento' layout instead of 'grid'
+- **Product Page Cleanup** - Removed LogosSwitcher from 14 product feature pages:
+  - paywall-builder, paywall-ab-testing, onboarding-builder
+  - autopilot, ltv-analytics, refund-saver
+  - predictive-analytics, ai-paywall-generator
+  - paywall-library, paywall-localization, paywall-targeting
+  - remote-config, fallback-paywalls, revenue-growth
+- **Logos remain** on role pages and main pages (homepage, pricing, schedule-demo)
+
+#### Code Cleanup
+
+- **Deleted 6 Unused Components** (~1,061 lines removed):
+  - `compare-inhouse.tsx` - Duplicate of `compare-in-house.tsx`
+  - `features-sticky-scroll.tsx` - Unused section variant
+  - `problem.tsx` - Superseded by Solution component
+  - `role-cards.tsx` - Superseded by Roles component
+  - `text-link.tsx` - Fragment never imported
+  - `text-generate-effect.tsx` - Fragment never imported
+
+#### Bug Fixes
+
+- **Build Configuration** - Added `--webpack` flag to fix Turbopack font loading errors in Next.js 16
+
+#### Documentation
+
+- **CLAUDE.md** - Added Debug Context Architecture section with patterns
+- **CLAUDE.md** - Documented page-specific vs generic hook pattern
+- **CLAUDE.md** - Added codebase analysis best practices
+
+---
+
+## [4.0.0] - 2026-01-20
+
+### Achromatic Production Release
+
+Full migration to Achromatic monorepo structure with comprehensive debug system.
+
+#### New Features
+
+- **42 Marketing Pages** - Complete page structure matching adapty.io
+- **Debug Menu System** - Comprehensive variant switching for all sections
+- **Roles Section** - 3 variants (cards, bento, stacked)
+- **AI-Generated Images** - 3 image sets for hero and roles
+
+#### Infrastructure
+
+- **Monorepo Structure** - Based on Achromatic SaaS starter kit
+- **Single Vercel Deployment** - Only achromatic-proto auto-deploys
+- **Content Collections** - MDX support for blog and docs
+
+---
+
 ## [0.3.0] - 2026-01-13
 
 ### Production Readiness & Best Practices
@@ -123,21 +199,28 @@ Foundation release establishing the multi-design-system architecture for A/B tes
 | 2026-01-12 | First prototype deployed to Vercel |
 | 2026-01-13 | Design system fidelity improvements |
 | 2026-01-13 | Production readiness features added |
+| 2026-01-18 | Achromatic monorepo migration started |
+| 2026-01-19 | Debug menu system implemented |
+| 2026-01-20 | 42 marketing pages scaffolded |
+| 2026-01-21 | Page-specific feature variants added |
+| 2026-01-22 | Debug system fully wired, dead code removed |
 
 ---
 
 ## Technical Details
 
-**Stack**: Next.js 15, React 19, Tailwind CSS 4, TypeScript
+**Stack**: Next.js 16, React 19, Tailwind CSS 4, TypeScript, motion/react
 
-**Design Systems Reference**:
-- Linear.app (DS1)
-- Attio.com (DS2)
-- Polar.sh (DS3)
-- Vercel.com (DS4)
-- Clerk.com (DS5)
+**Architecture**:
+- Monorepo with pnpm workspaces
+- Marketing app with 42 pages
+- Debug context system with 24+ variant types
+- Content Collections for MDX
 
-**Live Prototype**: [adapty-prototype.vercel.app](https://adapty-prototype.vercel.app)
+**Design References**:
+- Linear.app, Attio.com, Polar.sh, Vercel.com, Clerk.com
+
+**Live Prototype**: [adapty-achromatic-proto.vercel.app](https://adapty-achromatic-proto.vercel.app)
 
 ---
 
