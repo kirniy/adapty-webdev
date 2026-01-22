@@ -11,6 +11,7 @@ import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT integrations from adapty.io/integrations (scraped 2026-01-21)
 const INTEGRATIONS = [
@@ -73,15 +74,18 @@ function IntegrationCard({ integration, index }: { integration: typeof INTEGRATI
       whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
       transition={{ type: 'spring', duration: 0.2, bounce: 0.1 }}
+      className="group h-full"
     >
-      <Link href={integration.link} className="group block h-full">
-        <Card interactive className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-150">
-          <CardContent className="p-4 text-center">
-            <p className="font-medium text-sm group-hover:text-primary transition-colors">
-              {integration.name}
-            </p>
-          </CardContent>
-        </Card>
+      <Link href={integration.link} className="block h-full relative">
+        <div className="relative h-full overflow-hidden rounded-xl border border-border/50 bg-background/50 p-4 text-center transition-colors hover:border-border/80">
+          <Spotlight
+            className="from-primary/20 via-primary/10 to-transparent"
+            size={120}
+          />
+          <p className="font-medium text-sm text-muted-foreground group-hover:text-foreground transition-colors relative z-10">
+            {integration.name}
+          </p>
+        </div>
       </Link>
     </motion.div>
   );

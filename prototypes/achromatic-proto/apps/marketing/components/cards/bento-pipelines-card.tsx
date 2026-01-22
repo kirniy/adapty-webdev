@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import {
@@ -52,6 +52,20 @@ export function BentoPipelinesCard({
   className,
   ...other
 }: React.ComponentPropsWithoutRef<typeof MotionCard>): React.JSX.Element {
+  const [activeStage, setActiveStage] = React.useState<number>(0);
+  const shouldReduceMotion = useReducedMotion();
+
+  React.useEffect(() => {
+    // Skip animation if reduced motion is enabled
+    if (shouldReduceMotion) return;
+
+    const interval = setInterval(() => {
+      setActiveStage((prev) => (prev + 1) % DATA.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
+
   return (
     <MotionCard
       className={cn(
@@ -73,7 +87,11 @@ export function BentoPipelinesCard({
             {DATA.map((stage, index) => (
               <div
                 key={stage.id}
-                className="hover:opacity-100! group-hover:opacity-40"
+                className={cn(
+                  "transition-opacity duration-300",
+                  !shouldReduceMotion && activeStage !== index ? "opacity-40 group-hover:opacity-40" : "opacity-100",
+                  "hover:!opacity-100"
+                )}
               >
                 <motion.div
                   className="flex items-center space-x-2 rounded-md pr-4"

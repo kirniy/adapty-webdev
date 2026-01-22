@@ -2,8 +2,10 @@
 
 import * as React from 'react';
 import { CheckIcon, MinusIcon } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
+import { Badge } from '@workspace/ui/components/badge';
 
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
@@ -136,27 +138,37 @@ const TIERS = [
   { id: 'enterprise', name: 'Enterprise' },
 ] as const;
 
-function FeatureCell({ value }: { value: FeatureAvailability }) {
+function FeatureCell({ value, delay = 0 }: { value: FeatureAvailability, delay?: number }) {
+  const shouldReduceMotion = useReducedMotion();
+
   if (typeof value === 'string') {
     return <span className="text-sm font-medium">{value}</span>;
   }
   if (value) {
     return (
       <div className="flex items-center justify-center">
-        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
-          <CheckIcon className="w-3 h-3 text-primary" />
-        </div>
+        <motion.div
+          initial={shouldReduceMotion ? { scale: 1 } : { scale: 0, opacity: 0 }}
+          whileInView={shouldReduceMotion ? { scale: 1 } : { scale: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 300, damping: 20, delay }}
+          className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center"
+        >
+          <CheckIcon className="w-3.5 h-3.5 text-primary" />
+        </motion.div>
       </div>
     );
   }
   return (
     <div className="flex items-center justify-center">
-      <MinusIcon className="w-4 h-4 text-muted-foreground/40" />
+      <MinusIcon className="w-4 h-4 text-muted-foreground/30" />
     </div>
   );
 }
 
 export function PricingComparison(): React.JSX.Element {
+  const [hoveredRow, setHoveredRow] = React.useState<string | null>(null);
+
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1200} />
@@ -168,10 +180,10 @@ export function PricingComparison(): React.JSX.Element {
           />
         </BlurFade>
         <BlurFade delay={0.1}>
-          <div className="mt-12 overflow-x-auto">
+          <div className="mt-12 overflow-x-auto pb-4">
             <table className="w-full min-w-[800px] border-collapse">
               <thead>
-                <tr className="border-b border-border">
+                <tr>
                   <th className="py-4 px-4 text-left text-sm font-medium text-muted-foreground w-[280px]">
                     Features
                   </th>
@@ -179,13 +191,17 @@ export function PricingComparison(): React.JSX.Element {
                     <th
                       key={tier.id}
                       className={cn(
-                        'py-4 px-4 text-center text-sm font-semibold',
+                        'py-4 px-4 text-center text-sm font-semibold relative',
                         tier.id === 'pro' && 'text-primary'
                       )}
                     >
                       {tier.name}
                       {tier.id === 'pro' && (
-                        <span className="ml-2 text-xs font-normal text-primary/70">(Most popular)</span>
+                        <>
+                          <Badge variant="secondary" className="ml-2 text-[10px] h-5 px-1.5 font-normal text-primary/80 bg-primary/10 hover:bg-primary/20">Popular</Badge>
+                          {/* Pro Column Highlight Background */}
+                          <div className="absolute top-0 left-0 right-0 bottom-0 bg-primary/5 -z-10 rounded-t-xl" />
+                        </>
                       )}
                     </th>
                   ))}
@@ -194,39 +210,47 @@ export function PricingComparison(): React.JSX.Element {
               <tbody>
                 {COMPARISON_DATA.map((category, categoryIndex) => (
                   <React.Fragment key={category.name}>
-                    <tr className="bg-muted/30">
+                    <tr className="group">
                       <td
                         colSpan={5}
-                        className="py-3 px-4 text-sm font-semibold text-foreground"
+                        className="py-4 px-4 text-sm font-semibold text-foreground bg-muted/30 group-hover:bg-muted/50 transition-colors rounded-lg"
                       >
                         {category.name}
                       </td>
                     </tr>
-                    {category.features.map((feature, featureIndex) => (
-                      <tr
-                        key={feature.name}
-                        className={cn(
-                          'border-b border-border/50',
-                          featureIndex % 2 === 0 ? 'bg-background' : 'bg-muted/10'
-                        )}
-                      >
-                        <td className="py-3 px-4 text-sm text-muted-foreground">
-                          {feature.name}
-                        </td>
-                        <td className="py-3 px-4 text-center">
-                          <FeatureCell value={feature.free} />
-                        </td>
-                        <td className="py-3 px-4 text-center">
-                          <FeatureCell value={feature.pro} />
-                        </td>
-                        <td className="py-3 px-4 text-center">
-                          <FeatureCell value={feature.proPlus} />
-                        </td>
-                        <td className="py-3 px-4 text-center">
-                          <FeatureCell value={feature.enterprise} />
-                        </td>
-                      </tr>
-                    ))}
+                    {category.features.map((feature, featureIndex) => {
+                      const isHovered = hoveredRow === feature.name;
+                      return (
+                        <tr
+                          key={feature.name}
+                          onMouseEnter={() => setHoveredRow(feature.name)}
+                          onMouseLeave={() => setHoveredRow(null)}
+                          className="group/row transition-colors"
+                        >
+                          <td className={cn(
+                            "py-3 px-4 text-sm text-muted-foreground transition-colors group-hover/row:text-foreground border-b border-border/40",
+                            isHovered && "bg-muted/20"
+                          )}>
+                            {feature.name}
+                          </td>
+                          {TIERS.map((tier, tierIdx) => (
+                            <td
+                              key={tier.id}
+                              className={cn(
+                                "py-3 px-4 text-center border-b border-border/40 relative",
+                                isHovered && "bg-muted/20",
+                                tier.id === 'pro' && "bg-primary/5 group-hover/row:bg-primary/10"
+                              )}
+                            >
+                              <FeatureCell
+                                value={feature[tier.id] as FeatureAvailability}
+                                delay={tierIdx * 0.05}
+                              />
+                            </td>
+                          ))}
+                        </tr>
+                      )
+                    })}
                   </React.Fragment>
                 ))}
               </tbody>
@@ -237,3 +261,4 @@ export function PricingComparison(): React.JSX.Element {
     </GridSection>
   );
 }
+

@@ -209,8 +209,16 @@ export function FeaturesTabbed(): React.JSX.Element {
                   <TabsTrigger
                     key={tab.id}
                     value={tab.id}
-                    className="flex shrink-0 items-center gap-2 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm whitespace-nowrap data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                    className="relative flex shrink-0 items-center gap-2 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm whitespace-nowrap z-10 data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-colors"
                   >
+                    {activeTab === tab.id && (
+                      <motion.div
+                        layoutId="active-tab-bg"
+                        className="absolute inset-0 rounded-lg bg-background shadow-sm"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        style={{ zIndex: -1 }}
+                      />
+                    )}
                     <tab.icon className="size-4" />
                     {tab.label}
                   </TabsTrigger>
@@ -232,9 +240,30 @@ export function FeaturesTabbed(): React.JSX.Element {
                   {/* Left: Content */}
                   <div className="flex flex-col gap-6">
                     <div>
-                      <p className="mb-2 text-sm font-medium text-primary">{tab.tagline}</p>
-                      <h3 className="mb-3 text-2xl font-bold">{tab.label}</h3>
-                      <p className="text-muted-foreground">{tab.description}</p>
+                      <motion.p
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="mb-2 text-sm font-medium text-primary"
+                      >
+                        {tab.tagline}
+                      </motion.p>
+                      <motion.h3
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="mb-3 text-2xl font-bold"
+                      >
+                        {tab.label}
+                      </motion.h3>
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        className="text-muted-foreground"
+                      >
+                        {tab.description}
+                      </motion.p>
                     </div>
 
                     {/* Feature Cards Grid */}
@@ -264,11 +293,11 @@ export function FeaturesTabbed(): React.JSX.Element {
                   {/* Right: Image */}
                   <div className="relative">
                     <motion.div
-                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-                      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-                      transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, rotate: 1 }}
+                      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, rotate: 0 }}
+                      transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
                       className={cn(
-                        "overflow-hidden rounded-xl border bg-card shadow-lg",
+                        "overflow-hidden rounded-xl border bg-card shadow-lg ring-1 ring-border/50",
                         monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
                       )}
                     >
@@ -286,6 +315,9 @@ export function FeaturesTabbed(): React.JSX.Element {
                         height={727}
                         className="hidden w-full dark:block"
                       />
+
+                      {/* Glossy overlay effect */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
                     </motion.div>
                   </div>
                 </motion.div>

@@ -9,6 +9,7 @@ import {
   TagsIcon,
   User2Icon
 } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import {
@@ -61,13 +62,41 @@ function VercelLogo(): React.JSX.Element {
   );
 }
 
+const MotionCard = motion.create(Card);
+
 export function AiAdvisorCard({
   className,
   ...props
-}: CardProps): React.JSX.Element {
+}: React.ComponentPropsWithoutRef<typeof MotionCard>): React.JSX.Element {
+  const shouldReduceMotion = useReducedMotion();
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -10 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
+  } as const;
+
   return (
-    <Card
+    <MotionCard
       className={cn('pb-0', className)}
+      initial={shouldReduceMotion ? { opacity: 1 } : "hidden"}
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px" }}
+      variants={containerVariants}
       {...props}
     >
       <CardContent>
@@ -76,70 +105,52 @@ export function AiAdvisorCard({
           <h2 className="text-xl font-semibold">Vercel</h2>
         </div>
         <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <GlobeIcon className="size-4 text-muted-foreground" />
-            <span className="w-20 text-sm text-muted-foreground">Domain</span>
-            <Link
-              href="https://vercel.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-blue-500"
+          {[
+            { icon: GlobeIcon, label: 'Domain', content: <Link href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-500">https://vercel.com</Link> },
+            { icon: User2Icon, label: 'CEO', content: <span className="text-sm">Guillermo Rauch</span> },
+            { icon: CalendarIcon, label: 'Founded', content: <span className="text-sm">2015</span> },
+            { icon: LineChartIcon, label: 'Est. ARR', content: <span className="text-sm">$100-120M</span> },
+            { icon: MapPinIcon, label: 'Location', content: <span className="text-sm">California, USA</span> },
+            {
+              icon: TagsIcon, label: 'Tags', content: (
+                <div className="flex gap-1">
+                  <Badge variant="secondary" className="whitespace-nowrap pl-2 text-xs">SaaS</Badge>
+                  <Badge variant="secondary" className="whitespace-nowrap pl-2 text-xs">B2B</Badge>
+                </div>
+              )
+            },
+            { icon: DollarSignIcon, label: 'Funding', content: <span className="text-sm">$250M Series E</span> },
+          ].map((item, index) => (
+            <motion.div
+              key={item.label}
+              variants={shouldReduceMotion ? undefined : itemVariants}
+              className="flex items-center gap-2"
             >
-              https://vercel.com
-            </Link>
-          </div>
-          <div className="flex items-center gap-2">
-            <User2Icon className="size-4 text-muted-foreground" />
-            <span className="w-20 text-sm text-muted-foreground">CEO</span>
-            <span className="text-sm">Guillermo Rauch</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CalendarIcon className="size-4 text-muted-foreground" />
-            <span className="w-20 text-sm text-muted-foreground">Founded</span>
-            <span className="text-sm">2015</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <LineChartIcon className="size-4 text-muted-foreground" />
-            <span className="w-20 text-sm text-muted-foreground">Est. ARR</span>
-            <span className="text-sm">$100-120M</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPinIcon className="size-4 text-muted-foreground" />
-            <span className="w-20 text-sm text-muted-foreground">Location</span>
-            <span className="text-sm">California, USA</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <TagsIcon className="size-4 text-muted-foreground" />
-            <span className="w-20 text-sm text-muted-foreground">Tags</span>
-            <div className="flex gap-1">
-              <Badge
-                variant="secondary"
-                className="whitespace-nowrap pl-2 text-xs"
-              >
-                SaaS
-              </Badge>
-              <Badge
-                variant="secondary"
-                className="whitespace-nowrap pl-2 text-xs"
-              >
-                B2B
-              </Badge>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <DollarSignIcon className="size-4 text-muted-foreground" />
-            <span className="w-20 text-sm text-muted-foreground">Funding</span>
-            <span className="text-sm">$250M Series E</span>
-          </div>
+              <item.icon className="size-4 text-muted-foreground" />
+              <span className="w-20 text-sm text-muted-foreground">{item.label}</span>
+              {item.content}
+            </motion.div>
+          ))}
         </div>
       </CardContent>
       <CardFooter className="flex-col items-start space-y-4 rounded-b-xl bg-neutral-50 py-6 dark:bg-neutral-900">
-        <h3 className="text-base font-semibold sm:text-lg">AI Advisor</h3>
-        <div className="min-h-10 max-w-md text-sm text-muted-foreground">
-          Vercel has been contacted 4 times in the past year. Suggested next
-          contact is in 3 days.
-        </div>
+        <motion.div
+          variants={shouldReduceMotion ? undefined : { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="flex items-center gap-2 mb-1">
+            <h3 className="text-base font-semibold sm:text-lg">AI Advisor</h3>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+          </div>
+          <div className="min-h-10 max-w-md text-sm text-muted-foreground">
+            Vercel has been contacted 4 times in the past year. Suggested next
+            contact is in 3 days.
+          </div>
+        </motion.div>
       </CardFooter>
-    </Card>
+    </MotionCard>
   );
 }

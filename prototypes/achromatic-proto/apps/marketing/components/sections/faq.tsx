@@ -127,23 +127,22 @@ export function FAQ({ items = DATA }: FAQProps): React.JSX.Element {
                       duration: 0.25,
                       ease: [0.32, 0.72, 0, 1],
                     }}
+                    className="relative"
                   >
                     <AccordionItem
                       value={index.toString()}
-                      className="border-b-0 px-4 [&[data-state=open]]:bg-muted/30 rounded-lg transition-colors duration-150 ease-out hover:bg-muted/20 motion-reduce:transition-none"
+                      className="border-b-0 px-4 rounded-lg transition-all duration-200 group relative z-10"
                     >
-                      <AccordionTrigger className="text-left text-base py-4 hover:no-underline group">
-                        <motion.span
-                          className="flex-1"
-                          whileHover={shouldReduceMotion ? undefined : { x: 3 }}
-                          transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                        >
-                          {faq.question}
-                        </motion.span>
+                      <AccordionTrigger className="text-left text-base py-4 hover:no-underline [&[data-state=open]]:text-primary transition-colors">
+                        {faq.question}
                       </AccordionTrigger>
                       <AccordionContent className="text-sm text-muted-foreground pb-4">
                         {faq.answer}
                       </AccordionContent>
+
+                      {/* Active state backglow */}
+                      <div className="absolute inset-0 rounded-lg bg-muted/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100 -z-10" />
+                      <div className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity duration-200 group-[[data-state=open]]:opacity-100 -z-10" />
                     </AccordionItem>
                   </motion.div>
                 ))}

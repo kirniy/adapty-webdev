@@ -3,8 +3,8 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, Star } from 'lucide-react';
-import { motion, useReducedMotion } from 'motion/react';
+import { ArrowRightIcon, PlusIcon } from 'lucide-react';
+import { motion, useMotionValue, useSpring, AnimatePresence, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { cn } from '@workspace/ui/lib/utils';
@@ -89,126 +89,252 @@ const DATA = [
   }
 ];
 
-function TestimonialCard({ testimonial, index }: { testimonial: typeof DATA[0]; index: number }) {
-  const [isHovered, setIsHovered] = React.useState(false);
-  const shouldReduceMotion = useReducedMotion();
+function SplitText({ text, shouldReduceMotion }: { text: string; shouldReduceMotion: boolean | null }) {
+  const words = text.split(" ")
 
-  // Jakub's shadow pattern: multi-layer shadows that deepen on hover
-  const cardShadow = isHovered
-    ? '0 0 0 1px rgba(0,0,0,0.08), 0 4px 12px -2px rgba(0,0,0,0.12), 0 8px 24px 0 rgba(0,0,0,0.08)'
-    : '0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px -1px rgba(0,0,0,0.04), 0 2px 4px 0 rgba(0,0,0,0.02)';
+  if (shouldReduceMotion) {
+    return <span className="inline">{text}</span>
+  }
 
   return (
-    <BlurFade delay={shouldReduceMotion ? 0 : 0.05 + index * 0.05}>
-      <motion.div
-        className="group flex h-full flex-col rounded-xl border border-border/50 bg-card p-5 cursor-pointer"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        whileHover={shouldReduceMotion ? undefined : { y: -3 }}
-        animate={shouldReduceMotion ? undefined : { boxShadow: cardShadow }}
-        transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
-      >
-        {/* Metric badge with scale micro-interaction */}
-        <motion.div
-          className="mb-4 flex items-baseline gap-1.5"
-          animate={shouldReduceMotion ? undefined : {
-            scale: isHovered ? 1.02 : 1,
-            opacity: isHovered ? 1 : 0.9
+    <span className="inline">
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{
+            duration: 0.3,
+            delay: i * 0.02,
+            ease: [0.22, 1, 0.36, 1],
           }}
-          transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
+          className="inline-block mr-[0.25em]"
         >
-          <span className="text-2xl font-bold text-primary">{testimonial.metric}</span>
-          <span className="text-xs text-muted-foreground">{testimonial.metricLabel}</span>
-        </motion.div>
-
-        {/* Quote */}
-        <p className="mb-4 flex-1 text-sm text-muted-foreground leading-relaxed">
-          &ldquo;{testimonial.quote}&rdquo;
-        </p>
-
-        {/* Stars with stagger animation on hover */}
-        <div className="mb-4 flex gap-0.5">
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={shouldReduceMotion ? undefined : {
-                scale: isHovered ? 1.06 : 1,
-                rotate: isHovered ? (i % 2 === 0 ? 3 : -3) : 0
-              }}
-              transition={{
-                duration: 0.15,
-                delay: shouldReduceMotion ? 0 : (isHovered ? i * 0.02 : 0),
-                ease: [0.32, 0.72, 0, 1]
-              }}
-            >
-              <Star className="size-3.5 fill-primary/80 text-primary/80" />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Author */}
-        <div className="flex items-center gap-3 pt-4 border-t border-border/50">
-          <motion.div
-            animate={shouldReduceMotion ? undefined : {
-              scale: isHovered ? 1.05 : 1
-            }}
-            transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
-          >
-            <Image
-              width={36}
-              height={36}
-              src={testimonial.img || ''}
-              alt={testimonial.name}
-              loading="lazy"
-              className="size-9 rounded-full object-cover ring-2 ring-transparent transition-all group-hover:ring-primary/20"
-            />
-          </motion.div>
-          <div className="text-xs">
-            <p className="font-medium">{testimonial.name}</p>
-            <p className="text-muted-foreground">{testimonial.role} at {testimonial.company}</p>
-          </div>
-        </div>
-      </motion.div>
-    </BlurFade>
-  );
+          {word}
+        </motion.span>
+      ))}
+    </span>
+  )
 }
-
 
 interface TestimonialsProps {
   items?: typeof DATA;
 }
 
 export function Testimonials({ items = DATA }: TestimonialsProps): React.JSX.Element {
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const [isHovered, setIsHovered] = React.useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 25, stiffness: 150 };
+  const cursorX = useSpring(mouseX, springConfig);
+  const cursorY = useSpring(mouseY, springConfig);
+
+  const handleMouseMove = React.useCallback(
+    (e: React.MouseEvent) => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      mouseX.set(e.clientX - rect.left);
+      mouseY.set(e.clientY - rect.top);
+    },
+    [mouseX, mouseY],
+  );
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % items.length);
+  };
+
+  const activeTestimonial = items[activeIndex];
+
   return (
     <GridSection className="relative overflow-hidden">
-      <SectionBackground height={700} />
-      <div className="container py-16 lg:py-24 relative z-10">
-        {/* Section Header */}
-        <BlurFade className="mb-12">
-          <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
-            <div>
-              <Badge variant="outline" className="mb-4 rounded-full">
-                Testimonials
-              </Badge>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">
-                Loved by developers worldwide
-              </h2>
-            </div>
-            <Link
-              href="https://adapty.io/customer-stories/"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground lg:mt-0"
-            >
-              View all stories
-              <ArrowRightIcon className="size-4" />
-            </Link>
-          </div>
+      <SectionBackground height={1000} />
+
+      <div className="container py-24 lg:py-32 relative z-10">
+        <BlurFade className="mb-16 text-center">
+          <Badge variant="outline" className="mb-4 rounded-full">
+            Testimonials
+          </Badge>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl text-balance">
+            Loved by developers worldwide
+          </h2>
         </BlurFade>
 
-        {/* Static Grid - 3 columns on desktop */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((testimonial, index) => (
-            <TestimonialCard key={testimonial.name} testimonial={testimonial} index={index} />
-          ))}
+        {/* Interactive Testimonial Area */}
+        <div
+          ref={containerRef}
+          className="relative w-full max-w-5xl mx-auto min-h-[500px] flex flex-col justify-between"
+          style={{ cursor: shouldReduceMotion ? "auto" : "none" }}
+          onMouseMove={shouldReduceMotion ? undefined : handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={handleNext}
+        >
+          {/* Custom magnetic cursor */}
+          {!shouldReduceMotion && (
+            <motion.div
+              className="pointer-events-none absolute z-50 mix-blend-difference top-0 left-0"
+              style={{
+                x: cursorX,
+                y: cursorY,
+                translateX: "-50%",
+                translateY: "-50%",
+              }}
+            >
+              <motion.div
+                className="rounded-full bg-white flex items-center justify-center p-2"
+                animate={{
+                  width: isHovered ? 80 : 20,
+                  height: isHovered ? 80 : 20,
+                  opacity: isHovered ? 1 : 0,
+                }}
+                transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
+              >
+                <motion.span
+                  className="text-black text-xs font-bold tracking-wider uppercase whitespace-nowrap"
+                  animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.5 }}
+                  transition={{ duration: 0.1 }}
+                >
+                  <span className="sr-only">Next</span>
+                  <PlusIcon className="size-4" />
+                </motion.span>
+              </motion.div>
+            </motion.div>
+          )}
+
+          <div className="relative z-10 p-8 md:p-12 lg:p-16 rounded-3xl border bg-background/50 backdrop-blur-sm shadow-sm overflow-hidden group hover:border-primary/20 transition-colors duration-500">
+            {/* Progress bar */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-muted">
+              <motion.div
+                className="h-full bg-primary"
+                initial={{ width: "0%" }}
+                animate={{ width: `${((activeIndex + 1) / items.length) * 100}%` }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.35, ease: [0.32, 0.72, 0, 1] }}
+              />
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-12 md:items-center">
+              {/* Visual Side */}
+              <div className="flex-1 space-y-8 order-2 md:order-1">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeIndex}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="space-y-6"
+                  >
+                    <div className="flex flex-wrap gap-2 text-sm font-medium text-muted-foreground">
+                      <span className="px-3 py-1 rounded-full bg-secondary/50 border border-border/50">
+                        {activeTestimonial.metric} {activeTestimonial.metricLabel}
+                      </span>
+                      <span className="px-3 py-1 rounded-full bg-secondary/50 border border-border/50">
+                        {activeTestimonial.role}
+                      </span>
+                    </div>
+
+                    <blockquote className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight leading-tight">
+                      <SplitText text={activeTestimonial.quote} shouldReduceMotion={shouldReduceMotion} />
+                    </blockquote>
+
+                    <div className="pt-4 flex items-center gap-4">
+                      <div className="text-base">
+                        <div className="font-semibold text-foreground">
+                          {activeTestimonial.name}
+                        </div>
+                        <div className="text-muted-foreground">
+                          {activeTestimonial.company}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Image Side - Stacked Grid */}
+              <div className="w-full md:w-[320px] shrink-0 order-1 md:order-2 flex justify-end">
+                <div className="relative size-[280px] md:size-[320px]">
+                  <AnimatePresence mode="popLayout" initial={false}>
+                    {items.map((item, i) => {
+                      // Only show the active one and the next 2 for visual stacking
+                      const diff = (i - activeIndex + items.length) % items.length;
+                      if (diff > 2) return null;
+
+                      const scale = 1 - diff * 0.1;
+                      const rotate = diff * 5;
+                      const zIndex = 30 - diff;
+
+                      return (
+                        <motion.div
+                          key={item.name}
+                          className={cn(
+                            "absolute inset-0 rounded-2xl overflow-hidden border-2 bg-muted shadow-2xl origin-bottom-right",
+                            diff === 0 ? "border-primary/20" : "border-background/50 grayscale opacity-40"
+                          )}
+                          initial={{ opacity: 0, scale: 0.9, x: 20 }}
+                          animate={{
+                            opacity: diff === 0 ? 1 : 0.4,
+                            scale,
+                            rotate,
+                            zIndex,
+                            x: diff * 20,
+                            y: diff * 10
+                          }}
+                          exit={{ opacity: 0, scale: 1.1, x: -20, rotate: -5 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 200,
+                            damping: 20
+                          }}
+                        >
+                          <Image
+                            src={item.img}
+                            alt={item.name}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 320px"
+                            priority={i === activeIndex}
+                          />
+                        </motion.div>
+                      )
+                    })}
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 flex justify-between items-center text-sm text-muted-foreground">
+              <div className="flex gap-2">
+                {items.map((_, i) => (
+                  <div
+                    key={i}
+                    className={cn(
+                      "h-1.5 rounded-full transition-all duration-300",
+                      i === activeIndex ? "w-8 bg-primary" : "w-1.5 bg-primary/20"
+                    )}
+                  />
+                ))}
+              </div>
+              <div className="hidden md:block">
+                Click to view next story
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 text-center">
+          <Link
+            href="https://adapty.io/customer-stories/"
+            className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            View all customer stories
+            <ArrowRightIcon className="size-4" />
+          </Link>
         </div>
       </div>
     </GridSection>

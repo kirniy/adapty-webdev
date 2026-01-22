@@ -84,7 +84,16 @@ export function BentoCampaignsCard({
       {...other}
     >
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Campaigns</CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-xl font-semibold">Campaigns</CardTitle>
+          <div className="flex items-center gap-1.5 rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-500 opacity-75"></span>
+              <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
+            </span>
+            <span>Live</span>
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         <p className="mb-4 line-clamp-2 text-sm text-muted-foreground">

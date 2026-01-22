@@ -22,6 +22,7 @@ import { SiteHeading } from '~/components/fragments/site-heading';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT content from adapty.io/ltv-analytics (scraped 2026-01-21)
 const FEATURES = [
@@ -192,6 +193,9 @@ function GridFeatures() {
 // =============================================================================
 // VARIANT: BENTO - Asymmetric bento grid with featured cards
 // =============================================================================
+// =============================================================================
+// VARIANT: BENTO - Asymmetric bento grid with featured cards
+// =============================================================================
 function BentoFeatures() {
   const shouldReduceMotion = useReducedMotion();
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
@@ -228,15 +232,21 @@ function BentoFeatures() {
                   index === 0 && "lg:row-span-2"
                 )}
               >
-                <Card className={cn(
-                  "h-full bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer",
+                <div className={cn(
+                  "relative h-full overflow-hidden rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer",
                   hoveredIndex === index && "border-primary/50 shadow-xl",
                   index === 0 && "min-h-[300px]"
                 )}>
-                  <CardContent className="p-8 h-full flex flex-col">
+                  <Spotlight
+                    className="from-primary/20 via-primary/10 to-transparent"
+                    size={350}
+                    fill="white"
+                  />
+                  <div className="p-8 h-full flex flex-col relative z-10">
                     <motion.div
                       animate={shouldReduceMotion ? undefined : {
                         scale: hoveredIndex === index ? 1.15 : 1,
+                        rotate: hoveredIndex === index ? -5 : 0,
                       }}
                       transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
                       className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6"
@@ -254,8 +264,8 @@ function BentoFeatures() {
                     >
                       Learn more <ChevronRightIcon className="ml-1 size-4" />
                     </motion.div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </motion.div>
             </BlurFade>
           ))}
@@ -271,11 +281,15 @@ function BentoFeatures() {
                 }}
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               >
-                <Card className={cn(
-                  "h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-150 cursor-pointer",
+                <div className={cn(
+                  "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer",
                   hoveredIndex === index + featured.length && "border-primary/30 shadow-lg"
                 )}>
-                  <CardContent className="p-6">
+                  <Spotlight
+                    className="from-primary/20 via-primary/10 to-transparent"
+                    size={200}
+                  />
+                  <div className="p-6 relative z-10">
                     <div className="flex items-start gap-4">
                       <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <feature.icon className="size-5" />
@@ -294,8 +308,8 @@ function BentoFeatures() {
                         )}
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </motion.div>
             </BlurFade>
           ))}
