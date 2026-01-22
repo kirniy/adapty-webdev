@@ -12,7 +12,7 @@ import {
   PlayIcon,
   CheckIcon
 } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence, useInView } from 'motion/react';
+import { motion, useReducedMotion, AnimatePresence, useInView, useMotionValue, useSpring, useTransform } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
@@ -241,11 +241,39 @@ function HeroButton({
 // =============================================================================
 // VARIANT: SPLIT - Text left, image right (default)
 // =============================================================================
+// =============================================================================
+// VARIANT: SPLIT - Text left, image right (default)
+// =============================================================================
 function SplitHero() {
   const shouldReduceMotion = useReducedMotion();
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
-  const [imageHovered, setImageHovered] = React.useState(false);
+
+  // 3D Tilt Logic
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const mouseX = useSpring(x, { stiffness: 500, damping: 50 });
+  const mouseY = useSpring(y, { stiffness: 500, damping: 50 });
+
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["5deg", "-5deg"]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-5deg", "5deg"]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -311,36 +339,32 @@ function SplitHero() {
             </BlurFade>
           </div>
 
-          {/* Right: Screenshot with hover effect */}
+          {/* Right: Screenshot with 3D Tilt */}
           <BlurFade delay={0.2}>
             <motion.div
-              onMouseEnter={() => setImageHovered(true)}
-              onMouseLeave={() => setImageHovered(false)}
+              style={shouldReduceMotion ? undefined : {
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d",
+              }}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
               initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 20 }}
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.4, ease: EASE_OUT_EXPO }}
-              className="relative"
+              className="relative perspective-1000"
             >
               {/* Shadow layer */}
               <motion.div
-                animate={{
-                  y: imageHovered ? 8 : 4,
-                  opacity: imageHovered ? 0.15 : 0.1,
-                  scale: imageHovered ? 1.02 : 1,
+                style={{
+                  transform: "translateZ(-20px)",
                 }}
-                transition={{ duration: 0.3, ease: EASE_OUT_QUART }}
-                className="absolute inset-0 rounded-xl bg-foreground blur-xl -z-10"
+                className="absolute inset-0 top-8 rounded-xl bg-foreground/10 blur-2xl -z-10 transform-gpu"
               />
 
-              <motion.div
-                animate={shouldReduceMotion ? undefined : {
-                  y: imageHovered ? -4 : 0,
-                  scale: imageHovered ? 1.01 : 1,
-                }}
-                transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
+              <div
                 className={cn(
-                  "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg transition-shadow duration-300",
-                  imageHovered && "shadow-2xl",
+                  "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg transition-all duration-300",
                   monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
                 )}
               >
@@ -362,7 +386,10 @@ function SplitHero() {
                   alt="Adapty Paywall Builder"
                   className="hidden w-full dark:block"
                 />
-              </motion.div>
+
+                {/* Glossy reflection */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+              </div>
             </motion.div>
           </BlurFade>
         </div>
