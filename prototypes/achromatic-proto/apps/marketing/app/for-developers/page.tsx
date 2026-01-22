@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
+import { useHeroVariant, useForDevelopersFeaturesVariant } from '~/lib/debug-context';
 import { ForDevelopersHero } from '~/components/sections/for-developers-hero';
 import { ForDevelopersFeatures } from '~/components/sections/for-developers-features';
 import type { ForDevelopersHeroVariant } from '~/components/sections/for-developers-hero';
@@ -26,7 +26,7 @@ function mapHeroVariant(globalVariant: string): ForDevelopersHeroVariant {
 // For Developers page: SDK integration and developer features
 export default function ForDevelopersPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
-  const featuresVariant = useFeaturesVariant();
+  const featuresVariant = useForDevelopersFeaturesVariant();
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function ForDevelopersPage(): React.JSX.Element {
       <LogosSwitcher />
 
       {/* Developer features */}
-      {featuresVariant !== 'off' && <ForDevelopersFeatures />}
+      {featuresVariant !== 'off' && <ForDevelopersFeatures variant={featuresVariant} />}
 
       {/* SDK Code examples - shared switcher */}
       <SDKSwitcher />

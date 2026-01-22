@@ -7,6 +7,7 @@ import {
   ZapIcon,
   FlaskConicalIcon,
   LayoutGridIcon,
+  LayoutIcon,
   SlidersHorizontalIcon,
   GlobeIcon,
   SmartphoneIcon,
@@ -18,6 +19,12 @@ import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { Card, CardContent } from '@workspace/ui/components/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  Autoplay
+} from '@workspace/ui/components/carousel';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { GridSection } from '~/components/fragments/grid-section';
@@ -32,6 +39,16 @@ const EASE_OUT_QUART = [0.165, 0.84, 0.44, 1] as const;
 
 // Content from centralized content file
 const { features } = paywallBuilderContent;
+
+// Paywall scenarios for carousel animations
+const PAYWALL_SCENARIOS = [
+  { title: 'Onboarding', status: 'Live', viewers: '1.2k' },
+  { title: 'Black Friday', status: 'Scheduled', viewers: '-' },
+  { title: 'Win-back', status: 'Live', viewers: '850' },
+  { title: 'Holiday Special', status: 'Draft', viewers: '-' },
+  { title: 'Summer Sale', status: 'Ended', viewers: '3.4k' },
+  { title: 'New Features', status: 'Live', viewers: '2.1k' },
+];
 
 // Icon mapping
 const FEATURE_ICONS = {
@@ -136,9 +153,211 @@ function FeatureCard({
   );
 }
 
+
 // =============================================================================
-// VARIANT: GRID - Classic 2-column grid of cards
+// MAGIC ANIMATIONS
 // =============================================================================
+
+// 1. CAROUSEL MAGIC (Scale Paywall)
+function CarouselMagic() {
+  return (
+    <div className="mt-auto relative w-full overflow-hidden pb-4 pt-4">
+      <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-background to-transparent z-10" />
+      <Carousel
+        opts={{ align: 'start', skipSnaps: true, loop: true, dragFree: true }}
+        plugins={[Autoplay({ delay: 2000 })]}
+        orientation="vertical"
+        className="pointer-events-none w-full select-none"
+      >
+        <CarouselContent className="pointer-events-none -mt-1 h-[150px] select-none">
+          {PAYWALL_SCENARIOS.map((scenario, i) => (
+            <CarouselItem key={i} className="pointer-events-none basis-1/3 select-none pt-1">
+              <div className="mx-6 p-3 rounded-lg border bg-background/50 backdrop-blur-sm flex items-center justify-between shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                    <BoxIcon className="size-4" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium">{scenario.title}</div>
+                    <div className="text-[10px] text-muted-foreground">{scenario.status}</div>
+                  </div>
+                </div>
+                <div className="text-xs font-mono text-muted-foreground">{scenario.viewers}</div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+      <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent z-10" />
+    </div>
+  );
+}
+
+// 2. SYNC MAGIC (Real-time Changes)
+function SyncMagic() {
+  return (
+    <div className="mt-auto relative h-[150px] w-full flex items-center justify-center overflow-hidden">
+      {/* Connecting Beam */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="w-[60%] h-[2px] bg-border relative">
+          <motion.div
+            animate={{ x: [-100, 200], opacity: [0, 1, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="absolute top-0 left-0 w-[40px] h-full bg-gradient-to-r from-transparent via-primary to-transparent"
+          />
+        </div>
+      </div>
+
+      {/* Nodes */}
+      <div className="flex justify-between w-[80%] relative z-10">
+        <div className="flex flex-col items-center gap-2">
+          <div className="size-12 rounded-xl bg-background border shadow-sm flex items-center justify-center">
+            <LayoutGridIcon className="size-6 text-muted-foreground" />
+          </div>
+          <span className="text-[10px] font-mono text-muted-foreground">Config</span>
+        </div>
+
+        <div className="flex flex-col items-center gap-2">
+          <div className="size-12 rounded-xl bg-primary/10 border border-primary/20 shadow-sm flex items-center justify-center relative">
+            <SmartphoneIcon className="size-6 text-primary" />
+            <span className="absolute -top-1 -right-1 flex size-2.5">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex size-2.5 rounded-full bg-primary"></span>
+            </span>
+          </div>
+          <span className="text-[10px] font-mono text-primary font-medium">Updated</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 3. A/B TEST MAGIC (Testing)
+function ABTestMagic() {
+  return (
+    <div className="mt-4 space-y-3 w-full">
+      <div className="space-y-1.5">
+        <div className="flex justify-between text-[10px] text-muted-foreground">
+          <span>Variant A</span>
+          <span>12%</span>
+        </div>
+        <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
+          <motion.div
+            initial={{ width: "0%" }}
+            whileInView={{ width: "30%" }}
+            transition={{ duration: 1.5, delay: 0.2 }}
+            className="h-full bg-muted-foreground/30"
+          />
+        </div>
+      </div>
+      <div className="space-y-1.5">
+        <div className="flex justify-between text-[10px]">
+          <span className="font-medium text-primary">Variant B</span>
+          <span className="font-bold text-primary">48%</span>
+        </div>
+        <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
+          <motion.div
+            initial={{ width: "0%" }}
+            whileInView={{ width: "75%" }}
+            transition={{ duration: 1.5, delay: 0.4 }}
+            className="h-full bg-primary"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 4. SLIDERS MAGIC (Customization)
+function SlidersMagic() {
+  return (
+    <div className="mt-4 space-y-2 w-full">
+      {[0.7, 0.4, 0.8].map((val, i) => (
+        <div key={i} className="flex items-center gap-2">
+          <div className="h-1 flex-1 bg-muted/50 rounded-full overflow-hidden relative">
+            <motion.div
+              animate={{ x: ["0%", "50%", "20%", "70%"] }}
+              transition={{ duration: 4 + i, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+              className="absolute top-0 left-0 w-3 h-full bg-primary rounded-full"
+              style={{ left: `${val * 100}%` }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// 5. LOCALIZATION MAGIC (Localization)
+function LocalizationMagic() {
+  const WORDS = ["Paywall", "Paiement", "Bezahlmauer", "Pagos"];
+  const [index, setIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % WORDS.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="mt-4 h-[40px] flex items-center justify-center bg-muted/30 rounded-lg border border-border/50">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -5 }}
+          className="text-sm font-medium"
+        >
+          {WORDS[index]}
+        </motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// 6. LAYOUT MAGIC (Structure)
+function LayoutMagic() {
+  return (
+    <div className="mt-4 flex gap-1.5 justify-center opacity-80">
+      <motion.div
+        animate={{ scale: [1, 0.9, 1] }}
+        transition={{ duration: 2, repeat: Infinity, delay: 0 }}
+        className="w-12 h-16 rounded border bg-background shadow-sm"
+      />
+      <div className="space-y-1.5">
+        <motion.div
+          animate={{ scale: [1, 0.95, 1] }}
+          transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+          className="w-12 h-8 rounded border bg-primary/10"
+        />
+        <motion.div
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+          className="w-12 h-6 rounded border bg-muted"
+        />
+      </div>
+    </div>
+  );
+}
+
+// Map IDs to components
+const MAGIC_MAP: Record<string, React.ComponentType> = {
+  'scale-paywall': CarouselMagic,
+  'real-time-changes': SyncMagic,
+  'ab-testing': ABTestMagic,
+  'customizable-structure': LayoutMagic,
+  'flexible-adjustments': SlidersMagic,
+  'localization': LocalizationMagic,
+};
+
+function MagicArea({ id }: { id: string }) {
+  const Component = MAGIC_MAP[id];
+  if (!Component) return null;
+  return <Component />;
+}
+
 function GridFeatures() {
   const shouldReduceMotion = useReducedMotion();
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
@@ -234,7 +453,7 @@ function BentoFeatures() {
                   )}
                 >
                   <div className={cn(
-                    "relative h-full overflow-hidden rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer group",
+                    "relative h-full overflow-hidden rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer group flex flex-col",
                     isHovered && "border-primary/50 shadow-xl shadow-primary/10",
                     index === 0 && "min-h-[300px]"
                   )}>
@@ -243,7 +462,8 @@ function BentoFeatures() {
                       size={350}
                       fill="white"
                     />
-                    <div className="p-8 h-full flex flex-col relative z-10">
+
+                    <div className="p-8 pb-0 relative z-10 flex-1">
                       <motion.div
                         animate={shouldReduceMotion ? undefined : {
                           scale: isHovered ? 1.15 : 1,
@@ -257,21 +477,13 @@ function BentoFeatures() {
                       >
                         <Icon className="size-7" />
                       </motion.div>
-                      <Badge variant="secondary" className="w-fit mb-3 text-xs">
-                        {categoryLabels[feature.category as Category] || feature.category}
-                      </Badge>
                       <h3 className="font-bold text-xl mb-3 group-hover:text-primary transition-colors">{feature.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed flex-1">{feature.description}</p>
-                      <motion.div
-                        animate={shouldReduceMotion ? undefined : {
-                          x: isHovered ? 4 : 0,
-                          opacity: isHovered ? 1 : 0.6,
-                        }}
-                        transition={{ duration: 0.15 }}
-                        className="mt-4 flex items-center text-sm font-medium text-primary"
-                      >
-                        Learn more <ChevronRightIcon className="ml-1 size-4" />
-                      </motion.div>
+                      <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                    </div>
+
+                    {/* Magic Area at Bottom - No Active Badge anymore */}
+                    <div className="relative z-10">
+                      <MagicArea id={feature.id} />
                     </div>
                   </div>
                 </motion.div>
@@ -295,22 +507,22 @@ function BentoFeatures() {
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
                   <div className={cn(
-                    "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer group",
+                    "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer group flex flex-col",
                     isHovered && "border-primary/30 shadow-lg"
                   )}>
                     <Spotlight
                       className="from-primary/20 via-primary/10 to-transparent"
                       size={200}
                     />
-                    <div className="p-6 relative z-10">
-                      <div className="flex items-start gap-4">
+                    <div className="p-6 relative z-10 flex-1">
+                      <div className="flex flex-col gap-4">
                         <motion.div
                           animate={shouldReduceMotion ? undefined : {
                             scale: isHovered ? 1.1 : 1,
                             rotate: isHovered ? 3 : 0,
                           }}
                           transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
-                          className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"
+                          className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary self-start"
                         >
                           <Icon className="size-5" />
                         </motion.div>
@@ -319,6 +531,11 @@ function BentoFeatures() {
                           <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
                         </div>
                       </div>
+                    </div>
+
+                    {/* Magic Area */}
+                    <div className="px-6 pb-6 relative z-10">
+                      <MagicArea id={feature.id} />
                     </div>
                   </div>
                 </motion.div>

@@ -36,6 +36,16 @@ export type SdkVariant = 'default' | 'off'
 export type RolesVariant = 'cards' | 'bento' | 'stacked' | 'off'
 // FooterVariant moved below to keep with constants
 export type CustomizationVariant = 'grid' | 'carousel' | 'expandable' | 'off'
+export type PaywallBuilderFeaturesVariant = 'grid' | 'bento' | 'tabs' | 'off'
+export type ABTestingFeaturesVariant = 'grid' | 'bento' | 'tabs' | 'off'
+export type OnboardingBuilderFeaturesVariant = 'grid' | 'bento' | 'tabs' | 'off'
+export type AutopilotFeaturesVariant = 'grid' | 'bento' | 'tabs' | 'off'
+export type LTVAnalyticsFeaturesVariant = 'grid' | 'bento' | 'tabs' | 'off'
+export type RefundSaverFeaturesVariant = 'grid' | 'bento' | 'tabs' | 'off'
+export type ForMarketersFeaturesVariant = 'grid' | 'bento' | 'tabs' | 'off'
+export type ForAppOwnersFeaturesVariant = 'grid' | 'bento' | 'tabs' | 'off'
+export type ForDevelopersFeaturesVariant = 'grid' | 'bento' | 'accordion' | 'off'
+export type ForIndieFeaturesVariant = 'grid' | 'bento' | 'timeline' | 'off'
 export type HeroLinesVariant = 'above' | 'below'
 export type ImageSetVariant = 'set1' | 'set2' | 'set3'
 export type MonochromeMode = boolean
@@ -189,6 +199,76 @@ export const CUSTOMIZATION_VARIANTS: VariantOption<CustomizationVariant>[] = [
   { value: 'off', label: 'Off', description: 'Hide this section' },
 ]
 
+export const PAYWALL_BUILDER_FEATURES_VARIANTS: VariantOption<PaywallBuilderFeaturesVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '2-column grid of feature cards' },
+  { value: 'bento', label: 'Bento', description: 'Asymmetric bento with spotlight effects' },
+  { value: 'tabs', label: 'Tabs', description: 'Category-filtered tabbed view' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const AB_TESTING_FEATURES_VARIANTS: VariantOption<ABTestingFeaturesVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '2-column grid of A/B testing features' },
+  { value: 'bento', label: 'Bento', description: 'Asymmetric bento layout' },
+  { value: 'tabs', label: 'Tabs', description: 'Category-filtered tabbed view' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const ONBOARDING_BUILDER_FEATURES_VARIANTS: VariantOption<OnboardingBuilderFeaturesVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '2-column grid of onboarding features' },
+  { value: 'bento', label: 'Bento', description: 'Asymmetric bento layout' },
+  { value: 'tabs', label: 'Tabs', description: 'Category-filtered tabbed view' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const AUTOPILOT_FEATURES_VARIANTS: VariantOption<AutopilotFeaturesVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '2-column grid of autopilot features' },
+  { value: 'bento', label: 'Bento', description: 'Asymmetric bento layout' },
+  { value: 'tabs', label: 'Tabs', description: 'Category-filtered tabbed view' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const LTV_ANALYTICS_FEATURES_VARIANTS: VariantOption<LTVAnalyticsFeaturesVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '2-column grid of LTV analytics features' },
+  { value: 'bento', label: 'Bento', description: 'Asymmetric bento layout' },
+  { value: 'tabs', label: 'Tabs', description: 'Category-filtered tabbed view' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const REFUND_SAVER_FEATURES_VARIANTS: VariantOption<RefundSaverFeaturesVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '2-column grid of refund saver features' },
+  { value: 'bento', label: 'Bento', description: 'Asymmetric bento layout' },
+  { value: 'tabs', label: 'Tabs', description: 'Category-filtered tabbed view' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const FOR_MARKETERS_FEATURES_VARIANTS: VariantOption<ForMarketersFeaturesVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '2-column grid of marketer features' },
+  { value: 'bento', label: 'Bento', description: 'Asymmetric bento layout' },
+  { value: 'tabs', label: 'Tabs', description: 'Category-filtered tabbed view' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const FOR_APP_OWNERS_FEATURES_VARIANTS: VariantOption<ForAppOwnersFeaturesVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '2-column grid of app owner features' },
+  { value: 'bento', label: 'Bento', description: 'Asymmetric bento layout' },
+  { value: 'tabs', label: 'Tabs', description: 'Category-filtered tabbed view' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const FOR_DEVELOPERS_FEATURES_VARIANTS: VariantOption<ForDevelopersFeaturesVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '2-column grid of developer features' },
+  { value: 'bento', label: 'Bento', description: 'Asymmetric bento layout' },
+  { value: 'accordion', label: 'Accordion', description: 'Expandable accordion sections' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
+export const FOR_INDIE_FEATURES_VARIANTS: VariantOption<ForIndieFeaturesVariant>[] = [
+  { value: 'grid', label: 'Grid', description: '2-column grid of indie dev features' },
+  { value: 'bento', label: 'Bento', description: 'Asymmetric bento layout' },
+  { value: 'timeline', label: 'Timeline', description: 'Timeline-style feature progression' },
+  { value: 'off', label: 'Off', description: 'Hide this section' },
+]
+
 export const HERO_LINES_VARIANTS: VariantOption<HeroLinesVariant>[] = [
   { value: 'above', label: 'Above Content', description: 'Dashed lines appear above hero content' },
   { value: 'below', label: 'Below Content', description: 'Dashed lines hidden behind hero content' },
@@ -223,6 +303,16 @@ interface DebugState {
   rolesVariant: RolesVariant
   footerVariant: FooterVariant
   customizationVariant: CustomizationVariant
+  paywallBuilderFeaturesVariant: PaywallBuilderFeaturesVariant
+  abTestingFeaturesVariant: ABTestingFeaturesVariant
+  onboardingBuilderFeaturesVariant: OnboardingBuilderFeaturesVariant
+  autopilotFeaturesVariant: AutopilotFeaturesVariant
+  ltvAnalyticsFeaturesVariant: LTVAnalyticsFeaturesVariant
+  refundSaverFeaturesVariant: RefundSaverFeaturesVariant
+  forMarketersFeaturesVariant: ForMarketersFeaturesVariant
+  forAppOwnersFeaturesVariant: ForAppOwnersFeaturesVariant
+  forDevelopersFeaturesVariant: ForDevelopersFeaturesVariant
+  forIndieFeaturesVariant: ForIndieFeaturesVariant
   heroLinesVariant: HeroLinesVariant
   imageSetVariant: ImageSetVariant
   monochromeMode: boolean
@@ -252,6 +342,16 @@ interface DebugContextValue extends DebugState {
   setRolesVariant: (variant: RolesVariant) => void
   setFooterVariant: (variant: FooterVariant) => void
   setCustomizationVariant: (variant: CustomizationVariant) => void
+  setPaywallBuilderFeaturesVariant: (variant: PaywallBuilderFeaturesVariant) => void
+  setAbTestingFeaturesVariant: (variant: ABTestingFeaturesVariant) => void
+  setOnboardingBuilderFeaturesVariant: (variant: OnboardingBuilderFeaturesVariant) => void
+  setAutopilotFeaturesVariant: (variant: AutopilotFeaturesVariant) => void
+  setLtvAnalyticsFeaturesVariant: (variant: LTVAnalyticsFeaturesVariant) => void
+  setRefundSaverFeaturesVariant: (variant: RefundSaverFeaturesVariant) => void
+  setForMarketersFeaturesVariant: (variant: ForMarketersFeaturesVariant) => void
+  setForAppOwnersFeaturesVariant: (variant: ForAppOwnersFeaturesVariant) => void
+  setForDevelopersFeaturesVariant: (variant: ForDevelopersFeaturesVariant) => void
+  setForIndieFeaturesVariant: (variant: ForIndieFeaturesVariant) => void
   setHeroLinesVariant: (variant: HeroLinesVariant) => void
   setImageSetVariant: (variant: ImageSetVariant) => void
   setMonochromeMode: (enabled: boolean) => void
@@ -282,6 +382,16 @@ const defaultState: DebugState = {
   rolesVariant: 'cards',
   footerVariant: 'default',
   customizationVariant: 'expandable',
+  paywallBuilderFeaturesVariant: 'bento',
+  abTestingFeaturesVariant: 'bento',
+  onboardingBuilderFeaturesVariant: 'bento',
+  autopilotFeaturesVariant: 'bento',
+  ltvAnalyticsFeaturesVariant: 'bento',
+  refundSaverFeaturesVariant: 'bento',
+  forMarketersFeaturesVariant: 'bento',
+  forAppOwnersFeaturesVariant: 'bento',
+  forDevelopersFeaturesVariant: 'bento',
+  forIndieFeaturesVariant: 'bento',
   heroLinesVariant: 'above',
   imageSetVariant: 'set2',
   monochromeMode: true,
@@ -322,6 +432,16 @@ const PAGE_KEYS: (keyof DebugState)[] = [
   'sdkVariant',
   'rolesVariant',
   'customizationVariant',
+  'paywallBuilderFeaturesVariant',
+  'abTestingFeaturesVariant',
+  'onboardingBuilderFeaturesVariant',
+  'autopilotFeaturesVariant',
+  'ltvAnalyticsFeaturesVariant',
+  'refundSaverFeaturesVariant',
+  'forMarketersFeaturesVariant',
+  'forAppOwnersFeaturesVariant',
+  'forDevelopersFeaturesVariant',
+  'forIndieFeaturesVariant',
 ]
 
 // Helper to get page storage key
@@ -419,6 +539,16 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   const setRolesVariant = useCallback((variant: RolesVariant) => setState(prev => ({ ...prev, rolesVariant: variant })), [])
   const setFooterVariant = useCallback((variant: FooterVariant) => setState(prev => ({ ...prev, footerVariant: variant })), [])
   const setCustomizationVariant = useCallback((variant: CustomizationVariant) => setState(prev => ({ ...prev, customizationVariant: variant })), [])
+  const setPaywallBuilderFeaturesVariant = useCallback((variant: PaywallBuilderFeaturesVariant) => setState(prev => ({ ...prev, paywallBuilderFeaturesVariant: variant })), [])
+  const setAbTestingFeaturesVariant = useCallback((variant: ABTestingFeaturesVariant) => setState(prev => ({ ...prev, abTestingFeaturesVariant: variant })), [])
+  const setOnboardingBuilderFeaturesVariant = useCallback((variant: OnboardingBuilderFeaturesVariant) => setState(prev => ({ ...prev, onboardingBuilderFeaturesVariant: variant })), [])
+  const setAutopilotFeaturesVariant = useCallback((variant: AutopilotFeaturesVariant) => setState(prev => ({ ...prev, autopilotFeaturesVariant: variant })), [])
+  const setLtvAnalyticsFeaturesVariant = useCallback((variant: LTVAnalyticsFeaturesVariant) => setState(prev => ({ ...prev, ltvAnalyticsFeaturesVariant: variant })), [])
+  const setRefundSaverFeaturesVariant = useCallback((variant: RefundSaverFeaturesVariant) => setState(prev => ({ ...prev, refundSaverFeaturesVariant: variant })), [])
+  const setForMarketersFeaturesVariant = useCallback((variant: ForMarketersFeaturesVariant) => setState(prev => ({ ...prev, forMarketersFeaturesVariant: variant })), [])
+  const setForAppOwnersFeaturesVariant = useCallback((variant: ForAppOwnersFeaturesVariant) => setState(prev => ({ ...prev, forAppOwnersFeaturesVariant: variant })), [])
+  const setForDevelopersFeaturesVariant = useCallback((variant: ForDevelopersFeaturesVariant) => setState(prev => ({ ...prev, forDevelopersFeaturesVariant: variant })), [])
+  const setForIndieFeaturesVariant = useCallback((variant: ForIndieFeaturesVariant) => setState(prev => ({ ...prev, forIndieFeaturesVariant: variant })), [])
   const setHeroLinesVariant = useCallback((variant: HeroLinesVariant) => setState(prev => ({ ...prev, heroLinesVariant: variant })), [])
   const setImageSetVariant = useCallback((variant: ImageSetVariant) => setState(prev => ({ ...prev, imageSetVariant: variant })), [])
   const setMonochromeMode = useCallback((enabled: boolean) => setState(prev => ({ ...prev, monochromeMode: enabled })), [])
@@ -455,6 +585,16 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     setRolesVariant,
     setFooterVariant,
     setCustomizationVariant,
+    setPaywallBuilderFeaturesVariant,
+    setAbTestingFeaturesVariant,
+    setOnboardingBuilderFeaturesVariant,
+    setAutopilotFeaturesVariant,
+    setLtvAnalyticsFeaturesVariant,
+    setRefundSaverFeaturesVariant,
+    setForMarketersFeaturesVariant,
+    setForAppOwnersFeaturesVariant,
+    setForDevelopersFeaturesVariant,
+    setForIndieFeaturesVariant,
     setHeroLinesVariant,
     setImageSetVariant,
     setMonochromeMode,
@@ -497,6 +637,16 @@ export function useSdkVariant() { return useContext(DebugContext)?.sdkVariant ??
 export function useRolesVariant() { return useContext(DebugContext)?.rolesVariant ?? defaultState.rolesVariant }
 export function useFooterVariant() { return useContext(DebugContext)?.footerVariant ?? defaultState.footerVariant }
 export function useCustomizationVariant() { return useContext(DebugContext)?.customizationVariant ?? defaultState.customizationVariant }
+export function usePaywallBuilderFeaturesVariant() { return useContext(DebugContext)?.paywallBuilderFeaturesVariant ?? defaultState.paywallBuilderFeaturesVariant }
+export function useAbTestingFeaturesVariant() { return useContext(DebugContext)?.abTestingFeaturesVariant ?? defaultState.abTestingFeaturesVariant }
+export function useOnboardingBuilderFeaturesVariant() { return useContext(DebugContext)?.onboardingBuilderFeaturesVariant ?? defaultState.onboardingBuilderFeaturesVariant }
+export function useAutopilotFeaturesVariant() { return useContext(DebugContext)?.autopilotFeaturesVariant ?? defaultState.autopilotFeaturesVariant }
+export function useLtvAnalyticsFeaturesVariant() { return useContext(DebugContext)?.ltvAnalyticsFeaturesVariant ?? defaultState.ltvAnalyticsFeaturesVariant }
+export function useRefundSaverFeaturesVariant() { return useContext(DebugContext)?.refundSaverFeaturesVariant ?? defaultState.refundSaverFeaturesVariant }
+export function useForMarketersFeaturesVariant() { return useContext(DebugContext)?.forMarketersFeaturesVariant ?? defaultState.forMarketersFeaturesVariant }
+export function useForAppOwnersFeaturesVariant() { return useContext(DebugContext)?.forAppOwnersFeaturesVariant ?? defaultState.forAppOwnersFeaturesVariant }
+export function useForDevelopersFeaturesVariant() { return useContext(DebugContext)?.forDevelopersFeaturesVariant ?? defaultState.forDevelopersFeaturesVariant }
+export function useForIndieFeaturesVariant() { return useContext(DebugContext)?.forIndieFeaturesVariant ?? defaultState.forIndieFeaturesVariant }
 export function useHeroLinesVariant() { return useContext(DebugContext)?.heroLinesVariant ?? defaultState.heroLinesVariant }
 export function useImageSetVariant() { return useContext(DebugContext)?.imageSetVariant ?? defaultState.imageSetVariant }
 export function useMonochromeMode() { return useContext(DebugContext)?.monochromeMode ?? defaultState.monochromeMode }

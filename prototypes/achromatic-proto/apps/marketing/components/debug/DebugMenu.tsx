@@ -24,6 +24,16 @@ import {
   BLOG_VARIANTS,
   FAQ_VARIANTS,
   CUSTOMIZATION_VARIANTS,
+  PAYWALL_BUILDER_FEATURES_VARIANTS,
+  AB_TESTING_FEATURES_VARIANTS,
+  ONBOARDING_BUILDER_FEATURES_VARIANTS,
+  AUTOPILOT_FEATURES_VARIANTS,
+  LTV_ANALYTICS_FEATURES_VARIANTS,
+  REFUND_SAVER_FEATURES_VARIANTS,
+  FOR_MARKETERS_FEATURES_VARIANTS,
+  FOR_APP_OWNERS_FEATURES_VARIANTS,
+  FOR_DEVELOPERS_FEATURES_VARIANTS,
+  FOR_INDIE_FEATURES_VARIANTS,
   CTA_VARIANTS,
   FOOTER_VARIANTS,
   IMAGE_SET_VARIANTS,
@@ -35,6 +45,16 @@ type PageSections = {
   hero?: boolean
   logos?: boolean
   features?: boolean
+  paywallBuilderFeatures?: boolean
+  abTestingFeatures?: boolean
+  onboardingBuilderFeatures?: boolean
+  autopilotFeatures?: boolean
+  ltvAnalyticsFeatures?: boolean
+  refundSaverFeatures?: boolean
+  forMarketersFeatures?: boolean
+  forAppOwnersFeatures?: boolean
+  forDevelopersFeatures?: boolean
+  forIndieFeatures?: boolean
   customization?: boolean
   roles?: boolean
   sdk?: boolean
@@ -82,7 +102,7 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
   '/for-marketers': {
     hero: true,
     logos: true,
-    features: true,
+    forMarketersFeatures: true,
     stats: true,
     testimonials: true,
     cta: true,
@@ -90,7 +110,7 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
   '/for-developers': {
     hero: true,
     logos: true,
-    features: true,
+    forDevelopersFeatures: true,
     sdk: true,
     testimonials: true,
     cta: true,
@@ -98,7 +118,7 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
   '/for-app-owners': {
     hero: true,
     logos: true,
-    features: true,
+    forAppOwnersFeatures: true,
     stats: true,
     testimonials: true,
     cta: true,
@@ -106,7 +126,7 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
   '/for-indie': {
     hero: true,
     logos: true,
-    features: true,
+    forIndieFeatures: true,
     testimonials: true,
     cta: true,
   },
@@ -116,8 +136,7 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
   // ============================================================================
   '/paywall-builder': {
     hero: true,
-    logos: true,
-    features: true,
+    paywallBuilderFeatures: true,
     customization: true,
     testimonials: true,
     faq: true,
@@ -125,45 +144,39 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
   },
   '/paywall-ab-testing': {
     hero: true,
-    logos: true,
-    features: true,
+    abTestingFeatures: true,
     testimonials: true,
     cta: true,
   },
   '/onboarding-builder': {
     hero: true,
-    logos: true,
-    features: true,
+    onboardingBuilderFeatures: true,
     testimonials: true,
     faq: true,
     cta: true,
   },
   '/autopilot': {
     hero: true,
-    logos: true,
-    features: true,
+    autopilotFeatures: true,
     testimonials: true,
     cta: true,
   },
   '/ltv-analytics': {
     hero: true,
-    logos: true,
-    features: true,
+    ltvAnalyticsFeatures: true,
     stats: true,
     testimonials: true,
     cta: true,
   },
   '/predictive-analytics': {
     hero: true,
-    logos: true,
     features: true,
     testimonials: true,
     cta: true,
   },
   '/refund-saver': {
     hero: true,
-    logos: true,
-    features: true,
+    refundSaverFeatures: true,
     stats: true,
     faq: true,
     testimonials: true,
@@ -171,49 +184,42 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
   },
   '/ai-paywall-generator': {
     hero: true,
-    logos: true,
     features: true,
     testimonials: true,
     cta: true,
   },
   '/paywall-library': {
     hero: true,
-    logos: true,
     features: true,
     testimonials: true,
     cta: true,
   },
   '/paywall-localization': {
     hero: true,
-    logos: true,
     features: true,
     testimonials: true,
     cta: true,
   },
   '/paywall-targeting': {
     hero: true,
-    logos: true,
     features: true,
     testimonials: true,
     cta: true,
   },
   '/remote-config': {
     hero: true,
-    logos: true,
     features: true,
     testimonials: true,
     cta: true,
   },
   '/fallback-paywalls': {
     hero: true,
-    logos: true,
     features: true,
     testimonials: true,
     cta: true,
   },
   '/revenue-growth': {
     hero: true,
-    logos: true,
     features: true,
     stats: true,
     testimonials: true,
@@ -494,6 +500,16 @@ export function DebugMenu() {
     logosVariant, setLogosVariant,
     featuresVariant, setFeaturesVariant,
     customizationVariant, setCustomizationVariant,
+    paywallBuilderFeaturesVariant, setPaywallBuilderFeaturesVariant,
+    abTestingFeaturesVariant, setAbTestingFeaturesVariant,
+    onboardingBuilderFeaturesVariant, setOnboardingBuilderFeaturesVariant,
+    autopilotFeaturesVariant, setAutopilotFeaturesVariant,
+    ltvAnalyticsFeaturesVariant, setLtvAnalyticsFeaturesVariant,
+    refundSaverFeaturesVariant, setRefundSaverFeaturesVariant,
+    forMarketersFeaturesVariant, setForMarketersFeaturesVariant,
+    forAppOwnersFeaturesVariant, setForAppOwnersFeaturesVariant,
+    forDevelopersFeaturesVariant, setForDevelopersFeaturesVariant,
+    forIndieFeaturesVariant, setForIndieFeaturesVariant,
     rolesVariant, setRolesVariant,
     sdkVariant, setSdkVariant,
     statsVariant, setStatsVariant,
@@ -629,6 +645,66 @@ export function DebugMenu() {
             {sections.features && (
               <CollapsibleSection title="Features" icon={<BlocksIcon />} defaultOpen>
                 <VariantSelector variants={FEATURES_VARIANTS} currentValue={featuresVariant} onChange={setFeaturesVariant} />
+              </CollapsibleSection>
+            )}
+
+            {sections.paywallBuilderFeatures && (
+              <CollapsibleSection title="Paywall Features" icon={<BlocksIcon />} defaultOpen>
+                <VariantSelector variants={PAYWALL_BUILDER_FEATURES_VARIANTS} currentValue={paywallBuilderFeaturesVariant} onChange={setPaywallBuilderFeaturesVariant} />
+              </CollapsibleSection>
+            )}
+
+            {sections.abTestingFeatures && (
+              <CollapsibleSection title="A/B Testing Features" icon={<BlocksIcon />} defaultOpen>
+                <VariantSelector variants={AB_TESTING_FEATURES_VARIANTS} currentValue={abTestingFeaturesVariant} onChange={setAbTestingFeaturesVariant} />
+              </CollapsibleSection>
+            )}
+
+            {sections.onboardingBuilderFeatures && (
+              <CollapsibleSection title="Onboarding Features" icon={<BlocksIcon />} defaultOpen>
+                <VariantSelector variants={ONBOARDING_BUILDER_FEATURES_VARIANTS} currentValue={onboardingBuilderFeaturesVariant} onChange={setOnboardingBuilderFeaturesVariant} />
+              </CollapsibleSection>
+            )}
+
+            {sections.autopilotFeatures && (
+              <CollapsibleSection title="Autopilot Features" icon={<BlocksIcon />} defaultOpen>
+                <VariantSelector variants={AUTOPILOT_FEATURES_VARIANTS} currentValue={autopilotFeaturesVariant} onChange={setAutopilotFeaturesVariant} />
+              </CollapsibleSection>
+            )}
+
+            {sections.ltvAnalyticsFeatures && (
+              <CollapsibleSection title="LTV Analytics Features" icon={<BlocksIcon />} defaultOpen>
+                <VariantSelector variants={LTV_ANALYTICS_FEATURES_VARIANTS} currentValue={ltvAnalyticsFeaturesVariant} onChange={setLtvAnalyticsFeaturesVariant} />
+              </CollapsibleSection>
+            )}
+
+            {sections.refundSaverFeatures && (
+              <CollapsibleSection title="Refund Saver Features" icon={<BlocksIcon />} defaultOpen>
+                <VariantSelector variants={REFUND_SAVER_FEATURES_VARIANTS} currentValue={refundSaverFeaturesVariant} onChange={setRefundSaverFeaturesVariant} />
+              </CollapsibleSection>
+            )}
+
+            {sections.forMarketersFeatures && (
+              <CollapsibleSection title="Marketer Features" icon={<BlocksIcon />} defaultOpen>
+                <VariantSelector variants={FOR_MARKETERS_FEATURES_VARIANTS} currentValue={forMarketersFeaturesVariant} onChange={setForMarketersFeaturesVariant} />
+              </CollapsibleSection>
+            )}
+
+            {sections.forAppOwnersFeatures && (
+              <CollapsibleSection title="App Owner Features" icon={<BlocksIcon />} defaultOpen>
+                <VariantSelector variants={FOR_APP_OWNERS_FEATURES_VARIANTS} currentValue={forAppOwnersFeaturesVariant} onChange={setForAppOwnersFeaturesVariant} />
+              </CollapsibleSection>
+            )}
+
+            {sections.forDevelopersFeatures && (
+              <CollapsibleSection title="Developer Features" icon={<BlocksIcon />} defaultOpen>
+                <VariantSelector variants={FOR_DEVELOPERS_FEATURES_VARIANTS} currentValue={forDevelopersFeaturesVariant} onChange={setForDevelopersFeaturesVariant} />
+              </CollapsibleSection>
+            )}
+
+            {sections.forIndieFeatures && (
+              <CollapsibleSection title="Indie Dev Features" icon={<BlocksIcon />} defaultOpen>
+                <VariantSelector variants={FOR_INDIE_FEATURES_VARIANTS} currentValue={forIndieFeaturesVariant} onChange={setForIndieFeaturesVariant} />
               </CollapsibleSection>
             )}
 

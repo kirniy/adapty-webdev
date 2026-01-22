@@ -6,7 +6,6 @@ import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { FallbackPaywallsHero } from '~/components/sections/fallback-paywalls-hero';
 import { FallbackPaywallsFeatures } from '~/components/sections/fallback-paywalls-features';
 import {
-  LogosSwitcher,
   TestimonialsSwitcher,
   FAQSwitcher,
   CTASwitcher,
@@ -21,9 +20,6 @@ export default function FallbackPaywallsPage(): React.JSX.Element {
     <>
       {/* Fallback paywalls hero */}
       {heroVariant !== 'off' && <FallbackPaywallsHero />}
-
-      {/* Logos - shared switcher */}
-      <LogosSwitcher />
 
       {/* Fallback features */}
       {featuresVariant !== 'off' && <FallbackPaywallsFeatures />}

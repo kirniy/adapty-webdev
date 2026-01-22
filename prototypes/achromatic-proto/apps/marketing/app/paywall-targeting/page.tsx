@@ -6,7 +6,6 @@ import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { PaywallTargetingHero } from '~/components/sections/paywall-targeting-hero';
 import { PaywallTargetingFeatures } from '~/components/sections/paywall-targeting-features';
 import {
-  LogosSwitcher,
   TestimonialsSwitcher,
   FAQSwitcher,
   CTASwitcher,
@@ -21,9 +20,6 @@ export default function PaywallTargetingPage(): React.JSX.Element {
     <>
       {/* Targeting hero */}
       {heroVariant !== 'off' && <PaywallTargetingHero />}
-
-      {/* Logos - shared switcher */}
-      <LogosSwitcher />
 
       {/* Targeting features */}
       {featuresVariant !== 'off' && <PaywallTargetingFeatures />}

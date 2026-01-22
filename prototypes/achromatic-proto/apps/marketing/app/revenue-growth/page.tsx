@@ -6,7 +6,6 @@ import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { RevenueGrowthHero } from '~/components/sections/revenue-growth-hero';
 import { RevenueGrowthFeatures } from '~/components/sections/revenue-growth-features';
 import {
-  LogosSwitcher,
   StatsSwitcher,
   TestimonialsSwitcher,
   FAQSwitcher,
@@ -22,9 +21,6 @@ export default function RevenueGrowthPage(): React.JSX.Element {
     <>
       {/* Revenue growth hero */}
       {heroVariant !== 'off' && <RevenueGrowthHero />}
-
-      {/* Logos - shared switcher */}
-      <LogosSwitcher />
 
       {/* Revenue features */}
       {featuresVariant !== 'off' && <RevenueGrowthFeatures />}

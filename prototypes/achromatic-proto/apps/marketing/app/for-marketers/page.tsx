@@ -2,10 +2,11 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant, useStatsVariant } from '~/lib/debug-context';
+import { useHeroVariant, useForMarketersFeaturesVariant, useStatsVariant } from '~/lib/debug-context';
 import { ForMarketersHero } from '~/components/sections/for-marketers-hero';
 import { ForMarketersFeatures } from '~/components/sections/for-marketers-features';
 import { ForMarketersStats } from '~/components/sections/for-marketers-stats';
+import type { ForMarketersHeroVariant } from '~/components/sections/for-marketers-hero';
 import {
   LogosSwitcher,
   TestimonialsSwitcher,
@@ -13,8 +14,6 @@ import {
 } from '~/components/sections/section-switchers';
 
 // Map global Hero variant to local variants
-type ForMarketersHeroVariant = 'split' | 'centered' | 'video';
-
 function mapHeroVariant(globalVariant: string): ForMarketersHeroVariant {
   switch (globalVariant) {
     case 'marketing': return 'centered';
@@ -24,22 +23,10 @@ function mapHeroVariant(globalVariant: string): ForMarketersHeroVariant {
   }
 }
 
-// Map global Features variant to local variants
-type ForMarketersFeaturesVariant = 'grid' | 'bento' | 'tabs';
-
-function mapFeaturesVariant(globalVariant: string): ForMarketersFeaturesVariant {
-  switch (globalVariant) {
-    case 'bento-tabs': return 'bento';
-    case 'tabbed': return 'tabs';
-    case 'solution': return 'grid';
-    default: return 'grid';
-  }
-}
-
 // For Marketers page: Marketing-focused features and stats
 export default function ForMarketersPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
-  const featuresVariant = useFeaturesVariant();
+  const featuresVariant = useForMarketersFeaturesVariant();
   const statsVariant = useStatsVariant();
 
   return (
@@ -51,7 +38,7 @@ export default function ForMarketersPage(): React.JSX.Element {
       <LogosSwitcher />
 
       {/* Marketing features */}
-      {featuresVariant !== 'off' && <ForMarketersFeatures variant={mapFeaturesVariant(featuresVariant)} />}
+      {featuresVariant !== 'off' && <ForMarketersFeatures variant={featuresVariant} />}
 
       {/* Marketing stats */}
       {statsVariant !== 'off' && <ForMarketersStats />}

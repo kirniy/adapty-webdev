@@ -6,7 +6,6 @@ import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { RemoteConfigHero } from '~/components/sections/remote-config-hero';
 import { RemoteConfigFeatures } from '~/components/sections/remote-config-features';
 import {
-  LogosSwitcher,
   TestimonialsSwitcher,
   FAQSwitcher,
   CTASwitcher,
@@ -21,9 +20,6 @@ export default function RemoteConfigPage(): React.JSX.Element {
     <>
       {/* Remote config hero */}
       {heroVariant !== 'off' && <RemoteConfigHero />}
-
-      {/* Logos - shared switcher */}
-      <LogosSwitcher />
 
       {/* Remote config features */}
       {featuresVariant !== 'off' && <RemoteConfigFeatures />}

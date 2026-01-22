@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import {
   useHeroVariant,
-  useFeaturesVariant,
+  usePaywallBuilderFeaturesVariant,
   useCustomizationVariant,
 } from '~/lib/debug-context';
 
@@ -15,7 +15,6 @@ import { PaywallBuilderCustomization } from '~/components/sections/paywall-build
 
 // Shared section switchers
 import {
-  LogosSwitcher,
   TestimonialsSwitcher,
   FAQSwitcher,
   CTASwitcher,
@@ -33,20 +32,10 @@ function mapHeroVariant(globalVariant: string): PaywallBuilderHeroVariant {
   }
 }
 
-// Map global features variants to PaywallBuilderFeatures variants
-function mapFeaturesVariant(globalVariant: string): PaywallBuilderFeaturesVariant {
-  switch (globalVariant) {
-    case 'bento-tabs': return 'tabs';
-    case 'solution': return 'bento';
-    case 'tabbed': return 'tabs';
-    default: return 'grid';
-  }
-}
-
 // Paywall Builder page: No-code paywall creation features
 export default function PaywallBuilderPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
-  const featuresVariant = useFeaturesVariant();
+  const featuresVariant = usePaywallBuilderFeaturesVariant();
   const customizationVariant = useCustomizationVariant();
 
   return (
@@ -54,13 +43,10 @@ export default function PaywallBuilderPage(): React.JSX.Element {
       {/* Paywall Builder hero */}
       {heroVariant !== 'off' && <PaywallBuilderHero variant={mapHeroVariant(heroVariant)} />}
 
-      {/* Logos - shared switcher */}
-      <LogosSwitcher />
-
       {/* Features and customization */}
       {featuresVariant !== 'off' && (
         <>
-          <PaywallBuilderFeatures variant={mapFeaturesVariant(featuresVariant)} />
+          <PaywallBuilderFeatures variant={featuresVariant} />
           {customizationVariant !== 'off' && (
             <PaywallBuilderCustomization variant={customizationVariant} />
           )}

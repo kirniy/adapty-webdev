@@ -6,7 +6,6 @@ import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { AIPaywallGeneratorHero } from '~/components/sections/ai-paywall-generator-hero';
 import { AIPaywallGeneratorFeatures } from '~/components/sections/ai-paywall-generator-features';
 import {
-  LogosSwitcher,
   TestimonialsSwitcher,
   FAQSwitcher,
   CTASwitcher,
@@ -21,9 +20,6 @@ export default function AIPaywallGeneratorPage(): React.JSX.Element {
     <>
       {/* AI Generator hero */}
       {heroVariant !== 'off' && <AIPaywallGeneratorHero />}
-
-      {/* Logos - shared switcher */}
-      <LogosSwitcher />
 
       {/* AI features */}
       {featuresVariant !== 'off' && <AIPaywallGeneratorFeatures />}

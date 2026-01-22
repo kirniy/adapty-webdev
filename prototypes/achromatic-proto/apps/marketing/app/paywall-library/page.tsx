@@ -6,7 +6,6 @@ import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { PaywallLibraryHero } from '~/components/sections/paywall-library-hero';
 import { PaywallLibraryFeatures } from '~/components/sections/paywall-library-features';
 import {
-  LogosSwitcher,
   TestimonialsSwitcher,
   FAQSwitcher,
   CTASwitcher,
@@ -24,9 +23,6 @@ export default function PaywallLibraryPage(): React.JSX.Element {
 
       {/* Library features */}
       {featuresVariant !== 'off' && <PaywallLibraryFeatures />}
-
-      {/* Logos - shared switcher */}
-      <LogosSwitcher />
 
       {/* Testimonials - shared switcher */}
       <TestimonialsSwitcher />

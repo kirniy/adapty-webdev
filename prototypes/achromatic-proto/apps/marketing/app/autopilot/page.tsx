@@ -7,24 +7,22 @@
  * AI-powered automation for paywall optimization and A/B testing.
  */
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
+import { useHeroVariant, useAutopilotFeaturesVariant } from '~/lib/debug-context';
 import { AutopilotHero } from '~/components/sections/autopilot-hero';
 import { AutopilotFeatures } from '~/components/sections/autopilot-features';
 import {
-  LogosSwitcher,
   TestimonialsSwitcher,
   CTASwitcher,
 } from '~/components/sections/section-switchers';
 
 export default function AutopilotPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
-  const featuresVariant = useFeaturesVariant();
+  const featuresVariant = useAutopilotFeaturesVariant();
 
   return (
     <>
       {heroVariant !== 'off' && <AutopilotHero />}
-      <LogosSwitcher />
-      {featuresVariant !== 'off' && <AutopilotFeatures />}
+      {featuresVariant !== 'off' && <AutopilotFeatures variant={featuresVariant} />}
       <TestimonialsSwitcher />
       <CTASwitcher />
     </>

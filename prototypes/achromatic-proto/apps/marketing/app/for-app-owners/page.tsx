@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
+import { useHeroVariant, useForAppOwnersFeaturesVariant } from '~/lib/debug-context';
 import { ForAppOwnersHero } from '~/components/sections/for-app-owners-hero';
 import { ForAppOwnersFeatures } from '~/components/sections/for-app-owners-features';
 import type { ForAppOwnersHeroVariant } from '~/components/sections/for-app-owners-hero';
@@ -26,7 +26,7 @@ function mapHeroVariant(globalVariant: string): ForAppOwnersHeroVariant {
 // For App Owners page: Business-focused features and metrics
 export default function ForAppOwnersPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
-  const featuresVariant = useFeaturesVariant();
+  const featuresVariant = useForAppOwnersFeaturesVariant();
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function ForAppOwnersPage(): React.JSX.Element {
       <LogosSwitcher />
 
       {/* Business features */}
-      {featuresVariant !== 'off' && <ForAppOwnersFeatures />}
+      {featuresVariant !== 'off' && <ForAppOwnersFeatures variant={featuresVariant} />}
 
       {/* Stats - shared switcher (uses orbital, timeline, default) */}
       <StatsSwitcher />

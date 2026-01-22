@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
+import { useHeroVariant, useForIndieFeaturesVariant } from '~/lib/debug-context';
 import { ForIndieHero } from '~/components/sections/for-indie-hero';
 import { ForIndieFeatures } from '~/components/sections/for-indie-features';
 import type { ForIndieHeroVariant } from '~/components/sections/for-indie-hero';
@@ -26,7 +26,7 @@ function mapHeroVariant(globalVariant: string): ForIndieHeroVariant {
 // For Indie Developers page: Startup-friendly features
 export default function ForIndiePage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
-  const featuresVariant = useFeaturesVariant();
+  const featuresVariant = useForIndieFeaturesVariant();
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function ForIndiePage(): React.JSX.Element {
       <LogosSwitcher />
 
       {/* Indie-friendly features */}
-      {featuresVariant !== 'off' && <ForIndieFeatures />}
+      {featuresVariant !== 'off' && <ForIndieFeatures variant={featuresVariant} />}
 
       {/* FAQ - pricing questions for indie devs */}
       <FAQSwitcher />
