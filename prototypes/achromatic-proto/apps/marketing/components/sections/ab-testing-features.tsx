@@ -22,51 +22,59 @@ import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
 
-// EXACT content from adapty.io/paywall-ab-testing (scraped 2026-01-21)
+// MATCHES ADAPTY.IO CONTENT EXACTLY
 const FEATURES = [
   {
+    id: 'abc-testing',
     icon: FlaskConicalIcon,
     title: 'A/B/C testing',
     description: 'Compare several paywalls simultaneously. Test multiple variants at once to find the winning combination faster.',
     category: 'testing'
   },
   {
+    id: 'metrics',
     icon: BarChart3Icon,
     title: '20+ metrics calculated automatically',
     description: 'Track conversion rates, ARPU, LTV, trial starts, and more. All metrics are calculated in real-time without manual work.',
     category: 'analytics'
   },
   {
+    id: 'bayesian',
     icon: BrainCircuitIcon,
     title: 'Bayesian statistics',
     description: 'Our machine learning algorithms use Bayesian statistics to determine winners with high confidence and statistical significance.',
     category: 'analytics'
   },
   {
+    id: 'control',
     icon: PlayIcon,
     title: 'Start and stop tests anytime',
     description: 'Full control over your experiments. Pause, resume, or stop tests whenever you need without losing data.',
     category: 'testing'
   },
   {
+    id: 'targeting',
     icon: TargetIcon,
     title: 'Audience targeting',
     description: 'Run tests for specific user segments based on country, subscription status, custom attributes, and more.',
     category: 'targeting'
   },
   {
+    id: 'traffic',
     icon: SlidersHorizontalIcon,
     title: 'Traffic allocation',
     description: 'Control how much traffic each variant receives. Start with small percentages and scale up winning variants.',
     category: 'testing'
   },
   {
+    id: 'localization',
     icon: GlobeIcon,
     title: 'Localization testing',
     description: 'Test different paywall designs and copy for different locales. Find what works best in each market.',
     category: 'localization'
   },
   {
+    id: 'integration',
     icon: LinkIcon,
     title: 'Seamless integration',
     description: 'Works with Paywall Builder and Remote Config. No additional setup required to start testing.',
@@ -84,6 +92,241 @@ const RELATED_FEATURES = [
   { name: 'Targeting', description: 'Show different paywalls to different users' },
   { name: 'Paywall Builder', description: 'Create paywalls without coding' }
 ];
+
+// =============================================================================
+// MAGIC ANIMATIONS
+// =============================================================================
+
+// 1. A/B/C TESTING MAGIC
+function ABCMagic() {
+  return (
+    <div className="mt-4 flex gap-3 justify-center items-end h-[60px]">
+      {['A', 'B', 'C'].map((variant, i) => (
+        <motion.div
+          key={variant}
+          initial={{ height: '40%' }}
+          animate={{
+            height: i === 1 ? '100%' : '40%',
+            filter: i === 1 ? 'grayscale(0%)' : 'grayscale(100%)',
+            opacity: i === 1 ? 1 : 0.5
+          }}
+          transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: i * 0.2 }}
+          className={cn(
+            "w-12 rounded-t-md border border-b-0 flex items-center justify-center text-xs font-bold",
+            i === 1 ? "bg-primary/20 border-primary/50 text-primary" : "bg-muted/50 border-border"
+          )}
+        >
+          {variant}
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+// 2. METRICS MAGIC
+function MetricsMagic() {
+  return (
+    <div className="mt-4 grid grid-cols-2 gap-2">
+      {[1, 2].map((i) => (
+        <div key={i} className="bg-background/50 rounded p-2 border flex flex-col gap-1">
+          <div className="h-1.5 w-12 bg-muted rounded-full" />
+          <motion.div
+            animate={{ width: ["0%", "70%", "50%", "80%"] }}
+            transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+            className="h-1 bg-primary rounded-full"
+          />
+          <div className="flex justify-between items-end mt-1">
+            <div className="h-3 w-8 bg-muted/30 rounded" />
+            <motion.div
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="text-[9px] font-mono text-primary"
+            >
+              +12%
+            </motion.div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// 3. BAYESIAN MAGIC
+function BayesianMagic() {
+  return (
+    <div className="mt-4 relative h-[50px] w-full flex items-end justify-center px-4">
+      {/* Curve 1 */}
+      <motion.div
+        initial={{ opacity: 0.3, scaleY: 0.8 }}
+        animate={{ opacity: 0.3, scaleY: 0.9 }}
+        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+        className="absolute bottom-0 left-[20%] w-[30%] h-full bg-muted rounded-t-full blur-sm"
+      />
+      {/* Curve 2 (Winner) */}
+      <motion.div
+        initial={{ opacity: 0.6, scaleY: 0.9 }}
+        animate={{ opacity: 0.8, scaleY: 1.1 }}
+        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
+        className="absolute bottom-0 right-[20%] w-[30%] h-full bg-primary/20 border-t-2 border-primary rounded-t-full"
+      />
+      <motion.div
+        animate={{ y: [0, -5, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute top-0 right-[35%] bg-primary text-[9px] text-white px-1.5 py-0.5 rounded-full"
+      >
+        99%
+      </motion.div>
+    </div>
+  );
+}
+
+// 4. CONTROL MAGIC
+function ControlMagic() {
+  return (
+    <div className="mt-4 flex justify-center gap-4 items-center">
+      <button className="size-8 rounded-full bg-muted flex items-center justify-center opacity-50">
+        <div className="size-3 bg-foreground rounded-[1px]" />
+      </button>
+      <motion.button
+        animate={{ scale: [1, 1.1, 1], boxShadow: ["0 0 0 0px rgba(0,0,0,0)", "0 0 0 4px rgba(59, 130, 246, 0.2)", "0 0 0 0px rgba(0,0,0,0)"] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="size-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg"
+      >
+        <PlayIcon className="size-4 fill-current" />
+      </motion.button>
+      <button className="size-8 rounded-full bg-muted flex items-center justify-center opacity-50">
+        <div className="size-3 bg-foreground rounded-full" />
+      </button>
+    </div>
+  );
+}
+
+// 5. TARGETING MAGIC
+function TargetingMagic() {
+  return (
+    <div className="mt-4 flex justify-center items-center gap-2">
+      <div className="flex -space-x-2">
+        {[1, 2, 3].map(i => (
+          <div key={i} className="size-6 rounded-full bg-muted border-2 border-background" />
+        ))}
+      </div>
+      <motion.div
+        animate={{ x: [0, 5, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      >
+        <ChevronRightIcon className="size-4 text-muted-foreground" />
+      </motion.div>
+      <div className="h-8 px-3 rounded-md border border-primary/30 bg-primary/5 flex items-center gap-2">
+        <span className="size-2 rounded-full bg-green-500 animate-pulse" />
+        <span className="text-[10px] font-medium">Verified</span>
+      </div>
+    </div>
+  );
+}
+
+// 6. TRAFFIC MAGIC
+function TrafficMagic() {
+  return (
+    <div className="mt-4 space-y-3 w-full px-2">
+      <div className="space-y-1">
+        <div className="flex justify-between text-[9px] text-muted-foreground">
+          <span>A: Control</span>
+          <span>20%</span>
+        </div>
+        <div className="h-1.5 w-full bg-muted rounded-full">
+          <motion.div
+            animate={{ width: ["50%", "20%", "20%"] }}
+            transition={{ duration: 4, repeat: Infinity, times: [0, 0.2, 1] }}
+            className="h-full bg-muted-foreground rounded-full"
+          />
+        </div>
+      </div>
+      <div className="space-y-1">
+        <div className="flex justify-between text-[9px] text-primary font-medium">
+          <span>B: New Pricing</span>
+          <span>80%</span>
+        </div>
+        <div className="h-1.5 w-full bg-primary/20 rounded-full">
+          <motion.div
+            animate={{ width: ["50%", "80%", "80%"] }}
+            transition={{ duration: 4, repeat: Infinity, times: [0, 0.2, 1] }}
+            className="h-full bg-primary rounded-full"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 7. LOCALIZATION MAGIC
+function LocalizationMagic() {
+  const WORDS = ["Price", "Prix", "Preis", "Precio"];
+  const [index, setIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % WORDS.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="mt-4 h-[40px] flex items-center justify-center bg-muted/30 rounded-lg border border-border/50">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -5 }}
+          className="text-sm font-medium"
+        >
+          {WORDS[index]} $9.99
+        </motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// 8. INTEGRATION MAGIC
+function IntegrationMagic() {
+  return (
+    <div className="mt-4 flex justify-center items-center gap-3 opacity-80">
+      <div className="size-8 rounded-lg bg-background border shadow-sm flex items-center justify-center">
+        <div className="size-4 bg-primary/20 rounded-full" />
+      </div>
+      <div className="flex gap-0.5">
+        {[1, 2, 3].map(i => (
+          <motion.div
+            key={i}
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+            className="size-1 rounded-full bg-primary"
+          />
+        ))}
+      </div>
+      <div className="size-8 rounded-lg bg-primary/10 border border-primary/20 shadow-sm flex items-center justify-center">
+        <LinkIcon className="size-4 text-primary" />
+      </div>
+    </div>
+  );
+}
+
+const MAGIC_MAP: Record<string, React.ComponentType> = {
+  'abc-testing': ABCMagic,
+  'metrics': MetricsMagic,
+  'bayesian': BayesianMagic,
+  'control': ControlMagic,
+  'targeting': TargetingMagic,
+  'traffic': TrafficMagic,
+  'localization': LocalizationMagic,
+  'integration': IntegrationMagic,
+};
+
+function MagicArea({ id }: { id: string }) {
+  const Component = MAGIC_MAP[id];
+  if (!Component) return <div className="mt-8" />; // Spacer fallback
+  return <Component />;
+}
 
 // =============================================================================
 // VARIANT: GRID - Classic 2-column grid of cards
@@ -105,7 +348,7 @@ function GridFeatures() {
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
           {FEATURES.map((feature, index) => (
-            <BlurFade key={index} delay={0.1 + index * 0.02}>
+            <BlurFade key={feature.id} delay={0.1 + index * 0.02}>
               <motion.div
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -168,6 +411,8 @@ function GridFeatures() {
 // =============================================================================
 // VARIANT: BENTO - Asymmetric bento grid with featured cards
 // =============================================================================
+import { Spotlight } from '~/components/fragments/spotlight';
+
 function BentoFeatures() {
   const shouldReduceMotion = useReducedMotion();
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
@@ -190,7 +435,7 @@ function BentoFeatures() {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Featured cards - span 2 cols on lg */}
           {featured.map((feature, index) => (
-            <BlurFade key={`featured-${index}`} delay={0.1 + index * 0.05}>
+            <BlurFade key={feature.id} delay={0.1 + index * 0.05}>
               <motion.div
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -204,41 +449,47 @@ function BentoFeatures() {
                   index === 0 && "lg:row-span-2"
                 )}
               >
-                <Card className={cn(
-                  "h-full bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer",
+                <div className={cn(
+                  "relative h-full overflow-hidden rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer group flex flex-col",
                   hoveredIndex === index && "border-primary/50 shadow-xl",
                   index === 0 && "min-h-[300px]"
                 )}>
-                  <CardContent className="p-8 h-full flex flex-col">
+                  <Spotlight
+                    className="from-primary/20 via-primary/10 to-transparent"
+                    size={350}
+                    fill="white"
+                  />
+
+                  <div className="p-8 h-full flex flex-col relative z-10">
                     <motion.div
                       animate={shouldReduceMotion ? undefined : {
                         scale: hoveredIndex === index ? 1.15 : 1,
+                        rotate: hoveredIndex === index ? 5 : 0,
                       }}
                       transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
-                      className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6"
+                      className={cn(
+                        "flex size-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6 transition-colors",
+                        hoveredIndex === index && "bg-primary/20"
+                      )}
                     >
                       <feature.icon className="size-7" />
                     </motion.div>
-                    <h3 className="font-bold text-xl mb-3">{feature.title}</h3>
+                    <h3 className="font-bold text-xl mb-3 group-hover:text-primary transition-colors">{feature.title}</h3>
                     <p className="text-muted-foreground leading-relaxed flex-1">{feature.description}</p>
-                    <motion.div
-                      animate={shouldReduceMotion ? undefined : {
-                        x: hoveredIndex === index ? 4 : 0,
-                        opacity: hoveredIndex === index ? 1 : 0.6,
-                      }}
-                      className="mt-4 flex items-center text-sm font-medium text-primary"
-                    >
-                      Learn more <ChevronRightIcon className="ml-1 size-4" />
-                    </motion.div>
-                  </CardContent>
-                </Card>
+
+                    {/* Magic Area */}
+                    <div className="mt-auto pt-6">
+                      <MagicArea id={feature.id} />
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </BlurFade>
           ))}
 
           {/* Regular cards */}
           {regular.map((feature, index) => (
-            <BlurFade key={`regular-${index}`} delay={0.15 + index * 0.03}>
+            <BlurFade key={feature.id} delay={0.15 + index * 0.03}>
               <motion.div
                 onMouseEnter={() => setHoveredIndex(index + featured.length)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -247,22 +498,38 @@ function BentoFeatures() {
                 }}
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               >
-                <Card className={cn(
-                  "h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-150 cursor-pointer",
+                <div className={cn(
+                  "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer group flex flex-col",
                   hoveredIndex === index + featured.length && "border-primary/30 shadow-lg"
                 )}>
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <Spotlight
+                    className="from-primary/20 via-primary/10 to-transparent"
+                    size={200}
+                  />
+                  <div className="p-6 relative z-10 flex-1 flex flex-col">
+                    <div className="flex items-start gap-4 flex-1">
+                      <motion.div
+                        animate={shouldReduceMotion ? undefined : {
+                          scale: hoveredIndex === index + featured.length ? 1.1 : 1,
+                          rotate: hoveredIndex === index + featured.length ? 3 : 0,
+                        }}
+                        transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
+                        className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"
+                      >
                         <feature.icon className="size-5" />
-                      </div>
+                      </motion.div>
                       <div>
-                        <h3 className="font-semibold mb-2">{feature.title}</h3>
+                        <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
                         <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+
+                    {/* Magic Area */}
+                    <div className="mt-4 pt-2 border-t border-border/30">
+                      <MagicArea id={feature.id} />
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </BlurFade>
           ))}
