@@ -363,7 +363,7 @@ function GridFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1000} />
-      <div className="container py-20 relative z-10">
+      <div className="container py-24 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title={features.headline}
@@ -421,7 +421,7 @@ function BentoFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1200} />
-      <div className="container py-20 relative z-10">
+      <div className="container py-24 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title={features.headline}
@@ -552,7 +552,7 @@ function TabsFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1000} />
-      <div className="container py-20 relative z-10">
+      <div className="container py-24 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title={features.headline}

@@ -82,7 +82,7 @@ export function CTA(): React.JSX.Element {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={500} />
-      <div className="container py-16 lg:py-24 relative z-10">
+      <div className="container py-24 relative z-10">
         <div className="mx-auto max-w-3xl relative">
           {/* Headline */}
           <BlurFade className="text-center">

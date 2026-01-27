@@ -383,7 +383,7 @@ function GridFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1600} />
-      <div className="container py-20 relative z-10">
+      <div className="container py-24 relative z-10">
         {/* Featured testimonial */}
         <BlurFade delay={0.05}>
           <motion.div
@@ -541,7 +541,7 @@ function BentoFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1400} />
-      <div className="container py-20 relative z-10">
+      <div className="container py-24 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title="Powerful LTV analytics tools"
@@ -713,7 +713,7 @@ function TabsFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1400} />
-      <div className="container py-20 relative z-10">
+      <div className="container py-24 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title="Powerful LTV analytics tools"

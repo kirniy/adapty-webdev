@@ -250,7 +250,7 @@ export function SDKCode(): React.JSX.Element {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={600} />
-      <div className="container py-16 lg:py-24 relative z-10">
+      <div className="container py-24 relative z-10">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
