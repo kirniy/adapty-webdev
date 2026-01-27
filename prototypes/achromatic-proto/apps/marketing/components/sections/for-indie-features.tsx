@@ -326,7 +326,7 @@ function GridFeatures() {
                 >
                   <Card className={cn(
                     "h-full transition-all duration-200 relative overflow-hidden group",
-                    hoveredFeature === index && "border-primary/50 shadow-lg"
+                    hoveredFeature === index && "border-primary/50 "
                   )}>
                     {hoveredFeature === index && (
                       <BorderBeam
@@ -462,7 +462,7 @@ function GridFeatures() {
                     href={role.href}
                     className={cn(
                       "flex flex-col rounded-lg border bg-card p-6 h-full transition-all duration-200",
-                      hoveredRole === index && "border-primary/50 shadow-lg bg-accent"
+                      hoveredRole === index && "border-primary/50  bg-accent"
                     )}
                   >
                     <role.icon className={cn(
@@ -526,7 +526,7 @@ function BentoFeatures() {
               className={cn(
                 "md:col-span-2 md:row-span-2 rounded-2xl border-2 p-8 flex flex-col justify-between transition-all duration-300 relative overflow-hidden group",
                 hoveredIndex === 0
-                  ? "border-primary bg-primary/5 shadow-xl"
+                  ? "border-primary bg-primary/5 "
                   : "border-primary/30 bg-gradient-to-br from-primary/10 to-purple-500/5"
               )}
             >
@@ -580,7 +580,7 @@ function BentoFeatures() {
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
                     "h-full rounded-xl border bg-card p-6 transition-all duration-200 relative overflow-hidden group",
-                    hoveredIndex === index + 1 && "border-primary/50 shadow-lg"
+                    hoveredIndex === index + 1 && "border-primary/50 "
                   )}
                 >
                   <Spotlight className="from-primary/20 via-primary/5 to-transparent" />
@@ -670,7 +670,7 @@ function BentoFeatures() {
                 >
                   <Link
                     href={role.href}
-                    className="flex items-center gap-4 rounded-xl border bg-card p-4 hover:border-primary/50 hover:shadow-lg transition-all duration-200 relative overflow-hidden group h-full"
+                    className="flex items-center gap-4 rounded-xl border bg-card p-4 hover:border-primary/50 transition-all duration-200 relative overflow-hidden group h-full"
                   >
                     <Spotlight className="from-primary/15 via-primary/5 to-transparent" />
                     <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10 relative z-10">
@@ -751,10 +751,7 @@ function TimelineFeatures() {
             {TIMELINE_STEPS.map((step, index) => (
               <BlurFade key={index} delay={0.1 + index * 0.05}>
                 <motion.div
-                  className={cn(
-                    "relative pl-20 md:pl-0",
-                    index % 2 === 0 ? "md:pr-[calc(50%+2rem)]" : "md:pl-[calc(50%+2rem)]"
-                  )}
+                  className="relative pl-20 md:pl-0 md:pr-[calc(50%+2rem)]"
                 >
                   {/* Step number */}
                   <motion.div
@@ -780,7 +777,7 @@ function TimelineFeatures() {
                     transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                     className={cn(
                       "rounded-xl border bg-card p-6 cursor-pointer transition-all duration-200 relative overflow-hidden group",
-                      expandedIndex === index && "border-primary/50 shadow-lg"
+                      expandedIndex === index && "border-primary/50 "
                     )}
                   >
                     <Spotlight className="from-primary/15 via-primary/5 to-transparent" />
@@ -912,7 +909,7 @@ function TimelineFeatures() {
                 >
                   <Link
                     href={role.href}
-                    className="flex items-center gap-4 rounded-xl border bg-card p-5 hover:border-primary/50 hover:shadow-lg transition-all duration-200 group relative overflow-hidden h-full"
+                    className="flex items-center gap-4 rounded-xl border bg-card p-5 hover:border-primary/50 transition-all duration-200 group relative overflow-hidden h-full"
                   >
                     <Spotlight className="from-primary/15 via-primary/5 to-transparent" />
                     <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors relative z-10">

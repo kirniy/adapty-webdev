@@ -215,7 +215,7 @@ export function Testimonials({ items = DATA }: TestimonialsProps): React.JSX.Ele
 
             <div className="flex flex-col md:flex-row gap-12 md:items-center">
               {/* Visual Side */}
-              <div className="flex-1 space-y-8 order-2 md:order-1">
+              <div className="flex-1 space-y-8">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeIndex}
@@ -253,7 +253,7 @@ export function Testimonials({ items = DATA }: TestimonialsProps): React.JSX.Ele
               </div>
 
               {/* Image Side - Stacked Grid */}
-              <div className="w-full md:w-[320px] shrink-0 order-1 md:order-2 flex justify-end">
+              <div className="w-full md:w-[320px] shrink-0 flex justify-end">
                 <div className="relative size-[280px] md:size-[320px]">
                   <AnimatePresence mode="popLayout" initial={false}>
                     {items.map((item, i) => {
@@ -269,7 +269,7 @@ export function Testimonials({ items = DATA }: TestimonialsProps): React.JSX.Ele
                         <motion.div
                           key={item.name}
                           className={cn(
-                            "absolute inset-0 rounded-2xl overflow-hidden border-2 bg-muted shadow-2xl origin-bottom-right",
+                            "absolute inset-0 rounded-2xl overflow-hidden border-2 bg-muted  origin-bottom-right",
                             diff === 0 ? "border-primary/20" : "border-background/50 grayscale opacity-40"
                           )}
                           initial={{ opacity: 0, scale: 0.9, x: 20 }}
@@ -292,7 +292,7 @@ export function Testimonials({ items = DATA }: TestimonialsProps): React.JSX.Ele
                             src={item.img}
                             alt={item.name}
                             fill
-                            className="object-cover grayscale"
+                            className="object-cover grayscale hover:grayscale-0 transition-all duration-300"
                             sizes="(max-width: 768px) 100vw, 320px"
                             priority={i === activeIndex}
                           />

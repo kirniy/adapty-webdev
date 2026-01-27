@@ -21,9 +21,9 @@ function IntegrationSyncMagic() {
   const [activeIntegration, setActiveIntegration] = React.useState(0);
   const integrations = [
     { name: 'Amplitude', color: 'bg-blue-500' },
-    { name: 'AppsFlyer', color: 'bg-emerald-500' },
+    { name: 'AppsFlyer', color: 'bg-primary' },
     { name: 'Mixpanel', color: 'bg-purple-500' },
-    { name: 'Segment', color: 'bg-green-500' },
+    { name: 'Segment', color: 'bg-primary' },
   ];
 
   React.useEffect(() => {

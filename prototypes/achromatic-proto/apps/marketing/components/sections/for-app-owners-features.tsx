@@ -397,7 +397,7 @@ function GridFeatures(): React.JSX.Element {
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
                     "group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-200",
-                    hoveredIndex === index && "border-primary/30 shadow-lg shadow-primary/5"
+                    hoveredIndex === index && "border-primary/30  "
                   )}
                 >
                   {hoveredIndex === index && (
@@ -458,7 +458,7 @@ function GridFeatures(): React.JSX.Element {
                     whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                   >
-                    <Card className="relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-150 ease-out motion-reduce:transition-none">
+                    <Card className="relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-150 ease-out motion-reduce:transition-none">
                       <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
                       <CardContent className="relative p-6">
                         <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors inline-flex items-center gap-2">
@@ -573,7 +573,7 @@ function BentoFeatures(): React.JSX.Element {
                   <Card
                     className={cn(
                       "relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 cursor-pointer transition-all duration-200",
-                      expandedIndex === index && "border-primary/30 shadow-lg shadow-primary/5"
+                      expandedIndex === index && "border-primary/30  "
                     )}
                     onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
                   >
@@ -644,7 +644,7 @@ function BentoFeatures(): React.JSX.Element {
                     whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                   >
-                    <Card className="relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-150">
+                    <Card className="relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-150">
                       <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
                       <CardContent className="relative p-6">
                         <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors inline-flex items-center gap-2">
@@ -746,7 +746,7 @@ function TabsFeatures(): React.JSX.Element {
                 >
                   <Card className={cn(
                     "relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200",
-                    hoveredIndex === index && "border-primary/30 shadow-lg shadow-primary/5"
+                    hoveredIndex === index && "border-primary/30  "
                   )}>
                     <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
                     <CardContent className="relative p-6">
@@ -804,7 +804,7 @@ function TabsFeatures(): React.JSX.Element {
                     whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                   >
-                    <Card className="relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-150">
+                    <Card className="relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-150">
                       <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
                       <CardContent className="relative p-6">
                         <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors inline-flex items-center gap-2">

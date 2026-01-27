@@ -161,7 +161,7 @@ function TestingMagic() {
           transition={{ type: 'spring', duration: 0.4, bounce: 0.2 }}
           className={cn(
             "w-10 rounded border flex items-end justify-center pb-1 text-xs font-bold",
-            winner === i ? "bg-emerald-500/20 border-emerald-500 text-emerald-600" : "bg-muted/50 border-border"
+            winner === i ? "bg-primary/10 border-primary text-primary" : "bg-muted/50 border-border"
           )}
         >
           {v}
@@ -169,7 +169,7 @@ function TestingMagic() {
             <motion.span
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute -top-2 text-[8px] bg-emerald-500 text-white px-1 rounded"
+              className="absolute -top-2 text-[8px] bg-primary text-primary-foreground px-1 rounded"
             >
               WIN
             </motion.span>
@@ -425,7 +425,7 @@ function GridFeatures(): React.JSX.Element {
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
                     "group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-200",
-                    hoveredIndex === index && "border-primary/30 shadow-lg shadow-primary/5"
+                    hoveredIndex === index && "border-primary/30  "
                   )}
                 >
                   <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
@@ -555,7 +555,7 @@ function BentoFeatures(): React.JSX.Element {
                   <div
                     className={cn(
                       "group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-200",
-                      hoveredIndex === index && "border-primary/30 shadow-lg shadow-primary/5",
+                      hoveredIndex === index && "border-primary/30  ",
                       index === 0 && "bg-gradient-to-br from-primary/5 via-background/80 to-background/50 border-primary/20"
                     )}
                   >
@@ -728,7 +728,7 @@ function TabsFeatures(): React.JSX.Element {
                 >
                   <Card className={cn(
                     "h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 relative overflow-hidden",
-                    hoveredIndex === index && "border-primary/30 shadow-lg"
+                    hoveredIndex === index && "border-primary/30 "
                   )}>
                     {hoveredIndex === index && (
                       <BorderBeam

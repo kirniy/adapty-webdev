@@ -238,7 +238,7 @@ export function StateOfSubscriptionsFeatures(): React.JSX.Element {
                   >
                     <Card className={cn(
                       "bg-background/50 backdrop-blur-sm border-border/50 text-center relative overflow-hidden transition-all duration-200",
-                      isHovered && "border-primary/50 shadow-lg"
+                      isHovered && "border-primary/50 "
                     )}>
                       <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
                       <CardContent className="p-6 relative">
@@ -285,7 +285,7 @@ export function StateOfSubscriptionsFeatures(): React.JSX.Element {
                   >
                     <Card className={cn(
                       "h-full bg-background/50 backdrop-blur-sm border-border/50 relative overflow-hidden transition-all duration-200",
-                      isHovered && "border-primary/50 shadow-lg"
+                      isHovered && "border-primary/50 "
                     )}>
                       <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={220} />
                       <CardContent className="p-6 relative">

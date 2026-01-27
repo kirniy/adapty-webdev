@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, ShieldCheckIcon, RefreshCwIcon, ServerIcon, BellIcon, CheckIcon, AppleIcon, SmartphoneIcon, MonitorIcon, DownloadIcon } from 'lucide-react';
+import { ShieldCheckIcon, RefreshCwIcon, ServerIcon, BellIcon, CheckIcon, AppleIcon, SmartphoneIcon, MonitorIcon, DownloadIcon } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -39,7 +39,7 @@ function SDKInstallMagic() {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -51,8 +51,8 @@ function SDKInstallMagic() {
             className="flex items-center gap-2"
           >
             {step === 2 ? (
-              <div className="size-4 rounded-full bg-green-500/20 flex items-center justify-center">
-                <CheckIcon className="size-2.5 text-green-600" />
+              <div className="size-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <CheckIcon className="size-2.5 text-primary" />
               </div>
             ) : (
               <motion.div
@@ -65,7 +65,7 @@ function SDKInstallMagic() {
             )}
             <span className={cn(
               "text-xs font-medium",
-              step === 2 ? "text-green-600" : "text-muted-foreground"
+              step === 2 ? "text-primary" : "text-muted-foreground"
             )}>
               {steps[step].label}
             </span>
@@ -212,12 +212,6 @@ export function SDKHero(): React.JSX.Element {
                     )}
                   >
                     View documentation
-                    <motion.span
-                      animate={shouldReduceMotion ? undefined : { x: isHovered === 'docs' ? 3 : 0 }}
-                      transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                    >
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </motion.span>
                   </Link>
                 </motion.div>
 
@@ -251,7 +245,7 @@ export function SDKHero(): React.JSX.Element {
               initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
-              className="relative w-full overflow-hidden rounded-xl border bg-zinc-950 shadow-lg"
+              className="relative w-full overflow-hidden rounded-xl border bg-muted/30 "
             >
               <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
               <SDKInstallMagic />
@@ -269,7 +263,7 @@ export function SDKHero(): React.JSX.Element {
                 <div className="flex gap-1.5">
                   <div className="size-3 rounded-full bg-red-500/80" />
                   <div className="size-3 rounded-full bg-yellow-500/80" />
-                  <div className="size-3 rounded-full bg-green-500/80" />
+                  <div className="size-3 rounded-full bg-primary" />
                 </div>
                 <span className="ml-2 text-xs text-zinc-500">AdaptySubscriptions.swift</span>
               </div>
@@ -284,7 +278,7 @@ export function SDKHero(): React.JSX.Element {
                         <>
                           {line.split(/(Adapty\.\w+|profile\.\w+\[?"?\w*"?\]?\.?\w*|"[^"]*"|try|await|let|if|self)/).map((part, j) => {
                             if (part.startsWith('Adapty.') || part.startsWith('profile.')) return <span key={j} className="text-purple-400">{part}</span>;
-                            if (part.startsWith('"')) return <span key={j} className="text-green-400">{part}</span>;
+                            if (part.startsWith('"')) return <span key={j} className="text-primary">{part}</span>;
                             if (['try', 'await', 'let', 'if', 'self'].includes(part)) return <span key={j} className="text-pink-400">{part}</span>;
                             return <span key={j}>{part}</span>;
                           })}

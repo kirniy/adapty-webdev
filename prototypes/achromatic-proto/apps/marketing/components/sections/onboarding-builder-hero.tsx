@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, MousePointerClickIcon, FlaskConicalIcon, RefreshCwIcon, ZapIcon, CheckIcon, PlayIcon, SparklesIcon, LayersIcon } from 'lucide-react';
+import { MousePointerClickIcon, FlaskConicalIcon, RefreshCwIcon, ZapIcon, CheckIcon, PlayIcon, SparklesIcon, LayersIcon, ChevronRightIcon } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -39,7 +39,7 @@ function OnboardingStepMagic() {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
         <div className="flex items-center gap-2 mb-1.5">
           <LayersIcon className="size-3 text-primary" />
@@ -85,7 +85,7 @@ function NoCodeBadgeMagic() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
         <motion.div
           animate={shouldReduceMotion ? undefined : { rotate: [0, 10, -10, 0] }}
@@ -120,7 +120,7 @@ const BENEFITS = [
 
 // Stats for showcase variant
 const STATS = [
-  { value: '50%', label: 'Revenue growth', color: 'text-green-500' },
+  { value: '50%', label: 'Revenue growth', color: 'text-primary' },
   { value: '102%', label: 'ARPU increase', color: 'text-blue-500' },
   { value: '30%', label: 'Conversion boost', color: 'text-purple-500' },
 ];
@@ -220,12 +220,6 @@ function SplitHero(): React.JSX.Element {
                     )}
                   >
                     Book a demo
-                    <motion.span
-                      animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                      transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                    >
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </motion.span>
                   </Link>
                 </motion.div>
 
@@ -261,7 +255,7 @@ function SplitHero(): React.JSX.Element {
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg",
+                "relative w-full overflow-hidden rounded-xl border bg-background ",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
@@ -353,7 +347,7 @@ function CenteredHero(): React.JSX.Element {
                   whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                   className="flex items-center gap-2 rounded-full bg-primary/5 px-4 py-2 text-sm cursor-default"
                 >
-                  <CheckIcon className="size-4 text-primary" />
+                  <ChevronRightIcon className="size-3 text-muted-foreground" />
                   {item}
                 </motion.div>
               ))}
@@ -374,12 +368,6 @@ function CenteredHero(): React.JSX.Element {
                   className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
                 >
                   Book a demo
-                  <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                    transition={{ duration: 0.1 }}
-                  >
-                    <ArrowRightIcon className="ml-2 size-4" />
-                  </motion.span>
                 </Link>
               </motion.div>
 
@@ -408,7 +396,7 @@ function CenteredHero(): React.JSX.Element {
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
               className={cn(
-                "mt-16 relative w-full overflow-hidden rounded-xl border bg-background shadow-2xl",
+                "mt-16 relative w-full overflow-hidden rounded-xl border bg-background ",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
@@ -492,12 +480,6 @@ function ShowcaseHero(): React.JSX.Element {
                   className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
                 >
                   Book a demo
-                  <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                    transition={{ duration: 0.1 }}
-                  >
-                    <ArrowRightIcon className="ml-2 size-4" />
-                  </motion.span>
                 </Link>
               </motion.div>
 
@@ -533,7 +515,7 @@ function ShowcaseHero(): React.JSX.Element {
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                 className={cn(
                   "px-8 py-4 rounded-2xl border bg-background/80 backdrop-blur-sm cursor-default transition-colors duration-200",
-                  hoveredStat === index ? "border-primary/50 shadow-lg" : "border-border/50"
+                  hoveredStat === index ? "border-primary/50 " : "border-border/50"
                 )}
               >
                 <div className={cn("text-3xl sm:text-4xl font-bold", stat.color)}>
@@ -552,7 +534,7 @@ function ShowcaseHero(): React.JSX.Element {
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
             className={cn(
-              "relative w-full max-w-5xl mx-auto overflow-hidden rounded-2xl border-2 bg-background shadow-2xl",
+              "relative w-full max-w-5xl mx-auto overflow-hidden rounded-2xl border-2 bg-background ",
               monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
             )}
           >

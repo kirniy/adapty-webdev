@@ -91,10 +91,10 @@ export function LogosLinear(): React.JSX.Element {
                   className={cn(
                     'inline-flex items-center gap-2 rounded-full',
                     'bg-background/95 backdrop-blur-sm',
-                    'border border-border/50 shadow-lg',
+                    'border border-border/50 ',
                     'px-6 py-3 text-sm font-medium',
                     'transition-all duration-150 ease-out',
-                    'hover:bg-accent hover:shadow-xl',
+                    'hover:bg-accent hover:',
                     'motion-reduce:transition-none'
                   )}
                 >

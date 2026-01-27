@@ -138,7 +138,7 @@ export function StoryTimeline(): React.JSX.Element {
           {/* Glowing dot at progress tip */}
           {!shouldReduceMotion && (
             <motion.div
-              className="absolute left-[11px] w-3 h-3 rounded-full bg-primary shadow-lg shadow-primary/50"
+              className="absolute left-[11px] w-3 h-3 rounded-full bg-primary  "
               style={{
                 top: timelineHeight,
                 transform: 'translateY(-50%)',
@@ -175,8 +175,8 @@ export function StoryTimeline(): React.JSX.Element {
                     {/* Timeline dot */}
                     <motion.div
                       className={cn(
-                        "absolute left-0 top-1 flex size-8 items-center justify-center rounded-full border bg-background shadow-sm transition-all duration-200",
-                        isHovered && "border-primary shadow-lg shadow-primary/20"
+                        "absolute left-0 top-1 flex size-8 items-center justify-center rounded-full border bg-background  transition-all duration-200",
+                        isHovered && "border-primary  "
                       )}
                       animate={shouldReduceMotion ? undefined : {
                         scale: isHovered ? 1.2 : 1,

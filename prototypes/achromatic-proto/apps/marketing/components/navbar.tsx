@@ -93,7 +93,7 @@ function CompactMenuItem({ item, compact = false }: { item: MenuItem; compact?: 
       className="group flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent"
     >
       {item.icon && (
-        <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border bg-background/80 shadow-sm">
+        <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border bg-background/80 ">
           <MenuIcon src={item.icon} size={16} />
         </div>
       )}
@@ -324,7 +324,7 @@ function FloatingPillNavbar(): React.JSX.Element {
         className={cn(
           'mx-auto max-w-5xl rounded-full px-4 py-2 transition-all duration-300',
           isScrolled
-            ? 'border bg-background/95 shadow-lg backdrop-blur-xl'
+            ? 'border bg-background/95  backdrop-blur-xl'
             : 'bg-transparent'
         )}
       >
@@ -411,7 +411,7 @@ function FloatingPillNavbar(): React.JSX.Element {
 
             {/* Desktop CTA buttons - hidden on mobile */}
             <div className="hidden items-center gap-1.5 pr-1 lg:flex">
-              <ThemeToggle className="size-7 rounded-full border-none shadow-none" />
+              <ThemeToggle className="size-7 rounded-full border-none " />
               <Link
                 href={routes.dashboard.auth.SignIn}
                 className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'h-7 rounded-full px-3 text-sm')}
@@ -524,7 +524,7 @@ function DefaultMegaMenuNavbar(): React.JSX.Element {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <ThemeToggle className="rounded-xl border-none shadow-none" />
+            <ThemeToggle className="rounded-xl border-none " />
             <Link
               href={routes.dashboard.auth.SignIn}
               className={cn(buttonVariants({ variant: 'outline' }), 'rounded-xl')}

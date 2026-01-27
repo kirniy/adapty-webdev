@@ -269,7 +269,7 @@ export function SDKCode(): React.JSX.Element {
                         <TabsTrigger
                           key={key}
                           value={key}
-                          className="data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg px-3 py-2 text-xs font-medium transition-colors justify-center"
+                          className="data-[state=active]:bg-background data-[state=active]: rounded-lg px-3 py-2 text-xs font-medium transition-colors justify-center"
                         >
                           <span className="mr-1.5 opacity-60">{snippet.icon}</span>
                           {snippet.label}

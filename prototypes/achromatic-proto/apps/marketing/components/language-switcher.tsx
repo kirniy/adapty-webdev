@@ -102,7 +102,7 @@ export function LanguageSwitcher({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 top-full z-50 mt-1 w-48 rounded-xl border bg-background p-1 shadow-lg"
+            className="absolute left-0 top-full z-50 mt-1 w-48 rounded-xl border bg-background p-1 "
           >
             {LANGUAGES.filter((lang) => lang.code !== currentLang.code).map((lang) => (
               <button

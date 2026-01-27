@@ -1014,7 +1014,7 @@ function BentoFeatures() {
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
                     "group relative rounded-xl border bg-card overflow-hidden h-full",
-                    hoveredIndex === index && "border-primary/50 shadow-lg shadow-primary/5",
+                    hoveredIndex === index && "border-primary/50  ",
                     isLargeCard && "lg:col-span-2"
                   )}
                 >
@@ -1229,7 +1229,7 @@ function TabsFeatures() {
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
                     "group relative rounded-xl border bg-card p-6 h-full overflow-hidden",
-                    hoveredFeature === index && "border-primary/50 shadow-lg shadow-primary/5"
+                    hoveredFeature === index && "border-primary/50  "
                   )}
                 >
                   <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />

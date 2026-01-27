@@ -362,7 +362,7 @@ function MigrationMagic() {
         <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
           <div className="h-full w-full bg-primary" />
         </div>
-        <CheckIcon className="size-4 text-green-500" />
+        <CheckIcon className="size-4 text-primary" />
       </div>
     );
   }
@@ -384,7 +384,7 @@ function MigrationMagic() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
           >
-            <CheckIcon className="size-4 text-green-500" />
+            <CheckIcon className="size-4 text-primary" />
           </motion.div>
         ) : (
           <motion.span
@@ -446,7 +446,7 @@ function StatusIcon({
   switch (status) {
     case "check":
       return (
-        <div className="flex size-6 items-center justify-center rounded-full bg-green-500/20">
+        <div className="flex size-6 items-center justify-center rounded-full bg-primary/10">
           <CheckIcon className="size-4 text-green-500" />
         </div>
       );
@@ -652,7 +652,7 @@ export function CompareRevenueCat(): React.JSX.Element {
               </TabsList>
               {Object.entries(CODE_EXAMPLES).map(([key, code]) => (
                 <TabsContent key={key} value={key}>
-                  <Card className="bg-zinc-950 border-border/50">
+                  <Card className="bg-muted/30 border-border/50">
                     <CardContent className="p-4">
                       <pre className="text-sm text-zinc-300 overflow-x-auto">
                         <code>{code}</code>
@@ -762,7 +762,7 @@ export function CompareRevenueCat(): React.JSX.Element {
                 >
                   <Card className={cn(
                     "h-full relative overflow-hidden transition-all duration-200",
-                    hoveredQuote === index && "border-primary/50 shadow-lg"
+                    hoveredQuote === index && "border-primary/50 "
                   )}>
                     {hoveredQuote === index && (
                       <BorderBeam
@@ -811,7 +811,7 @@ export function CompareRevenueCat(): React.JSX.Element {
                 >
                   <Card className={cn(
                     "h-full relative overflow-hidden transition-all duration-200",
-                    hoveredCaseStudy === index && "border-primary/50 shadow-xl"
+                    hoveredCaseStudy === index && "border-primary/50 "
                   )}>
                     {hoveredCaseStudy === index && (
                       <BorderBeam

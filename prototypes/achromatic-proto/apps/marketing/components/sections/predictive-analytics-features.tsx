@@ -396,7 +396,7 @@ function BenefitCard({ benefit, index }: { benefit: typeof BENEFITS[0]; index: n
     >
       <div className={cn(
         "relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group",
-        isHovered && "border-primary/30 shadow-lg"
+        isHovered && "border-primary/30 "
       )}>
         <Spotlight
           className="from-primary/20 via-primary/10 to-transparent"
@@ -451,7 +451,7 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
     >
       <div className={cn(
         "relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group",
-        isHovered && "border-primary/30 shadow-xl"
+        isHovered && "border-primary/30 "
       )}>
         <Spotlight
           className="from-primary/20 via-primary/10 to-transparent"
@@ -507,7 +507,7 @@ function RelatedPageLink({ page, index }: { page: typeof RELATED_PAGES[0]; index
         href={page.href}
         className={cn(
           "flex items-center gap-2 rounded-lg border bg-card px-4 py-3 text-sm font-medium transition-all duration-150",
-          isHovered && "border-primary/30 text-primary shadow-md"
+          isHovered && "border-primary/30 text-primary "
         )}
       >
         {page.name}

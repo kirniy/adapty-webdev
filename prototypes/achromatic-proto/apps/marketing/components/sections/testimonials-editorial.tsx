@@ -133,7 +133,7 @@ function FeaturedTestimonial() {
               alt={FEATURED.person.name}
               width={48}
               height={48}
-              className="size-12 rounded-full object-cover grayscale"
+              className="size-12 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
             />
             <div>
               <p className="font-medium">{FEATURED.person.name}</p>
@@ -193,7 +193,7 @@ function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index:
                 alt={study.person.name}
                 width={28}
                 height={28}
-                className="size-7 rounded-full object-cover grayscale"
+                className="size-7 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
               />
               <div className="text-xs">
                 <p className="font-medium">{study.person.name}</p>

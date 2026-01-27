@@ -63,9 +63,9 @@ function SDKInstallMagic() {
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="size-5 rounded-full bg-green-500/20 flex items-center justify-center"
+          className="size-5 rounded-full bg-primary/10 flex items-center justify-center"
         >
-          <CheckIcon className="size-3 text-green-500" />
+          <CheckIcon className="size-3 text-primary" />
         </motion.div>
       )}
     </div>
@@ -97,14 +97,14 @@ function ToggleMagic() {
         <motion.div
           animate={{ x: isOn ? 24 : 0 }}
           transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
-          className="size-4 rounded-full bg-white shadow-sm"
+          className="size-4 rounded-full bg-white "
         />
       </motion.div>
       {isOn && (
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-[10px] text-green-500 font-medium"
+          className="text-[10px] text-primary font-medium"
         >
           Active
         </motion.span>
@@ -143,7 +143,7 @@ function RevenueMagic() {
       <motion.div
         animate={shouldReduceMotion ? {} : { y: [0, -3, 0] }}
         transition={{ duration: 1.5, repeat: Infinity }}
-        className="text-green-500"
+        className="text-primary"
       >
         <TrendingUpIcon className="size-5" />
       </motion.div>
@@ -192,7 +192,7 @@ function RefundReductionMagic() {
           <motion.div
             animate={{ height: showCut ? '60%' : '100%' }}
             transition={{ duration: 0.5 }}
-            className="absolute bottom-0 left-0 right-0 bg-green-500/30 rounded-b"
+            className="absolute bottom-0 left-0 right-0 bg-primary/20 rounded-b"
           />
           <AnimatePresence>
             {showCut && (
@@ -200,7 +200,7 @@ function RefundReductionMagic() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 flex items-center justify-center text-[8px] text-green-500 font-bold"
+                className="absolute inset-0 flex items-center justify-center text-[8px] text-primary font-bold"
               >
                 60%
               </motion.span>
@@ -213,7 +213,7 @@ function RefundReductionMagic() {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="text-[9px] text-green-500 font-bold"
+          className="text-[9px] text-primary font-bold"
         >
           -40%
         </motion.div>
@@ -304,7 +304,7 @@ function CostRecoveryMagic() {
             animate={{ width: `${Math.min(balance, 100)}%` }}
             className={cn(
               "h-full rounded-full transition-colors",
-              isPaid ? "bg-green-500" : "bg-primary"
+              isPaid ? "bg-primary" : "bg-muted"
             )}
           />
         </div>
@@ -484,7 +484,7 @@ function GridFeatures(): React.JSX.Element {
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className="relative"
                 >
-                  <div className="relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm border-border/50 p-6 hover:border-primary/30 hover:shadow-xl transition-all duration-200">
+                  <div className="relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm border-border/50 p-6 hover:border-primary/30 transition-all duration-200">
                     <Spotlight
                       className="from-primary/20 via-primary/10 to-transparent"
                       size={200}
@@ -568,7 +568,7 @@ function GridFeatures(): React.JSX.Element {
                 >
                   <div className={cn(
                     "relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer",
-                    isHovered && "border-primary/30 shadow-xl"
+                    isHovered && "border-primary/30 "
                   )}>
                     <Spotlight
                       className="from-primary/20 via-primary/10 to-transparent"
@@ -629,7 +629,7 @@ function GridFeatures(): React.JSX.Element {
                   whileHover={shouldReduceMotion ? undefined : { y: -6, scale: 1.02 }}
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <div className="relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 p-6 hover:border-primary/40 hover:shadow-xl transition-all duration-200">
+                  <div className="relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 p-6 hover:border-primary/40 transition-all duration-200">
                     <Spotlight
                       className="from-primary/20 via-primary/10 to-transparent"
                       size={250}
@@ -741,7 +741,7 @@ function BentoFeatures(): React.JSX.Element {
                   <div
                     className={cn(
                       "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 cursor-pointer transition-all duration-200",
-                      isExpanded && "border-primary/30 shadow-lg"
+                      isExpanded && "border-primary/30 "
                     )}
                     onClick={() => setExpandedIndex(isExpanded ? null : index)}
                   >
@@ -801,7 +801,7 @@ function BentoFeatures(): React.JSX.Element {
                   whileHover={shouldReduceMotion ? undefined : { y: -6, scale: 1.02 }}
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <div className="relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 p-6 hover:border-primary/40 hover:shadow-xl transition-all duration-200">
+                  <div className="relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 p-6 hover:border-primary/40 transition-all duration-200">
                     <Spotlight
                       className="from-primary/20 via-primary/10 to-transparent"
                       size={250}
@@ -944,7 +944,7 @@ function TabsFeatures(): React.JSX.Element {
                     >
                       <div className={cn(
                         "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200",
-                        isHovered && "border-primary/30 shadow-lg"
+                        isHovered && "border-primary/30 "
                       )}>
                         <Spotlight
                           className="from-primary/20 via-primary/10 to-transparent"

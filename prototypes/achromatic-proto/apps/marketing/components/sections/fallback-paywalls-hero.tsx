@@ -39,7 +39,7 @@ function FallbackMagic() {
           <ShieldCheckIcon className="size-6 text-primary" />
         </div>
         <div className="w-8 h-0.5 bg-muted" />
-        <div className="flex size-12 items-center justify-center rounded-lg bg-emerald-500/10">
+        <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10">
           <CheckCircleIcon className="size-6 text-emerald-500" />
         </div>
       </div>
@@ -95,7 +95,7 @@ function FallbackMagic() {
           <motion.div
             animate={{ x: ['-100%', '200%'] }}
             transition={{ duration: 0.8, ease: 'linear' }}
-            className="absolute inset-y-0 w-4 bg-emerald-500 rounded"
+            className="absolute inset-y-0 w-4 bg-primary rounded"
           />
         )}
       </motion.div>

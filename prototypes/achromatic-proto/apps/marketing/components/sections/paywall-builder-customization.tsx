@@ -85,7 +85,7 @@ function CustomizationMagic() {
       transition={{ duration: 0.3, delay: 0.15 }}
     >
       <motion.div
-        className="size-2 rounded-full bg-green-500"
+        className="size-2 rounded-full bg-primary"
         animate={shouldReduceMotion ? {} : {
           scale: [1, 1.3, 1],
         }}
@@ -153,7 +153,7 @@ function CustomizationCard({
         className={cn(
           'relative h-full rounded-2xl border bg-background/60 backdrop-blur-sm p-6 transition-all duration-200 overflow-hidden',
           isHovered
-            ? 'border-foreground/20 shadow-xl shadow-foreground/5'
+            ? 'border-foreground/20  '
             : 'border-border/50'
         )}
       >
@@ -310,10 +310,10 @@ function CarouselCustomization() {
                 onClick={goPrev}
                 disabled={currentIndex === 0}
                 className={cn(
-                  'flex size-11 items-center justify-center rounded-full border bg-background shadow-lg transition-all',
+                  'flex size-11 items-center justify-center rounded-full border bg-background  transition-all',
                   currentIndex === 0
                     ? 'cursor-not-allowed opacity-40'
-                    : 'hover:border-foreground/20 hover:shadow-xl'
+                    : 'hover:border-foreground/20 hover:'
                 )}
               >
                 <ChevronLeftIcon className="size-5" />
@@ -327,10 +327,10 @@ function CarouselCustomization() {
                 onClick={goNext}
                 disabled={currentIndex >= maxIndex}
                 className={cn(
-                  'flex size-11 items-center justify-center rounded-full border bg-background shadow-lg transition-all',
+                  'flex size-11 items-center justify-center rounded-full border bg-background  transition-all',
                   currentIndex >= maxIndex
                     ? 'cursor-not-allowed opacity-40'
-                    : 'hover:border-foreground/20 hover:shadow-xl'
+                    : 'hover:border-foreground/20 hover:'
                 )}
               >
                 <ChevronRightIcon className="size-5" />
@@ -371,7 +371,7 @@ function CarouselCustomization() {
                         className={cn(
                           'h-full rounded-2xl border bg-background/60 backdrop-blur-sm p-6 transition-all duration-200 overflow-hidden relative',
                           isCardHovered
-                            ? 'border-foreground/20 shadow-xl'
+                            ? 'border-foreground/20 '
                             : 'border-border/50'
                         )}
                       >

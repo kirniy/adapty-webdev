@@ -276,7 +276,7 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof FEATURED_
       transition={{ type: 'spring', duration: 0.25, bounce: 0.1 }}
     >
       <Card
-        className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-150 ease-out motion-reduce:transition-none relative overflow-hidden"
+        className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-150 ease-out motion-reduce:transition-none relative overflow-hidden"
       >
         {isHovered && (
           <BorderBeam
@@ -322,7 +322,7 @@ function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index:
       transition={{ type: 'spring', duration: 0.25, bounce: 0.1 }}
     >
       <Link href={`https://adapty.io${study.link}`} target="_blank" rel="noopener noreferrer" className="block h-full">
-        <Card interactive className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-lg group cursor-pointer transition-shadow duration-150 relative overflow-hidden">
+        <Card interactive className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 group cursor-pointer transition-duration-150 relative overflow-hidden">
           {isHovered && (
             <BorderBeam
               size={120}
@@ -373,7 +373,7 @@ function G2AwardBadge({ award }: { award: string }) {
     <motion.div
       whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.03 }}
       transition={{ type: 'spring', duration: 0.2, bounce: 0.1 }}
-      className="px-6 py-3 rounded-lg bg-muted/50 border border-border/50 font-medium text-sm hover:border-primary/20 hover:shadow-md transition-all duration-150 cursor-default"
+      className="px-6 py-3 rounded-lg bg-muted/50 border border-border/50 font-medium text-sm hover:border-primary/20 transition-all duration-150 cursor-default"
     >
       G2 Award: {award}
     </motion.div>

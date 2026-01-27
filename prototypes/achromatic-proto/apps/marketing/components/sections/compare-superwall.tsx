@@ -474,8 +474,8 @@ function StatusIcon({
   switch (status) {
     case "check":
       return (
-        <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-green-500/20">
-          <CheckIcon className="size-4 text-green-500" />
+        <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10">
+          <CheckIcon className="size-4 text-primary" />
         </div>
       );
     case "partial":
@@ -684,7 +684,7 @@ export function CompareSuperwall(): React.JSX.Element {
               </TabsList>
               {Object.entries(CODE_EXAMPLES).map(([key, code]) => (
                 <TabsContent key={key} value={key}>
-                  <Card className="bg-zinc-950 border-border/50">
+                  <Card className="bg-muted/30 border-border/50">
                     <CardContent className="p-4">
                       <pre className="text-sm text-zinc-300 overflow-x-auto">
                         <code>{code}</code>
@@ -722,7 +722,7 @@ export function CompareSuperwall(): React.JSX.Element {
                   onMouseLeave={() => setHoveredFeature(null)}
                   className="grid md:grid-cols-2 gap-8 items-center"
                 >
-                  <div className={index % 2 === 1 ? "md:order-2" : ""}>
+                  <div>
                     <h3 className="text-xl font-semibold mb-4">{section.title}</h3>
                     <p className="text-muted-foreground mb-4">{section.description}</p>
                     <ul className="space-y-2 mb-6">
@@ -735,7 +735,7 @@ export function CompareSuperwall(): React.JSX.Element {
                           }}
                           transition={{ type: 'spring', duration: 0.2, bounce: 0, delay: bulletIndex * 0.05 }}
                         >
-                          <CheckIcon className="size-5 text-green-500 shrink-0 mt-0.5" />
+                          <CheckIcon className="size-5 text-primary shrink-0 mt-0.5" />
                           <span className="text-muted-foreground">{bullet}</span>
                         </motion.li>
                       ))}
@@ -762,8 +762,7 @@ export function CompareSuperwall(): React.JSX.Element {
                     transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
                     className={cn(
                       "relative h-64 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center overflow-hidden",
-                      index % 2 === 1 ? "md:order-1" : "",
-                      hoveredFeature === index && "shadow-lg"
+                      hoveredFeature === index && ""
                     )}
                   >
                     <Spotlight className="from-primary/20 via-primary/10 to-transparent" size={300} />
@@ -893,7 +892,7 @@ export function CompareSuperwall(): React.JSX.Element {
             </p>
             <ul className="max-w-md mx-auto space-y-2 mb-8">
               <li className="flex items-center gap-3">
-                <CheckIcon className="size-5 text-green-500" />
+                <CheckIcon className="size-5 text-primary" />
                 <span className="text-muted-foreground">Live chat for quick fixes</span>
               </li>
               <li className="flex items-center gap-3">
@@ -922,7 +921,7 @@ export function CompareSuperwall(): React.JSX.Element {
                 >
                   <Card className={cn(
                     "h-full relative overflow-hidden transition-all duration-200",
-                    hoveredQuote === index && "border-primary/50 shadow-lg"
+                    hoveredQuote === index && "border-primary/50 "
                   )}>
                     <Spotlight className="from-primary/10 via-transparent to-transparent" size={200} />
                     <CardContent className="p-4 relative">

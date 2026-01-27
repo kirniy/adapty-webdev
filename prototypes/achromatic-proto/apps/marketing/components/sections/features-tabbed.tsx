@@ -241,12 +241,12 @@ export function FeaturesTabbed(): React.JSX.Element {
                   <TabsTrigger
                     key={tab.id}
                     value={tab.id}
-                    className="relative flex shrink-0 items-center gap-2 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm whitespace-nowrap z-10 data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-colors"
+                    className="relative flex shrink-0 items-center gap-2 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm whitespace-nowrap z-10 data-[state=active]:bg-transparent data-[state=active]: transition-colors"
                   >
                     {activeTab === tab.id && (
                       <motion.div
                         layoutId="active-tab-bg"
-                        className="absolute inset-0 rounded-lg bg-background shadow-sm"
+                        className="absolute inset-0 rounded-lg bg-background "
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                         style={{ zIndex: -1 }}
                       />
@@ -329,7 +329,7 @@ export function FeaturesTabbed(): React.JSX.Element {
                       animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, rotate: 0 }}
                       transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
                       className={cn(
-                        "overflow-hidden rounded-xl border bg-card shadow-lg ring-1 ring-border/50 relative",
+                        "overflow-hidden rounded-xl border bg-card  ring-1 ring-border/50 relative",
                         monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
                       )}
                     >

@@ -59,13 +59,13 @@ function TeamGrowthMagic() {
 
   return (
     <motion.div
-      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm font-medium"
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay: 0.2 }}
     >
       <motion.div
-        className="size-2 rounded-full bg-emerald-500"
+        className="size-2 rounded-full bg-primary"
         animate={shouldReduceMotion ? {} : {
           scale: [1, 1.3, 1],
         }}
@@ -177,7 +177,7 @@ export function CareersBenefits(): React.JSX.Element {
                     transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                     className={cn(
                       'group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm p-8 transition-all duration-200',
-                      isHovered && 'border-primary/30 shadow-lg shadow-primary/5'
+                      isHovered && 'border-primary/30  '
                     )}
                   >
                     {isHovered && (

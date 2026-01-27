@@ -83,7 +83,7 @@ export function StoryHero(): React.JSX.Element {
                 >
                   <Card className={cn(
                     "text-center relative overflow-hidden transition-all duration-200",
-                    isHovered && "border-primary/50 shadow-lg"
+                    isHovered && "border-primary/50 "
                   )}>
                     <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={180} />
                     {isHovered && (

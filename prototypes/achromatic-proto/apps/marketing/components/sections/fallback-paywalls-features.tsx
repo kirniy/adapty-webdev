@@ -523,7 +523,7 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
     >
       <div className={cn(
         "relative h-full overflow-hidden rounded-2xl border bg-card transition-all duration-300 cursor-pointer group",
-        isHovered && "border-primary/40 shadow-xl shadow-primary/5"
+        isHovered && "border-primary/40  "
       )}>
         <Spotlight
           className="from-primary/25 via-primary/10 to-transparent"
@@ -593,7 +593,7 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
     >
       <div className={cn(
         "rounded-2xl border bg-card p-6 text-center transition-all duration-300 relative overflow-hidden",
-        isHovered && "border-primary/40 shadow-lg shadow-primary/5"
+        isHovered && "border-primary/40  "
       )}>
         <Spotlight
           className="from-primary/20 via-primary/5 to-transparent"
@@ -628,7 +628,7 @@ function RelatedPageLink({ page }: { page: typeof RELATED_PAGES[0] }) {
         href={page.href}
         className={cn(
           "flex items-center gap-2 rounded-xl border bg-card px-5 py-3.5 text-sm font-medium transition-all duration-200",
-          isHovered && "border-primary/40 text-primary shadow-lg shadow-primary/5"
+          isHovered && "border-primary/40 text-primary  "
         )}
       >
         {page.name}

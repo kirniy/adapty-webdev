@@ -427,7 +427,7 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
     >
       <div className={cn(
         "relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group",
-        isHovered && "border-primary/30 shadow-xl"
+        isHovered && "border-primary/30 "
       )}>
         <Spotlight
           className="from-primary/20 via-primary/10 to-transparent"
@@ -488,7 +488,7 @@ function ProcessStepCard({ step, index }: { step: typeof PROCESS_STEPS[0]; index
     >
       <div className={cn(
         "relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group text-center",
-        isHovered && "border-primary/30 shadow-xl"
+        isHovered && "border-primary/30 "
       )}>
         <Spotlight
           className="from-primary/20 via-primary/10 to-transparent"
@@ -548,7 +548,7 @@ function FAQItem({ faq, index }: { faq: typeof FAQS[0]; index: number }) {
       transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
       className={cn(
         "relative overflow-hidden rounded-xl border bg-card transition-all duration-200",
-        isHovered && "border-primary/30 shadow-md"
+        isHovered && "border-primary/30 "
       )}
     >
       <Spotlight

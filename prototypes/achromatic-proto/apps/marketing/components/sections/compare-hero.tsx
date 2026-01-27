@@ -146,7 +146,7 @@ export function CompareHero(): React.JSX.Element {
                       href={`/compare/${competitor.slug}`}
                       className={cn(
                         'group relative flex items-center justify-center rounded-xl border bg-background/50 backdrop-blur-sm px-6 py-4 text-sm font-medium transition-colors min-w-[160px] overflow-hidden',
-                        hoveredIndex === index && 'border-primary/30 shadow-lg shadow-primary/5'
+                        hoveredIndex === index && 'border-primary/30  '
                       )}
                     >
                       {hoveredIndex === index && (

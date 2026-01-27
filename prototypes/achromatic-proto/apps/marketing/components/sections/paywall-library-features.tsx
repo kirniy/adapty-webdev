@@ -137,7 +137,7 @@ function CategoryBadge({ category, index }: { category: typeof CATEGORIES[0]; in
         href="https://adapty.io/paywall-library/"
         target="_blank"
         rel="noopener noreferrer"
-        className="px-3 py-1.5 rounded-lg bg-muted/50 border border-border/50 text-sm font-medium hover:border-primary/30 hover:text-primary hover:shadow-md transition-all duration-150 ease-out motion-reduce:transition-none inline-flex items-center gap-1.5"
+        className="px-3 py-1.5 rounded-lg bg-muted/50 border border-border/50 text-sm font-medium hover:border-primary/30 hover:text-primary transition-all duration-150 ease-out motion-reduce:transition-none inline-flex items-center gap-1.5"
       >
         {category.name}
         <span className="text-xs text-muted-foreground">({category.count.toLocaleString()})</span>
@@ -161,7 +161,7 @@ function AppCard({ app, index }: { app: typeof TOP_APPS[0]; index: number }) {
     >
       <div className={cn(
         "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer group",
-        isHovered && "border-primary/30 shadow-lg"
+        isHovered && "border-primary/30 "
       )}>
         <Spotlight
           className="from-primary/20 via-primary/10 to-transparent"
@@ -212,7 +212,7 @@ function PaywallBuilderCTA() {
       >
         <div className={cn(
           "relative overflow-hidden p-8 rounded-2xl bg-gradient-to-br from-primary/5 via-background to-background border border-primary/20 transition-all duration-200",
-          isHovered && "border-primary/40 shadow-xl"
+          isHovered && "border-primary/40 "
         )}>
           <Spotlight
             className="from-primary/20 via-primary/10 to-transparent"

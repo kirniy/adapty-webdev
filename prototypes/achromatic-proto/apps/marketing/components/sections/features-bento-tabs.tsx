@@ -199,7 +199,7 @@ function FeatureCard({ feature, index, compact = false }: { feature: FeatureItem
       transition={{ delay: shouldReduceMotion ? 0 : 0.05 + index * 0.05, duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
       className={cn(
         'group flex gap-4 rounded-xl border bg-card p-4 transition-all duration-200 cursor-pointer',
-        isHovered && 'border-primary/30 shadow-md',
+        isHovered && 'border-primary/30 ',
         compact && 'p-3'
       )}
       onMouseEnter={() => setIsHovered(true)}
@@ -240,7 +240,7 @@ function FeatureImage({ tab, className }: { tab: FeatureTab; className?: string 
   return (
     <motion.div
       className={cn(
-        'overflow-hidden rounded-xl border bg-card shadow-lg relative',
+        'overflow-hidden rounded-xl border bg-card  relative',
         monochromeMode && 'grayscale hover:grayscale-0 transition-[filter] duration-500',
         className
       )}
@@ -310,10 +310,10 @@ function LayoutImageLeft({ tab }: { tab: FeatureTab }) {
   return (
     <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
       {/* Left: Image */}
-      <FeatureImage tab={tab} className="order-2 lg:order-1" />
+      <FeatureImage tab={tab} />
 
       {/* Right: Features */}
-      <div className="flex flex-col gap-4 order-1 lg:order-2">
+      <div className="flex flex-col gap-4">
         <BlurFade delay={0.1}>
           <p className="text-sm font-medium text-primary mb-1">{tab.tagline}</p>
           <p className="text-muted-foreground mb-4">{tab.description}</p>
@@ -363,7 +363,7 @@ function LayoutBentoGrid({ tab }: { tab: FeatureTab }) {
       {/* Large: Main image spanning 8 cols, 2 rows */}
       <motion.div
         className={cn(
-          "lg:col-span-8 lg:row-span-2 overflow-hidden rounded-xl border bg-card shadow-lg",
+          "lg:col-span-8 lg:row-span-2 overflow-hidden rounded-xl border bg-card ",
           monochromeMode && 'grayscale hover:grayscale-0 transition-[filter] duration-500'
         )}
         initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
@@ -403,7 +403,7 @@ function LayoutBentoGrid({ tab }: { tab: FeatureTab }) {
             key={feature.id}
             className={cn(
               'lg:col-span-4 flex flex-col gap-2 rounded-xl border bg-card p-4 transition-all duration-200 cursor-pointer',
-              isHovered && 'border-primary/30 shadow-md'
+              isHovered && 'border-primary/30 '
             )}
             initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 15 }}
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
@@ -452,7 +452,7 @@ function TabButton({
       className={cn(
         'group relative flex shrink-0 items-center gap-2 sm:gap-2.5 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer whitespace-nowrap',
         isActive
-          ? 'bg-primary text-primary-foreground shadow-md'
+          ? 'bg-primary text-primary-foreground '
           : 'text-muted-foreground hover:text-foreground hover:bg-muted'
       )}
     >

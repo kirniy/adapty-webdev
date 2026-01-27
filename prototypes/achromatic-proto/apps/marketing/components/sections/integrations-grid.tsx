@@ -81,7 +81,7 @@ function IntegrationCard({ integration, index }: { integration: typeof INTEGRATI
       className="group h-full"
     >
       <Link href={integration.link} className="block h-full relative">
-        <div className="relative h-full overflow-hidden rounded-xl border border-border/50 bg-background/50 p-4 text-center transition-colors hover:border-primary/30 hover:shadow-md">
+        <div className="relative h-full overflow-hidden rounded-xl border border-border/50 bg-background/50 p-4 text-center transition-colors hover:border-primary/30 hover:">
           {isHovered && (
             <BorderBeam
               size={80}
@@ -116,7 +116,7 @@ function SDKBadge({ sdk }: { sdk: typeof SDKS[0] }) {
     >
       <Link
         href={sdk.link}
-        className="block px-4 py-2 rounded-lg bg-muted/50 border border-border/50 text-sm font-medium hover:border-primary/30 hover:text-primary hover:shadow-md transition-all duration-150 ease-out motion-reduce:transition-none"
+        className="block px-4 py-2 rounded-lg bg-muted/50 border border-border/50 text-sm font-medium hover:border-primary/30 hover:text-primary transition-all duration-150 ease-out motion-reduce:transition-none"
       >
         {sdk.name}
       </Link>

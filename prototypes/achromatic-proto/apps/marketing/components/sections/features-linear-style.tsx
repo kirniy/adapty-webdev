@@ -33,7 +33,7 @@ function FeatureTag({
   const colorClasses = {
     primary: 'bg-primary',
     cyan: 'bg-cyan-500',
-    green: 'bg-emerald-500',
+    green: 'bg-primary',
     amber: 'bg-amber-500',
     purple: 'bg-purple-500',
     pink: 'bg-pink-500',
@@ -146,7 +146,7 @@ function InteractiveSelector({
           {/* Selectable options with vertical line - Linear style */}
           <div className="relative pl-6">
             {/* Vertical line - subtle */}
-            <div className="absolute left-0 top-1 top-0 bottom-0 w-px bg-border/60" />
+            <div className="absolute left-0 top-0 bottom-0 w-px bg-white/10" />
 
             <div className="space-y-1">
               {options.map((option, index) => (
@@ -206,8 +206,8 @@ function InteractiveSelector({
       {/* Optional: Small feature grid below separator */}
       {features && features.length > 0 && (
         <>
-          <div className="h-px bg-border/40 my-12" />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="h-px bg-white/5 my-12" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {features.map((feature, index) => (
               <div key={index}>
                 <div className="flex items-center gap-2.5 mb-2">
@@ -251,7 +251,7 @@ export function LinearFeatureSection({
 }) {
   return (
     <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="container py-24 lg:py-32">
+      <div className="container max-w-6xl mx-auto px-6 py-[120px] lg:py-[160px]">
         <BlurFade>
           {/* Tag - increased spacing */}
           <div className="mb-6">
@@ -261,7 +261,7 @@ export function LinearFeatureSection({
           {/* Title + Description layout - Linear's 2-column header style */}
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">
+              <h2 className="text-[40px] font-semibold tracking-tight leading-[1.1]">
                 {title}
               </h2>
             </div>
@@ -284,7 +284,7 @@ export function LinearFeatureSection({
         </BlurFade>
 
         {/* Content area */}
-        {children && <div className="mt-16">{children}</div>}
+        {children && <div className="mt-20">{children}</div>}
       </div>
     </GridSection>
   );
@@ -311,14 +311,14 @@ export function ValuePropsSection({
 
   return (
     <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="container py-24 lg:py-32">
+      <div className="container max-w-6xl mx-auto px-6 py-[120px] lg:py-[160px]">
         <BlurFade>
-          <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-center mb-16">
+          <h2 className="text-[40px] font-semibold tracking-tight leading-[1.1] text-center mb-20">
             {heading}
           </h2>
         </BlurFade>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-4">
           {props.map((prop, index) => (
             <BlurFade key={index} delay={0.1 + index * 0.08}>
               <motion.div
@@ -326,8 +326,9 @@ export function ValuePropsSection({
                 transition={{ duration: 0.2 }}
                 className={cn(
                   'group relative flex flex-col h-full rounded-[20px] overflow-hidden',
-                  'bg-muted/30 border border-border/50',
-                  'hover:border-border/80 hover:bg-muted/40 transition-all duration-200 cursor-pointer'
+                  'bg-muted/20 border border-white/5',
+                  'hover:border-white/10 hover:bg-muted/30 hover:-translate-y-0.5',
+                  'transition-all duration-200 ease-out cursor-pointer'
                 )}
                 onClick={() => setOpenIndex(index)}
               >
@@ -346,7 +347,7 @@ export function ValuePropsSection({
                 {/* Content */}
                 <div className="flex-1 p-6 flex flex-col">
                   <h3 className="font-semibold text-lg mb-2 tracking-tight">{prop.title}</h3>
-                  <p className="text-[14px] text-muted-foreground leading-relaxed flex-1">
+                  <p className="text-[15px] text-muted-foreground leading-relaxed flex-1">
                     {prop.description}
                   </p>
 
@@ -355,8 +356,9 @@ export function ValuePropsSection({
                     <span
                       className={cn(
                         'flex items-center justify-center size-8 rounded-full',
-                        'bg-muted/60 border border-border/60',
-                        'group-hover:bg-muted group-hover:border-border/80 transition-colors'
+                        'bg-white/5 border border-white/10',
+                        'group-hover:bg-white/10 group-hover:border-white/20',
+                        'transition-all duration-200'
                       )}
                     >
                       <span className="text-base leading-none">+</span>
@@ -561,30 +563,30 @@ export function AnalyticsLinear() {
         </div>
         <div className="space-y-6">
           <div className="flex items-start gap-4">
-            <span className="size-9 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
-              <span className="size-2.5 rounded-full bg-emerald-500" />
+            <span className="size-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <span className="size-2.5 rounded-full bg-primary" />
             </span>
             <div>
               <h4 className="font-medium text-[15px] mb-1">Real-time dashboard</h4>
-              <p className="text-[14px] text-muted-foreground leading-relaxed">See revenue, trials, and conversions as they happen.</p>
+              <p className="text-[15px] text-muted-foreground leading-relaxed">See revenue, trials, and conversions as they happen.</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <span className="size-9 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
-              <span className="size-2.5 rounded-full bg-emerald-500" />
+            <span className="size-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <span className="size-2.5 rounded-full bg-primary" />
             </span>
             <div>
               <h4 className="font-medium text-[15px] mb-1">Cohort analysis</h4>
-              <p className="text-[14px] text-muted-foreground leading-relaxed">Understand retention patterns across user segments.</p>
+              <p className="text-[15px] text-muted-foreground leading-relaxed">Understand retention patterns across user segments.</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <span className="size-9 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
-              <span className="size-2.5 rounded-full bg-emerald-500" />
+            <span className="size-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <span className="size-2.5 rounded-full bg-primary" />
             </span>
             <div>
               <h4 className="font-medium text-[15px] mb-1">LTV predictions</h4>
-              <p className="text-[14px] text-muted-foreground leading-relaxed">AI-powered forecasts for up to 12 months.</p>
+              <p className="text-[15px] text-muted-foreground leading-relaxed">AI-powered forecasts for up to 12 months.</p>
             </div>
           </div>
         </div>
@@ -695,8 +697,9 @@ function ModalCard({
       transition={{ duration: 0.2 }}
       className={cn(
         'group relative flex flex-col h-full rounded-[20px] overflow-hidden',
-        'bg-muted/30 border border-border/50',
-        'hover:border-border/80 hover:bg-muted/40 transition-all duration-200 cursor-pointer'
+        'bg-muted/20 border border-white/5',
+        'hover:border-white/10 hover:bg-muted/30 hover:-translate-y-0.5',
+        'transition-all duration-200 ease-out cursor-pointer'
       )}
     >
       {/* Image area */}
@@ -712,15 +715,16 @@ function ModalCard({
       {/* Content area */}
       <div className="flex-1 p-6 flex flex-col">
         <h4 className="font-semibold text-lg mb-2 tracking-tight">{data.title}</h4>
-        <p className="text-[14px] text-muted-foreground leading-relaxed flex-1">{data.subtitle}</p>
+        <p className="text-[15px] text-muted-foreground leading-relaxed flex-1">{data.subtitle}</p>
 
         {/* Button - chevron for direct links, plus for modals */}
         <div className="mt-5 flex justify-end">
           <span
             className={cn(
               'flex items-center justify-center size-8 rounded-full',
-              'bg-muted/60 border border-border/60',
-              'group-hover:bg-muted group-hover:border-border/80 transition-colors'
+              'bg-white/5 border border-white/10',
+              'group-hover:bg-white/10 group-hover:border-white/20',
+              'transition-all duration-200'
             )}
           >
             {isDirectLink ? (
@@ -797,17 +801,17 @@ function CardModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-background/60 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/60 backdrop-blur-[12px] z-[100]"
             onClick={onClose}
           />
 
           {/* Modal */}
           <motion.div
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
-            transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-            className="fixed inset-x-4 top-[5%] bottom-[5%] md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl lg:max-w-3xl bg-background border border-border/60 rounded-[24px] z-[101] overflow-hidden shadow-2xl"
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-x-4 top-[5%] bottom-[5%] md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl lg:max-w-3xl bg-background/95 border border-white/[0.08] rounded-[24px] z-[101] overflow-hidden shadow-2xl"
           >
             {/* Scrollable content */}
             <div className="h-full overflow-y-auto">
@@ -831,7 +835,7 @@ function CardModal({
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-6">
+                <h3 className="text-[32px] font-semibold tracking-tight leading-[1.1] mb-8">
                   {data.title}
                 </h3>
 
@@ -847,12 +851,12 @@ function CardModal({
                 {/* Quote section */}
                 {data.quote && (
                   <>
-                    <div className="h-px bg-border/40 my-8" />
-                    <blockquote className="text-center py-4">
-                      <p className="text-lg font-medium mb-3">
+                    <div className="h-px bg-white/5 my-10" />
+                    <blockquote className="text-center py-6">
+                      <p className="text-xl font-medium mb-4 leading-relaxed">
                         "{data.quote.text}"
                       </p>
-                      <cite className="text-[13px] text-muted-foreground not-italic">
+                      <cite className="text-[14px] text-muted-foreground not-italic">
                         {data.quote.company}
                       </cite>
                     </blockquote>
@@ -862,12 +866,12 @@ function CardModal({
                 {/* Stats grid */}
                 {data.stats && data.stats.length > 0 && (
                   <>
-                    <div className="h-px bg-border/40 my-8" />
-                    <div className="grid grid-cols-2 gap-6 py-4">
+                    <div className="h-px bg-white/5 my-10" />
+                    <div className="grid grid-cols-2 gap-8 py-6">
                       {data.stats.map((stat, i) => (
                         <div key={i}>
-                          <div className="text-2xl font-bold tracking-tight">{stat.value}</div>
-                          <div className="text-[13px] text-muted-foreground">{stat.label}</div>
+                          <div className="text-[32px] font-semibold tracking-tight leading-none mb-2">{stat.value}</div>
+                          <div className="text-[14px] text-muted-foreground">{stat.label}</div>
                         </div>
                       ))}
                     </div>
@@ -944,14 +948,14 @@ export function CardCarousel({
 
   return (
     <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="container py-24 lg:py-32">
+      <div className="container max-w-6xl mx-auto px-6 py-[120px] lg:py-[160px]">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-12">
           <div>
             <div className="mb-5">
               <FeatureTag label={tag} color={tagColor} />
             </div>
-            <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">{title}</h2>
+            <h2 className="text-[40px] font-semibold tracking-tight leading-[1.1]">{title}</h2>
           </div>
           <p className="text-muted-foreground text-[15px] max-w-md leading-relaxed md:pt-10">{description}</p>
         </div>
@@ -960,13 +964,13 @@ export function CardCarousel({
         <div className="relative">
           <div
             ref={scrollRef}
-            className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4"
+            className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4"
             style={{ scrollSnapType: 'x mandatory' }}
           >
             {cards.map((card) => (
               <div
                 key={card.id}
-                className="flex-shrink-0 w-[300px] md:w-[340px]"
+                className="flex-shrink-0 w-[320px] md:w-[360px]"
                 style={{ scrollSnapAlign: 'start' }}
               >
                 <ModalCard data={card} onOpen={() => setActiveModal(card.id)} />

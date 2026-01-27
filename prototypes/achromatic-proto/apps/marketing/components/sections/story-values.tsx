@@ -81,7 +81,7 @@ export function StoryValues(): React.JSX.Element {
                 >
                   <Card className={cn(
                     "h-full text-center relative overflow-hidden transition-all duration-200",
-                    isHovered && "border-primary/50 shadow-lg"
+                    isHovered && "border-primary/50 "
                   )}>
                     {isHovered && (
                       <BorderBeam

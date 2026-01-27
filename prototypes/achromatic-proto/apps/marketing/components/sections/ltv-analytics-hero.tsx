@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, LineChartIcon, UsersIcon, DollarSignIcon, FilterIcon, PlayIcon, CheckIcon, TrendingUpIcon } from 'lucide-react';
+import { LineChartIcon, UsersIcon, DollarSignIcon, FilterIcon, PlayIcon, CheckIcon, TrendingUpIcon } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -51,7 +51,7 @@ function LTVChartMagic() {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
         <div className="flex items-center gap-2 mb-1.5">
           <TrendingUpIcon className="size-3 text-primary" />
@@ -114,7 +114,7 @@ function CohortMetricMagic() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
         <div className="size-5 rounded-full bg-primary/10 flex items-center justify-center">
           <DollarSignIcon className="size-3 text-primary" />
@@ -219,12 +219,6 @@ function SplitHero() {
                     className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8 transition-all duration-150 ease-out')}
                   >
                     Book a demo
-                    <motion.span
-                      animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                      transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                    >
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </motion.span>
                   </Link>
                 </motion.div>
 
@@ -265,7 +259,7 @@ function SplitHero() {
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
               transition={{ delay: 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg",
+                "relative w-full overflow-hidden rounded-xl border bg-background ",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
@@ -351,12 +345,6 @@ function CenteredHero() {
                   className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
                 >
                   Book a demo
-                  <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                    transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                  >
-                    <ArrowRightIcon className="ml-2 size-4" />
-                  </motion.span>
                 </Link>
               </motion.div>
 
@@ -398,7 +386,7 @@ function CenteredHero() {
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
             className={cn(
-              "mt-16 mx-auto max-w-6xl overflow-hidden rounded-xl border bg-background shadow-2xl",
+              "mt-16 mx-auto max-w-6xl overflow-hidden rounded-xl border bg-background ",
               monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
             )}
           >
@@ -472,7 +460,7 @@ function ShowcaseHero() {
           >
             <div
               className={cn(
-                "relative overflow-hidden rounded-2xl border bg-background shadow-2xl",
+                "relative overflow-hidden rounded-2xl border bg-background ",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
@@ -510,7 +498,7 @@ function ShowcaseHero() {
                     <motion.div
                       animate={shouldReduceMotion ? undefined : { scale: isHovered === 'play' ? 1.1 : 1 }}
                       transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
-                      className="flex size-20 items-center justify-center rounded-full bg-white shadow-lg"
+                      className="flex size-20 items-center justify-center rounded-full bg-white "
                     >
                       <PlayIcon className="size-8 text-primary ml-1" />
                     </motion.div>
@@ -556,12 +544,6 @@ function ShowcaseHero() {
                     className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
                   >
                     Book a demo
-                    <motion.span
-                      animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                      transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                    >
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </motion.span>
                   </Link>
                 </motion.div>
 

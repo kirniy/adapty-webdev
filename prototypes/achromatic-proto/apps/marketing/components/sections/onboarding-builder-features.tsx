@@ -166,7 +166,7 @@ function ABTestMagic() {
       <motion.div
         animate={{ y: [0, -3, 0] }}
         transition={{ duration: 1.5, repeat: Infinity }}
-        className="ml-2 bg-green-500/10 text-green-600 text-[9px] px-2 py-0.5 rounded-full border border-green-500/30"
+        className="ml-2 bg-primary/10 text-primary text-[9px] px-2 py-0.5 rounded-full border border-primary/30"
       >
         +30%
       </motion.div>
@@ -329,7 +329,7 @@ function GridFeatures(): React.JSX.Element {
               >
                 <div className={cn(
                   "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer group",
-                  hoveredIndex === index && "border-primary/30 shadow-lg"
+                  hoveredIndex === index && "border-primary/30 "
                 )}>
                   {hoveredIndex === index && (
                     <BorderBeam
@@ -380,7 +380,7 @@ function GridFeatures(): React.JSX.Element {
             >
               <div className={cn(
                 "relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 transition-all duration-150 cursor-pointer group",
-                hoveredIndex === 99 && "border-primary/40 shadow-lg"
+                hoveredIndex === 99 && "border-primary/40 "
               )}>
                 <Spotlight
                   className="from-primary/20 via-primary/10 to-transparent"
@@ -471,7 +471,7 @@ function BentoFeatures(): React.JSX.Element {
               >
                 <div className={cn(
                   "relative h-full overflow-hidden rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer group flex flex-col",
-                  hoveredIndex === index && "border-primary/50 shadow-xl",
+                  hoveredIndex === index && "border-primary/50 ",
                   index === 0 && "min-h-[300px]"
                 )}>
                   <Spotlight
@@ -522,7 +522,7 @@ function BentoFeatures(): React.JSX.Element {
                 >
                   <div className={cn(
                     "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer group flex flex-col",
-                    hoveredIndex === index && "border-primary/30 shadow-lg"
+                    hoveredIndex === index && "border-primary/30 "
                   )}>
                     <Spotlight
                       className="from-primary/20 via-primary/10 to-transparent"
@@ -570,7 +570,7 @@ function BentoFeatures(): React.JSX.Element {
             >
               <div className={cn(
                 "relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 transition-all duration-150 cursor-pointer group",
-                hoveredIndex === 99 && "border-primary/40 shadow-lg"
+                hoveredIndex === 99 && "border-primary/40 "
               )}>
                 <Spotlight
                   className="from-primary/20 via-primary/10 to-transparent"
@@ -695,7 +695,7 @@ function TabsFeatures(): React.JSX.Element {
                   >
                     <div className={cn(
                       "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer group",
-                      hoveredIndex === index && "border-primary/30 shadow-lg"
+                      hoveredIndex === index && "border-primary/30 "
                     )}>
                       <Spotlight
                         className="from-primary/20 via-primary/10 to-transparent"
@@ -742,7 +742,7 @@ function TabsFeatures(): React.JSX.Element {
                   >
                     <div className={cn(
                       "relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 transition-all duration-150 cursor-pointer group",
-                      hoveredIndex === 99 && "border-primary/40 shadow-lg"
+                      hoveredIndex === 99 && "border-primary/40 "
                     )}>
                       <Spotlight
                         className="from-primary/20 via-primary/10 to-transparent"

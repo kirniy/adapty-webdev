@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, FlaskConicalIcon, BarChart2Icon, BrainCircuitIcon, PlayCircleIcon, PlayIcon, CheckIcon, TrophyIcon, ArrowUpIcon } from 'lucide-react';
+import { FlaskConicalIcon, BarChart2Icon, BrainCircuitIcon, PlayCircleIcon, PlayIcon, CheckIcon, TrophyIcon, ArrowUpIcon } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -55,7 +55,7 @@ function ABTestResultMagic() {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
         <div className="flex items-center gap-4 text-xs">
           <div className="text-center">
@@ -66,15 +66,15 @@ function ABTestResultMagic() {
           <div className="text-center">
             <p className="text-muted-foreground mb-0.5">Variant B</p>
             <div className="flex items-center gap-1">
-              <p className="font-bold text-green-600">{variantB}%</p>
+              <p className="font-bold text-primary">{variantB}%</p>
               <AnimatePresence>
                 {showWinner && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="size-4 rounded-full bg-green-500/20 flex items-center justify-center"
+                    className="size-4 rounded-full bg-primary/10 flex items-center justify-center"
                   >
-                    <TrophyIcon className="size-2.5 text-green-600" />
+                    <TrophyIcon className="size-2.5 text-primary" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -121,14 +121,14 @@ function ConfidenceBadgeMagic() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
-        <div className="size-5 rounded-full bg-green-500/10 flex items-center justify-center">
-          <ArrowUpIcon className="size-3 text-green-600" />
+        <div className="size-5 rounded-full bg-primary/10 flex items-center justify-center">
+          <ArrowUpIcon className="size-3 text-primary" />
         </div>
         <div>
           <p className="text-[10px] text-muted-foreground">Statistical confidence</p>
-          <p className="text-sm font-bold text-green-600">{confidence}%</p>
+          <p className="text-sm font-bold text-primary">{confidence}%</p>
         </div>
       </motion.div>
     </div>
@@ -233,12 +233,6 @@ function SplitHero() {
                     className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8 transition-all duration-150 ease-out')}
                   >
                     Book a demo
-                    <motion.span
-                      animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                      transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                    >
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </motion.span>
                   </Link>
                 </motion.div>
 
@@ -279,7 +273,7 @@ function SplitHero() {
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
               transition={{ delay: 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg",
+                "relative w-full overflow-hidden rounded-xl border bg-background ",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
@@ -372,12 +366,6 @@ function CenteredHero() {
                   className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
                 >
                   Book a demo
-                  <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                    transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                  >
-                    <ArrowRightIcon className="ml-2 size-4" />
-                  </motion.span>
                 </Link>
               </motion.div>
 
@@ -419,7 +407,7 @@ function CenteredHero() {
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
             className={cn(
-              "mt-16 mx-auto max-w-6xl overflow-hidden rounded-xl border bg-background shadow-2xl",
+              "mt-16 mx-auto max-w-6xl overflow-hidden rounded-xl border bg-background ",
               monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
             )}
           >
@@ -500,7 +488,7 @@ function ShowcaseHero() {
           >
             <div
               className={cn(
-                "relative overflow-hidden rounded-2xl border bg-background shadow-2xl",
+                "relative overflow-hidden rounded-2xl border bg-background ",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
@@ -538,7 +526,7 @@ function ShowcaseHero() {
                     <motion.div
                       animate={shouldReduceMotion ? undefined : { scale: isHovered === 'play' ? 1.1 : 1 }}
                       transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
-                      className="flex size-20 items-center justify-center rounded-full bg-white shadow-lg"
+                      className="flex size-20 items-center justify-center rounded-full bg-white "
                     >
                       <PlayIcon className="size-8 text-primary ml-1" />
                     </motion.div>
@@ -563,8 +551,8 @@ function ShowcaseHero() {
                     transition={{ delay: 0.35 + index * 0.05, duration: 0.2 }}
                     className="flex items-center gap-3 text-sm text-muted-foreground"
                   >
-                    <div className="flex size-5 items-center justify-center rounded-full bg-green-500/10">
-                      <CheckIcon className="size-3 text-green-600 dark:text-green-400" />
+                    <div className="flex size-5 items-center justify-center rounded-full bg-primary/10">
+                      <CheckIcon className="size-3 text-primary" />
                     </div>
                     {item}
                   </motion.div>
@@ -584,12 +572,6 @@ function ShowcaseHero() {
                     className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
                   >
                     Book a demo
-                    <motion.span
-                      animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                      transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                    >
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </motion.span>
                   </Link>
                 </motion.div>
 

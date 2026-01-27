@@ -90,7 +90,7 @@ export function StoryVision(): React.JSX.Element {
               >
                 <Card className={cn(
                   "relative overflow-hidden transition-all duration-200",
-                  isQuoteHovered && "border-primary/50 shadow-lg"
+                  isQuoteHovered && "border-primary/50 "
                 )}>
                   {isQuoteHovered && (
                     <BorderBeam

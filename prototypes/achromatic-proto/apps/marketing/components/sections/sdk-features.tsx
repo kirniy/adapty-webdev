@@ -355,7 +355,7 @@ function CodeTypeMagic() {
   }, [shouldReduceMotion, lineIndex, codeLines]);
 
   return (
-    <div className="mt-4 h-[80px] rounded-xl bg-zinc-900 border border-border/50 p-3 font-mono">
+    <div className="mt-4 h-[80px] rounded-xl bg-muted/30 border border-border/50 p-3 font-mono">
       <div className="flex items-center gap-2 mb-2">
         <div className="flex gap-1">
           <div className="w-2 h-2 rounded-full bg-red-500/50" />
@@ -539,7 +539,7 @@ function SDKBadge({ sdk, index }: { sdk: typeof SDKS[0]; index: number }) {
         href={sdk.link}
         className={cn(
           "px-4 py-2.5 rounded-xl bg-card border text-sm font-medium transition-all duration-200 inline-flex items-center gap-2",
-          isHovered ? "border-primary/40 text-primary shadow-lg shadow-primary/5" : "border-border/50"
+          isHovered ? "border-primary/40 text-primary  " : "border-border/50"
         )}
       >
         <motion.div
@@ -573,7 +573,7 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
     >
       <div className={cn(
         "relative h-full overflow-hidden rounded-2xl border bg-card transition-all duration-300 cursor-pointer group",
-        isHovered && "border-primary/40 shadow-xl shadow-primary/5"
+        isHovered && "border-primary/40  "
       )}>
         <Spotlight
           className="from-primary/25 via-primary/10 to-transparent"
@@ -643,7 +643,7 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof TESTIMONI
     >
       <div className={cn(
         "relative h-full overflow-hidden rounded-2xl border bg-card transition-all duration-300",
-        isHovered && "border-primary/40 shadow-xl shadow-primary/5"
+        isHovered && "border-primary/40  "
       )}>
         <Spotlight
           className="from-primary/20 via-primary/5 to-transparent"
@@ -723,7 +723,7 @@ function RelatedPageLink({ page }: { page: typeof RELATED_PAGES[0] }) {
         href={page.link}
         className={cn(
           "px-6 py-3.5 rounded-xl bg-card border font-medium transition-all duration-200 inline-flex items-center gap-2",
-          isHovered && "border-primary/40 text-primary shadow-lg shadow-primary/5"
+          isHovered && "border-primary/40 text-primary  "
         )}
       >
         {page.title}
@@ -805,7 +805,7 @@ export function SDKFeatures(): React.JSX.Element {
                     whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                     transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   >
-                    <Card className="bg-zinc-950 border-border/50 overflow-hidden">
+                    <Card className="bg-muted/30 border-border/50 overflow-hidden">
                       <CardContent className="p-0">
                         <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800">
                           <div className="flex items-center gap-2">

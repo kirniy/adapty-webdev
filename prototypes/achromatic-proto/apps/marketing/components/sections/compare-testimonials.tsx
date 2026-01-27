@@ -128,7 +128,7 @@ export function CompareTestimonials(): React.JSX.Element {
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
                     'group relative flex h-full flex-col overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm p-6 transition-all duration-200',
-                    isHovered && 'border-primary/30 shadow-lg shadow-primary/5'
+                    isHovered && 'border-primary/30  '
                   )}
                 >
                   <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />

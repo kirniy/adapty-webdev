@@ -137,7 +137,7 @@ export function CareersPositions(): React.JSX.Element {
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
                     'group relative overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm p-6 transition-all duration-200',
-                    isHovered && 'border-primary/30 shadow-lg shadow-primary/5'
+                    isHovered && 'border-primary/30  '
                   )}
                 >
                   {isHovered && (

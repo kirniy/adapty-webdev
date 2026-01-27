@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, ShieldCheckIcon, DollarSignIcon, TrendingDownIcon, ZapIcon, CheckIcon, ArrowDownIcon } from 'lucide-react';
+import { ShieldCheckIcon, DollarSignIcon, TrendingDownIcon, ZapIcon, CheckIcon, ArrowDownIcon, ChevronRightIcon } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -49,13 +49,13 @@ function RefundReductionMagic() {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
-        <div className="size-6 rounded-full bg-green-500/10 flex items-center justify-center">
-          <ArrowDownIcon className="size-3 text-green-600" />
+        <div className="size-6 rounded-full bg-primary/10 flex items-center justify-center">
+          <ArrowDownIcon className="size-3 text-primary" />
         </div>
         <div className="text-left">
-          <p className="text-sm font-bold text-green-600">-{percentage}%</p>
+          <p className="text-sm font-bold text-primary">-{percentage}%</p>
           <p className="text-[10px] text-muted-foreground">Refunds reduced</p>
         </div>
       </motion.div>
@@ -99,7 +99,7 @@ function RevenueSavedMagic() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
         <div className="size-5 rounded-full bg-primary/10 flex items-center justify-center">
           <DollarSignIcon className="size-3 text-primary" />
@@ -130,7 +130,7 @@ const BENEFITS = [
 
 // Key stats
 const STATS = [
-  { value: '$576K', label: 'saved weekly', color: 'text-green-500' },
+  { value: '$576K', label: 'saved weekly', color: 'text-primary' },
   { value: '50%', label: 'fewer refunds', color: 'text-blue-500' },
   { value: '3x', label: 'ROI average', color: 'text-purple-500' },
 ];
@@ -230,12 +230,6 @@ function SplitHero(): React.JSX.Element {
                     )}
                   >
                     Schedule A Demo
-                    <motion.span
-                      animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                      transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                    >
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </motion.span>
                   </Link>
                 </motion.div>
 
@@ -282,7 +276,7 @@ function SplitHero(): React.JSX.Element {
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg",
+                "relative w-full overflow-hidden rounded-xl border bg-background ",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
@@ -374,7 +368,7 @@ function CenteredHero(): React.JSX.Element {
                   whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                   className="flex items-center gap-2 rounded-full bg-primary/5 px-4 py-2 text-sm cursor-default"
                 >
-                  <CheckIcon className="size-4 text-primary" />
+                  <ChevronRightIcon className="size-3 text-muted-foreground" />
                   {item}
                 </motion.div>
               ))}
@@ -395,12 +389,6 @@ function CenteredHero(): React.JSX.Element {
                   className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
                 >
                   Schedule a demo
-                  <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                    transition={{ duration: 0.1 }}
-                  >
-                    <ArrowRightIcon className="ml-2 size-4" />
-                  </motion.span>
                 </Link>
               </motion.div>
 
@@ -429,7 +417,7 @@ function CenteredHero(): React.JSX.Element {
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
               className={cn(
-                "mt-16 relative w-full overflow-hidden rounded-xl border bg-background shadow-2xl",
+                "mt-16 relative w-full overflow-hidden rounded-xl border bg-background ",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
@@ -513,12 +501,6 @@ function ShowcaseHero(): React.JSX.Element {
                   className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
                 >
                   Schedule a demo
-                  <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                    transition={{ duration: 0.1 }}
-                  >
-                    <ArrowRightIcon className="ml-2 size-4" />
-                  </motion.span>
                 </Link>
               </motion.div>
 
@@ -554,7 +536,7 @@ function ShowcaseHero(): React.JSX.Element {
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                 className={cn(
                   "px-8 py-4 rounded-2xl border bg-background/80 backdrop-blur-sm cursor-default transition-colors duration-200",
-                  hoveredStat === index ? "border-primary/50 shadow-lg" : "border-border/50"
+                  hoveredStat === index ? "border-primary/50 " : "border-border/50"
                 )}
               >
                 <div className={cn("text-3xl sm:text-4xl font-bold", stat.color)}>
@@ -573,7 +555,7 @@ function ShowcaseHero(): React.JSX.Element {
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
             className={cn(
-              "relative w-full max-w-5xl mx-auto overflow-hidden rounded-2xl border-2 bg-background shadow-2xl",
+              "relative w-full max-w-5xl mx-auto overflow-hidden rounded-2xl border-2 bg-background ",
               monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
             )}
           >

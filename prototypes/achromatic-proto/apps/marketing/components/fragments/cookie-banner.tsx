@@ -49,7 +49,7 @@ export function CookieBanner(): React.JSX.Element {
           }}
           className="fixed inset-x-2 bottom-2 z-50 rounded-xl sm:bottom-4 sm:left-4 sm:right-auto sm:max-w-sm"
         >
-          <div className="rounded-xl border bg-background p-4 shadow-lg">
+          <div className="rounded-xl border bg-background p-4 ">
             <p className="mb-3 text-sm">
               We use cookies primarily for analytics and to enhance your
               experience. By accepting you agree to our use of cookies.{' '}

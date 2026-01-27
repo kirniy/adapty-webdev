@@ -142,14 +142,14 @@ function CodeMagic() {
 
   if (shouldReduceMotion) {
     return (
-      <div className="mt-4 p-2 bg-zinc-900 rounded font-mono text-[10px] text-emerald-400">
+      <div className="mt-4 p-2 bg-muted/30 border border-border/50 rounded font-mono text-[10px] text-emerald-400">
         Adapty.getPaywall("premium")
       </div>
     );
   }
 
   return (
-    <div className="mt-4 p-2 bg-zinc-900 rounded font-mono text-[10px] text-emerald-400 overflow-hidden">
+    <div className="mt-4 p-2 bg-muted/30 border border-border/50 rounded font-mono text-[10px] text-emerald-400 overflow-hidden">
       <motion.span
         key={step}
         initial={{ opacity: 0 }}
@@ -365,7 +365,7 @@ function GridFeatures() {
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
                     "group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-150 cursor-pointer",
-                    hoveredIndex === index && "border-primary/50 shadow-lg shadow-primary/5"
+                    hoveredIndex === index && "border-primary/50  "
                   )}
                 >
                   {hoveredIndex === index && (
@@ -649,7 +649,7 @@ function AccordionFeatures() {
                   layout
                   className={cn(
                     "rounded-xl border bg-background/50 backdrop-blur-sm overflow-hidden transition-colors duration-200",
-                    expandedIndex === index ? "border-primary/50 shadow-lg" : "border-border/50"
+                    expandedIndex === index ? "border-primary/50 " : "border-border/50"
                   )}
                 >
                   <motion.button

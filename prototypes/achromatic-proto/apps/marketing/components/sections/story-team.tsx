@@ -27,7 +27,7 @@ function TeamSizeMagic() {
       transition={{ duration: 0.3, delay: 0.15 }}
     >
       <motion.div
-        className="size-2 rounded-full bg-green-500"
+        className="size-2 rounded-full bg-primary"
         animate={shouldReduceMotion ? {} : {
           scale: [1, 1.3, 1],
           opacity: [1, 0.7, 1],

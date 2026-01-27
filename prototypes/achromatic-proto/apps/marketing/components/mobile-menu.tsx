@@ -136,7 +136,7 @@ export function MobileMenu({
                   duration: shouldReduceMotion ? 0.01 : 0.4,
                   bounce: 0.1,
                 }}
-                className="fixed inset-y-0 right-0 z-50 w-[85%] max-w-[400px] bg-background shadow-2xl"
+                className="fixed inset-y-0 right-0 z-50 w-[85%] max-w-[400px] bg-background "
               >
                 <div className="flex h-full flex-col">
                   {/* Header */}

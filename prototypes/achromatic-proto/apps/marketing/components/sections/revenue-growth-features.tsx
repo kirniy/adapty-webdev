@@ -461,7 +461,7 @@ function FeatureCard({ feature, index }: { feature: typeof PAYWALL_FEATURES[0]; 
       <Link href={feature.link} className="block h-full">
         <div className={cn(
           "relative h-full overflow-hidden rounded-2xl border bg-card transition-all duration-300 cursor-pointer group",
-          isHovered && "border-primary/40 shadow-xl shadow-primary/5"
+          isHovered && "border-primary/40  "
         )}>
           <Spotlight
             className="from-primary/25 via-primary/10 to-transparent"
@@ -562,7 +562,7 @@ function RelatedPageLink({ page }: { page: typeof RELATED_PAGES[0] }) {
         href={page.href}
         className={cn(
           "flex items-center gap-2 rounded-xl border bg-card px-5 py-3.5 text-sm font-medium transition-all duration-200",
-          isHovered && "border-primary/40 text-primary shadow-lg shadow-primary/5"
+          isHovered && "border-primary/40 text-primary  "
         )}
       >
         {page.name}
@@ -703,7 +703,7 @@ export function RevenueGrowthFeatures(): React.JSX.Element {
                     >
                       <Link
                         href="/schedule-demo"
-                        className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
+                        className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors  "
                       >
                         Learn about FunnelFox
                         <ArrowRightIcon className="size-5" />

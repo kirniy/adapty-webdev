@@ -261,7 +261,7 @@ function CostSavingMagic() {
   if (shouldReduceMotion) {
     return (
       <div className="flex items-center justify-center gap-2 py-2">
-        <span className="text-lg font-bold text-green-500">Save $100k+</span>
+        <span className="text-lg font-bold text-primary">Save $100k+</span>
         <span className="text-sm text-muted-foreground">on development</span>
       </div>
     );
@@ -325,8 +325,8 @@ function StatusIcon({
   switch (status) {
     case "check":
       return (
-        <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-green-500/20">
-          <CheckIcon className="size-4 text-green-500" />
+        <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10">
+          <CheckIcon className="size-4 text-primary" />
         </div>
       );
     case "partial":
@@ -434,7 +434,7 @@ export function CompareInHouse(): React.JSX.Element {
                 >
                   <Card className={cn(
                     "h-full relative overflow-hidden transition-all duration-200",
-                    hoveredBenefit === index && "border-primary/50 shadow-lg"
+                    hoveredBenefit === index && "border-primary/50 "
                   )}>
                     <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
                     {hoveredBenefit === index && (
@@ -465,7 +465,7 @@ export function CompareInHouse(): React.JSX.Element {
           {FEATURE_SECTIONS.map((section, index) => (
             <BlurFade key={index} delay={0.25 + index * 0.05}>
               <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className={index % 2 === 1 ? "md:order-2" : ""}>
+                <div>
                   <h3 className="text-xl font-semibold mb-4">{section.title}</h3>
                   {section.description && (
                     <p className="text-muted-foreground mb-4">{section.description}</p>
@@ -474,7 +474,7 @@ export function CompareInHouse(): React.JSX.Element {
                     <ul className="space-y-3 mb-6">
                       {section.bullets.map((bullet, bulletIndex) => (
                         <li key={bulletIndex} className="flex items-start gap-3">
-                          <CheckIcon className="size-5 text-green-500 shrink-0 mt-0.5" />
+                          <CheckIcon className="size-5 text-primary shrink-0 mt-0.5" />
                           <span className="text-muted-foreground">{bullet}</span>
                         </li>
                       ))}
@@ -490,7 +490,7 @@ export function CompareInHouse(): React.JSX.Element {
                     </Link>
                   )}
                 </div>
-                <div className={index % 2 === 1 ? "md:order-1" : ""}>
+                <div>
                   {section.testimonial && (
                     <Card className="bg-card/50">
                       <CardContent className="p-6">
@@ -524,7 +524,7 @@ export function CompareInHouse(): React.JSX.Element {
                 whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                 transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
               >
-                <Card className="h-full bg-card/50 border-red-500/20 relative overflow-hidden hover:shadow-lg transition-all duration-200">
+                <Card className="h-full bg-card/50 border-red-500/20 relative overflow-hidden transition-all duration-200">
                   <Spotlight className="from-red-500/10 via-red-500/5 to-transparent" size={300} />
                   <CardContent className="p-6 relative">
                     <h3 className="text-lg font-semibold mb-6">In-house solution</h3>
@@ -557,7 +557,7 @@ export function CompareInHouse(): React.JSX.Element {
                 whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                 transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
               >
-                <Card className="h-full bg-card/50 border-green-500/20 relative overflow-hidden hover:shadow-lg transition-all duration-200">
+                <Card className="h-full bg-card/50 border-green-500/20 relative overflow-hidden transition-all duration-200">
                   <Spotlight className="from-green-500/10 via-green-500/5 to-transparent" size={300} />
                   <CardContent className="p-6 relative">
                     <h3 className="text-lg font-semibold mb-6 text-primary">Adapty</h3>
@@ -625,10 +625,10 @@ export function CompareInHouse(): React.JSX.Element {
                   whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-200">
+                  <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 transition-all duration-200">
                     <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={220} />
                     <CardContent className="p-6 relative">
-                      <CheckIcon className="size-6 text-green-500 mb-3" />
+                      <CheckIcon className="size-6 text-primary mb-3" />
                       <p className="text-muted-foreground">{reason}</p>
                     </CardContent>
                   </Card>
@@ -671,7 +671,7 @@ export function CompareInHouse(): React.JSX.Element {
                   whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
+                  <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 transition-all duration-200">
                     <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
                     <CardContent className="p-6 relative">
                       <blockquote className="text-sm text-muted-foreground italic mb-4">

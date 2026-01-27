@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { CircleCheckBigIcon } from 'lucide-react';
+import { ChevronRightIcon } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 
 import { APP_NAME } from '@workspace/common/app';
@@ -34,13 +34,13 @@ function NoCodeMagic() {
 
   return (
     <motion.div
-      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm font-medium"
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay: 0.3 }}
     >
       <motion.div
-        className="size-2 rounded-full bg-emerald-500"
+        className="size-2 rounded-full bg-primary"
         animate={shouldReduceMotion ? {} : {
           scale: [1, 1.2, 1],
         }}
@@ -127,7 +127,7 @@ export function Solution(): React.JSX.Element {
             <div className="-ml-8 w-[calc(100%+64px)] border-t border-dashed sm:-ml-20 sm:w-[calc(100%+160px)]" />
 
             <div className="grid gap-10 sm:container lg:grid-cols-2">
-              <div className="order-1 lg:order-2">
+              <div>
                 <BlurFade delay={0.1}>
                   <h2 className="mb-2.5 mt-8 text-3xl font-semibold md:text-5xl">
                     Know your subscription numbers at any moment
@@ -163,7 +163,7 @@ export function Solution(): React.JSX.Element {
                           }}
                           transition={{ type: 'spring', duration: 0.2 }}
                         >
-                          <CircleCheckBigIcon className="size-4 shrink-0 text-primary" />
+                          <ChevronRightIcon className="size-3 shrink-0 text-muted-foreground" />
                         </motion.div>
                         <span className="font-medium">{feature}</span>
                       </motion.li>
@@ -171,7 +171,7 @@ export function Solution(): React.JSX.Element {
                   ))}
                 </ul>
               </div>
-              <BlurFade delay={0.2} className="order-2 md:order-1">
+              <BlurFade delay={0.2}>
                 <AiAdvisorCard className="w-full max-w-md" />
               </BlurFade>
             </div>

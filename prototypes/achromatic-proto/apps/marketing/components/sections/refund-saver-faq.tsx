@@ -22,13 +22,13 @@ function RefundFAQMagic() {
 
   return (
     <motion.div
-      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-sm font-medium"
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay: 0.15 }}
     >
       <motion.div
-        className="size-2 rounded-full bg-green-500"
+        className="size-2 rounded-full bg-primary"
         animate={shouldReduceMotion ? {} : {
           scale: [1, 1.3, 1],
         }}

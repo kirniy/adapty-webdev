@@ -23,7 +23,7 @@ function PlatformScaleMagic() {
       transition={{ duration: 0.3, delay: 0.15 }}
     >
       <motion.div
-        className="size-2 rounded-full bg-green-500"
+        className="size-2 rounded-full bg-primary"
         animate={shouldReduceMotion ? {} : {
           scale: [1, 1.3, 1],
           opacity: [1, 0.7, 1],
@@ -134,7 +134,7 @@ function StatCard({
         <div className={cn(
           'relative rounded-2xl border bg-card p-8 h-full overflow-hidden',
           'transition-all duration-200',
-          isHovered && 'border-border/80 shadow-lg'
+          isHovered && 'border-border/80 '
         )}>
           {isHovered && <BorderBeam size={150} duration={8} borderWidth={1.5} />}
           {/* Content */}

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, TrendingUpIcon, TargetIcon, GlobeIcon, FlaskConicalIcon, DollarSignIcon, ArrowUpIcon } from 'lucide-react';
+import { TrendingUpIcon, TargetIcon, GlobeIcon, FlaskConicalIcon, DollarSignIcon, ArrowUpIcon } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -49,13 +49,13 @@ function RevenueCounterMagic() {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
-        <div className="size-6 rounded-full bg-green-500/10 flex items-center justify-center">
-          <ArrowUpIcon className="size-3 text-green-600" />
+        <div className="size-6 rounded-full bg-primary/10 flex items-center justify-center">
+          <ArrowUpIcon className="size-3 text-primary" />
         </div>
         <div className="text-left">
-          <p className="text-sm font-bold text-green-600">+{value}%</p>
+          <p className="text-sm font-bold text-primary">+{value}%</p>
           <p className="text-[10px] text-muted-foreground">Revenue growth</p>
         </div>
       </motion.div>
@@ -98,7 +98,7 @@ function MRRChartMagic() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 shadow-lg"
+        className="rounded-lg bg-background/95 backdrop-blur-sm border px-3 py-2 "
       >
         <div className="flex items-center gap-2 mb-1">
           <DollarSignIcon className="size-3 text-primary" />
@@ -207,12 +207,6 @@ export function RevenueGrowthHero(): React.JSX.Element {
                     )}
                   >
                     Book a demo
-                    <motion.span
-                      animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
-                      transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                    >
-                      <ArrowRightIcon className="ml-2 size-4" />
-                    </motion.span>
                   </Link>
                 </motion.div>
 
@@ -247,7 +241,7 @@ export function RevenueGrowthHero(): React.JSX.Element {
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background shadow-lg",
+                "relative w-full overflow-hidden rounded-xl border bg-background ",
                 monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
               )}
             >
