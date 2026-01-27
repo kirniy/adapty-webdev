@@ -1,15 +1,21 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ChevronRightIcon } from 'lucide-react';
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { createPortal } from 'react-dom';
 
 import { cn } from '@workspace/ui/lib/utils';
-import { GridSection } from '~/components/fragments/grid-section';
+
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { GridSection } from '~/components/fragments/grid-section';
+import {
+  TSeparatorCard,
+  TSeparatorFeatureCard,
+  TSeparatorSection
+} from '~/components/fragments/t-separator-section';
 import { useImageSetVariant, type ImageSetVariant } from '~/lib/debug-context';
 
 // Helper to get image path based on current image set variant
@@ -19,29 +25,27 @@ function getImagePath(imageSet: ImageSetVariant, imageName: string): string {
 
 // =============================================================================
 // LINEAR-STYLE FEATURE TAG
-// Elongated horizontal dot (pill) + text - very Linear aesthetic
 // =============================================================================
 function FeatureTag({
   label,
   href,
-  color = 'primary',
+  color = 'primary'
 }: {
   label: string;
   href?: string;
   color?: 'primary' | 'cyan' | 'green' | 'amber' | 'purple' | 'pink';
 }) {
   const colorClasses = {
-    primary: 'bg-primary',
+    primary: 'bg-gray-900',
     cyan: 'bg-cyan-500',
-    green: 'bg-primary',
+    green: 'bg-green-500',
     amber: 'bg-amber-500',
     purple: 'bg-purple-500',
-    pink: 'bg-pink-500',
+    pink: 'bg-pink-500'
   };
 
   const content = (
-    <span className="inline-flex items-center gap-2.5 text-[15px] text-muted-foreground">
-      {/* Linear-style elongated pill dot */}
+    <span className="inline-flex items-center gap-2.5 text-sm text-gray-500 font-medium">
       <span className={cn('w-4 h-1.5 rounded-full', colorClasses[color])} />
       <span>{label}</span>
     </span>
@@ -51,7 +55,7 @@ function FeatureTag({
     return (
       <Link
         href={href}
-        className="inline-flex items-center gap-2.5 text-[15px] text-muted-foreground hover:text-foreground transition-colors group"
+        className="inline-flex items-center gap-2.5 text-sm text-gray-500 font-medium hover:text-gray-900 transition-colors group"
       >
         <span className={cn('w-4 h-1.5 rounded-full', colorClasses[color])} />
         <span>{label}</span>
@@ -65,13 +69,12 @@ function FeatureTag({
 
 // =============================================================================
 // LINEAR-STYLE SQUIRCLE BUTTON
-// Pill button with subtle border - cleaner than rounded-lg
 // =============================================================================
 function SquircleButton({
   children,
   href,
   variant = 'chevron',
-  onClick,
+  onClick
 }: {
   children: React.ReactNode;
   href?: string;
@@ -80,17 +83,16 @@ function SquircleButton({
 }) {
   const content = (
     <>
-      <span className="text-[14px] font-medium">{children}</span>
-      {variant === 'chevron' && <ChevronRightIcon className="size-3.5" />}
-      {variant === 'plus' && <span className="text-base leading-none">+</span>}
+      <span className="text-sm font-medium text-gray-700">{children}</span>
+      {variant === 'chevron' && <ChevronRightIcon className="size-3.5 text-gray-400 transition-transform duration-150 group-hover:translate-x-0.5" />}
+      {variant === 'plus' && <span className="text-base leading-none text-gray-400">+</span>}
     </>
   );
 
   const className = cn(
-    'inline-flex items-center gap-1.5 px-4 py-2 rounded-full',
-    'bg-muted/40 border border-border/60',
-    'text-foreground',
-    'hover:bg-muted hover:border-border/80 transition-all duration-200'
+    'group inline-flex items-center gap-1.5 px-4 py-2 rounded-full',
+    'bg-white border border-gray-200',
+    'hover:bg-gray-50 hover:border-gray-300 transition-all duration-200'
   );
 
   if (href) {
@@ -110,7 +112,8 @@ function SquircleButton({
 
 // =============================================================================
 // LINEAR-STYLE INTERACTIVE SELECTOR
-// Options on left, image on right that changes based on selection
+// =============================================================================
+// INTERACTIVE SELECTOR - 2-column: vertical menu left, large image right
 // =============================================================================
 type SelectorOption = {
   id: string;
@@ -123,7 +126,7 @@ function InteractiveSelector({
   title,
   subtitle,
   options,
-  features,
+  features
 }: {
   title: string;
   subtitle?: string;
@@ -134,55 +137,54 @@ function InteractiveSelector({
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div className="pt-12 pb-8">
-      <div className="grid lg:grid-cols-2 gap-16 items-start">
-        {/* Left: Header + Options */}
-        <div>
-          <h3 className="text-xl font-semibold tracking-tight mb-2">{title}</h3>
-          {subtitle && (
-            <p className="text-muted-foreground text-[15px] mb-10">{subtitle}</p>
-          )}
+    <div>
+      {/* Header */}
+      <h3 className="text-2xl lg:text-3xl font-semibold tracking-tight mb-3 text-gray-900">{title}</h3>
+      {subtitle && (
+        <p className="text-gray-500 mb-10 max-w-xl">{subtitle}</p>
+      )}
 
-          {/* Selectable options with vertical line - Linear style */}
-          <div className="relative pl-6">
-            {/* Vertical line - subtle */}
-            <div className="absolute left-0 top-0 bottom-0 w-px bg-white/10" />
+      {/* 2-column layout: menu left, image right */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        {/* Left: Vertical menu with indicator line */}
+        <div className="relative pl-6">
+          {/* Vertical line */}
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-200" />
 
-            <div className="space-y-1">
-              {options.map((option, index) => (
-                <button
-                  key={option.id}
-                  onClick={() => setSelectedIndex(index)}
+          <div className="space-y-1">
+            {options.map((option, index) => (
+              <button
+                key={option.id}
+                onClick={() => setSelectedIndex(index)}
+                className={cn(
+                  'relative block w-full text-left py-3 px-4 -ml-4 rounded-lg transition-all duration-200',
+                  selectedIndex === index
+                    ? 'text-gray-900 bg-gray-50'
+                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50/50'
+                )}
+              >
+                {/* Indicator dot */}
+                <span
                   className={cn(
-                    'relative block w-full text-left py-3 px-4 -ml-4 rounded-lg transition-all duration-200',
+                    'absolute -left-6 top-1/2 -translate-y-1/2 -translate-x-1/2 size-2 rounded-full transition-all duration-200',
                     selectedIndex === index
-                      ? 'text-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/30'
+                      ? 'bg-gray-900 scale-100'
+                      : 'bg-gray-300 scale-75'
                   )}
-                >
-                  {/* Indicator dot on vertical line */}
-                  <span
-                    className={cn(
-                      'absolute -left-6 top-1/2 -translate-y-1/2 -translate-x-1/2 size-2 rounded-full transition-all duration-200',
-                      selectedIndex === index
-                        ? 'bg-primary scale-100'
-                        : 'bg-border scale-75'
-                    )}
-                  />
-                  <span className="font-medium text-[15px]">{option.title}</span>
-                  {option.description && (
-                    <span className="block text-[13px] text-muted-foreground mt-0.5">
-                      {option.description}
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
+                />
+                <span className="font-medium">{option.title}</span>
+                {option.description && (
+                  <span className="block text-sm text-gray-400 mt-0.5">
+                    {option.description}
+                  </span>
+                )}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Right: Image that changes - Linear-style card */}
-        <div className="relative aspect-[4/3] rounded-[20px] overflow-hidden border border-border/50 bg-muted/30">
+        {/* Right: Large image */}
+        <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 bg-gray-50 shadow-sm">
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedIndex}
@@ -203,32 +205,30 @@ function InteractiveSelector({
         </div>
       </div>
 
-      {/* Optional: Small feature grid below separator */}
+      {/* Optional: Feature grid below */}
       {features && features.length > 0 && (
-        <>
-          <div className="h-px bg-white/5 my-12" />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <div key={index}>
-                <div className="flex items-center gap-2.5 mb-2">
-                  {feature.icon}
-                  <span className="font-medium text-[14px] text-foreground">{feature.title}</span>
-                </div>
-                <p className="text-muted-foreground text-[13px] leading-relaxed">
-                  {feature.description}
-                </p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12 pt-10 border-t border-gray-100">
+          {features.map((feature, index) => (
+            <div key={index}>
+              <div className="flex items-center gap-2.5 mb-2">
+                {feature.icon}
+                <span className="font-medium text-sm text-gray-900">
+                  {feature.title}
+                </span>
               </div>
-            ))}
-          </div>
-        </>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
 }
 
 // =============================================================================
-// LINEAR-STYLE FEATURE SECTION
-// Complete section with tag, title, description, and content
+// LINEAR-STYLE FEATURE SECTION - Vertical text stack like Linear.app
 // =============================================================================
 export function LinearFeatureSection({
   tag,
@@ -238,7 +238,7 @@ export function LinearFeatureSection({
   subtitle,
   description,
   children,
-  learnMoreHref,
+  learnMoreHref
 }: {
   tag: string;
   tagHref?: string;
@@ -250,26 +250,33 @@ export function LinearFeatureSection({
   learnMoreHref?: string;
 }) {
   return (
-    <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="container max-w-6xl mx-auto px-6 py-[120px] lg:py-[160px]">
+    <GridSection
+      className="relative"
+      hideVerticalGridLines
+      hideBottomGridLine
+    >
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <BlurFade>
-          {/* Tag - increased spacing */}
-          <div className="mb-6">
-            <FeatureTag label={tag} href={tagHref} color={tagColor} />
-          </div>
-
-          {/* Title + Description layout - Linear's 2-column header style */}
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-            <div>
-              <h2 className="text-[40px] font-semibold tracking-tight leading-[1.1]">
-                {title}
-              </h2>
+          {/* Linear pattern: Vertical text stack, not 2-column split */}
+          <div className="mb-12">
+            {/* Tag */}
+            <div className="mb-4">
+              <FeatureTag label={tag} href={tagHref} color={tagColor} />
             </div>
-            <div className="lg:pt-1">
+
+            {/* Large title */}
+            <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1] text-gray-900 mb-6 max-w-3xl">
+              {title}
+            </h2>
+
+            {/* Description below title */}
+            <div className="max-w-2xl">
               {subtitle && (
-                <p className="text-foreground font-medium mb-3 text-[17px]">{subtitle}</p>
+                <p className="text-gray-900 font-medium mb-3 text-lg">
+                  {subtitle}
+                </p>
               )}
-              <p className="text-muted-foreground text-[15px] leading-relaxed">
+              <p className="text-gray-500 text-lg leading-relaxed">
                 {description}
               </p>
               {learnMoreHref && (
@@ -283,8 +290,8 @@ export function LinearFeatureSection({
           </div>
         </BlurFade>
 
-        {/* Content area */}
-        {children && <div className="mt-20">{children}</div>}
+        {/* Content area - visuals go here, full width */}
+        {children && <div>{children}</div>}
       </div>
     </GridSection>
   );
@@ -292,49 +299,69 @@ export function LinearFeatureSection({
 
 // =============================================================================
 // LINEAR-STYLE 3-COLUMN VALUE PROPS
-// Like "Made for modern product teams" section
 // =============================================================================
 type ValueProp = {
   title: string;
   description: string;
   image?: string;
+  modal?: {
+    paragraphs: string[];
+    stats?: { value: string; label: string }[];
+    link?: string;
+  };
 };
 
 export function ValuePropsSection({
   heading,
-  props,
+  props
 }: {
   heading: string;
   props: ValueProp[];
 }) {
-  const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+  const [activeModal, setActiveModal] = React.useState<number | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  const activeProp = activeModal !== null ? props[activeModal] : null;
+
+  const modalData = activeProp?.modal
+    ? {
+        id: `value-prop-${activeModal}`,
+        title: activeProp.title,
+        subtitle: activeProp.description,
+        image: activeProp.image || '',
+        paragraphs: activeProp.modal.paragraphs,
+        stats: activeProp.modal.stats,
+        link: activeProp.modal.link
+      }
+    : null;
 
   return (
     <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="container max-w-6xl mx-auto px-6 py-[120px] lg:py-[160px]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <BlurFade>
-          <h2 className="text-[40px] font-semibold tracking-tight leading-[1.1] text-center mb-20">
+          <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight leading-tight text-center mb-16 text-gray-900">
             {heading}
           </h2>
         </BlurFade>
 
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {props.map((prop, index) => (
             <BlurFade key={index} delay={0.1 + index * 0.08}>
               <motion.div
-                whileHover={{ y: -2 }}
-                transition={{ duration: 0.2 }}
+                whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+                transition={{ duration: 0.15, ease: 'easeOut' }}
+                onClick={() => prop.modal && setActiveModal(index)}
                 className={cn(
                   'group relative flex flex-col h-full rounded-[20px] overflow-hidden',
-                  'bg-muted/20 border border-white/5',
-                  'hover:border-white/10 hover:bg-muted/30 hover:-translate-y-0.5',
-                  'transition-all duration-200 ease-out cursor-pointer'
+                  'bg-white border border-gray-200',
+                  'hover:border-gray-300 hover:shadow-lg',
+                  'transition-all duration-150 ease-out',
+                  prop.modal && 'cursor-pointer'
                 )}
-                onClick={() => setOpenIndex(index)}
               >
                 {/* Image/illustration area */}
                 {prop.image && (
-                  <div className="relative aspect-[16/10] bg-muted/40">
+                  <div className="relative aspect-[16/10] bg-gray-50">
                     <Image
                       src={prop.image}
                       alt={prop.title}
@@ -346,37 +373,46 @@ export function ValuePropsSection({
 
                 {/* Content */}
                 <div className="flex-1 p-6 flex flex-col">
-                  <h3 className="font-semibold text-lg mb-2 tracking-tight">{prop.title}</h3>
-                  <p className="text-[15px] text-muted-foreground leading-relaxed flex-1">
+                  <h3 className="font-medium text-xl mb-2 tracking-tight text-gray-900">
+                    {prop.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 leading-relaxed flex-1">
                     {prop.description}
                   </p>
 
-                  {/* Plus button - Linear style */}
-                  <div className="mt-5 flex justify-end">
-                    <span
-                      className={cn(
-                        'flex items-center justify-center size-8 rounded-full',
-                        'bg-white/5 border border-white/10',
-                        'group-hover:bg-white/10 group-hover:border-white/20',
-                        'transition-all duration-200'
-                      )}
-                    >
-                      <span className="text-base leading-none">+</span>
-                    </span>
-                  </div>
+                  {/* + button for modals */}
+                  {prop.modal && (
+                    <div className="mt-5 flex justify-end">
+                      <span
+                        className={cn(
+                          'flex items-center justify-center size-8 rounded-full',
+                          'bg-gray-100 border border-gray-200',
+                          'group-hover:bg-gray-200 group-hover:border-gray-300',
+                          'transition-colors duration-150 ease-out active:scale-[0.98]'
+                        )}
+                      >
+                        <span className="text-base leading-none text-gray-600">+</span>
+                      </span>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             </BlurFade>
           ))}
         </div>
       </div>
+
+      {/* Modal */}
+      {modalData && (
+        <CardModal
+          data={modalData}
+          isOpen={activeModal !== null}
+          onClose={() => setActiveModal(null)}
+        />
+      )}
     </GridSection>
   );
 }
-
-// =============================================================================
-// COMPLETE LINEAR-STYLE HOMEPAGE SECTIONS
-// =============================================================================
 
 // Section 1: Value Props (3 cards)
 export function AdaptyValueProps() {
@@ -384,19 +420,55 @@ export function AdaptyValueProps() {
   const props: ValueProp[] = [
     {
       title: 'Purpose-built for subscription apps',
-      description: 'Everything you need to manage, optimize, and grow in-app subscriptions. From paywalls to analytics.',
+      description:
+        'Everything you need to manage, optimize, and grow in-app subscriptions. From paywalls to analytics.',
       image: getImagePath(imageSet, 'light-feature1.webp'),
+      modal: {
+        paragraphs: [
+          'Adapty is built exclusively for subscription-based mobile apps. Unlike generic analytics tools, we understand the unique challenges of subscription businesses — from trial conversions to churn prediction.',
+          'Our SDK handles the complexity of subscription lifecycle management across iOS, Android, and Web platforms. You get unified data and consistent paywall experiences regardless of platform.'
+        ],
+        stats: [
+          { value: '3', label: 'Platforms supported' },
+          { value: '10K+', label: 'Apps powered' }
+        ],
+        link: '/features'
+      }
     },
     {
       title: 'Designed for speed',
-      description: 'Ship paywall changes in minutes, not weeks. No app store reviews, no code deploys required.',
+      description:
+        'Ship paywall changes in minutes, not weeks. No app store reviews, no code deploys required.',
       image: getImagePath(imageSet, 'light-feature2.webp'),
+      modal: {
+        paragraphs: [
+          'Stop waiting for App Store review cycles to test new paywall designs. With Adapty, your product team can create, deploy, and iterate on paywalls without writing a single line of code.',
+          'Our visual editor and remote configuration system means updates go live instantly. Test pricing, designs, and messaging in real-time while your developers focus on building core product features.'
+        ],
+        stats: [
+          { value: '<5 min', label: 'To deploy changes' },
+          { value: '0', label: 'Code deploys needed' }
+        ],
+        link: '/paywall-builder'
+      }
     },
     {
       title: 'Data-driven optimization',
-      description: 'A/B test everything. Get statistical significance fast. Make decisions with confidence.',
+      description:
+        'A/B test everything. Get statistical significance fast. Make decisions with confidence.',
       image: getImagePath(imageSet, 'light-feature3.webp'),
-    },
+      modal: {
+        paragraphs: [
+          'Make product decisions based on statistical evidence, not gut feelings. Adapty runs continuous A/B tests on your paywalls, pricing, and onboarding flows to find what actually converts.',
+          'Our analytics engine automatically calculates statistical significance, so you know when you have enough data to make a decision. No more guessing or relying on inconclusive test results.'
+        ],
+        stats: [
+          { value: '32%', label: 'Avg. revenue uplift' },
+          { value: '10x', label: 'Faster insights' }
+        ],
+        link: '/ab-testing'
+      }
+    }
   ];
 
   return (
@@ -407,73 +479,168 @@ export function AdaptyValueProps() {
   );
 }
 
-// Section 2: Paywall Builder (with interactive selector)
-export function PaywallBuilderLinear() {
+// Section 2b: Paywall Builder (T-Separator layout)
+export function PaywallBuilderTSeparator() {
   const imageSet = useImageSetVariant();
-  const options: SelectorOption[] = [
-    {
-      id: 'visual-editor',
-      title: 'Visual drag-and-drop editor',
-      description: 'No coding required',
-      image: getImagePath(imageSet, 'light-feature1.webp'),
-    },
-    {
-      id: 'templates',
-      title: 'Pre-built templates',
-      description: 'Industry-tested designs',
-      image: getImagePath(imageSet, 'light-feature2.webp'),
-    },
-    {
-      id: 'preview',
-      title: 'Real-time device preview',
-      description: 'See changes instantly',
-      image: getImagePath(imageSet, 'light-feature3.webp'),
-    },
-  ];
+  const [activeModal, setActiveModal] = React.useState<'templates' | 'preview' | null>(null);
 
-  const features = [
-    {
-      icon: <span className="size-3.5 rounded bg-primary/20" />,
-      title: 'Native rendering',
-      description: 'Paywalls render natively on iOS and Android.',
-    },
-    {
-      icon: <span className="size-3.5 rounded bg-primary/20" />,
-      title: 'Remote updates',
-      description: 'No app store review needed.',
-    },
-    {
-      icon: <span className="size-3.5 rounded bg-primary/20" />,
-      title: 'A/B testing ready',
-      description: 'Test any paywall variant.',
-    },
-    {
-      icon: <span className="size-3.5 rounded bg-primary/20" />,
-      title: 'Analytics built-in',
-      description: 'Track conversions and revenue.',
-    },
-  ];
+  const templatesModalData: ModalCardData = {
+    id: 'templates',
+    title: 'Pre-built templates',
+    subtitle: 'Start with industry-tested templates designed for maximum conversion',
+    image: getImagePath(imageSet, 'light-feature2.webp'),
+    paragraphs: [
+      'Choose from our library of professionally designed paywall templates, each optimized for different subscription models and user segments.',
+      'Every template has been tested across thousands of apps and refined based on real conversion data. Customize colors, fonts, images, and copy to match your brand in seconds.'
+    ],
+    stats: [
+      { value: '50+', label: 'Templates available' },
+      { value: '32%', label: 'Avg. conversion lift' }
+    ],
+    link: '/paywall-library'
+  };
+
+  const previewModalData: ModalCardData = {
+    id: 'preview',
+    title: 'Real-time device preview',
+    subtitle: 'See exactly how your paywall looks on every device before publishing',
+    image: getImagePath(imageSet, 'light-feature3.webp'),
+    paragraphs: [
+      'Preview your paywall on iPhone, iPad, and Android devices simultaneously as you edit. See pixel-perfect renders without deploying to a device.',
+      'Test different screen sizes, orientations, and accessibility settings. Ensure your paywall looks perfect on every device your users have.'
+    ],
+    stats: [
+      { value: '3', label: 'Platform previews' },
+      { value: '12+', label: 'Device sizes' }
+    ],
+    link: '/paywall-builder'
+  };
+
+  const activeData = activeModal === 'templates' ? templatesModalData : activeModal === 'preview' ? previewModalData : null;
 
   return (
-    <LinearFeatureSection
-      tag="Paywall Builder"
-      tagHref="/paywall-builder"
-      tagColor="primary"
-      title="Build paywalls without code"
-      subtitle="Visual editor for everyone."
-      description="Create stunning subscription paywalls with our drag-and-drop builder. Designers and product managers can iterate independently."
-      learnMoreHref="/paywall-builder"
-    >
-      <InteractiveSelector
-        title="Choose how you build"
-        options={options}
-        features={features}
-      />
-    </LinearFeatureSection>
+    <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
+      <div className="container max-w-5xl mx-auto px-4 sm:px-6 py-16 lg:py-24">
+        <BlurFade>
+          {/* Section Header */}
+          <div className="mb-16">
+            <div className="mb-6">
+              <FeatureTag label="Paywall Builder" color="purple" />
+            </div>
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+              <div>
+                <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight leading-[1.1] text-gray-900">
+                  Build paywalls without code
+                </h2>
+              </div>
+              <div className="lg:pt-1">
+                <p className="text-gray-500 text-[15px] leading-relaxed">
+                  Create stunning subscription paywalls with our drag-and-drop builder.
+                  Designers and product managers can iterate independently without
+                  waiting for app store reviews.
+                </p>
+              </div>
+            </div>
+          </div>
+        </BlurFade>
+
+        {/* T-Separator Layout */}
+        <BlurFade delay={0.1}>
+          <TSeparatorSection
+            borderColor="border-gray-200"
+            mainFeature={
+              <TSeparatorFeatureCard
+                className="bg-white border border-gray-200"
+                visual={
+                  <Image
+                    src={getImagePath(imageSet, 'light-feature1.webp')}
+                    alt="Visual drag-and-drop editor"
+                    fill
+                    className="object-cover"
+                  />
+                }
+                contentClassName="p-8"
+              >
+                <div className="flex items-start justify-between gap-8">
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-xl mb-3 tracking-tight text-gray-900">
+                      Visual drag-and-drop editor
+                    </h3>
+                    <p className="text-[15px] text-gray-500 leading-relaxed max-w-xl">
+                      Design beautiful paywalls with our intuitive visual editor.
+                      No coding required—just drag, drop, and customize every element
+                      to match your brand perfectly.
+                    </p>
+                  </div>
+                  <SquircleButton href="/paywall-builder" variant="chevron">
+                    Explore builder
+                  </SquircleButton>
+                </div>
+              </TSeparatorFeatureCard>
+            }
+            leftFeature={
+              <TSeparatorFeatureCard
+                className="bg-white border border-gray-200 h-full"
+                visual={
+                  <Image
+                    src={getImagePath(imageSet, 'light-feature2.webp')}
+                    alt="Pre-built templates"
+                    fill
+                    className="object-cover"
+                  />
+                }
+                title="Pre-built templates"
+                description="Start with industry-tested templates designed for maximum conversion. Customize colors, fonts, and layouts in seconds."
+                onClick={() => setActiveModal('templates')}
+                action={
+                  <div className="flex justify-end">
+                    <span className={cn('flex items-center justify-center size-8 rounded-full bg-gray-100 border border-gray-200')}>
+                      <span className="text-base leading-none text-gray-500">+</span>
+                    </span>
+                  </div>
+                }
+              />
+            }
+            rightFeature={
+              <TSeparatorFeatureCard
+                className="bg-white border border-gray-200 h-full"
+                visual={
+                  <Image
+                    src={getImagePath(imageSet, 'light-feature3.webp')}
+                    alt="Real-time device preview"
+                    fill
+                    className="object-cover"
+                  />
+                }
+                title="Real-time device preview"
+                description="See exactly how your paywall looks on iPhone, iPad, and Android devices before publishing. Preview instantly as you edit."
+                onClick={() => setActiveModal('preview')}
+                action={
+                  <div className="flex justify-end">
+                    <span className={cn('flex items-center justify-center size-8 rounded-full bg-gray-100 border border-gray-200')}>
+                      <span className="text-base leading-none text-gray-500">+</span>
+                    </span>
+                  </div>
+                }
+              />
+            }
+          />
+        </BlurFade>
+      </div>
+
+      {/* Modal */}
+      {activeData && (
+        <CardModal
+          data={activeData}
+          isOpen={!!activeModal}
+          onClose={() => setActiveModal(null)}
+        />
+      )}
+    </GridSection>
   );
 }
 
-// Section 3: A/B Testing (with interactive selector)
+// Section 3: A/B Testing
 export function ABTestingLinear() {
   const imageSet = useImageSetVariant();
   const options: SelectorOption[] = [
@@ -481,43 +648,43 @@ export function ABTestingLinear() {
       id: 'multivariate',
       title: 'Multi-variant experiments',
       description: 'Test A/B/C/D at once',
-      image: getImagePath(imageSet, 'light-feature2.webp'),
+      image: getImagePath(imageSet, 'light-feature2.webp')
     },
     {
       id: 'targeting',
       title: 'Audience targeting',
       description: 'Segment by any attribute',
-      image: getImagePath(imageSet, 'light-feature3.webp'),
+      image: getImagePath(imageSet, 'light-feature3.webp')
     },
     {
       id: 'analysis',
       title: 'Statistical analysis',
       description: 'Bayesian significance',
-      image: getImagePath(imageSet, 'light-feature1.webp'),
-    },
+      image: getImagePath(imageSet, 'light-feature1.webp')
+    }
   ];
 
   const features = [
     {
       icon: <span className="size-3.5 rounded bg-cyan-500/20" />,
       title: '20+ metrics',
-      description: 'Conversion, ARPU, LTV, and more.',
+      description: 'Conversion, ARPU, LTV, and more.'
     },
     {
       icon: <span className="size-3.5 rounded bg-cyan-500/20" />,
       title: 'Traffic allocation',
-      description: 'Control variant distribution.',
+      description: 'Control variant distribution.'
     },
     {
       icon: <span className="size-3.5 rounded bg-cyan-500/20" />,
       title: 'Auto-winner',
-      description: 'Automatic rollout to winning variant.',
+      description: 'Automatic rollout to winning variant.'
     },
     {
       icon: <span className="size-3.5 rounded bg-cyan-500/20" />,
       title: 'Real-time results',
-      description: 'See data as it comes in.',
-    },
+      description: 'See data as it comes in.'
+    }
   ];
 
   return (
@@ -539,7 +706,7 @@ export function ABTestingLinear() {
   );
 }
 
-// Section 4: Analytics (simpler section)
+// Section 4: Analytics
 export function AnalyticsLinear() {
   const imageSet = useImageSetVariant();
   return (
@@ -553,7 +720,7 @@ export function AnalyticsLinear() {
       learnMoreHref="/ltv-analytics"
     >
       <div className="mt-12 grid md:grid-cols-2 gap-12 items-center">
-        <div className="relative aspect-video rounded-[20px] overflow-hidden border border-border/50 bg-muted/30">
+        <div className="relative aspect-video rounded-[20px] overflow-hidden border border-gray-200 bg-gray-50/50 shadow-sm">
           <Image
             src={getImagePath(imageSet, 'light-feature3.webp')}
             alt="Analytics dashboard"
@@ -563,30 +730,38 @@ export function AnalyticsLinear() {
         </div>
         <div className="space-y-6">
           <div className="flex items-start gap-4">
-            <span className="size-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <span className="size-2.5 rounded-full bg-primary" />
+            <span className="size-9 rounded-xl bg-gray-100 flex items-center justify-center shrink-0">
+              <span className="size-2.5 rounded-full bg-gray-900" />
             </span>
             <div>
-              <h4 className="font-medium text-[15px] mb-1">Real-time dashboard</h4>
-              <p className="text-[15px] text-muted-foreground leading-relaxed">See revenue, trials, and conversions as they happen.</p>
+              <h4 className="font-medium text-base mb-1 text-gray-900">
+                Real-time dashboard
+              </h4>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                See revenue, trials, and conversions as they happen.
+              </p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <span className="size-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <span className="size-2.5 rounded-full bg-primary" />
+            <span className="size-9 rounded-xl bg-gray-100 flex items-center justify-center shrink-0">
+              <span className="size-2.5 rounded-full bg-gray-900" />
             </span>
             <div>
-              <h4 className="font-medium text-[15px] mb-1">Cohort analysis</h4>
-              <p className="text-[15px] text-muted-foreground leading-relaxed">Understand retention patterns across user segments.</p>
+              <h4 className="font-medium text-base mb-1 text-gray-900">Cohort analysis</h4>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Understand retention patterns across user segments.
+              </p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <span className="size-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <span className="size-2.5 rounded-full bg-primary" />
+            <span className="size-9 rounded-xl bg-gray-100 flex items-center justify-center shrink-0">
+              <span className="size-2.5 rounded-full bg-gray-900" />
             </span>
             <div>
-              <h4 className="font-medium text-[15px] mb-1">LTV predictions</h4>
-              <p className="text-[15px] text-muted-foreground leading-relaxed">AI-powered forecasts for up to 12 months.</p>
+              <h4 className="font-medium text-base mb-1 text-gray-900">LTV predictions</h4>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                AI-powered forecasts for up to 12 months.
+              </p>
             </div>
           </div>
         </div>
@@ -595,142 +770,399 @@ export function AnalyticsLinear() {
   );
 }
 
+// =============================================================================
+// 30+ INTEGRATION CARDS
+// =============================================================================
+const INTEGRATIONS: ModalCardData[] = [
+  // Analytics
+  {
+    id: 'amplitude',
+    title: 'Amplitude',
+    subtitle: 'Product analytics integration',
+    logo: '/logos/integrations/amplitude.svg',
+    image: '/assets/hero/light-feature1.webp',
+    paragraphs: [
+      'Connect Adapty to Amplitude and send all subscription events automatically. Track user behavior alongside revenue data for complete product insights.',
+      'Understand how subscription events correlate with user engagement patterns and feature adoption.'
+    ],
+    link: '/integrations/amplitude'
+  },
+  {
+    id: 'mixpanel',
+    title: 'Mixpanel',
+    subtitle: 'Advanced product analytics',
+    logo: '/logos/integrations/mixpanel.svg',
+    image: '/assets/hero/light-feature2.webp',
+    paragraphs: [
+      'Send subscription lifecycle events to Mixpanel for deeper user behavior analysis.',
+      'Build funnels, cohorts, and retention reports combining subscription data with product usage.'
+    ]
+  },
+  {
+    id: 'firebase',
+    title: 'Firebase Analytics',
+    subtitle: 'Google Analytics for Firebase',
+    logo: '/logos/integrations/firebase.svg',
+    image: '/assets/hero/light-feature3.webp',
+    paragraphs: [
+      'Integrate with Firebase Analytics to get a complete picture of your app performance.',
+      'Track in-app purchase events alongside user engagement metrics.'
+    ]
+  },
+  {
+    id: 'segment',
+    title: 'Segment',
+    subtitle: 'Customer data platform',
+    logo: '/logos/integrations/segment.svg',
+    image: '/assets/hero/light-feature1.webp',
+    paragraphs: [
+      'Send subscription events to Segment and route them to 300+ destinations.',
+      'Unify your customer data across all your tools and platforms.'
+    ]
+  },
+  // Attribution
+  {
+    id: 'appsflyer',
+    title: 'AppsFlyer',
+    subtitle: 'Mobile attribution and marketing analytics',
+    logo: '/logos/integrations/appsflyer.svg',
+    image: '/assets/hero/light-feature2.webp',
+    paragraphs: [
+      'Send purchase and subscription events to AppsFlyer automatically. Measure true ROI of your user acquisition campaigns.',
+      'Support for SKAN and privacy-first attribution. Track subscriptions back to specific campaigns and creatives.'
+    ],
+    stats: [
+      { value: '100%', label: 'Event accuracy' },
+      { value: '<1s', label: 'Event latency' }
+    ]
+  },
+  {
+    id: 'adjust',
+    title: 'Adjust',
+    subtitle: 'Mobile measurement and fraud prevention',
+    logo: '/logos/integrations/adjust.svg',
+    image: '/assets/hero/light-feature3.webp',
+    paragraphs: [
+      'Connect Adapty to Adjust for accurate attribution of subscription revenue.',
+      'Measure the true LTV of users acquired through different channels.'
+    ]
+  },
+  {
+    id: 'branch',
+    title: 'Branch',
+    subtitle: 'Mobile linking and attribution',
+    logo: '/logos/integrations/branch.svg',
+    image: '/assets/hero/light-feature1.webp',
+    paragraphs: [
+      'Attribute subscription revenue to specific marketing links and campaigns.',
+      'Understand which referral sources drive the highest-value subscribers.'
+    ]
+  },
+  {
+    id: 'singular',
+    title: 'Singular',
+    subtitle: 'Marketing intelligence platform',
+    logo: '/logos/integrations/singular.svg',
+    image: '/assets/hero/light-feature2.webp',
+    paragraphs: [
+      'Unify your marketing data with subscription revenue in Singular.',
+      'Optimize ad spend based on actual subscription LTV, not just installs.'
+    ]
+  },
+  {
+    id: 'posthog',
+    title: 'PostHog',
+    subtitle: 'Product analytics platform',
+    logo: '/logos/integrations/posthog.svg',
+    image: '/assets/hero/light-feature3.webp',
+    paragraphs: [
+      'Send subscription events to PostHog for comprehensive attribution analysis.',
+      'Connect revenue to acquisition sources across all your marketing channels.'
+    ]
+  },
+  {
+    id: 'mparticle',
+    title: 'mParticle',
+    subtitle: 'Customer data infrastructure',
+    logo: '/logos/integrations/mparticle.svg',
+    image: '/assets/hero/light-feature1.webp',
+    paragraphs: [
+      'Integrate subscription data with mParticle for complete ROAS analysis.',
+      'Track user acquisition costs against subscription revenue in real-time.'
+    ]
+  },
+  // Marketing
+  {
+    id: 'braze',
+    title: 'Braze',
+    subtitle: 'Customer engagement platform',
+    logo: '/logos/integrations/braze.svg',
+    image: '/assets/hero/light-feature2.webp',
+    paragraphs: [
+      'Trigger personalized campaigns based on subscription events.',
+      'Send targeted messages to users at risk of churning or ready to upgrade.'
+    ]
+  },
+  {
+    id: 'onesignal',
+    title: 'OneSignal',
+    subtitle: 'Push notification and email platform',
+    logo: '/logos/integrations/onesignal.svg',
+    image: '/assets/hero/light-feature3.webp',
+    paragraphs: [
+      'Send targeted push notifications based on subscription status.',
+      'Re-engage lapsed subscribers and promote upgrades with personalized messages.'
+    ]
+  },
+  {
+    id: 'clevertap',
+    title: 'CleverTap',
+    subtitle: 'Mobile marketing platform',
+    logo: '/logos/integrations/clevertap.svg',
+    image: '/assets/hero/light-feature1.webp',
+    paragraphs: [
+      'Create personalized user journeys based on subscription lifecycle events.',
+      'Automate retention campaigns for subscribers at risk of churning.'
+    ]
+  },
+  {
+    id: 'airship',
+    title: 'Airship',
+    subtitle: 'Customer engagement platform',
+    logo: '/logos/integrations/airship.svg',
+    image: '/assets/hero/light-feature2.webp',
+    paragraphs: [
+      'Leverage subscription data to power personalized messaging across channels.',
+      'Orchestrate cross-channel campaigns based on subscription events.'
+    ]
+  },
+  {
+    id: 'pushwoosh',
+    title: 'Pushwoosh',
+    subtitle: 'Push notification platform',
+    logo: '/logos/integrations/pushwoosh.svg',
+    image: '/assets/hero/light-feature3.webp',
+    paragraphs: [
+      'Use subscription events to trigger personalized push notifications.',
+      'Build automated workflows for onboarding, retention, and win-back.'
+    ]
+  },
+  {
+    id: 'customerio',
+    title: 'Customer.io',
+    subtitle: 'Automated messaging platform',
+    logo: '/logos/integrations/customerio.svg',
+    image: '/assets/hero/light-feature1.webp',
+    paragraphs: [
+      'Create data-driven messaging campaigns based on subscription behavior.',
+      'Automate lifecycle marketing with real-time subscription events.'
+    ]
+  },
+  // Communication
+  {
+    id: 'slack',
+    title: 'Slack',
+    subtitle: 'Team communication',
+    logo: '/logos/integrations/slack.svg',
+    image: '/assets/hero/light-feature2.webp',
+    paragraphs: [
+      'Receive real-time notifications for purchases, trials, and cancellations.',
+      'Customize which events trigger notifications and keep your team informed.'
+    ]
+  },
+  {
+    id: 'facebook',
+    title: 'Facebook Ads',
+    subtitle: 'Ad attribution and optimization',
+    logo: '/logos/integrations/facebook.svg',
+    image: '/assets/hero/light-feature3.webp',
+    paragraphs: [
+      'Send subscription event data to Facebook for ad optimization.',
+      'Improve targeting with subscription-based custom audiences.'
+    ]
+  },
+  {
+    id: 'tiktok',
+    title: 'TikTok Ads',
+    subtitle: 'Ad attribution platform',
+    logo: '/logos/integrations/tiktok.svg',
+    image: '/assets/hero/light-feature1.webp',
+    paragraphs: [
+      'Get instant notifications about important subscription events via TikTok.',
+      'Optimize ad spend based on actual subscription conversions.'
+    ]
+  },
+  // Developer
+  {
+    id: 'webhooks',
+    title: 'Webhooks',
+    subtitle: 'Real-time event notifications',
+    logo: '/logos/integrations/webhook.svg',
+    image: '/assets/hero/light-feature2.webp',
+    paragraphs: [
+      'Build custom integrations with our webhook system. Receive all subscription lifecycle events in real-time.',
+      'Retry logic and event logging included. Build any custom workflow you need.'
+    ],
+    link: '/integrations/webhooks'
+  },
+  {
+    id: 'appmetrica',
+    title: 'AppMetrica',
+    subtitle: 'Mobile analytics by Yandex',
+    logo: '/logos/integrations/appmetrica.svg',
+    image: '/assets/hero/light-feature3.webp',
+    paragraphs: [
+      'Export subscription data to AppMetrica for analysis.',
+      'Connect with Yandex analytics tools for custom reporting.'
+    ]
+  },
+  {
+    id: 'split',
+    title: 'Split.io',
+    subtitle: 'Feature flag platform',
+    logo: '/logos/integrations/split.svg',
+    image: '/assets/hero/light-feature1.webp',
+    paragraphs: [
+      'Use Split.io feature flags alongside Adapty experiments.',
+      'Coordinate feature rollouts with subscription-based targeting.'
+    ]
+  }
+];
+
 // Section 5: Integrations Carousel
 export function IntegrationsLinear() {
-  const imageSet = useImageSetVariant();
-  const cards: ModalCardData[] = [
-    {
-      id: 'amplitude',
-      title: 'Amplitude',
-      subtitle: 'Send subscription events to your product analytics.',
-      image: getImagePath(imageSet, 'light-feature1.webp'),
-      paragraphs: [
-        'Connect Adapty to Amplitude and send all subscription events automatically.',
-        'Track user behavior alongside revenue data for complete product insights.',
-        'No code required - just connect your Amplitude API key.',
-      ],
-      link: '/integrations/amplitude',
-    },
-    {
-      id: 'appsflyer',
-      title: 'AppsFlyer',
-      subtitle: 'Attribute revenue to marketing campaigns.',
-      image: getImagePath(imageSet, 'light-feature2.webp'),
-      paragraphs: [
-        'Send purchase and subscription events to AppsFlyer automatically.',
-        'Measure true ROI of your user acquisition campaigns.',
-        'Support for SKAN and privacy-first attribution.',
-      ],
-      stats: [
-        { value: '100%', label: 'Event accuracy' },
-        { value: '<1s', label: 'Event latency' },
-      ],
-    },
-    {
-      id: 'slack',
-      title: 'Slack',
-      subtitle: 'Get notified about important events.',
-      image: getImagePath(imageSet, 'light-feature3.webp'),
-      paragraphs: [
-        'Receive real-time notifications for purchases, trials, and cancellations.',
-        'Customize which events trigger notifications.',
-        'Keep your team informed without checking dashboards.',
-      ],
-    },
-    {
-      id: 'webhooks',
-      title: 'Webhooks',
-      subtitle: 'Send events to any endpoint.',
-      image: getImagePath(imageSet, 'light-feature1.webp'),
-      paragraphs: [
-        'Build custom integrations with our webhook system.',
-        'Receive all subscription lifecycle events in real-time.',
-        'Retry logic and event logging included.',
-      ],
-      link: '/integrations/webhooks',
-    },
-  ];
-
   return (
     <CardCarousel
       tag="Integrations"
       tagColor="amber"
       title="Connect your tools"
       description="Send subscription events to your analytics, marketing, and CRM tools. 30+ integrations available out of the box."
-      cards={cards}
+      cards={INTEGRATIONS}
     />
   );
 }
 
 // =============================================================================
-// LINEAR-STYLE MODAL CARD
-// Card that opens as modal when clicked (+ button)
-// Modal contains: illustration, title, paragraphs, quote, stats
+// MODAL CARD DATA TYPE
 // =============================================================================
-type ModalCardData = {
+export type ModalCardData = {
   id: string;
   title: string;
   subtitle: string;
   image: string;
+  logo?: string; // Optional logo for integration cards
   paragraphs: string[];
   quote?: {
     text: string;
     company: string;
   };
   stats?: { value: string; label: string }[];
-  link?: string; // Link shown inside modal as "Learn more" button
-  directLink?: boolean; // If true, card navigates directly instead of opening modal
+  link?: string;
+  directLink?: boolean;
 };
 
+// =============================================================================
+// MODAL ANIMATION VARIANTS
+// =============================================================================
+const modalBackdropVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 }
+};
+
+const modalContentVariants = {
+  initial: { opacity: 0, scale: 0.96, y: 20 },
+  animate: { opacity: 1, scale: 1, y: 0 },
+  exit: { opacity: 0, scale: 0.96, y: 20 }
+};
+
+const modalTransition = {
+  duration: 0.3,
+  ease: [0.16, 1, 0.3, 1] as const
+};
+
+const modalExitTransition = {
+  duration: 0.2,
+  ease: [0.16, 1, 0.3, 1] as const
+};
+
+// =============================================================================
+// MODAL CARD COMPONENT
+// =============================================================================
 function ModalCard({
   data,
-  onOpen,
+  onOpen
 }: {
   data: ModalCardData;
   onOpen: () => void;
 }) {
   const isDirectLink = data.directLink && !!data.link;
+  const shouldReduceMotion = useReducedMotion();
+
+  // Generate a consistent color based on the card title for variety
+  const colorIndex = data.title.charCodeAt(0) % 5;
+  const bgColors = [
+    'bg-gradient-to-br from-purple-50 to-purple-100/50',
+    'bg-gradient-to-br from-blue-50 to-blue-100/50',
+    'bg-gradient-to-br from-amber-50 to-amber-100/50',
+    'bg-gradient-to-br from-green-50 to-green-100/50',
+    'bg-gradient-to-br from-pink-50 to-pink-100/50'
+  ];
+  const iconColors = [
+    'text-purple-600',
+    'text-blue-600',
+    'text-amber-600',
+    'text-green-600',
+    'text-pink-600'
+  ];
 
   const cardContent = (
     <motion.div
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.2 }}
+      whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         'group relative flex flex-col h-full rounded-[20px] overflow-hidden',
-        'bg-muted/20 border border-white/5',
-        'hover:border-white/10 hover:bg-muted/30 hover:-translate-y-0.5',
+        'bg-white border border-gray-200',
+        'hover:border-gray-300 hover:shadow-lg',
         'transition-all duration-200 ease-out cursor-pointer'
       )}
     >
-      {/* Image area */}
-      <div className="relative aspect-[16/10] bg-muted/40">
-        <Image
-          src={data.image}
-          alt={data.title}
-          fill
-          className="object-cover"
-        />
+      {/* Icon area with gradient background */}
+      <div className={cn('relative aspect-[16/10] flex items-center justify-center', bgColors[colorIndex])}>
+        {/* Simple icon based on first letter */}
+        <div className={cn(
+          'size-16 rounded-2xl bg-white/80 backdrop-blur-sm shadow-sm flex items-center justify-center',
+          'border border-gray-100'
+        )}>
+          <span className={cn('text-2xl font-bold', iconColors[colorIndex])}>
+            {data.title.charAt(0)}
+          </span>
+        </div>
       </div>
 
       {/* Content area */}
       <div className="flex-1 p-6 flex flex-col">
-        <h4 className="font-semibold text-lg mb-2 tracking-tight">{data.title}</h4>
-        <p className="text-[15px] text-muted-foreground leading-relaxed flex-1">{data.subtitle}</p>
+        <h4 className="font-medium text-xl mb-2 tracking-tight text-gray-900">
+          {data.title}
+        </h4>
+        <p className="text-sm text-gray-500 leading-relaxed flex-1">
+          {data.subtitle}
+        </p>
 
         {/* Button - chevron for direct links, plus for modals */}
         <div className="mt-5 flex justify-end">
           <span
             className={cn(
               'flex items-center justify-center size-8 rounded-full',
-              'bg-white/5 border border-white/10',
-              'group-hover:bg-white/10 group-hover:border-white/20',
-              'transition-all duration-200'
+              'bg-gray-100 border border-gray-200',
+              'group-hover:bg-gray-200 group-hover:border-gray-300',
+              'transition-colors duration-150 ease-out active:scale-[0.98]'
             )}
           >
             {isDirectLink ? (
-              <ChevronRightIcon className="size-3.5" />
+              <ChevronRightIcon className="size-3.5 text-gray-600" />
             ) : (
-              <span className="text-base leading-none">+</span>
+              <span className="text-base leading-none text-gray-600">+</span>
             )}
           </span>
         </div>
@@ -746,13 +1178,12 @@ function ModalCard({
 }
 
 // =============================================================================
-// MODAL COMPONENT WITH PORTAL
-// Uses createPortal to render outside the component tree
+// LIGHT THEME MODAL COMPONENT - VERTICAL LAYOUT, FULL HEIGHT, SCROLLABLE
 // =============================================================================
 function CardModal({
   data,
   isOpen,
-  onClose,
+  onClose
 }: {
   data: ModalCardData;
   isOpen: boolean;
@@ -795,100 +1226,129 @@ function CardModal({
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop - Light theme: softer backdrop */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-[12px] z-[100]"
+            variants={modalBackdropVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="fixed inset-0 bg-gray-950/30 backdrop-blur-sm z-[100]"
             onClick={onClose}
           />
 
-          {/* Modal */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.98 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-x-4 top-[5%] bottom-[5%] md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl lg:max-w-3xl bg-background/95 border border-white/[0.08] rounded-[24px] z-[101] overflow-hidden shadow-2xl"
-          >
-            {/* Scrollable content */}
-            <div className="h-full overflow-y-auto">
-              <div className="p-6 md:p-10">
-                {/* Close button */}
-                <button
-                  onClick={onClose}
-                  className="absolute top-4 right-4 z-10 size-10 rounded-full bg-muted/60 border border-border/60 hover:bg-muted flex items-center justify-center transition-colors"
-                >
-                  <span className="text-xl leading-none rotate-45">+</span>
-                </button>
+          {/* Modal container - FULL HEIGHT, VERTICAL LAYOUT */}
+          <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 sm:p-6 pointer-events-none">
+            <motion.div
+              variants={modalContentVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={shouldReduceMotion ? { duration: 0 } : modalTransition}
+              className="relative w-full max-w-3xl h-[90vh] bg-white rounded-3xl pointer-events-auto overflow-hidden border border-gray-200 shadow-2xl flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button - fixed position */}
+              <button
+                onClick={onClose}
+                className="absolute top-4 right-4 z-10 size-10 rounded-full bg-white/90 hover:bg-gray-100 flex items-center justify-center transition-colors duration-150 active:scale-[0.98] backdrop-blur-sm border border-gray-200"
+                aria-label="Close modal"
+              >
+                <svg className="size-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
 
-                {/* Image - smaller, contained */}
-                <div className="relative h-48 md:h-64 rounded-[16px] overflow-hidden bg-muted/30 mb-8 border border-border/40">
-                  <Image
-                    src={data.image}
-                    alt={data.title}
-                    fill
-                    className="object-cover"
-                  />
+              {/* Scrollable content - VERTICAL LAYOUT */}
+              <div className="flex-1 overflow-y-auto">
+                {/* Top: Image - fixed height */}
+                <div className="relative w-full h-[300px] sm:h-[350px] bg-gray-50 flex-shrink-0">
+                  {data.logo ? (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Image
+                        src={data.logo}
+                        alt={data.title}
+                        width={120}
+                        height={120}
+                        className="object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <Image
+                      src={data.image}
+                      alt={data.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 768px"
+                    />
+                  )}
                 </div>
 
-                {/* Title */}
-                <h3 className="text-[32px] font-semibold tracking-tight leading-[1.1] mb-8">
-                  {data.title}
-                </h3>
+                {/* Bottom: Content - scrollable */}
+                <div className="p-8 sm:p-10">
+                  {/* Title */}
+                  <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-gray-900 mb-3">
+                    {data.title}
+                  </h2>
 
-                {/* Paragraphs */}
-                <div className="space-y-4 mb-8">
-                  {data.paragraphs.map((p, i) => (
-                    <p key={i} className="text-muted-foreground text-[15px] leading-relaxed">
-                      {p}
-                    </p>
-                  ))}
-                </div>
+                  {/* Subtitle */}
+                  <p className="text-base sm:text-lg text-gray-500 mb-6">
+                    {data.subtitle}
+                  </p>
 
-                {/* Quote section */}
-                {data.quote && (
-                  <>
-                    <div className="h-px bg-white/5 my-10" />
-                    <blockquote className="text-center py-6">
-                      <p className="text-xl font-medium mb-4 leading-relaxed">
-                        "{data.quote.text}"
+                  {/* Description paragraphs */}
+                  <div className="space-y-4 mb-8">
+                    {data.paragraphs.map((p, i) => (
+                      <p key={i} className="text-gray-600 leading-relaxed">
+                        {p}
                       </p>
-                      <cite className="text-[14px] text-muted-foreground not-italic">
-                        {data.quote.company}
-                      </cite>
-                    </blockquote>
-                  </>
-                )}
+                    ))}
+                  </div>
 
-                {/* Stats grid */}
-                {data.stats && data.stats.length > 0 && (
-                  <>
-                    <div className="h-px bg-white/5 my-10" />
-                    <div className="grid grid-cols-2 gap-8 py-6">
+                  {/* Stats */}
+                  {data.stats && data.stats.length > 0 && (
+                    <div className="grid grid-cols-2 gap-6 py-6 border-t border-gray-100 mb-6">
                       {data.stats.map((stat, i) => (
                         <div key={i}>
-                          <div className="text-[32px] font-semibold tracking-tight leading-none mb-2">{stat.value}</div>
-                          <div className="text-[14px] text-muted-foreground">{stat.label}</div>
+                          <div className="text-2xl sm:text-3xl font-semibold tracking-tight text-gray-900">
+                            {stat.value}
+                          </div>
+                          <div className="text-sm text-gray-500 mt-1">
+                            {stat.label}
+                          </div>
                         </div>
                       ))}
                     </div>
-                  </>
-                )}
+                  )}
 
-                {/* Action buttons */}
-                {data.link && (
-                  <div className="mt-8 flex gap-4">
-                    <SquircleButton href={data.link} variant="chevron">
-                      Learn more
-                    </SquircleButton>
-                  </div>
-                )}
+                  {/* Quote */}
+                  {data.quote && (
+                    <div className="py-6 border-t border-gray-100 mb-6">
+                      <blockquote className="text-gray-600 italic">
+                        &ldquo;{data.quote.text}&rdquo;
+                      </blockquote>
+                      <cite className="text-sm text-gray-500 mt-2 block not-italic">
+                        — {data.quote.company}
+                      </cite>
+                    </div>
+                  )}
+
+                  {/* Action button */}
+                  {data.link && (
+                    <div className="pt-6 border-t border-gray-100">
+                      <Link
+                        href={data.link}
+                        className="group inline-flex items-center gap-2 text-base font-medium text-gray-900 hover:text-gray-600 transition-colors duration-150"
+                      >
+                        Learn more
+                        <ChevronRightIcon className="size-4 transition-transform duration-150 group-hover:translate-x-0.5" />
+                      </Link>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>
@@ -898,15 +1358,14 @@ function CardModal({
 }
 
 // =============================================================================
-// LINEAR-STYLE CARD CAROUSEL
-// Carousel with modal cards, navigation arrows
+// LINEAR-STYLE CARD CAROUSEL - Standard container width like all sections
 // =============================================================================
 export function CardCarousel({
   tag,
   tagColor,
   title,
   description,
-  cards,
+  cards
 }: {
   tag: string;
   tagColor?: 'primary' | 'cyan' | 'green' | 'amber' | 'purple' | 'pink';
@@ -919,106 +1378,115 @@ export function CardCarousel({
   const [canScrollRight, setCanScrollRight] = React.useState(true);
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
-  const checkScrollability = () => {
+  const checkScrollability = React.useCallback(() => {
     if (!scrollRef.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-  };
+  }, []);
 
   React.useEffect(() => {
     checkScrollability();
     const el = scrollRef.current;
     if (el) {
       el.addEventListener('scroll', checkScrollability);
-      return () => el.removeEventListener('scroll', checkScrollability);
+      window.addEventListener('resize', checkScrollability);
+      return () => {
+        el.removeEventListener('scroll', checkScrollability);
+        window.removeEventListener('resize', checkScrollability);
+      };
     }
-  }, []);
+  }, [checkScrollability]);
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
-    const scrollAmount = 340;
-    const newPosition = direction === 'left'
-      ? scrollRef.current.scrollLeft - scrollAmount
-      : scrollRef.current.scrollLeft + scrollAmount;
+    const scrollAmount = 320;
+    const newPosition =
+      direction === 'left'
+        ? scrollRef.current.scrollLeft - scrollAmount
+        : scrollRef.current.scrollLeft + scrollAmount;
     scrollRef.current.scrollTo({ left: newPosition, behavior: 'smooth' });
   };
 
-  const activeCard = cards.find(c => c.id === activeModal);
+  const activeCard = cards.find((c) => c.id === activeModal);
 
   return (
     <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="container max-w-6xl mx-auto px-6 py-[120px] lg:py-[160px]">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-12">
-          <div>
-            <div className="mb-5">
-              <FeatureTag label={tag} color={tagColor} />
-            </div>
-            <h2 className="text-[40px] font-semibold tracking-tight leading-[1.1]">{title}</h2>
+      <div className="py-16 lg:py-24">
+        {/* Header - Linear pattern: vertical stack */}
+        <div className="mb-12">
+          <div className="mb-4">
+            <FeatureTag label={tag} color={tagColor} />
           </div>
-          <p className="text-muted-foreground text-[15px] max-w-md leading-relaxed md:pt-10">{description}</p>
+          <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1] text-gray-900 mb-6 max-w-3xl">
+            {title}
+          </h2>
+          <p className="text-gray-500 text-lg leading-relaxed max-w-2xl">
+            {description}
+          </p>
         </div>
 
-        {/* Carousel */}
-        <div className="relative">
-          <div
-            ref={scrollRef}
-            className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4"
-            style={{ scrollSnapType: 'x mandatory' }}
+        {/* Navigation arrows */}
+        <div className="flex justify-end gap-2 mb-6">
+          <button
+            onClick={() => scroll('left')}
+            disabled={!canScrollLeft}
+            className={cn(
+              'size-10 rounded-full border border-gray-200 bg-white flex items-center justify-center transition-all duration-200',
+              canScrollLeft
+                ? 'hover:bg-gray-50 hover:border-gray-300 cursor-pointer'
+                : 'opacity-40 cursor-not-allowed'
+            )}
+            aria-label="Scroll left"
           >
-            {cards.map((card) => (
-              <div
-                key={card.id}
-                className="flex-shrink-0 w-[320px] md:w-[360px]"
-                style={{ scrollSnapAlign: 'start' }}
-              >
-                <ModalCard data={card} onOpen={() => setActiveModal(card.id)} />
-              </div>
-            ))}
-          </div>
-
-          {/* Navigation arrows - Linear style */}
-          <div className="flex justify-end gap-2 mt-6">
-            <button
-              onClick={() => scroll('left')}
-              disabled={!canScrollLeft}
-              className={cn(
-                'size-10 rounded-full border border-border/60 flex items-center justify-center transition-all duration-200',
-                canScrollLeft
-                  ? 'hover:bg-muted hover:border-border/80'
-                  : 'opacity-40 cursor-not-allowed'
-              )}
-            >
-              <ChevronRightIcon className="size-4 rotate-180" />
-            </button>
-            <button
-              onClick={() => scroll('right')}
-              disabled={!canScrollRight}
-              className={cn(
-                'size-10 rounded-full border border-border/60 flex items-center justify-center transition-all duration-200',
-                canScrollRight
-                  ? 'hover:bg-muted hover:border-border/80'
-                  : 'opacity-40 cursor-not-allowed'
-              )}
-            >
-              <ChevronRightIcon className="size-4" />
-            </button>
-          </div>
+            <ChevronRightIcon className="size-4 text-gray-600 rotate-180" />
+          </button>
+          <button
+            onClick={() => scroll('right')}
+            disabled={!canScrollRight}
+            className={cn(
+              'size-10 rounded-full border border-gray-200 bg-white flex items-center justify-center transition-all duration-200',
+              canScrollRight
+                ? 'hover:bg-gray-50 hover:border-gray-300 cursor-pointer'
+                : 'opacity-40 cursor-not-allowed'
+            )}
+            aria-label="Scroll right"
+          >
+            <ChevronRightIcon className="size-4 text-gray-600" />
+          </button>
         </div>
 
-        {/* Modal - rendered via portal */}
-        {activeCard && (
-          <CardModal
-            data={activeCard}
-            isOpen={!!activeModal}
-            onClose={() => setActiveModal(null)}
-          />
-        )}
+        {/* Carousel - within container */}
+        <div
+          ref={scrollRef}
+          className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 -mx-6 px-6"
+          style={{ scrollSnapType: 'x mandatory' }}
+        >
+          {cards.map((card) => (
+            <div
+              key={card.id}
+              className="flex-shrink-0 w-[280px] sm:w-[320px]"
+              style={{ scrollSnapAlign: 'start' }}
+            >
+              <ModalCard data={card} onOpen={() => setActiveModal(card.id)} />
+            </div>
+          ))}
+          {/* Spacer at end to allow last card to scroll fully into view */}
+          <div className="flex-shrink-0 w-6 sm:w-12 lg:w-20 xl:w-32" />
+        </div>
       </div>
+
+      {/* Modal */}
+      {activeCard && (
+        <CardModal
+          data={activeCard}
+          isOpen={!!activeModal}
+          onClose={() => setActiveModal(null)}
+        />
+      )}
     </GridSection>
   );
 }
 
-// Export components for use elsewhere
+// Export components
 export { FeatureTag, SquircleButton, InteractiveSelector, ModalCard, CardModal };
