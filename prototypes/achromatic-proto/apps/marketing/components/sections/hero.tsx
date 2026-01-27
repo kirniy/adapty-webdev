@@ -44,20 +44,6 @@ function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
   return basePath.replace('/assets/hero/', `/assets/hero/${imageSet}/`);
 }
 
-// Trust signal - simplified, no green dot (per Lera's feedback)
-function LiveAppsMagic() {
-  return (
-    <motion.div
-      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs sm:text-sm font-medium"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, delay: 0.1 }}
-    >
-      <span>15,000+ apps powered</span>
-    </motion.div>
-  );
-}
-
 // Feature tab content data
 const HERO_FEATURES = [
   {
@@ -234,16 +220,13 @@ function HeroButton({
 function HeroButtons(): React.JSX.Element {
   return (
     <SlideIn delay={0.4} duration={0.6} direction="up">
-      <div className="mx-auto mt-8 flex flex-col items-start min-[400px]:items-center gap-4">
-        <div className="flex flex-col sm:flex-row justify-start min-[400px]:justify-center gap-3 w-full sm:w-auto">
-          <HeroButton href="https://app.adapty.io/registration" variant="default">
-            Start for free
-          </HeroButton>
-          <HeroButton href="/schedule-demo" variant="outline">
-            Book a demo
-          </HeroButton>
-        </div>
-        <LiveAppsMagic />
+      <div className="mx-auto mt-8 flex flex-col sm:flex-row items-start min-[400px]:items-center justify-start min-[400px]:justify-center gap-3 w-full sm:w-auto">
+        <HeroButton href="https://app.adapty.io/registration" variant="default">
+          Start for free
+        </HeroButton>
+        <HeroButton href="/schedule-demo" variant="outline">
+          Book a demo
+        </HeroButton>
       </div>
     </SlideIn>
   );
