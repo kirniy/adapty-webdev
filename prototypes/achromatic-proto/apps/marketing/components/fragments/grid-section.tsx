@@ -22,7 +22,7 @@ export type GridSectionProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
  */
 export function GridSection({
   children,
-  hideVerticalGridLines,
+  hideVerticalGridLines = true, // Linear pattern: no vertical lines for "airy" feeling
   hideBottomGridLine,
   background = 'white',
   fullWidth = false, // Kept for API compatibility but now applies same width

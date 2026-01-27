@@ -28,10 +28,7 @@ export function CTA(): React.JSX.Element {
                 href="/schedule-demo"
                 className={cn(
                   buttonVariants({ variant: 'outline' }),
-                  'rounded-lg px-5 h-11',
-                  'transition-all duration-150 ease-out',
-                  'active:scale-[0.98]',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2'
+                  'px-5 h-11'
                 )}
               >
                 Contact Sales
@@ -40,10 +37,7 @@ export function CTA(): React.JSX.Element {
                 href="https://app.adapty.io/registration"
                 className={cn(
                   buttonVariants({ variant: 'default' }),
-                  'rounded-lg px-5 h-11',
-                  'transition-all duration-150 ease-out',
-                  'active:scale-[0.98]',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2'
+                  'px-5 h-11'
                 )}
               >
                 Get Started

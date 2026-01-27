@@ -704,7 +704,7 @@ function HeroTrustSignal(): React.JSX.Element {
               opacity: isHovered ? 0.4 : 1,
             }}
             transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
-            className="flex items-center justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 px-4"
+            className="flex items-center justify-center gap-4 sm:gap-6 md:gap-8 px-4"
           >
             {TRUST_LOGOS.map((logo, index) => (
               <BlurFade
