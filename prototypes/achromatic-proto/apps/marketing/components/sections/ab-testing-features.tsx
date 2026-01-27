@@ -358,7 +358,7 @@ function TargetingMagic() {
         <ChevronRightIcon className="size-4 text-muted-foreground" />
       </motion.div>
       <div className="h-8 px-3 rounded-md border border-primary/30 bg-primary/5 flex items-center gap-2">
-        <span className="size-2 rounded-full bg-green-500 animate-pulse" />
+        <span className="size-2 rounded-full bg-primary animate-pulse" />
         <span className="text-[10px] font-medium">Verified</span>
       </div>
     </div>
