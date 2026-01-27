@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon } from 'lucide-react';
+import { ChevronRightIcon } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 
 import {
@@ -11,10 +11,10 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@workspace/ui/components/accordion';
+import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
-import { SectionBackground } from '~/components/fragments/section-background';
 
 const DATA = [
   {
@@ -51,44 +51,38 @@ const DATA = [
   }
 ];
 
-// Quick response badge - green dot removed per Lera's feedback
-function QuickResponseMagic() {
+// Linear-style tag
+function FeatureTag({ label }: { label: string }) {
   return (
-    <motion.div
-      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, delay: 0.3 }}
-    >
-      <span>{'<2h avg response'}</span>
-    </motion.div>
+    <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+      <span className="size-2 rounded-full bg-primary" />
+      <span>{label}</span>
+    </div>
   );
 }
 
-// Animated link with arrow micro-interaction
-function AnimatedLink({ href, children }: { href: string; children: React.ReactNode }) {
-  const [isHovered, setIsHovered] = React.useState(false);
-  const shouldReduceMotion = useReducedMotion();
-
+// Linear-style squircle button
+function SquircleButton({
+  children,
+  href
+}: {
+  children: React.ReactNode;
+  href: string;
+}) {
   return (
     <Link
       href={href}
-      target="_blank"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors duration-150 ease-out hover:text-foreground motion-reduce:transition-none"
+      className={cn(
+        'inline-flex items-center gap-2 px-4 py-2 text-sm font-medium',
+        'rounded-full border border-border/50 bg-muted/30',
+        'hover:bg-muted hover:border-border transition-colors'
+      )}
     >
       {children}
-      <motion.span
-        animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }}
-        transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-      >
-        <ArrowRightIcon className="size-4" />
-      </motion.span>
+      <ChevronRightIcon className="size-4" />
     </Link>
   );
 }
-
 
 interface FAQProps {
   items?: typeof DATA;
@@ -98,13 +92,15 @@ export function FAQ({ items = DATA }: FAQProps): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <GridSection className="relative overflow-hidden">
-      <SectionBackground height={800} />
-      <div className="container py-16 relative z-10">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+    <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
+      <div className="container py-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left column - Header */}
-          <BlurFade delay={shouldReduceMotion ? 0 : 0.05} className="text-center lg:text-left lg:sticky lg:top-24 lg:self-start">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl text-balance">
+          <BlurFade delay={shouldReduceMotion ? 0 : 0.05} className="lg:sticky lg:top-24 lg:self-start">
+            <div className="mb-4">
+              <FeatureTag label="FAQ" />
+            </div>
+            <h2 className="text-3xl font-bold tracking-tight">
               Frequently Asked
               <br />
               <span className="text-muted-foreground">Questions</span>
@@ -112,22 +108,19 @@ export function FAQ({ items = DATA }: FAQProps): React.JSX.Element {
             <p className="mt-4 text-muted-foreground lg:max-w-[85%]">
               Everything you need to know about Adapty. Can&apos;t find the answer you&apos;re looking for?
             </p>
-            <div className="mt-4">
-              <QuickResponseMagic />
-            </div>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <AnimatedLink href="https://adapty.io/docs/">
+              <SquircleButton href="https://adapty.io/docs/">
                 Read documentation
-              </AnimatedLink>
-              <AnimatedLink href="/schedule-demo">
+              </SquircleButton>
+              <SquircleButton href="/schedule-demo">
                 Schedule a demo
-              </AnimatedLink>
+              </SquircleButton>
             </div>
           </BlurFade>
 
           {/* Right column - Accordion */}
           <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
-            <div className="rounded-xl border bg-card p-1">
+            <div className="rounded-[24px] border border-border/50 bg-muted/30 p-2">
               <Accordion type="single" collapsible className="w-full">
                 {items.map((faq, index) => (
                   <motion.div
@@ -144,18 +137,18 @@ export function FAQ({ items = DATA }: FAQProps): React.JSX.Element {
                   >
                     <AccordionItem
                       value={index.toString()}
-                      className="border-b-0 px-4 rounded-lg transition-all duration-200 group relative z-10"
+                      className="border-b-0 px-4 rounded-xl transition-all duration-200 group relative z-10"
                     >
                       <AccordionTrigger className="text-left text-base py-4 hover:no-underline [&[data-state=open]]:text-primary transition-colors">
                         {faq.question}
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground pb-4">
+                      <AccordionContent className="text-sm text-muted-foreground pb-4 leading-relaxed">
                         {faq.answer}
                       </AccordionContent>
 
-                      {/* Active state backglow */}
-                      <div className="absolute inset-0 rounded-lg bg-muted/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100 -z-10" />
-                      <div className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity duration-200 group-[[data-state=open]]:opacity-100 -z-10" />
+                      {/* Active state backglow - kept for nice animation */}
+                      <div className="absolute inset-0 rounded-xl bg-background/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100 -z-10" />
+                      <div className="absolute inset-0 rounded-xl bg-primary/5 opacity-0 transition-opacity duration-200 group-[[data-state=open]]:opacity-100 -z-10" />
                     </AccordionItem>
                   </motion.div>
                 ))}
