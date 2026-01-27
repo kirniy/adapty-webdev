@@ -79,10 +79,10 @@ export default function IndexPage(): React.JSX.Element {
       {/* 8. Testimonials Section */}
       <TestimonialsSwitcher />
 
+      <Separator />
+
       {/* 9. FAQ Section */}
       <FAQSwitcher />
-
-      <Separator />
 
       {/* 10. CTA Section */}
       <CTASwitcher />

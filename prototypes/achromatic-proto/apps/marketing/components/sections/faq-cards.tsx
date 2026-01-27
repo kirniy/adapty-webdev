@@ -1,42 +1,45 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { ChevronDownIcon, MessageCircleQuestionIcon, PlusIcon, MinusIcon } from 'lucide-react';
+import { ChevronRightIcon, PlusIcon } from 'lucide-react';
 
-import { Badge } from '@workspace/ui/components/badge';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
-import { SectionBackground } from '~/components/fragments/section-background';
-import { Spotlight } from '~/components/fragments/spotlight';
 
-// Magic animation: FAQ response time badge
-function FAQResponseMagic() {
-  const shouldReduceMotion = useReducedMotion();
-
+// Linear-style tag
+function FeatureTag({ label }: { label: string }) {
   return (
-    <motion.div
-      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, delay: 0.15 }}
+    <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+      <span className="size-2 rounded-full bg-primary" />
+      <span>{label}</span>
+    </div>
+  );
+}
+
+// Linear-style squircle button
+function SquircleButton({
+  children,
+  href
+}: {
+  children: React.ReactNode;
+  href: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        'inline-flex items-center gap-2 px-4 py-2 text-sm font-medium',
+        'rounded-full border border-border/50 bg-muted/30',
+        'hover:bg-muted hover:border-border transition-colors'
+      )}
     >
-      <motion.div
-        animate={shouldReduceMotion ? {} : {
-          rotate: [0, 10, -10, 0],
-        }}
-        transition={{
-          duration: 0.6,
-          repeat: Infinity,
-          repeatDelay: 3,
-        }}
-      >
-        <MessageCircleQuestionIcon className="size-3.5" />
-      </motion.div>
-      <span>Quick answers</span>
-    </motion.div>
+      {children}
+      <ChevronRightIcon className="size-4" />
+    </Link>
   );
 }
 
@@ -73,7 +76,7 @@ const FAQ_ITEMS = [
   },
 ];
 
-// Single FAQ item with card design
+// Single FAQ item with card design - Linear style
 function FAQCard({
   item,
   index,
@@ -91,15 +94,15 @@ function FAQCard({
     <BlurFade delay={shouldReduceMotion ? 0 : 0.05 + index * 0.05}>
       <motion.div
         className={cn(
-          'group relative overflow-hidden rounded-xl border bg-card/50 backdrop-blur-sm transition-all duration-300',
-          isOpen ? 'border-primary/30 shadow-lg shadow-primary/5' : 'hover:border-border/80 hover:shadow-md'
+          'group relative overflow-hidden rounded-[20px] border border-border/50 bg-muted/30 transition-all duration-300',
+          isOpen ? 'border-border bg-background/50' : 'hover:border-border hover:bg-muted/50'
         )}
         layout={!shouldReduceMotion}
         transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
       >
-        {/* Gradient background on open */}
+        {/* Subtle gradient background on open */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"
+          className="absolute inset-0 bg-gradient-to-br from-primary/3 to-transparent"
           initial={{ opacity: 0 }}
           animate={{ opacity: isOpen ? 1 : 0 }}
           transition={{ duration: 0.2 }}
@@ -108,44 +111,36 @@ function FAQCard({
         {/* Question header */}
         <button
           onClick={onToggle}
-          className="relative z-10 flex w-full items-start gap-4 p-5 text-left cursor-pointer"
+          className="relative z-10 flex w-full items-center gap-4 p-5 text-left cursor-pointer"
         >
-          {/* Icon */}
-          <motion.div
-            className={cn(
-              'flex shrink-0 items-center justify-center size-10 rounded-lg transition-colors duration-200',
-              isOpen ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary'
-            )}
-            animate={shouldReduceMotion ? undefined : { rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
-          >
-            {isOpen ? (
-              <MinusIcon className="size-5" />
-            ) : (
-              <PlusIcon className="size-5" />
-            )}
-          </motion.div>
-
           {/* Question text */}
           <div className="flex-1 min-w-0">
-            <Badge variant="secondary" className="mb-2 text-xs font-medium">
+            <span className="text-xs text-muted-foreground mb-1 block">
               {item.category}
-            </Badge>
+            </span>
             <h3 className={cn(
-              'text-base font-semibold leading-snug transition-colors duration-200',
+              'text-base font-medium leading-snug transition-colors duration-200',
               isOpen ? 'text-foreground' : 'text-foreground/80 group-hover:text-foreground'
             )}>
               {item.question}
             </h3>
           </div>
 
-          {/* Chevron indicator */}
+          {/* Icon button */}
           <motion.div
-            className="shrink-0 text-muted-foreground"
-            animate={shouldReduceMotion ? undefined : { rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
+            className={cn(
+              'flex shrink-0 items-center justify-center size-8 rounded-full border transition-colors duration-200',
+              isOpen
+                ? 'bg-primary border-primary text-primary-foreground'
+                : 'bg-background border-border/50 text-muted-foreground group-hover:border-border'
+            )}
           >
-            <ChevronDownIcon className="size-5" />
+            <motion.div
+              animate={shouldReduceMotion ? undefined : { rotate: isOpen ? 45 : 0 }}
+              transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
+            >
+              <PlusIcon className="size-4" />
+            </motion.div>
           </motion.div>
         </button>
 
@@ -160,18 +155,16 @@ function FAQCard({
               className="overflow-hidden"
             >
               <div className="relative z-10 px-5 pb-5 pt-0">
-                <div className="pl-14">
-                  <motion.div
-                    className="h-px bg-gradient-to-r from-primary/30 to-transparent mb-4"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.3, delay: 0.1 }}
-                    style={{ originX: 0 }}
-                  />
-                  <p className="text-muted-foreground leading-relaxed">
-                    {item.answer}
-                  </p>
-                </div>
+                <motion.div
+                  className="h-px bg-gradient-to-r from-border to-transparent mb-4"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                  style={{ originX: 0 }}
+                />
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {item.answer}
+                </p>
               </div>
             </motion.div>
           )}
@@ -189,32 +182,26 @@ export function FAQCards(): React.JSX.Element {
   };
 
   return (
-    <GridSection className="relative overflow-hidden">
-      <SectionBackground height={800} />
-      <div className="container py-16 lg:py-24 relative z-10">
+    <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
+      <div className="container py-24">
         <div className="mx-auto max-w-3xl">
-          {/* Section header */}
+          {/* Section header - Linear style */}
           <BlurFade className="text-center mb-12">
-            <Badge variant="outline" className="mb-4 rounded-full">
-              <MessageCircleQuestionIcon className="mr-2 size-3.5" />
-              FAQ
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-              Frequently asked questions
+            <div className="mb-4 flex justify-center">
+              <FeatureTag label="FAQ" />
+            </div>
+            <h2 className="text-3xl font-bold tracking-tight mb-4">
+              Frequently asked
+              <br />
+              <span className="text-muted-foreground">questions</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Everything you need to know about Adapty. Can&apos;t find what you&apos;re looking for?{' '}
-              <a href="/contact" className="text-primary hover:underline">
-                Contact our team
-              </a>
+              Everything you need to know about Adapty.
             </p>
-            <div className="mt-4">
-              <FAQResponseMagic />
-            </div>
           </BlurFade>
 
           {/* FAQ cards */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             {FAQ_ITEMS.map((item, index) => (
               <FAQCard
                 key={item.question}
@@ -226,24 +213,14 @@ export function FAQCards(): React.JSX.Element {
             ))}
           </div>
 
-          {/* Bottom CTA */}
-          <BlurFade delay={0.4} className="mt-12 text-center">
-            <div className="inline-flex items-center gap-3 rounded-full border bg-card/50 backdrop-blur-sm px-5 py-3">
-              <div className="flex -space-x-2">
-                {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="size-8 rounded-full bg-gradient-to-br from-primary/20 to-primary/40 border-2 border-background"
-                  />
-                ))}
-              </div>
-              <p className="text-sm">
-                <span className="text-muted-foreground">Still have questions? </span>
-                <a href="/schedule-demo" className="font-medium text-primary hover:underline">
-                  Talk to our team
-                </a>
-              </p>
-            </div>
+          {/* Bottom CTA - Linear style */}
+          <BlurFade delay={0.4} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <SquircleButton href="https://adapty.io/docs/">
+              Read documentation
+            </SquircleButton>
+            <SquircleButton href="/schedule-demo">
+              Schedule a demo
+            </SquircleButton>
           </BlurFade>
         </div>
       </div>
