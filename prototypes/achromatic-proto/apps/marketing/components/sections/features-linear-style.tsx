@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRightIcon } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { createPortal } from 'react-dom';
 
 import { cn } from '@workspace/ui/lib/utils';
 import { GridSection } from '~/components/fragments/grid-section';
@@ -18,7 +19,7 @@ function getImagePath(imageSet: ImageSetVariant, imageName: string): string {
 
 // =============================================================================
 // LINEAR-STYLE FEATURE TAG
-// Colored elongated dot + text + optional chevron (clickable if has href)
+// Elongated horizontal dot (pill) + text - very Linear aesthetic
 // =============================================================================
 function FeatureTag({
   label,
@@ -27,20 +28,22 @@ function FeatureTag({
 }: {
   label: string;
   href?: string;
-  color?: 'primary' | 'cyan' | 'green' | 'amber';
+  color?: 'primary' | 'cyan' | 'green' | 'amber' | 'purple' | 'pink';
 }) {
   const colorClasses = {
     primary: 'bg-primary',
     cyan: 'bg-cyan-500',
     green: 'bg-emerald-500',
     amber: 'bg-amber-500',
+    purple: 'bg-purple-500',
+    pink: 'bg-pink-500',
   };
 
   const content = (
-    <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
-      <span className={cn('w-3 h-1.5 rounded-full', colorClasses[color])} />
+    <span className="inline-flex items-center gap-2.5 text-[15px] text-muted-foreground">
+      {/* Linear-style elongated pill dot */}
+      <span className={cn('w-4 h-1.5 rounded-full', colorClasses[color])} />
       <span>{label}</span>
-      {href && <ChevronRightIcon className="size-3.5" />}
     </span>
   );
 
@@ -48,11 +51,11 @@ function FeatureTag({
     return (
       <Link
         href={href}
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        className="inline-flex items-center gap-2.5 text-[15px] text-muted-foreground hover:text-foreground transition-colors group"
       >
-        <span className={cn('w-3 h-1.5 rounded-full', colorClasses[color])} />
+        <span className={cn('w-4 h-1.5 rounded-full', colorClasses[color])} />
         <span>{label}</span>
-        <ChevronRightIcon className="size-3.5" />
+        <ChevronRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
       </Link>
     );
   }
@@ -62,7 +65,7 @@ function FeatureTag({
 
 // =============================================================================
 // LINEAR-STYLE SQUIRCLE BUTTON
-// Three types: with chevron, text only, with plus
+// Pill button with subtle border - cleaner than rounded-lg
 // =============================================================================
 function SquircleButton({
   children,
@@ -77,17 +80,17 @@ function SquircleButton({
 }) {
   const content = (
     <>
-      <span>{children}</span>
-      {variant === 'chevron' && <ChevronRightIcon className="size-4" />}
-      {variant === 'plus' && <span className="text-lg leading-none">+</span>}
+      <span className="text-[14px] font-medium">{children}</span>
+      {variant === 'chevron' && <ChevronRightIcon className="size-3.5" />}
+      {variant === 'plus' && <span className="text-base leading-none">+</span>}
     </>
   );
 
   const className = cn(
-    'inline-flex items-center gap-2 px-4 py-2 rounded-lg',
-    'bg-muted/50 border border-border/50',
-    'text-sm font-medium text-foreground',
-    'hover:bg-muted hover:border-border transition-colors'
+    'inline-flex items-center gap-1.5 px-4 py-2 rounded-full',
+    'bg-muted/40 border border-border/60',
+    'text-foreground',
+    'hover:bg-muted hover:border-border/80 transition-all duration-200'
   );
 
   if (href) {
@@ -131,96 +134,94 @@ function InteractiveSelector({
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div className="py-16">
-      <div className="container">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left: Header + Options */}
-          <div>
-            <h3 className="text-2xl font-bold tracking-tight mb-2">{title}</h3>
-            {subtitle && (
-              <p className="text-muted-foreground mb-8">{subtitle}</p>
-            )}
+    <div className="pt-12 pb-8">
+      <div className="grid lg:grid-cols-2 gap-16 items-start">
+        {/* Left: Header + Options */}
+        <div>
+          <h3 className="text-xl font-semibold tracking-tight mb-2">{title}</h3>
+          {subtitle && (
+            <p className="text-muted-foreground text-[15px] mb-10">{subtitle}</p>
+          )}
 
-            {/* Selectable options with vertical line */}
-            <div className="relative pl-6">
-              {/* Vertical line */}
-              <div className="absolute left-0 top-0 bottom-0 w-px bg-border" />
+          {/* Selectable options with vertical line - Linear style */}
+          <div className="relative pl-6">
+            {/* Vertical line - subtle */}
+            <div className="absolute left-0 top-1 top-0 bottom-0 w-px bg-border/60" />
 
-              <div className="space-y-4">
-                {options.map((option, index) => (
-                  <button
-                    key={option.id}
-                    onClick={() => setSelectedIndex(index)}
+            <div className="space-y-1">
+              {options.map((option, index) => (
+                <button
+                  key={option.id}
+                  onClick={() => setSelectedIndex(index)}
+                  className={cn(
+                    'relative block w-full text-left py-3 px-4 -ml-4 rounded-lg transition-all duration-200',
+                    selectedIndex === index
+                      ? 'text-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/30'
+                  )}
+                >
+                  {/* Indicator dot on vertical line */}
+                  <span
                     className={cn(
-                      'relative block w-full text-left transition-colors',
+                      'absolute -left-6 top-1/2 -translate-y-1/2 -translate-x-1/2 size-2 rounded-full transition-all duration-200',
                       selectedIndex === index
-                        ? 'text-foreground'
-                        : 'text-muted-foreground hover:text-foreground'
+                        ? 'bg-primary scale-100'
+                        : 'bg-border scale-75'
                     )}
-                  >
-                    {/* Indicator dot on vertical line */}
-                    <span
-                      className={cn(
-                        'absolute -left-6 top-1/2 -translate-y-1/2 -translate-x-1/2 size-2 rounded-full transition-colors',
-                        selectedIndex === index
-                          ? 'bg-primary'
-                          : 'bg-border'
-                      )}
-                    />
-                    <span className="font-medium">{option.title}</span>
-                    {option.description && (
-                      <span className="block text-sm text-muted-foreground mt-0.5">
-                        {option.description}
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </div>
+                  />
+                  <span className="font-medium text-[15px]">{option.title}</span>
+                  {option.description && (
+                    <span className="block text-[13px] text-muted-foreground mt-0.5">
+                      {option.description}
+                    </span>
+                  )}
+                </button>
+              ))}
             </div>
-          </div>
-
-          {/* Right: Image that changes */}
-          <div className="relative aspect-[4/3] rounded-xl overflow-hidden border bg-muted/30">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedIndex}
-                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
-                transition={{ duration: 0.2 }}
-                className="absolute inset-0"
-              >
-                <Image
-                  src={options[selectedIndex].image}
-                  alt={options[selectedIndex].title}
-                  fill
-                  className="object-cover"
-                />
-              </motion.div>
-            </AnimatePresence>
           </div>
         </div>
 
-        {/* Optional: Small feature grid below separator */}
-        {features && features.length > 0 && (
-          <>
-            <div className="h-px bg-border/50 my-12" />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {features.map((feature, index) => (
-                <div key={index} className="text-sm">
-                  <div className="flex items-center gap-2 mb-2 text-muted-foreground">
-                    {feature.icon}
-                    <span className="font-medium text-foreground">{feature.title}</span>
-                  </div>
-                  <p className="text-muted-foreground text-xs leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
+        {/* Right: Image that changes - Linear-style card */}
+        <div className="relative aspect-[4/3] rounded-[20px] overflow-hidden border border-border/50 bg-muted/30">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedIndex}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={options[selectedIndex].image}
+                alt={options[selectedIndex].title}
+                fill
+                className="object-cover"
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
+
+      {/* Optional: Small feature grid below separator */}
+      {features && features.length > 0 && (
+        <>
+          <div className="h-px bg-border/40 my-12" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <div key={index}>
+                <div className="flex items-center gap-2.5 mb-2">
+                  {feature.icon}
+                  <span className="font-medium text-[14px] text-foreground">{feature.title}</span>
+                </div>
+                <p className="text-muted-foreground text-[13px] leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -241,7 +242,7 @@ export function LinearFeatureSection({
 }: {
   tag: string;
   tagHref?: string;
-  tagColor?: 'primary' | 'cyan' | 'green' | 'amber';
+  tagColor?: 'primary' | 'cyan' | 'green' | 'amber' | 'purple' | 'pink';
   title: string;
   subtitle?: string;
   description: string;
@@ -250,29 +251,29 @@ export function LinearFeatureSection({
 }) {
   return (
     <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="container py-16">
+      <div className="container py-24 lg:py-32">
         <BlurFade>
-          {/* Tag */}
-          <div className="mb-4">
+          {/* Tag - increased spacing */}
+          <div className="mb-6">
             <FeatureTag label={tag} href={tagHref} color={tagColor} />
           </div>
 
-          {/* Title + Description layout */}
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
+          {/* Title + Description layout - Linear's 2-column header style */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight lg:text-4xl">
+              <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">
                 {title}
               </h2>
             </div>
-            <div>
+            <div className="lg:pt-1">
               {subtitle && (
-                <p className="text-foreground font-medium mb-2">{subtitle}</p>
+                <p className="text-foreground font-medium mb-3 text-[17px]">{subtitle}</p>
               )}
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-muted-foreground text-[15px] leading-relaxed">
                 {description}
               </p>
               {learnMoreHref && (
-                <div className="mt-4">
+                <div className="mt-6">
                   <SquircleButton href={learnMoreHref} variant="chevron">
                     Learn more
                   </SquircleButton>
@@ -283,7 +284,7 @@ export function LinearFeatureSection({
         </BlurFade>
 
         {/* Content area */}
-        {children && <div className="mt-12">{children}</div>}
+        {children && <div className="mt-16">{children}</div>}
       </div>
     </GridSection>
   );
@@ -307,32 +308,32 @@ export function ValuePropsSection({
   props: ValueProp[];
 }) {
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="container py-16">
+      <div className="container py-24 lg:py-32">
         <BlurFade>
-          <h2 className="text-3xl font-bold tracking-tight text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-center mb-16">
             {heading}
           </h2>
         </BlurFade>
 
         <div className="grid md:grid-cols-3 gap-6">
           {props.map((prop, index) => (
-            <BlurFade key={index} delay={0.1 + index * 0.05}>
+            <BlurFade key={index} delay={0.1 + index * 0.08}>
               <motion.div
-                whileHover={undefined}
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2 }}
                 className={cn(
-                  'group relative flex flex-col h-full rounded-[24px] overflow-hidden',
+                  'group relative flex flex-col h-full rounded-[20px] overflow-hidden',
                   'bg-muted/30 border border-border/50',
-                  'hover:border-border transition-colors cursor-pointer'
+                  'hover:border-border/80 hover:bg-muted/40 transition-all duration-200 cursor-pointer'
                 )}
                 onClick={() => setOpenIndex(index)}
               >
                 {/* Image/illustration area */}
                 {prop.image && (
-                  <div className="relative aspect-[4/3] bg-muted/50">
+                  <div className="relative aspect-[16/10] bg-muted/40">
                     <Image
                       src={prop.image}
                       alt={prop.title}
@@ -344,21 +345,21 @@ export function ValuePropsSection({
 
                 {/* Content */}
                 <div className="flex-1 p-6 flex flex-col">
-                  <h3 className="font-semibold text-lg mb-2">{prop.title}</h3>
-                  <p className="text-sm text-muted-foreground flex-1">
+                  <h3 className="font-semibold text-lg mb-2 tracking-tight">{prop.title}</h3>
+                  <p className="text-[14px] text-muted-foreground leading-relaxed flex-1">
                     {prop.description}
                   </p>
 
-                  {/* Plus button */}
-                  <div className="mt-4 flex justify-end">
+                  {/* Plus button - Linear style */}
+                  <div className="mt-5 flex justify-end">
                     <span
                       className={cn(
                         'flex items-center justify-center size-8 rounded-full',
-                        'bg-muted/50 border border-border/50',
-                        'group-hover:bg-muted group-hover:border-border transition-colors'
+                        'bg-muted/60 border border-border/60',
+                        'group-hover:bg-muted group-hover:border-border/80 transition-colors'
                       )}
                     >
-                      <span className="text-lg leading-none">+</span>
+                      <span className="text-base leading-none">+</span>
                     </span>
                   </div>
                 </div>
@@ -430,22 +431,22 @@ export function PaywallBuilderLinear() {
 
   const features = [
     {
-      icon: <span className="size-4 rounded bg-primary/20" />,
+      icon: <span className="size-3.5 rounded bg-primary/20" />,
       title: 'Native rendering',
       description: 'Paywalls render natively on iOS and Android.',
     },
     {
-      icon: <span className="size-4 rounded bg-primary/20" />,
+      icon: <span className="size-3.5 rounded bg-primary/20" />,
       title: 'Remote updates',
       description: 'No app store review needed.',
     },
     {
-      icon: <span className="size-4 rounded bg-primary/20" />,
+      icon: <span className="size-3.5 rounded bg-primary/20" />,
       title: 'A/B testing ready',
       description: 'Test any paywall variant.',
     },
     {
-      icon: <span className="size-4 rounded bg-primary/20" />,
+      icon: <span className="size-3.5 rounded bg-primary/20" />,
       title: 'Analytics built-in',
       description: 'Track conversions and revenue.',
     },
@@ -496,22 +497,22 @@ export function ABTestingLinear() {
 
   const features = [
     {
-      icon: <span className="size-4 rounded bg-cyan-500/20" />,
+      icon: <span className="size-3.5 rounded bg-cyan-500/20" />,
       title: '20+ metrics',
       description: 'Conversion, ARPU, LTV, and more.',
     },
     {
-      icon: <span className="size-4 rounded bg-cyan-500/20" />,
+      icon: <span className="size-3.5 rounded bg-cyan-500/20" />,
       title: 'Traffic allocation',
       description: 'Control variant distribution.',
     },
     {
-      icon: <span className="size-4 rounded bg-cyan-500/20" />,
+      icon: <span className="size-3.5 rounded bg-cyan-500/20" />,
       title: 'Auto-winner',
       description: 'Automatic rollout to winning variant.',
     },
     {
-      icon: <span className="size-4 rounded bg-cyan-500/20" />,
+      icon: <span className="size-3.5 rounded bg-cyan-500/20" />,
       title: 'Real-time results',
       description: 'See data as it comes in.',
     },
@@ -549,8 +550,8 @@ export function AnalyticsLinear() {
       description="Track MRR, LTV, churn, and cohort retention. Get the metrics you need to grow your subscription business."
       learnMoreHref="/ltv-analytics"
     >
-      <div className="mt-8 grid md:grid-cols-2 gap-8 items-center">
-        <div className="relative aspect-video rounded-xl overflow-hidden border bg-muted/30">
+      <div className="mt-12 grid md:grid-cols-2 gap-12 items-center">
+        <div className="relative aspect-video rounded-[20px] overflow-hidden border border-border/50 bg-muted/30">
           <Image
             src={getImagePath(imageSet, 'light-feature3.webp')}
             alt="Analytics dashboard"
@@ -558,32 +559,32 @@ export function AnalyticsLinear() {
             className="object-cover"
           />
         </div>
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="flex items-start gap-4">
-            <span className="size-8 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-              <span className="size-3 rounded-full bg-emerald-500" />
+            <span className="size-9 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+              <span className="size-2.5 rounded-full bg-emerald-500" />
             </span>
             <div>
-              <h4 className="font-medium">Real-time dashboard</h4>
-              <p className="text-sm text-muted-foreground">See revenue, trials, and conversions as they happen.</p>
+              <h4 className="font-medium text-[15px] mb-1">Real-time dashboard</h4>
+              <p className="text-[14px] text-muted-foreground leading-relaxed">See revenue, trials, and conversions as they happen.</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <span className="size-8 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-              <span className="size-3 rounded-full bg-emerald-500" />
+            <span className="size-9 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+              <span className="size-2.5 rounded-full bg-emerald-500" />
             </span>
             <div>
-              <h4 className="font-medium">Cohort analysis</h4>
-              <p className="text-sm text-muted-foreground">Understand retention patterns across user segments.</p>
+              <h4 className="font-medium text-[15px] mb-1">Cohort analysis</h4>
+              <p className="text-[14px] text-muted-foreground leading-relaxed">Understand retention patterns across user segments.</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <span className="size-8 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-              <span className="size-3 rounded-full bg-emerald-500" />
+            <span className="size-9 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+              <span className="size-2.5 rounded-full bg-emerald-500" />
             </span>
             <div>
-              <h4 className="font-medium">LTV predictions</h4>
-              <p className="text-sm text-muted-foreground">AI-powered forecasts for up to 12 months.</p>
+              <h4 className="font-medium text-[15px] mb-1">LTV predictions</h4>
+              <p className="text-[14px] text-muted-foreground leading-relaxed">AI-powered forecasts for up to 12 months.</p>
             </div>
           </div>
         </div>
@@ -686,20 +687,20 @@ function ModalCard({
   data: ModalCardData;
   onOpen: () => void;
 }) {
-  const shouldReduceMotion = useReducedMotion();
   const isDirectLink = data.directLink && !!data.link;
 
   const cardContent = (
     <motion.div
-      whileHover={undefined}
+      whileHover={{ y: -2 }}
+      transition={{ duration: 0.2 }}
       className={cn(
-        'group relative flex flex-col h-full rounded-[24px] overflow-hidden',
+        'group relative flex flex-col h-full rounded-[20px] overflow-hidden',
         'bg-muted/30 border border-border/50',
-        'hover:border-border transition-colors cursor-pointer'
+        'hover:border-border/80 hover:bg-muted/40 transition-all duration-200 cursor-pointer'
       )}
     >
       {/* Image area */}
-      <div className="relative aspect-[4/3] bg-muted/50">
+      <div className="relative aspect-[16/10] bg-muted/40">
         <Image
           src={data.image}
           alt={data.title}
@@ -710,22 +711,22 @@ function ModalCard({
 
       {/* Content area */}
       <div className="flex-1 p-6 flex flex-col">
-        <h4 className="font-semibold text-lg mb-2">{data.title}</h4>
-        <p className="text-sm text-muted-foreground flex-1">{data.subtitle}</p>
+        <h4 className="font-semibold text-lg mb-2 tracking-tight">{data.title}</h4>
+        <p className="text-[14px] text-muted-foreground leading-relaxed flex-1">{data.subtitle}</p>
 
         {/* Button - chevron for direct links, plus for modals */}
-        <div className="mt-4 flex justify-end">
+        <div className="mt-5 flex justify-end">
           <span
             className={cn(
               'flex items-center justify-center size-8 rounded-full',
-              'bg-muted/50 border border-border/50',
-              'group-hover:bg-muted group-hover:border-border transition-colors'
+              'bg-muted/60 border border-border/60',
+              'group-hover:bg-muted group-hover:border-border/80 transition-colors'
             )}
           >
             {isDirectLink ? (
-              <ChevronRightIcon className="size-4" />
+              <ChevronRightIcon className="size-3.5" />
             ) : (
-              <span className="text-lg leading-none">+</span>
+              <span className="text-base leading-none">+</span>
             )}
           </span>
         </div>
@@ -740,6 +741,10 @@ function ModalCard({
   return <div onClick={onOpen}>{cardContent}</div>;
 }
 
+// =============================================================================
+// MODAL COMPONENT WITH PORTAL
+// Uses createPortal to render outside the component tree
+// =============================================================================
 function CardModal({
   data,
   isOpen,
@@ -750,8 +755,39 @@ function CardModal({
   onClose: () => void;
 }) {
   const shouldReduceMotion = useReducedMotion();
+  const [mounted, setMounted] = React.useState(false);
 
-  return (
+  React.useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  // Lock body scroll when modal is open
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  // Handle escape key
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleEscape);
+      return () => window.removeEventListener('keydown', handleEscape);
+    }
+  }, [isOpen, onClose]);
+
+  if (!mounted) return null;
+
+  const modalContent = (
     <AnimatePresence>
       {isOpen && (
         <>
@@ -761,95 +797,100 @@ function CardModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-background/60 backdrop-blur-sm z-[100]"
             onClick={onClose}
           />
 
           {/* Modal */}
           <motion.div
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-            className="fixed inset-x-4 top-[5%] bottom-[5%] md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl lg:max-w-3xl bg-background border rounded-2xl z-50 overflow-y-auto"
+            className="fixed inset-x-4 top-[5%] bottom-[5%] md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl lg:max-w-3xl bg-background border border-border/60 rounded-[24px] z-[101] overflow-hidden shadow-2xl"
           >
-            {/* Close button */}
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 z-10 size-10 rounded-full bg-background/80 backdrop-blur border hover:bg-muted flex items-center justify-center transition-colors"
-            >
-              <span className="text-xl leading-none rotate-45">+</span>
-            </button>
+            {/* Scrollable content */}
+            <div className="h-full overflow-y-auto">
+              <div className="p-6 md:p-10">
+                {/* Close button */}
+                <button
+                  onClick={onClose}
+                  className="absolute top-4 right-4 z-10 size-10 rounded-full bg-muted/60 border border-border/60 hover:bg-muted flex items-center justify-center transition-colors"
+                >
+                  <span className="text-xl leading-none rotate-45">+</span>
+                </button>
 
-            <div className="p-6 md:p-10">
-              {/* Image - smaller, contained */}
-              <div className="relative h-48 md:h-64 rounded-xl overflow-hidden bg-muted/30 mb-8">
-                <Image
-                  src={data.image}
-                  alt={data.title}
-                  fill
-                  className="object-contain p-4"
-                />
-              </div>
-
-              {/* Title */}
-              <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-6">
-                {data.title}
-              </h3>
-
-              {/* Paragraphs */}
-              <div className="space-y-4 mb-8">
-                {data.paragraphs.map((p, i) => (
-                  <p key={i} className="text-muted-foreground leading-relaxed">
-                    {p}
-                  </p>
-                ))}
-              </div>
-
-              {/* Quote section */}
-              {data.quote && (
-                <>
-                  <div className="h-px bg-border/50 my-8" />
-                  <blockquote className="text-center">
-                    <p className="text-lg font-medium mb-4">
-                      {data.quote.text}
-                    </p>
-                    <cite className="text-sm text-muted-foreground">
-                      {data.quote.company}
-                    </cite>
-                  </blockquote>
-                </>
-              )}
-
-              {/* Stats grid */}
-              {data.stats && data.stats.length > 0 && (
-                <>
-                  <div className="h-px bg-border/50 my-8" />
-                  <div className="grid grid-cols-2 gap-6">
-                    {data.stats.map((stat, i) => (
-                      <div key={i}>
-                        <div className="text-2xl font-bold">{stat.value}</div>
-                        <div className="text-sm text-muted-foreground">{stat.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              {/* Action buttons */}
-              {data.link && (
-                <div className="mt-8 flex gap-4">
-                  <SquircleButton href={data.link} variant="chevron">
-                    Learn more
-                  </SquircleButton>
+                {/* Image - smaller, contained */}
+                <div className="relative h-48 md:h-64 rounded-[16px] overflow-hidden bg-muted/30 mb-8 border border-border/40">
+                  <Image
+                    src={data.image}
+                    alt={data.title}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-              )}
+
+                {/* Title */}
+                <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-6">
+                  {data.title}
+                </h3>
+
+                {/* Paragraphs */}
+                <div className="space-y-4 mb-8">
+                  {data.paragraphs.map((p, i) => (
+                    <p key={i} className="text-muted-foreground text-[15px] leading-relaxed">
+                      {p}
+                    </p>
+                  ))}
+                </div>
+
+                {/* Quote section */}
+                {data.quote && (
+                  <>
+                    <div className="h-px bg-border/40 my-8" />
+                    <blockquote className="text-center py-4">
+                      <p className="text-lg font-medium mb-3">
+                        "{data.quote.text}"
+                      </p>
+                      <cite className="text-[13px] text-muted-foreground not-italic">
+                        {data.quote.company}
+                      </cite>
+                    </blockquote>
+                  </>
+                )}
+
+                {/* Stats grid */}
+                {data.stats && data.stats.length > 0 && (
+                  <>
+                    <div className="h-px bg-border/40 my-8" />
+                    <div className="grid grid-cols-2 gap-6 py-4">
+                      {data.stats.map((stat, i) => (
+                        <div key={i}>
+                          <div className="text-2xl font-bold tracking-tight">{stat.value}</div>
+                          <div className="text-[13px] text-muted-foreground">{stat.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {/* Action buttons */}
+                {data.link && (
+                  <div className="mt-8 flex gap-4">
+                    <SquircleButton href={data.link} variant="chevron">
+                      Learn more
+                    </SquircleButton>
+                  </div>
+                )}
+              </div>
             </div>
           </motion.div>
         </>
       )}
     </AnimatePresence>
   );
+
+  return createPortal(modalContent, document.body);
 }
 
 // =============================================================================
@@ -864,52 +905,68 @@ export function CardCarousel({
   cards,
 }: {
   tag: string;
-  tagColor?: 'primary' | 'cyan' | 'green' | 'amber';
+  tagColor?: 'primary' | 'cyan' | 'green' | 'amber' | 'purple' | 'pink';
   title: string;
   description: string;
   cards: ModalCardData[];
 }) {
   const [activeModal, setActiveModal] = React.useState<string | null>(null);
-  const [scrollPosition, setScrollPosition] = React.useState(0);
+  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
+  const [canScrollRight, setCanScrollRight] = React.useState(true);
   const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  const checkScrollability = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
+  React.useEffect(() => {
+    checkScrollability();
+    const el = scrollRef.current;
+    if (el) {
+      el.addEventListener('scroll', checkScrollability);
+      return () => el.removeEventListener('scroll', checkScrollability);
+    }
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
-    const scrollAmount = 320; // Card width + gap
+    const scrollAmount = 340;
     const newPosition = direction === 'left'
-      ? Math.max(0, scrollPosition - scrollAmount)
-      : scrollPosition + scrollAmount;
+      ? scrollRef.current.scrollLeft - scrollAmount
+      : scrollRef.current.scrollLeft + scrollAmount;
     scrollRef.current.scrollTo({ left: newPosition, behavior: 'smooth' });
-    setScrollPosition(newPosition);
   };
 
   const activeCard = cards.find(c => c.id === activeModal);
 
   return (
     <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="container py-16">
+      <div className="container py-24 lg:py-32">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-12">
           <div>
-            <div className="mb-4">
+            <div className="mb-5">
               <FeatureTag label={tag} color={tagColor} />
             </div>
-            <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">{title}</h2>
           </div>
-          <p className="text-muted-foreground max-w-md">{description}</p>
+          <p className="text-muted-foreground text-[15px] max-w-md leading-relaxed md:pt-10">{description}</p>
         </div>
 
         {/* Carousel */}
         <div className="relative">
           <div
             ref={scrollRef}
-            className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4"
+            className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4"
             style={{ scrollSnapType: 'x mandatory' }}
           >
             {cards.map((card) => (
               <div
                 key={card.id}
-                className="flex-shrink-0 w-[280px] md:w-[320px]"
+                className="flex-shrink-0 w-[300px] md:w-[340px]"
                 style={{ scrollSnapAlign: 'start' }}
               >
                 <ModalCard data={card} onOpen={() => setActiveModal(card.id)} />
@@ -917,30 +974,36 @@ export function CardCarousel({
             ))}
           </div>
 
-          {/* Navigation arrows */}
-          <div className="flex justify-end gap-2 mt-4">
+          {/* Navigation arrows - Linear style */}
+          <div className="flex justify-end gap-2 mt-6">
             <button
               onClick={() => scroll('left')}
-              disabled={scrollPosition === 0}
+              disabled={!canScrollLeft}
               className={cn(
-                'size-10 rounded-full border flex items-center justify-center transition-colors',
-                scrollPosition === 0
-                  ? 'opacity-50 cursor-not-allowed'
-                  : 'hover:bg-muted'
+                'size-10 rounded-full border border-border/60 flex items-center justify-center transition-all duration-200',
+                canScrollLeft
+                  ? 'hover:bg-muted hover:border-border/80'
+                  : 'opacity-40 cursor-not-allowed'
               )}
             >
               <ChevronRightIcon className="size-4 rotate-180" />
             </button>
             <button
               onClick={() => scroll('right')}
-              className="size-10 rounded-full border flex items-center justify-center hover:bg-muted transition-colors"
+              disabled={!canScrollRight}
+              className={cn(
+                'size-10 rounded-full border border-border/60 flex items-center justify-center transition-all duration-200',
+                canScrollRight
+                  ? 'hover:bg-muted hover:border-border/80'
+                  : 'opacity-40 cursor-not-allowed'
+              )}
             >
               <ChevronRightIcon className="size-4" />
             </button>
           </div>
         </div>
 
-        {/* Modal */}
+        {/* Modal - rendered via portal */}
         {activeCard && (
           <CardModal
             data={activeCard}
