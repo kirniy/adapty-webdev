@@ -6,7 +6,6 @@ import {
   useHeroVariant,
   useStatsVariant,
   useTestimonialsVariant,
-  useCtaVariant,
 } from '~/lib/debug-context';
 
 import { StoryHero } from '~/components/sections/story-hero';

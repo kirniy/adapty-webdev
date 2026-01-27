@@ -2,15 +2,11 @@ import * as React from 'react';
 import Image from 'next/image';
 import {
   BookIcon,
-  BoxIcon,
-  CircuitBoardIcon,
-  FileBarChartIcon,
   LayoutIcon,
   PlayIcon,
   SendHorizonalIcon,
   CodeIcon,
   UsersIcon,
-  GraduationCapIcon,
   CalendarIcon,
   BriefcaseIcon,
   NewspaperIcon,
@@ -27,12 +23,10 @@ import {
   HeartHandshakeIcon,
 } from 'lucide-react';
 
-import { baseUrl, routes } from '@workspace/routes';
 import {
   FacebookIcon,
   InstagramIcon,
   LinkedInIcon,
-  TikTokIcon,
   XIcon
 } from '@workspace/ui/components/brand-icons';
 

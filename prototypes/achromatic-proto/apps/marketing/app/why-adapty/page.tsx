@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { GridSection } from "~/components/fragments/grid-section";
 import { SectionBackground } from "~/components/fragments/section-background";
@@ -429,7 +429,7 @@ export default function WhyAdaptyPage(): React.JSX.Element {
           <BlurFade delay={0.15}>
             {/* Mobile: Card-based layout */}
             <div className="mt-12 space-y-4 md:hidden">
-              {COMPARISON_DATA.map((row, index) => (
+              {COMPARISON_DATA.map((row) => (
                 <Card key={row.feature} className="overflow-hidden">
                   <CardContent className="p-4">
                     <h4 className="font-medium text-sm mb-3">{row.feature}</h4>
