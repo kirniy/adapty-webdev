@@ -763,9 +763,8 @@ function HeroTrustSignal(): React.JSX.Element {
 
 export function Hero(): React.JSX.Element {
   return (
-    <GridSection className="overflow-x-hidden relative">
+    <GridSection className="overflow-x-hidden relative" hideVerticalGridLines>
       <SectionBackground height={900} />
-      <MainDashedGridLines />
       <div className="relative z-10 pt-20 sm:pt-24 md:pt-28 lg:pt-32">
         <div className="w-full max-w-full px-4 sm:container sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl w-full">
