@@ -25,7 +25,6 @@ import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { SlideIn } from '~/components/fragments/slide-in';
 import { ScaleOnHover } from '~/components/fragments/scale-on-hover';
-import { Spotlight } from '~/components/fragments/spotlight';
 import {
   useDashedThicknessVariant,
   useGridColorVariant,
@@ -45,52 +44,16 @@ function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
   return basePath.replace('/assets/hero/', `/assets/hero/${imageSet}/`);
 }
 
-// Magic animation: Live apps counter
+// Trust signal - simplified, no green dot (per Lera's feedback)
 function LiveAppsMagic() {
-  const shouldReduceMotion = useReducedMotion();
-  const [count, setCount] = React.useState(14950);
-
-  React.useEffect(() => {
-    if (shouldReduceMotion) {
-      setCount(15000);
-      return;
-    }
-    const interval = setInterval(() => {
-      setCount(prev => {
-        if (prev >= 15000) return 15000;
-        return prev + Math.floor(Math.random() * 3) + 1;
-      });
-    }, 150);
-    return () => clearInterval(interval);
-  }, [shouldReduceMotion]);
-
   return (
     <motion.div
-      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs sm:text-sm font-medium"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay: 0.1 }}
     >
-      <motion.div
-        className="size-2 rounded-full bg-green-500"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-          opacity: [1, 0.7, 1],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-      <motion.span
-        key={count}
-        initial={shouldReduceMotion ? {} : { y: -3, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.1 }}
-      >
-        {count.toLocaleString()}+ apps powered
-      </motion.span>
+      <span>15,000+ apps powered</span>
     </motion.div>
   );
 }
@@ -181,7 +144,7 @@ function HeroPill(): React.JSX.Element {
   return (
     <BlurFade delay={0.1}>
       <motion.div
-        className="flex items-center justify-center"
+        className="flex items-center justify-start min-[400px]:justify-center"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
@@ -191,7 +154,7 @@ function HeroPill(): React.JSX.Element {
         <Link href="https://adapty.io/ebooks/100k-app-playbook/">
           <Badge
             variant="outline"
-            className="group relative h-8 overflow-hidden rounded-full px-3 text-xs font-medium shadow-xs transition-all duration-200 hover:bg-accent/50 hover:shadow-md sm:text-sm cursor-pointer"
+            className="group relative h-8 overflow-hidden rounded-full px-3 text-xs font-medium transition-all duration-200 hover:bg-accent/50 sm:text-sm cursor-pointer"
           >
             <BorderBeam
               size={40}
@@ -226,7 +189,7 @@ function HeroPill(): React.JSX.Element {
 function HeroTitle(): React.JSX.Element {
   return (
     <SlideIn delay={0.2} duration={0.6} direction="up">
-      <h1 className="mt-6 text-center text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-balance">
+      <h1 className="mt-6 text-left min-[400px]:text-center text-[19px] font-bold leading-tight tracking-tight min-[390px]:text-[21px] min-[420px]:text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
         Revenue management
         <br />
         <span className="text-muted-foreground">for in-app purchases</span>
@@ -238,14 +201,14 @@ function HeroTitle(): React.JSX.Element {
 function HeroDescription(): React.JSX.Element {
   return (
     <SlideIn delay={0.3} duration={0.6} direction="up">
-      <p className="mx-auto mt-4 max-w-2xl text-balance text-center text-lg text-muted-foreground lg:text-xl">
-        Save months on integrating subscriptions and double your app revenue with paywall management, A/B testing, and real-time analytics.
+      <p className="mt-4 w-full sm:max-w-2xl mx-auto text-left min-[400px]:text-center text-[12px] text-muted-foreground min-[390px]:text-[13px] min-[400px]:text-sm sm:text-lg lg:text-xl [overflow-wrap:anywhere]">
+        Integrate faster. Grow revenue with paywalls and A/B tests.
       </p>
     </SlideIn>
   );
 }
 
-// Animated hero button with glow, pulse, and press effects
+// Simple hero button - no glow, pulse, or beam effects (per user feedback)
 function HeroButton({
   href,
   variant = 'default',
@@ -255,69 +218,24 @@ function HeroButton({
   variant?: 'default' | 'outline';
   children: React.ReactNode;
 }) {
-  const [isHovered, setIsHovered] = React.useState(false);
-  const shouldReduceMotion = useReducedMotion();
-
   return (
-    <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      {/* Glow effect for primary button */}
-      {variant === 'default' && (
-        <motion.div
-          className="absolute inset-0 -z-10 rounded-xl bg-primary/25 blur-lg"
-          animate={{
-            opacity: isHovered ? 0.8 : 0,
-            scale: isHovered ? 1.15 : 1,
-          }}
-          transition={{ duration: 0.25 }}
-        />
+    <Link
+      href={href}
+      className={cn(
+        buttonVariants({ variant }),
+        'h-11 min-h-[44px] rounded-xl px-5 flex items-center justify-center'
       )}
-      {/* Pulsing ring effect for primary button */}
-      {variant === 'default' && !shouldReduceMotion && (
-        <motion.div
-          className="absolute inset-0 rounded-xl border-2 border-primary/40"
-          animate={{
-            scale: [1, 1.06, 1],
-            opacity: [0.4, 0, 0.4],
-          }}
-          transition={{
-            duration: 2.5,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-      )}
-      {/* BorderBeam for premium look */}
-      {variant === 'default' && (
-        <BorderBeam
-          size={80}
-          duration={5}
-          borderWidth={1.5}
-          colorFrom="hsl(var(--primary))"
-          colorTo="hsl(var(--primary)/0)"
-          className="opacity-60"
-        />
-      )}
-      <ScaleOnHover>
-        <Link
-          href={href}
-          className={cn(
-            buttonVariants({ variant }),
-            'h-10 rounded-xl px-5 transition-shadow flex items-center justify-center',
-            variant === 'default' && 'shadow-md hover:shadow-lg'
-          )}
-        >
-          {children}
-        </Link>
-      </ScaleOnHover>
-    </div>
+    >
+      {children}
+    </Link>
   );
 }
 
 function HeroButtons(): React.JSX.Element {
   return (
     <SlideIn delay={0.4} duration={0.6} direction="up">
-      <div className="mx-auto mt-8 flex flex-col items-center gap-4">
-        <div className="flex justify-center gap-3">
+      <div className="mx-auto mt-8 flex flex-col items-start min-[400px]:items-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-start min-[400px]:justify-center gap-3 w-full sm:w-auto">
           <HeroButton href="https://app.adapty.io/registration" variant="default">
             Start for free
           </HeroButton>
@@ -412,25 +330,14 @@ function MainDashedGridLines(): React.JSX.Element {
   );
 }
 
-// Learn more link with arrow animation
+// Learn more link - arrow removed per Lera's feedback
 function LearnMoreLink({ href, label }: { href: string; label: string }) {
-  const [isHovered, setIsHovered] = React.useState(false);
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <Link
       href={href}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
     >
       Learn more about {label}
-      <motion.span
-        animate={{ x: shouldReduceMotion ? 0 : isHovered ? 4 : 0 }}
-        transition={{ type: 'spring', duration: 0.15, bounce: 0.15 }}
-      >
-        <ArrowRightIcon className="size-4" />
-      </motion.span>
     </Link>
   );
 }
@@ -560,10 +467,7 @@ function FeatureContent({
           animate={{ opacity: 1, x: 0 }}
           transition={{ type: 'spring', delay: 0.05, duration: 0.25, bounce: 0 }}
         >
-          <Badge variant="secondary" className="mb-4 w-fit rounded-full">
-            <feature.icon className="mr-1.5 size-3" />
-            {feature.label}
-          </Badge>
+          {/* Badge removed per Lera's feedback - "Убрать FEATURE TAB BADGE либо подложку у него" */}
           <h3 className="mb-3 text-2xl font-bold tracking-tight lg:text-3xl">
             {feature.headline}
           </h3>
@@ -592,13 +496,7 @@ function FeatureContent({
               }}
               className="flex items-center gap-3 text-sm group/item cursor-default"
             >
-              <motion.div
-                className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary"
-                whileHover={{ scale: 1.15, backgroundColor: 'hsl(var(--primary))' }}
-                transition={{ type: 'spring', duration: 0.2, bounce: 0.3 }}
-              >
-                <CheckIcon className="size-3 group-hover/item:text-primary-foreground transition-colors" />
-              </motion.div>
+              <CheckIcon className="size-4 shrink-0 text-primary" />
               <span className="text-muted-foreground group-hover/item:text-foreground transition-colors">{highlight}</span>
             </motion.li>
           ))}
@@ -627,7 +525,7 @@ function FeatureContent({
         whileHover={shouldReduceMotion ? undefined : { scale: 1.01 }}
       >
         <div className={cn(
-          "relative overflow-hidden rounded-xl border bg-gradient-to-b from-muted/30 to-muted/10 shadow-lg transition-all hover:shadow-xl",
+          "relative overflow-hidden rounded-xl border bg-gradient-to-b from-muted/30 to-muted/10 transition-all",
           monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
         )}>
           <Image
@@ -755,68 +653,130 @@ function HeroFeatureShowcase(): React.JSX.Element {
   );
 }
 
-// Magic animation: Live apps counter
-function LiveAppsCounter(): React.JSX.Element {
+// Trust counter animation - counts up to 15,000+
+function TrustCounterMagic() {
   const shouldReduceMotion = useReducedMotion();
-  const [count, setCount] = React.useState(15000);
+  const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
-    if (shouldReduceMotion) return;
-
-    // Gradually increase to show live growth
+    if (shouldReduceMotion) {
+      setCount(15000);
+      return;
+    }
     const interval = setInterval(() => {
-      setCount(prev => prev + Math.floor(Math.random() * 2) + 1);
-    }, 5000);
+      setCount(prev => {
+        if (prev >= 15000) return 15000;
+        return prev + 500;
+      });
+    }, 40);
     return () => clearInterval(interval);
   }, [shouldReduceMotion]);
 
   return (
     <motion.span
       key={count}
-      initial={shouldReduceMotion ? {} : { y: -5, opacity: 0 }}
+      initial={shouldReduceMotion ? {} : { y: -3, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.2 }}
-      className="font-medium text-foreground"
+      transition={{ duration: 0.1 }}
+      className="font-semibold text-foreground"
     >
       {count.toLocaleString()}+
     </motion.span>
   );
 }
 
-// Trust signal with live counter
+// All 7 logos per Sergey's rule
+const TRUST_LOGOS = [
+  { name: 'Feeld', file: '/logos/trusted-by/feeld.svg', invert: false },
+  { name: 'Bumble', file: '/logos/trusted-by/bumble.svg', invert: false },
+  { name: 'HubX', file: '/logos/trusted-by/hubx.svg', invert: false },
+  { name: 'AppNation', file: '/logos/trusted-by/appnation.webp', invert: false },
+  { name: 'Impala Studios', file: '/logos/trusted-by/impala-studios.svg', invert: false },
+  { name: 'SocialKit', file: '/logos/trusted-by/socialkit.svg', invert: true }, // white logo needs invert
+  { name: 'Almus', file: '/logos/trusted-by/almus.svg', invert: false },
+];
+
+// Trust bar with logos - integrated into hero with hover blur effect
 function HeroTrustSignal(): React.JSX.Element {
+  const [isHovered, setIsHovered] = React.useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <SlideIn delay={0.5} duration={0.6} direction="up">
-      <div className="mt-8 flex flex-col items-center gap-2">
-        <p className="text-center text-sm text-muted-foreground">
-          Trusted by <LiveAppsCounter /> apps worldwide
+      <div className="mt-12 flex flex-col items-start min-[400px]:items-center gap-6">
+        <p className="text-left min-[400px]:text-center text-sm text-muted-foreground">
+          Trusted by <TrustCounterMagic /> apps and the world&apos;s largest app publishers
         </p>
-        <motion.div
-          className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400"
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.3 }}
+
+        {/* Logo grid with hover blur effect */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
+          {/* Logos - blur on hover, always single line */}
           <motion.div
-            className="size-1.5 rounded-full bg-emerald-500"
-            animate={shouldReduceMotion ? {} : {
-              scale: [1, 1.3, 1],
-              opacity: [1, 0.7, 1],
+            animate={shouldReduceMotion ? undefined : {
+              filter: isHovered ? 'blur(8px)' : 'blur(0px)',
+              opacity: isHovered ? 0.4 : 1,
             }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          <span>Growing daily</span>
-        </motion.div>
+            transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
+            className="flex items-center justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 px-4"
+          >
+            {TRUST_LOGOS.map((logo, index) => (
+              <BlurFade
+                key={logo.name}
+                delay={0.55 + index * 0.05}
+                className="flex items-center justify-center shrink-0"
+              >
+                <Image
+                  src={logo.file}
+                  alt={logo.name}
+                  width={100}
+                  height={32}
+                  className={cn(
+                    "h-5 w-auto object-contain grayscale sm:h-6",
+                    logo.invert ? "invert dark:invert-0" : "dark:invert"
+                  )}
+                />
+              </BlurFade>
+            ))}
+          </motion.div>
+
+          {/* Button appears on hover over blurred logos */}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <Link
+                  href="/case-studies"
+                  className={cn(
+                    'inline-flex items-center gap-2 rounded-xl',
+                    'bg-background/95 backdrop-blur-sm',
+                    'border border-border/50 shadow-lg',
+                    'px-6 py-3 text-sm font-medium',
+                    'transition-all duration-150 ease-out',
+                    'hover:bg-accent hover:shadow-xl',
+                    'motion-reduce:transition-none'
+                  )}
+                >
+                  View case studies
+                  <ChevronRightIcon className="size-4" />
+                </Link>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </SlideIn>
   );
 }
+
 
 export function Hero(): React.JSX.Element {
   return (
@@ -824,15 +784,14 @@ export function Hero(): React.JSX.Element {
       <SectionBackground height={900} />
       <MainDashedGridLines />
       <div className="relative z-10 pt-20 sm:pt-24 md:pt-28 lg:pt-32">
-        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={450} />
-        <div className="container">
-          <div className="mx-auto max-w-4xl">
+        <div className="w-full max-w-full px-4 sm:container sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl w-full">
             <HeroPill />
             <HeroTitle />
             <HeroDescription />
             <HeroButtons />
-            <HeroTrustSignal />
           </div>
+          <HeroTrustSignal />
         </div>
         <HeroFeatureShowcase />
       </div>

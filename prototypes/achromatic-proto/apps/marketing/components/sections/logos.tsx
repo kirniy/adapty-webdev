@@ -7,7 +7,6 @@ import { motion, useReducedMotion } from 'motion/react';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { Spotlight } from '~/components/fragments/spotlight';
 
 // Magic animation: Trust counter
 function TrustCounterMagic() {
@@ -57,7 +56,6 @@ export function Logos(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={200} />
       <div className="container py-12 lg:py-16 relative z-10">
-        <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={300} />
         <BlurFade className="mb-8 text-center">
           <p className="text-lg font-medium text-muted-foreground">
             Trusted by <TrustCounterMagic /> apps and the world&apos;s largest app publishers

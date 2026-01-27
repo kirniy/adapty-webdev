@@ -11,34 +11,6 @@ import { cn } from '@workspace/ui/lib/utils';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { Spotlight } from '~/components/fragments/spotlight';
-
-// Magic animation: Trusted apps counter
-function TrustedAppsMagic() {
-  const shouldReduceMotion = useReducedMotion();
-
-  return (
-    <motion.span
-      className="inline-flex items-center gap-1.5 text-primary font-medium"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, delay: 0.1 }}
-    >
-      <motion.span
-        className="size-1.5 rounded-full bg-green-500"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-      <span>15,000+</span>
-    </motion.span>
-  );
-}
 
 // Linear-style: 8 logos in a 4x2 grid, all blur on hover with centered CTA
 const CUSTOMER_LOGOS = [
@@ -60,11 +32,10 @@ export function LogosLinear(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={300} />
       <div className="container py-16 lg:py-20 relative z-10">
-        <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={300} />
         {/* Header text */}
         <BlurFade className="mb-12 text-center">
           <h2 className="text-xl font-semibold text-foreground md:text-2xl">
-            Powering <TrustedAppsMagic /> subscription apps worldwide.
+            Powering 15,000+ subscription apps worldwide.
           </h2>
           <p className="mt-2 text-base text-muted-foreground md:text-lg">
             From indie developers to enterprise publishers.

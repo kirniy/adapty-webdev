@@ -612,7 +612,7 @@ export function ComparePurchasely(): React.JSX.Element {
             <div className="grid md:grid-cols-3 gap-8 mt-12">
               {PLATFORM_STATS.map((stat, index) => (
                 <div key={index} className="text-center">
-                  <div className="text-4xl font-bold text-primary mb-2">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-2">
                     {stat.value}
                   </div>
                   <p className="text-muted-foreground">{stat.label}</p>

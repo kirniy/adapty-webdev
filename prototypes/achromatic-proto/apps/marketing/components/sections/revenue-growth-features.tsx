@@ -537,7 +537,7 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
         animate={shouldReduceMotion ? undefined : {
           scale: isHovered ? 1.1 : 1,
         }}
-        className="text-4xl font-bold text-primary md:text-5xl"
+        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-primary"
       >
         {stat.value}
       </motion.div>
@@ -722,7 +722,7 @@ export function RevenueGrowthFeatures(): React.JSX.Element {
                     <motion.div
                       animate={shouldReduceMotion ? {} : { opacity: [0.15, 0.3, 0.15] }}
                       transition={{ duration: 3, repeat: Infinity }}
-                      className="text-7xl font-bold text-primary/30"
+                      className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary/30"
                     >
                       WEB
                     </motion.div>

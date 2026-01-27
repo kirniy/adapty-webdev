@@ -777,7 +777,7 @@ export function CompareSuperwall(): React.JSX.Element {
                       />
                     )}
                     <motion.div
-                      className="text-4xl font-bold text-primary/30 relative z-10"
+                      className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary/30 relative z-10"
                       animate={shouldReduceMotion ? undefined : {
                         scale: hoveredFeature === index ? 1.1 : 1,
                       }}

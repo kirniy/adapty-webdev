@@ -9,7 +9,6 @@ import {
   CheckIcon
 } from 'lucide-react';
 
-import { Badge } from '@workspace/ui/components/badge';
 import { Button } from '@workspace/ui/components/button';
 import {
   Tabs,
@@ -22,7 +21,6 @@ import { cn } from '@workspace/ui/lib/utils';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { Spotlight } from '~/components/fragments/spotlight';
 
 // Magic animation: SDK platforms counter
 function SDKPlatformsMagic() {
@@ -36,17 +34,6 @@ function SDKPlatformsMagic() {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay: 0.15 }}
     >
-      <motion.div
-        className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
       <span>{platformCount}+ platforms</span>
     </motion.div>
   );
@@ -268,12 +255,7 @@ export function SDKCode(): React.JSX.Element {
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
             <BlurFade delay={shouldReduceMotion ? 0 : 0.05}>
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="outline" className="rounded-full">
-                  Developer-First SDK
-                </Badge>
-                <SDKPlatformsMagic />
-              </div>
+              <SDKPlatformsMagic />
             </BlurFade>
 
             <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
@@ -321,7 +303,6 @@ export function SDKCode(): React.JSX.Element {
                   )}
                 >
                   View Documentation
-                  <ArrowRightIcon className="size-4" />
                 </Link>
                 <Link
                   href={SDK_SNIPPETS[activeTab].docsUrl}
@@ -339,7 +320,7 @@ export function SDKCode(): React.JSX.Element {
               initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={shouldReduceMotion ? undefined : { delay: 0.2, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-              className="rounded-xl border bg-card shadow-lg overflow-hidden"
+              className="rounded-xl border bg-muted/30 overflow-hidden"
             >
               <Tabs
                 value={activeTab}

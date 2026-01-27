@@ -17,12 +17,10 @@ import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { Spotlight } from '~/components/fragments/spotlight';
 
 // MATCHES ADAPTY.IO CONTENT EXACTLY
 const FEATURES = [
@@ -289,7 +287,7 @@ function ControlMagic() {
         <button className="size-8 rounded-full bg-muted flex items-center justify-center opacity-50">
           <div className="size-3 bg-foreground rounded-[1px]" />
         </button>
-        <button className="size-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
+        <button className="size-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground ">
           <PlayIcon className="size-4 fill-current" />
         </button>
         <button className="size-8 rounded-full bg-muted flex items-center justify-center opacity-50">
@@ -322,7 +320,7 @@ function ControlMagic() {
         }}
         transition={{ duration: 1.5, repeat: state === 'playing' ? Infinity : 0 }}
         className={cn(
-          "size-10 rounded-full flex items-center justify-center shadow-lg",
+          "size-10 rounded-full flex items-center justify-center ",
           state === 'playing' ? "bg-primary" : state === 'paused' ? "bg-amber-500" : "bg-muted"
         )}
       >
@@ -503,11 +501,9 @@ function GridFeatures() {
                 transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 className={cn(
                   "group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-150 ease-out cursor-pointer",
-                  hoveredIndex === index && "border-primary/50 shadow-lg shadow-primary/5"
+                  hoveredIndex === index && "border-primary/50 "
                 )}
               >
-                <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
-
                 <div className="relative p-6">
                   <div className="flex items-start gap-4">
                     <motion.div
@@ -599,26 +595,11 @@ function BentoFeatures() {
                 )}
               >
                 <div className={cn(
-                  "relative h-full overflow-hidden rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer group flex flex-col",
-                  hoveredIndex === index && "border-primary/50 shadow-xl",
+                  "relative h-full rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer group flex flex-col",
+                  hoveredIndex === index && "border-primary/50",
                   index === 0 && "min-h-[300px]"
                 )}>
-                  {hoveredIndex === index && (
-                    <BorderBeam
-                      size={200}
-                      duration={10}
-                      borderWidth={1.5}
-                      colorFrom="hsl(var(--primary))"
-                      colorTo="hsl(var(--primary)/0)"
-                    />
-                  )}
-                  <Spotlight
-                    className="from-primary/20 via-primary/10 to-transparent"
-                    size={350}
-                    fill="white"
-                  />
-
-                  <div className="p-8 h-full flex flex-col relative z-10">
+                  <div className="p-8 h-full flex flex-col">
                     <motion.div
                       animate={shouldReduceMotion ? undefined : {
                         scale: hoveredIndex === index ? 1.15 : 1,
@@ -658,12 +639,8 @@ function BentoFeatures() {
               >
                 <div className={cn(
                   "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer group flex flex-col",
-                  hoveredIndex === index + featured.length && "border-primary/30 shadow-lg"
+                  hoveredIndex === index + featured.length && "border-primary/30 "
                 )}>
-                  <Spotlight
-                    className="from-primary/20 via-primary/10 to-transparent"
-                    size={200}
-                  />
                   <div className="p-6 relative z-10 flex-1 flex flex-col">
                     <div className="flex items-start gap-4 flex-1">
                       <motion.div
@@ -767,7 +744,7 @@ function TabsFeatures() {
               >
                 <Card className={cn(
                   "h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-150 cursor-pointer",
-                  hoveredIndex === index && "border-primary/50 shadow-lg -translate-y-1"
+                  hoveredIndex === index && "border-primary/50 -translate-y-1"
                 )}>
                   <CardContent className="p-6">
                     <div className="flex flex-col gap-4">

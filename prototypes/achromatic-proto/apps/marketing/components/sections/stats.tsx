@@ -44,10 +44,8 @@ const DATA = [
   }
 ];
 
-// Magic animation: Pulsing indicator showing live data
+// Live indicator - green dot removed per Lera's feedback
 function LiveIndicatorMagic() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <motion.div
       className="flex items-center gap-1.5 text-xs text-muted-foreground"
@@ -55,19 +53,7 @@ function LiveIndicatorMagic() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3, delay: 0.5 }}
     >
-      <motion.div
-        className="size-1.5 rounded-full bg-emerald-500"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-          opacity: [1, 0.7, 1],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-      <span>Live data</span>
+      <span>Real-time data</span>
     </motion.div>
   );
 }

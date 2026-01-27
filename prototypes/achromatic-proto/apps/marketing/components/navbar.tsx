@@ -131,7 +131,7 @@ function CompactSection({ title, children }: { title: string; children: React.Re
 
 function CompactProductDropdown() {
   return (
-    <div className="max-h-[70vh] w-[520px] overflow-y-auto p-3">
+    <div className="max-h-[70vh] w-full sm:w-[520px] max-w-[calc(100vw-2rem)] overflow-y-auto p-3">
       {/* Solution section */}
       <CompactSection title="Solutions">
         <div className="grid grid-cols-2 gap-0.5">

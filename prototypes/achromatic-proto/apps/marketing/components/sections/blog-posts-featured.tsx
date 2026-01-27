@@ -84,7 +84,7 @@ function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
               transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-6xl font-bold text-primary/10">
+              <span className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary/10">
                 {post.title.charAt(0)}
               </span>
             </div>

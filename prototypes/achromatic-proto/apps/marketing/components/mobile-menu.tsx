@@ -88,7 +88,7 @@ export function MobileMenu({
           aria-expanded={open}
           aria-label="Toggle Mobile Menu"
           onClick={handleToggleMobileMenu}
-          className="flex aspect-square h-fit select-none flex-col items-center justify-center gap-1 rounded-full p-2"
+          className="flex min-h-[44px] min-w-[44px] select-none flex-col items-center justify-center gap-1 rounded-full p-2"
         >
           <motion.div
             className="w-5 origin-center border-t-2 border-primary"
@@ -154,7 +154,7 @@ export function MobileMenu({
                         variant="ghost"
                         size="icon"
                         onClick={handleCloseMenu}
-                        className="size-8 rounded-lg"
+                        className="min-h-[44px] min-w-[44px] rounded-lg"
                         aria-label="Close menu"
                       >
                         <XIcon className="size-5" />

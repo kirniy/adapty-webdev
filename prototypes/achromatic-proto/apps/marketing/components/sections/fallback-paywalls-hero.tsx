@@ -151,7 +151,7 @@ function UptimeMagic() {
       <motion.div
         initial={shouldReduceMotion ? undefined : { scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="text-4xl font-bold text-primary"
+        className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary"
       >
         {percentage.toFixed(2)}%
       </motion.div>
@@ -211,7 +211,7 @@ export function FallbackPaywallsHero(): React.JSX.Element {
             <div className="mt-10 flex justify-center gap-12">
               <UptimeMagic />
               <div className="text-center">
-                <div className="text-4xl font-bold text-foreground">0</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">0</div>
                 <div className="text-sm text-muted-foreground mt-1">Lost conversions</div>
               </div>
             </div>

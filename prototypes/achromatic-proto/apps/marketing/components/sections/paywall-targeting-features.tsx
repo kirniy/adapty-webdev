@@ -330,7 +330,7 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
           scale: isHovered ? 1.1 : 1,
         }}
         transition={{ duration: 0.15 }}
-        className="text-4xl font-bold text-primary"
+        className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary"
       >
         {stat.value}
       </motion.p>

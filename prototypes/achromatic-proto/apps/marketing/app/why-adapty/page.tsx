@@ -427,7 +427,36 @@ export default function WhyAdaptyPage(): React.JSX.Element {
             </div>
           </BlurFade>
           <BlurFade delay={0.15}>
-            <div className="mt-12 overflow-x-auto rounded-xl border bg-card/50">
+            {/* Mobile: Card-based layout */}
+            <div className="mt-12 space-y-4 md:hidden">
+              {COMPARISON_DATA.map((row, index) => (
+                <Card key={row.feature} className="overflow-hidden">
+                  <CardContent className="p-4">
+                    <h4 className="font-medium text-sm mb-3">{row.feature}</h4>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div className="flex items-center justify-between p-2 rounded bg-primary/5">
+                        <span className="text-primary font-medium">Adapty</span>
+                        <StatusIcon value={row.adapty} />
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground">RevenueCat</span>
+                        <StatusIcon value={row.revenuecat} />
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground">Qonversion</span>
+                        <StatusIcon value={row.qonversion} />
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground">Superwall</span>
+                        <StatusIcon value={row.superwall} />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            {/* Desktop: Table layout */}
+            <div className="mt-12 hidden md:block rounded-xl border bg-card/50">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b bg-muted/30">

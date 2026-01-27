@@ -6,6 +6,10 @@
         "shadcn@latest",
         "mcp"
       ]
+    },
+    "figma-use": {
+      "type": "http",
+      "url": "http://localhost:38451/mcp"
     }
   }
 }

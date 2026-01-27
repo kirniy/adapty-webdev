@@ -738,7 +738,7 @@ function GridFeatures() {
 
               <div className="text-center">
                 <motion.div
-                  className="text-5xl font-bold text-primary md:text-6xl"
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-primary"
                   initial={{ scale: 0.5, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   transition={{ type: 'spring', bounce: 0.3 }}
@@ -824,7 +824,7 @@ function GridFeatures() {
 
                 {/* Step number badge */}
                 <motion.div
-                  className="absolute top-4 right-4 text-6xl font-bold text-primary/5"
+                  className="absolute top-4 right-4 text-4xl sm:text-5xl md:text-6xl font-bold text-primary/5"
                   animate={shouldReduceMotion ? undefined : {
                     scale: hoveredStep === index ? 1.2 : 1,
                     opacity: hoveredStep === index ? 0.15 : 0.05,
@@ -1115,7 +1115,7 @@ function BentoFeatures() {
               >
                 <Spotlight className="from-primary/10 via-transparent to-transparent" size={200} />
                 <motion.div
-                  className={cn("text-4xl font-bold", stat.highlight && "text-primary")}
+                  className={cn("text-2xl sm:text-3xl md:text-4xl font-bold", stat.highlight && "text-primary")}
                   animate={shouldReduceMotion ? undefined : {
                     scale: hoveredStat === index ? 1.1 : 1,
                   }}

@@ -60,7 +60,7 @@ function WinRateMagic() {
         key={count}
         initial={shouldReduceMotion ? false : { scale: 1.1 }}
         animate={{ scale: 1 }}
-        className="text-4xl font-bold text-primary"
+        className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary"
       >
         {count}%
       </motion.span>

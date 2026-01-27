@@ -373,8 +373,8 @@ function GridFeatures() {
                       size={120}
                       duration={8}
                       borderWidth={1.5}
-                      colorFrom="hsl(var(--primary))"
-                      colorTo="hsl(var(--primary)/0)"
+                      colorFrom="#6720FF"
+                      colorTo="#6720FF00"
                     />
                   )}
                   <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />

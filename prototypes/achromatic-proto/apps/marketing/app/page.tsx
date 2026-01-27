@@ -5,52 +5,50 @@ import * as React from 'react';
 // Import all section switchers from the shared module
 import {
   HeroSwitcher,
-  LogosSwitcher,
-  FeaturesSwitcher,
-  RolesSwitcher,
   SDKSwitcher,
-  StatsSwitcher,
   TestimonialsSwitcher,
-  BlogSwitcher,
   FAQSwitcher,
   CTASwitcher,
 } from '~/components/sections/section-switchers';
 
+// Import dedicated feature sections (per Linear analysis - 66% of page should be features)
+import { PaywallBuilderFeatures } from '~/components/sections/paywall-builder-features';
+import { ABTestingFeatures } from '~/components/sections/ab-testing-features';
+import { LTVAnalyticsFeatures } from '~/components/sections/ltv-analytics-features';
+
 // ============================================================================
-// MAIN PAGE - Using shared section switchers for consistent variant handling
+// MAIN PAGE - Restructured per Lera's feedback and Linear analysis
+// - Features moved from hero tabs to dedicated sections
+// - Blog, Stats, Roles removed
+// - Logos merged into Hero as compact trust bar
+// - Focus on core product value (Paywall Builder, A/B Testing, Analytics)
 // ============================================================================
 
 export default function IndexPage(): React.JSX.Element {
   return (
     <>
-      {/* 1. Hero Section */}
+      {/* 1. Hero Section - includes logo trust bar */}
       <HeroSwitcher />
 
-      {/* 2. Logos Section */}
-      <LogosSwitcher />
+      {/* 2. Paywall Builder Features - dedicated section */}
+      <PaywallBuilderFeatures variant="bento" />
 
-      {/* 3. Features Section (Problem/Solution) */}
-      <FeaturesSwitcher />
+      {/* 4. A/B Testing Features - dedicated section */}
+      <ABTestingFeatures variant="bento" />
 
-      {/* 4. Roles Section (For Developers/Marketers/Owners) */}
-      <RolesSwitcher />
+      {/* 5. Analytics Features - dedicated section */}
+      <LTVAnalyticsFeatures variant="bento" />
 
-      {/* 5. SDK Code Section */}
+      {/* 6. SDK Code Section */}
       <SDKSwitcher />
-
-      {/* 6. Stats Section */}
-      <StatsSwitcher />
 
       {/* 7. Testimonials Section */}
       <TestimonialsSwitcher />
 
-      {/* 8. Blog Section */}
-      <BlogSwitcher />
-
-      {/* 9. FAQ Section */}
+      {/* 8. FAQ Section */}
       <FAQSwitcher />
 
-      {/* 10. CTA Section */}
+      {/* 9. CTA Section */}
       <CTASwitcher />
     </>
   );

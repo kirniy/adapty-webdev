@@ -243,7 +243,7 @@ export function StateOfSubscriptionsFeatures(): React.JSX.Element {
                       <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
                       <CardContent className="p-6 relative">
                         <motion.p
-                          className="text-4xl font-bold text-primary"
+                          className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary"
                           animate={shouldReduceMotion ? undefined : {
                             scale: isHovered ? 1.05 : 1,
                           }}

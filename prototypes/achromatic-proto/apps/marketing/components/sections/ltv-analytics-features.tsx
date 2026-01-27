@@ -17,13 +17,11 @@ import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { Spotlight } from '~/components/fragments/spotlight';
 
 // =============================================================================
 // MAGIC ANIMATIONS
@@ -393,20 +391,8 @@ function GridFeatures() {
             transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
             className="max-w-3xl mx-auto mb-16"
           >
-            <div className="relative overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 p-8">
-              <Spotlight
-                className="from-primary/15 via-primary/5 to-transparent"
-                size={350}
-              />
-              <BorderBeam
-                size={180}
-                duration={12}
-                borderWidth={1.5}
-                colorFrom="hsl(var(--primary))"
-                colorTo="hsl(var(--primary)/0)"
-                className="opacity-40"
-              />
-              <div className="relative z-10 text-center">
+            <div className="relative rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 p-8">
+              <div className="text-center">
                 <TrendingUpIcon className="size-8 text-primary/50 mx-auto mb-4" />
                 <p className="text-lg text-foreground italic mb-6">
                   "{FEATURED_TESTIMONIAL.quote}"
@@ -436,23 +422,10 @@ function GridFeatures() {
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
                   <div className={cn(
-                    "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer",
-                    isHovered && "border-primary/50 shadow-xl"
+                    "relative h-full rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer",
+                    isHovered && "border-primary/50"
                   )}>
-                    <Spotlight
-                      className="from-primary/20 via-primary/10 to-transparent"
-                      size={250}
-                    />
-                    {isHovered && (
-                      <BorderBeam
-                        size={120}
-                        duration={8}
-                        borderWidth={1.5}
-                        colorFrom="hsl(var(--primary))"
-                        colorTo="hsl(var(--primary)/0)"
-                      />
-                    )}
-                    <div className="p-6 relative z-10">
+                    <div className="p-6">
                       <motion.div
                         animate={shouldReduceMotion ? undefined : {
                           scale: isHovered ? 1.15 : 1,
@@ -500,10 +473,6 @@ function GridFeatures() {
             className="mt-20"
           >
             <div className="relative overflow-hidden rounded-2xl bg-muted/50 border border-border/50 p-8 md:p-12 max-w-2xl mx-auto text-center">
-              <Spotlight
-                className="from-primary/20 via-primary/10 to-transparent"
-                size={300}
-              />
               <div className="relative z-10">
                 <h3 className="text-xl font-semibold mb-2">
                   Using another or in-house solution for subscriptions?
@@ -602,24 +571,11 @@ function BentoFeatures() {
                   )}
                 >
                   <div className={cn(
-                    "relative h-full overflow-hidden rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer",
-                    isHovered && "border-primary/50 shadow-xl",
+                    "relative h-full rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer",
+                    isHovered && "border-primary/50",
                     index === 0 && "min-h-[380px]"
                   )}>
-                    <Spotlight
-                      className="from-primary/20 via-primary/10 to-transparent"
-                      size={350}
-                    />
-                    {isHovered && (
-                      <BorderBeam
-                        size={150}
-                        duration={10}
-                        borderWidth={1.5}
-                        colorFrom="hsl(var(--primary))"
-                        colorTo="hsl(var(--primary)/0)"
-                      />
-                    )}
-                    <div className="p-8 h-full flex flex-col relative z-10">
+                    <div className="p-8 h-full flex flex-col">
                       <motion.div
                         animate={shouldReduceMotion ? undefined : {
                           scale: isHovered ? 1.15 : 1,
@@ -671,23 +627,10 @@ function BentoFeatures() {
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
                   <div className={cn(
-                    "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer",
-                    isHovered && "border-primary/30 shadow-lg"
+                    "relative h-full rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer",
+                    isHovered && "border-primary/30"
                   )}>
-                    <Spotlight
-                      className="from-primary/20 via-primary/10 to-transparent"
-                      size={200}
-                    />
-                    {isHovered && (
-                      <BorderBeam
-                        size={100}
-                        duration={8}
-                        borderWidth={1.5}
-                        colorFrom="hsl(var(--primary))"
-                        colorTo="hsl(var(--primary)/0)"
-                      />
-                    )}
-                    <div className="p-6 relative z-10">
+                    <div className="p-6">
                       <div className="flex items-start gap-4">
                         <motion.div
                           animate={shouldReduceMotion ? undefined : {
@@ -731,20 +674,8 @@ function BentoFeatures() {
             transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
             className="mt-16 max-w-3xl mx-auto"
           >
-            <div className="relative overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 p-8">
-              <Spotlight
-                className="from-primary/15 via-primary/5 to-transparent"
-                size={350}
-              />
-              <BorderBeam
-                size={180}
-                duration={12}
-                borderWidth={1.5}
-                colorFrom="hsl(var(--primary))"
-                colorTo="hsl(var(--primary)/0)"
-                className="opacity-40"
-              />
-              <div className="relative z-10 text-center">
+            <div className="relative rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 p-8">
+              <div className="text-center">
                 <p className="text-lg text-foreground italic mb-6">
                   "{FEATURED_TESTIMONIAL.quote}"
                 </p>
@@ -832,12 +763,8 @@ function TabsFeatures() {
                 >
                   <div className={cn(
                     "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer",
-                    isHovered && "border-primary/50 shadow-xl -translate-y-1"
+                    isHovered && "border-primary/50 -translate-y-1"
                   )}>
-                    <Spotlight
-                      className="from-primary/20 via-primary/10 to-transparent"
-                      size={250}
-                    />
                     <div className="p-6 relative z-10">
                       <div className="flex flex-col gap-4">
                         <div className="flex items-center gap-3">
@@ -887,20 +814,8 @@ function TabsFeatures() {
             transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
             className="mt-16 max-w-3xl mx-auto"
           >
-            <div className="relative overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 p-8">
-              <Spotlight
-                className="from-primary/15 via-primary/5 to-transparent"
-                size={350}
-              />
-              <BorderBeam
-                size={180}
-                duration={12}
-                borderWidth={1.5}
-                colorFrom="hsl(var(--primary))"
-                colorTo="hsl(var(--primary)/0)"
-                className="opacity-40"
-              />
-              <div className="relative z-10 text-center">
+            <div className="relative rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 p-8">
+              <div className="text-center">
                 <p className="text-lg text-foreground italic mb-6">
                   "{FEATURED_TESTIMONIAL.quote}"
                 </p>

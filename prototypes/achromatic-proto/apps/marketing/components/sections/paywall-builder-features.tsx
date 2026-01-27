@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
-import { Badge } from '@workspace/ui/components/badge';
 import { Card, CardContent } from '@workspace/ui/components/card';
 import {
   Carousel,
@@ -32,8 +31,6 @@ import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { paywallBuilderContent } from '~/lib/content';
-import { Spotlight } from '~/components/fragments/spotlight';
-import { BorderBeam } from '~/components/fragments/border-beam';
 
 // Animation constants following Emil Kowalski principles
 const EASE_OUT_QUART = [0.165, 0.84, 0.44, 1] as const;
@@ -108,19 +105,10 @@ function FeatureCard({
         transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
       >
         <Card className={cn(
-          "relative h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer group overflow-hidden",
-          isHovered && "border-primary/40 shadow-lg shadow-primary/5"
+          "relative h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer group",
+          isHovered && "border-primary/40"
         )}>
-          {isHovered && (
-            <BorderBeam
-              size={120}
-              duration={8}
-              borderWidth={1.5}
-              colorFrom="hsl(var(--primary))"
-              colorTo="hsl(var(--primary)/0)"
-            />
-          )}
-          <CardContent className={cn("relative z-10 p-6", compact && "p-4")}>
+          <CardContent className={cn("p-6", compact && "p-4")}>
             <div className="flex items-start gap-4">
               <motion.div
                 animate={shouldReduceMotion ? undefined : {
@@ -463,26 +451,11 @@ function BentoFeatures() {
                   )}
                 >
                   <div className={cn(
-                    "relative h-full overflow-hidden rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer group flex flex-col",
-                    isHovered && "border-primary/50 shadow-xl shadow-primary/10",
+                    "relative h-full rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer group flex flex-col",
+                    isHovered && "border-primary/50",
                     index === 0 && "min-h-[300px]"
                   )}>
-                    <Spotlight
-                      className="from-primary/20 via-primary/10 to-transparent"
-                      size={350}
-                      fill="white"
-                    />
-                    {isHovered && (
-                      <BorderBeam
-                        size={160}
-                        duration={10}
-                        borderWidth={1.5}
-                        colorFrom="hsl(var(--primary))"
-                        colorTo="hsl(var(--primary)/0)"
-                      />
-                    )}
-
-                    <div className="p-8 pb-0 relative z-10 flex-1">
+                    <div className="p-8 pb-0 flex-1">
                       <motion.div
                         animate={shouldReduceMotion ? undefined : {
                           scale: isHovered ? 1.15 : 1,
@@ -526,23 +499,10 @@ function BentoFeatures() {
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
                   <div className={cn(
-                    "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer group flex flex-col",
-                    isHovered && "border-primary/30 shadow-lg"
+                    "relative h-full rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer group flex flex-col",
+                    isHovered && "border-primary/30"
                   )}>
-                    <Spotlight
-                      className="from-primary/20 via-primary/10 to-transparent"
-                      size={200}
-                    />
-                    {isHovered && (
-                      <BorderBeam
-                        size={120}
-                        duration={8}
-                        borderWidth={1.5}
-                        colorFrom="hsl(var(--primary))"
-                        colorTo="hsl(var(--primary)/0)"
-                      />
-                    )}
-                    <div className="p-6 relative z-10 flex-1">
+                    <div className="p-6 flex-1">
                       <div className="flex flex-col gap-4">
                         <motion.div
                           animate={shouldReduceMotion ? undefined : {
@@ -659,19 +619,10 @@ function TabsFeatures() {
                     transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                   >
                     <Card className={cn(
-                      "relative h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer group overflow-hidden",
-                      isHovered && "border-primary/40 shadow-lg shadow-primary/5"
+                      "relative h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer group",
+                      isHovered && "border-primary/40"
                     )}>
-                      {isHovered && (
-                        <BorderBeam
-                          size={120}
-                          duration={8}
-                          borderWidth={1.5}
-                          colorFrom="hsl(var(--primary))"
-                          colorTo="hsl(var(--primary)/0)"
-                        />
-                      )}
-                      <CardContent className="relative z-10 p-6">
+                      <CardContent className="p-6">
                         <div className="flex flex-col gap-4">
                           <div className="flex items-center justify-between">
                             <motion.div
@@ -687,9 +638,6 @@ function TabsFeatures() {
                             >
                               <Icon className="size-5" />
                             </motion.div>
-                            <Badge variant="outline" className="text-xs">
-                              {categoryLabels[feature.category as Category]}
-                            </Badge>
                           </div>
                           <div>
                             <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>

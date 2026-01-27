@@ -697,7 +697,7 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
       <motion.p
         animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.15 : 1 }}
         transition={{ type: 'spring', duration: 0.3, bounce: 0.3 }}
-        className="text-4xl md:text-5xl font-bold text-primary relative z-10"
+        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-primary relative z-10"
       >
         {stat.value}
       </motion.p>

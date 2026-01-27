@@ -185,7 +185,7 @@ function InlineStats(): React.JSX.Element {
                 transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
               >
                 <motion.div
-                  className={cn("text-5xl md:text-6xl lg:text-7xl font-bold", stat.color)}
+                  className={cn("text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold", stat.color)}
                   animate={shouldReduceMotion ? undefined : {
                     scale: hoveredIndex === index ? 1.05 : 1,
                   }}

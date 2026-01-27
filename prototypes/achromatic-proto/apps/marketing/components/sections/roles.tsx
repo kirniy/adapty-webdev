@@ -52,7 +52,7 @@ function DevCodeMagic() {
   }, [shouldReduceMotion]);
 
   return (
-    <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-lg border bg-background/95 px-2.5 py-1.5 shadow-sm backdrop-blur-sm">
+    <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-lg border bg-background/95 px-2.5 py-1.5  backdrop-blur-sm">
       <CodeIcon className="size-3.5 text-primary" />
       <motion.span
         className="text-sm font-bold tabular-nums"
@@ -96,10 +96,10 @@ function RevenueTrackedMagic() {
   }, [shouldReduceMotion]);
 
   return (
-    <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-lg border bg-background/95 px-2.5 py-1.5 shadow-sm backdrop-blur-sm">
-      <BarChartIcon className="size-3.5 text-green-500" />
+    <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-lg border bg-background/95 px-2.5 py-1.5  backdrop-blur-sm">
+      <BarChartIcon className="size-3.5 text-primary" />
       <motion.span
-        className="text-sm font-bold tabular-nums text-green-500"
+        className="text-sm font-bold tabular-nums text-primary"
         key={revenue}
         initial={shouldReduceMotion ? undefined : { scale: 1.1 }}
         animate={{ scale: 1 }}
@@ -140,7 +140,7 @@ function ConversionMagic() {
   }, [shouldReduceMotion]);
 
   return (
-    <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-lg border bg-background/95 px-2.5 py-1.5 shadow-sm backdrop-blur-sm">
+    <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-lg border bg-background/95 px-2.5 py-1.5  backdrop-blur-sm">
       <MegaphoneIcon className="size-3.5 text-primary" />
       <motion.span
         className="text-sm font-bold tabular-nums text-primary"
@@ -252,7 +252,7 @@ function RoleCard({ role, index, imageSet, monochromeMode }: RoleCardProps) {
       <Link
         href={role.link}
         target="_blank"
-        className="relative flex h-full flex-col rounded-2xl border bg-card p-6 transition-all duration-300 hover:border-primary/20 hover:shadow-lg cursor-pointer overflow-hidden"
+        className="relative flex h-full flex-col rounded-2xl border bg-card p-6 transition-all duration-300 hover:border-primary/20  cursor-pointer overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -382,7 +382,7 @@ function BentoCard({ role, index, imageSet, monochromeMode, featured = false }: 
         <Link
           href={role.link}
           target="_blank"
-          className="relative flex h-full flex-col lg:flex-row rounded-2xl border bg-card overflow-hidden transition-all duration-300 hover:border-primary/20 hover:shadow-lg cursor-pointer"
+          className="relative flex h-full flex-col lg:flex-row rounded-2xl border bg-card overflow-hidden transition-all duration-300 hover:border-primary/20  cursor-pointer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -460,7 +460,7 @@ function BentoCard({ role, index, imageSet, monochromeMode, featured = false }: 
       <Link
         href={role.link}
         target="_blank"
-        className="relative flex h-full flex-col rounded-2xl border bg-card overflow-hidden transition-all duration-300 hover:border-primary/20 hover:shadow-lg cursor-pointer"
+        className="relative flex h-full flex-col rounded-2xl border bg-card overflow-hidden transition-all duration-300 hover:border-primary/20  cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -629,7 +629,7 @@ function RolesStacked() {
                   target="_blank"
                   className={cn(
                     "group flex flex-col rounded-2xl border bg-card overflow-hidden",
-                    "transition-all duration-300 hover:border-primary/20 hover:shadow-xl cursor-pointer",
+                    "transition-all duration-300 hover:border-primary/20  cursor-pointer",
                     "lg:flex-row",
                     !isEven && "lg:flex-row-reverse"
                   )}

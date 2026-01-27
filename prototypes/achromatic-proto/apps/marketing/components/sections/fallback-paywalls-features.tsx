@@ -86,7 +86,7 @@ function ShieldMagic() {
             key={percentage}
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="text-4xl font-bold text-emerald-500"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold text-emerald-500"
           >
             {percentage}
           </motion.span>
@@ -602,7 +602,7 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
         <motion.div
           animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.15 : 1 }}
           transition={{ type: 'spring', duration: 0.3, bounce: 0.3 }}
-          className="text-4xl font-bold text-primary relative z-10"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary relative z-10"
         >
           {stat.value}
         </motion.div>

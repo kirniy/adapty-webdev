@@ -305,7 +305,7 @@ function CardsHero() {
                   </CardHeader>
                   <CardContent className="flex-1 relative z-10">
                     <div className="mb-6">
-                      <span className="text-4xl font-bold">{plan.price}</span>
+                      <span className="text-2xl sm:text-3xl md:text-4xl font-bold">{plan.price}</span>
                       <span className="text-muted-foreground ml-1">{plan.period}</span>
                       <p className="text-sm text-muted-foreground mt-1">{plan.mtr}</p>
                     </div>

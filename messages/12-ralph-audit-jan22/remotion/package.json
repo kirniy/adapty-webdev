@@ -1,0 +1,23 @@
+{
+  "name": "adapty-daily-report-video",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render DailyReportCinematic out/2026-01-21-report-cinematic-v2.mp4",
+    "build": "remotion bundle"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@remotion/cli": "^4.0.0",
+    "@remotion/media-utils": "^4.0.407",
+    "@remotion/noise": "^4.0.407",
+    "@remotion/paths": "^4.0.407",
+    "@types/react": "^19.2.9",
+    "puppeteer": "^24.35.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.0",
+    "typescript": "^5.9.3"
+  }
+}
