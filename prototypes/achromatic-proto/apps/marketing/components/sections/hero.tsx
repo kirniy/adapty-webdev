@@ -442,8 +442,8 @@ function FeatureContent({
   // Respect reduced motion preference
   const slideOffset = shouldReduceMotion ? 0 : direction === 'right' ? 40 : -40;
 
-  // Alternate layout: odd indexes (1, 3) have image on left, even (0, 2, 4) have image on right
-  const isReversed = index % 2 === 1;
+  // Consistent layout: text left, image right (no snake/alternating)
+  const isReversed = false;
 
   return (
     <motion.div

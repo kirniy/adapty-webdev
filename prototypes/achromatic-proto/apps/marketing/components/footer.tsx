@@ -22,14 +22,27 @@ export function Footer(): React.JSX.Element {
     <footer className="px-2 pb-10 pt-20 sm:container">
       <h2 className="sr-only">Footer</h2>
       <div className="container">
-        <div className="xl:grid xl:grid-cols-6 xl:gap-8">
-          <div className="hidden xl:block">
+        <div className="flex flex-col gap-12 md:flex-row md:justify-between">
+          <div className="flex flex-col gap-4">
             <Logo />
-            <p className="mt-3 text-xs text-muted-foreground">
-              Revenue management for in-app purchases. Save months on integrating subscriptions.
+            <p className="max-w-xs text-sm text-muted-foreground">
+              Revenue management for in-app purchases.
             </p>
+            <form className="flex gap-2 pt-2">
+              <Input
+                type="email"
+                placeholder="Email"
+                className="w-48"
+              />
+              <Button
+                type="button"
+                onClick={handleSubscribe}
+              >
+                Subscribe
+              </Button>
+            </form>
           </div>
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:col-span-3">
+          <div className="grid grid-cols-2 gap-16">
             {FOOTER_LINKS.map((group) => (
               <div key={group.title}>
                 <h3 className="text-sm font-semibold text-foreground">
@@ -37,7 +50,7 @@ export function Footer(): React.JSX.Element {
                 </h3>
                 <ul
                   role="list"
-                  className="mt-6 space-y-2"
+                  className="mt-4 space-y-2"
                 >
                   {group.links.map((link) => (
                     <li key={link.name}>
@@ -46,11 +59,11 @@ export function Footer(): React.JSX.Element {
                         title={link.name}
                         target={link.external ? '_blank' : undefined}
                         rel={link.external ? 'noopener noreferrer' : undefined}
-                        className="relative text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                       >
                         {link.name}
                         {link.external && (
-                          <ExternalLink className="absolute right-[-10px] top-[2px] opacity-80" />
+                          <ExternalLink className="ml-1 inline-block opacity-60" />
                         )}
                       </Link>
                     </li>
@@ -58,28 +71,6 @@ export function Footer(): React.JSX.Element {
                 </ul>
               </div>
             ))}
-          </div>
-          <div className="mt-10 space-y-4 lg:col-span-2 xl:mt-0">
-            <h3 className="text-sm font-semibold text-foreground">
-              Subscribe to our paywall newsletter
-            </h3>
-            <form className="py-2 sm:flex sm:max-w-md">
-              <div className="w-full min-w-0">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full"
-                />
-              </div>
-              <div className="mt-3 sm:ml-4 sm:mt-0 sm:shrink-0">
-                <Button
-                  type="button"
-                  onClick={handleSubscribe}
-                >
-                  Subscribe
-                </Button>
-              </div>
-            </form>
           </div>
         </div>
         <div className="mt-8 border-t pt-8">
