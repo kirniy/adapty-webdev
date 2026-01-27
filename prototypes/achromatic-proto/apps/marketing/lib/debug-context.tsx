@@ -367,7 +367,7 @@ const defaultState: DebugState = {
   gridThicknessVariant: 'default',
   dashedThicknessVariant: 'thin',
   gridColorVariant: 'muted',
-  gridOpacityVariant: 'faint',
+  gridOpacityVariant: 'subtle',
   gridZIndexVariant: 'back',
   headerVariant: 'default',
   heroVariant: 'marketing',
