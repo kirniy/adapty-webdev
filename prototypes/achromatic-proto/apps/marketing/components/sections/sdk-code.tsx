@@ -262,14 +262,14 @@ export function SDKCode(): React.JSX.Element {
                 className="w-full"
               >
                 {/* Tab bar */}
-                <div className="bg-muted/30 overflow-x-auto scrollbar-hide">
-                  <TabsList className="h-11 bg-transparent gap-0 px-2 min-w-max">
+                <div className="bg-muted/30">
+                  <TabsList className="h-11 w-full bg-transparent gap-0 px-2 grid grid-cols-5">
                     {(Object.entries(SDK_SNIPPETS) as [Language, typeof SDK_SNIPPETS.swift][]).map(
                       ([key, snippet]) => (
                         <TabsTrigger
                           key={key}
                           value={key}
-                          className="data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg px-4 py-2 text-xs font-medium shrink-0 transition-colors"
+                          className="data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg px-3 py-2 text-xs font-medium transition-colors justify-center"
                         >
                           <span className="mr-1.5 opacity-60">{snippet.icon}</span>
                           {snippet.label}
