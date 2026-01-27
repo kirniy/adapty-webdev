@@ -2,23 +2,22 @@
 
 import * as React from 'react';
 
-// Import all section switchers from the shared module
-import {
-  HeroSwitcher,
-  SDKSwitcher,
-  TestimonialsSwitcher,
-  FAQSwitcher,
-  CTASwitcher,
-} from '~/components/sections/section-switchers';
-
 // Import Linear-style feature sections
 import {
-  AdaptyValueProps,
-  PaywallBuilderLinear,
   ABTestingLinear,
+  AdaptyValueProps,
   AnalyticsLinear,
   IntegrationsLinear,
+  PaywallBuilderTSeparator
 } from '~/components/sections/features-linear-style';
+// Import all section switchers from the shared module
+import {
+  CTASwitcher,
+  FAQSwitcher,
+  HeroSwitcher,
+  SDKSwitcher,
+  TestimonialsSwitcher
+} from '~/components/sections/section-switchers';
 
 // ============================================================================
 // MAIN PAGE - Linear.app inspired design
@@ -31,15 +30,15 @@ import {
 
 export default function IndexPage(): React.JSX.Element {
   return (
-    <main className="overflow-hidden">
+    <main className="overflow-x-hidden">
       {/* 1. Hero Section - includes logo trust bar */}
       <HeroSwitcher />
 
       {/* 2. Value Props - 3 column cards (Linear style) */}
       <AdaptyValueProps />
 
-      {/* 3. Paywall Builder - Interactive selector (Linear style) */}
-      <PaywallBuilderLinear />
+      {/* 3. Paywall Builder - T-Separator layout (Linear style) */}
+      <PaywallBuilderTSeparator />
 
       {/* 4. A/B Testing - Interactive selector (Linear style) */}
       <ABTestingLinear />

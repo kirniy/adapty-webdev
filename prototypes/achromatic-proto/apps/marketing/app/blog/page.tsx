@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import {
   BlogSwitcher,
-  CTASwitcher,
+  CTASwitcher
 } from '~/components/sections/section-switchers';
 
 // Blog listing page: All blog posts

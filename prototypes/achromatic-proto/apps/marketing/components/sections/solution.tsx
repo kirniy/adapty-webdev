@@ -12,10 +12,10 @@ import { BentoCampaignsCard } from '~/components/cards/bento-campaigns-card';
 import { BentoCustomersCard } from '~/components/cards/bento-customers-card';
 import { BentoMagicInboxCard } from '~/components/cards/bento-magic-inbox-card';
 import { BentoPipelinesCard } from '~/components/cards/bento-pipelines-card';
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { BlurFade } from '~/components/fragments/blur-fade';
 import { Spotlight } from '~/components/fragments/spotlight';
 
 // Magic animation: Zero code changes badge
@@ -41,13 +41,17 @@ function NoCodeMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.2, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.2, 1]
+              }
+        }
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <span>{count} code changes required</span>
@@ -57,7 +61,9 @@ function NoCodeMagic() {
 
 export function Solution(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [hoveredFeature, setHoveredFeature] = React.useState<number | null>(null);
+  const [hoveredFeature, setHoveredFeature] = React.useState<number | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -71,8 +77,10 @@ export function Solution(): React.JSX.Element {
                   Increase subscription revenue without app releases
                 </h2>
                 <p className="mt-1 max-w-2xl text-muted-foreground md:mt-6">
-                  Manage, target, localize and personalize paywalls without leaving your browser.
-                  {APP_NAME} gives you the tools to optimize every step of the subscription journey.
+                  Manage, target, localize and personalize paywalls without
+                  leaving your browser.
+                  {APP_NAME} gives you the tools to optimize every step of the
+                  subscription journey.
                 </p>
                 <div className="mt-4">
                   <NoCodeMagic />
@@ -89,37 +97,62 @@ export function Solution(): React.JSX.Element {
                 colorTo="hsl(var(--primary)/0)"
                 className="opacity-30"
               />
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={450} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={450}
+              />
               <div className="grid auto-rows-[minmax(200px,auto)] grid-cols-12 gap-6">
                 <BentoCustomersCard
                   className="col-span-12 md:col-span-6 xl:col-span-4"
-                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+                  initial={
+                    shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }
+                  }
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                 />
                 <BentoPipelinesCard
                   className="col-span-12 md:col-span-6 xl:col-span-8"
-                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+                  initial={
+                    shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }
+                  }
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.2 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: shouldReduceMotion ? 0 : 0.2
+                  }}
                 />
                 <BentoAnalyticsCard
                   className="col-span-12 md:col-span-6 xl:col-span-4"
-                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+                  initial={
+                    shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }
+                  }
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.2 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: shouldReduceMotion ? 0 : 0.2
+                  }}
                 />
                 <BentoCampaignsCard
                   className="col-span-12 md:col-span-6 xl:col-span-4"
-                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+                  initial={
+                    shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }
+                  }
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.6 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: shouldReduceMotion ? 0 : 0.6
+                  }}
                 />
                 <BentoMagicInboxCard
                   className="col-span-12 md:col-span-6 xl:col-span-4"
-                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+                  initial={
+                    shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }
+                  }
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.8 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: shouldReduceMotion ? 0 : 0.8
+                  }}
                 />
               </div>
             </div>
@@ -133,8 +166,9 @@ export function Solution(): React.JSX.Element {
                     Know your subscription numbers at any moment
                   </h2>
                   <p className="mt-1 text-muted-foreground md:mt-6">
-                    Measure your in-app economy from trials to refunds with a ready-to-go,
-                    real-time subscription BI powered by AI predictions.
+                    Measure your in-app economy from trials to refunds with a
+                    ready-to-go, real-time subscription BI powered by AI
+                    predictions.
                   </p>
                 </BlurFade>
 
@@ -147,20 +181,35 @@ export function Solution(): React.JSX.Element {
                     'Churn monitoring',
                     'Attribution tracking'
                   ].map((feature, index) => (
-                    <BlurFade key={feature} delay={0.15 + index * 0.03}>
+                    <BlurFade
+                      key={feature}
+                      delay={0.15 + index * 0.03}
+                    >
                       <motion.li
                         onMouseEnter={() => setHoveredFeature(index)}
                         onMouseLeave={() => setHoveredFeature(null)}
-                        animate={shouldReduceMotion ? undefined : {
-                          x: hoveredFeature === index ? 4 : 0,
+                        animate={
+                          shouldReduceMotion
+                            ? undefined
+                            : {
+                                x: hoveredFeature === index ? 4 : 0
+                              }
+                        }
+                        transition={{
+                          type: 'spring',
+                          duration: 0.2,
+                          bounce: 0
                         }}
-                        transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                         className="flex flex-row items-center gap-2"
                       >
                         <motion.div
-                          animate={shouldReduceMotion ? undefined : {
-                            scale: hoveredFeature === index ? 1.2 : 1,
-                          }}
+                          animate={
+                            shouldReduceMotion
+                              ? undefined
+                              : {
+                                  scale: hoveredFeature === index ? 1.2 : 1
+                                }
+                          }
                           transition={{ type: 'spring', duration: 0.2 }}
                         >
                           <ChevronRightIcon className="size-3 shrink-0 text-muted-foreground" />

@@ -1,17 +1,22 @@
 'use client';
 
 import * as React from 'react';
-import { ClockIcon, MapPinIcon, ArrowRightIcon, BriefcaseIcon } from 'lucide-react';
+import {
+  ArrowRightIcon,
+  BriefcaseIcon,
+  ClockIcon,
+  MapPinIcon
+} from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { Button } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { BlurFade } from '~/components/fragments/blur-fade';
 import { Spotlight } from '~/components/fragments/spotlight';
 
 const DATA = [
@@ -21,14 +26,14 @@ const DATA = [
     description:
       'You will be responsible for the development of new and existing software products.',
     type: 'Full-time',
-    location: 'Remote',
+    location: 'Remote'
   },
   {
     title: 'Product Manager',
     department: 'Engineering',
     description: 'Help us build the next generation of Adapty products.',
     type: 'Full-time',
-    location: 'Remote',
+    location: 'Remote'
   },
   {
     title: 'Content Writer',
@@ -36,7 +41,7 @@ const DATA = [
     description:
       'Create engaging content for our blog, website, and social media channels.',
     type: 'Full-time',
-    location: 'Remote',
+    location: 'Remote'
   },
   {
     title: 'Social Media Manager',
@@ -44,8 +49,8 @@ const DATA = [
     description:
       'Manage our social media presence and engage with our followers.',
     type: 'Full-time',
-    location: 'Remote',
-  },
+    location: 'Remote'
+  }
 ];
 
 // Magic animation: Open positions count
@@ -60,7 +65,7 @@ function OpenPositionsMagic() {
       return;
     }
     const interval = setInterval(() => {
-      setCount(prev => {
+      setCount((prev) => {
         if (prev >= targetCount) return targetCount;
         return prev + 1;
       });
@@ -77,13 +82,17 @@ function OpenPositionsMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.2, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.2, 1]
+              }
+        }
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <motion.span
@@ -126,14 +135,21 @@ export function CareersPositions(): React.JSX.Element {
             const isHovered = hoveredIndex === index;
 
             return (
-              <BlurFade key={index} delay={0.1 + index * 0.05}>
+              <BlurFade
+                key={index}
+                delay={0.1 + index * 0.05}
+              >
                 <motion.div
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  animate={shouldReduceMotion ? undefined : {
-                    y: isHovered ? -4 : 0,
-                    scale: isHovered ? 1.01 : 1,
-                  }}
+                  animate={
+                    shouldReduceMotion
+                      ? undefined
+                      : {
+                          y: isHovered ? -4 : 0,
+                          scale: isHovered ? 1.01 : 1
+                        }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
                     'group relative overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm p-6 transition-all duration-200',
@@ -149,7 +165,10 @@ export function CareersPositions(): React.JSX.Element {
                       colorTo="hsl(var(--primary)/0)"
                     />
                   )}
-                  <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={300} />
+                  <Spotlight
+                    className="from-primary/15 via-primary/5 to-transparent"
+                    size={300}
+                  />
 
                   <div className="relative flex flex-col justify-between md:flex-row md:items-center gap-4">
                     <div className="flex-1">
@@ -167,12 +186,18 @@ export function CareersPositions(): React.JSX.Element {
                           {position.department}
                         </Badge>
                       </div>
-                      <p className="mt-2 text-muted-foreground">{position.description}</p>
+                      <p className="mt-2 text-muted-foreground">
+                        {position.description}
+                      </p>
                       <div className="mt-4 flex gap-4 text-sm text-muted-foreground">
                         <motion.div
-                          animate={shouldReduceMotion ? undefined : {
-                            x: isHovered ? 2 : 0,
-                          }}
+                          animate={
+                            shouldReduceMotion
+                              ? undefined
+                              : {
+                                  x: isHovered ? 2 : 0
+                                }
+                          }
                           transition={{ duration: 0.15 }}
                           className="flex items-center gap-2"
                         >
@@ -180,9 +205,13 @@ export function CareersPositions(): React.JSX.Element {
                           {position.type}
                         </motion.div>
                         <motion.div
-                          animate={shouldReduceMotion ? undefined : {
-                            x: isHovered ? 2 : 0,
-                          }}
+                          animate={
+                            shouldReduceMotion
+                              ? undefined
+                              : {
+                                  x: isHovered ? 2 : 0
+                                }
+                          }
                           transition={{ duration: 0.15, delay: 0.05 }}
                           className="flex items-center gap-2"
                         >
@@ -199,9 +228,13 @@ export function CareersPositions(): React.JSX.Element {
                       >
                         Apply
                         <motion.span
-                          animate={shouldReduceMotion ? undefined : {
-                            x: isHovered ? 3 : 0,
-                          }}
+                          animate={
+                            shouldReduceMotion
+                              ? undefined
+                              : {
+                                  x: isHovered ? 3 : 0
+                                }
+                          }
                           transition={{ duration: 0.15 }}
                         >
                           <ArrowRightIcon className="ml-2 size-4" />
@@ -223,9 +256,13 @@ export function CareersPositions(): React.JSX.Element {
               className="text-center p-8 rounded-xl border border-dashed border-border/50 bg-muted/20"
             >
               <p className="text-muted-foreground mb-4">
-                Do not see a role that fits? We are always looking for talented people.
+                Do not see a role that fits? We are always looking for talented
+                people.
               </p>
-              <Button variant="outline" className="rounded-xl">
+              <Button
+                variant="outline"
+                className="rounded-xl"
+              >
                 Send us your resume
                 <ArrowRightIcon className="ml-2 size-4" />
               </Button>

@@ -1,136 +1,143 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Link from "next/link";
-import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon, TrendingUpIcon, ZapIcon, ShieldCheckIcon, ClockIcon, CodeIcon } from "lucide-react";
-import { motion, useReducedMotion, AnimatePresence } from "motion/react";
-
-import { Button } from "@workspace/ui/components/button";
+import * as React from 'react';
+import Link from 'next/link';
 import {
-  Card,
-  CardContent,
-} from "@workspace/ui/components/card";
-import { cn } from "@workspace/ui/lib/utils";
+  ArrowRightIcon,
+  CheckIcon,
+  ClockIcon,
+  CodeIcon,
+  MinusIcon,
+  ShieldCheckIcon,
+  TrendingUpIcon,
+  XIcon,
+  ZapIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
-import { BorderBeam } from "~/components/fragments/border-beam";
-import { GridSection } from "~/components/fragments/grid-section";
-import { SectionBackground } from "~/components/fragments/section-background";
-import { SiteHeading } from "~/components/fragments/site-heading";
-import { BlurFade } from "~/components/fragments/blur-fade";
-import { Spotlight } from "~/components/fragments/spotlight";
+import { Button } from '@workspace/ui/components/button';
+import { Card, CardContent } from '@workspace/ui/components/card';
+import { cn } from '@workspace/ui/lib/utils';
+
+import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT content from adapty.io/compare/in-house-development (scraped 2026-01-21)
 
 // Why pick Adapty benefits
 const BENEFITS = [
   {
-    title: "To make your app more profitable",
+    title: 'To make your app more profitable',
     description:
-      "Our clients get up to a 30% revenue increase in just 2 months with the help of paywall A/B testing.",
+      'Our clients get up to a 30% revenue increase in just 2 months with the help of paywall A/B testing.'
   },
   {
-    title: "To get a quick subscription ROI",
+    title: 'To get a quick subscription ROI',
     description:
-      "Growth from the paywall A/B testing will allow you to cover expenses faster and start earning.",
+      'Growth from the paywall A/B testing will allow you to cover expenses faster and start earning.'
   },
   {
-    title: "To save time and money",
+    title: 'To save time and money',
     description:
-      "Reliable SDK and fast-responsive support will smooth out your interaction with the service.",
-  },
+      'Reliable SDK and fast-responsive support will smooth out your interaction with the service.'
+  }
 ];
 
 // Feature sections
 const FEATURE_SECTIONS = [
   {
-    title: "Cost",
+    title: 'Cost',
     description:
-      "Get a more cost-effective solution with fair pricing. Use the tools that will really grow your revenue with a single paid plan. Invest the money saved on development and maintenance in more important areas of your app business.",
+      'Get a more cost-effective solution with fair pricing. Use the tools that will really grow your revenue with a single paid plan. Invest the money saved on development and maintenance in more important areas of your app business.',
     testimonial: {
       quote:
         "Adapty goes beyond simple subscription management. It's a comprehensive platform that empowers developers to optimize every aspect of their app's monetization strategy.",
-      name: "Ilgar Tali",
-      title: "Founder & Chief Vision Officer at Smartist",
-    },
+      name: 'Ilgar Tali',
+      title: 'Founder & Chief Vision Officer at Smartist'
+    }
   },
   {
-    title: "Features for subscription monetization",
+    title: 'Features for subscription monetization',
     description:
       "IAP infrastructure is not the only feature of Adapty. Paywall builder, A/B testing for paywalls, CRM, integrations, and more - all this will help you boost your app's revenue.",
     testimonial: {
       quote:
         "We like it that Adapty provides deep customization possibilities for paywalls and A/B tests. For a long time we've been using Remote config to change elements and localize our paywalls in a matter of minutes without having to wait for another app review.",
-      name: "Magnus Olafsson",
-      title: "Chief Technology Officer at Smitten",
-    },
+      name: 'Magnus Olafsson',
+      title: 'Chief Technology Officer at Smitten'
+    }
   },
   {
-    title: "Quick start with a ready SDK for any platform",
+    title: 'Quick start with a ready SDK for any platform',
     bullets: [
-      "Save time and money on building your own backend infrastructure.",
+      'Save time and money on building your own backend infrastructure.',
       "Sync subscribers' state across iOS, Android, and the Web.",
-      "Integrate in-app purchases in a few hours with no server code.",
+      'Integrate in-app purchases in a few hours with no server code.'
     ],
-    link: "/sdk",
-    linkText: "Read more about SDK",
+    link: '/sdk',
+    linkText: 'Read more about SDK',
     testimonial: {
       quote:
-        "We have tested multiple SDKs for in-app purchases, but Adapty stands out due to its ease of use and reliability. The documentation is clear, and their support team is highly responsive. Great service.",
-      name: "Vjacheslav Kononenko",
-      title: "Co-Founder at Onelight Apps",
-    },
+        'We have tested multiple SDKs for in-app purchases, but Adapty stands out due to its ease of use and reliability. The documentation is clear, and their support team is highly responsive. Great service.',
+      name: 'Vjacheslav Kononenko',
+      title: 'Co-Founder at Onelight Apps'
+    }
   },
   {
-    title: "Responsive customer support",
+    title: 'Responsive customer support',
     description:
       "Adapty gives you 99.9% SLA rate for all API so that you don't have to worry about the technical side of things. Our fast-responsive support is always ready to help you find answers to any questions about the service, as well as assist you in migration.",
-    testimonial: null,
-  },
+    testimonial: null
+  }
 ];
 
 // In-house vs Adapty comparison
 const INHOUSE_DRAWBACKS = [
-  "Need for developing the server and the client side",
-  "Constant tech support",
-  "Dozens of hundreds of side cases handling",
-  "Distracting your team from developing your product",
-  "High risk of breaking payments",
+  'Need for developing the server and the client side',
+  'Constant tech support',
+  'Dozens of hundreds of side cases handling',
+  'Distracting your team from developing your product',
+  'High risk of breaking payments'
 ];
 
 const ADAPTY_ADVANTAGES = [
-  "Just a couple of SDK methods",
-  "1 hour to integrate",
-  "Analytics, integrations",
-  "Paywall A/B testing",
-  "Paywall Builder",
+  'Just a couple of SDK methods',
+  '1 hour to integrate',
+  'Analytics, integrations',
+  'Paywall A/B testing',
+  'Paywall Builder'
 ];
 
 // SDK platforms
 const SDK_PLATFORMS = [
-  { name: "Swift SDK", href: "/sdk/ios" },
-  { name: "Kotlin SDK", href: "/sdk/android" },
-  { name: "React Native SDK", href: "/sdk/react-native" },
-  { name: "Unity SDK", href: "/sdk/unity" },
-  { name: "Flutter SDK", href: "/sdk/flutter" },
-  { name: "Capacitor SDK", href: "/sdk/capacitor" },
-  { name: "KMP SDK", href: "/sdk/kmp" },
-  { name: "FlutterFlow", href: "/sdk/flutterflow" },
-  { name: "Web API", href: "/sdk/web" },
-  { name: "Stripe", href: "/integrations/stripe" },
+  { name: 'Swift SDK', href: '/sdk/ios' },
+  { name: 'Kotlin SDK', href: '/sdk/android' },
+  { name: 'React Native SDK', href: '/sdk/react-native' },
+  { name: 'Unity SDK', href: '/sdk/unity' },
+  { name: 'Flutter SDK', href: '/sdk/flutter' },
+  { name: 'Capacitor SDK', href: '/sdk/capacitor' },
+  { name: 'KMP SDK', href: '/sdk/kmp' },
+  { name: 'FlutterFlow', href: '/sdk/flutterflow' },
+  { name: 'Web API', href: '/sdk/web' },
+  { name: 'Stripe', href: '/integrations/stripe' }
 ];
 
 // Platform stats
 const PLATFORM_STATS = [
-  { value: "99.9%", label: "SLA reliability" },
-  { value: "$16M", label: "of in-app purchases processed/year" },
-  { value: "2 weeks", label: "Product updates every two weeks" },
+  { value: '99.9%', label: 'SLA reliability' },
+  { value: '$16M', label: 'of in-app purchases processed/year' },
+  { value: '2 weeks', label: 'Product updates every two weeks' }
 ];
 
 // Choose Adapty reasons
 const CHOOSE_REASONS = [
-  "Increase your subscription revenue and become more profitable.",
-  "Have a convenient platform with the best-in-class stability.",
-  "Work with a reliable partner with great customer support and success.",
+  'Increase your subscription revenue and become more profitable.',
+  'Have a convenient platform with the best-in-class stability.',
+  'Work with a reliable partner with great customer support and success.'
 ];
 
 // Testimonials
@@ -138,38 +145,38 @@ const TESTIMONIALS = [
   {
     quote:
       "Migrating off RevenueCat was not an easy decision for us. We've chosen Adapty because we believe they are a better partner as we grow. Looking back it was the right call. Despite some hiccups, the Adapty team was always there to help us during the migration and afterward, and their support is top-notch. I recommend Adapty as a reliable partner.",
-    name: "Cem Ortabas",
-    title: "Co-founder and CEO",
-    company: "HubX",
+    name: 'Cem Ortabas',
+    title: 'Co-founder and CEO',
+    company: 'HubX'
   },
   {
     quote:
       "We've been working with Adapty since 2021 and I couldn't be happier about it. We've tried other subscription management platforms in the past so I can compare. Adapty introduced numerous features over the years and constantly helped us grow. They have the best analytics on the market and all the integrations you can think of. If you looking to boost the revenue of your app, I definitely recommend Adapty.",
-    name: "Chris Bick",
-    title: "Founder and CEO",
-    company: "Bickster",
+    name: 'Chris Bick',
+    title: 'Founder and CEO',
+    company: 'Bickster'
   },
   {
     quote:
-      "We chose Adapty for its powerful paywall A/B testing capabilities, which helped us optimize our monetization strategy effectively. The user-friendly platform, flexible pricing, and exceptional customer support make Adapty a superior choice over competitors.",
-    name: "Yalcin Ozdemir",
-    title: "Founder & CEO",
-    company: "AppNation",
+      'We chose Adapty for its powerful paywall A/B testing capabilities, which helped us optimize our monetization strategy effectively. The user-friendly platform, flexible pricing, and exceptional customer support make Adapty a superior choice over competitors.',
+    name: 'Yalcin Ozdemir',
+    title: 'Founder & CEO',
+    company: 'AppNation'
   },
   {
     quote:
       "Adapty's platform makes it easy for non-developers to create and manage A/B tests, paywalls, product mix and pricing structure. They have a great external API that makes it easy to pass related events to other analytics tools like Amplitude and Mixpanel.",
-    name: "Kyle Smith",
-    title: "Head of data",
-    company: "Smitten Dating",
+    name: 'Kyle Smith',
+    title: 'Head of data',
+    company: 'Smitten Dating'
   },
   {
     quote:
       "We've tested more than three hundred paywalls in the space of four months. Adapty allows testing basically any element of the paywall, and we took advantage of that. We've tested them all: products, title text, CTA buttons, images, videos etc. With Adapty's A/B testing, we managed to double our monthly revenue. I wasn't sure if one instrument could make such an impact, but I witnessed it myself.",
-    name: "Roi Mulia",
-    title: "Founder & CEO",
-    company: "SocialKit",
-  },
+    name: 'Roi Mulia',
+    title: 'Founder & CEO',
+    company: 'SocialKit'
+  }
 ];
 
 // =============================================================================
@@ -201,7 +208,7 @@ function TimeSavingMagic() {
       <motion.div
         className="text-center"
         animate={{ scale: [1, 1.08, 1] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
       >
         <motion.div
           className="text-2xl font-bold text-primary"
@@ -290,7 +297,11 @@ function GrowthMagic() {
     return (
       <div className="flex items-end gap-1 h-10 justify-center">
         {bars.map((h, i) => (
-          <div key={i} className="w-2 bg-primary/60 rounded-sm" style={{ height: `${h}%` }} />
+          <div
+            key={i}
+            className="w-2 bg-primary/60 rounded-sm"
+            style={{ height: `${h}%` }}
+          />
         ))}
       </div>
     );
@@ -308,8 +319,8 @@ function GrowthMagic() {
             duration: 0.5,
             delay: i * 0.08,
             repeat: Infinity,
-            repeatType: "reverse",
-            repeatDelay: 2.5,
+            repeatType: 'reverse',
+            repeatDelay: 2.5
           }}
         />
       ))}
@@ -318,24 +329,24 @@ function GrowthMagic() {
 }
 
 function StatusIcon({
-  status,
+  status
 }: {
-  status: "check" | "partial" | "no";
+  status: 'check' | 'partial' | 'no';
 }): React.JSX.Element {
   switch (status) {
-    case "check":
+    case 'check':
       return (
         <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10">
           <CheckIcon className="size-4 text-primary" />
         </div>
       );
-    case "partial":
+    case 'partial':
       return (
         <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-yellow-500/20">
           <MinusIcon className="size-4 text-yellow-500" />
         </div>
       );
-    case "no":
+    case 'no':
       return (
         <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-red-500/20">
           <XIcon className="size-4 text-red-500" />
@@ -346,10 +357,18 @@ function StatusIcon({
 
 export function CompareInHouse(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [hoveredBenefit, setHoveredBenefit] = React.useState<number | null>(null);
-  const [hoveredFeature, setHoveredFeature] = React.useState<number | null>(null);
-  const [hoveredDrawback, setHoveredDrawback] = React.useState<number | null>(null);
-  const [hoveredAdvantage, setHoveredAdvantage] = React.useState<number | null>(null);
+  const [hoveredBenefit, setHoveredBenefit] = React.useState<number | null>(
+    null
+  );
+  const [hoveredFeature, setHoveredFeature] = React.useState<number | null>(
+    null
+  );
+  const [hoveredDrawback, setHoveredDrawback] = React.useState<number | null>(
+    null
+  );
+  const [hoveredAdvantage, setHoveredAdvantage] = React.useState<number | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -366,13 +385,26 @@ export function CompareInHouse(): React.JSX.Element {
           </BlurFade>
           <BlurFade delay={0.1}>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button asChild size="lg">
+              <motion.div
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  asChild
+                  size="lg"
+                >
                   <Link href="/schedule-demo">Schedule A Demo</Link>
                 </Button>
               </motion.div>
-              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button asChild variant="outline" size="lg">
+              <motion.div
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                >
                   <Link href="https://app.adapty.io/registration">
                     Start for free
                   </Link>
@@ -387,7 +419,9 @@ export function CompareInHouse(): React.JSX.Element {
             <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
               <motion.span
                 className="rounded-full bg-muted px-4 py-2 flex items-center gap-2"
-                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                animate={
+                  shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }
+                }
                 transition={{ duration: 2, repeat: Infinity }}
               >
                 <CodeIcon className="size-4" />
@@ -395,7 +429,9 @@ export function CompareInHouse(): React.JSX.Element {
               </motion.span>
               <motion.span
                 className="rounded-full bg-muted px-4 py-2 flex items-center gap-2"
-                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                animate={
+                  shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }
+                }
                 transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
               >
                 <TrendingUpIcon className="size-4" />
@@ -403,7 +439,9 @@ export function CompareInHouse(): React.JSX.Element {
               </motion.span>
               <motion.span
                 className="rounded-full bg-muted px-4 py-2 flex items-center gap-2"
-                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                animate={
+                  shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }
+                }
                 transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
               >
                 <ClockIcon className="size-4" />
@@ -426,17 +464,26 @@ export function CompareInHouse(): React.JSX.Element {
                   key={index}
                   onMouseEnter={() => setHoveredBenefit(index)}
                   onMouseLeave={() => setHoveredBenefit(null)}
-                  animate={shouldReduceMotion ? undefined : {
-                    y: hoveredBenefit === index ? -6 : 0,
-                    scale: hoveredBenefit === index ? 1.02 : 1,
-                  }}
+                  animate={
+                    shouldReduceMotion
+                      ? undefined
+                      : {
+                          y: hoveredBenefit === index ? -6 : 0,
+                          scale: hoveredBenefit === index ? 1.02 : 1
+                        }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <Card className={cn(
-                    "h-full relative overflow-hidden transition-all duration-200",
-                    hoveredBenefit === index && "border-primary/50 "
-                  )}>
-                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
+                  <Card
+                    className={cn(
+                      'h-full relative overflow-hidden transition-all duration-200',
+                      hoveredBenefit === index && 'border-primary/50 '
+                    )}
+                  >
+                    <Spotlight
+                      className="from-primary/15 via-primary/5 to-transparent"
+                      size={250}
+                    />
                     {hoveredBenefit === index && (
                       <BorderBeam
                         size={120}
@@ -447,8 +494,12 @@ export function CompareInHouse(): React.JSX.Element {
                       />
                     )}
                     <CardContent className="p-6 relative z-10">
-                      <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
-                      <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                      <h3 className="text-lg font-semibold mb-2">
+                        {benefit.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {benefit.description}
+                      </p>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -463,19 +514,31 @@ export function CompareInHouse(): React.JSX.Element {
             What are the advantages of using Adapty?
           </h2>
           {FEATURE_SECTIONS.map((section, index) => (
-            <BlurFade key={index} delay={0.25 + index * 0.05}>
+            <BlurFade
+              key={index}
+              delay={0.25 + index * 0.05}
+            >
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4">{section.title}</h3>
+                  <h3 className="text-xl font-semibold mb-4">
+                    {section.title}
+                  </h3>
                   {section.description && (
-                    <p className="text-muted-foreground mb-4">{section.description}</p>
+                    <p className="text-muted-foreground mb-4">
+                      {section.description}
+                    </p>
                   )}
                   {section.bullets && (
                     <ul className="space-y-3 mb-6">
                       {section.bullets.map((bullet, bulletIndex) => (
-                        <li key={bulletIndex} className="flex items-start gap-3">
+                        <li
+                          key={bulletIndex}
+                          className="flex items-start gap-3"
+                        >
                           <CheckIcon className="size-5 text-primary shrink-0 mt-0.5" />
-                          <span className="text-muted-foreground">{bullet}</span>
+                          <span className="text-muted-foreground">
+                            {bullet}
+                          </span>
                         </li>
                       ))}
                     </ul>
@@ -498,7 +561,9 @@ export function CompareInHouse(): React.JSX.Element {
                           "{section.testimonial.quote}"
                         </blockquote>
                         <div>
-                          <p className="font-semibold">{section.testimonial.name}</p>
+                          <p className="font-semibold">
+                            {section.testimonial.name}
+                          </p>
                           <p className="text-sm text-muted-foreground">
                             {section.testimonial.title}
                           </p>
@@ -525,9 +590,14 @@ export function CompareInHouse(): React.JSX.Element {
                 transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
               >
                 <Card className="h-full bg-card/50 border-red-500/20 relative overflow-hidden transition-all duration-200">
-                  <Spotlight className="from-red-500/10 via-red-500/5 to-transparent" size={300} />
+                  <Spotlight
+                    className="from-red-500/10 via-red-500/5 to-transparent"
+                    size={300}
+                  />
                   <CardContent className="p-6 relative">
-                    <h3 className="text-lg font-semibold mb-6">In-house solution</h3>
+                    <h3 className="text-lg font-semibold mb-6">
+                      In-house solution
+                    </h3>
                     <ul className="space-y-3">
                       {INHOUSE_DRAWBACKS.map((item, index) => (
                         <motion.li
@@ -537,9 +607,13 @@ export function CompareInHouse(): React.JSX.Element {
                           onMouseLeave={() => setHoveredDrawback(null)}
                         >
                           <motion.div
-                            animate={shouldReduceMotion ? undefined : {
-                              scale: hoveredDrawback === index ? 1.2 : 1,
-                            }}
+                            animate={
+                              shouldReduceMotion
+                                ? undefined
+                                : {
+                                    scale: hoveredDrawback === index ? 1.2 : 1
+                                  }
+                            }
                             transition={{ type: 'spring', duration: 0.2 }}
                           >
                             <StatusIcon status="no" />
@@ -558,9 +632,14 @@ export function CompareInHouse(): React.JSX.Element {
                 transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
               >
                 <Card className="h-full bg-card/50 border-green-500/20 relative overflow-hidden transition-all duration-200">
-                  <Spotlight className="from-green-500/10 via-green-500/5 to-transparent" size={300} />
+                  <Spotlight
+                    className="from-green-500/10 via-green-500/5 to-transparent"
+                    size={300}
+                  />
                   <CardContent className="p-6 relative">
-                    <h3 className="text-lg font-semibold mb-6 text-primary">Adapty</h3>
+                    <h3 className="text-lg font-semibold mb-6 text-primary">
+                      Adapty
+                    </h3>
                     <ul className="space-y-3">
                       {ADAPTY_ADVANTAGES.map((item, index) => (
                         <motion.li
@@ -570,9 +649,13 @@ export function CompareInHouse(): React.JSX.Element {
                           onMouseLeave={() => setHoveredAdvantage(null)}
                         >
                           <motion.div
-                            animate={shouldReduceMotion ? undefined : {
-                              scale: hoveredAdvantage === index ? 1.2 : 1,
-                            }}
+                            animate={
+                              shouldReduceMotion
+                                ? undefined
+                                : {
+                                    scale: hoveredAdvantage === index ? 1.2 : 1
+                                  }
+                            }
                             transition={{ type: 'spring', duration: 0.2 }}
                           >
                             <StatusIcon status="check" />
@@ -595,14 +678,19 @@ export function CompareInHouse(): React.JSX.Element {
               {SDK_PLATFORMS.map((platform, index) => (
                 <motion.div
                   key={index}
-                  whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.05 }}
+                  whileHover={
+                    shouldReduceMotion ? undefined : { y: -2, scale: 1.05 }
+                  }
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
                   <Link
                     href={platform.href}
                     className="relative inline-flex items-center gap-2 rounded-lg border bg-card/50 px-4 py-3 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground overflow-hidden group"
                   >
-                    <Spotlight className="from-primary/20 via-primary/5 to-transparent" size={120} />
+                    <Spotlight
+                      className="from-primary/20 via-primary/5 to-transparent"
+                      size={120}
+                    />
                     <span className="relative">{platform.name}</span>
                     <ArrowRightIcon className="relative size-4 text-primary group-hover:translate-x-1 transition-transform" />
                   </Link>
@@ -622,11 +710,16 @@ export function CompareInHouse(): React.JSX.Element {
               {CHOOSE_REASONS.map((reason, index) => (
                 <motion.div
                   key={index}
-                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                  whileHover={
+                    shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
                   <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 transition-all duration-200">
-                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={220} />
+                    <Spotlight
+                      className="from-primary/15 via-primary/5 to-transparent"
+                      size={220}
+                    />
                     <CardContent className="p-6 relative">
                       <CheckIcon className="size-6 text-primary mb-3" />
                       <p className="text-muted-foreground">{reason}</p>
@@ -646,8 +739,13 @@ export function CompareInHouse(): React.JSX.Element {
             </h2>
             <div className="grid md:grid-cols-3 gap-8 mt-12">
               {PLATFORM_STATS.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-2">{stat.value}</div>
+                <div
+                  key={index}
+                  className="text-center"
+                >
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-2">
+                    {stat.value}
+                  </div>
                   <p className="text-muted-foreground">{stat.label}</p>
                 </div>
               ))}
@@ -668,11 +766,16 @@ export function CompareInHouse(): React.JSX.Element {
               {TESTIMONIALS.slice(0, 3).map((testimonial, index) => (
                 <motion.div
                   key={index}
-                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
+                  whileHover={
+                    shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
                   <Card className="h-full bg-card/50 relative overflow-hidden hover:border-primary/50 transition-all duration-200">
-                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
+                    <Spotlight
+                      className="from-primary/15 via-primary/5 to-transparent"
+                      size={250}
+                    />
                     <CardContent className="p-6 relative">
                       <blockquote className="text-sm text-muted-foreground italic mb-4">
                         "{testimonial.quote}"

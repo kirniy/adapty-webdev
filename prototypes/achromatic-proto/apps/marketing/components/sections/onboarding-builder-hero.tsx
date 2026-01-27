@@ -3,20 +3,34 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MousePointerClickIcon, FlaskConicalIcon, RefreshCwIcon, ZapIcon, CheckIcon, PlayIcon, SparklesIcon, LayersIcon, ChevronRightIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  CheckIcon,
+  ChevronRightIcon,
+  FlaskConicalIcon,
+  LayersIcon,
+  MousePointerClickIcon,
+  PlayIcon,
+  RefreshCwIcon,
+  SparklesIcon,
+  ZapIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { SectionBackground } from '~/components/fragments/section-background';
-import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
 import { Spotlight } from '~/components/fragments/spotlight';
-import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+import {
+  useImageSetVariant,
+  useMonochromeMode,
+  type ImageSetVariant
+} from '~/lib/debug-context';
 
 // Magic animation: Onboarding step progress
 function OnboardingStepMagic() {
@@ -43,16 +57,25 @@ function OnboardingStepMagic() {
       >
         <div className="flex items-center gap-2 mb-1.5">
           <LayersIcon className="size-3 text-primary" />
-          <span className="text-[10px] font-medium text-muted-foreground">Onboarding flow</span>
+          <span className="text-[10px] font-medium text-muted-foreground">
+            Onboarding flow
+          </span>
         </div>
         <div className="flex items-center gap-1">
           {Array.from({ length: totalSteps }).map((_, i) => (
             <motion.div
               key={i}
-              animate={shouldReduceMotion ? undefined : {
-                scale: i + 1 === step ? 1.2 : 1,
-                backgroundColor: i + 1 <= step ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
-              }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      scale: i + 1 === step ? 1.2 : 1,
+                      backgroundColor:
+                        i + 1 <= step
+                          ? 'hsl(var(--primary))'
+                          : 'hsl(var(--muted))'
+                    }
+              }
               transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               className="size-2 rounded-full"
             />
@@ -60,7 +83,9 @@ function OnboardingStepMagic() {
           <AnimatePresence mode="wait">
             <motion.span
               key={step}
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 5 }}
+              initial={
+                shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 5 }
+              }
               animate={{ opacity: 1, x: 0 }}
               exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -5 }}
               transition={{ duration: 0.15 }}
@@ -95,7 +120,9 @@ function NoCodeBadgeMagic() {
           <SparklesIcon className="size-3 text-primary" />
         </motion.div>
         <div>
-          <p className="text-xs font-medium text-foreground">No code required</p>
+          <p className="text-xs font-medium text-foreground">
+            No code required
+          </p>
           <p className="text-[10px] text-muted-foreground">Ship in minutes</p>
         </div>
       </motion.div>
@@ -107,7 +134,8 @@ function NoCodeBadgeMagic() {
 const HERO_CONTENT = {
   badge: 'Onboarding Builder',
   title: 'Build and publish onboardings that are proven to convert',
-  description: "Update flows, run A/B tests, and optimize conversion - all without an app update, a design ticket, or a single line of code. Ship changes in minutes, not weeks.",
+  description:
+    'Update flows, run A/B tests, and optimize conversion - all without an app update, a design ticket, or a single line of code. Ship changes in minutes, not weeks.'
 };
 
 // Key benefits for onboarding builder
@@ -115,14 +143,14 @@ const BENEFITS = [
   { icon: MousePointerClickIcon, text: 'No-code visual editor' },
   { icon: FlaskConicalIcon, text: 'A/B test onboarding flows' },
   { icon: RefreshCwIcon, text: 'Update without app release' },
-  { icon: ZapIcon, text: 'Deploy in minutes' },
+  { icon: ZapIcon, text: 'Deploy in minutes' }
 ];
 
 // Stats for showcase variant
 const STATS = [
   { value: '50%', label: 'Revenue growth', color: 'text-primary' },
   { value: '102%', label: 'ARPU increase', color: 'text-blue-500' },
-  { value: '30%', label: 'Conversion boost', color: 'text-purple-500' },
+  { value: '30%', label: 'Conversion boost', color: 'text-purple-500' }
 ];
 
 // Checklist for centered variant
@@ -130,7 +158,7 @@ const CHECKLIST = [
   'Visual drag-and-drop editor',
   'Personalized user journeys',
   'Real-time A/B testing',
-  'No engineering required',
+  'No engineering required'
 ];
 
 // Helper to get image path based on selected image set
@@ -140,7 +168,11 @@ function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
 
 export type OnboardingBuilderHeroVariant = 'split' | 'centered' | 'showcase';
 
-export const ONBOARDING_BUILDER_HERO_VARIANTS = ['split', 'centered', 'showcase'] as const;
+export const ONBOARDING_BUILDER_HERO_VARIANTS = [
+  'split',
+  'centered',
+  'showcase'
+] as const;
 
 type Props = {
   variant?: OnboardingBuilderHeroVariant;
@@ -153,7 +185,9 @@ function SplitHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -164,7 +198,10 @@ function SplitHero(): React.JSX.Element {
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
             <BlurFade delay={0.05}>
-              <Badge variant="outline" className="relative w-fit overflow-hidden rounded-full px-4 py-1.5">
+              <Badge
+                variant="outline"
+                className="relative w-fit overflow-hidden rounded-full px-4 py-1.5"
+              >
                 <BorderBeam
                   size={40}
                   duration={4}
@@ -192,7 +229,10 @@ function SplitHero(): React.JSX.Element {
             <BlurFade delay={0.2}>
               <div className="grid grid-cols-2 gap-4">
                 {BENEFITS.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 text-sm text-muted-foreground"
+                  >
                     <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
                       <benefit.icon className="size-4 text-primary" />
                     </div>
@@ -208,7 +248,7 @@ function SplitHero(): React.JSX.Element {
                   onMouseEnter={() => setIsHovered('demo')}
                   onMouseLeave={() => setIsHovered(null)}
                   animate={{
-                    y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0,
+                    y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0
                   }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -227,7 +267,7 @@ function SplitHero(): React.JSX.Element {
                   onMouseEnter={() => setIsHovered('start')}
                   onMouseLeave={() => setIsHovered(null)}
                   animate={{
-                    y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0,
+                    y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0
                   }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -245,21 +285,34 @@ function SplitHero(): React.JSX.Element {
                 </motion.div>
               </div>
             </BlurFade>
-
           </div>
 
           {/* Right: Onboarding Builder screenshot */}
           <BlurFade delay={0.2}>
             <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-              transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.96 }
+              }
+              animate={
+                shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }
+              }
+              transition={{
+                delay: shouldReduceMotion ? 0 : 0.1,
+                duration: 0.35,
+                ease: [0.32, 0.72, 0, 1]
+              }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background ",
-                monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+                'relative w-full overflow-hidden rounded-xl border bg-background ',
+                monochromeMode &&
+                  'grayscale hover:grayscale-0 transition-[filter] duration-500'
               )}
             >
-              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <Spotlight
+                className="from-primary/10 via-primary/5 to-transparent"
+                size={350}
+              />
               <OnboardingStepMagic />
               <NoCodeBadgeMagic />
               <BorderBeam
@@ -303,7 +356,9 @@ function CenteredHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -311,7 +366,10 @@ function CenteredHero(): React.JSX.Element {
       <div className="container py-20 sm:py-24 md:py-32 relative z-10">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           <BlurFade delay={0.05}>
-            <Badge variant="outline" className="relative overflow-hidden rounded-full px-4 py-1.5 mb-6">
+            <Badge
+              variant="outline"
+              className="relative overflow-hidden rounded-full px-4 py-1.5 mb-6"
+            >
               <BorderBeam
                 size={40}
                 duration={4}
@@ -341,8 +399,16 @@ function CenteredHero(): React.JSX.Element {
               {CHECKLIST.map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
-                  animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+                  initial={
+                    shouldReduceMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, scale: 0.9 }
+                  }
+                  animate={
+                    shouldReduceMotion
+                      ? { opacity: 1 }
+                      : { opacity: 1, scale: 1 }
+                  }
                   transition={{ delay: 0.3 + index * 0.05 }}
                   whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                   className="flex items-center gap-2 rounded-full bg-primary/5 px-4 py-2 text-sm cursor-default"
@@ -365,7 +431,10 @@ function CenteredHero(): React.JSX.Element {
               >
                 <Link
                   href="/schedule-demo"
-                  className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
+                  className={cn(
+                    buttonVariants({ size: 'lg' }),
+                    'rounded-xl px-8'
+                  )}
                 >
                   Book a demo
                 </Link>
@@ -381,7 +450,10 @@ function CenteredHero(): React.JSX.Element {
                   href="https://app.adapty.io/registration"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'rounded-xl px-8')}
+                  className={cn(
+                    buttonVariants({ variant: 'outline', size: 'lg' }),
+                    'rounded-xl px-8'
+                  )}
                 >
                   Start for free
                 </Link>
@@ -392,12 +464,21 @@ function CenteredHero(): React.JSX.Element {
           {/* Dashboard image */}
           <BlurFade delay={0.3}>
             <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+              initial={
+                shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }
+              }
+              animate={
+                shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }
+              }
+              transition={{
+                delay: 0.2,
+                duration: 0.6,
+                ease: [0.32, 0.72, 0, 1]
+              }}
               className={cn(
-                "mt-16 relative w-full overflow-hidden rounded-xl border bg-background ",
-                monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+                'mt-16 relative w-full overflow-hidden rounded-xl border bg-background ',
+                monochromeMode &&
+                  'grayscale hover:grayscale-0 transition-[filter] duration-500'
               )}
             >
               <Image
@@ -433,7 +514,9 @@ function ShowcaseHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(
+    null
+  );
   const [hoveredStat, setHoveredStat] = React.useState<number | null>(null);
 
   return (
@@ -443,7 +526,10 @@ function ShowcaseHero(): React.JSX.Element {
         {/* Centered heading */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <BlurFade delay={0.05}>
-            <Badge variant="outline" className="relative overflow-hidden rounded-full px-4 py-1.5 mb-6">
+            <Badge
+              variant="outline"
+              className="relative overflow-hidden rounded-full px-4 py-1.5 mb-6"
+            >
               <BorderBeam
                 size={40}
                 duration={4}
@@ -477,7 +563,10 @@ function ShowcaseHero(): React.JSX.Element {
               >
                 <Link
                   href="/schedule-demo"
-                  className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
+                  className={cn(
+                    buttonVariants({ size: 'lg' }),
+                    'rounded-xl px-8'
+                  )}
                 >
                   Book a demo
                 </Link>
@@ -492,7 +581,10 @@ function ShowcaseHero(): React.JSX.Element {
                   href="https://app.adapty.io/registration"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'rounded-xl px-8')}
+                  className={cn(
+                    buttonVariants({ variant: 'outline', size: 'lg' }),
+                    'rounded-xl px-8'
+                  )}
                 >
                   Start for free
                 </Link>
@@ -507,21 +599,31 @@ function ShowcaseHero(): React.JSX.Element {
             {STATS.map((stat, index) => (
               <motion.div
                 key={index}
-                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                initial={
+                  shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }
+                }
+                animate={
+                  shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }
+                }
                 transition={{ delay: 0.3 + index * 0.08 }}
                 onMouseEnter={() => setHoveredStat(index)}
                 onMouseLeave={() => setHoveredStat(null)}
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                 className={cn(
-                  "px-8 py-4 rounded-2xl border bg-background/80 backdrop-blur-sm cursor-default transition-colors duration-200",
-                  hoveredStat === index ? "border-primary/50 " : "border-border/50"
+                  'px-8 py-4 rounded-2xl border bg-background/80 backdrop-blur-sm cursor-default transition-colors duration-200',
+                  hoveredStat === index
+                    ? 'border-primary/50 '
+                    : 'border-border/50'
                 )}
               >
-                <div className={cn("text-3xl sm:text-4xl font-bold", stat.color)}>
+                <div
+                  className={cn('text-3xl sm:text-4xl font-bold', stat.color)}
+                >
                   {stat.value}
                 </div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -530,12 +632,21 @@ function ShowcaseHero(): React.JSX.Element {
         {/* Large product screenshot */}
         <BlurFade delay={0.3}>
           <motion.div
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30, scale: 0.98 }}
-            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            initial={
+              shouldReduceMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: 30, scale: 0.98 }
+            }
+            animate={
+              shouldReduceMotion
+                ? { opacity: 1 }
+                : { opacity: 1, y: 0, scale: 1 }
+            }
             transition={{ delay: 0.2, duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
             className={cn(
-              "relative w-full max-w-5xl mx-auto overflow-hidden rounded-2xl border-2 bg-background ",
-              monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+              'relative w-full max-w-5xl mx-auto overflow-hidden rounded-2xl border-2 bg-background ',
+              monochromeMode &&
+                'grayscale hover:grayscale-0 transition-[filter] duration-500'
             )}
           >
             <Image
@@ -566,7 +677,9 @@ function ShowcaseHero(): React.JSX.Element {
 // =============================================================================
 // MAIN EXPORT
 // =============================================================================
-export function OnboardingBuilderHero({ variant = 'split' }: Props): React.JSX.Element {
+export function OnboardingBuilderHero({
+  variant = 'split'
+}: Props): React.JSX.Element {
   switch (variant) {
     case 'centered':
       return <CenteredHero />;

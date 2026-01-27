@@ -1,10 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRightIcon } from 'lucide-react';
-import { motion, useScroll, useMotionValueEvent, useReducedMotion } from 'motion/react';
+import {
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll
+} from 'motion/react';
 
 import { routes } from '@workspace/routes';
 import { Badge } from '@workspace/ui/components/badge';
@@ -22,29 +27,29 @@ import {
 import { ThemeToggle } from '@workspace/ui/components/theme-toggle';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { MobileMenu } from '~/components/mobile-menu';
 import { LanguageSwitcher } from '~/components/language-switcher';
 import {
-  ProductMegaMenu,
   CasesMegaMenu,
-  ResourcesMegaMenu,
-  DocsMegaMenu
+  DocsMegaMenu,
+  ProductMegaMenu,
+  ResourcesMegaMenu
 } from '~/components/menus';
+import { MobileMenu } from '~/components/mobile-menu';
+import { useHeaderVariant } from '~/lib/debug-context';
 import {
-  PRODUCT_TABS,
-  PRODUCT_FOOTER,
-  SOLUTION_ITEMS,
-  SDK_ITEMS,
-  INTEGRATIONS_ITEMS,
   CASES_MENU,
-  RESOURCES_SECTIONS,
-  DOCS_SIDEBAR,
   DOCS_MOBILE_SDKS,
-  DOCS_WEB_PAYMENTS,
+  DOCS_SIDEBAR,
   DOCS_WEB_API,
+  DOCS_WEB_PAYMENTS,
+  INTEGRATIONS_ITEMS,
+  PRODUCT_FOOTER,
+  PRODUCT_TABS,
+  RESOURCES_SECTIONS,
+  SDK_ITEMS,
+  SOLUTION_ITEMS,
   type MenuItem
 } from '~/lib/menu-data';
-import { useHeaderVariant } from '~/lib/debug-context';
 
 // ============================================================================
 // COMPACT MENU COMPONENTS (for simple/pill navbar)
@@ -63,7 +68,13 @@ function MenuIcon({ src, size = 18 }: { src: string; size?: number }) {
   );
 }
 
-function CompactMenuItem({ item, compact = false }: { item: MenuItem; compact?: boolean }) {
+function CompactMenuItem({
+  item,
+  compact = false
+}: {
+  item: MenuItem;
+  compact?: boolean;
+}) {
   const isExternal = item.external || item.href.startsWith('http');
 
   if (compact) {
@@ -74,10 +85,18 @@ function CompactMenuItem({ item, compact = false }: { item: MenuItem; compact?: 
         rel={isExternal ? 'noopener noreferrer' : undefined}
         className="flex items-center gap-2 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-accent"
       >
-        {item.icon && <MenuIcon src={item.icon} size={16} />}
+        {item.icon && (
+          <MenuIcon
+            src={item.icon}
+            size={16}
+          />
+        )}
         <span className="text-foreground">{item.title}</span>
         {item.badge && (
-          <Badge variant="secondary" className="h-4 rounded-full px-1.5 text-[9px] font-semibold uppercase">
+          <Badge
+            variant="secondary"
+            className="h-4 rounded-full px-1.5 text-[9px] font-semibold uppercase"
+          >
             {item.badge}
           </Badge>
         )}
@@ -94,27 +113,41 @@ function CompactMenuItem({ item, compact = false }: { item: MenuItem; compact?: 
     >
       {item.icon && (
         <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border bg-background/80 ">
-          <MenuIcon src={item.icon} size={16} />
+          <MenuIcon
+            src={item.icon}
+            size={16}
+          />
         </div>
       )}
       <div className="flex-1">
         <div className="flex items-center gap-1.5">
           <span className="font-medium text-foreground">{item.title}</span>
           {item.badge && (
-            <Badge variant="secondary" className="h-4 rounded-full px-1.5 text-[9px] font-semibold uppercase">
+            <Badge
+              variant="secondary"
+              className="h-4 rounded-full px-1.5 text-[9px] font-semibold uppercase"
+            >
               {item.badge}
             </Badge>
           )}
         </div>
         {item.description && (
-          <p className="text-xs text-muted-foreground line-clamp-1">{item.description}</p>
+          <p className="text-xs text-muted-foreground line-clamp-1">
+            {item.description}
+          </p>
         )}
       </div>
     </Link>
   );
 }
 
-function CompactSection({ title, children }: { title: string; children: React.ReactNode }) {
+function CompactSection({
+  title,
+  children
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="mb-3 last:mb-0">
       <div className="mb-1.5 px-2.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -136,7 +169,11 @@ function CompactProductDropdown() {
       <CompactSection title="Solutions">
         <div className="grid grid-cols-2 gap-0.5">
           {SOLUTION_ITEMS.map((item) => (
-            <CompactMenuItem key={item.title} item={item} compact />
+            <CompactMenuItem
+              key={item.title}
+              item={item}
+              compact
+            />
           ))}
         </div>
       </CompactSection>
@@ -145,7 +182,11 @@ function CompactProductDropdown() {
       <CompactSection title="Tech">
         <div className="grid grid-cols-2 gap-0.5">
           {PRODUCT_TABS.tech.items.map((item) => (
-            <CompactMenuItem key={item.title} item={item} compact />
+            <CompactMenuItem
+              key={item.title}
+              item={item}
+              compact
+            />
           ))}
         </div>
       </CompactSection>
@@ -154,7 +195,11 @@ function CompactProductDropdown() {
       <CompactSection title="Paywalls">
         <div className="grid grid-cols-2 gap-0.5">
           {PRODUCT_TABS.paywalls.items.map((item) => (
-            <CompactMenuItem key={item.title} item={item} compact />
+            <CompactMenuItem
+              key={item.title}
+              item={item}
+              compact
+            />
           ))}
         </div>
       </CompactSection>
@@ -163,7 +208,11 @@ function CompactProductDropdown() {
       <CompactSection title="Analytics">
         <div className="grid grid-cols-2 gap-0.5">
           {PRODUCT_TABS.analytics.items.map((item) => (
-            <CompactMenuItem key={item.title} item={item} compact />
+            <CompactMenuItem
+              key={item.title}
+              item={item}
+              compact
+            />
           ))}
         </div>
       </CompactSection>
@@ -172,7 +221,11 @@ function CompactProductDropdown() {
       <CompactSection title="SDKs">
         <div className="grid grid-cols-2 gap-0.5">
           {SDK_ITEMS.map((item) => (
-            <CompactMenuItem key={item.title} item={item} compact />
+            <CompactMenuItem
+              key={item.title}
+              item={item}
+              compact
+            />
           ))}
         </div>
       </CompactSection>
@@ -181,7 +234,11 @@ function CompactProductDropdown() {
       <CompactSection title="Integrations">
         <div className="grid grid-cols-2 gap-0.5">
           {INTEGRATIONS_ITEMS.map((item) => (
-            <CompactMenuItem key={item.title} item={item} compact />
+            <CompactMenuItem
+              key={item.title}
+              item={item}
+              compact
+            />
           ))}
         </div>
       </CompactSection>
@@ -241,10 +298,17 @@ function CompactResourcesDropdown() {
     <div className="max-h-[70vh] w-[480px] overflow-y-auto p-3">
       <div className="grid grid-cols-2 gap-x-4">
         {RESOURCES_SECTIONS.map((section) => (
-          <CompactSection key={section.title} title={section.title}>
+          <CompactSection
+            key={section.title}
+            title={section.title}
+          >
             <div className="flex flex-col gap-0.5">
               {section.items.map((item) => (
-                <CompactMenuItem key={item.title} item={item} compact />
+                <CompactMenuItem
+                  key={item.title}
+                  item={item}
+                  compact
+                />
               ))}
             </div>
           </CompactSection>
@@ -261,7 +325,11 @@ function CompactDocsDropdown() {
       <CompactSection title="Quick Links">
         <div className="flex flex-col gap-0.5">
           {DOCS_SIDEBAR.map((item) => (
-            <CompactMenuItem key={item.title} item={item} compact />
+            <CompactMenuItem
+              key={item.title}
+              item={item}
+              compact
+            />
           ))}
         </div>
       </CompactSection>
@@ -270,7 +338,11 @@ function CompactDocsDropdown() {
       <CompactSection title="Mobile SDKs">
         <div className="grid grid-cols-2 gap-0.5">
           {DOCS_MOBILE_SDKS.map((item) => (
-            <CompactMenuItem key={item.title} item={item} compact />
+            <CompactMenuItem
+              key={item.title}
+              item={item}
+              compact
+            />
           ))}
         </div>
       </CompactSection>
@@ -279,10 +351,18 @@ function CompactDocsDropdown() {
       <CompactSection title="Web">
         <div className="grid grid-cols-2 gap-0.5">
           {DOCS_WEB_PAYMENTS.map((item) => (
-            <CompactMenuItem key={item.title} item={item} compact />
+            <CompactMenuItem
+              key={item.title}
+              item={item}
+              compact
+            />
           ))}
           {DOCS_WEB_API.map((item) => (
-            <CompactMenuItem key={item.title} item={item} compact />
+            <CompactMenuItem
+              key={item.title}
+              item={item}
+              compact
+            />
           ))}
         </div>
       </CompactSection>
@@ -317,12 +397,12 @@ function FloatingPillNavbar(): React.JSX.Element {
       initial={shouldReduceMotion ? { opacity: 1 } : { y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-      className="fixed inset-x-0 top-0 z-40 px-4 pt-4"
+      className="fixed inset-x-0 top-0 z-40 px-3 sm:px-4 pt-3 sm:pt-4"
     >
       {/* Pill container - transparent until scrolled */}
       <div
         className={cn(
-          'mx-auto max-w-5xl rounded-full px-4 py-2 transition-all duration-300',
+          'mx-auto max-w-5xl rounded-full px-3 sm:px-4 py-2 transition-all duration-300 max-w-[calc(100vw-1.5rem)]',
           isScrolled
             ? 'border bg-background/95  backdrop-blur-xl'
             : 'bg-transparent'
@@ -330,7 +410,10 @@ function FloatingPillNavbar(): React.JSX.Element {
       >
         <nav className="flex items-center justify-between">
           <div className="flex items-center gap-3 pl-2">
-            <Link href={routes.marketing.Index} className="flex items-center">
+            <Link
+              href={routes.marketing.Index}
+              className="flex items-center"
+            >
               <Logo className="h-6 w-auto" />
             </Link>
             <LanguageSwitcher className="h-6 px-1" />
@@ -379,55 +462,66 @@ function FloatingPillNavbar(): React.JSX.Element {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                  {/* Pricing - Direct Link */}
-                  <NavigationMenuItem>
-                    <NavigationMenuLink
-                      asChild
-                      className={cn(navigationMenuTriggerStyle(), 'h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground')}
+                {/* Pricing - Direct Link */}
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    asChild
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      'h-8 rounded-full bg-transparent px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground'
+                    )}
+                  >
+                    <Link href="/pricing">Pricing</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+
+                {/* web2app - Highlighted Link */}
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    asChild
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      'h-8 rounded-full bg-transparent px-3 text-sm font-medium text-[#FF8A00] hover:bg-[#FF8A00]/10 hover:text-[#FF8A00]'
+                    )}
+                  >
+                    <Link
+                      href="https://funnelfox.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <Link href="/pricing">
-                        Pricing
-                      </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
+                      web2app
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
 
-                  {/* web2app - Highlighted Link */}
-                  <NavigationMenuItem>
-                    <NavigationMenuLink
-                      asChild
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        'h-8 rounded-full bg-transparent px-3 text-sm font-medium text-[#FF8A00] hover:bg-[#FF8A00]/10 hover:text-[#FF8A00]'
-                      )}
-                    >
-                      <Link href="https://funnelfox.com/" target="_blank" rel="noopener noreferrer">
-                        web2app
-                      </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
+          {/* Desktop CTA buttons - hidden on mobile */}
+          <div className="hidden items-center gap-1.5 pr-1 lg:flex">
+            <ThemeToggle className="size-7 rounded-full border-none " />
+            <Link
+              href={routes.dashboard.auth.SignIn}
+              className={cn(
+                buttonVariants({ variant: 'ghost', size: 'sm' }),
+                'h-7 rounded-full px-3 text-sm'
+              )}
+            >
+              Sign in
+            </Link>
+            <Link
+              href={routes.dashboard.auth.SignUp}
+              className={cn(
+                buttonVariants({ variant: 'default', size: 'sm' }),
+                'h-7 rounded-full px-3 text-sm'
+              )}
+            >
+              Start for free
+            </Link>
+          </div>
 
-            {/* Desktop CTA buttons - hidden on mobile */}
-            <div className="hidden items-center gap-1.5 pr-1 lg:flex">
-              <ThemeToggle className="size-7 rounded-full border-none " />
-              <Link
-                href={routes.dashboard.auth.SignIn}
-                className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'h-7 rounded-full px-3 text-sm')}
-              >
-                Sign in
-              </Link>
-              <Link
-                href={routes.dashboard.auth.SignUp}
-                className={cn(buttonVariants({ variant: 'default', size: 'sm' }), 'h-7 rounded-full px-3 text-sm')}
-              >
-                Start for free
-              </Link>
-            </div>
-
-            {/* Mobile menu button */}
-            <MobileMenu className="lg:hidden" />
+          {/* Mobile menu button */}
+          <MobileMenu className="lg:hidden" />
         </nav>
       </div>
     </motion.header>
@@ -445,7 +539,10 @@ function DefaultMegaMenuNavbar(): React.JSX.Element {
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-x-9">
             <div className="flex items-center gap-4">
-              <Link href={routes.marketing.Index} className="flex items-center gap-2">
+              <Link
+                href={routes.marketing.Index}
+                className="flex items-center gap-2"
+              >
                 <Logo />
               </Link>
               <LanguageSwitcher />
@@ -497,11 +594,12 @@ function DefaultMegaMenuNavbar(): React.JSX.Element {
                   <NavigationMenuItem>
                     <NavigationMenuLink
                       asChild
-                      className={cn(navigationMenuTriggerStyle(), 'rounded-xl text-[15px] font-normal')}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        'rounded-xl text-[15px] font-normal'
+                      )}
                     >
-                      <Link href="/pricing">
-                        Pricing
-                      </Link>
+                      <Link href="/pricing">Pricing</Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
@@ -514,7 +612,11 @@ function DefaultMegaMenuNavbar(): React.JSX.Element {
                         'rounded-xl text-[15px] font-medium text-[#FF8A00] hover:bg-[#FF8A00]/10 hover:text-[#FF8A00]'
                       )}
                     >
-                      <Link href="https://funnelfox.com/" target="_blank" rel="noopener noreferrer">
+                      <Link
+                        href="https://funnelfox.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         web2app
                       </Link>
                     </NavigationMenuLink>
@@ -527,13 +629,19 @@ function DefaultMegaMenuNavbar(): React.JSX.Element {
             <ThemeToggle className="rounded-xl border-none " />
             <Link
               href={routes.dashboard.auth.SignIn}
-              className={cn(buttonVariants({ variant: 'outline' }), 'rounded-xl')}
+              className={cn(
+                buttonVariants({ variant: 'outline' }),
+                'rounded-xl'
+              )}
             >
               Sign in
             </Link>
             <Link
               href={routes.dashboard.auth.SignUp}
-              className={cn(buttonVariants({ variant: 'default' }), 'rounded-xl')}
+              className={cn(
+                buttonVariants({ variant: 'default' }),
+                'rounded-xl'
+              )}
             >
               Start for free
             </Link>

@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { Separator } from '@workspace/ui/components/separator';
@@ -38,12 +38,18 @@ function ResourceLink({ item }: { item: MenuItem }) {
     >
       {item.icon && (
         <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border bg-background">
-          <MenuIcon src={item.icon} size={16} />
+          <MenuIcon
+            src={item.icon}
+            size={16}
+          />
         </div>
       )}
       <span className="flex-1 text-sm font-medium">{item.title}</span>
       {item.badge && (
-        <Badge variant="outline" className="h-5 rounded-full px-2 text-[10px]">
+        <Badge
+          variant="outline"
+          className="h-5 rounded-full px-2 text-[10px]"
+        >
           {item.badge}
         </Badge>
       )}
@@ -60,11 +66,15 @@ export function ResourcesMegaMenu(): React.JSX.Element {
   // Col 1: Learn + Connect
   // Col 2: Discover
   // Col 3: Ebooks + Research
-  const learnSection = RESOURCES_SECTIONS.find(s => s.title === 'Learn');
-  const connectSection = RESOURCES_SECTIONS.find(s => s.title === 'Connect');
-  const discoverSection = RESOURCES_SECTIONS.find(s => s.title === 'Discover');
-  const ebooksSection = RESOURCES_SECTIONS.find(s => s.title === 'Ebooks');
-  const researchSection = RESOURCES_SECTIONS.find(s => s.title === 'Research');
+  const learnSection = RESOURCES_SECTIONS.find((s) => s.title === 'Learn');
+  const connectSection = RESOURCES_SECTIONS.find((s) => s.title === 'Connect');
+  const discoverSection = RESOURCES_SECTIONS.find(
+    (s) => s.title === 'Discover'
+  );
+  const ebooksSection = RESOURCES_SECTIONS.find((s) => s.title === 'Ebooks');
+  const researchSection = RESOURCES_SECTIONS.find(
+    (s) => s.title === 'Research'
+  );
 
   return (
     <div className="flex w-[1100px] gap-0 p-6">
@@ -77,7 +87,10 @@ export function ResourcesMegaMenu(): React.JSX.Element {
             </h4>
             <nav className="flex flex-col gap-0.5">
               {learnSection.items.map((item) => (
-                <ResourceLink key={item.title} item={item} />
+                <ResourceLink
+                  key={item.title}
+                  item={item}
+                />
               ))}
             </nav>
           </div>
@@ -89,14 +102,20 @@ export function ResourcesMegaMenu(): React.JSX.Element {
             </h4>
             <nav className="flex flex-col gap-0.5">
               {connectSection.items.map((item) => (
-                <ResourceLink key={item.title} item={item} />
+                <ResourceLink
+                  key={item.title}
+                  item={item}
+                />
               ))}
             </nav>
           </div>
         )}
       </div>
 
-      <Separator orientation="vertical" className="mx-6 h-auto" />
+      <Separator
+        orientation="vertical"
+        className="mx-6 h-auto"
+      />
 
       {/* Column 2: Discover */}
       {discoverSection && (
@@ -106,13 +125,19 @@ export function ResourcesMegaMenu(): React.JSX.Element {
           </h4>
           <nav className="flex flex-col gap-0.5">
             {discoverSection.items.map((item) => (
-              <ResourceLink key={item.title} item={item} />
+              <ResourceLink
+                key={item.title}
+                item={item}
+              />
             ))}
           </nav>
         </div>
       )}
 
-      <Separator orientation="vertical" className="mx-6 h-auto" />
+      <Separator
+        orientation="vertical"
+        className="mx-6 h-auto"
+      />
 
       {/* Column 3: Ebooks & Research */}
       <div className="flex flex-1 flex-col gap-8">
@@ -123,7 +148,10 @@ export function ResourcesMegaMenu(): React.JSX.Element {
             </h4>
             <nav className="flex flex-col gap-0.5">
               {ebooksSection.items.map((item) => (
-                <ResourceLink key={item.title} item={item} />
+                <ResourceLink
+                  key={item.title}
+                  item={item}
+                />
               ))}
             </nav>
           </div>
@@ -135,7 +163,10 @@ export function ResourcesMegaMenu(): React.JSX.Element {
             </h4>
             <nav className="flex flex-col gap-0.5">
               {researchSection.items.map((item) => (
-                <ResourceLink key={item.title} item={item} />
+                <ResourceLink
+                  key={item.title}
+                  item={item}
+                />
               ))}
             </nav>
           </div>

@@ -3,19 +3,30 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { TrendingUpIcon, TargetIcon, GlobeIcon, FlaskConicalIcon, DollarSignIcon, ArrowUpIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowUpIcon,
+  DollarSignIcon,
+  FlaskConicalIcon,
+  GlobeIcon,
+  TargetIcon,
+  TrendingUpIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { SectionBackground } from '~/components/fragments/section-background';
-import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 import { Spotlight } from '~/components/fragments/spotlight';
-import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+import {
+  useImageSetVariant,
+  useMonochromeMode,
+  type ImageSetVariant
+} from '~/lib/debug-context';
 
 // Magic animation: Revenue growth counter
 function RevenueCounterMagic() {
@@ -102,7 +113,9 @@ function MRRChartMagic() {
       >
         <div className="flex items-center gap-2 mb-1">
           <DollarSignIcon className="size-3 text-primary" />
-          <span className="text-[10px] font-medium text-muted-foreground">MRR Growth</span>
+          <span className="text-[10px] font-medium text-muted-foreground">
+            MRR Growth
+          </span>
         </div>
         <div className="flex items-end gap-0.5 h-6">
           {dataPoints.map((height, index) => (
@@ -110,12 +123,12 @@ function MRRChartMagic() {
               key={index}
               initial={{ height: 0 }}
               animate={{
-                height: index < visiblePoints ? `${height}%` : 0,
+                height: index < visiblePoints ? `${height}%` : 0
               }}
               transition={{ duration: 0.15, delay: index * 0.05 }}
               className={cn(
-                "w-1.5 rounded-t-sm",
-                index < visiblePoints - 1 ? "bg-primary/40" : "bg-primary"
+                'w-1.5 rounded-t-sm',
+                index < visiblePoints - 1 ? 'bg-primary/40' : 'bg-primary'
               )}
             />
           ))}
@@ -135,7 +148,7 @@ const BENEFITS = [
   { icon: FlaskConicalIcon, text: 'A/B test everything' },
   { icon: GlobeIcon, text: 'Localize for 180+ markets' },
   { icon: TargetIcon, text: 'Target the right users' },
-  { icon: TrendingUpIcon, text: 'Real-time analytics' },
+  { icon: TrendingUpIcon, text: 'Real-time analytics' }
 ];
 
 // Helper to get image path based on selected image set
@@ -147,7 +160,9 @@ export function RevenueGrowthHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -158,7 +173,10 @@ export function RevenueGrowthHero(): React.JSX.Element {
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
             <BlurFade delay={0.05}>
-              <Badge variant="outline" className="w-fit rounded-full px-4 py-1.5">
+              <Badge
+                variant="outline"
+                className="w-fit rounded-full px-4 py-1.5"
+              >
                 Revenue Growth
               </Badge>
             </BlurFade>
@@ -171,7 +189,9 @@ export function RevenueGrowthHero(): React.JSX.Element {
 
             <BlurFade delay={0.15}>
               <p className="max-w-xl text-left text-base leading-relaxed text-muted-foreground sm:text-lg">
-                With Adapty, your paywalls are not static pictures. Turn them into powerful no-code tools with A/B testing, localization, and targeting to maximize your subscription revenue.
+                With Adapty, your paywalls are not static pictures. Turn them
+                into powerful no-code tools with A/B testing, localization, and
+                targeting to maximize your subscription revenue.
               </p>
             </BlurFade>
 
@@ -179,7 +199,10 @@ export function RevenueGrowthHero(): React.JSX.Element {
             <BlurFade delay={0.2}>
               <div className="grid grid-cols-2 gap-4">
                 {BENEFITS.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 text-sm text-muted-foreground"
+                  >
                     <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
                       <benefit.icon className="size-4 text-primary" />
                     </div>
@@ -195,7 +218,7 @@ export function RevenueGrowthHero(): React.JSX.Element {
                   onMouseEnter={() => setIsHovered('demo')}
                   onMouseLeave={() => setIsHovered(null)}
                   animate={{
-                    y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0,
+                    y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0
                   }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -214,7 +237,7 @@ export function RevenueGrowthHero(): React.JSX.Element {
                   onMouseEnter={() => setIsHovered('start')}
                   onMouseLeave={() => setIsHovered(null)}
                   animate={{
-                    y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0,
+                    y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0
                   }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -237,15 +260,29 @@ export function RevenueGrowthHero(): React.JSX.Element {
           {/* Right: Analytics dashboard screenshot */}
           <BlurFade delay={0.2}>
             <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-              transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.96 }
+              }
+              animate={
+                shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }
+              }
+              transition={{
+                delay: shouldReduceMotion ? 0 : 0.1,
+                duration: 0.35,
+                ease: [0.32, 0.72, 0, 1]
+              }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background ",
-                monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+                'relative w-full overflow-hidden rounded-xl border bg-background ',
+                monochromeMode &&
+                  'grayscale hover:grayscale-0 transition-[filter] duration-500'
               )}
             >
-              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <Spotlight
+                className="from-primary/10 via-primary/5 to-transparent"
+                size={350}
+              />
               <RevenueCounterMagic />
               <MRRChartMagic />
               <BorderBeam

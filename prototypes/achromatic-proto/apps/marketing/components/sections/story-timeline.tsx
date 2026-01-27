@@ -1,14 +1,20 @@
 'use client';
 
 import * as React from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform
+} from 'motion/react';
 
+import { cn } from '@workspace/ui/lib/utils';
+
+import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { BlurFade } from '~/components/fragments/blur-fade';
 import { Spotlight } from '~/components/fragments/spotlight';
-import { BorderBeam } from '~/components/fragments/border-beam';
-import { cn } from '@workspace/ui/lib/utils';
 
 const DATA = [
   {
@@ -60,7 +66,7 @@ function YearsExperienceMagic() {
       return;
     }
     const interval = setInterval(() => {
-      setYears(prev => {
+      setYears((prev) => {
         if (prev >= 6) return 6;
         return prev + 1;
       });
@@ -77,13 +83,17 @@ function YearsExperienceMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.2, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.2, 1]
+              }
+        }
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <motion.span
@@ -100,13 +110,15 @@ function YearsExperienceMagic() {
 
 export function StoryTimeline(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [hoveredMilestone, setHoveredMilestone] = React.useState<number | null>(null);
+  const [hoveredMilestone, setHoveredMilestone] = React.useState<number | null>(
+    null
+  );
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   // Scroll-based progress animation
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 80%', 'end 20%'],
+    offset: ['start 80%', 'end 20%']
   });
 
   // Transform scroll progress to timeline height
@@ -115,8 +127,11 @@ export function StoryTimeline(): React.JSX.Element {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1200} />
-      <div className="container max-w-6xl py-20 relative z-10">
-        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+      <div className="container max-w-5xl py-20 relative z-10">
+        <Spotlight
+          className="from-primary/15 via-primary/5 to-transparent"
+          size={350}
+        />
         <BlurFade delay={0.05}>
           <h2 className="mb-4 text-sm font-medium uppercase tracking-wider text-muted-foreground">
             The road so far
@@ -125,7 +140,10 @@ export function StoryTimeline(): React.JSX.Element {
             <YearsExperienceMagic />
           </div>
         </BlurFade>
-        <div ref={containerRef} className="relative">
+        <div
+          ref={containerRef}
+          className="relative"
+        >
           {/* Background timeline track */}
           <div className="absolute left-4 top-0 h-full w-0.5 bg-border/50" />
 
@@ -141,19 +159,19 @@ export function StoryTimeline(): React.JSX.Element {
               className="absolute left-[11px] w-3 h-3 rounded-full bg-primary  "
               style={{
                 top: timelineHeight,
-                transform: 'translateY(-50%)',
+                transform: 'translateY(-50%)'
               }}
             >
               <motion.div
                 className="absolute inset-0 rounded-full bg-primary"
                 animate={{
                   scale: [1, 1.5, 1],
-                  opacity: [1, 0.3, 1],
+                  opacity: [1, 0.3, 1]
                 }}
                 transition={{
                   duration: 1.5,
                   repeat: Infinity,
-                  ease: 'easeInOut',
+                  ease: 'easeInOut'
                 }}
               />
             </motion.div>
@@ -162,12 +180,27 @@ export function StoryTimeline(): React.JSX.Element {
             {DATA.map((milestone, index) => {
               const isHovered = hoveredMilestone === index;
               return (
-                <BlurFade key={index} delay={0.1 + index * 0.05}>
+                <BlurFade
+                  key={index}
+                  delay={0.1 + index * 0.05}
+                >
                   <motion.div
-                    initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -12 }}
+                    initial={
+                      shouldReduceMotion
+                        ? { opacity: 1 }
+                        : { opacity: 0, x: -12 }
+                    }
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={shouldReduceMotion ? undefined : { duration: 0.3, delay: index * 0.05, ease: [0.32, 0.72, 0, 1] }}
+                    viewport={{ once: true, margin: '-100px' }}
+                    transition={
+                      shouldReduceMotion
+                        ? undefined
+                        : {
+                            duration: 0.3,
+                            delay: index * 0.05,
+                            ease: [0.32, 0.72, 0, 1]
+                          }
+                    }
                     className="relative pl-14 cursor-default"
                     onMouseEnter={() => setHoveredMilestone(index)}
                     onMouseLeave={() => setHoveredMilestone(null)}
@@ -175,35 +208,54 @@ export function StoryTimeline(): React.JSX.Element {
                     {/* Timeline dot */}
                     <motion.div
                       className={cn(
-                        "absolute left-0 top-1 flex size-8 items-center justify-center rounded-full border bg-background  transition-all duration-200",
-                        isHovered && "border-primary  "
+                        'absolute left-0 top-1 flex size-8 items-center justify-center rounded-full border bg-background  transition-all duration-200',
+                        isHovered && 'border-primary  '
                       )}
-                      animate={shouldReduceMotion ? undefined : {
-                        scale: isHovered ? 1.2 : 1,
+                      animate={
+                        shouldReduceMotion
+                          ? undefined
+                          : {
+                              scale: isHovered ? 1.2 : 1
+                            }
+                      }
+                      transition={{
+                        type: 'spring',
+                        duration: 0.2,
+                        bounce: 0.3
                       }}
-                      transition={{ type: 'spring', duration: 0.2, bounce: 0.3 }}
                     >
                       <motion.div
                         className={cn(
-                          "size-2.5 rounded-full bg-primary transition-all duration-200",
-                          isHovered && "size-3"
+                          'size-2.5 rounded-full bg-primary transition-all duration-200',
+                          isHovered && 'size-3'
                         )}
-                        animate={shouldReduceMotion ? undefined : {
-                          scale: isHovered ? [1, 1.3, 1] : 1,
+                        animate={
+                          shouldReduceMotion
+                            ? undefined
+                            : {
+                                scale: isHovered ? [1, 1.3, 1] : 1
+                              }
+                        }
+                        transition={{
+                          duration: 0.6,
+                          repeat: isHovered ? Infinity : 0
                         }}
-                        transition={{ duration: 0.6, repeat: isHovered ? Infinity : 0 }}
                       />
                     </motion.div>
 
                     {/* Content */}
                     <motion.div
                       className={cn(
-                        "relative overflow-hidden rounded-lg p-4 -ml-4 transition-colors duration-200",
-                        isHovered && "bg-card/50 backdrop-blur-sm"
+                        'relative overflow-hidden rounded-lg p-4 -ml-4 transition-colors duration-200',
+                        isHovered && 'bg-card/50 backdrop-blur-sm'
                       )}
-                      animate={shouldReduceMotion ? undefined : {
-                        x: isHovered ? 8 : 0,
-                      }}
+                      animate={
+                        shouldReduceMotion
+                          ? undefined
+                          : {
+                              x: isHovered ? 8 : 0
+                            }
+                      }
                       transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                     >
                       {isHovered && (
@@ -215,22 +267,30 @@ export function StoryTimeline(): React.JSX.Element {
                           colorTo="hsl(var(--primary)/0)"
                         />
                       )}
-                      <div className={cn(
-                        "relative z-10 text-sm font-bold transition-colors duration-150",
-                        isHovered ? "text-primary" : "text-muted-foreground"
-                      )}>
+                      <div
+                        className={cn(
+                          'relative z-10 text-sm font-bold transition-colors duration-150',
+                          isHovered ? 'text-primary' : 'text-muted-foreground'
+                        )}
+                      >
                         {milestone.date}
                       </div>
-                      <h3 className={cn(
-                        "relative z-10 mb-2 text-xl font-medium transition-colors duration-150",
-                        isHovered && "text-primary"
-                      )}>
+                      <h3
+                        className={cn(
+                          'relative z-10 mb-2 text-xl font-medium transition-colors duration-150',
+                          isHovered && 'text-primary'
+                        )}
+                      >
                         {milestone.title}
                       </h3>
-                      <p className={cn(
-                        "relative z-10 leading-relaxed transition-colors duration-150",
-                        isHovered ? "text-foreground" : "text-muted-foreground"
-                      )}>
+                      <p
+                        className={cn(
+                          'relative z-10 leading-relaxed transition-colors duration-150',
+                          isHovered
+                            ? 'text-foreground'
+                            : 'text-muted-foreground'
+                        )}
+                      >
                         {milestone.description}
                       </p>
                     </motion.div>

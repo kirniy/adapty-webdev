@@ -4,8 +4,8 @@ import { cacheLife, cacheTag } from 'next/cache';
 
 import { getAuthOrganizationContext } from '@workspace/auth/context';
 import { ValidationError } from '@workspace/common/errors';
-import { prisma } from '@workspace/database/client';
 import { ContactRecord } from '@workspace/database';
+import { prisma } from '@workspace/database/client';
 
 import { Caching, OrganizationCacheKey } from '~/data/caching';
 import {
@@ -42,7 +42,9 @@ function mapRecords(option: RecordsOption): ContactRecord | undefined {
   return undefined;
 }
 
-async function getContactsData(params: SearchParams): Promise<GetContactsResult> {
+async function getContactsData(
+  params: SearchParams
+): Promise<GetContactsResult> {
   'use cache';
   cacheLife('default');
   cacheTag(
@@ -127,7 +129,9 @@ async function getContactsData(params: SearchParams): Promise<GetContactsResult>
   return { contacts: mapped, filteredCount, totalCount };
 }
 
-export async function getContacts(input: GetContactsSchema): Promise<GetContactsResult> {
+export async function getContacts(
+  input: GetContactsSchema
+): Promise<GetContactsResult> {
   const ctx = await getAuthOrganizationContext();
 
   const result = getContactsSchema.safeParse(input);

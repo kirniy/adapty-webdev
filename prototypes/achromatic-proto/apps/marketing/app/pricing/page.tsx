@@ -2,26 +2,30 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
 import { PricingComparison } from '~/components/sections/pricing-comparison';
 import { PricingHero } from '~/components/sections/pricing-hero';
-import { StartupCallout } from '~/components/sections/startup-callout';
 import {
-  LogosSwitcher,
-  FAQSwitcher,
-  TestimonialsSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  LogosSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { StartupCallout } from '~/components/sections/startup-callout';
+import { useFeaturesVariant, useHeroVariant } from '~/lib/debug-context';
 
 // Map global Hero variant to PricingHero variant
 type PricingHeroVariant = 'table' | 'cards' | 'compact';
 
 function mapHeroVariant(globalVariant: string): PricingHeroVariant {
   switch (globalVariant) {
-    case 'pricing': return 'compact';
-    case 'marketing': return 'cards';
-    case 'split': return 'table';
-    default: return 'table';
+    case 'pricing':
+      return 'compact';
+    case 'marketing':
+      return 'cards';
+    case 'split':
+      return 'table';
+    default:
+      return 'table';
   }
 }
 
@@ -34,7 +38,9 @@ export default function PricingPage(): React.JSX.Element {
   return (
     <>
       {/* Pricing Hero with plans */}
-      {heroVariant !== 'off' && <PricingHero variant={mapHeroVariant(heroVariant)} />}
+      {heroVariant !== 'off' && (
+        <PricingHero variant={mapHeroVariant(heroVariant)} />
+      )}
 
       {/* Startup discount callout */}
       <StartupCallout />

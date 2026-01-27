@@ -3,21 +3,21 @@
 import * as React from 'react';
 import Link from 'next/link';
 import {
-  ShieldCheckIcon,
-  LayersIcon,
-  RefreshCwIcon,
-  ArrowRightIcon,
-  CloudIcon,
-  DatabaseIcon,
-  ServerIcon,
-  WifiIcon,
-  WifiOffIcon,
-  CheckCircle2Icon,
   AlertTriangleIcon,
   ArrowDownIcon,
-  ZapIcon,
+  ArrowRightIcon,
+  CheckCircle2Icon,
+  CloudIcon,
+  DatabaseIcon,
+  LayersIcon,
+  RefreshCwIcon,
+  ServerIcon,
+  ShieldCheckIcon,
+  WifiIcon,
+  WifiOffIcon,
+  ZapIcon
 } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
 
@@ -55,30 +55,35 @@ function ShieldMagic() {
     <div className="mt-6 h-[100px] rounded-xl bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50 p-4 flex items-center justify-center gap-6">
       <div className="relative">
         <motion.div
-          animate={shouldReduceMotion ? {} : {
-            scale: [1, 1.05, 1],
-          }}
+          animate={
+            shouldReduceMotion
+              ? {}
+              : {
+                  scale: [1, 1.05, 1]
+                }
+          }
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         >
           <ShieldCheckIcon className="size-14 text-emerald-500" />
         </motion.div>
         {/* Pulse rings */}
-        {!shouldReduceMotion && [0, 1, 2].map((i) => (
-          <motion.div
-            key={i}
-            className="absolute inset-0 rounded-full border-2 border-emerald-500/30"
-            animate={{
-              scale: [1, 2.5],
-              opacity: [0.6, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              delay: i * 0.6,
-              ease: 'easeOut',
-            }}
-          />
-        ))}
+        {!shouldReduceMotion &&
+          [0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              className="absolute inset-0 rounded-full border-2 border-emerald-500/30"
+              animate={{
+                scale: [1, 2.5],
+                opacity: [0.6, 0]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                delay: i * 0.6,
+                ease: 'easeOut'
+              }}
+            />
+          ))}
       </div>
       <div className="flex flex-col items-start">
         <div className="flex items-baseline gap-1">
@@ -92,10 +97,14 @@ function ShieldMagic() {
           </motion.span>
           <span className="text-2xl font-bold text-emerald-500">%</span>
         </div>
-        <span className="text-[10px] font-medium text-muted-foreground">Guaranteed uptime</span>
+        <span className="text-[10px] font-medium text-muted-foreground">
+          Guaranteed uptime
+        </span>
         <div className="flex items-center gap-1 mt-1">
           <CheckCircle2Icon className="size-3 text-emerald-500" />
-          <span className="text-[8px] text-emerald-600">All systems operational</span>
+          <span className="text-[8px] text-emerald-600">
+            All systems operational
+          </span>
         </div>
       </div>
     </div>
@@ -107,10 +116,30 @@ function CacheLayersMagic() {
   const shouldReduceMotion = useReducedMotion();
   const [activeLayer, setActiveLayer] = React.useState(0);
   const layers = [
-    { icon: WifiIcon, label: 'Network', color: 'text-blue-500', bg: 'bg-blue-500/10' },
-    { icon: CloudIcon, label: 'CDN', color: 'text-purple-500', bg: 'bg-purple-500/10' },
-    { icon: ServerIcon, label: 'Device', color: 'text-amber-500', bg: 'bg-amber-500/10' },
-    { icon: DatabaseIcon, label: 'Offline', color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
+    {
+      icon: WifiIcon,
+      label: 'Network',
+      color: 'text-blue-500',
+      bg: 'bg-blue-500/10'
+    },
+    {
+      icon: CloudIcon,
+      label: 'CDN',
+      color: 'text-purple-500',
+      bg: 'bg-purple-500/10'
+    },
+    {
+      icon: ServerIcon,
+      label: 'Device',
+      color: 'text-amber-500',
+      bg: 'bg-amber-500/10'
+    },
+    {
+      icon: DatabaseIcon,
+      label: 'Offline',
+      color: 'text-emerald-500',
+      bg: 'bg-emerald-500/10'
+    }
   ];
 
   React.useEffect(() => {
@@ -129,20 +158,23 @@ function CacheLayersMagic() {
             <motion.div
               animate={{
                 scale: activeLayer === i ? 1.15 : 1,
-                y: activeLayer === i ? -4 : 0,
+                y: activeLayer === i ? -4 : 0
               }}
               transition={{ type: 'spring', duration: 0.3, bounce: 0.3 }}
               className="flex flex-col items-center gap-1.5"
             >
               <motion.div
                 animate={{
-                  backgroundColor: activeLayer >= i
-                    ? i === layers.length - 1 ? 'rgb(16 185 129 / 0.2)' : 'rgb(239 68 68 / 0.2)'
-                    : 'hsl(var(--muted))',
+                  backgroundColor:
+                    activeLayer >= i
+                      ? i === layers.length - 1
+                        ? 'rgb(16 185 129 / 0.2)'
+                        : 'rgb(239 68 68 / 0.2)'
+                      : 'hsl(var(--muted))'
                 }}
                 className={cn(
-                  "flex size-10 items-center justify-center rounded-xl transition-all duration-300",
-                  activeLayer === i ? layer.bg : "bg-muted"
+                  'flex size-10 items-center justify-center rounded-xl transition-all duration-300',
+                  activeLayer === i ? layer.bg : 'bg-muted'
                 )}
               >
                 {activeLayer >= i && i < activeLayer ? (
@@ -160,16 +192,20 @@ function CacheLayersMagic() {
                     <CheckCircle2Icon className="size-5 text-emerald-500" />
                   </motion.div>
                 ) : (
-                  <layer.icon className={cn(
-                    "size-5 transition-colors",
-                    activeLayer === i ? layer.color : "text-muted-foreground"
-                  )} />
+                  <layer.icon
+                    className={cn(
+                      'size-5 transition-colors',
+                      activeLayer === i ? layer.color : 'text-muted-foreground'
+                    )}
+                  />
                 )}
               </motion.div>
-              <span className={cn(
-                "text-[8px] font-medium transition-colors",
-                activeLayer === i ? layer.color : "text-muted-foreground"
-              )}>
+              <span
+                className={cn(
+                  'text-[8px] font-medium transition-colors',
+                  activeLayer === i ? layer.color : 'text-muted-foreground'
+                )}
+              >
                 {layer.label}
               </span>
             </motion.div>
@@ -177,14 +213,18 @@ function CacheLayersMagic() {
               <motion.div
                 animate={{
                   opacity: activeLayer > i ? 1 : 0.3,
-                  scale: activeLayer === i + 1 ? [1, 1.2, 1] : 1,
+                  scale: activeLayer === i + 1 ? [1, 1.2, 1] : 1
                 }}
                 transition={{ duration: 0.3 }}
               >
-                <ArrowRightIcon className={cn(
-                  "size-4",
-                  activeLayer > i ? "text-red-400" : "text-muted-foreground/30"
-                )} />
+                <ArrowRightIcon
+                  className={cn(
+                    'size-4',
+                    activeLayer > i
+                      ? 'text-red-400'
+                      : 'text-muted-foreground/30'
+                  )}
+                />
               </motion.div>
             )}
           </React.Fragment>
@@ -200,7 +240,7 @@ function AutoRestoreMagic() {
   const [events, setEvents] = React.useState([
     { id: 1, status: 'pending' },
     { id: 2, status: 'pending' },
-    { id: 3, status: 'pending' },
+    { id: 3, status: 'pending' }
   ]);
 
   React.useEffect(() => {
@@ -212,7 +252,7 @@ function AutoRestoreMagic() {
           return [
             { id: Date.now(), status: 'pending' },
             { id: Date.now() + 1, status: 'pending' },
-            { id: Date.now() + 2, status: 'pending' },
+            { id: Date.now() + 2, status: 'pending' }
           ];
         }
         return prev.map((e, i) =>
@@ -236,9 +276,12 @@ function AutoRestoreMagic() {
       </motion.div>
       <div className="flex-1 flex flex-col gap-1.5">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-[9px] font-medium text-muted-foreground">Event Queue</span>
+          <span className="text-[9px] font-medium text-muted-foreground">
+            Event Queue
+          </span>
           <span className="text-[8px] px-1.5 py-0.5 rounded bg-primary/10 text-primary font-mono">
-            {events.filter((e) => e.status === 'synced').length}/{events.length} synced
+            {events.filter((e) => e.status === 'synced').length}/{events.length}{' '}
+            synced
           </span>
         </div>
         <div className="flex gap-2">
@@ -250,9 +293,10 @@ function AutoRestoreMagic() {
                 animate={{
                   scale: 1,
                   opacity: 1,
-                  backgroundColor: event.status === 'synced'
-                    ? 'rgb(16 185 129 / 0.2)'
-                    : 'hsl(var(--muted))',
+                  backgroundColor:
+                    event.status === 'synced'
+                      ? 'rgb(16 185 129 / 0.2)'
+                      : 'hsl(var(--muted))'
                 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 className="flex-1 h-8 rounded-lg flex items-center justify-center"
@@ -293,7 +337,9 @@ function OfflinePaywallMagic() {
       <div className="flex items-center gap-4">
         <motion.div
           animate={{
-            backgroundColor: isOffline ? 'rgb(239 68 68 / 0.2)' : 'rgb(16 185 129 / 0.2)',
+            backgroundColor: isOffline
+              ? 'rgb(239 68 68 / 0.2)'
+              : 'rgb(16 185 129 / 0.2)'
           }}
           className="flex size-10 items-center justify-center rounded-xl"
         >
@@ -312,7 +358,9 @@ function OfflinePaywallMagic() {
         <motion.div
           animate={{
             scale: isOffline ? 1.1 : 1,
-            borderColor: isOffline ? 'rgb(139 92 246 / 0.5)' : 'hsl(var(--border))',
+            borderColor: isOffline
+              ? 'rgb(139 92 246 / 0.5)'
+              : 'hsl(var(--border))'
           }}
           className="px-4 py-2 rounded-lg border bg-card"
         >
@@ -329,7 +377,7 @@ function OfflinePaywallMagic() {
         <motion.div
           animate={{
             backgroundColor: 'rgb(16 185 129 / 0.2)',
-            scale: [1, 1.05, 1],
+            scale: [1, 1.05, 1]
           }}
           transition={{ duration: 1.5, repeat: Infinity }}
           className="flex size-10 items-center justify-center rounded-xl"
@@ -343,7 +391,9 @@ function OfflinePaywallMagic() {
         animate={{ opacity: 1, y: 0 }}
         className="text-[9px] text-muted-foreground mt-3"
       >
-        {isOffline ? 'Network down - using cached paywall' : 'Connected - serving live paywall'}
+        {isOffline
+          ? 'Network down - using cached paywall'
+          : 'Connected - serving live paywall'}
       </motion.p>
     </div>
   );
@@ -369,8 +419,12 @@ function ZeroRevenueLossMagic() {
     <div className="mt-6 h-[100px] rounded-xl bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50 p-4 flex items-center gap-4">
       <div className="flex-1">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-[9px] font-medium text-muted-foreground">Revenue protected</span>
-          <span className="text-[9px] font-mono text-emerald-500">{protected_}%</span>
+          <span className="text-[9px] font-medium text-muted-foreground">
+            Revenue protected
+          </span>
+          <span className="text-[9px] font-mono text-emerald-500">
+            {protected_}%
+          </span>
         </div>
         <div className="h-3 bg-muted rounded-full overflow-hidden">
           <motion.div
@@ -386,7 +440,9 @@ function ZeroRevenueLossMagic() {
         </div>
         <div className="flex justify-between mt-2">
           <span className="text-[8px] text-muted-foreground">$0 lost</span>
-          <span className="text-[8px] text-emerald-500 font-medium">$12.4K protected</span>
+          <span className="text-[8px] text-emerald-500 font-medium">
+            $12.4K protected
+          </span>
         </div>
       </div>
     </div>
@@ -412,9 +468,13 @@ function InstantRecoveryMagic() {
   return (
     <div className="mt-6 h-[100px] rounded-xl bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50 p-4 flex items-center justify-center gap-6">
       <motion.div
-        animate={shouldReduceMotion ? {} : {
-          rotate: [0, 360],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                rotate: [0, 360]
+              }
+        }
         transition={{ duration: 0.5, repeat: Infinity, ease: 'linear' }}
         className="flex size-12 items-center justify-center rounded-xl bg-amber-500/10"
       >
@@ -433,7 +493,9 @@ function InstantRecoveryMagic() {
           </motion.span>
           <span className="text-lg font-medium text-muted-foreground">ms</span>
         </div>
-        <span className="text-[10px] text-muted-foreground">Fallback switch time</span>
+        <span className="text-[10px] text-muted-foreground">
+          Fallback switch time
+        </span>
       </div>
     </div>
   );
@@ -447,68 +509,80 @@ const FEATURES = [
   {
     id: 'tolerance',
     title: '100% fall tolerance',
-    description: 'Download your paywalls and use them in case Adapty is unavailable. Subscribe customers in any circumstance and never miss one.',
+    description:
+      'Download your paywalls and use them in case Adapty is unavailable. Subscribe customers in any circumstance and never miss one.',
     icon: ShieldCheckIcon,
     link: 'https://adapty.io/docs/fallback-paywalls',
     linkText: 'Learn more',
-    magic: ShieldMagic,
+    magic: ShieldMagic
   },
   {
     id: 'cache',
     title: 'Multi-cache layers of security',
-    description: "Adapty caches paywalls on the offline, device, CDN, network, and database layers. We make sure you get 100% availability in the most extreme cases.",
+    description:
+      'Adapty caches paywalls on the offline, device, CDN, network, and database layers. We make sure you get 100% availability in the most extreme cases.',
     icon: LayersIcon,
-    magic: CacheLayersMagic,
+    magic: CacheLayersMagic
   },
   {
     id: 'restore',
     title: 'Auto data restore',
-    description: "Adapty never misses a single subscription event from subscribers. If our servers are unavailable, we'll auto-restore data on the next launch.",
+    description:
+      "Adapty never misses a single subscription event from subscribers. If our servers are unavailable, we'll auto-restore data on the next launch.",
     icon: RefreshCwIcon,
     link: 'https://status.adapty.io/',
     linkText: 'Check the system status',
-    magic: AutoRestoreMagic,
+    magic: AutoRestoreMagic
   },
   {
     id: 'offline',
     title: 'Works offline',
-    description: 'Your paywalls continue to function even without an internet connection, ensuring a seamless user experience.',
+    description:
+      'Your paywalls continue to function even without an internet connection, ensuring a seamless user experience.',
     icon: WifiOffIcon,
-    magic: OfflinePaywallMagic,
+    magic: OfflinePaywallMagic
   },
   {
     id: 'revenue',
     title: 'Zero revenue loss',
-    description: 'Never lose a potential subscriber due to technical issues. Fallback paywalls ensure every purchase opportunity is captured.',
+    description:
+      'Never lose a potential subscriber due to technical issues. Fallback paywalls ensure every purchase opportunity is captured.',
     icon: DatabaseIcon,
-    magic: ZeroRevenueLossMagic,
+    magic: ZeroRevenueLossMagic
   },
   {
     id: 'recovery',
     title: 'Instant recovery',
-    description: 'Switch to fallback paywalls in under 50ms, so fast your users will never notice any disruption.',
+    description:
+      'Switch to fallback paywalls in under 50ms, so fast your users will never notice any disruption.',
     icon: ZapIcon,
-    magic: InstantRecoveryMagic,
-  },
+    magic: InstantRecoveryMagic
+  }
 ];
 
 const STATS = [
   { value: '500M+', label: 'subscription events / month' },
   { value: '1.4B', label: 'users' },
   { value: '2.8M', label: 'subscribers / month' },
-  { value: '9B', label: 'API calls / month' },
+  { value: '9B', label: 'API calls / month' }
 ];
 
 const RELATED_PAGES = [
   { name: 'Subscriber sync', href: '/subscription-sync' },
-  { name: 'Subscription SDK', href: '/sdk' },
+  { name: 'Subscription SDK', href: '/sdk' }
 ];
 
 // =============================================================================
 // COMPONENTS
 // =============================================================================
 
-function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: number }) {
+function FeatureCard({
+  feature,
+  index
+}: {
+  feature: (typeof FEATURES)[0];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
   const MagicComponent = feature.magic;
@@ -521,10 +595,12 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
       transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
     >
-      <div className={cn(
-        "relative h-full overflow-hidden rounded-2xl border bg-card transition-all duration-300 cursor-pointer group",
-        isHovered && "border-primary/40  "
-      )}>
+      <div
+        className={cn(
+          'relative h-full overflow-hidden rounded-2xl border bg-card transition-all duration-300 cursor-pointer group',
+          isHovered && 'border-primary/40  '
+        )}
+      >
         <Spotlight
           className="from-primary/25 via-primary/10 to-transparent"
           size={280}
@@ -540,14 +616,20 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
         )}
         <div className="p-8 relative z-10">
           <motion.div
-            animate={shouldReduceMotion ? undefined : {
-              scale: isHovered ? 1.15 : 1,
-              rotate: isHovered ? 8 : 0,
-            }}
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    scale: isHovered ? 1.15 : 1,
+                    rotate: isHovered ? 8 : 0
+                  }
+            }
             transition={{ type: 'spring', duration: 0.35, bounce: 0.3 }}
             className={cn(
-              "flex size-14 items-center justify-center rounded-2xl transition-colors duration-300",
-              isHovered ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary"
+              'flex size-14 items-center justify-center rounded-2xl transition-colors duration-300',
+              isHovered
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-primary/10 text-primary'
             )}
           >
             <feature.icon className="size-7" />
@@ -555,7 +637,9 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
           <h3 className="mt-6 text-xl font-semibold group-hover:text-primary transition-colors duration-200">
             {feature.title}
           </h3>
-          <p className="mt-3 text-muted-foreground leading-relaxed">{feature.description}</p>
+          <p className="mt-3 text-muted-foreground leading-relaxed">
+            {feature.description}
+          </p>
 
           {MagicComponent && <MagicComponent />}
 
@@ -566,7 +650,9 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
             >
               {feature.linkText}
               <motion.span
-                animate={shouldReduceMotion ? undefined : { x: isHovered ? 4 : 0 }}
+                animate={
+                  shouldReduceMotion ? undefined : { x: isHovered ? 4 : 0 }
+                }
                 transition={{ duration: 0.2 }}
               >
                 <ArrowRightIcon className="size-4 group-hover/link:translate-x-1 transition-transform" />
@@ -579,7 +665,7 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
   );
 }
 
-function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
+function StatCard({ stat, index }: { stat: (typeof STATS)[0]; index: number }) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
 
@@ -591,28 +677,34 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
       transition={{ type: 'spring', duration: 0.25, bounce: 0.2 }}
       className="relative overflow-hidden"
     >
-      <div className={cn(
-        "rounded-2xl border bg-card p-6 text-center transition-all duration-300 relative overflow-hidden",
-        isHovered && "border-primary/40  "
-      )}>
+      <div
+        className={cn(
+          'rounded-2xl border bg-card p-6 text-center transition-all duration-300 relative overflow-hidden',
+          isHovered && 'border-primary/40  '
+        )}
+      >
         <Spotlight
           className="from-primary/20 via-primary/5 to-transparent"
           size={200}
         />
         <motion.div
-          animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.15 : 1 }}
+          animate={
+            shouldReduceMotion ? undefined : { scale: isHovered ? 1.15 : 1 }
+          }
           transition={{ type: 'spring', duration: 0.3, bounce: 0.3 }}
           className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary relative z-10"
         >
           {stat.value}
         </motion.div>
-        <div className="mt-2 text-sm text-muted-foreground relative z-10">{stat.label}</div>
+        <div className="mt-2 text-sm text-muted-foreground relative z-10">
+          {stat.label}
+        </div>
       </div>
     </motion.div>
   );
 }
 
-function RelatedPageLink({ page }: { page: typeof RELATED_PAGES[0] }) {
+function RelatedPageLink({ page }: { page: (typeof RELATED_PAGES)[0] }) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
 
@@ -627,8 +719,8 @@ function RelatedPageLink({ page }: { page: typeof RELATED_PAGES[0] }) {
       <Link
         href={page.href}
         className={cn(
-          "flex items-center gap-2 rounded-xl border bg-card px-5 py-3.5 text-sm font-medium transition-all duration-200",
-          isHovered && "border-primary/40 text-primary  "
+          'flex items-center gap-2 rounded-xl border bg-card px-5 py-3.5 text-sm font-medium transition-all duration-200',
+          isHovered && 'border-primary/40 text-primary  '
         )}
       >
         {page.name}
@@ -664,8 +756,14 @@ export function FallbackPaywallsFeatures(): React.JSX.Element {
 
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((feature, index) => (
-            <BlurFade key={feature.id} delay={0.1 + index * 0.05}>
-              <FeatureCard feature={feature} index={index} />
+            <BlurFade
+              key={feature.id}
+              delay={0.1 + index * 0.05}
+            >
+              <FeatureCard
+                feature={feature}
+                index={index}
+              />
             </BlurFade>
           ))}
         </div>
@@ -693,17 +791,26 @@ export function FallbackPaywallsFeatures(): React.JSX.Element {
               <div className="relative z-10 max-w-3xl mx-auto">
                 <motion.div
                   animate={shouldReduceMotion ? {} : { rotate: [0, 8, -8, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: 'easeInOut'
+                  }}
                   className="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary mb-6"
                 >
                   <ShieldCheckIcon className="size-6" />
                 </motion.div>
                 <blockquote className="text-xl md:text-2xl italic text-muted-foreground leading-relaxed">
-                  "Adapty SDK made integrating in-app purchases a walk in the park. With just a few lines of code, I was able to implement subscriptions seamlessly for both iOS and Android. The fallback system gives us peace of mind."
+                  "Adapty SDK made integrating in-app purchases a walk in the
+                  park. With just a few lines of code, I was able to implement
+                  subscriptions seamlessly for both iOS and Android. The
+                  fallback system gives us peace of mind."
                 </blockquote>
                 <div className="mt-8">
                   <p className="font-semibold text-lg">Magnus Olafsson</p>
-                  <p className="text-muted-foreground">Chief Technology Officer at Smitten</p>
+                  <p className="text-muted-foreground">
+                    Chief Technology Officer at Smitten
+                  </p>
                 </div>
               </div>
             </div>
@@ -718,8 +825,14 @@ export function FallbackPaywallsFeatures(): React.JSX.Element {
             </h2>
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {STATS.map((stat, index) => (
-                <BlurFade key={stat.label} delay={0.6 + index * 0.05}>
-                  <StatCard stat={stat} index={index} />
+                <BlurFade
+                  key={stat.label}
+                  delay={0.6 + index * 0.05}
+                >
+                  <StatCard
+                    stat={stat}
+                    index={index}
+                  />
                 </BlurFade>
               ))}
             </div>
@@ -732,7 +845,10 @@ export function FallbackPaywallsFeatures(): React.JSX.Element {
             <h2 className="text-xl font-semibold text-center">Learn more</h2>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               {RELATED_PAGES.map((page, index) => (
-                <BlurFade key={page.href} delay={0.8 + index * 0.05}>
+                <BlurFade
+                  key={page.href}
+                  delay={0.8 + index * 0.05}
+                >
                   <RelatedPageLink page={page} />
                 </BlurFade>
               ))}

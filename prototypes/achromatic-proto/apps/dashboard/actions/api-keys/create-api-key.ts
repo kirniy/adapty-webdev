@@ -1,6 +1,6 @@
 'use server';
-import { updateTag } from 'next/cache';
 
+import { updateTag } from 'next/cache';
 import { startOfDay } from 'date-fns';
 
 import { generateApiKey } from '@workspace/api-keys/generate-api-key';

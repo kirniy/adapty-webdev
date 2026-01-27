@@ -2,21 +2,21 @@
 
 import * as React from 'react';
 import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
   LayoutIcon,
-  TypeIcon,
   MousePointerClickIcon,
   PaletteIcon,
   SlidersIcon,
   TagIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronDownIcon,
-  type LucideIcon,
+  TypeIcon,
+  type LucideIcon
 } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
-import { cn } from '@workspace/ui/lib/utils';
 import { Badge } from '@workspace/ui/components/badge';
+import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
@@ -35,20 +35,20 @@ const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 const ANIMATION = {
   card: {
     duration: 0.35,
-    ease: EASE_OUT_QUART,
+    ease: EASE_OUT_QUART
   },
   icon: {
     duration: 0.4,
-    ease: EASE_OUT_EXPO,
+    ease: EASE_OUT_EXPO
   },
   expand: {
     duration: 0.3,
-    ease: EASE_OUT_QUART,
+    ease: EASE_OUT_QUART
   },
   stagger: {
     base: 0.05,
-    multiplier: 0.03,
-  },
+    multiplier: 0.03
+  }
 };
 
 // =============================================================================
@@ -60,13 +60,15 @@ const ICON_MAP: Record<string, LucideIcon> = {
   MousePointerClick: MousePointerClickIcon,
   Palette: PaletteIcon,
   Sliders: SlidersIcon,
-  Tag: TagIcon,
+  Tag: TagIcon
 };
 
-const CUSTOMIZATION_FEATURES = paywallBuilderContent.customization.items.map(item => ({
-  ...item,
-  icon: ICON_MAP[item.icon] || LayoutIcon
-}));
+const CUSTOMIZATION_FEATURES = paywallBuilderContent.customization.items.map(
+  (item) => ({
+    ...item,
+    icon: ICON_MAP[item.icon] || LayoutIcon
+  })
+);
 
 // =============================================================================
 // CONTENT
@@ -86,13 +88,17 @@ function CustomizationMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.3, 1]
+              }
+        }
         transition={{
           duration: 1.5,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <span>{CUSTOMIZATION_FEATURES.length} options</span>
@@ -121,7 +127,7 @@ function CustomizationCard({
   index,
   isHovered,
   onHover,
-  shouldReduceMotion,
+  shouldReduceMotion
 }: CustomizationCardProps) {
   const IconComponent = ICON_MAP[icon] || LayoutIcon;
 
@@ -133,12 +139,12 @@ function CustomizationCard({
         shouldReduceMotion
           ? undefined
           : {
-            y: isHovered ? -6 : 0,
-          }
+              y: isHovered ? -6 : 0
+            }
       }
       transition={{
         duration: ANIMATION.card.duration,
-        ease: ANIMATION.card.ease,
+        ease: ANIMATION.card.ease
       }}
       className="group relative h-full"
     >
@@ -152,9 +158,7 @@ function CustomizationCard({
       <div
         className={cn(
           'relative h-full rounded-2xl border bg-background/60 backdrop-blur-sm p-6 transition-all duration-200 overflow-hidden',
-          isHovered
-            ? 'border-foreground/20  '
-            : 'border-border/50'
+          isHovered ? 'border-foreground/20  ' : 'border-border/50'
         )}
       >
         <Spotlight
@@ -176,13 +180,13 @@ function CustomizationCard({
             shouldReduceMotion
               ? undefined
               : {
-                scale: isHovered ? 1.1 : 1,
-                rotate: isHovered ? 6 : 0,
-              }
+                  scale: isHovered ? 1.1 : 1,
+                  rotate: isHovered ? 6 : 0
+                }
           }
           transition={{
             duration: ANIMATION.icon.duration,
-            ease: ANIMATION.icon.ease,
+            ease: ANIMATION.icon.ease
           }}
           className={cn(
             'mb-4 flex size-12 items-center justify-center rounded-xl transition-colors duration-200 relative z-10',
@@ -191,11 +195,16 @@ function CustomizationCard({
               : 'bg-muted/50 text-foreground'
           )}
         >
-          <IconComponent className="size-6" strokeWidth={1.5} />
+          <IconComponent
+            className="size-6"
+            strokeWidth={1.5}
+          />
         </motion.div>
 
         {/* Content */}
-        <h3 className="mb-2 text-lg font-semibold tracking-tight relative z-10">{title}</h3>
+        <h3 className="mb-2 text-lg font-semibold tracking-tight relative z-10">
+          {title}
+        </h3>
         <p className="text-sm leading-relaxed text-muted-foreground relative z-10">
           {description}
         </p>
@@ -223,7 +232,10 @@ function GridCustomization() {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
       <div className="container relative z-10 py-20">
-        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+        <Spotlight
+          className="from-primary/15 via-primary/5 to-transparent"
+          size={350}
+        />
         <BlurFade delay={ANIMATION.stagger.base}>
           <SiteHeading
             title={customization.headline}
@@ -238,7 +250,10 @@ function GridCustomization() {
           {CUSTOMIZATION_FEATURES.map((item, index) => (
             <BlurFade
               key={item.id}
-              delay={ANIMATION.stagger.base * 2 + index * ANIMATION.stagger.multiplier}
+              delay={
+                ANIMATION.stagger.base * 2 +
+                index * ANIMATION.stagger.multiplier
+              }
             >
               <CustomizationCard
                 icon={item.icon.displayName || 'LayoutIcon'} // Pass icon name or default
@@ -264,7 +279,9 @@ function CarouselCustomization() {
   const shouldReduceMotion = useReducedMotion();
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [isHovered, setIsHovered] = React.useState(false);
-  const [hoveredCardIndex, setHoveredCardIndex] = React.useState<number | null>(null);
+  const [hoveredCardIndex, setHoveredCardIndex] = React.useState<number | null>(
+    null
+  );
 
   const itemsPerView = 3;
   const maxIndex = Math.max(0, CUSTOMIZATION_FEATURES.length - itemsPerView);
@@ -285,7 +302,10 @@ function CarouselCustomization() {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={700} />
       <div className="container relative z-10 py-20">
-        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+        <Spotlight
+          className="from-primary/15 via-primary/5 to-transparent"
+          size={350}
+        />
         <BlurFade delay={ANIMATION.stagger.base}>
           <SiteHeading
             title={customization.headline}
@@ -343,7 +363,7 @@ function CarouselCustomization() {
                 animate={{ x: `-${currentIndex * (100 / itemsPerView)}%` }}
                 transition={{
                   duration: 0.5,
-                  ease: EASE_OUT_QUART,
+                  ease: EASE_OUT_QUART
                 }}
                 className="flex gap-6"
               >
@@ -364,7 +384,7 @@ function CarouselCustomization() {
                       }
                       transition={{
                         duration: ANIMATION.card.duration,
-                        ease: ANIMATION.card.ease,
+                        ease: ANIMATION.card.ease
                       }}
                     >
                       <div
@@ -393,13 +413,13 @@ function CarouselCustomization() {
                             shouldReduceMotion
                               ? undefined
                               : {
-                                scale: isCardHovered ? 1.1 : 1,
-                                rotate: isCardHovered ? 6 : 0,
-                              }
+                                  scale: isCardHovered ? 1.1 : 1,
+                                  rotate: isCardHovered ? 6 : 0
+                                }
                           }
                           transition={{
                             duration: ANIMATION.icon.duration,
-                            ease: ANIMATION.icon.ease,
+                            ease: ANIMATION.icon.ease
                           }}
                           className={cn(
                             'mb-4 flex size-14 items-center justify-center rounded-xl transition-colors duration-200 relative z-10',
@@ -408,7 +428,10 @@ function CarouselCustomization() {
                               : 'bg-muted/50 text-foreground'
                           )}
                         >
-                          <IconComponent className="size-7" strokeWidth={1.5} />
+                          <IconComponent
+                            className="size-7"
+                            strokeWidth={1.5}
+                          />
                         </motion.div>
                         <h3 className="mb-2 text-lg font-semibold relative z-10">
                           {item.title}
@@ -435,7 +458,7 @@ function CarouselCustomization() {
                     backgroundColor:
                       currentIndex === index
                         ? 'hsl(var(--foreground))'
-                        : 'hsl(var(--muted-foreground) / 0.3)',
+                        : 'hsl(var(--muted-foreground) / 0.3)'
                   }}
                   transition={{ duration: 0.3, ease: EASE_OUT_QUART }}
                 />
@@ -466,7 +489,10 @@ function ExpandableCustomization() {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={900} />
       <div className="container relative z-10 py-20">
-        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+        <Spotlight
+          className="from-primary/15 via-primary/5 to-transparent"
+          size={350}
+        />
         <div className="grid items-start gap-12 lg:grid-cols-2">
           {/* Left: Sticky heading */}
           <div className="lg:sticky lg:top-24">
@@ -476,7 +502,8 @@ function ExpandableCustomization() {
                   {paywallBuilderContent.customization.headline}
                 </h2>
                 <p className="text-lg text-muted-foreground">
-                  {paywallBuilderContent.customization.description} Click each option to learn more.
+                  {paywallBuilderContent.customization.description} Click each
+                  option to learn more.
                 </p>
                 <div className="mt-2">
                   <CustomizationMagic />
@@ -497,7 +524,7 @@ function ExpandableCustomization() {
                         backgroundColor:
                           expandedIndex === index
                             ? 'hsl(var(--primary))'
-                            : 'hsl(var(--muted-foreground) / 0.2)',
+                            : 'hsl(var(--muted-foreground) / 0.2)'
                       }}
                       transition={{ duration: 0.3, ease: EASE_OUT_QUART }}
                     />
@@ -525,9 +552,15 @@ function ExpandableCustomization() {
                     layout={!shouldReduceMotion}
                     initial={false}
                     animate={{
-                      borderColor: isExpanded ? 'hsl(var(--primary) / 0.3)' : 'hsl(var(--border) / 0.5)',
-                      backgroundColor: isExpanded ? 'hsl(var(--background) / 0.8)' : 'hsl(var(--background) / 0.4)',
-                      boxShadow: isExpanded ? '0 10px 30px -10px hsl(var(--primary) / 0.1)' : 'none',
+                      borderColor: isExpanded
+                        ? 'hsl(var(--primary) / 0.3)'
+                        : 'hsl(var(--border) / 0.5)',
+                      backgroundColor: isExpanded
+                        ? 'hsl(var(--background) / 0.8)'
+                        : 'hsl(var(--background) / 0.4)',
+                      boxShadow: isExpanded
+                        ? '0 10px 30px -10px hsl(var(--primary) / 0.1)'
+                        : 'none'
                     }}
                     transition={{ duration: 0.2 }}
                     className={cn(
@@ -544,13 +577,13 @@ function ExpandableCustomization() {
                           shouldReduceMotion
                             ? undefined
                             : {
-                              scale: isExpanded ? 1.1 : 1,
-                              rotate: isExpanded ? 6 : 0,
-                            }
+                                scale: isExpanded ? 1.1 : 1,
+                                rotate: isExpanded ? 6 : 0
+                              }
                         }
                         transition={{
                           duration: ANIMATION.icon.duration,
-                          ease: ANIMATION.icon.ease,
+                          ease: ANIMATION.icon.ease
                         }}
                         className={cn(
                           'flex size-11 shrink-0 items-center justify-center rounded-xl transition-colors duration-200',
@@ -559,15 +592,28 @@ function ExpandableCustomization() {
                             : 'bg-muted/50 text-foreground'
                         )}
                       >
-                        <IconComponent className="size-5" strokeWidth={1.5} />
+                        <IconComponent
+                          className="size-5"
+                          strokeWidth={1.5}
+                        />
                       </motion.div>
 
                       {/* Text */}
                       <div className="min-w-0 flex-1">
-                        <h3 className={cn("font-semibold tracking-tight transition-colors", isExpanded && "text-primary")}>
+                        <h3
+                          className={cn(
+                            'font-semibold tracking-tight transition-colors',
+                            isExpanded && 'text-primary'
+                          )}
+                        >
                           {item.title}
                         </h3>
-                        <p className={cn("line-clamp-1 text-sm text-muted-foreground", isExpanded && "line-clamp-none")}>
+                        <p
+                          className={cn(
+                            'line-clamp-1 text-sm text-muted-foreground',
+                            isExpanded && 'line-clamp-none'
+                          )}
+                        >
                           {item.description}
                         </p>
                       </div>
@@ -577,11 +623,18 @@ function ExpandableCustomization() {
                         animate={{ rotate: isExpanded ? 180 : 0 }}
                         transition={{
                           duration: ANIMATION.expand.duration,
-                          ease: ANIMATION.expand.ease,
+                          ease: ANIMATION.expand.ease
                         }}
                         className="shrink-0"
                       >
-                        <ChevronDownIcon className={cn("size-5 transition-colors", isExpanded ? "text-primary" : "text-muted-foreground")} />
+                        <ChevronDownIcon
+                          className={cn(
+                            'size-5 transition-colors',
+                            isExpanded
+                              ? 'text-primary'
+                              : 'text-muted-foreground'
+                          )}
+                        />
                       </motion.div>
                     </motion.button>
 
@@ -606,7 +659,7 @@ function ExpandableCustomization() {
                           }
                           transition={{
                             duration: ANIMATION.expand.duration,
-                            ease: ANIMATION.expand.ease,
+                            ease: ANIMATION.expand.ease
                           }}
                         >
                           <div className="px-5 pb-5">
@@ -621,7 +674,10 @@ function ExpandableCustomization() {
                               </p>
                               {/* Imaginary interactive preview could go here */}
                               <div className="mt-4 flex gap-2">
-                                <Badge variant="outline" className="text-[10px] opacity-70">
+                                <Badge
+                                  variant="outline"
+                                  className="text-[10px] opacity-70"
+                                >
                                   Feature Preview
                                 </Badge>
                               </div>
@@ -654,7 +710,7 @@ type Props = {
 };
 
 export function PaywallBuilderCustomization({
-  variant = 'grid',
+  variant = 'grid'
 }: Props): React.JSX.Element {
   switch (variant) {
     case 'carousel':

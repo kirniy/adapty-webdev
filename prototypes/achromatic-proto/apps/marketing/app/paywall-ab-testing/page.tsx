@@ -2,31 +2,36 @@
 
 import * as React from 'react';
 
-// Components
-import { ABTestingHero, type ABTestingHeroVariant } from '~/components/sections/ab-testing-hero';
 import { ABTestingFeatures } from '~/components/sections/ab-testing-features';
+// Components
+import {
+  ABTestingHero,
+  type ABTestingHeroVariant
+} from '~/components/sections/ab-testing-hero';
 import { CaseStudiesGrid } from '~/components/sections/case-studies-grid';
-
 // Shared section switchers
 import {
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
-
 // Debug
 import {
-  useHeroVariant,
   useAbTestingFeaturesVariant,
+  useHeroVariant
 } from '~/lib/debug-context';
 
 // Map global Hero variant to ABTestingHero variant
 function mapHeroVariant(globalVariant: string): ABTestingHeroVariant {
   switch (globalVariant) {
-    case 'marketing': return 'centered';
-    case 'split': return 'split';
-    case 'pricing': return 'showcase';
-    default: return 'split';
+    case 'marketing':
+      return 'centered';
+    case 'split':
+      return 'split';
+    case 'pricing':
+      return 'showcase';
+    default:
+      return 'split';
   }
 }
 

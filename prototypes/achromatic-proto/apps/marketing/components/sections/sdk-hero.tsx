@@ -2,17 +2,27 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ShieldCheckIcon, RefreshCwIcon, ServerIcon, BellIcon, CheckIcon, AppleIcon, SmartphoneIcon, MonitorIcon, DownloadIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  AppleIcon,
+  BellIcon,
+  CheckIcon,
+  DownloadIcon,
+  MonitorIcon,
+  RefreshCwIcon,
+  ServerIcon,
+  ShieldCheckIcon,
+  SmartphoneIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { SectionBackground } from '~/components/fragments/section-background';
-import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 import { Spotlight } from '~/components/fragments/spotlight';
 
 // Magic animation: SDK installation progress
@@ -23,7 +33,7 @@ function SDKInstallMagic() {
   const steps = [
     { label: 'Installing SDK...', icon: DownloadIcon },
     { label: 'Configuring API key...', icon: ShieldCheckIcon },
-    { label: 'SDK ready!', icon: CheckIcon },
+    { label: 'SDK ready!', icon: CheckIcon }
   ];
 
   React.useEffect(() => {
@@ -60,13 +70,17 @@ function SDKInstallMagic() {
                 transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
                 className="size-4"
               >
-                {React.createElement(steps[step].icon, { className: 'size-4 text-primary' })}
+                {React.createElement(steps[step].icon, {
+                  className: 'size-4 text-primary'
+                })}
               </motion.div>
             )}
-            <span className={cn(
-              "text-xs font-medium",
-              step === 2 ? "text-primary" : "text-muted-foreground"
-            )}>
+            <span
+              className={cn(
+                'text-xs font-medium',
+                step === 2 ? 'text-primary' : 'text-muted-foreground'
+              )}
+            >
               {steps[step].label}
             </span>
           </motion.div>
@@ -85,7 +99,7 @@ function PlatformBadgesMagic() {
     { name: 'iOS', icon: AppleIcon },
     { name: 'Android', icon: SmartphoneIcon },
     { name: 'React Native', icon: MonitorIcon },
-    { name: 'Flutter', icon: SmartphoneIcon },
+    { name: 'Flutter', icon: SmartphoneIcon }
   ];
 
   React.useEffect(() => {
@@ -101,14 +115,18 @@ function PlatformBadgesMagic() {
       {platforms.map((platform, index) => (
         <motion.div
           key={platform.name}
-          animate={shouldReduceMotion ? undefined : {
-            scale: activePlatform === index ? 1.1 : 1,
-            opacity: activePlatform === index ? 1 : 0.5,
-          }}
+          animate={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  scale: activePlatform === index ? 1.1 : 1,
+                  opacity: activePlatform === index ? 1 : 0.5
+                }
+          }
           transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
           className={cn(
-            "flex items-center gap-1.5 rounded-full px-2 py-1 text-[10px] font-medium border bg-background/95 backdrop-blur-sm",
-            activePlatform === index && "border-primary/50"
+            'flex items-center gap-1.5 rounded-full px-2 py-1 text-[10px] font-medium border bg-background/95 backdrop-blur-sm',
+            activePlatform === index && 'border-primary/50'
           )}
         >
           <platform.icon className="size-3" />
@@ -129,7 +147,7 @@ const BENEFITS = [
   { icon: ShieldCheckIcon, text: 'Server-side receipt verification' },
   { icon: RefreshCwIcon, text: 'Real-time subscription state' },
   { icon: ServerIcon, text: 'No backend required' },
-  { icon: BellIcon, text: 'Subscription event webhooks' },
+  { icon: BellIcon, text: 'Subscription event webhooks' }
 ];
 
 // Code snippet showing SDK capabilities
@@ -150,7 +168,9 @@ Adapty.delegate = self`;
 
 export function SDKHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [isHovered, setIsHovered] = React.useState<'docs' | 'start' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'docs' | 'start' | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -161,7 +181,10 @@ export function SDKHero(): React.JSX.Element {
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
             <BlurFade delay={0.05}>
-              <Badge variant="outline" className="w-fit rounded-full px-4 py-1.5">
+              <Badge
+                variant="outline"
+                className="w-fit rounded-full px-4 py-1.5"
+              >
                 Subscriptions SDK
               </Badge>
             </BlurFade>
@@ -174,7 +197,9 @@ export function SDKHero(): React.JSX.Element {
 
             <BlurFade delay={0.15}>
               <p className="max-w-xl text-left text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Use Adapty SDK to quickly integrate in-app purchases and subscriptions with no server coding. We handle receipt verification, subscription state, events, and more.
+                Use Adapty SDK to quickly integrate in-app purchases and
+                subscriptions with no server coding. We handle receipt
+                verification, subscription state, events, and more.
               </p>
             </BlurFade>
 
@@ -182,7 +207,10 @@ export function SDKHero(): React.JSX.Element {
             <BlurFade delay={0.2}>
               <div className="grid grid-cols-2 gap-4">
                 {BENEFITS.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 text-sm text-muted-foreground"
+                  >
                     <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
                       <benefit.icon className="size-4 text-primary" />
                     </div>
@@ -198,7 +226,7 @@ export function SDKHero(): React.JSX.Element {
                   onMouseEnter={() => setIsHovered('docs')}
                   onMouseLeave={() => setIsHovered(null)}
                   animate={{
-                    y: shouldReduceMotion ? 0 : isHovered === 'docs' ? -2 : 0,
+                    y: shouldReduceMotion ? 0 : isHovered === 'docs' ? -2 : 0
                   }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -219,7 +247,7 @@ export function SDKHero(): React.JSX.Element {
                   onMouseEnter={() => setIsHovered('start')}
                   onMouseLeave={() => setIsHovered(null)}
                   animate={{
-                    y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0,
+                    y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0
                   }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -242,12 +270,25 @@ export function SDKHero(): React.JSX.Element {
           {/* Right: Code snippet */}
           <BlurFade delay={0.2}>
             <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-              transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.96 }
+              }
+              animate={
+                shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }
+              }
+              transition={{
+                delay: shouldReduceMotion ? 0 : 0.1,
+                duration: 0.35,
+                ease: [0.32, 0.72, 0, 1]
+              }}
               className="relative w-full overflow-hidden rounded-xl border bg-muted/30 "
             >
-              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <Spotlight
+                className="from-primary/10 via-primary/5 to-transparent"
+                size={350}
+              />
               <SDKInstallMagic />
               <PlatformBadgesMagic />
               <BorderBeam
@@ -265,30 +306,81 @@ export function SDKHero(): React.JSX.Element {
                   <div className="size-3 rounded-full bg-yellow-500/80" />
                   <div className="size-3 rounded-full bg-primary" />
                 </div>
-                <span className="ml-2 text-xs text-zinc-500">AdaptySubscriptions.swift</span>
+                <span className="ml-2 text-xs text-zinc-500">
+                  AdaptySubscriptions.swift
+                </span>
               </div>
               {/* Code content */}
               <pre className="overflow-x-auto p-4 text-sm leading-relaxed">
                 <code className="text-zinc-300">
                   {CODE_SNIPPET.split('\n').map((line, i) => (
-                    <div key={i} className="whitespace-pre">
+                    <div
+                      key={i}
+                      className="whitespace-pre"
+                    >
                       {line.startsWith('//') ? (
                         <span className="text-zinc-500">{line}</span>
-                      ) : line.includes('Adapty') || line.includes('profile') ? (
+                      ) : line.includes('Adapty') ||
+                        line.includes('profile') ? (
                         <>
-                          {line.split(/(Adapty\.\w+|profile\.\w+\[?"?\w*"?\]?\.?\w*|"[^"]*"|try|await|let|if|self)/).map((part, j) => {
-                            if (part.startsWith('Adapty.') || part.startsWith('profile.')) return <span key={j} className="text-purple-400">{part}</span>;
-                            if (part.startsWith('"')) return <span key={j} className="text-primary">{part}</span>;
-                            if (['try', 'await', 'let', 'if', 'self'].includes(part)) return <span key={j} className="text-pink-400">{part}</span>;
-                            return <span key={j}>{part}</span>;
-                          })}
+                          {line
+                            .split(
+                              /(Adapty\.\w+|profile\.\w+\[?"?\w*"?\]?\.?\w*|"[^"]*"|try|await|let|if|self)/
+                            )
+                            .map((part, j) => {
+                              if (
+                                part.startsWith('Adapty.') ||
+                                part.startsWith('profile.')
+                              )
+                                return (
+                                  <span
+                                    key={j}
+                                    className="text-purple-400"
+                                  >
+                                    {part}
+                                  </span>
+                                );
+                              if (part.startsWith('"'))
+                                return (
+                                  <span
+                                    key={j}
+                                    className="text-primary"
+                                  >
+                                    {part}
+                                  </span>
+                                );
+                              if (
+                                ['try', 'await', 'let', 'if', 'self'].includes(
+                                  part
+                                )
+                              )
+                                return (
+                                  <span
+                                    key={j}
+                                    className="text-pink-400"
+                                  >
+                                    {part}
+                                  </span>
+                                );
+                              return <span key={j}>{part}</span>;
+                            })}
                         </>
                       ) : line.includes('enablePremiumFeatures') ? (
                         <>
-                          {line.split(/(enablePremiumFeatures\(\))/).map((part, j) => {
-                            if (part === 'enablePremiumFeatures()') return <span key={j} className="text-blue-400">{part}</span>;
-                            return <span key={j}>{part}</span>;
-                          })}
+                          {line
+                            .split(/(enablePremiumFeatures\(\))/)
+                            .map((part, j) => {
+                              if (part === 'enablePremiumFeatures()')
+                                return (
+                                  <span
+                                    key={j}
+                                    className="text-blue-400"
+                                  >
+                                    {part}
+                                  </span>
+                                );
+                              return <span key={j}>{part}</span>;
+                            })}
                         </>
                       ) : (
                         line

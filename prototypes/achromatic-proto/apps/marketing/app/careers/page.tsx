@@ -2,10 +2,13 @@
 
 import * as React from 'react';
 
-import { useFeaturesVariant, useCtaVariant } from '~/lib/debug-context';
 import { CareersBenefits } from '~/components/sections/careers-benefits';
 import { CareersPositions } from '~/components/sections/careers-positions';
-import { TestimonialsSwitcher, FAQSwitcher } from '~/components/sections/section-switchers';
+import {
+  FAQSwitcher,
+  TestimonialsSwitcher
+} from '~/components/sections/section-switchers';
+import { useCtaVariant, useFeaturesVariant } from '~/lib/debug-context';
 
 // Careers page: Benefits and open positions
 export default function CareersPage(): React.JSX.Element {

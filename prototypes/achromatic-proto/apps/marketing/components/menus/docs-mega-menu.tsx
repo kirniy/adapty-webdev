@@ -1,18 +1,18 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRightIcon, ExternalLinkIcon, SearchIcon } from 'lucide-react';
 
 import { Button } from '@workspace/ui/components/button';
 import { Separator } from '@workspace/ui/components/separator';
 
 import {
-  DOCS_SIDEBAR,
   DOCS_MOBILE_SDKS,
-  DOCS_WEB_PAYMENTS,
+  DOCS_SIDEBAR,
   DOCS_WEB_API,
+  DOCS_WEB_PAYMENTS,
   type MenuItem
 } from '~/lib/menu-data';
 
@@ -139,7 +139,10 @@ export function DocsMegaMenu(): React.JSX.Element {
           </h4>
           <div className="grid grid-cols-4 gap-3">
             {DOCS_MOBILE_SDKS.map((sdk) => (
-              <SdkCard key={sdk.title} item={sdk} />
+              <SdkCard
+                key={sdk.title}
+                item={sdk}
+              />
             ))}
           </div>
         </div>
@@ -155,7 +158,10 @@ export function DocsMegaMenu(): React.JSX.Element {
             </h4>
             <div className="flex flex-col gap-2">
               {DOCS_WEB_PAYMENTS.map((item) => (
-                <SdkCard key={item.title} item={item} />
+                <SdkCard
+                  key={item.title}
+                  item={item}
+                />
               ))}
             </div>
           </div>
@@ -167,7 +173,10 @@ export function DocsMegaMenu(): React.JSX.Element {
             </h4>
             <div className="flex flex-col gap-2">
               {DOCS_WEB_API.map((item) => (
-                <SdkCard key={item.title} item={item} />
+                <SdkCard
+                  key={item.title}
+                  item={item}
+                />
               ))}
             </div>
           </div>

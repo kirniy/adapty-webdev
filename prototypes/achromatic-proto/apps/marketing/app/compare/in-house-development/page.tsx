@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useFeaturesVariant } from '~/lib/debug-context';
 import { CompareInHouse } from '~/components/sections/compare-in-house';
 import {
-  LogosSwitcher,
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  LogosSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant } from '~/lib/debug-context';
 
 // Adapty vs In-House Development comparison page
 export default function CompareInHousePage(): React.JSX.Element {

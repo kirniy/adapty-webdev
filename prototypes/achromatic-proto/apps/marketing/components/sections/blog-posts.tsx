@@ -35,14 +35,18 @@ function ArticleCountMagic({ count }: { count: number }) {
     >
       <motion.div
         className="size-2 rounded-full bg-green-500"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-          opacity: [1, 0.7, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.3, 1],
+                opacity: [1, 0.7, 1]
+              }
+        }
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <span>{count} articles</span>
@@ -50,7 +54,13 @@ function ArticleCountMagic({ count }: { count: number }) {
   );
 }
 
-function BlogCard({ post, index }: { post: typeof allPosts[0]; index: number }) {
+function BlogCard({
+  post,
+  index
+}: {
+  post: (typeof allPosts)[0];
+  index: number;
+}) {
   const [isHovered, setIsHovered] = React.useState(false);
   const shouldReduceMotion = useReducedMotion();
 
@@ -73,11 +83,19 @@ function BlogCard({ post, index }: { post: typeof allPosts[0]; index: number }) 
               colorTo="hsl(var(--primary)/0)"
             />
           )}
-          <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={150} />
+          <Spotlight
+            className="from-primary/10 via-primary/5 to-transparent"
+            size={150}
+          />
           {/* Category and Date */}
           <div className="mb-3 flex items-center justify-between relative z-10">
-            <span className="text-xs font-medium text-primary">{post.category}</span>
-            <time dateTime={post.published} className="text-xs text-muted-foreground">
+            <span className="text-xs font-medium text-primary">
+              {post.category}
+            </span>
+            <time
+              dateTime={post.published}
+              className="text-xs text-muted-foreground"
+            >
               {format(post.published, 'MMM d, yyyy')}
             </time>
           </div>
@@ -96,17 +114,26 @@ function BlogCard({ post, index }: { post: typeof allPosts[0]; index: number }) 
           <div className="flex items-center justify-between pt-4 border-t border-border/50 relative z-10">
             <div className="flex items-center gap-2">
               <Avatar className="size-6">
-                <AvatarImage src={post.author?.avatar} alt={post.author?.name ?? ''} />
+                <AvatarImage
+                  src={post.author?.avatar}
+                  alt={post.author?.name ?? ''}
+                />
                 <AvatarFallback className="text-[9px]">
                   {getInitials(post.author?.name ?? '')}
                 </AvatarFallback>
               </Avatar>
-              <span className="text-xs text-muted-foreground">{post.author?.name ?? ''}</span>
+              <span className="text-xs text-muted-foreground">
+                {post.author?.name ?? ''}
+              </span>
             </div>
 
             <motion.div
               className="text-muted-foreground"
-              animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0, opacity: isHovered ? 1 : 0.5 }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : { x: isHovered ? 3 : 0, opacity: isHovered ? 1 : 0.5 }
+              }
               transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
             >
               <ArrowRightIcon className="size-4" />
@@ -128,12 +155,18 @@ export function BlogPosts(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={700} />
       <div className="container py-16 lg:py-24 relative z-10">
-        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+        <Spotlight
+          className="from-primary/15 via-primary/5 to-transparent"
+          size={350}
+        />
         {/* Section Header */}
         <BlurFade className="mb-12">
           <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
             <div>
-              <Badge variant="outline" className="mb-4 rounded-full">
+              <Badge
+                variant="outline"
+                className="mb-4 rounded-full"
+              >
                 Blog
               </Badge>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">
@@ -156,7 +189,11 @@ export function BlogPosts(): React.JSX.Element {
         {/* Posts Grid */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sortedPosts.map((post, index) => (
-            <BlogCard key={post.slug} post={post} index={index} />
+            <BlogCard
+              key={post.slug}
+              post={post}
+              index={index}
+            />
           ))}
         </div>
       </div>

@@ -2,28 +2,36 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, LayoutGridIcon, SparklesIcon, SearchIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowRightIcon,
+  LayoutGridIcon,
+  SearchIcon,
+  SparklesIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { SectionBackground } from '~/components/fragments/section-background';
-import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { Spotlight } from '~/components/fragments/spotlight';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // Paywall gallery magic animation
 function PaywallGalleryMagic() {
   const shouldReduceMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = React.useState(0);
   const paywalls = [
-    { style: 'bg-gradient-to-br from-purple-500 to-pink-500', label: 'Premium' },
+    {
+      style: 'bg-gradient-to-br from-purple-500 to-pink-500',
+      label: 'Premium'
+    },
     { style: 'bg-gradient-to-br from-blue-500 to-cyan-500', label: 'Pro' },
     { style: 'bg-gradient-to-br from-amber-500 to-orange-500', label: 'Trial' },
-    { style: 'bg-gradient-to-br from-emerald-500 to-teal-500', label: 'Annual' },
+    { style: 'bg-gradient-to-br from-emerald-500 to-teal-500', label: 'Annual' }
   ];
 
   React.useEffect(() => {
@@ -38,7 +46,10 @@ function PaywallGalleryMagic() {
     return (
       <div className="grid grid-cols-2 gap-2">
         {paywalls.map((p, i) => (
-          <div key={i} className={cn('h-16 rounded-lg', p.style)} />
+          <div
+            key={i}
+            className={cn('h-16 rounded-lg', p.style)}
+          />
         ))}
       </div>
     );
@@ -53,7 +64,7 @@ function PaywallGalleryMagic() {
             key={i}
             animate={{
               scale: i === activeIndex ? 1.05 : 0.95,
-              opacity: i === activeIndex ? 1 : 0.6,
+              opacity: i === activeIndex ? 1 : 0.6
             }}
             transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
             className={cn(
@@ -134,7 +145,10 @@ function LibraryCounterMagic() {
     >
       <LayoutGridIcon className="size-4 text-primary" />
       <span className="text-sm font-medium">
-        <span className="text-primary font-bold">{count.toLocaleString()}+</span> paywalls to explore
+        <span className="text-primary font-bold">
+          {count.toLocaleString()}+
+        </span>{' '}
+        paywalls to explore
       </span>
     </motion.div>
   );
@@ -142,7 +156,9 @@ function LibraryCounterMagic() {
 
 export function PaywallLibraryHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [isHovered, setIsHovered] = React.useState<'try' | 'browse' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'try' | 'browse' | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -169,7 +185,10 @@ export function PaywallLibraryHero(): React.JSX.Element {
               whileHover={shouldReduceMotion ? undefined : { y: -4 }}
               className="p-6 rounded-2xl border bg-background/50 backdrop-blur-sm max-w-xs mx-auto relative overflow-hidden"
             >
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={280}
+              />
               <div className="relative">
                 <div className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">
                   Paywall examples
@@ -189,7 +208,7 @@ export function PaywallLibraryHero(): React.JSX.Element {
                 onMouseEnter={() => setIsHovered('try')}
                 onMouseLeave={() => setIsHovered(null)}
                 animate={{
-                  y: shouldReduceMotion ? 0 : isHovered === 'try' ? -2 : 0,
+                  y: shouldReduceMotion ? 0 : isHovered === 'try' ? -2 : 0
                 }}
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 className="relative"
@@ -205,7 +224,11 @@ export function PaywallLibraryHero(): React.JSX.Element {
                 >
                   Try Adapty for free
                   <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: isHovered === 'try' ? 3 : 0 }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : { x: isHovered === 'try' ? 3 : 0 }
+                    }
                     transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
                   >
                     <ArrowRightIcon className="ml-2 size-4" />
@@ -225,7 +248,7 @@ export function PaywallLibraryHero(): React.JSX.Element {
                 onMouseEnter={() => setIsHovered('browse')}
                 onMouseLeave={() => setIsHovered(null)}
                 animate={{
-                  y: shouldReduceMotion ? 0 : isHovered === 'browse' ? -2 : 0,
+                  y: shouldReduceMotion ? 0 : isHovered === 'browse' ? -2 : 0
                 }}
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               >

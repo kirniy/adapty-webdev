@@ -2,18 +2,23 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, TrophyIcon, TrendingUpIcon, SparklesIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowRightIcon,
+  SparklesIcon,
+  TrendingUpIcon,
+  TrophyIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { SectionBackground } from '~/components/fragments/section-background';
-import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { Spotlight } from '~/components/fragments/spotlight';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // Success stories magic animation
 function SuccessStoriesMagic() {
@@ -23,7 +28,7 @@ function SuccessStoriesMagic() {
     { company: 'SocialKit', metric: '2x', label: 'Revenue growth' },
     { company: 'HubX', metric: '+35%', label: 'Conversion rate' },
     { company: 'AppNation', metric: '300+', label: 'Paywalls tested' },
-    { company: 'Bickster', metric: '4 years', label: 'With Adapty' },
+    { company: 'Bickster', metric: '4 years', label: 'With Adapty' }
   ];
 
   React.useEffect(() => {
@@ -66,12 +71,18 @@ function SuccessStoriesMagic() {
           transition={{ duration: 0.3 }}
           className="rounded-lg border bg-background/50 p-4 text-center"
         >
-          <div className="text-xs text-muted-foreground mb-1">{stories[activeStory]?.company}</div>
+          <div className="text-xs text-muted-foreground mb-1">
+            {stories[activeStory]?.company}
+          </div>
           <div className="flex items-center justify-center gap-2">
             <TrendingUpIcon className="size-5 text-emerald-500" />
-            <span className="text-2xl font-bold text-primary">{stories[activeStory]?.metric}</span>
+            <span className="text-2xl font-bold text-primary">
+              {stories[activeStory]?.metric}
+            </span>
           </div>
-          <div className="text-sm text-muted-foreground mt-1">{stories[activeStory]?.label}</div>
+          <div className="text-sm text-muted-foreground mt-1">
+            {stories[activeStory]?.label}
+          </div>
         </motion.div>
       </AnimatePresence>
 
@@ -82,7 +93,7 @@ function SuccessStoriesMagic() {
             key={i}
             animate={{
               scale: i === activeStory ? 1.2 : 1,
-              opacity: i === activeStory ? 1 : 0.4,
+              opacity: i === activeStory ? 1 : 0.4
             }}
             className="size-1.5 rounded-full bg-primary"
           />
@@ -128,7 +139,8 @@ function StoriesCountBadge() {
     >
       <SparklesIcon className="size-4 text-emerald-500" />
       <span className="text-sm font-medium">
-        <span className="text-emerald-600 font-bold">{count}+</span> success stories
+        <span className="text-emerald-600 font-bold">{count}+</span> success
+        stories
       </span>
     </motion.div>
   );
@@ -163,7 +175,10 @@ export function CaseStudiesHero(): React.JSX.Element {
               whileHover={shouldReduceMotion ? undefined : { y: -4 }}
               className="p-6 rounded-2xl border bg-background/50 backdrop-blur-sm max-w-xs mx-auto relative overflow-hidden"
             >
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={280}
+              />
               <div className="relative">
                 <div className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">
                   Success stories
@@ -182,7 +197,7 @@ export function CaseStudiesHero(): React.JSX.Element {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               animate={{
-                y: shouldReduceMotion ? 0 : isHovered ? -2 : 0,
+                y: shouldReduceMotion ? 0 : isHovered ? -2 : 0
               }}
               transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               className="inline-block relative"
@@ -196,7 +211,9 @@ export function CaseStudiesHero(): React.JSX.Element {
               >
                 Schedule A Demo
                 <motion.span
-                  animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }}
+                  animate={
+                    shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }
+                  }
                   transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
                 >
                   <ArrowRightIcon className="ml-2 size-4" />

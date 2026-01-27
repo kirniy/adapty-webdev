@@ -19,10 +19,10 @@
 export const EASE_OUT = {
   quad: [0.25, 0.46, 0.45, 0.94] as const,
   cubic: [0.215, 0.61, 0.355, 1] as const,
-  quart: [0.165, 0.84, 0.44, 1] as const,  // RECOMMENDED for most enter animations
+  quart: [0.165, 0.84, 0.44, 1] as const, // RECOMMENDED for most enter animations
   quint: [0.23, 1, 0.32, 1] as const,
   expo: [0.19, 1, 0.22, 1] as const,
-  circ: [0.075, 0.82, 0.165, 1] as const,
+  circ: [0.075, 0.82, 0.165, 1] as const
 };
 
 /**
@@ -31,11 +31,11 @@ export const EASE_OUT = {
  */
 export const EASE_IN_OUT = {
   quad: [0.455, 0.03, 0.515, 0.955] as const,
-  cubic: [0.645, 0.045, 0.355, 1] as const,  // RECOMMENDED for layout shifts
+  cubic: [0.645, 0.045, 0.355, 1] as const, // RECOMMENDED for layout shifts
   quart: [0.77, 0, 0.175, 1] as const,
   quint: [0.86, 0, 0.07, 1] as const,
   expo: [1, 0, 0, 1] as const,
-  circ: [0.785, 0.135, 0.15, 0.86] as const,
+  circ: [0.785, 0.135, 0.15, 0.86] as const
 };
 
 // Shorthand aliases for the most commonly used easings
@@ -66,7 +66,7 @@ export const DURATION = {
   /** 300ms - Page transitions */
   page: 0.3,
   /** 500ms - Marketing hero animations */
-  marketing: 0.5,
+  marketing: 0.5
 } as const;
 
 // ============================================================
@@ -83,7 +83,7 @@ export const SCALE = {
   /** Press feedback (buttons) */
   press: { from: 1, to: 0.97 },
   /** Hover lift (cards) */
-  hover: { from: 1, to: 1.02 },
+  hover: { from: 1, to: 1.02 }
 } as const;
 
 // ============================================================
@@ -98,7 +98,7 @@ export const fadeIn = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0 },
-  transition: { duration: DURATION.normal, ease: EASE_OUT_QUART },
+  transition: { duration: DURATION.normal, ease: EASE_OUT_QUART }
 };
 
 /**
@@ -109,7 +109,7 @@ export const slideUp = {
   initial: { opacity: 0, y: 20, scale: SCALE.medium.from },
   animate: { opacity: 1, y: 0, scale: 1 },
   exit: { opacity: 0, y: -10, scale: SCALE.medium.from },
-  transition: { duration: DURATION.normal, ease: EASE_OUT_QUART },
+  transition: { duration: DURATION.normal, ease: EASE_OUT_QUART }
 };
 
 /**
@@ -120,7 +120,7 @@ export const slideDown = {
   initial: { opacity: 0, y: -10, scale: SCALE.small.from },
   animate: { opacity: 1, y: 0, scale: 1 },
   exit: { opacity: 0, y: -10, scale: SCALE.small.from },
-  transition: { duration: DURATION.fast, ease: EASE_OUT_QUART },
+  transition: { duration: DURATION.fast, ease: EASE_OUT_QUART }
 };
 
 /**
@@ -131,7 +131,7 @@ export const scaleIn = {
   initial: { opacity: 0, scale: SCALE.large.from },
   animate: { opacity: 1, scale: 1 },
   exit: { opacity: 0, scale: SCALE.large.from },
-  transition: { duration: DURATION.slow, ease: EASE_OUT_QUART },
+  transition: { duration: DURATION.slow, ease: EASE_OUT_QUART }
 };
 
 /**
@@ -141,7 +141,7 @@ export const scaleIn = {
 export const heroEntrance = {
   initial: { opacity: 0, y: 30, scale: 0.96 },
   animate: { opacity: 1, y: 0, scale: 1 },
-  transition: { duration: DURATION.marketing, ease: EASE_OUT_QUART },
+  transition: { duration: DURATION.marketing, ease: EASE_OUT_QUART }
 };
 
 // ============================================================
@@ -155,7 +155,7 @@ export const heroEntrance = {
  * @param increment - Delay increment per item (default: 0.05s)
  */
 export const stagger = (index: number, baseDelay = 0.05, increment = 0.05) => ({
-  transition: { delay: baseDelay + index * increment },
+  transition: { delay: baseDelay + index * increment }
 });
 
 /**
@@ -166,9 +166,9 @@ export const staggerContainer = {
   animate: {
     transition: {
       staggerChildren: 0.05,
-      delayChildren: 0.1,
-    },
-  },
+      delayChildren: 0.1
+    }
+  }
 };
 
 /**
@@ -177,7 +177,7 @@ export const staggerContainer = {
  */
 export const staggerChild = {
   initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
+  animate: { opacity: 1, y: 0 }
 };
 
 // ============================================================
@@ -190,13 +190,13 @@ export const staggerChild = {
  */
 export const SPRING = {
   /** Subtle spring for small movements */
-  gentle: { type: "spring" as const, duration: 0.4, bounce: 0.15 },
+  gentle: { type: 'spring' as const, duration: 0.4, bounce: 0.15 },
   /** Standard spring for most UI */
-  default: { type: "spring" as const, duration: 0.5, bounce: 0.2 },
+  default: { type: 'spring' as const, duration: 0.5, bounce: 0.2 },
   /** Bouncy spring for playful interactions */
-  bouncy: { type: "spring" as const, duration: 0.6, bounce: 0.3 },
+  bouncy: { type: 'spring' as const, duration: 0.6, bounce: 0.3 },
   /** Stiff spring for snappy feedback */
-  stiff: { type: "spring" as const, duration: 0.3, bounce: 0.1 },
+  stiff: { type: 'spring' as const, duration: 0.3, bounce: 0.1 }
 } as const;
 
 // ============================================================
@@ -208,9 +208,9 @@ export const SPRING = {
  * Use: Clickable cards, feature cards
  */
 export const cardHover = {
-  rest: { scale: 1, boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1)" },
-  hover: { scale: 1.02, boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" },
-  tap: { scale: 0.98 },
+  rest: { scale: 1, boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1)' },
+  hover: { scale: 1.02, boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' },
+  tap: { scale: 0.98 }
 };
 
 /**
@@ -220,7 +220,7 @@ export const cardHover = {
 export const buttonInteraction = {
   rest: { scale: 1 },
   hover: { scale: 1.02 },
-  tap: { scale: 0.97 },
+  tap: { scale: 0.97 }
 };
 
 /**
@@ -229,7 +229,7 @@ export const buttonInteraction = {
  */
 export const iconHover = {
   rest: { rotate: 0 },
-  hover: { rotate: 5 },
+  hover: { rotate: 5 }
 };
 
 // ============================================================
@@ -253,7 +253,7 @@ export const getReducedMotionProps = (
       initial: { opacity: 0 },
       animate: { opacity: 1 },
       exit: { opacity: 0 },
-      transition: { duration: 0 },
+      transition: { duration: 0 }
     };
   }
   return fullAnimation;
@@ -269,17 +269,17 @@ export const getReducedMotionProps = (
  */
 export const TRANSITION_CLASSES = {
   /** Default transition for hover states */
-  default: "transition-all duration-150 ease-out",
+  default: 'transition-all duration-150 ease-out',
   /** Fast transition for micro-interactions */
-  fast: "transition-all duration-100 ease-out",
+  fast: 'transition-all duration-100 ease-out',
   /** Slow transition for larger elements */
-  slow: "transition-all duration-300 ease-out",
+  slow: 'transition-all duration-300 ease-out',
   /** Color-only transition */
-  color: "transition-colors duration-150 ease",
+  color: 'transition-colors duration-150 ease',
   /** Transform-only transition */
-  transform: "transition-transform duration-150 ease-out",
+  transform: 'transition-transform duration-150 ease-out',
   /** Opacity-only transition */
-  opacity: "transition-opacity duration-150 ease-out",
+  opacity: 'transition-opacity duration-150 ease-out'
 } as const;
 
 // ============================================================

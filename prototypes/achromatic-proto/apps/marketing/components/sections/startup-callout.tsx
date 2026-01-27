@@ -31,13 +31,17 @@ function StartupDiscountMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.3, 1]
+              }
+        }
         transition={{
           duration: 1.5,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <span>Special offer</span>
@@ -54,8 +58,17 @@ export function StartupCallout(): React.JSX.Element {
       <div className="container py-12">
         <BlurFade>
           <div className="mx-auto max-w-2xl rounded-xl border bg-muted/30 p-8 text-center relative overflow-hidden">
-            <BorderBeam size={200} duration={10} borderWidth={1.5} colorFrom="hsl(var(--primary))" colorTo="rgb(34 197 94)" />
-            <Spotlight className="from-green-500/15 via-green-500/5 to-transparent" size={300} />
+            <BorderBeam
+              size={200}
+              duration={10}
+              borderWidth={1.5}
+              colorFrom="hsl(var(--primary))"
+              colorTo="rgb(34 197 94)"
+            />
+            <Spotlight
+              className="from-green-500/15 via-green-500/5 to-transparent"
+              size={300}
+            />
             <div className="relative">
               <StartupDiscountMagic />
             </div>
@@ -69,7 +82,7 @@ export function StartupCallout(): React.JSX.Element {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               animate={{
-                y: shouldReduceMotion ? 0 : isHovered ? -2 : 0,
+                y: shouldReduceMotion ? 0 : isHovered ? -2 : 0
               }}
               transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               className="inline-block"
@@ -85,7 +98,9 @@ export function StartupCallout(): React.JSX.Element {
               >
                 Apply for discount
                 <motion.span
-                  animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }}
+                  animate={
+                    shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }
+                  }
                   transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
                 >
                   <ArrowRightIcon className="ml-2 size-4" />

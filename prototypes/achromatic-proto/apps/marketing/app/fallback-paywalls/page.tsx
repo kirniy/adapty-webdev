@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
-import { FallbackPaywallsHero } from '~/components/sections/fallback-paywalls-hero';
 import { FallbackPaywallsFeatures } from '~/components/sections/fallback-paywalls-features';
+import { FallbackPaywallsHero } from '~/components/sections/fallback-paywalls-hero';
 import {
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant, useHeroVariant } from '~/lib/debug-context';
 
 // Fallback Paywalls page: Offline paywall reliability
 export default function FallbackPaywallsPage(): React.JSX.Element {

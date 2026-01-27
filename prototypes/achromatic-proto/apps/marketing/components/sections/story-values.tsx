@@ -1,22 +1,41 @@
 'use client';
 
 import * as React from 'react';
+import { HeartIcon, RocketIcon, SparklesIcon, UsersIcon } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
-import { HeartIcon, RocketIcon, UsersIcon, SparklesIcon } from 'lucide-react';
 
+import { Card, CardContent } from '@workspace/ui/components/card';
+import { cn } from '@workspace/ui/lib/utils';
+
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { FlickeringGrid } from '~/components/fragments/flickering-grid';
 import { GridSection } from '~/components/fragments/grid-section';
-import { BlurFade } from '~/components/fragments/blur-fade';
-import { Card, CardContent } from '@workspace/ui/components/card';
 import { Spotlight } from '~/components/fragments/spotlight';
-import { cn } from '@workspace/ui/lib/utils';
 
 const VALUES = [
-  { icon: HeartIcon, title: 'Developer-first', description: 'Everything we build starts with developer experience in mind.' },
-  { icon: RocketIcon, title: 'Ship fast', description: 'We release updates every two weeks to stay ahead of the market.' },
-  { icon: UsersIcon, title: 'Customer success', description: 'Your growth is our growth - we succeed when you succeed.' },
-  { icon: SparklesIcon, title: 'Innovation', description: 'We invest heavily in R&D to bring you the latest in AI and analytics.' },
+  {
+    icon: HeartIcon,
+    title: 'Developer-first',
+    description: 'Everything we build starts with developer experience in mind.'
+  },
+  {
+    icon: RocketIcon,
+    title: 'Ship fast',
+    description:
+      'We release updates every two weeks to stay ahead of the market.'
+  },
+  {
+    icon: UsersIcon,
+    title: 'Customer success',
+    description: 'Your growth is our growth - we succeed when you succeed.'
+  },
+  {
+    icon: SparklesIcon,
+    title: 'Innovation',
+    description:
+      'We invest heavily in R&D to bring you the latest in AI and analytics.'
+  }
 ];
 
 // Magic animation: Core values badge
@@ -31,13 +50,17 @@ function CoreValuesMagic() {
       transition={{ duration: 0.3, delay: 0.15 }}
     >
       <motion.div
-        animate={shouldReduceMotion ? {} : {
-          rotate: [0, 360],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                rotate: [0, 360]
+              }
+        }
         transition={{
           duration: 20,
           repeat: Infinity,
-          ease: 'linear',
+          ease: 'linear'
         }}
       >
         <SparklesIcon className="size-3.5" />
@@ -59,7 +82,8 @@ export function StoryValues(): React.JSX.Element {
             <CoreValuesMagic />
           </div>
           <p className="mx-auto text-center text-2xl font-semibold sm:text-3xl md:text-4xl relative z-10">
-            "We believe every developer deserves access to world-class subscription tools."
+            "We believe every developer deserves access to world-class
+            subscription tools."
           </p>
         </BlurFade>
 
@@ -69,20 +93,29 @@ export function StoryValues(): React.JSX.Element {
             const Icon = value.icon;
             const isHovered = hoveredValue === index;
             return (
-              <BlurFade key={value.title} delay={0.1 + index * 0.05}>
+              <BlurFade
+                key={value.title}
+                delay={0.1 + index * 0.05}
+              >
                 <motion.div
                   onMouseEnter={() => setHoveredValue(index)}
                   onMouseLeave={() => setHoveredValue(null)}
-                  animate={shouldReduceMotion ? undefined : {
-                    y: isHovered ? -4 : 0,
-                    scale: isHovered ? 1.02 : 1,
-                  }}
+                  animate={
+                    shouldReduceMotion
+                      ? undefined
+                      : {
+                          y: isHovered ? -4 : 0,
+                          scale: isHovered ? 1.02 : 1
+                        }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <Card className={cn(
-                    "h-full text-center relative overflow-hidden transition-all duration-200",
-                    isHovered && "border-primary/50 "
-                  )}>
+                  <Card
+                    className={cn(
+                      'h-full text-center relative overflow-hidden transition-all duration-200',
+                      isHovered && 'border-primary/50 '
+                    )}
+                  >
                     {isHovered && (
                       <BorderBeam
                         size={100}
@@ -92,25 +125,40 @@ export function StoryValues(): React.JSX.Element {
                         colorTo="hsl(var(--primary)/0)"
                       />
                     )}
-                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={150} />
+                    <Spotlight
+                      className="from-primary/15 via-primary/5 to-transparent"
+                      size={150}
+                    />
                     <CardContent className="p-6 relative z-10">
                       <motion.div
                         className="flex size-10 items-center justify-center rounded-lg bg-primary/10 mx-auto mb-3"
-                        animate={shouldReduceMotion ? undefined : {
-                          scale: isHovered ? 1.15 : 1,
-                          rotate: isHovered ? 8 : 0,
+                        animate={
+                          shouldReduceMotion
+                            ? undefined
+                            : {
+                                scale: isHovered ? 1.15 : 1,
+                                rotate: isHovered ? 8 : 0
+                              }
+                        }
+                        transition={{
+                          type: 'spring',
+                          duration: 0.2,
+                          bounce: 0.3
                         }}
-                        transition={{ type: 'spring', duration: 0.2, bounce: 0.3 }}
                       >
                         <Icon className="size-5 text-primary" />
                       </motion.div>
-                      <h3 className={cn(
-                        "font-semibold mb-2 transition-colors duration-150",
-                        isHovered && "text-primary"
-                      )}>
+                      <h3
+                        className={cn(
+                          'font-semibold mb-2 transition-colors duration-150',
+                          isHovered && 'text-primary'
+                        )}
+                      >
                         {value.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground">{value.description}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {value.description}
+                      </p>
                     </CardContent>
                   </Card>
                 </motion.div>

@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import { easeOutQuart, lerp } from "./animations";
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import { easeOutQuart, lerp } from './animations';
 
 // ============================================================
 // INTERSECTION OBSERVER HOOK
@@ -26,7 +27,7 @@ interface UseInViewOptions {
 export function useInView<T extends HTMLElement = HTMLDivElement>(
   options: UseInViewOptions = {}
 ): [React.RefObject<T | null>, boolean] {
-  const { threshold = 0.1, rootMargin = "0px", triggerOnce = true } = options;
+  const { threshold = 0.1, rootMargin = '0px', triggerOnce = true } = options;
   const ref = useRef<T>(null);
   const [isInView, setIsInView] = useState(false);
 
@@ -90,8 +91,8 @@ export function useCountUp({
   duration = 2000,
   decimals = 0,
   enabled = true,
-  prefix = "",
-  suffix = "",
+  prefix = '',
+  suffix = ''
 }: UseCountUpOptions): string {
   const [value, setValue] = useState(from);
   const startTimeRef = useRef<number | null>(null);
@@ -147,7 +148,7 @@ export function useCountUp({
  */
 export function useScrollProgress<T extends HTMLElement = HTMLDivElement>(): [
   React.RefObject<T | null>,
-  number,
+  number
 ] {
   const ref = useRef<T>(null);
   const [progress, setProgress] = useState(0);
@@ -175,12 +176,12 @@ export function useScrollProgress<T extends HTMLElement = HTMLDivElement>(): [
     };
 
     updateProgress();
-    window.addEventListener("scroll", updateProgress, { passive: true });
-    window.addEventListener("resize", updateProgress);
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
 
     return () => {
-      window.removeEventListener("scroll", updateProgress);
-      window.removeEventListener("resize", updateProgress);
+      window.removeEventListener('scroll', updateProgress);
+      window.removeEventListener('resize', updateProgress);
     };
   }, []);
 
@@ -195,7 +196,7 @@ interface UseParallaxOptions {
   /** Speed multiplier (0.5 = half speed, 2 = double speed) */
   speed?: number;
   /** Direction of parallax */
-  direction?: "up" | "down";
+  direction?: 'up' | 'down';
 }
 
 /**
@@ -208,7 +209,7 @@ interface UseParallaxOptions {
 export function useParallax<T extends HTMLElement = HTMLDivElement>(
   options: UseParallaxOptions = {}
 ): [React.RefObject<T | null>, number] {
-  const { speed = 0.5, direction = "up" } = options;
+  const { speed = 0.5, direction = 'up' } = options;
   const ref = useRef<T>(null);
   const [offset, setOffset] = useState(0);
 
@@ -222,16 +223,16 @@ export function useParallax<T extends HTMLElement = HTMLDivElement>(
       const elementCenter = rect.top + rect.height / 2;
       const windowCenter = windowHeight / 2;
       const distance = elementCenter - windowCenter;
-      const multiplier = direction === "up" ? -1 : 1;
+      const multiplier = direction === 'up' ? -1 : 1;
 
       setOffset(distance * speed * multiplier);
     };
 
     updateOffset();
-    window.addEventListener("scroll", updateOffset, { passive: true });
+    window.addEventListener('scroll', updateOffset, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", updateOffset);
+      window.removeEventListener('scroll', updateOffset);
     };
   }, [speed, direction]);
 
@@ -273,7 +274,7 @@ export function useStaggeredReveal({
   count,
   baseDelay = 100,
   staggerDelay = 50,
-  enabled = true,
+  enabled = true
 }: UseStaggeredRevealOptions): boolean[] {
   const [visibleItems, setVisibleItems] = useState<boolean[]>(
     new Array(count).fill(false)
@@ -288,13 +289,16 @@ export function useStaggeredReveal({
     const timeouts: NodeJS.Timeout[] = [];
 
     for (let i = 0; i < count; i++) {
-      const timeout = setTimeout(() => {
-        setVisibleItems((prev) => {
-          const next = [...prev];
-          next[i] = true;
-          return next;
-        });
-      }, baseDelay + i * staggerDelay);
+      const timeout = setTimeout(
+        () => {
+          setVisibleItems((prev) => {
+            const next = [...prev];
+            next[i] = true;
+            return next;
+          });
+        },
+        baseDelay + i * staggerDelay
+      );
 
       timeouts.push(timeout);
     }
@@ -336,14 +340,14 @@ interface MousePosition {
  */
 export function useMousePosition<T extends HTMLElement = HTMLDivElement>(): [
   React.RefObject<T | null>,
-  MousePosition,
+  MousePosition
 ] {
   const ref = useRef<T>(null);
   const [position, setPosition] = useState<MousePosition>({
     x: 0,
     y: 0,
     xPercent: 50,
-    yPercent: 50,
+    yPercent: 50
   });
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
@@ -368,12 +372,12 @@ export function useMousePosition<T extends HTMLElement = HTMLDivElement>(): [
     const element = ref.current;
     if (!element) return;
 
-    element.addEventListener("mousemove", handleMouseMove);
-    element.addEventListener("mouseleave", handleMouseLeave);
+    element.addEventListener('mousemove', handleMouseMove);
+    element.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
-      element.removeEventListener("mousemove", handleMouseMove);
-      element.removeEventListener("mouseleave", handleMouseLeave);
+      element.removeEventListener('mousemove', handleMouseMove);
+      element.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, [handleMouseMove, handleMouseLeave]);
 

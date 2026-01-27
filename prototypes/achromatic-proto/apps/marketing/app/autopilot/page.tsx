@@ -6,14 +6,16 @@
  * Page structure matches adapty.io/autopilot (scraped 2026-01-21).
  * AI-powered automation for paywall optimization and A/B testing.
  */
-
-import { useHeroVariant, useAutopilotFeaturesVariant } from '~/lib/debug-context';
-import { AutopilotHero } from '~/components/sections/autopilot-hero';
 import { AutopilotFeatures } from '~/components/sections/autopilot-features';
+import { AutopilotHero } from '~/components/sections/autopilot-hero';
 import {
-  TestimonialsSwitcher,
   CTASwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import {
+  useAutopilotFeaturesVariant,
+  useHeroVariant
+} from '~/lib/debug-context';
 
 export default function AutopilotPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
@@ -22,7 +24,9 @@ export default function AutopilotPage(): React.JSX.Element {
   return (
     <>
       {heroVariant !== 'off' && <AutopilotHero />}
-      {featuresVariant !== 'off' && <AutopilotFeatures variant={featuresVariant} />}
+      {featuresVariant !== 'off' && (
+        <AutopilotFeatures variant={featuresVariant} />
+      )}
       <TestimonialsSwitcher />
       <CTASwitcher />
     </>

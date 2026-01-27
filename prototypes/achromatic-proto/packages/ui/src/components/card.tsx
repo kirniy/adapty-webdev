@@ -7,13 +7,18 @@ export type CardProps = React.ComponentPropsWithoutRef<'div'> & {
   /** Enable hover lift effect for interactive cards */
   interactive?: boolean;
 };
-function Card({ className, interactive, ...props }: CardProps): React.JSX.Element {
+function Card({
+  className,
+  interactive,
+  ...props
+}: CardProps): React.JSX.Element {
   return (
     <div
       data-slot="card"
       className={cn(
         'bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm',
-        interactive && 'transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-md motion-reduce:hover:translate-y-0 motion-reduce:transition-none',
+        interactive &&
+          'transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-md motion-reduce:hover:translate-y-0 motion-reduce:transition-none',
         className
       )}
       {...props}

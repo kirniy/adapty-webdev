@@ -1,7 +1,7 @@
 'use server';
-import { updateTag } from 'next/cache';
 
 import { createHash } from 'crypto';
+import { updateTag } from 'next/cache';
 import { v4 } from 'uuid';
 
 import {
@@ -179,7 +179,12 @@ async function handleProfileStep(
     transactions.push(
       prisma.userImage.deleteMany({ where: { userId } }),
       prisma.userImage.create({
-        data: { userId, data: new Uint8Array(data), contentType: mimeType, hash }
+        data: {
+          userId,
+          data: new Uint8Array(data),
+          contentType: mimeType,
+          hash
+        }
       })
     );
 

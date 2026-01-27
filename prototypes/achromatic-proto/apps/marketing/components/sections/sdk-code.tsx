@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { CheckIcon, ChevronRightIcon, CopyIcon } from 'lucide-react';
 import { useReducedMotion } from 'motion/react';
-import { ChevronRightIcon, CopyIcon, CheckIcon } from 'lucide-react';
 
 import { Button } from '@workspace/ui/components/button';
 import {
@@ -23,9 +23,13 @@ const SDK_SNIPPETS = {
     name: 'Swift',
     label: 'iOS',
     icon: (
-      <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M21.98 14.316c.032-.503.048-1.013.048-1.527 0-5.63-4.008-10.314-9.324-11.373C12.45.972 12.22.949 12 .949c-5.525 0-10.001 4.476-10.001 10.001 0 .22.023.45.067.704 1.06 5.316 5.743 9.324 11.373 9.324.514 0 1.024-.016 1.527-.048 1.395-.088 2.73-.36 3.978-.795a11.99 11.99 0 003.036-1.695.75.75 0 00-.92-1.185 10.49 10.49 0 01-2.657 1.483c-1.092.381-2.256.62-3.478.698-.44.028-.885.042-1.337.042-4.935 0-9.053-3.51-9.974-8.162a8.49 8.49 0 01-.048-.566c0-4.694 3.806-8.501 8.5-8.501.188 0 .394.02.616.062 4.652.92 8.162 5.039 8.162 9.974 0 .452-.014.897-.042 1.337a10.49 10.49 0 01-.698 3.478 10.49 10.49 0 01-1.483 2.657.75.75 0 001.185.92 11.99 11.99 0 001.695-3.036c.435-1.248.707-2.583.795-3.978z"/>
-        <path d="M12 6.949a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5a.75.75 0 01.75-.75z"/>
+      <svg
+        className="size-4"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M21.98 14.316c.032-.503.048-1.013.048-1.527 0-5.63-4.008-10.314-9.324-11.373C12.45.972 12.22.949 12 .949c-5.525 0-10.001 4.476-10.001 10.001 0 .22.023.45.067.704 1.06 5.316 5.743 9.324 11.373 9.324.514 0 1.024-.016 1.527-.048 1.395-.088 2.73-.36 3.978-.795a11.99 11.99 0 003.036-1.695.75.75 0 00-.92-1.185 10.49 10.49 0 01-2.657 1.483c-1.092.381-2.256.62-3.478.698-.44.028-.885.042-1.337.042-4.935 0-9.053-3.51-9.974-8.162a8.49 8.49 0 01-.048-.566c0-4.694 3.806-8.501 8.5-8.501.188 0 .394.02.616.062 4.652.92 8.162 5.039 8.162 9.974 0 .452-.014.897-.042 1.337a10.49 10.49 0 01-.698 3.478 10.49 10.49 0 01-1.483 2.657.75.75 0 001.185.92 11.99 11.99 0 001.695-3.036c.435-1.248.707-2.583.795-3.978z" />
+        <path d="M12 6.949a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5a.75.75 0 01.75-.75z" />
       </svg>
     ),
     code: `import Adapty
@@ -45,8 +49,12 @@ print("Purchase successful: \\(result.profile)")`,
     name: 'Kotlin',
     label: 'Android',
     icon: (
-      <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M24 24H0V0h24L12 12z"/>
+      <svg
+        className="size-4"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M24 24H0V0h24L12 12z" />
       </svg>
     ),
     code: `import io.adapty.Adapty
@@ -73,8 +81,12 @@ Adapty.makePurchase(activity, product) { result ->
     name: 'React Native',
     label: 'RN',
     icon: (
-      <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 9.861A2.139 2.139 0 1 0 12 14.139 2.139 2.139 0 1 0 12 9.861zM6.008 16.255l-.472-.12C2.018 15.246 0 13.737 0 11.996s2.018-3.25 5.536-4.139l.472-.119.133.468a23.53 23.53 0 0 0 1.363 3.578l.101.213-.101.213a23.307 23.307 0 0 0-1.363 3.578l-.133.467z"/>
+      <svg
+        className="size-4"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 9.861A2.139 2.139 0 1 0 12 14.139 2.139 2.139 0 1 0 12 9.861zM6.008 16.255l-.472-.12C2.018 15.246 0 13.737 0 11.996s2.018-3.25 5.536-4.139l.472-.119.133.468a23.53 23.53 0 0 0 1.363 3.578l.101.213-.101.213a23.307 23.307 0 0 0-1.363 3.578l-.133.467z" />
       </svg>
     ),
     code: `import { adapty } from 'react-native-adapty';
@@ -95,8 +107,12 @@ console.log('Purchase successful:', result.profile);`,
     name: 'Flutter',
     label: 'Flutter',
     icon: (
-      <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z"/>
+      <svg
+        className="size-4"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z" />
       </svg>
     ),
     code: `import 'package:adapty_flutter/adapty_flutter.dart';
@@ -117,8 +133,12 @@ print('Purchase successful: \${result.profile}');`,
     name: 'Unity',
     label: 'Unity',
     icon: (
-      <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M10.4 17.8l-6.7-4V8.5l6.7 4.6v4.7zM11.2 12l-6.7-4.6L11.2 3l6.7 4.4-6.7 4.6zm6.7 1.8l-6.7 4.6v-4.7l6.7-4.6v4.7zM24 5.6v12.8l-11.2 6.4L1.6 18.4V5.6L12.8-.8 24 5.6z"/>
+      <svg
+        className="size-4"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M10.4 17.8l-6.7-4V8.5l6.7 4.6v4.7zM11.2 12l-6.7-4.6L11.2 3l6.7 4.4-6.7 4.6zm6.7 1.8l-6.7 4.6v-4.7l6.7-4.6v4.7zM24 5.6v12.8l-11.2 6.4L1.6 18.4V5.6L12.8-.8 24 5.6z" />
       </svg>
     ),
     code: `using AdaptySDK;
@@ -142,7 +162,7 @@ type Language = keyof typeof SDK_SNIPPETS;
 // Linear-style tag
 function FeatureTag({ label }: { label: string }) {
   return (
-    <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+    <div className="inline-flex items-center gap-2 text-xs text-zinc-400 font-medium">
       <span className="size-2 rounded-full bg-primary" />
       <span>{label}</span>
     </div>
@@ -191,8 +211,12 @@ export function SDKCode(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="container py-16">
+    <GridSection
+      className="relative"
+      hideVerticalGridLines
+      hideBottomGridLine
+    >
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-start">
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
@@ -201,7 +225,7 @@ export function SDKCode(): React.JSX.Element {
             </BlurFade>
 
             <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
-              <h2 className="text-3xl font-bold tracking-tight">
+              <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
                 10 lines of code.
                 <br />
                 <span className="text-muted-foreground">All platforms.</span>
@@ -209,14 +233,15 @@ export function SDKCode(): React.JSX.Element {
             </BlurFade>
 
             <BlurFade delay={shouldReduceMotion ? 0 : 0.15}>
-              <p className="text-muted-foreground leading-relaxed">
-                Integrate in-app purchases in minutes with our battle-tested SDKs.
-                Works seamlessly across iOS, Android, React Native, Flutter, and Unity.
+              <p className="text-zinc-400 text-sm leading-relaxed max-w-md">
+                Integrate in-app purchases in minutes with our battle-tested
+                SDKs. Works seamlessly across iOS, Android, React Native,
+                Flutter, and Unity.
               </p>
             </BlurFade>
 
             <BlurFade delay={shouldReduceMotion ? 0 : 0.2}>
-              <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
+              <ul className="flex flex-col gap-3 text-sm text-zinc-400">
                 <li className="flex items-center gap-3">
                   <span className="size-1.5 rounded-full bg-primary/60" />
                   Server-side receipt validation
@@ -264,28 +289,40 @@ export function SDKCode(): React.JSX.Element {
                 {/* Tab bar */}
                 <div className="bg-muted/30">
                   <TabsList className="h-11 w-full bg-transparent gap-0 px-2 grid grid-cols-5">
-                    {(Object.entries(SDK_SNIPPETS) as [Language, typeof SDK_SNIPPETS.swift][]).map(
-                      ([key, snippet]) => (
-                        <TabsTrigger
-                          key={key}
-                          value={key}
-                          className="data-[state=active]:bg-background data-[state=active]: rounded-lg px-3 py-2 text-xs font-medium transition-colors justify-center"
-                        >
-                          <span className="mr-1.5 opacity-60">{snippet.icon}</span>
-                          {snippet.label}
-                        </TabsTrigger>
-                      )
-                    )}
+                    {(
+                      Object.entries(SDK_SNIPPETS) as [
+                        Language,
+                        typeof SDK_SNIPPETS.swift
+                      ][]
+                    ).map(([key, snippet]) => (
+                      <TabsTrigger
+                        key={key}
+                        value={key}
+                        className="data-[state=active]:bg-background data-[state=active]: rounded-lg px-3 py-2 text-xs font-medium transition-colors justify-center"
+                      >
+                        <span className="mr-1.5 opacity-60">
+                          {snippet.icon}
+                        </span>
+                        {snippet.label}
+                      </TabsTrigger>
+                    ))}
                   </TabsList>
                 </div>
 
-                {(Object.entries(SDK_SNIPPETS) as [Language, typeof SDK_SNIPPETS.swift][]).map(
-                  ([key, snippet]) => (
-                    <TabsContent key={key} value={key} className="m-0">
-                      <CodeBlock code={snippet.code} />
-                    </TabsContent>
-                  )
-                )}
+                {(
+                  Object.entries(SDK_SNIPPETS) as [
+                    Language,
+                    typeof SDK_SNIPPETS.swift
+                  ][]
+                ).map(([key, snippet]) => (
+                  <TabsContent
+                    key={key}
+                    value={key}
+                    className="m-0"
+                  >
+                    <CodeBlock code={snippet.code} />
+                  </TabsContent>
+                ))}
               </Tabs>
             </div>
           </BlurFade>
@@ -293,15 +330,24 @@ export function SDKCode(): React.JSX.Element {
 
         {/* SDK Platform Links */}
         <BlurFade delay={shouldReduceMotion ? 0 : 0.3}>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
-            <span className="font-medium">Available for:</span>
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-400 font-medium">
+            <span>Available for:</span>
             {[
               { name: 'iOS', href: 'https://docs.adapty.io/docs/ios-sdk' },
-              { name: 'Android', href: 'https://docs.adapty.io/docs/android-sdk' },
-              { name: 'React Native', href: 'https://docs.adapty.io/docs/react-native-sdk' },
-              { name: 'Flutter', href: 'https://docs.adapty.io/docs/flutter-sdk' },
+              {
+                name: 'Android',
+                href: 'https://docs.adapty.io/docs/android-sdk'
+              },
+              {
+                name: 'React Native',
+                href: 'https://docs.adapty.io/docs/react-native-sdk'
+              },
+              {
+                name: 'Flutter',
+                href: 'https://docs.adapty.io/docs/flutter-sdk'
+              },
               { name: 'Unity', href: 'https://docs.adapty.io/docs/unity-sdk' },
-              { name: 'Web', href: 'https://docs.adapty.io/docs/web' },
+              { name: 'Web', href: 'https://docs.adapty.io/docs/web' }
             ].map((platform, i) => (
               <React.Fragment key={platform.name}>
                 {i > 0 && <span className="text-border">|</span>}

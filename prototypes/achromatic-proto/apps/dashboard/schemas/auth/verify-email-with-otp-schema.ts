@@ -3,7 +3,8 @@ import { z } from 'zod';
 export const verifyEmailWithOtpSchema = z.object({
   otp: z
     .string({
-        error: (issue) => issue.input === undefined ? 'OTP is required.' : 'OTP must be a string.'
+      error: (issue) =>
+        issue.input === undefined ? 'OTP is required.' : 'OTP must be a string.'
     })
     .trim()
     .min(1, 'OTP is required.')

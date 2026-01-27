@@ -9,11 +9,16 @@ import { prisma } from '@workspace/database/client';
 import { Caching, OrganizationCacheKey } from '~/data/caching';
 import type { SocialMediaDto } from '~/types/dtos/social-media-dto';
 
-async function getSocialMediaData(organizationId: string): Promise<SocialMediaDto> {
+async function getSocialMediaData(
+  organizationId: string
+): Promise<SocialMediaDto> {
   'use cache';
   cacheLife('default');
   cacheTag(
-    Caching.createOrganizationTag(OrganizationCacheKey.SocialMedia, organizationId)
+    Caching.createOrganizationTag(
+      OrganizationCacheKey.SocialMedia,
+      organizationId
+    )
   );
 
   const organization = await prisma.organization.findFirst({

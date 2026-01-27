@@ -59,7 +59,11 @@ export function BlurFade({
   // Respect reduced motion preference - only pass safe props to native div
   if (shouldReduceMotion) {
     return (
-      <div ref={ref} className={className} style={style as React.CSSProperties}>
+      <div
+        ref={ref}
+        className={className}
+        style={style as React.CSSProperties}
+      >
         {children as React.ReactNode}
       </div>
     );
@@ -75,7 +79,7 @@ export function BlurFade({
         delay: 0.04 + delay,
         type: 'spring',
         duration,
-        bounce: 0, // Professional feel, no overshoot
+        bounce: 0 // Professional feel, no overshoot
       }}
       className={className}
       style={style}

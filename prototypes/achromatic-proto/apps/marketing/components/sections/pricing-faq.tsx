@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'motion/react';
 import { HelpCircleIcon } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { APP_NAME } from '@workspace/common/app';
 import { routes } from '@workspace/routes';
@@ -14,10 +14,10 @@ import {
   AccordionTrigger
 } from '@workspace/ui/components/accordion';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { BlurFade } from '~/components/fragments/blur-fade';
 import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT FAQs from adapty.io/pricing (only 4 questions)
@@ -26,7 +26,10 @@ const DATA = [
     question: 'What is MTR?',
     answer: (
       <p>
-        MTR is a monthly tracked revenue. It's the amount of revenue tracked by {APP_NAME} (in USD, and before the platform cut) during the billing period of one month. This includes paid subscriptions, renewals, and one-time purchases.
+        MTR is a monthly tracked revenue. It's the amount of revenue tracked by{' '}
+        {APP_NAME} (in USD, and before the platform cut) during the billing
+        period of one month. This includes paid subscriptions, renewals, and
+        one-time purchases.
       </p>
     )
   },
@@ -34,7 +37,10 @@ const DATA = [
     question: 'What if my MTR goes over $10K on a Free plan?',
     answer: (
       <p>
-        Don't worry, {APP_NAME} continues to handle your purchases and receipt validation. However, you won't have access to the rest of the features, including Dashboard and Reports. To unlock the access you'll need to upgrade your plan.
+        Don't worry, {APP_NAME} continues to handle your purchases and receipt
+        validation. However, you won't have access to the rest of the features,
+        including Dashboard and Reports. To unlock the access you'll need to
+        upgrade your plan.
       </p>
     )
   },
@@ -42,15 +48,19 @@ const DATA = [
     question: 'Do you replace Apple or Google payment?',
     answer: (
       <p>
-        No, we don't! We simplify and secure payment infrastructure for you but all payments are still processed by Apple or Google.
+        No, we don't! We simplify and secure payment infrastructure for you but
+        all payments are still processed by Apple or Google.
       </p>
     )
   },
   {
-    question: 'Ooops, I have a billing issue with my card, will you cancel our SDK?',
+    question:
+      'Ooops, I have a billing issue with my card, will you cancel our SDK?',
     answer: (
       <p>
-        No, we won't. {APP_NAME} continues to handle your purchases and receipt validation. You will be prompted with a paywall and after paying you can continue to use all the {APP_NAME} features.
+        No, we won't. {APP_NAME} continues to handle your purchases and receipt
+        validation. You will be prompted with a paywall and after paying you can
+        continue to use all the {APP_NAME} features.
       </p>
     )
   }
@@ -68,13 +78,17 @@ function FAQCountMagic() {
       transition={{ duration: 0.3, delay: 0.15 }}
     >
       <motion.div
-        animate={shouldReduceMotion ? {} : {
-          rotate: [0, 10, -10, 0],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                rotate: [0, 10, -10, 0]
+              }
+        }
         transition={{
           duration: 0.5,
           repeat: Infinity,
-          repeatDelay: 3,
+          repeatDelay: 3
         }}
       >
         <HelpCircleIcon className="size-3.5" />
@@ -89,7 +103,10 @@ export function PricingFAQ(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
       <div className="container py-20 relative z-10">
-        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+        <Spotlight
+          className="from-primary/15 via-primary/5 to-transparent"
+          size={350}
+        />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
           <BlurFade delay={0.05}>
             <div className="text-center lg:text-left">
@@ -113,7 +130,10 @@ export function PricingFAQ(): React.JSX.Element {
           </BlurFade>
           <BlurFade delay={0.1}>
             <div className="mx-auto flex w-full max-w-xl flex-col relative rounded-xl border bg-card p-1 overflow-hidden">
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={300} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={300}
+              />
               <BorderBeam
                 size={180}
                 duration={12}

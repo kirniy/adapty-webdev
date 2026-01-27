@@ -2,18 +2,24 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, GlobeIcon, LanguagesIcon, CheckIcon, DollarSignIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  DollarSignIcon,
+  GlobeIcon,
+  LanguagesIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
-import { SectionBackground } from '~/components/fragments/section-background';
-import { Spotlight } from '~/components/fragments/spotlight';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // Language localization magic animation
 function LocalizationMagic() {
@@ -23,7 +29,7 @@ function LocalizationMagic() {
     { code: 'EN', flag: 'US', price: '$9.99', text: 'Subscribe Now' },
     { code: 'DE', flag: 'DE', price: '9,99 EUR', text: 'Jetzt abonnieren' },
     { code: 'JP', flag: 'JP', price: '1,480 JPY', text: 'Ima sugu tooroku' },
-    { code: 'BR', flag: 'BR', price: 'R$ 49,90', text: 'Assine agora' },
+    { code: 'BR', flag: 'BR', price: 'R$ 49,90', text: 'Assine agora' }
   ];
 
   React.useEffect(() => {
@@ -83,7 +89,9 @@ function LocalizationMagic() {
           className="rounded-lg border bg-background/50 p-3 text-center"
         >
           <div className="text-lg font-semibold">{currentLang?.price}</div>
-          <div className="text-xs text-muted-foreground mt-1">{currentLang?.text}</div>
+          <div className="text-xs text-muted-foreground mt-1">
+            {currentLang?.text}
+          </div>
         </motion.div>
       </AnimatePresence>
 
@@ -94,7 +102,7 @@ function LocalizationMagic() {
             key={lang.code}
             animate={{
               scale: i === activeLanguage ? 1.2 : 1,
-              opacity: i === activeLanguage ? 1 : 0.4,
+              opacity: i === activeLanguage ? 1 : 0.4
             }}
             className="size-2 rounded-full bg-primary"
           />
@@ -140,7 +148,8 @@ function CoverageMagic() {
     >
       <LanguagesIcon className="size-4 text-primary" />
       <span className="text-sm font-medium">
-        <span className="text-primary font-bold">{count}+</span> languages supported
+        <span className="text-primary font-bold">{count}+</span> languages
+        supported
       </span>
     </motion.div>
   );
@@ -148,7 +157,9 @@ function CoverageMagic() {
 
 export function PaywallLocalizationHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [hoveredButton, setHoveredButton] = React.useState<'start' | 'demo' | null>(null);
+  const [hoveredButton, setHoveredButton] = React.useState<
+    'start' | 'demo' | null
+  >(null);
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -177,7 +188,10 @@ export function PaywallLocalizationHero(): React.JSX.Element {
               whileHover={shouldReduceMotion ? undefined : { y: -4 }}
               className="mt-10 p-6 rounded-2xl border bg-background/50 backdrop-blur-sm max-w-xs mx-auto relative overflow-hidden"
             >
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={280}
+              />
               <div className="relative">
                 <div className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">
                   Auto-localization
@@ -198,9 +212,13 @@ export function PaywallLocalizationHero(): React.JSX.Element {
               <motion.div
                 onMouseEnter={() => setHoveredButton('start')}
                 onMouseLeave={() => setHoveredButton(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredButton === 'start' ? -2 : 0,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: hoveredButton === 'start' ? -2 : 0
+                      }
+                }
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 className="relative"
               >
@@ -213,7 +231,11 @@ export function PaywallLocalizationHero(): React.JSX.Element {
                 >
                   Start for free
                   <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: hoveredButton === 'start' ? 3 : 0 }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : { x: hoveredButton === 'start' ? 3 : 0 }
+                    }
                     transition={{ duration: 0.15 }}
                   >
                     <ArrowRightIcon className="ml-2 size-4" />
@@ -232,9 +254,13 @@ export function PaywallLocalizationHero(): React.JSX.Element {
               <motion.div
                 onMouseEnter={() => setHoveredButton('demo')}
                 onMouseLeave={() => setHoveredButton(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredButton === 'demo' ? -2 : 0,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: hoveredButton === 'demo' ? -2 : 0
+                      }
+                }
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               >
                 <Link

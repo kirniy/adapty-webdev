@@ -2,24 +2,31 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useForIndieFeaturesVariant } from '~/lib/debug-context';
-import { ForIndieHero } from '~/components/sections/for-indie-hero';
 import { ForIndieFeatures } from '~/components/sections/for-indie-features';
+import { ForIndieHero } from '~/components/sections/for-indie-hero';
 import type { ForIndieHeroVariant } from '~/components/sections/for-indie-hero';
 import {
-  LogosSwitcher,
-  TestimonialsSwitcher,
   CTASwitcher,
   FAQSwitcher,
+  LogosSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import {
+  useForIndieFeaturesVariant,
+  useHeroVariant
+} from '~/lib/debug-context';
 
 // Map global Hero variant to page-specific variants
 function mapHeroVariant(globalVariant: string): ForIndieHeroVariant {
   switch (globalVariant) {
-    case 'marketing': return 'centered';
-    case 'story': return 'startup';
-    case 'split': return 'split';
-    default: return 'split';
+    case 'marketing':
+      return 'centered';
+    case 'story':
+      return 'startup';
+    case 'split':
+      return 'split';
+    default:
+      return 'split';
   }
 }
 
@@ -31,13 +38,17 @@ export default function ForIndiePage(): React.JSX.Element {
   return (
     <>
       {/* Indie developer focused hero */}
-      {heroVariant !== 'off' && <ForIndieHero variant={mapHeroVariant(heroVariant)} />}
+      {heroVariant !== 'off' && (
+        <ForIndieHero variant={mapHeroVariant(heroVariant)} />
+      )}
 
       {/* Logos - shared switcher */}
       <LogosSwitcher />
 
       {/* Indie-friendly features */}
-      {featuresVariant !== 'off' && <ForIndieFeatures variant={featuresVariant} />}
+      {featuresVariant !== 'off' && (
+        <ForIndieFeatures variant={featuresVariant} />
+      )}
 
       {/* FAQ - pricing questions for indie devs */}
       <FAQSwitcher />

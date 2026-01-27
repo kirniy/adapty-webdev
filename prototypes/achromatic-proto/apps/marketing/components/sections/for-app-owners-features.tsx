@@ -3,25 +3,25 @@
 import * as React from 'react';
 import Link from 'next/link';
 import {
-  RocketIcon,
-  CodeIcon,
-  BarChart3Icon,
-  TrendingUpIcon,
-  ShieldCheckIcon,
   ArrowRightIcon,
+  BarChart3Icon,
   ChevronDownIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  CodeIcon,
+  RocketIcon,
+  ShieldCheckIcon,
+  TrendingUpIcon
 } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { cn } from '@workspace/ui/lib/utils';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
-import { BlurFade } from '~/components/fragments/blur-fade';
 import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT content from adapty.io/for-app-owners (scraped 2026-01-21)
@@ -29,7 +29,8 @@ const FEATURES = [
   {
     icon: RocketIcon,
     title: 'Increase marketing speed',
-    description: 'Use Adapty to launch app updates faster, reduce costs, and minimize reliance on development team.',
+    description:
+      'Use Adapty to launch app updates faster, reduce costs, and minimize reliance on development team.',
     category: 'marketing',
     details: [
       'Easily edit pricing and products with a user-friendly dashboard',
@@ -40,7 +41,8 @@ const FEATURES = [
   {
     icon: CodeIcon,
     title: 'Save dev team efforts',
-    description: 'Reduce development time and costs with simple integration and no-code tools.',
+    description:
+      'Reduce development time and costs with simple integration and no-code tools.',
     category: 'development',
     details: [
       'Integrate in hours, not weeks, with just a few SDK methods',
@@ -51,7 +53,8 @@ const FEATURES = [
   {
     icon: BarChart3Icon,
     title: 'Clear subscription reporting',
-    description: 'Get a complete picture of your subscription business with real-time analytics.',
+    description:
+      'Get a complete picture of your subscription business with real-time analytics.',
     category: 'analytics',
     details: [
       'Track MRR, LTV, churn, and 20+ other key metrics',
@@ -62,7 +65,8 @@ const FEATURES = [
   {
     icon: TrendingUpIcon,
     title: 'Predict revenue for 4 quarters',
-    description: 'Use Adapty Forecast to predict subscription revenue and plan your business growth.',
+    description:
+      'Use Adapty Forecast to predict subscription revenue and plan your business growth.',
     category: 'analytics',
     details: [
       'AI-powered revenue predictions based on your data',
@@ -73,7 +77,8 @@ const FEATURES = [
   {
     icon: ShieldCheckIcon,
     title: 'Access rights',
-    description: 'Control who can access what with granular permissions and role-based access.',
+    description:
+      'Control who can access what with granular permissions and role-based access.',
     category: 'management',
     details: [
       'Role-based access control for team members',
@@ -88,19 +93,21 @@ const CATEGORIES = [
   { id: 'marketing', label: 'Marketing' },
   { id: 'development', label: 'Development' },
   { id: 'analytics', label: 'Analytics' },
-  { id: 'management', label: 'Management' },
+  { id: 'management', label: 'Management' }
 ] as const;
 
 // Related roles from adapty.io/for-app-owners
 const RELATED_ROLES = [
   {
     title: 'For developers',
-    description: 'Integrate and deploy in-app purchases in minutes with a single line of code.',
+    description:
+      'Integrate and deploy in-app purchases in minutes with a single line of code.',
     link: '/for-developers'
   },
   {
     title: 'For marketers',
-    description: 'Build, manage, and target paywalls without leaving the dashboard.',
+    description:
+      'Build, manage, and target paywalls without leaving the dashboard.',
     link: '/for-marketers'
   }
 ];
@@ -182,8 +189,8 @@ function DevTeamMagic() {
           <motion.div
             key={i}
             className={cn(
-              "w-1.5 h-1.5 rounded-full",
-              step === i ? "bg-primary" : "bg-primary/30"
+              'w-1.5 h-1.5 rounded-full',
+              step === i ? 'bg-primary' : 'bg-primary/30'
             )}
             animate={{ scale: step === i ? 1.2 : 1 }}
           />
@@ -203,9 +210,17 @@ function AnalyticsMagic() {
     return (
       <div className="mt-4 flex items-end justify-center gap-1 h-12">
         {bars.map((h, i) => (
-          <div key={i} className="flex flex-col items-center">
-            <div className="w-3 bg-primary/30 rounded-t" style={{ height: `${h * 0.4}px` }} />
-            <span className="text-[8px] text-muted-foreground mt-1">{labels[i]}</span>
+          <div
+            key={i}
+            className="flex flex-col items-center"
+          >
+            <div
+              className="w-3 bg-primary/30 rounded-t"
+              style={{ height: `${h * 0.4}px` }}
+            />
+            <span className="text-[8px] text-muted-foreground mt-1">
+              {labels[i]}
+            </span>
           </div>
         ))}
       </div>
@@ -215,14 +230,24 @@ function AnalyticsMagic() {
   return (
     <div className="mt-4 flex items-end justify-center gap-1 h-12">
       {bars.map((h, i) => (
-        <div key={i} className="flex flex-col items-center">
+        <div
+          key={i}
+          className="flex flex-col items-center"
+        >
           <motion.div
             className="w-3 bg-primary/30 rounded-t"
             initial={{ height: 0 }}
             animate={{ height: `${h * 0.4}px` }}
-            transition={{ duration: 0.5, delay: i * 0.1, repeat: Infinity, repeatDelay: 3 }}
+            transition={{
+              duration: 0.5,
+              delay: i * 0.1,
+              repeat: Infinity,
+              repeatDelay: 3
+            }}
           />
-          <span className="text-[8px] text-muted-foreground mt-1">{labels[i]}</span>
+          <span className="text-[8px] text-muted-foreground mt-1">
+            {labels[i]}
+          </span>
         </div>
       ))}
     </div>
@@ -284,8 +309,8 @@ function ForecastMagic() {
           <motion.div
             key={i}
             className={cn(
-              "w-6 h-1 rounded",
-              i <= quarter ? "bg-emerald-500" : "bg-emerald-500/20"
+              'w-6 h-1 rounded',
+              i <= quarter ? 'bg-emerald-500' : 'bg-emerald-500/20'
             )}
             animate={{ scaleX: i === quarter ? [1, 1.1, 1] : 1 }}
             transition={{ duration: 0.3 }}
@@ -323,10 +348,12 @@ function AccessMagic() {
         animate={{ scale: locked ? 1 : 1.1 }}
         transition={{ type: 'spring', duration: 0.3 }}
       >
-        <ShieldCheckIcon className={cn(
-          "size-8 transition-colors duration-300",
-          locked ? "text-primary" : "text-emerald-500"
-        )} />
+        <ShieldCheckIcon
+          className={cn(
+            'size-8 transition-colors duration-300',
+            locked ? 'text-primary' : 'text-emerald-500'
+          )}
+        />
       </motion.div>
       <motion.div
         initial={{ opacity: 0 }}
@@ -337,8 +364,8 @@ function AccessMagic() {
           animate={{ scale: locked ? [1, 1.1, 1] : 1 }}
           transition={{ duration: 0.5 }}
           className={cn(
-            "text-xs font-medium",
-            locked ? "text-primary" : "text-emerald-500"
+            'text-xs font-medium',
+            locked ? 'text-primary' : 'text-emerald-500'
           )}
         >
           {locked ? 'Protected' : 'Verified'}
@@ -354,12 +381,16 @@ const FEATURE_MAGIC: Record<string, React.FC> = {
   'Save dev team efforts': DevTeamMagic,
   'Clear subscription reporting': AnalyticsMagic,
   'Predict revenue for 4 quarters': ForecastMagic,
-  'Access rights': AccessMagic,
+  'Access rights': AccessMagic
 };
 
 export type ForAppOwnersFeaturesVariant = 'grid' | 'bento' | 'tabs';
 
-export const FOR_APP_OWNERS_FEATURES_VARIANTS = ['grid', 'bento', 'tabs'] as const;
+export const FOR_APP_OWNERS_FEATURES_VARIANTS = [
+  'grid',
+  'bento',
+  'tabs'
+] as const;
 
 type Props = {
   variant?: ForAppOwnersFeaturesVariant;
@@ -386,18 +417,25 @@ function GridFeatures(): React.JSX.Element {
             const MagicComponent = FEATURE_MAGIC[feature.title];
 
             return (
-              <BlurFade key={index} delay={0.1 + index * 0.02}>
+              <BlurFade
+                key={index}
+                delay={0.1 + index * 0.02}
+              >
                 <motion.div
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  animate={shouldReduceMotion ? undefined : {
-                    y: hoveredIndex === index ? -8 : 0,
-                    scale: hoveredIndex === index ? 1.02 : 1,
-                  }}
+                  animate={
+                    shouldReduceMotion
+                      ? undefined
+                      : {
+                          y: hoveredIndex === index ? -8 : 0,
+                          scale: hoveredIndex === index ? 1.02 : 1
+                        }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
-                    "group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-200",
-                    hoveredIndex === index && "border-primary/30  "
+                    'group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-200',
+                    hoveredIndex === index && 'border-primary/30  '
                   )}
                 >
                   {hoveredIndex === index && (
@@ -409,21 +447,36 @@ function GridFeatures(): React.JSX.Element {
                       colorTo="hsl(var(--primary)/0)"
                     />
                   )}
-                  <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+                  <Spotlight
+                    className="from-primary/15 via-primary/5 to-transparent"
+                    size={280}
+                  />
 
                   <div className="relative p-6 z-10">
                     <motion.div
-                      animate={shouldReduceMotion ? undefined : {
-                        scale: hoveredIndex === index ? 1.15 : 1,
-                        rotate: hoveredIndex === index ? 8 : 0,
+                      animate={
+                        shouldReduceMotion
+                          ? undefined
+                          : {
+                              scale: hoveredIndex === index ? 1.15 : 1,
+                              rotate: hoveredIndex === index ? 8 : 0
+                            }
+                      }
+                      transition={{
+                        type: 'spring',
+                        duration: 0.3,
+                        bounce: 0.2
                       }}
-                      transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
                       className="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4"
                     >
                       <feature.icon className="size-6" />
                     </motion.div>
-                    <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">{feature.description}</p>
+                    <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                      {feature.description}
+                    </p>
 
                     {/* Magic animation */}
                     {MagicComponent && (
@@ -434,7 +487,10 @@ function GridFeatures(): React.JSX.Element {
 
                     <ul className="space-y-2">
                       {feature.details.map((detail, detailIndex) => (
-                        <li key={detailIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <li
+                          key={detailIndex}
+                          className="text-sm text-muted-foreground flex items-start gap-2"
+                        >
                           <ChevronRightIcon className="size-4 text-primary shrink-0 mt-0.5" />
                           <span>{detail}</span>
                         </li>
@@ -453,24 +509,35 @@ function GridFeatures(): React.JSX.Element {
             <SiteHeading title="We're here for your team" />
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               {RELATED_ROLES.map((role, index) => (
-                <Link key={index} href={role.link} className="group">
+                <Link
+                  key={index}
+                  href={role.link}
+                  className="group"
+                >
                   <motion.div
                     whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                   >
                     <Card className="relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-150 ease-out motion-reduce:transition-none">
-                      <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
+                      <Spotlight
+                        className="from-primary/15 via-primary/5 to-transparent"
+                        size={200}
+                      />
                       <CardContent className="relative p-6">
                         <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors inline-flex items-center gap-2">
                           {role.title}
                           <motion.span
                             animate={shouldReduceMotion ? undefined : { x: 0 }}
-                            whileHover={shouldReduceMotion ? undefined : { x: 4 }}
+                            whileHover={
+                              shouldReduceMotion ? undefined : { x: 4 }
+                            }
                           >
                             <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                           </motion.span>
                         </h3>
-                        <p className="text-sm text-muted-foreground">{role.description}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {role.description}
+                        </p>
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -502,19 +569,25 @@ function BentoFeatures(): React.JSX.Element {
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Featured large card - first feature */}
-          <BlurFade delay={0.1} className="md:col-span-2 lg:row-span-2">
+          <BlurFade
+            delay={0.1}
+            className="md:col-span-2 lg:row-span-2"
+          >
             <motion.div
               whileHover={shouldReduceMotion ? undefined : { scale: 1.01 }}
               className="h-full"
             >
               <Card
                 className={cn(
-                  "relative h-full overflow-hidden bg-gradient-to-br from-primary/5 via-background/80 to-background/50 backdrop-blur-sm border-primary/20 cursor-pointer transition-all duration-200",
-                  expandedIndex === 0 && "ring-2 ring-primary/30"
+                  'relative h-full overflow-hidden bg-gradient-to-br from-primary/5 via-background/80 to-background/50 backdrop-blur-sm border-primary/20 cursor-pointer transition-all duration-200',
+                  expandedIndex === 0 && 'ring-2 ring-primary/30'
                 )}
                 onClick={() => setExpandedIndex(expandedIndex === 0 ? null : 0)}
               >
-                <Spotlight className="from-primary/20 via-primary/5 to-transparent" size={400} />
+                <Spotlight
+                  className="from-primary/20 via-primary/5 to-transparent"
+                  size={400}
+                />
                 <CardContent className="relative p-8 h-full flex flex-col">
                   <div className="flex items-start justify-between mb-6">
                     <div className="flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
@@ -527,8 +600,12 @@ function BentoFeatures(): React.JSX.Element {
                       <ChevronDownIcon className="size-5" />
                     </motion.div>
                   </div>
-                  <h3 className="font-bold text-2xl mb-3">{FEATURES[0].title}</h3>
-                  <p className="text-muted-foreground leading-relaxed mb-6">{FEATURES[0].description}</p>
+                  <h3 className="font-bold text-2xl mb-3">
+                    {FEATURES[0].title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed mb-6">
+                    {FEATURES[0].description}
+                  </p>
 
                   <AnimatePresence>
                     {expandedIndex === 0 && (
@@ -548,7 +625,9 @@ function BentoFeatures(): React.JSX.Element {
                               className="flex items-start gap-3 text-sm"
                             >
                               <ChevronRightIcon className="size-4 text-primary shrink-0 mt-0.5" />
-                              <span className="text-muted-foreground">{detail}</span>
+                              <span className="text-muted-foreground">
+                                {detail}
+                              </span>
                             </motion.div>
                           ))}
                         </div>
@@ -565,33 +644,49 @@ function BentoFeatures(): React.JSX.Element {
             const index = i + 1;
             const MagicComponent = FEATURE_MAGIC[feature.title];
             return (
-              <BlurFade key={index} delay={0.12 + i * 0.02}>
+              <BlurFade
+                key={index}
+                delay={0.12 + i * 0.02}
+              >
                 <motion.div
-                  whileHover={shouldReduceMotion ? undefined : { scale: 1.02, y: -2 }}
+                  whileHover={
+                    shouldReduceMotion ? undefined : { scale: 1.02, y: -2 }
+                  }
                   whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                 >
                   <Card
                     className={cn(
-                      "relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 cursor-pointer transition-all duration-200",
-                      expandedIndex === index && "border-primary/30  "
+                      'relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 cursor-pointer transition-all duration-200',
+                      expandedIndex === index && 'border-primary/30  '
                     )}
-                    onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
+                    onClick={() =>
+                      setExpandedIndex(expandedIndex === index ? null : index)
+                    }
                   >
-                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
+                    <Spotlight
+                      className="from-primary/15 via-primary/5 to-transparent"
+                      size={250}
+                    />
                     <CardContent className="relative p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                           <feature.icon className="size-5" />
                         </div>
                         <motion.div
-                          animate={{ rotate: expandedIndex === index ? 180 : 0 }}
+                          animate={{
+                            rotate: expandedIndex === index ? 180 : 0
+                          }}
                           className="text-muted-foreground"
                         >
                           <ChevronDownIcon className="size-4" />
                         </motion.div>
                       </div>
-                      <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+                      <h3 className="font-semibold text-lg mb-2">
+                        {feature.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {feature.description}
+                      </p>
 
                       {/* Magic animation */}
                       {MagicComponent && (
@@ -618,7 +713,9 @@ function BentoFeatures(): React.JSX.Element {
                                   className="flex items-start gap-2 text-xs"
                                 >
                                   <ChevronRightIcon className="size-3 text-primary shrink-0 mt-0.5" />
-                                  <span className="text-muted-foreground">{detail}</span>
+                                  <span className="text-muted-foreground">
+                                    {detail}
+                                  </span>
                                 </motion.div>
                               ))}
                             </div>
@@ -639,13 +736,20 @@ function BentoFeatures(): React.JSX.Element {
             <SiteHeading title="We're here for your team" />
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               {RELATED_ROLES.map((role, index) => (
-                <Link key={index} href={role.link} className="group">
+                <Link
+                  key={index}
+                  href={role.link}
+                  className="group"
+                >
                   <motion.div
                     whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                   >
                     <Card className="relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-150">
-                      <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
+                      <Spotlight
+                        className="from-primary/15 via-primary/5 to-transparent"
+                        size={200}
+                      />
                       <CardContent className="relative p-6">
                         <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors inline-flex items-center gap-2">
                           {role.title}
@@ -657,7 +761,9 @@ function BentoFeatures(): React.JSX.Element {
                             <ArrowRightIcon className="size-4" />
                           </motion.span>
                         </h3>
-                        <p className="text-sm text-muted-foreground">{role.description}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {role.description}
+                        </p>
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -674,12 +780,14 @@ function BentoFeatures(): React.JSX.Element {
 // Variant 3: Tabs - Category tabs with filtered features
 function TabsFeatures(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [activeCategory, setActiveCategory] = React.useState<typeof CATEGORIES[number]['id']>('all');
+  const [activeCategory, setActiveCategory] =
+    React.useState<(typeof CATEGORIES)[number]['id']>('all');
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
 
-  const filteredFeatures = activeCategory === 'all'
-    ? FEATURES
-    : FEATURES.filter(f => f.category === activeCategory);
+  const filteredFeatures =
+    activeCategory === 'all'
+      ? FEATURES
+      : FEATURES.filter((f) => f.category === activeCategory);
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -702,10 +810,10 @@ function TabsFeatures(): React.JSX.Element {
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 className={cn(
-                  "relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200",
+                  'relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200',
                   activeCategory === category.id
-                    ? "text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? 'text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
                 {activeCategory === category.id && (
@@ -735,59 +843,85 @@ function TabsFeatures(): React.JSX.Element {
               {filteredFeatures.map((feature, index) => {
                 const MagicComponent = FEATURE_MAGIC[feature.title];
                 return (
-                <motion.div
-                  key={feature.title}
-                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.95 }}
-                  animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: index * 0.05, duration: 0.3 }}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                  whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-                >
-                  <Card className={cn(
-                    "relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200",
-                    hoveredIndex === index && "border-primary/30  "
-                  )}>
-                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
-                    <CardContent className="relative p-6">
-                      <div className="flex items-start gap-4 mb-4">
-                        <motion.div
-                          animate={shouldReduceMotion ? undefined : {
-                            scale: hoveredIndex === index ? 1.1 : 1,
-                          }}
-                          className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
-                        >
-                          <feature.icon className="size-6" />
-                        </motion.div>
-                        <div>
-                          <h3 className="font-semibold text-lg">{feature.title}</h3>
-                          <span className="text-xs text-primary/70 font-medium uppercase tracking-wider">
-                            {feature.category}
-                          </span>
-                        </div>
-                      </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed mb-4">{feature.description}</p>
-
-                      {/* Magic animation */}
-                      {MagicComponent && (
-                        <div className="mb-4 pb-4 border-b border-border/30">
-                          <MagicComponent />
-                        </div>
+                  <motion.div
+                    key={feature.title}
+                    initial={
+                      shouldReduceMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, y: 20, scale: 0.95 }
+                    }
+                    animate={
+                      shouldReduceMotion
+                        ? { opacity: 1 }
+                        : { opacity: 1, y: 0, scale: 1 }
+                    }
+                    transition={{ delay: index * 0.05, duration: 0.3 }}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+                  >
+                    <Card
+                      className={cn(
+                        'relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200',
+                        hoveredIndex === index && 'border-primary/30  '
                       )}
-
-                      {/* Details always visible in tabs variant */}
-                      <div className="space-y-2 pt-4 border-t border-border/50">
-                        {feature.details.map((detail, i) => (
-                          <div key={i} className="flex items-start gap-2 text-sm">
-                            <ChevronRightIcon className="size-4 text-primary shrink-0 mt-0.5" />
-                            <span className="text-muted-foreground">{detail}</span>
+                    >
+                      <Spotlight
+                        className="from-primary/15 via-primary/5 to-transparent"
+                        size={280}
+                      />
+                      <CardContent className="relative p-6">
+                        <div className="flex items-start gap-4 mb-4">
+                          <motion.div
+                            animate={
+                              shouldReduceMotion
+                                ? undefined
+                                : {
+                                    scale: hoveredIndex === index ? 1.1 : 1
+                                  }
+                            }
+                            className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
+                          >
+                            <feature.icon className="size-6" />
+                          </motion.div>
+                          <div>
+                            <h3 className="font-semibold text-lg">
+                              {feature.title}
+                            </h3>
+                            <span className="text-xs text-primary/70 font-medium uppercase tracking-wider">
+                              {feature.category}
+                            </span>
                           </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                          {feature.description}
+                        </p>
+
+                        {/* Magic animation */}
+                        {MagicComponent && (
+                          <div className="mb-4 pb-4 border-b border-border/30">
+                            <MagicComponent />
+                          </div>
+                        )}
+
+                        {/* Details always visible in tabs variant */}
+                        <div className="space-y-2 pt-4 border-t border-border/50">
+                          {feature.details.map((detail, i) => (
+                            <div
+                              key={i}
+                              className="flex items-start gap-2 text-sm"
+                            >
+                              <ChevronRightIcon className="size-4 text-primary shrink-0 mt-0.5" />
+                              <span className="text-muted-foreground">
+                                {detail}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
               })}
             </motion.div>
           </AnimatePresence>
@@ -799,13 +933,20 @@ function TabsFeatures(): React.JSX.Element {
             <SiteHeading title="We're here for your team" />
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               {RELATED_ROLES.map((role, index) => (
-                <Link key={index} href={role.link} className="group">
+                <Link
+                  key={index}
+                  href={role.link}
+                  className="group"
+                >
                   <motion.div
                     whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                   >
                     <Card className="relative h-full overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-150">
-                      <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
+                      <Spotlight
+                        className="from-primary/15 via-primary/5 to-transparent"
+                        size={200}
+                      />
                       <CardContent className="relative p-6">
                         <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors inline-flex items-center gap-2">
                           {role.title}
@@ -817,7 +958,9 @@ function TabsFeatures(): React.JSX.Element {
                             <ArrowRightIcon className="size-4" />
                           </motion.span>
                         </h3>
-                        <p className="text-sm text-muted-foreground">{role.description}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {role.description}
+                        </p>
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -831,7 +974,9 @@ function TabsFeatures(): React.JSX.Element {
   );
 }
 
-export function ForAppOwnersFeatures({ variant = 'grid' }: Props): React.JSX.Element {
+export function ForAppOwnersFeatures({
+  variant = 'grid'
+}: Props): React.JSX.Element {
   switch (variant) {
     case 'bento':
       return <BentoFeatures />;

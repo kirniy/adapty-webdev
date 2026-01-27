@@ -1,6 +1,6 @@
 'use server';
-import { updateTag } from 'next/cache';
 
+import { updateTag } from 'next/cache';
 
 import { NotFoundError } from '@workspace/common/errors';
 import { prisma } from '@workspace/database/client';

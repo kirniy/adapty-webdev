@@ -5,6 +5,7 @@ import * as React from 'react';
 import { AnalyticsProvider } from '@workspace/analytics/hooks/use-analytics';
 import { TooltipProvider } from '@workspace/ui/components/tooltip';
 import { ThemeProvider } from '@workspace/ui/hooks/use-theme';
+
 import { DebugProvider } from '~/lib/debug-context';
 
 export function Providers({

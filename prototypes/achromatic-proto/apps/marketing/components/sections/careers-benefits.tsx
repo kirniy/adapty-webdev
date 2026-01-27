@@ -1,17 +1,24 @@
 'use client';
 
 import * as React from 'react';
-import { BriefcaseBusinessIcon, Users2Icon, ZapIcon, HeartIcon, GlobeIcon, RocketIcon } from 'lucide-react';
+import {
+  BriefcaseBusinessIcon,
+  GlobeIcon,
+  HeartIcon,
+  RocketIcon,
+  Users2Icon,
+  ZapIcon
+} from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 
 import { APP_NAME } from '@workspace/common/app';
 import { cn } from '@workspace/ui/lib/utils';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { BlurFade } from '~/components/fragments/blur-fade';
+import { SiteHeading } from '~/components/fragments/site-heading';
 import { Spotlight } from '~/components/fragments/spotlight';
 
 const DATA = [
@@ -19,38 +26,38 @@ const DATA = [
     icon: ZapIcon,
     title: 'Innovation at its core',
     description:
-      'We are committed to pushing boundaries and fostering a culture of creativity.',
+      'We are committed to pushing boundaries and fostering a culture of creativity.'
   },
   {
     icon: Users2Icon,
     title: 'Inclusive environment',
     description:
-      'Our diverse and collaborative team welcomes individuals from all backgrounds.',
+      'Our diverse and collaborative team welcomes individuals from all backgrounds.'
   },
   {
     icon: BriefcaseBusinessIcon,
     title: 'Opportunities for growth',
     description:
-      'We support continuous learning and career development through mentorship and resources.',
+      'We support continuous learning and career development through mentorship and resources.'
   },
   {
     icon: GlobeIcon,
     title: 'Remote-first culture',
     description:
-      'Work from anywhere in the world with flexible hours that fit your lifestyle.',
+      'Work from anywhere in the world with flexible hours that fit your lifestyle.'
   },
   {
     icon: HeartIcon,
     title: 'Competitive benefits',
     description:
-      'Comprehensive health coverage, equity options, and generous time off policies.',
+      'Comprehensive health coverage, equity options, and generous time off policies.'
   },
   {
     icon: RocketIcon,
     title: 'High-impact work',
     description:
-      'Build products used by thousands of apps and millions of users worldwide.',
-  },
+      'Build products used by thousands of apps and millions of users worldwide.'
+  }
 ];
 
 // Magic animation: Team growth indicator
@@ -66,13 +73,17 @@ function TeamGrowthMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.3, 1]
+              }
+        }
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <span>Hiring across all teams</span>
@@ -120,7 +131,8 @@ function StatMagic({ value, label }: { value: string; label: string }) {
         viewport={{ once: true }}
         className="text-3xl font-bold text-primary"
       >
-        {count}{suffix}
+        {count}
+        {suffix}
       </motion.div>
       <div className="text-sm text-muted-foreground mt-1">{label}</div>
     </div>
@@ -150,10 +162,22 @@ export function CareersBenefits(): React.JSX.Element {
           {/* Company stats */}
           <BlurFade delay={0.1}>
             <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
-              <StatMagic value="50+" label="Team members" />
-              <StatMagic value="15+" label="Countries" />
-              <StatMagic value="10K+" label="Apps powered" />
-              <StatMagic value="100%" label="Remote" />
+              <StatMagic
+                value="50+"
+                label="Team members"
+              />
+              <StatMagic
+                value="15+"
+                label="Countries"
+              />
+              <StatMagic
+                value="10K+"
+                label="Apps powered"
+              />
+              <StatMagic
+                value="100%"
+                label="Remote"
+              />
             </div>
           </BlurFade>
         </div>
@@ -166,14 +190,21 @@ export function CareersBenefits(): React.JSX.Element {
               const Icon = benefit.icon;
 
               return (
-                <BlurFade key={index} delay={0.15 + index * 0.03}>
+                <BlurFade
+                  key={index}
+                  delay={0.15 + index * 0.03}
+                >
                   <motion.div
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                    animate={shouldReduceMotion ? undefined : {
-                      y: isHovered ? -6 : 0,
-                      scale: isHovered ? 1.02 : 1,
-                    }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : {
+                            y: isHovered ? -6 : 0,
+                            scale: isHovered ? 1.02 : 1
+                          }
+                    }
                     transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                     className={cn(
                       'group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm p-8 transition-all duration-200',
@@ -189,15 +220,26 @@ export function CareersBenefits(): React.JSX.Element {
                         colorTo="hsl(var(--primary)/0)"
                       />
                     )}
-                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={250} />
+                    <Spotlight
+                      className="from-primary/15 via-primary/5 to-transparent"
+                      size={250}
+                    />
 
                     <div className="relative">
                       <motion.div
-                        animate={shouldReduceMotion ? undefined : {
-                          scale: isHovered ? 1.15 : 1,
-                          rotate: isHovered ? 8 : 0,
+                        animate={
+                          shouldReduceMotion
+                            ? undefined
+                            : {
+                                scale: isHovered ? 1.15 : 1,
+                                rotate: isHovered ? 8 : 0
+                              }
+                        }
+                        transition={{
+                          type: 'spring',
+                          duration: 0.3,
+                          bounce: 0.2
                         }}
-                        transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
                         className="mb-6 flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary"
                       >
                         <Icon className="size-6" />
@@ -205,7 +247,9 @@ export function CareersBenefits(): React.JSX.Element {
                       <h3 className="mb-3 text-lg font-semibold group-hover:text-primary transition-colors">
                         {benefit.title}
                       </h3>
-                      <p className="text-muted-foreground">{benefit.description}</p>
+                      <p className="text-muted-foreground">
+                        {benefit.description}
+                      </p>
                     </div>
                   </motion.div>
                 </BlurFade>

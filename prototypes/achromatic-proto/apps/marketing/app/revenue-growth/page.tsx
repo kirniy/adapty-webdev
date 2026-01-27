@@ -2,15 +2,15 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
-import { RevenueGrowthHero } from '~/components/sections/revenue-growth-hero';
 import { RevenueGrowthFeatures } from '~/components/sections/revenue-growth-features';
+import { RevenueGrowthHero } from '~/components/sections/revenue-growth-hero';
 import {
-  StatsSwitcher,
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  StatsSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant, useHeroVariant } from '~/lib/debug-context';
 
 // Revenue Growth page: Maximize subscription revenue
 export default function RevenueGrowthPage(): React.JSX.Element {

@@ -19,7 +19,7 @@ function TrustCounterMagic() {
       return;
     }
     const interval = setInterval(() => {
-      setCount(prev => {
+      setCount((prev) => {
         if (prev >= 15000) return 15000;
         return prev + 500;
       });
@@ -48,7 +48,7 @@ const LOGOS = [
   { name: 'AppNation', file: '/logos/trusted-by/appnation.webp' },
   { name: 'Impala Studios', file: '/logos/trusted-by/impala-studios.svg' },
   { name: 'SocialKit', file: '/logos/trusted-by/socialkit.svg' },
-  { name: 'Almus', file: '/logos/trusted-by/almus.svg' },
+  { name: 'Almus', file: '/logos/trusted-by/almus.svg' }
 ];
 
 export function Logos(): React.JSX.Element {
@@ -58,10 +58,11 @@ export function Logos(): React.JSX.Element {
       <div className="container py-12 lg:py-16 relative z-10">
         <BlurFade className="mb-8 text-center">
           <p className="text-lg font-medium text-muted-foreground">
-            Trusted by <TrustCounterMagic /> apps and the world&apos;s largest app publishers
+            Trusted by <TrustCounterMagic /> apps and the world&apos;s largest
+            app publishers
           </p>
         </BlurFade>
-        
+
         {/* Large, static logo grid - prominent display */}
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16">
           {LOGOS.map((logo, index) => (

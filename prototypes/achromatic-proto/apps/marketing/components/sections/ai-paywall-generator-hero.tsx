@@ -2,18 +2,24 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, SparklesIcon, WandIcon, CodeIcon, LayoutIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowRightIcon,
+  CodeIcon,
+  LayoutIcon,
+  SparklesIcon,
+  WandIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
-import { SectionBackground } from '~/components/fragments/section-background';
-import { Spotlight } from '~/components/fragments/spotlight';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // AI generation magic animation
 function AIGenerationMagic() {
@@ -22,7 +28,7 @@ function AIGenerationMagic() {
   const steps = [
     { icon: CodeIcon, label: 'App URL', sublabel: 'yourapp.com' },
     { icon: SparklesIcon, label: 'AI analyzing...', sublabel: '' },
-    { icon: LayoutIcon, label: 'Paywall ready', sublabel: '' },
+    { icon: LayoutIcon, label: 'Paywall ready', sublabel: '' }
   ];
 
   React.useEffect(() => {
@@ -61,12 +67,14 @@ function AIGenerationMagic() {
               <motion.div
                 animate={{
                   scale: isActive ? 1.15 : 1,
-                  opacity: isActive ? 1 : isPast ? 0.6 : 0.3,
+                  opacity: isActive ? 1 : isPast ? 0.6 : 0.3
                 }}
                 transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
                 className={cn(
                   'flex size-10 items-center justify-center rounded-full transition-colors',
-                  isActive ? 'bg-primary text-white' : 'bg-muted text-muted-foreground'
+                  isActive
+                    ? 'bg-primary text-white'
+                    : 'bg-muted text-muted-foreground'
                 )}
               >
                 <Icon className="size-5" />
@@ -76,7 +84,7 @@ function AIGenerationMagic() {
                   <motion.div
                     animate={{
                       scaleX: isPast || isActive ? 1 : 0,
-                      opacity: isPast ? 1 : 0.3,
+                      opacity: isPast ? 1 : 0.3
                     }}
                     transition={{ duration: 0.3 }}
                     className="w-8 h-0.5 bg-primary origin-left"
@@ -100,7 +108,9 @@ function AIGenerationMagic() {
         >
           <div className="text-sm font-medium">{steps[step]?.label}</div>
           {steps[step]?.sublabel && (
-            <div className="text-xs text-muted-foreground mt-0.5">{steps[step]?.sublabel}</div>
+            <div className="text-xs text-muted-foreground mt-0.5">
+              {steps[step]?.sublabel}
+            </div>
           )}
         </motion.div>
       </AnimatePresence>
@@ -109,7 +119,7 @@ function AIGenerationMagic() {
       <div className="h-1.5 rounded-full bg-muted overflow-hidden">
         <motion.div
           animate={{
-            width: step === 0 ? '33%' : step === 1 ? '66%' : '100%',
+            width: step === 0 ? '33%' : step === 1 ? '66%' : '100%'
           }}
           transition={{ duration: 0.5 }}
           className="h-full bg-primary rounded-full"
@@ -155,7 +165,8 @@ function SpeedBadge() {
     >
       <WandIcon className="size-4 text-primary" />
       <span className="text-sm font-medium">
-        Ready in <span className="text-primary font-bold">{seconds}s</span> - No signup required
+        Ready in <span className="text-primary font-bold">{seconds}s</span> - No
+        signup required
       </span>
     </motion.div>
   );
@@ -163,7 +174,9 @@ function SpeedBadge() {
 
 export function AIPaywallGeneratorHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [hoveredButton, setHoveredButton] = React.useState<'try' | 'demo' | null>(null);
+  const [hoveredButton, setHoveredButton] = React.useState<
+    'try' | 'demo' | null
+  >(null);
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -192,7 +205,10 @@ export function AIPaywallGeneratorHero(): React.JSX.Element {
               whileHover={shouldReduceMotion ? undefined : { y: -4 }}
               className="mt-10 p-6 rounded-2xl border bg-background/50 backdrop-blur-sm max-w-sm mx-auto relative overflow-hidden"
             >
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={280}
+              />
               <div className="relative">
                 <div className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">
                   AI-powered generation
@@ -213,9 +229,13 @@ export function AIPaywallGeneratorHero(): React.JSX.Element {
               <motion.div
                 onMouseEnter={() => setHoveredButton('try')}
                 onMouseLeave={() => setHoveredButton(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredButton === 'try' ? -2 : 0,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: hoveredButton === 'try' ? -2 : 0
+                      }
+                }
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 className="relative"
               >
@@ -228,7 +248,11 @@ export function AIPaywallGeneratorHero(): React.JSX.Element {
                 >
                   Try AI Paywall Generator
                   <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: hoveredButton === 'try' ? 3 : 0 }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : { x: hoveredButton === 'try' ? 3 : 0 }
+                    }
                     transition={{ duration: 0.15 }}
                   >
                     <ArrowRightIcon className="ml-2 size-4" />
@@ -247,9 +271,13 @@ export function AIPaywallGeneratorHero(): React.JSX.Element {
               <motion.div
                 onMouseEnter={() => setHoveredButton('demo')}
                 onMouseLeave={() => setHoveredButton(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredButton === 'demo' ? -2 : 0,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: hoveredButton === 'demo' ? -2 : 0
+                      }
+                }
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               >
                 <Link

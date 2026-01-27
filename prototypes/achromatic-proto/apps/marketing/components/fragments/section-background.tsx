@@ -2,57 +2,22 @@
 
 import * as React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
+
 import {
-  useGridVariant,
-  useGridThicknessVariant,
   useGridColorVariant,
   useGridOpacityVariant,
+  useGridVariant,
   useGridZIndexVariant
 } from '~/lib/debug-context';
-import { FlickeringGrid } from '~/components/fragments/flickering-grid';
 
-// Cursor-tracking gradient component
-function CursorTrackingGradient({
-  colorHex,
-  opacityValue,
-  zIndexClass
-}: {
-  colorHex: string;
-  opacityValue: number;
-  zIndexClass: string;
-}) {
-  const [mousePos, setMousePos] = React.useState({ x: 50, y: 50 });
-  const shouldReduceMotion = useReducedMotion();
+/**
+ * SectionBackground Component
+ * 
+ * Provides subtle background effects for sections.
+ * Supports light theme with subtle gradient animations.
+ */
 
-  React.useEffect(() => {
-    if (shouldReduceMotion) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      // Convert to percentage of viewport
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      setMousePos({ x, y });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [shouldReduceMotion]);
-
-  const gradientColor = colorHex === 'currentColor' ? '#6720FF' : colorHex;
-
-  return (
-    <motion.div
-      className={`absolute inset-0 ${zIndexClass} pointer-events-none`}
-      animate={{
-        background: `radial-gradient(ellipse 80% 50% at ${mousePos.x}% ${mousePos.y}%, ${gradientColor}15 0%, transparent 50%)`,
-      }}
-      transition={{ duration: shouldReduceMotion ? 0 : 0.15, ease: 'linear' }}
-      style={{ opacity: opacityValue * 2 }} // Slightly more visible for cursor tracking
-    />
-  );
-}
-
-// Slow drift gradient component
+// Slow drift gradient component - Light theme optimized
 function SlowDriftGradient({
   colorHex,
   opacityValue,
@@ -63,7 +28,7 @@ function SlowDriftGradient({
   zIndexClass: string;
 }) {
   const shouldReduceMotion = useReducedMotion();
-  const gradientColor = colorHex === 'currentColor' ? '#6720FF' : colorHex;
+  const gradientColor = colorHex === 'currentColor' ? '#3B82F6' : colorHex;
 
   // If reduced motion, show static gradient
   if (shouldReduceMotion) {
@@ -72,7 +37,7 @@ function SlowDriftGradient({
         className={`absolute inset-0 ${zIndexClass} pointer-events-none`}
         style={{
           opacity: opacityValue * 1.5,
-          background: `radial-gradient(ellipse 60% 40% at 50% 50%, ${gradientColor}10 0%, transparent 60%)`,
+          background: `radial-gradient(ellipse 60% 40% at 50% 50%, ${gradientColor}08 0%, transparent 60%)`
         }}
       />
     );
@@ -83,17 +48,17 @@ function SlowDriftGradient({
       className={`absolute inset-0 ${zIndexClass} pointer-events-none`}
       animate={{
         background: [
-          `radial-gradient(ellipse 60% 40% at 30% 30%, ${gradientColor}12 0%, transparent 60%)`,
-          `radial-gradient(ellipse 50% 50% at 70% 40%, ${gradientColor}10 0%, transparent 55%)`,
-          `radial-gradient(ellipse 70% 35% at 50% 60%, ${gradientColor}12 0%, transparent 60%)`,
-          `radial-gradient(ellipse 55% 45% at 40% 35%, ${gradientColor}10 0%, transparent 55%)`,
-          `radial-gradient(ellipse 60% 40% at 30% 30%, ${gradientColor}12 0%, transparent 60%)`,
-        ],
+          `radial-gradient(ellipse 60% 40% at 30% 30%, ${gradientColor}06 0%, transparent 60%)`,
+          `radial-gradient(ellipse 50% 50% at 70% 40%, ${gradientColor}04 0%, transparent 55%)`,
+          `radial-gradient(ellipse 70% 35% at 50% 60%, ${gradientColor}06 0%, transparent 60%)`,
+          `radial-gradient(ellipse 55% 45% at 40% 35%, ${gradientColor}04 0%, transparent 55%)`,
+          `radial-gradient(ellipse 60% 40% at 30% 30%, ${gradientColor}06 0%, transparent 60%)`
+        ]
       }}
       transition={{
         duration: 20,
         ease: 'linear',
-        repeat: Infinity,
+        repeat: Infinity
       }}
       style={{ opacity: opacityValue * 1.5 }}
     />
@@ -101,14 +66,13 @@ function SlowDriftGradient({
 }
 
 export function SectionBackground({
-    height = 800,
-    className
+  height = 800,
+  className
 }: {
-    height?: number;
-    className?: string;
+  height?: number;
+  className?: string;
 }): React.JSX.Element | null {
   const gridVariant = useGridVariant();
-  const gridThickness = useGridThicknessVariant();
   const gridColor = useGridColorVariant();
   const gridOpacity = useGridOpacityVariant();
   const gridZIndex = useGridZIndexVariant();
@@ -117,37 +81,36 @@ export function SectionBackground({
 
   // Map variants to values
   const zIndexClass =
-    gridZIndex === 'deep' ? '-z-10' :
-    gridZIndex === 'back' ? '-z-1' :
-    gridZIndex === 'normal' ? 'z-0' :
-    'z-10';
+    gridZIndex === 'deep'
+      ? '-z-10'
+      : gridZIndex === 'back'
+        ? '-z-1'
+        : gridZIndex === 'normal'
+          ? 'z-0'
+          : 'z-10';
 
   const opacityValue =
-    gridOpacity === 'faint' ? 0.1 :
-    gridOpacity === 'subtle' ? 0.2 :
-    gridOpacity === 'visible' ? 0.4 :
-    0.6;
+    gridOpacity === 'faint'
+      ? 0.1
+      : gridOpacity === 'subtle'
+        ? 0.2
+        : gridOpacity === 'visible'
+          ? 0.4
+          : 0.6;
 
   const colorHex =
-    gridColor === 'muted' ? '#9CA3AF' :
-    gridColor === 'accent' ? '#6720FF' :
-    gridColor === 'blue' ? '#3B82F6' :
-    gridColor === 'purple' ? '#8B5CF6' :
-    'currentColor'; // Default uses current color (border usually)
+    gridColor === 'muted'
+      ? '#9CA3AF'
+      : gridColor === 'accent'
+        ? '#3B82F6'
+        : gridColor === 'blue'
+          ? '#3B82F6'
+          : gridColor === 'purple'
+            ? '#8B5CF6'
+            : 'currentColor';
 
-  // Cursor-tracking variant: Gradient follows mouse position
-  if (gridVariant === 'cursor-tracking') {
-    return (
-      <CursorTrackingGradient
-        colorHex={colorHex}
-        opacityValue={opacityValue}
-        zIndexClass={zIndexClass}
-      />
-    );
-  }
-
-  // Slow drift variant: Subtle animated gradient movement
-  if (gridVariant === 'slow-drift') {
+  // Slow drift variant: Subtle animated gradient movement (light theme)
+  if (gridVariant === 'slow-drift' || gridVariant === 'default') {
     return (
       <SlowDriftGradient
         colorHex={colorHex}
@@ -157,42 +120,51 @@ export function SectionBackground({
     );
   }
 
-  if (gridVariant === 'flickering') {
-     return (
-       <div className={`absolute inset-0 ${zIndexClass} pointer-events-none ${className}`}>
-        <FlickeringGrid
-          squareSize={4}
-          gridGap={6}
-          color={colorHex === 'currentColor' ? '#6B7280' : colorHex}
-          maxOpacity={opacityValue}
-          flickerChance={0.1}
-          className="size-full"
-          height={height}
-        />
-      </div>
-     )
+  // Cursor tracking - simplified for light theme
+  if (gridVariant === 'cursor-tracking') {
+    return (
+      <div
+        className={`absolute inset-0 ${zIndexClass} pointer-events-none ${className}`}
+        style={{
+          opacity: opacityValue,
+          background: `radial-gradient(ellipse 80% 50% at 50% 50%, ${colorHex === 'currentColor' ? '#3B82F6' : colorHex}08 0%, transparent 50%)`
+        }}
+      />
+    );
   }
 
-  // Default: Diagonal Lines using CSS repeating-linear-gradient (matches template's .bg-diagonal-lines)
-  // Template CSS: repeating-linear-gradient(-45deg, var(--background), var(--border) 1px, var(--background) 1px, var(--background) 8px)
-  const strokeWidth = gridThickness === 'thin' ? 0.5 : gridThickness === 'thick' ? 2 : 1;
-  const spacing = gridThickness === 'thin' ? 6 : gridThickness === 'thick' ? 12 : 8;
+  // Flickering grid - disabled for light theme (doesn't work well)
+  if (gridVariant === 'flickering') {
+    return (
+      <div
+        className={`absolute inset-0 ${zIndexClass} pointer-events-none ${className}`}
+        style={{
+          opacity: 0.03,
+          backgroundImage: `
+            linear-gradient(to right, #000 1px, transparent 1px),
+            linear-gradient(to bottom, #000 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px'
+        }}
+      />
+    );
+  }
 
-  // Build the gradient - uses CSS variables for theme support
-  const borderColor = colorHex === 'currentColor' ? 'var(--border)' : colorHex;
+  // Default: subtle diagonal lines
+  const borderColor = colorHex === 'currentColor' ? '#E5E7EB' : colorHex;
   const backgroundGradient = `repeating-linear-gradient(
     -45deg,
-    var(--background),
-    ${borderColor} ${strokeWidth}px,
-    var(--background) ${strokeWidth}px,
-    var(--background) ${spacing}px
+    transparent,
+    ${borderColor}20 1px,
+    transparent 1px,
+    transparent 12px
   )`;
 
   return (
     <div
       className={`absolute inset-0 ${zIndexClass} pointer-events-none ${className}`}
       style={{
-        opacity: opacityValue,
+        opacity: opacityValue * 0.5,
         backgroundImage: backgroundGradient
       }}
     />

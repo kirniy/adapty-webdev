@@ -1,6 +1,6 @@
 'use server';
-import { updateTag } from 'next/cache';
 
+import { updateTag } from 'next/cache';
 
 import { type Prisma } from '@workspace/database';
 import { prisma } from '@workspace/database/client';

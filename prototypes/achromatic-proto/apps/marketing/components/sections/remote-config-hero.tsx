@@ -2,18 +2,24 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, CloudIcon, RefreshCwIcon, SettingsIcon, CheckIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  CloudIcon,
+  RefreshCwIcon,
+  SettingsIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
-import { SectionBackground } from '~/components/fragments/section-background';
-import { Spotlight } from '~/components/fragments/spotlight';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // Remote config sync animation
 function ConfigSyncMagic() {
@@ -122,14 +128,18 @@ function NoUpdateBadge() {
       <div className="flex size-5 items-center justify-center rounded-full bg-emerald-500">
         <CheckIcon className="size-3 text-white" />
       </div>
-      <span className="text-sm text-emerald-600 font-medium">No app update required</span>
+      <span className="text-sm text-emerald-600 font-medium">
+        No app update required
+      </span>
     </motion.div>
   );
 }
 
 export function RemoteConfigHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [hoveredButton, setHoveredButton] = React.useState<'start' | 'demo' | null>(null);
+  const [hoveredButton, setHoveredButton] = React.useState<
+    'start' | 'demo' | null
+  >(null);
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -158,7 +168,10 @@ export function RemoteConfigHero(): React.JSX.Element {
               whileHover={shouldReduceMotion ? undefined : { y: -4 }}
               className="mt-10 p-6 rounded-2xl border bg-background/50 backdrop-blur-sm max-w-sm mx-auto relative overflow-hidden"
             >
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={280}
+              />
               <div className="relative">
                 <div className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">
                   Real-time config sync
@@ -174,9 +187,13 @@ export function RemoteConfigHero(): React.JSX.Element {
               <motion.div
                 onMouseEnter={() => setHoveredButton('start')}
                 onMouseLeave={() => setHoveredButton(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredButton === 'start' ? -2 : 0,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: hoveredButton === 'start' ? -2 : 0
+                      }
+                }
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 className="relative"
               >
@@ -189,7 +206,11 @@ export function RemoteConfigHero(): React.JSX.Element {
                 >
                   Start for free
                   <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: hoveredButton === 'start' ? 3 : 0 }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : { x: hoveredButton === 'start' ? 3 : 0 }
+                    }
                     transition={{ duration: 0.15 }}
                   >
                     <ArrowRightIcon className="ml-2 size-4" />
@@ -208,9 +229,13 @@ export function RemoteConfigHero(): React.JSX.Element {
               <motion.div
                 onMouseEnter={() => setHoveredButton('demo')}
                 onMouseLeave={() => setHoveredButton(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredButton === 'demo' ? -2 : 0,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: hoveredButton === 'demo' ? -2 : 0
+                      }
+                }
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               >
                 <Link

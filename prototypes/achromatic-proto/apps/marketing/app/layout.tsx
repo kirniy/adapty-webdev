@@ -9,10 +9,10 @@ import { baseUrl } from '@workspace/routes';
 import { Toaster } from '@workspace/ui/components/sonner';
 
 import { ColorAccentApplier } from '~/components/color-accent-applier';
+import { DebugMenu } from '~/components/debug/DebugMenu';
 import { FooterSection } from '~/components/footer-section';
 import { CookieBanner } from '~/components/fragments/cookie-banner';
 import { Navbar } from '~/components/navbar';
-import { DebugMenu } from '~/components/debug/DebugMenu';
 import { Providers } from './providers';
 
 export const viewport: Viewport = {
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl.Marketing),
   title: {
     default: `${APP_NAME} - In-App Subscription Infrastructure`,
-    template: `%s | ${APP_NAME}`,
+    template: `%s | ${APP_NAME}`
   },
   description: APP_DESCRIPTION,
   icons: {
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
       { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
-      { url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' }
     ],
-    apple: '/apple-touch-icon.png',
+    apple: '/apple-touch-icon.png'
   },
   manifest: `${baseUrl.Marketing}/manifest`,
   openGraph: {

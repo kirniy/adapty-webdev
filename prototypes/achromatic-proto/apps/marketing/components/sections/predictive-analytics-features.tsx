@@ -3,18 +3,18 @@
 import * as React from 'react';
 import Link from 'next/link';
 import {
-  TrendingUpIcon,
+  ArrowRightIcon,
+  BarChart3Icon,
+  BrainCircuitIcon,
+  CalendarCheckIcon,
   DollarSignIcon,
   FilterIcon,
-  TargetIcon,
-  UsersIcon,
-  CalendarCheckIcon,
-  ArrowRightIcon,
-  BrainCircuitIcon,
   LineChartIcon,
-  BarChart3Icon
+  TargetIcon,
+  TrendingUpIcon,
+  UsersIcon
 } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
 
@@ -54,10 +54,14 @@ function LTVChartMagic() {
         <motion.div
           key={`pred-${i}`}
           initial={{ height: 0, opacity: 0 }}
-          animate={shouldReduceMotion ? { height: `${h}%`, opacity: 1 } : {
-            height: [`${h - 10}%`, `${h}%`, `${h - 5}%`],
-            opacity: [0.6, 1, 0.8]
-          }}
+          animate={
+            shouldReduceMotion
+              ? { height: `${h}%`, opacity: 1 }
+              : {
+                  height: [`${h - 10}%`, `${h}%`, `${h - 5}%`],
+                  opacity: [0.6, 1, 0.8]
+                }
+          }
           transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
           className="w-4 rounded-t bg-primary/30 border border-primary/50 relative"
         >
@@ -101,9 +105,13 @@ function RevenuePredictionMagic() {
       </motion.div>
 
       <div className="flex flex-col">
-        <span className="text-[10px] text-muted-foreground">Predicted Revenue</span>
+        <span className="text-[10px] text-muted-foreground">
+          Predicted Revenue
+        </span>
         <div className="flex items-baseline gap-1">
-          <span className="text-2xl font-bold text-foreground">${displayValue}k</span>
+          <span className="text-2xl font-bold text-foreground">
+            ${displayValue}k
+          </span>
           <motion.span
             animate={shouldReduceMotion ? {} : { y: [0, -2, 0] }}
             transition={{ duration: 1, repeat: Infinity }}
@@ -127,20 +135,27 @@ function CohortPredictionMagic() {
       <div className="grid grid-cols-4 gap-0.5">
         {[...Array(16)].map((_, i) => {
           const row = Math.floor(i / 4);
-          const opacity = 1 - (row * 0.2) + (Math.random() * 0.1);
+          const opacity = 1 - row * 0.2 + Math.random() * 0.1;
           return (
             <motion.div
               key={i}
-              animate={shouldReduceMotion ? {} : {
-                opacity: [opacity * 0.5, opacity, opacity * 0.5],
-              }}
+              animate={
+                shouldReduceMotion
+                  ? {}
+                  : {
+                      opacity: [opacity * 0.5, opacity, opacity * 0.5]
+                    }
+              }
               transition={{ duration: 2, repeat: Infinity, delay: i * 0.05 }}
               className={cn(
-                "size-3 rounded-sm",
-                row === 0 ? "bg-primary" :
-                row === 1 ? "bg-primary/70" :
-                row === 2 ? "bg-primary/40" :
-                "bg-primary/20"
+                'size-3 rounded-sm',
+                row === 0
+                  ? 'bg-primary'
+                  : row === 1
+                    ? 'bg-primary/70'
+                    : row === 2
+                      ? 'bg-primary/40'
+                      : 'bg-primary/20'
               )}
             />
           );
@@ -196,13 +211,17 @@ function FilterMagic() {
             key={filter}
             animate={{
               scale: i === activeFilter ? 1.05 : 1,
-              backgroundColor: i === activeFilter ? 'hsl(var(--primary) / 0.1)' : 'transparent',
-              borderColor: i === activeFilter ? 'hsl(var(--primary) / 0.3)' : 'transparent'
+              backgroundColor:
+                i === activeFilter
+                  ? 'hsl(var(--primary) / 0.1)'
+                  : 'transparent',
+              borderColor:
+                i === activeFilter ? 'hsl(var(--primary) / 0.3)' : 'transparent'
             }}
             transition={{ duration: 0.2 }}
             className={cn(
-              "h-5 px-2 rounded text-[9px] font-medium flex items-center border",
-              i === activeFilter ? "text-primary" : "text-muted-foreground"
+              'h-5 px-2 rounded text-[9px] font-medium flex items-center border',
+              i === activeFilter ? 'text-primary' : 'text-muted-foreground'
             )}
           >
             {filter}
@@ -215,14 +234,23 @@ function FilterMagic() {
         {[80, 60, 45].map((w, i) => (
           <motion.div
             key={i}
-            animate={shouldReduceMotion ? {} : {
-              width: i === activeFilter ? [`${w - 20}%`, `${w}%`] : `${w * 0.7}%`,
-              opacity: i === activeFilter ? 1 : 0.4
-            }}
+            animate={
+              shouldReduceMotion
+                ? {}
+                : {
+                    width:
+                      i === activeFilter
+                        ? [`${w - 20}%`, `${w}%`]
+                        : `${w * 0.7}%`,
+                    opacity: i === activeFilter ? 1 : 0.4
+                  }
+            }
             transition={{ duration: 0.3 }}
             className={cn(
-              "h-4 rounded",
-              i === activeFilter ? "bg-primary/30 border border-primary/50" : "bg-muted"
+              'h-4 rounded',
+              i === activeFilter
+                ? 'bg-primary/30 border border-primary/50'
+                : 'bg-muted'
             )}
           />
         ))}
@@ -239,7 +267,10 @@ function AccuracyMagic() {
     <div className="mt-6 h-[80px] rounded-lg bg-muted/30 border border-border/50 p-4 flex items-center justify-center gap-4">
       {/* Circular progress */}
       <div className="relative size-14">
-        <svg className="size-14 -rotate-90" viewBox="0 0 36 36">
+        <svg
+          className="size-14 -rotate-90"
+          viewBox="0 0 36 36"
+        >
           <path
             d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
             fill="none"
@@ -253,9 +284,13 @@ function AccuracyMagic() {
             strokeWidth="3"
             strokeDasharray="90, 100"
             initial={{ strokeDashoffset: 100 }}
-            animate={shouldReduceMotion ? { strokeDashoffset: 0 } : {
-              strokeDashoffset: [100, 0, 0],
-            }}
+            animate={
+              shouldReduceMotion
+                ? { strokeDashoffset: 0 }
+                : {
+                    strokeDashoffset: [100, 0, 0]
+                  }
+            }
             transition={{ duration: 2, repeat: Infinity, times: [0, 0.5, 1] }}
           />
         </svg>
@@ -266,7 +301,9 @@ function AccuracyMagic() {
 
       <div className="flex flex-col">
         <span className="text-sm font-medium">Model Accuracy</span>
-        <span className="text-[10px] text-muted-foreground">2-quarter predictions</span>
+        <span className="text-[10px] text-muted-foreground">
+          2-quarter predictions
+        </span>
       </div>
     </div>
   );
@@ -283,21 +320,27 @@ function QuarterlyMagic() {
         <motion.div
           key={q}
           initial={{ opacity: 0, y: 10 }}
-          animate={shouldReduceMotion ? { opacity: 1, y: 0 } : {
-            opacity: [0.3, 1, 0.3],
-            y: [5, 0, 5],
-            scale: [0.95, 1, 0.95]
-          }}
+          animate={
+            shouldReduceMotion
+              ? { opacity: 1, y: 0 }
+              : {
+                  opacity: [0.3, 1, 0.3],
+                  y: [5, 0, 5],
+                  scale: [0.95, 1, 0.95]
+                }
+          }
           transition={{ duration: 3, repeat: Infinity, delay: i * 0.3 }}
           className={cn(
-            "flex flex-col items-center justify-center size-12 rounded-lg border",
-            i < 2 ? "bg-muted border-border" : "bg-primary/10 border-primary/30"
+            'flex flex-col items-center justify-center size-12 rounded-lg border',
+            i < 2 ? 'bg-muted border-border' : 'bg-primary/10 border-primary/30'
           )}
         >
-          <span className={cn(
-            "text-xs font-bold",
-            i < 2 ? "text-muted-foreground" : "text-primary"
-          )}>
+          <span
+            className={cn(
+              'text-xs font-bold',
+              i < 2 ? 'text-muted-foreground' : 'text-primary'
+            )}
+          >
             {q}
           </span>
           {i >= 2 && (
@@ -324,63 +367,73 @@ const BENEFITS = [
     id: 'ltv',
     icon: TrendingUpIcon,
     text: 'Find out the predicted LTV and revenue of your user cohorts.',
-    magic: LTVChartMagic,
+    magic: LTVChartMagic
   },
   {
     id: 'investment',
     icon: DollarSignIcon,
     text: 'See how much you can invest by being aware of the predicted payoff.',
-    magic: RevenuePredictionMagic,
+    magic: RevenuePredictionMagic
   },
   {
     id: 'cohorts',
     icon: TargetIcon,
     text: 'Learn which cohorts are likely to generate the highest revenue in the future.',
-    magic: CohortPredictionMagic,
-  },
+    magic: CohortPredictionMagic
+  }
 ];
 
 const FEATURES = [
   {
     id: 'quarterly',
     title: 'Predict the next 4 quarters',
-    description: 'Build LTV and revenue predictions for 3, 6, 9, or 12 months based on your historical data.',
+    description:
+      'Build LTV and revenue predictions for 3, 6, 9, or 12 months based on your historical data.',
     icon: CalendarCheckIcon,
-    magic: QuarterlyMagic,
+    magic: QuarterlyMagic
   },
   {
     id: 'filtering',
     title: 'Diverse filtering',
-    description: 'Filter and group the predicted LTV data by product, duration, country, and other attributes to find more insights.',
+    description:
+      'Filter and group the predicted LTV data by product, duration, country, and other attributes to find more insights.',
     icon: FilterIcon,
-    magic: FilterMagic,
+    magic: FilterMagic
   },
   {
     id: 'accuracy',
     title: 'Accurate prediction model',
-    description: "Our backtests show 90% accuracy with the real LTV when making predictions for the next 2 quarters.",
+    description:
+      'Our backtests show 90% accuracy with the real LTV when making predictions for the next 2 quarters.',
     icon: TargetIcon,
-    magic: AccuracyMagic,
+    magic: AccuracyMagic
   },
   {
     id: 'cohort',
     title: 'Cohort prediction',
-    description: 'The prediction model is tightly tied with the cohort chart that enables you to see how your subscribers renew, churn, and bring revenue each subscription period.',
+    description:
+      'The prediction model is tightly tied with the cohort chart that enables you to see how your subscribers renew, churn, and bring revenue each subscription period.',
     icon: UsersIcon,
-    magic: CohortPredictionMagic,
-  },
+    magic: CohortPredictionMagic
+  }
 ];
 
 const RELATED_PAGES = [
   { name: 'LTV analytics', href: '/ltv-analytics' },
-  { name: 'Revenue analytics', href: '/revenue-growth' },
+  { name: 'Revenue analytics', href: '/revenue-growth' }
 ];
 
 // =============================================================================
 // COMPONENTS
 // =============================================================================
 
-function BenefitCard({ benefit, index }: { benefit: typeof BENEFITS[0]; index: number }) {
+function BenefitCard({
+  benefit,
+  index
+}: {
+  benefit: (typeof BENEFITS)[0];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
   const MagicComponent = benefit.magic;
@@ -389,15 +442,21 @@ function BenefitCard({ benefit, index }: { benefit: typeof BENEFITS[0]; index: n
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      animate={shouldReduceMotion ? undefined : {
-        y: isHovered ? -4 : 0,
-      }}
+      animate={
+        shouldReduceMotion
+          ? undefined
+          : {
+              y: isHovered ? -4 : 0
+            }
+      }
       transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
     >
-      <div className={cn(
-        "relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group",
-        isHovered && "border-primary/30 "
-      )}>
+      <div
+        className={cn(
+          'relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group',
+          isHovered && 'border-primary/30 '
+        )}
+      >
         <Spotlight
           className="from-primary/20 via-primary/10 to-transparent"
           size={200}
@@ -414,16 +473,22 @@ function BenefitCard({ benefit, index }: { benefit: typeof BENEFITS[0]; index: n
         <div className="p-6 relative z-10">
           <div className="flex gap-4">
             <motion.div
-              animate={shouldReduceMotion ? undefined : {
-                scale: isHovered ? 1.1 : 1,
-                rotate: isHovered ? 5 : 0,
-              }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      scale: isHovered ? 1.1 : 1,
+                      rotate: isHovered ? 5 : 0
+                    }
+              }
               transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
               className="flex-shrink-0"
             >
               <benefit.icon className="size-6 text-primary" />
             </motion.div>
-            <p className="text-muted-foreground group-hover:text-foreground transition-colors">{benefit.text}</p>
+            <p className="text-muted-foreground group-hover:text-foreground transition-colors">
+              {benefit.text}
+            </p>
           </div>
 
           {/* Magic Area */}
@@ -434,7 +499,13 @@ function BenefitCard({ benefit, index }: { benefit: typeof BENEFITS[0]; index: n
   );
 }
 
-function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: number }) {
+function FeatureCard({
+  feature,
+  index
+}: {
+  feature: (typeof FEATURES)[0];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
   const MagicComponent = feature.magic;
@@ -443,16 +514,22 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      animate={shouldReduceMotion ? undefined : {
-        y: isHovered ? -6 : 0,
-        scale: isHovered ? 1.01 : 1,
-      }}
+      animate={
+        shouldReduceMotion
+          ? undefined
+          : {
+              y: isHovered ? -6 : 0,
+              scale: isHovered ? 1.01 : 1
+            }
+      }
       transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
     >
-      <div className={cn(
-        "relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group",
-        isHovered && "border-primary/30 "
-      )}>
+      <div
+        className={cn(
+          'relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group',
+          isHovered && 'border-primary/30 '
+        )}
+      >
         <Spotlight
           className="from-primary/20 via-primary/10 to-transparent"
           size={300}
@@ -468,19 +545,25 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
         )}
         <div className="p-8 relative z-10">
           <motion.div
-            animate={shouldReduceMotion ? undefined : {
-              scale: isHovered ? 1.15 : 1,
-              rotate: isHovered ? 5 : 0,
-            }}
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    scale: isHovered ? 1.15 : 1,
+                    rotate: isHovered ? 5 : 0
+                  }
+            }
             transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
             className={cn(
-              "flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors",
-              isHovered && "bg-primary/20"
+              'flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors',
+              isHovered && 'bg-primary/20'
             )}
           >
             <feature.icon className="size-6" />
           </motion.div>
-          <h3 className="mt-4 text-xl font-semibold group-hover:text-primary transition-colors">{feature.title}</h3>
+          <h3 className="mt-4 text-xl font-semibold group-hover:text-primary transition-colors">
+            {feature.title}
+          </h3>
           <p className="mt-2 text-muted-foreground">{feature.description}</p>
 
           {/* Magic Area */}
@@ -491,7 +574,13 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
   );
 }
 
-function RelatedPageLink({ page, index }: { page: typeof RELATED_PAGES[0]; index: number }) {
+function RelatedPageLink({
+  page,
+  index
+}: {
+  page: (typeof RELATED_PAGES)[0];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
 
@@ -506,8 +595,8 @@ function RelatedPageLink({ page, index }: { page: typeof RELATED_PAGES[0]; index
       <Link
         href={page.href}
         className={cn(
-          "flex items-center gap-2 rounded-lg border bg-card px-4 py-3 text-sm font-medium transition-all duration-150",
-          isHovered && "border-primary/30 text-primary "
+          'flex items-center gap-2 rounded-lg border bg-card px-4 py-3 text-sm font-medium transition-all duration-150',
+          isHovered && 'border-primary/30 text-primary '
         )}
       >
         {page.name}
@@ -543,8 +632,14 @@ export function PredictiveAnalyticsFeatures(): React.JSX.Element {
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {BENEFITS.map((benefit, index) => (
-            <BlurFade key={benefit.id} delay={0.1 + index * 0.05}>
-              <BenefitCard benefit={benefit} index={index} />
+            <BlurFade
+              key={benefit.id}
+              delay={0.1 + index * 0.05}
+            >
+              <BenefitCard
+                benefit={benefit}
+                index={index}
+              />
             </BlurFade>
           ))}
         </div>
@@ -561,8 +656,14 @@ export function PredictiveAnalyticsFeatures(): React.JSX.Element {
 
         <div className="mt-12 grid gap-8 md:grid-cols-2">
           {FEATURES.map((feature, index) => (
-            <BlurFade key={feature.id} delay={0.3 + index * 0.05}>
-              <FeatureCard feature={feature} index={index} />
+            <BlurFade
+              key={feature.id}
+              delay={0.3 + index * 0.05}
+            >
+              <FeatureCard
+                feature={feature}
+                index={index}
+              />
             </BlurFade>
           ))}
         </div>
@@ -591,8 +692,8 @@ export function PredictiveAnalyticsFeatures(): React.JSX.Element {
                 <BrainCircuitIcon className="size-8 text-primary/50 mb-4" />
                 <blockquote className="text-lg italic text-muted-foreground">
                   "We've been using Adapty's analytics for a long time, but the
-                  predictive analytics feature turned out to be our crystal ball for
-                  future growth."
+                  predictive analytics feature turned out to be our crystal ball
+                  for future growth."
                 </blockquote>
                 <div className="mt-6">
                   <p className="font-semibold">Sergey Lagutyonok</p>
@@ -636,8 +737,12 @@ export function PredictiveAnalyticsFeatures(): React.JSX.Element {
                   </p>
                   <div className="mt-6">
                     <motion.div
-                      whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }}
-                      whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+                      whileHover={
+                        shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }
+                      }
+                      whileTap={
+                        shouldReduceMotion ? undefined : { scale: 0.98 }
+                      }
                       transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                       className="inline-block"
                     >
@@ -653,10 +758,18 @@ export function PredictiveAnalyticsFeatures(): React.JSX.Element {
                 </div>
                 <div className="flex justify-center">
                   <motion.div
-                    animate={shouldReduceMotion ? {} : {
-                      y: [0, -10, 0],
+                    animate={
+                      shouldReduceMotion
+                        ? {}
+                        : {
+                            y: [0, -10, 0]
+                          }
+                    }
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: 'easeInOut'
                     }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                     className="relative h-48 w-full max-w-sm rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center"
                   >
                     <LineChartIcon className="size-20 text-primary/30" />
@@ -673,7 +786,11 @@ export function PredictiveAnalyticsFeatures(): React.JSX.Element {
             <h2 className="text-xl font-semibold text-center">Learn more</h2>
             <div className="mt-6 flex flex-wrap justify-center gap-4">
               {RELATED_PAGES.map((page, index) => (
-                <RelatedPageLink key={page.href} page={page} index={index} />
+                <RelatedPageLink
+                  key={page.href}
+                  page={page}
+                  index={index}
+                />
               ))}
             </div>
           </div>

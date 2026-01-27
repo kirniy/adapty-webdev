@@ -2,9 +2,12 @@
 
 import * as React from 'react';
 
-import { useHeroVariant } from '~/lib/debug-context';
 import { Contact } from '~/components/sections/contact';
-import { FAQSwitcher, CTASwitcher } from '~/components/sections/section-switchers';
+import {
+  CTASwitcher,
+  FAQSwitcher
+} from '~/components/sections/section-switchers';
+import { useHeroVariant } from '~/lib/debug-context';
 
 // Contact page: Contact form with FAQ support
 export default function ContactPage(): React.JSX.Element {

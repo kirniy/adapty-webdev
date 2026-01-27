@@ -2,14 +2,17 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useLtvAnalyticsFeaturesVariant } from '~/lib/debug-context';
-import { LTVAnalyticsHero } from '~/components/sections/ltv-analytics-hero';
 import { LTVAnalyticsFeatures } from '~/components/sections/ltv-analytics-features';
+import { LTVAnalyticsHero } from '~/components/sections/ltv-analytics-hero';
 import {
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import {
+  useHeroVariant,
+  useLtvAnalyticsFeaturesVariant
+} from '~/lib/debug-context';
 
 // LTV Analytics page: Revenue prediction and analytics features
 export default function LTVAnalyticsPage(): React.JSX.Element {
@@ -22,7 +25,9 @@ export default function LTVAnalyticsPage(): React.JSX.Element {
       {heroVariant !== 'off' && <LTVAnalyticsHero />}
 
       {/* Analytics features */}
-      {featuresVariant !== 'off' && <LTVAnalyticsFeatures variant={featuresVariant} />}
+      {featuresVariant !== 'off' && (
+        <LTVAnalyticsFeatures variant={featuresVariant} />
+      )}
 
       {/* Testimonials - shared switcher */}
       <TestimonialsSwitcher />

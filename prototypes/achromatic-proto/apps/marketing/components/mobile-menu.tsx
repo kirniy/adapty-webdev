@@ -4,11 +4,11 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronLeftIcon, ChevronRightIcon, XIcon } from 'lucide-react';
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { routes } from '@workspace/routes';
-import { Button, buttonVariants } from '@workspace/ui/components/button';
 import { Badge } from '@workspace/ui/components/badge';
+import { Button, buttonVariants } from '@workspace/ui/components/button';
 import { Logo } from '@workspace/ui/components/logo';
 import { Portal } from '@workspace/ui/components/portal';
 import { ThemeSwitcher } from '@workspace/ui/components/theme-switcher';
@@ -16,10 +16,7 @@ import { RemoveScroll } from '@workspace/ui/lib/remove-scroll';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { LanguageSwitcher } from '~/components/language-switcher';
-import {
-  MOBILE_MAIN_MENU,
-  MOBILE_SUBMENU_DATA,
-} from '~/lib/menu-data';
+import { MOBILE_MAIN_MENU, MOBILE_SUBMENU_DATA } from '~/lib/menu-data';
 
 // ============================================================================
 // MOBILE MENU COMPONENT
@@ -100,9 +97,7 @@ export function MobileMenu({
           <motion.div
             className="w-5 origin-center border-t-2 border-primary"
             animate={
-              open
-                ? { rotate: '-45deg', y: '-5px' }
-                : { rotate: '0deg', y: 0 }
+              open ? { rotate: '-45deg', y: '-5px' } : { rotate: '0deg', y: 0 }
             }
             transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
           />
@@ -112,7 +107,10 @@ export function MobileMenu({
       {/* Mobile menu panel (portal + scroll lock) */}
       {open && (
         <Portal asChild>
-          <RemoveScroll allowPinchZoom enabled>
+          <RemoveScroll
+            allowPinchZoom
+            enabled
+          >
             <AnimatePresence mode="wait">
               {/* Backdrop */}
               <motion.div
@@ -134,7 +132,7 @@ export function MobileMenu({
                 transition={{
                   type: 'spring',
                   duration: shouldReduceMotion ? 0.01 : 0.4,
-                  bounce: 0.1,
+                  bounce: 0.1
                 }}
                 className="fixed inset-y-0 right-0 z-50 w-[85%] max-w-[400px] bg-background "
               >
@@ -232,7 +230,10 @@ type MainMenuViewProps = {
   onLinkClick: () => void;
 };
 
-function MainMenuView({ onSubmenuClick, onLinkClick }: MainMenuViewProps): React.JSX.Element {
+function MainMenuView({
+  onSubmenuClick,
+  onLinkClick
+}: MainMenuViewProps): React.JSX.Element {
   return (
     <motion.div
       initial={{ opacity: 0, x: -16, filter: 'blur(4px)' }}
@@ -290,7 +291,11 @@ type SubmenuViewProps = {
   onLinkClick: () => void;
 };
 
-function SubmenuView({ menuKey, onBack, onLinkClick }: SubmenuViewProps): React.JSX.Element {
+function SubmenuView({
+  menuKey,
+  onBack,
+  onLinkClick
+}: SubmenuViewProps): React.JSX.Element {
   const menuData = MOBILE_SUBMENU_DATA[menuKey];
 
   if (!menuData) {
@@ -337,13 +342,18 @@ function SubmenuView({ menuKey, onBack, onLinkClick }: SubmenuViewProps): React.
               key={link.title}
               href={link.href}
               target={link.href.startsWith('http') ? '_blank' : undefined}
-              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              rel={
+                link.href.startsWith('http') ? 'noopener noreferrer' : undefined
+              }
               onClick={onLinkClick}
               className="flex items-center gap-2 py-2.5 text-[15px] font-semibold text-foreground transition-colors hover:text-primary"
             >
               {link.title}
               {link.badge && (
-                <Badge variant="secondary" className="h-5 rounded-full px-2 text-[10px] font-semibold uppercase">
+                <Badge
+                  variant="secondary"
+                  className="h-5 rounded-full px-2 text-[10px] font-semibold uppercase"
+                >
                   {link.badge}
                 </Badge>
               )}
@@ -354,7 +364,10 @@ function SubmenuView({ menuKey, onBack, onLinkClick }: SubmenuViewProps): React.
 
       {/* Sections */}
       {menuData.sections?.map((section) => (
-        <div key={section.title} className="mb-6">
+        <div
+          key={section.title}
+          className="mb-6"
+        >
           <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             {section.title}
           </h3>
@@ -363,13 +376,18 @@ function SubmenuView({ menuKey, onBack, onLinkClick }: SubmenuViewProps): React.
               key={item.title}
               href={item.href}
               target={item.href.startsWith('http') ? '_blank' : undefined}
-              rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              rel={
+                item.href.startsWith('http') ? 'noopener noreferrer' : undefined
+              }
               onClick={onLinkClick}
               className="flex items-center gap-2 py-2.5 text-[15px] text-foreground transition-colors hover:text-primary"
             >
               {item.title}
               {item.badge && (
-                <Badge variant="secondary" className="h-5 rounded-full px-2 text-[10px] font-semibold uppercase">
+                <Badge
+                  variant="secondary"
+                  className="h-5 rounded-full px-2 text-[10px] font-semibold uppercase"
+                >
                   {item.badge}
                 </Badge>
               )}

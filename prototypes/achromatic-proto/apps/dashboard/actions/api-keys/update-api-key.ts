@@ -1,6 +1,6 @@
 'use server';
-import { updateTag } from 'next/cache';
 
+import { updateTag } from 'next/cache';
 import { startOfDay } from 'date-fns';
 
 import { NotFoundError } from '@workspace/common/errors';

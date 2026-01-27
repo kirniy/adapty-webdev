@@ -2,18 +2,24 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, CalendarIcon, DownloadIcon, DollarSignIcon, ClockIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowRightIcon,
+  CalendarIcon,
+  ClockIcon,
+  DollarSignIcon,
+  DownloadIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { SectionBackground } from '~/components/fragments/section-background';
-import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { Spotlight } from '~/components/fragments/spotlight';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // Calendar magic animation showing fiscal weeks
 function CalendarPreviewMagic() {
@@ -23,7 +29,7 @@ function CalendarPreviewMagic() {
     { label: 'Week 1', days: [1, 2, 3, 4, 5, 6, 7] },
     { label: 'Week 2', days: [8, 9, 10, 11, 12, 13, 14] },
     { label: 'Week 3', days: [15, 16, 17, 18, 19, 20, 21] },
-    { label: 'Week 4', days: [22, 23, 24, 25, 26, 27, 28] },
+    { label: 'Week 4', days: [22, 23, 24, 25, 26, 27, 28] }
   ];
   const payDays = [12, 26]; // Example paydays
 
@@ -67,14 +73,16 @@ function CalendarPreviewMagic() {
                 key={day}
                 animate={{
                   scale: isCurrentWeek ? 1.05 : 0.95,
-                  opacity: isCurrentWeek ? 1 : 0.5,
+                  opacity: isCurrentWeek ? 1 : 0.5
                 }}
                 transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
                 className={cn(
                   'size-6 rounded text-[10px] flex items-center justify-center font-medium',
                   isPayday && 'bg-emerald-500 text-white',
                   !isPayday && isCurrentWeek && 'bg-primary/20 text-primary',
-                  !isPayday && !isCurrentWeek && 'bg-muted text-muted-foreground'
+                  !isPayday &&
+                    !isCurrentWeek &&
+                    'bg-muted text-muted-foreground'
                 )}
               >
                 {day}
@@ -138,7 +146,8 @@ function PaydayCountdownMagic() {
     >
       <DollarSignIcon className="size-4 text-emerald-500" />
       <span className="text-sm font-medium">
-        Next payday in <span className="text-emerald-600 font-bold">{days} days</span>
+        Next payday in{' '}
+        <span className="text-emerald-600 font-bold">{days} days</span>
       </span>
     </motion.div>
   );
@@ -173,7 +182,10 @@ export function AppleFiscalCalendarHero(): React.JSX.Element {
               whileHover={shouldReduceMotion ? undefined : { y: -4 }}
               className="p-6 rounded-2xl border bg-background/50 backdrop-blur-sm max-w-xs mx-auto relative overflow-hidden"
             >
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={280}
+              />
               <div className="relative">
                 <div className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">
                   Fiscal month preview
@@ -193,7 +205,7 @@ export function AppleFiscalCalendarHero(): React.JSX.Element {
                 onMouseEnter={() => setIsHovered('pdf')}
                 onMouseLeave={() => setIsHovered(null)}
                 animate={{
-                  y: shouldReduceMotion ? 0 : isHovered === 'pdf' ? -2 : 0,
+                  y: shouldReduceMotion ? 0 : isHovered === 'pdf' ? -2 : 0
                 }}
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 className="relative"
@@ -224,7 +236,7 @@ export function AppleFiscalCalendarHero(): React.JSX.Element {
                 onMouseEnter={() => setIsHovered('gcal')}
                 onMouseLeave={() => setIsHovered(null)}
                 animate={{
-                  y: shouldReduceMotion ? 0 : isHovered === 'gcal' ? -2 : 0,
+                  y: shouldReduceMotion ? 0 : isHovered === 'gcal' ? -2 : 0
                 }}
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               >

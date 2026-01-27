@@ -9,18 +9,18 @@ import { Button, buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
 import { Spotlight } from '~/components/fragments/spotlight';
-import { BorderBeam } from '~/components/fragments/border-beam';
-import { SectionBackground } from '~/components/fragments/section-background';
 
 const COMPETITORS = [
   { name: 'RevenueCat', slug: 'revenuecat' },
   { name: 'Qonversion', slug: 'qonversion' },
   { name: 'Purchasely', slug: 'purchasely' },
   { name: 'Superwall', slug: 'superwall' },
-  { name: 'In-house Solution', slug: 'in-house-development' },
+  { name: 'In-house Solution', slug: 'in-house-development' }
 ];
 
 // Animated counter for win rate
@@ -99,9 +99,13 @@ export function CompareHero(): React.JSX.Element {
               <motion.div
                 onMouseEnter={() => setIsCtaHovered(true)}
                 onMouseLeave={() => setIsCtaHovered(false)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: isCtaHovered ? -2 : 0,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: isCtaHovered ? -2 : 0
+                      }
+                }
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 className="inline-block"
               >
@@ -114,7 +118,11 @@ export function CompareHero(): React.JSX.Element {
                 >
                   Schedule A Demo
                   <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: isCtaHovered ? 3 : 0 }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : { x: isCtaHovered ? 3 : 0 }
+                    }
                     transition={{ duration: 0.15 }}
                   >
                     <ArrowRightIcon className="ml-2 size-4" />
@@ -132,14 +140,21 @@ export function CompareHero(): React.JSX.Element {
             </h2>
             <div className="flex flex-wrap justify-center gap-4">
               {COMPETITORS.map((competitor, index) => (
-                <BlurFade key={competitor.slug} delay={0.25 + index * 0.03}>
+                <BlurFade
+                  key={competitor.slug}
+                  delay={0.25 + index * 0.03}
+                >
                   <motion.div
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                    animate={shouldReduceMotion ? undefined : {
-                      y: hoveredIndex === index ? -4 : 0,
-                      scale: hoveredIndex === index ? 1.02 : 1,
-                    }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : {
+                            y: hoveredIndex === index ? -4 : 0,
+                            scale: hoveredIndex === index ? 1.02 : 1
+                          }
+                    }
                     transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   >
                     <Link
@@ -158,15 +173,22 @@ export function CompareHero(): React.JSX.Element {
                           colorTo="hsl(var(--primary)/0)"
                         />
                       )}
-                      <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={150} />
+                      <Spotlight
+                        className="from-primary/15 via-primary/5 to-transparent"
+                        size={150}
+                      />
                       <span className="relative group-hover:text-primary transition-colors">
                         {competitor.name}
                       </span>
                       <motion.span
-                        animate={shouldReduceMotion ? undefined : {
-                          x: hoveredIndex === index ? 4 : 0,
-                          opacity: hoveredIndex === index ? 1 : 0,
-                        }}
+                        animate={
+                          shouldReduceMotion
+                            ? undefined
+                            : {
+                                x: hoveredIndex === index ? 4 : 0,
+                                opacity: hoveredIndex === index ? 1 : 0
+                              }
+                        }
                         transition={{ duration: 0.15 }}
                         className="relative ml-2"
                       >
@@ -184,13 +206,20 @@ export function CompareHero(): React.JSX.Element {
           <motion.div
             onMouseEnter={() => setIsMigrationHovered(true)}
             onMouseLeave={() => setIsMigrationHovered(false)}
-            animate={shouldReduceMotion ? undefined : {
-              y: isMigrationHovered ? -4 : 0,
-            }}
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    y: isMigrationHovered ? -4 : 0
+                  }
+            }
             transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
             className="mt-20 relative rounded-2xl border bg-gradient-to-br from-primary/5 via-background/80 to-background/50 border-primary/20 p-8 md:p-12 overflow-hidden"
           >
-            <Spotlight className="from-primary/20 via-primary/5 to-transparent" size={400} />
+            <Spotlight
+              className="from-primary/20 via-primary/5 to-transparent"
+              size={400}
+            />
             <BorderBeam
               size={250}
               duration={15}
@@ -212,11 +241,19 @@ export function CompareHero(): React.JSX.Element {
 
                 {/* Migration benefits */}
                 <div className="mt-6 space-y-3">
-                  {['Zero downtime migration', 'Full data integrity', 'Dedicated support team'].map((benefit, i) => (
+                  {[
+                    'Zero downtime migration',
+                    'Full data integrity',
+                    'Dedicated support team'
+                  ].map((benefit, i) => (
                     <motion.div
                       key={benefit}
-                      initial={shouldReduceMotion ? undefined : { opacity: 0, x: -10 }}
-                      whileInView={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
+                      initial={
+                        shouldReduceMotion ? undefined : { opacity: 0, x: -10 }
+                      }
+                      whileInView={
+                        shouldReduceMotion ? undefined : { opacity: 1, x: 0 }
+                      }
                       transition={{ delay: 0.1 + i * 0.1 }}
                       viewport={{ once: true }}
                       className="flex items-center gap-2 text-sm"
@@ -250,16 +287,22 @@ export function CompareHero(): React.JSX.Element {
                 {/* Migration visualization */}
                 <div className="relative flex items-center justify-center gap-4">
                   <motion.div
-                    animate={shouldReduceMotion ? undefined : { scale: [1, 0.95, 1] }}
+                    animate={
+                      shouldReduceMotion ? undefined : { scale: [1, 0.95, 1] }
+                    }
                     transition={{ duration: 2, repeat: Infinity }}
                     className="h-16 w-24 rounded-lg bg-muted/50 border border-border/50 flex items-center justify-center"
                   >
-                    <span className="text-xs text-muted-foreground">Old SDK</span>
+                    <span className="text-xs text-muted-foreground">
+                      Old SDK
+                    </span>
                   </motion.div>
 
                   <div className="relative w-16">
                     <motion.div
-                      animate={shouldReduceMotion ? undefined : { x: [0, 8, 0] }}
+                      animate={
+                        shouldReduceMotion ? undefined : { x: [0, 8, 0] }
+                      }
                       transition={{ duration: 1.5, repeat: Infinity }}
                       className="flex items-center justify-center"
                     >
@@ -268,18 +311,26 @@ export function CompareHero(): React.JSX.Element {
                     {!shouldReduceMotion && (
                       <motion.div
                         animate={{ x: ['-100%', '200%'] }}
-                        transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: 'linear'
+                        }}
                         className="absolute top-1/2 left-0 h-0.5 w-4 bg-primary rounded"
                       />
                     )}
                   </div>
 
                   <motion.div
-                    animate={shouldReduceMotion ? undefined : { scale: [1, 1.05, 1] }}
+                    animate={
+                      shouldReduceMotion ? undefined : { scale: [1, 1.05, 1] }
+                    }
                     transition={{ duration: 2, repeat: Infinity }}
                     className="h-16 w-24 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center"
                   >
-                    <span className="text-xs text-primary font-medium">Adapty</span>
+                    <span className="text-xs text-primary font-medium">
+                      Adapty
+                    </span>
                   </motion.div>
                 </div>
               </div>

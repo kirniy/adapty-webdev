@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
-import { PaywallLocalizationHero } from '~/components/sections/paywall-localization-hero';
 import { PaywallLocalizationFeatures } from '~/components/sections/paywall-localization-features';
+import { PaywallLocalizationHero } from '~/components/sections/paywall-localization-hero';
 import {
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant, useHeroVariant } from '~/lib/debug-context';
 
 // Paywall Localization page: Multi-language paywall support
 export default function PaywallLocalizationPage(): React.JSX.Element {

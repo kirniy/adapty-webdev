@@ -22,70 +22,59 @@
  * }
  * ```
  */
-
 import * as React from 'react';
-
-// Import all variant hooks
-import {
-  useHeroVariant,
-  useLogosVariant,
-  useFeaturesVariant,
-  useRolesVariant,
-  useStatsVariant,
-  useTestimonialsVariant,
-  useFaqVariant,
-  useCtaVariant,
-  useBlogVariant,
-  useSdkVariant,
-} from '~/lib/debug-context';
-
-// Hero components
-import { Hero } from '~/components/sections/hero';
-import { HeroSplit } from '~/components/sections/hero-split';
-import { PricingHero } from '~/components/sections/pricing-hero';
-import { StoryHero } from '~/components/sections/story-hero';
-import { Contact } from '~/components/sections/contact';
-
-// Logos components
-import { Logos } from '~/components/sections/logos';
-import { LogosLinear } from '~/components/sections/logos-linear';
-import { LogosMarquee } from '~/components/sections/logos-marquee';
-
-// Features components
-import { Solution } from '~/components/sections/solution';
-import { FeaturesTabbed } from '~/components/sections/features-tabbed';
-import { FeaturesBentoTabs } from '~/components/sections/features-bento-tabs';
-
-// Roles
-import { Roles } from '~/components/sections/roles';
-
-// Stats components
-import { Stats } from '~/components/sections/stats';
-import { StatsOrbital } from '~/components/sections/stats-orbital';
-import { StoryTimeline } from '~/components/sections/story-timeline';
-
-// Testimonials components
-import { Testimonials } from '~/components/sections/testimonials';
-import { TestimonialsEditorial } from '~/components/sections/testimonials-editorial';
-import { TestimonialsClean } from '~/components/sections/testimonials-clean';
-import { StoryTeam } from '~/components/sections/story-team';
-
-// FAQ components
-import { FAQ } from '~/components/sections/faq';
-import { FAQCards } from '~/components/sections/faq-cards';
-import { PricingFAQ } from '~/components/sections/pricing-faq';
-
-// CTA components
-import { CTA } from '~/components/sections/cta';
-import { CTABeam } from '~/components/sections/cta-beam';
-import { CareersPositions } from '~/components/sections/careers-positions';
 
 // Blog components
 import { BlogPosts } from '~/components/sections/blog-posts';
 import { BlogPostsFeatured } from '~/components/sections/blog-posts-featured';
-
+import { CareersPositions } from '~/components/sections/careers-positions';
+import { Contact } from '~/components/sections/contact';
+// CTA components
+import { CTA } from '~/components/sections/cta';
+import { CTABeam } from '~/components/sections/cta-beam';
+// FAQ components
+import { FAQ } from '~/components/sections/faq';
+import { FAQCards } from '~/components/sections/faq-cards';
+import { FeaturesBentoTabs } from '~/components/sections/features-bento-tabs';
+import { FeaturesTabbed } from '~/components/sections/features-tabbed';
+// Hero components
+import { Hero } from '~/components/sections/hero';
+import { HeroSplit } from '~/components/sections/hero-split';
+// Logos components
+import { Logos } from '~/components/sections/logos';
+import { LogosLinear } from '~/components/sections/logos-linear';
+import { LogosMarquee } from '~/components/sections/logos-marquee';
+import { PricingFAQ } from '~/components/sections/pricing-faq';
+import { PricingHero } from '~/components/sections/pricing-hero';
+// Roles
+import { Roles } from '~/components/sections/roles';
 // SDK
 import { SDKCode } from '~/components/sections/sdk-code';
+// Features components
+import { Solution } from '~/components/sections/solution';
+// Stats components
+import { Stats } from '~/components/sections/stats';
+import { StatsOrbital } from '~/components/sections/stats-orbital';
+import { StoryHero } from '~/components/sections/story-hero';
+import { StoryTeam } from '~/components/sections/story-team';
+import { StoryTimeline } from '~/components/sections/story-timeline';
+// Testimonials components
+import { Testimonials } from '~/components/sections/testimonials';
+import { TestimonialsClean } from '~/components/sections/testimonials-clean';
+import { TestimonialsEditorial } from '~/components/sections/testimonials-editorial';
+// Import all variant hooks
+import {
+  useBlogVariant,
+  useCtaVariant,
+  useFaqVariant,
+  useFeaturesVariant,
+  useHeroVariant,
+  useLogosVariant,
+  useRolesVariant,
+  useSdkVariant,
+  useStatsVariant,
+  useTestimonialsVariant
+} from '~/lib/debug-context';
 
 // ============================================================================
 // HERO SWITCHER

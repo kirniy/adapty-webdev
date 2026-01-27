@@ -19,17 +19,18 @@ export function Footer(): React.JSX.Element {
     toast.error("I'm not implemented yet.");
   };
   return (
-    <footer className="px-2 pb-10 pt-20 sm:container">
+    <footer className="pb-10 pt-16 lg:pt-20">
       <h2 className="sr-only">Footer</h2>
-      <div className="container">
+      <div className="container px-4 sm:px-6">
         <div className="xl:grid xl:grid-cols-6 xl:gap-8">
           <div className="hidden xl:block">
             <Logo />
             <p className="mt-3 text-xs text-muted-foreground">
-              Revenue management for in-app purchases. Save months on integrating subscriptions.
+              Revenue management for in-app purchases. Save months on
+              integrating subscriptions.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:col-span-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:grid-cols-4 lg:col-span-3">
             {FOOTER_LINKS.map((group) => (
               <div key={group.title}>
                 <h3 className="text-sm font-semibold text-foreground">
@@ -63,7 +64,7 @@ export function Footer(): React.JSX.Element {
             <h3 className="text-sm font-semibold text-foreground">
               Subscribe to our paywall newsletter
             </h3>
-            <form className="py-2 sm:flex sm:max-w-md">
+            <form className="py-2 flex flex-col sm:flex-row sm:max-w-md gap-3 sm:gap-0">
               <div className="w-full min-w-0">
                 <Input
                   type="email"
@@ -71,7 +72,7 @@ export function Footer(): React.JSX.Element {
                   className="w-full"
                 />
               </div>
-              <div className="mt-3 sm:ml-4 sm:mt-0 sm:shrink-0">
+              <div className="sm:ml-4 sm:shrink-0">
                 <Button
                   type="button"
                   onClick={handleSubscribe}

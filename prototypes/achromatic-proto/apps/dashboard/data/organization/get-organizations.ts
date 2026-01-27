@@ -17,7 +17,9 @@ type OrganizationWithMembership = {
   memberships: { createdAt: Date }[];
 };
 
-async function getOrganizationsData(userId: string): Promise<OrganizationDto[]> {
+async function getOrganizationsData(
+  userId: string
+): Promise<OrganizationDto[]> {
   'use cache';
   cacheLife('default');
   cacheTag(Caching.createUserTag(UserCacheKey.Organizations, userId));

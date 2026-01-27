@@ -1,150 +1,154 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Link from "next/link";
-import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon, TrendingUpIcon, ZapIcon, ShieldCheckIcon } from "lucide-react";
-import { motion, useReducedMotion, AnimatePresence } from "motion/react";
+import * as React from 'react';
+import Link from 'next/link';
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  MinusIcon,
+  ShieldCheckIcon,
+  TrendingUpIcon,
+  XIcon,
+  ZapIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
-import { Button } from "@workspace/ui/components/button";
-import {
-  Card,
-  CardContent,
-} from "@workspace/ui/components/card";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@workspace/ui/components/tabs";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
-} from "@workspace/ui/components/accordion";
-import { cn } from "@workspace/ui/lib/utils";
+  AccordionTrigger
+} from '@workspace/ui/components/accordion';
+import { Button } from '@workspace/ui/components/button';
+import { Card, CardContent } from '@workspace/ui/components/card';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@workspace/ui/components/tabs';
+import { cn } from '@workspace/ui/lib/utils';
 
-import { BorderBeam } from "~/components/fragments/border-beam";
-import { GridSection } from "~/components/fragments/grid-section";
-import { SectionBackground } from "~/components/fragments/section-background";
-import { SiteHeading } from "~/components/fragments/site-heading";
-import { BlurFade } from "~/components/fragments/blur-fade";
-import { Spotlight } from "~/components/fragments/spotlight";
+import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT content from adapty.io/compare/revenuecat (scraped 2026-01-21)
 
 // Comparison table data
 const COMPARISON_ITEMS = [
   {
-    feature: "Infrastructure",
+    feature: 'Infrastructure',
     adapty: {
-      status: "check",
+      status: 'check',
       description:
-        "The fastest paywall loading speed thanks to optimized CDN. Global distributed cache in 400 locations. Handles 3B+ requests per day",
+        'The fastest paywall loading speed thanks to optimized CDN. Global distributed cache in 400 locations. Handles 3B+ requests per day'
     },
     competitor: {
-      status: "check",
-      description: "Standard infrastructure with reported latency issues",
-    },
+      status: 'check',
+      description: 'Standard infrastructure with reported latency issues'
+    }
   },
   {
-    feature: "Integrations",
-    adapty: { status: "check", description: "22 integrations" },
-    competitor: { status: "check", description: "~30 integrations" },
+    feature: 'Integrations',
+    adapty: { status: 'check', description: '22 integrations' },
+    competitor: { status: 'check', description: '~30 integrations' }
   },
   {
-    feature: "Advanced analytics",
+    feature: 'Advanced analytics',
     adapty: {
-      status: "check",
+      status: 'check',
       description:
-        "Detailed overview dashboard with real-time data. Installs to purchase funnel. Group and filter by multiple parameters, including offer type, paywall variant, user segments, and other key dimensions. 10 conversion metrics plus historical comparisons",
+        'Detailed overview dashboard with real-time data. Installs to purchase funnel. Group and filter by multiple parameters, including offer type, paywall variant, user segments, and other key dimensions. 10 conversion metrics plus historical comparisons'
     },
     competitor: {
-      status: "partial",
+      status: 'partial',
       description:
-        "Basic overview. Data isn't real-time. Charts require additional tinkering to get useful insights. Limited grouping options. 3 conversion metrics only",
-    },
+        "Basic overview. Data isn't real-time. Charts require additional tinkering to get useful insights. Limited grouping options. 3 conversion metrics only"
+    }
   },
   {
-    feature: "Predictive analytics",
+    feature: 'Predictive analytics',
     adapty: {
-      status: "check",
+      status: 'check',
       description:
-        "Sophisticated AI-powered revenue & LTV predictions used by 15,000+ apps generating $1.9B+ in revenue",
+        'Sophisticated AI-powered revenue & LTV predictions used by 15,000+ apps generating $1.9B+ in revenue'
     },
     competitor: {
-      status: "no",
-      description: "No revenue prediction; LTV prediction in beta",
-    },
+      status: 'no',
+      description: 'No revenue prediction; LTV prediction in beta'
+    }
   },
   {
-    feature: "No-code Paywall Builder",
+    feature: 'No-code Paywall Builder',
     adapty: {
-      status: "check",
+      status: 'check',
       description:
-        "Huge template library and best-in-class Paywall Builder. Fastest paywall loading in the industry. Advanced widgets (timer, trial toggle), support for video/animated buttons. AI Paywall Generator",
+        'Huge template library and best-in-class Paywall Builder. Fastest paywall loading in the industry. Advanced widgets (timer, trial toggle), support for video/animated buttons. AI Paywall Generator'
     },
     competitor: {
-      status: "partial",
+      status: 'partial',
       description:
-        "Paywalls don't support video, lack timers, trial toggles, and other conversion-driven widgets. No AI tools",
-    },
+        "Paywalls don't support video, lack timers, trial toggles, and other conversion-driven widgets. No AI tools"
+    }
   },
   {
-    feature: "A/B testing",
+    feature: 'A/B testing',
     adapty: {
-      status: "check",
+      status: 'check',
       description:
-        "Test unlimited paywalls with custom weight distribution. Run app-wide pricing tests or target a specific user touchpoint like settings or onboarding. Can test on existing customer base. AI-powered winner predictions",
+        'Test unlimited paywalls with custom weight distribution. Run app-wide pricing tests or target a specific user touchpoint like settings or onboarding. Can test on existing customer base. AI-powered winner predictions'
     },
     competitor: {
-      status: "partial",
-      description: "Limited to 2 paywalls with 50/50 weight distribution",
-    },
+      status: 'partial',
+      description: 'Limited to 2 paywalls with 50/50 weight distribution'
+    }
   },
   {
-    feature: "Advanced targeting",
+    feature: 'Advanced targeting',
     adapty: {
-      status: "check",
+      status: 'check',
       description:
-        "Target by any custom attribute, including ASA attribution (without MMP), revenue, subscription product, device type, and many other",
+        'Target by any custom attribute, including ASA attribution (without MMP), revenue, subscription product, device type, and many other'
     },
     competitor: {
-      status: "partial",
+      status: 'partial',
       description:
-        "Targeting limited to app version, country, platform, and a few other parameters",
-    },
+        'Targeting limited to app version, country, platform, and a few other parameters'
+    }
   },
   {
-    feature: "No-code Onboarding Builder",
+    feature: 'No-code Onboarding Builder',
     adapty: {
-      status: "check",
-      description: "Fully customizable with A/B testing and advanced targeting",
+      status: 'check',
+      description: 'Fully customizable with A/B testing and advanced targeting'
     },
-    competitor: { status: "no", description: "" },
+    competitor: { status: 'no', description: '' }
   },
   {
-    feature: "Ads Intelligence",
+    feature: 'Ads Intelligence',
     adapty: {
-      status: "check",
+      status: 'check',
       description:
-        "Advanced analytics and campaign management for Apple Ads. Provides near real-time performance data, full-funnel attribution (no MMP), cohort-based ROAS tracking, and automation for managing keywords",
+        'Advanced analytics and campaign management for Apple Ads. Provides near real-time performance data, full-funnel attribution (no MMP), cohort-based ROAS tracking, and automation for managing keywords'
     },
-    competitor: { status: "no", description: "" },
+    competitor: { status: 'no', description: '' }
   },
   {
-    feature: "Support chat",
+    feature: 'Support chat',
     adapty: {
-      status: "check",
+      status: 'check',
       description:
-        "Live chat support for all paid plans, Slack support, dedicated Customer Success team, and Solution Engineers for enterprise",
+        'Live chat support for all paid plans, Slack support, dedicated Customer Success team, and Solution Engineers for enterprise'
     },
     competitor: {
-      status: "partial",
-      description:
-        "Community forum only. Live chat requires enterprise plans",
-    },
-  },
+      status: 'partial',
+      description: 'Community forum only. Live chat requires enterprise plans'
+    }
+  }
 ];
 
 // Code examples
@@ -205,82 +209,82 @@ Adapty.makePurchase(product, (profile, error) => {
   if (error == null) {
     // successful purchase
   }
-});`,
+});`
 };
 
 // Migration mapping
 const MIGRATION_MAPPING = [
-  { from: "Purchases.configure", to: "Adapty.activate" },
-  { from: "getOfferings()", to: "getPaywall(placement)" },
-  { from: "purchase()", to: "makePurchase()" },
-  { from: "entitlements", to: "accessLevels" },
-  { from: "restorePurchases()", to: "restorePurchases()" },
-  { from: "isAnonymous", to: "profile.customerUserId" },
+  { from: 'Purchases.configure', to: 'Adapty.activate' },
+  { from: 'getOfferings()', to: 'getPaywall(placement)' },
+  { from: 'purchase()', to: 'makePurchase()' },
+  { from: 'entitlements', to: 'accessLevels' },
+  { from: 'restorePurchases()', to: 'restorePurchases()' },
+  { from: 'isAnonymous', to: 'profile.customerUserId' }
 ];
 
 // FAQs
 const FAQS = [
   {
-    question: "What is the best way to implement in-app purchases?",
+    question: 'What is the best way to implement in-app purchases?',
     answer:
-      "You can: (1) build in-house (3-6 months dev time), (2) use backend services like Firebase (basic validation, but you still build paywalls, analytics, A/B tests), or (3) use a subscription platform like Adapty. Specialized platforms handle the full lifecycle (paywalls, analytics, optimization), so you launch faster (days vs. months) and usually get higher conversion rates.",
+      'You can: (1) build in-house (3-6 months dev time), (2) use backend services like Firebase (basic validation, but you still build paywalls, analytics, A/B tests), or (3) use a subscription platform like Adapty. Specialized platforms handle the full lifecycle (paywalls, analytics, optimization), so you launch faster (days vs. months) and usually get higher conversion rates.'
   },
   {
     question:
-      "Does Adapty support the same platforms and integrations as RevenueCat?",
+      'Does Adapty support the same platforms and integrations as RevenueCat?',
     answer:
-      "Yes. Adapty supports iOS, Android, Flutter, React Native, Unity, plus 20+ analytics/marketing integrations (Amplitude, Mixpanel, AppsFlyer, Firebase, etc.). Both handle cross-platform sync and provide App Store and Google Play integrations. Adapty adds extras like Onboarding Builder, advanced targeting and A/B testing, and snappier analytics.",
+      'Yes. Adapty supports iOS, Android, Flutter, React Native, Unity, plus 20+ analytics/marketing integrations (Amplitude, Mixpanel, AppsFlyer, Firebase, etc.). Both handle cross-platform sync and provide App Store and Google Play integrations. Adapty adds extras like Onboarding Builder, advanced targeting and A/B testing, and snappier analytics.'
   },
   {
     question: "What features does Adapty offer that RevenueCat doesn't have?",
     answer:
-      "AI-powered predictive analytics; Paywall Builder with templates, video, trial toggles, and other widgets; Unlimited A/B tests with custom weight distribution; Advanced targeting (by attribution source, device, subscription history); No-code onboarding flow builder; Live chat support on all paid plans.",
+      'AI-powered predictive analytics; Paywall Builder with templates, video, trial toggles, and other widgets; Unlimited A/B tests with custom weight distribution; Advanced targeting (by attribution source, device, subscription history); No-code onboarding flow builder; Live chat support on all paid plans.'
   },
   {
     question:
       "How does Adapty's A/B testing compare to RevenueCat's paywall experiments?",
     answer:
-      "Adapty: unlimited tests, custom traffic splits (20/30/50, etc.), test on existing users, advanced targeting. RevenueCat: only 2 variants, fixed 50/50, and only new users.",
+      'Adapty: unlimited tests, custom traffic splits (20/30/50, etc.), test on existing users, advanced targeting. RevenueCat: only 2 variants, fixed 50/50, and only new users.'
   },
   {
-    question: "How difficult is it to migrate from RevenueCat to Adapty?",
+    question: 'How difficult is it to migrate from RevenueCat to Adapty?',
     answer:
-      "Most migrations finish in one day. Adapty provides code examples, SDK updates, and server-side notification setup. Free migration support and live chat help you transfer historical data.",
+      'Most migrations finish in one day. Adapty provides code examples, SDK updates, and server-side notification setup. Free migration support and live chat help you transfer historical data.'
   },
   {
     question:
-      "What happens to my data and analytics if I switch from RevenueCat to Adapty?",
+      'What happens to my data and analytics if I switch from RevenueCat to Adapty?',
     answer:
-      "You can export your RevenueCat data (CSV) and Adapty will import it, including integration IDs (Amplitude, Mixpanel, AppsFlyer, etc.). From migration onward, new data flows directly into Adapty.",
-  },
+      'You can export your RevenueCat data (CSV) and Adapty will import it, including integration IDs (Amplitude, Mixpanel, AppsFlyer, etc.). From migration onward, new data flows directly into Adapty.'
+  }
 ];
 
 // Case studies
 const CASE_STUDIES = [
   {
-    name: "Impala Studios",
-    category: "Publishing company",
-    result: "Migrated in 1 week",
+    name: 'Impala Studios',
+    category: 'Publishing company',
+    result: 'Migrated in 1 week',
     description:
-      "After years with RevenueCat, Impala hit scaling roadblocks. Missing features and long-standing technical issues pushed the team to switch. With Adapty, they migrated in just one week, launching new paywalls twice as fast and cutting A/B test launch times in half.",
+      'After years with RevenueCat, Impala hit scaling roadblocks. Missing features and long-standing technical issues pushed the team to switch. With Adapty, they migrated in just one week, launching new paywalls twice as fast and cutting A/B test launch times in half.',
     quote:
       "Adapty goes beyond simple subscription management. It's a comprehensive platform that empowers developers to optimize every aspect of their app's monetization strategy. Whether it's A/B testing paywalls, predicting LTV, or analyzing subscription metrics, Adapty is the ultimate toolkit for app success.",
-    author: "Sergey Lagutyonok",
-    authorTitle: "Product Manager at Impala Studios",
-    link: "/case-studies/impala/",
+    author: 'Sergey Lagutyonok',
+    authorTitle: 'Product Manager at Impala Studios',
+    link: '/case-studies/impala/'
   },
   {
-    name: "GlowUp - Makeup & Beauty",
-    category: "Lifestyle",
-    result: "Hit $1.2M ARR in 3 months",
+    name: 'GlowUp - Makeup & Beauty',
+    category: 'Lifestyle',
+    result: 'Hit $1.2M ARR in 3 months',
     description:
-      "GlowUp outgrew RevenueCat, no advanced A/B testing, limited data, no control over paywalls. Switching to Adapty changed everything. They won 77% of refund requests, tripled daily revenue, and scaled to $1.2M ARR in 3 months with the same installs.",
+      'GlowUp outgrew RevenueCat, no advanced A/B testing, limited data, no control over paywalls. Switching to Adapty changed everything. They won 77% of refund requests, tripled daily revenue, and scaled to $1.2M ARR in 3 months with the same installs.',
     quote:
       "RevenueCat wasn't the best for us, when we were looking at the A/B test paywall to see which pay wall that user would like to buy the most. We couldn't figure it out with RevenueCat because we're using Flutterflow and it's quite different.",
-    author: "Louis-David Paul-Hus",
-    authorTitle: "Co-founder & CTO of GlowUp",
-    link: "/case-studies/glam-ai/",
-  },
+    author: 'Louis-David Paul-Hus',
+    authorTitle: 'Co-founder & CTO of GlowUp',
+    link: '/case-studies/glam-ai/'
+  }
 ];
 
 // Support testimonials
@@ -288,24 +292,24 @@ const SUPPORT_QUOTES = [
   {
     quote:
       "My experience with your support was excellent... Super fast responses... But the most important thing for me... was that I felt like I'm dealing with a person with Patience and Knowledge... Keep doing this... We need you!!!",
-    name: "Vassilis",
+    name: 'Vassilis'
   },
   {
     quote:
       "Lightning fast response and great guidance for this spaghetti-code programmer that doesn't understand most of this mumbo-jumbo high-tech stuff.",
-    name: "John",
+    name: 'John'
   },
   {
     quote:
-      "Unexpectedly good support, solved tricky issue within one working day.",
-    name: "Arturs",
+      'Unexpectedly good support, solved tricky issue within one working day.',
+    name: 'Arturs'
   },
   {
     quote:
-      "The responses were fast and accurate, I got my doubt resolved under 15 minutes. Thanks for the quick response.",
-    name: "Kosma",
+      'The responses were fast and accurate, I got my doubt resolved under 15 minutes. Thanks for the quick response.',
+    name: 'Kosma'
   },
-  { quote: "Amazing. Fast and helpful.", name: "Poliany" },
+  { quote: 'Amazing. Fast and helpful.', name: 'Poliany' }
 ];
 
 // =============================================================================
@@ -331,13 +335,13 @@ function CompareScaleMagic() {
       <motion.div
         className="h-3 bg-primary rounded-full"
         animate={{ width: [60, 80, 70, 80] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
       />
       <span className="text-xs text-muted-foreground">vs</span>
       <motion.div
         className="h-3 bg-muted-foreground/30 rounded-full"
         animate={{ width: [50, 40, 45, 40] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
       />
     </div>
   );
@@ -411,7 +415,11 @@ function RevenueMagic() {
     return (
       <div className="flex items-end gap-1 h-8">
         {bars.map((h, i) => (
-          <div key={i} className="w-2 bg-primary/60 rounded-sm" style={{ height: `${h}%` }} />
+          <div
+            key={i}
+            className="w-2 bg-primary/60 rounded-sm"
+            style={{ height: `${h}%` }}
+          />
         ))}
       </div>
     );
@@ -429,8 +437,8 @@ function RevenueMagic() {
             duration: 0.5,
             delay: i * 0.08,
             repeat: Infinity,
-            repeatType: "reverse",
-            repeatDelay: 2,
+            repeatType: 'reverse',
+            repeatDelay: 2
           }}
         />
       ))}
@@ -439,24 +447,24 @@ function RevenueMagic() {
 }
 
 function StatusIcon({
-  status,
+  status
 }: {
-  status: "check" | "partial" | "no";
+  status: 'check' | 'partial' | 'no';
 }): React.JSX.Element {
   switch (status) {
-    case "check":
+    case 'check':
       return (
         <div className="flex size-6 items-center justify-center rounded-full bg-primary/10">
           <CheckIcon className="size-4 text-green-500" />
         </div>
       );
-    case "partial":
+    case 'partial':
       return (
         <div className="flex size-6 items-center justify-center rounded-full bg-yellow-500/20">
           <MinusIcon className="size-4 text-yellow-500" />
         </div>
       );
-    case "no":
+    case 'no':
       return (
         <div className="flex size-6 items-center justify-center rounded-full bg-red-500/20">
           <XIcon className="size-4 text-red-500" />
@@ -468,7 +476,9 @@ function StatusIcon({
 export function CompareRevenueCat(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
-  const [hoveredCaseStudy, setHoveredCaseStudy] = React.useState<number | null>(null);
+  const [hoveredCaseStudy, setHoveredCaseStudy] = React.useState<number | null>(
+    null
+  );
   const [hoveredQuote, setHoveredQuote] = React.useState<number | null>(null);
 
   return (
@@ -486,13 +496,26 @@ export function CompareRevenueCat(): React.JSX.Element {
           </BlurFade>
           <BlurFade delay={0.1}>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button asChild size="lg">
+              <motion.div
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  asChild
+                  size="lg"
+                >
                   <Link href="/schedule-demo">Book a demo</Link>
                 </Button>
               </motion.div>
-              <motion.div whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button asChild variant="outline" size="lg">
+              <motion.div
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                >
                   <Link href="https://app.adapty.io/registration">
                     Start for free
                   </Link>
@@ -507,7 +530,9 @@ export function CompareRevenueCat(): React.JSX.Element {
             <div className="mt-4 flex items-center justify-center gap-6 text-sm text-muted-foreground">
               <motion.div
                 className="flex items-center gap-2"
-                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                animate={
+                  shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }
+                }
                 transition={{ duration: 2, repeat: Infinity }}
               >
                 <TrendingUpIcon className="size-4 text-primary" />
@@ -515,7 +540,9 @@ export function CompareRevenueCat(): React.JSX.Element {
               </motion.div>
               <motion.div
                 className="flex items-center gap-2"
-                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                animate={
+                  shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }
+                }
                 transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
               >
                 <ZapIcon className="size-4 text-primary" />
@@ -523,7 +550,9 @@ export function CompareRevenueCat(): React.JSX.Element {
               </motion.div>
               <motion.div
                 className="flex items-center gap-2"
-                animate={shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
+                animate={
+                  shouldReduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }
+                }
                 transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
               >
                 <ShieldCheckIcon className="size-4 text-primary" />
@@ -576,21 +605,31 @@ export function CompareRevenueCat(): React.JSX.Element {
                       onMouseEnter={() => setHoveredRow(index)}
                       onMouseLeave={() => setHoveredRow(null)}
                       className={cn(
-                        "border-b border-border/50 transition-colors cursor-default",
-                        hoveredRow === index && "bg-primary/5"
+                        'border-b border-border/50 transition-colors cursor-default',
+                        hoveredRow === index && 'bg-primary/5'
                       )}
                     >
                       <td className="py-4 px-6 font-medium">{item.feature}</td>
                       <td className="py-4 px-6">
                         <motion.div
                           className="flex items-start gap-3"
-                          animate={shouldReduceMotion ? undefined : {
-                            x: hoveredRow === index ? 4 : 0,
+                          animate={
+                            shouldReduceMotion
+                              ? undefined
+                              : {
+                                  x: hoveredRow === index ? 4 : 0
+                                }
+                          }
+                          transition={{
+                            type: 'spring',
+                            duration: 0.2,
+                            bounce: 0
                           }}
-                          transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                         >
                           <StatusIcon
-                            status={item.adapty.status as "check" | "partial" | "no"}
+                            status={
+                              item.adapty.status as 'check' | 'partial' | 'no'
+                            }
                           />
                           <span className="text-sm text-muted-foreground">
                             {item.adapty.description}
@@ -600,7 +639,12 @@ export function CompareRevenueCat(): React.JSX.Element {
                       <td className="py-4 px-6">
                         <div className="flex items-start gap-3">
                           <StatusIcon
-                            status={item.competitor.status as "check" | "partial" | "no"}
+                            status={
+                              item.competitor.status as
+                                | 'check'
+                                | 'partial'
+                                | 'no'
+                            }
                           />
                           <span className="text-sm text-muted-foreground">
                             {item.competitor.description}
@@ -614,10 +658,17 @@ export function CompareRevenueCat(): React.JSX.Element {
             </div>
 
             <div className="mt-8 flex justify-center gap-4">
-              <Button asChild size="lg">
+              <Button
+                asChild
+                size="lg"
+              >
                 <Link href="/schedule-demo">Book a demo</Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+              >
                 <Link href="https://app.adapty.io/registration">
                   Start for free
                 </Link>
@@ -642,7 +693,10 @@ export function CompareRevenueCat(): React.JSX.Element {
               simple, developer-friendly SDK.
             </p>
 
-            <Tabs defaultValue="swift" className="max-w-3xl mx-auto">
+            <Tabs
+              defaultValue="swift"
+              className="max-w-3xl mx-auto"
+            >
               <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="swift">Swift</TabsTrigger>
                 <TabsTrigger value="kotlin">Kotlin</TabsTrigger>
@@ -651,7 +705,10 @@ export function CompareRevenueCat(): React.JSX.Element {
                 <TabsTrigger value="unity">Unity</TabsTrigger>
               </TabsList>
               {Object.entries(CODE_EXAMPLES).map(([key, code]) => (
-                <TabsContent key={key} value={key}>
+                <TabsContent
+                  key={key}
+                  value={key}
+                >
                   <Card className="bg-muted/30 border-border/50">
                     <CardContent className="p-4">
                       <pre className="text-sm text-zinc-300 overflow-x-auto">
@@ -726,7 +783,10 @@ export function CompareRevenueCat(): React.JSX.Element {
               <Button asChild>
                 <Link href="https://app.adapty.io/registration">Sign up</Link>
               </Button>
-              <Button asChild variant="outline">
+              <Button
+                asChild
+                variant="outline"
+              >
                 <Link href="https://adapty.io/docs/migration-from-revenuecat">
                   Read the docs
                 </Link>
@@ -754,16 +814,22 @@ export function CompareRevenueCat(): React.JSX.Element {
                   key={index}
                   onMouseEnter={() => setHoveredQuote(index)}
                   onMouseLeave={() => setHoveredQuote(null)}
-                  animate={shouldReduceMotion ? undefined : {
-                    y: hoveredQuote === index ? -4 : 0,
-                    scale: hoveredQuote === index ? 1.02 : 1,
-                  }}
+                  animate={
+                    shouldReduceMotion
+                      ? undefined
+                      : {
+                          y: hoveredQuote === index ? -4 : 0,
+                          scale: hoveredQuote === index ? 1.02 : 1
+                        }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <Card className={cn(
-                    "h-full relative overflow-hidden transition-all duration-200",
-                    hoveredQuote === index && "border-primary/50 "
-                  )}>
+                  <Card
+                    className={cn(
+                      'h-full relative overflow-hidden transition-all duration-200',
+                      hoveredQuote === index && 'border-primary/50 '
+                    )}
+                  >
                     {hoveredQuote === index && (
                       <BorderBeam
                         size={100}
@@ -773,7 +839,10 @@ export function CompareRevenueCat(): React.JSX.Element {
                         colorTo="hsl(var(--primary)/0)"
                       />
                     )}
-                    <Spotlight className="from-primary/10 via-transparent to-transparent" size={200} />
+                    <Spotlight
+                      className="from-primary/10 via-transparent to-transparent"
+                      size={200}
+                    />
                     <CardContent className="p-4 relative z-10">
                       <p className="text-sm text-muted-foreground italic mb-2">
                         "{item.quote}"
@@ -803,16 +872,22 @@ export function CompareRevenueCat(): React.JSX.Element {
                   key={index}
                   onMouseEnter={() => setHoveredCaseStudy(index)}
                   onMouseLeave={() => setHoveredCaseStudy(null)}
-                  animate={shouldReduceMotion ? undefined : {
-                    y: hoveredCaseStudy === index ? -8 : 0,
-                    scale: hoveredCaseStudy === index ? 1.02 : 1,
-                  }}
+                  animate={
+                    shouldReduceMotion
+                      ? undefined
+                      : {
+                          y: hoveredCaseStudy === index ? -8 : 0,
+                          scale: hoveredCaseStudy === index ? 1.02 : 1
+                        }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <Card className={cn(
-                    "h-full relative overflow-hidden transition-all duration-200",
-                    hoveredCaseStudy === index && "border-primary/50 "
-                  )}>
+                  <Card
+                    className={cn(
+                      'h-full relative overflow-hidden transition-all duration-200',
+                      hoveredCaseStudy === index && 'border-primary/50 '
+                    )}
+                  >
                     {hoveredCaseStudy === index && (
                       <BorderBeam
                         size={150}
@@ -822,14 +897,21 @@ export function CompareRevenueCat(): React.JSX.Element {
                         colorTo="hsl(var(--primary)/0)"
                       />
                     )}
-                    <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+                    <Spotlight
+                      className="from-primary/15 via-primary/5 to-transparent"
+                      size={350}
+                    />
                     <CardContent className="p-6 relative z-10">
                       <div className="flex items-center gap-4 mb-4">
                         <motion.div
                           className="size-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center font-bold text-lg text-primary"
-                          animate={shouldReduceMotion ? undefined : {
-                            scale: hoveredCaseStudy === index ? 1.1 : 1,
-                          }}
+                          animate={
+                            shouldReduceMotion
+                              ? undefined
+                              : {
+                                  scale: hoveredCaseStudy === index ? 1.1 : 1
+                                }
+                          }
                           transition={{ type: 'spring', duration: 0.2 }}
                         >
                           {study.name.charAt(0)}
@@ -843,9 +925,13 @@ export function CompareRevenueCat(): React.JSX.Element {
                       </div>
                       <motion.div
                         className="text-lg font-bold text-primary mb-4"
-                        animate={shouldReduceMotion ? undefined : {
-                          scale: hoveredCaseStudy === index ? 1.02 : 1,
-                        }}
+                        animate={
+                          shouldReduceMotion
+                            ? undefined
+                            : {
+                                scale: hoveredCaseStudy === index ? 1.02 : 1
+                              }
+                        }
                       >
                         {study.result}
                       </motion.div>
@@ -865,9 +951,13 @@ export function CompareRevenueCat(): React.JSX.Element {
                       >
                         Read full story
                         <motion.span
-                          animate={shouldReduceMotion ? undefined : {
-                            x: hoveredCaseStudy === index ? 4 : 0,
-                          }}
+                          animate={
+                            shouldReduceMotion
+                              ? undefined
+                              : {
+                                  x: hoveredCaseStudy === index ? 4 : 0
+                                }
+                          }
                           transition={{ duration: 0.15 }}
                         >
                           <ArrowRightIcon className="size-4" />
@@ -885,9 +975,16 @@ export function CompareRevenueCat(): React.JSX.Element {
         <BlurFade delay={0.45}>
           <div className="py-16 max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-center mb-8">FAQ</h2>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+            >
               {FAQS.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                >
                   <AccordionTrigger className="text-left">
                     {faq.question}
                   </AccordionTrigger>

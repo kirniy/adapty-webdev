@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useFeaturesVariant } from '~/lib/debug-context';
 import { CompareRevenueCat } from '~/components/sections/compare-revenuecat';
 import {
-  LogosSwitcher,
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  LogosSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant } from '~/lib/debug-context';
 
 // Adapty vs RevenueCat comparison page
 export default function CompareRevenueCatPage(): React.JSX.Element {

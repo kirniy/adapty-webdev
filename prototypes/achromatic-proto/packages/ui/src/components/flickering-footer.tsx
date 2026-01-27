@@ -1,25 +1,31 @@
-"use client";
+'use client';
 
-import * as Color from "color-bits";
-import { ChevronRight } from "lucide-react";
-import { motion } from "motion/react";
-import Link from "next/link";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
+import Link from 'next/link';
+import * as Color from 'color-bits';
+import { ChevronRight } from 'lucide-react';
+import { motion } from 'motion/react';
 
-import { cn } from "../lib/utils";
+import { cn } from '../lib/utils';
 
 // Helper function to convert any CSS color to rgba
 export const getRGBA = (
-  cssColor: React.CSSProperties["color"],
-  fallback: string = "rgba(180, 180, 180)",
+  cssColor: React.CSSProperties['color'],
+  fallback: string = 'rgba(180, 180, 180)'
 ): string => {
-  if (typeof window === "undefined") return fallback;
+  if (typeof window === 'undefined') return fallback;
   if (!cssColor) return fallback;
 
   try {
     // Handle CSS variables
-    if (typeof cssColor === "string" && cssColor.startsWith("var(")) {
-      const element = document.createElement("div");
+    if (typeof cssColor === 'string' && cssColor.startsWith('var(')) {
+      const element = document.createElement('div');
       element.style.color = cssColor;
       document.body.appendChild(element);
       const computedColor = window.getComputedStyle(element).color;
@@ -29,14 +35,14 @@ export const getRGBA = (
 
     return Color.formatRGBA(Color.parse(cssColor));
   } catch (e) {
-    console.error("Color parsing failed:", e);
+    console.error('Color parsing failed:', e);
     return fallback;
   }
 };
 
 // Helper function to add opacity to an RGB color string
 export const colorWithOpacity = (color: string, opacity: number): string => {
-  if (!color.startsWith("rgb")) return color;
+  if (!color.startsWith('rgb')) return color;
   return Color.formatRGBA(Color.alpha(Color.parse(color), opacity));
 };
 
@@ -44,31 +50,31 @@ export const colorWithOpacity = (color: string, opacity: number): string => {
 
 export const focusInput = [
   // base
-  "focus:ring-2",
+  'focus:ring-2',
   // ring color
-  "focus:ring-blue-200 focus:dark:ring-blue-700/30",
+  'focus:ring-blue-200 focus:dark:ring-blue-700/30',
   // border color
-  "focus:border-blue-500 focus:dark:border-blue-700",
+  'focus:border-blue-500 focus:dark:border-blue-700'
 ];
 
 // Tremor Raw focusRing [v0.0.1]
 
 export const focusRing = [
   // base
-  "outline outline-offset-2 outline-0 focus-visible:outline-2",
+  'outline outline-offset-2 outline-0 focus-visible:outline-2',
   // outline color
-  "outline-blue-500 dark:outline-blue-500",
+  'outline-blue-500 dark:outline-blue-500'
 ];
 
 // Tremor Raw hasErrorInput [v0.0.1]
 
 export const hasErrorInput = [
   // base
-  "ring-2",
+  'ring-2',
   // border color
-  "border-red-500 dark:border-red-700",
+  'border-red-500 dark:border-red-700',
   // ring color
-  "ring-red-200 dark:ring-red-700/30",
+  'ring-red-200 dark:ring-red-700/30'
 ];
 
 export const Icons = {
@@ -79,7 +85,7 @@ export const Icons = {
       viewBox="0 0 42 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("size-4 fill-[var(--secondary)]", className)}
+      className={cn('size-4 fill-[var(--secondary)]', className)}
     >
       <g clipPath="url(#clip0_322_9172)">
         <path
@@ -93,7 +99,11 @@ export const Icons = {
       </g>
       <defs>
         <clipPath id="clip0_322_9172">
-          <rect width="42" height="24" fill="white" />
+          <rect
+            width="42"
+            height="24"
+            fill="white"
+          />
         </clipPath>
       </defs>
     </svg>
@@ -105,7 +115,7 @@ export const Icons = {
       viewBox="0 0 46 45"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("size-4", className)}
+      className={cn('size-4', className)}
     >
       <g>
         <rect
@@ -153,7 +163,10 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#F9FAFB" />
-          <stop offset="1" stopColor="#E5E7EB" />
+          <stop
+            offset="1"
+            stopColor="#E5E7EB"
+          />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1_4900"
@@ -164,7 +177,10 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#E5E7EB" />
-          <stop offset="1" stopColor="#F9FAFB" />
+          <stop
+            offset="1"
+            stopColor="#F9FAFB"
+          />
         </linearGradient>
       </defs>
     </svg>
@@ -176,7 +192,7 @@ export const Icons = {
       viewBox="0 0 46 45"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("size-4", className)}
+      className={cn('size-4', className)}
     >
       <g>
         <rect
@@ -224,7 +240,10 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#27272A" />
-          <stop offset="1" stopColor="#52525C" />
+          <stop
+            offset="1"
+            stopColor="#52525C"
+          />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1_2018"
@@ -235,7 +254,10 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#52525C" />
-          <stop offset="1" stopColor="#27272A" />
+          <stop
+            offset="1"
+            stopColor="#27272A"
+          />
         </linearGradient>
       </defs>
     </svg>
@@ -279,7 +301,10 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#E5E7EB" />
-          <stop offset="1" stopColor="#F9FAFB" />
+          <stop
+            offset="1"
+            stopColor="#F9FAFB"
+          />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1_4905"
@@ -289,8 +314,16 @@ export const Icons = {
           y2="31.2119"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.473541" stopColor="#364153" stopOpacity="0.7" />
-          <stop offset="0.811446" stopColor="#364153" stopOpacity="0" />
+          <stop
+            offset="0.473541"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
+          <stop
+            offset="0.811446"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
         </linearGradient>
       </defs>
     </svg>
@@ -334,7 +367,10 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#27272A" />
-          <stop offset="1" stopColor="#52525C" />
+          <stop
+            offset="1"
+            stopColor="#52525C"
+          />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1_2028"
@@ -344,8 +380,16 @@ export const Icons = {
           y2="31.2119"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.473541" stopColor="#FAFAFA" stopOpacity="0.7" />
-          <stop offset="0.811446" stopColor="#FAFAFA" stopOpacity="0" />
+          <stop
+            offset="0.473541"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
+          <stop
+            offset="0.811446"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
         </linearGradient>
       </defs>
     </svg>
@@ -357,7 +401,7 @@ export const Icons = {
       viewBox="0 0 46 45"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("size-4", className)}
+      className={cn('size-4', className)}
     >
       <g>
         <rect
@@ -433,7 +477,10 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#E5E7EB" />
-          <stop offset="1" stopColor="#F9FAFB" />
+          <stop
+            offset="1"
+            stopColor="#F9FAFB"
+          />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1_4914"
@@ -443,8 +490,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint2_linear_1_4914"
@@ -454,8 +509,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint3_linear_1_4914"
@@ -465,8 +528,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint4_linear_1_4914"
@@ -476,8 +547,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint5_linear_1_4914"
@@ -487,8 +566,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint6_linear_1_4914"
@@ -498,8 +585,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint7_linear_1_4914"
@@ -509,8 +604,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint8_linear_1_4914"
@@ -520,8 +623,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint9_linear_1_4914"
@@ -531,8 +642,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint10_linear_1_4914"
@@ -542,8 +661,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint11_linear_1_4914"
@@ -553,8 +680,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint12_linear_1_4914"
@@ -564,8 +699,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#364153" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#364153" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#364153"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#364153"
+            stopOpacity="0.7"
+          />
         </linearGradient>
       </defs>
     </svg>
@@ -577,7 +720,7 @@ export const Icons = {
       viewBox="0 0 46 45"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("size-4", className)}
+      className={cn('size-4', className)}
     >
       <g>
         <rect
@@ -651,7 +794,10 @@ export const Icons = {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#27272A" />
-          <stop offset="1" stopColor="#52525C" />
+          <stop
+            offset="1"
+            stopColor="#52525C"
+          />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1_2046"
@@ -661,8 +807,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint2_linear_1_2046"
@@ -672,8 +826,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint3_linear_1_2046"
@@ -683,8 +845,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint4_linear_1_2046"
@@ -694,8 +864,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint5_linear_1_2046"
@@ -705,8 +883,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint6_linear_1_2046"
@@ -716,8 +902,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint7_linear_1_2046"
@@ -727,8 +921,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint8_linear_1_2046"
@@ -738,8 +940,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint9_linear_1_2046"
@@ -749,8 +959,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint10_linear_1_2046"
@@ -760,8 +978,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint11_linear_1_2046"
@@ -771,8 +997,16 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
         <linearGradient
           id="paint12_linear_1_2046"
@@ -782,12 +1016,20 @@ export const Icons = {
           y2="5.36433"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.188554" stopColor="#FAFAFA" stopOpacity="0" />
-          <stop offset="0.526459" stopColor="#FAFAFA" stopOpacity="0.7" />
+          <stop
+            offset="0.188554"
+            stopColor="#FAFAFA"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.526459"
+            stopColor="#FAFAFA"
+            stopOpacity="0.7"
+          />
         </linearGradient>
       </defs>
     </svg>
-  ),
+  )
 };
 
 interface FlickeringGridProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -809,12 +1051,12 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   squareSize = 3,
   gridGap = 3,
   flickerChance = 0.2,
-  color = "#B4B4B4",
+  color = '#B4B4B4',
   width,
   height,
   className,
   maxOpacity = 0.15,
-  text = "",
+  text = '',
   fontSize = 140,
   fontWeight = 600,
   ...props
@@ -837,25 +1079,25 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       cols: number,
       rows: number,
       squares: Float32Array,
-      dpr: number,
+      dpr: number
     ) => {
       ctx.clearRect(0, 0, width, height);
 
       // Create a separate canvas for the text mask
-      const maskCanvas = document.createElement("canvas");
+      const maskCanvas = document.createElement('canvas');
       maskCanvas.width = width;
       maskCanvas.height = height;
-      const maskCtx = maskCanvas.getContext("2d", { willReadFrequently: true });
+      const maskCtx = maskCanvas.getContext('2d', { willReadFrequently: true });
       if (!maskCtx) return;
 
       // Draw text on mask canvas
       if (text) {
         maskCtx.save();
         maskCtx.scale(dpr, dpr);
-        maskCtx.fillStyle = "white";
+        maskCtx.fillStyle = 'white';
         maskCtx.font = `${fontWeight} ${fontSize}px "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
-        maskCtx.textAlign = "center";
-        maskCtx.textBaseline = "middle";
+        maskCtx.textAlign = 'center';
+        maskCtx.textBaseline = 'middle';
         maskCtx.fillText(text, width / (2 * dpr), height / (2 * dpr));
         maskCtx.restore();
       }
@@ -872,10 +1114,10 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
             x,
             y,
             squareWidth,
-            squareHeight,
+            squareHeight
           ).data;
           const hasText = maskData.some(
-            (value, index) => index % 4 === 0 && value > 0,
+            (value, index) => index % 4 === 0 && value > 0
           );
 
           const opacity = squares[i * rows + j];
@@ -888,7 +1130,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
         }
       }
     },
-    [memoizedColor, squareSize, gridGap, text, fontSize, fontWeight],
+    [memoizedColor, squareSize, gridGap, text, fontSize, fontWeight]
   );
 
   const setupCanvas = useCallback(
@@ -908,7 +1150,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
       return { cols, rows, squares, dpr };
     },
-    [squareSize, gridGap, maxOpacity],
+    [squareSize, gridGap, maxOpacity]
   );
 
   const updateSquares = useCallback(
@@ -919,7 +1161,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
         }
       }
     },
-    [flickerChance, maxOpacity],
+    [flickerChance, maxOpacity]
   );
 
   useEffect(() => {
@@ -927,7 +1169,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     let animationFrameId: number;
@@ -957,7 +1199,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
         gridParams.cols,
         gridParams.rows,
         gridParams.squares,
-        gridParams.dpr,
+        gridParams.dpr
       );
       animationFrameId = requestAnimationFrame(animate);
     };
@@ -972,7 +1214,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       ([entry]) => {
         setIsInView(entry.isIntersecting);
       },
-      { threshold: 0 },
+      { threshold: 0 }
     );
 
     intersectionObserver.observe(canvas);
@@ -999,7 +1241,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
         className="pointer-events-none"
         style={{
           width: canvasSize.width,
-          height: canvasSize.height,
+          height: canvasSize.height
         }}
       />
     </div>
@@ -1020,16 +1262,16 @@ export function useMediaQuery(query: string) {
     checkQuery();
 
     // Add resize listener
-    window.addEventListener("resize", checkQuery);
+    window.addEventListener('resize', checkQuery);
 
     // Add media query change listener
     const mediaQuery = window.matchMedia(query);
-    mediaQuery.addEventListener("change", checkQuery);
+    mediaQuery.addEventListener('change', checkQuery);
 
     // Cleanup
     return () => {
-      window.removeEventListener("resize", checkQuery);
-      mediaQuery.removeEventListener("change", checkQuery);
+      window.removeEventListener('resize', checkQuery);
+      mediaQuery.removeEventListener('change', checkQuery);
     };
   }, [query]);
 
@@ -1038,7 +1280,7 @@ export function useMediaQuery(query: string) {
 
 export const Highlight = ({
   children,
-  className,
+  className
 }: {
   children: React.ReactNode;
   className?: string;
@@ -1046,8 +1288,8 @@ export const Highlight = ({
   return (
     <span
       className={cn(
-        "p-1 py-0.5 font-medium dark:font-semibold text-secondary",
-        className,
+        'p-1 py-0.5 font-medium dark:font-semibold text-secondary',
+        className
       )}
     >
       {children}
@@ -1073,62 +1315,68 @@ export const siteConfig = {
         <path d="M2.37845 10.5993L2.57045 10.4893L6.88445 12.9533C7.22435 13.1474 7.60901 13.2496 8.00045 13.2496C8.39189 13.2496 8.77656 13.1474 9.11645 12.9533L13.4305 10.4883L13.6225 10.5983C13.7374 10.6638 13.833 10.7586 13.8994 10.8731C13.9659 10.9875 14.0009 11.1175 14.0009 11.2498C14.0009 11.3821 13.9659 11.5121 13.8994 11.6265C13.833 11.7409 13.7374 11.8357 13.6225 11.9013L8.37245 14.9013C8.25915 14.966 8.13093 15 8.00045 15C7.86997 15 7.74175 14.966 7.62845 14.9013L2.37845 11.9013C2.2635 11.8357 2.16795 11.7409 2.10148 11.6265C2.03501 11.5121 2 11.3821 2 11.2498C2 11.1175 2.03501 10.9875 2.10148 10.8731C2.16795 10.7586 2.2635 10.6638 2.37845 10.5983V10.5993Z" />
       </svg>
     ),
-    badge: "Introducing custom automations",
-    title: "Meet your AI Agent Streamline your workflow",
+    badge: 'Introducing custom automations',
+    title: 'Meet your AI Agent Streamline your workflow',
     description:
-      "AI assistant designed to streamline your digital workflows and handle mundane tasks, so you can focus on what truly matters",
+      'AI assistant designed to streamline your digital workflows and handle mundane tasks, so you can focus on what truly matters',
     cta: {
       primary: {
-        text: "Try for Free",
-        href: "#",
+        text: 'Try for Free',
+        href: '#'
       },
       secondary: {
-        text: "Log in",
-        href: "#",
-      },
-    },
+        text: 'Log in',
+        href: '#'
+      }
+    }
   },
   footerLinks: [
     {
-      title: "Company",
+      title: 'Company',
       links: [
-        { id: 1, title: "About", url: "#" },
-        { id: 2, title: "Contact", url: "#" },
-        { id: 3, title: "Blog", url: "#" },
-        { id: 4, title: "Story", url: "#" },
-      ],
+        { id: 1, title: 'About', url: '#' },
+        { id: 2, title: 'Contact', url: '#' },
+        { id: 3, title: 'Blog', url: '#' },
+        { id: 4, title: 'Story', url: '#' }
+      ]
     },
     {
-      title: "Products",
+      title: 'Products',
       links: [
-        { id: 5, title: "Company", url: "#" },
-        { id: 6, title: "Product", url: "#" },
-        { id: 7, title: "Press", url: "#" },
-        { id: 8, title: "More", url: "#" },
-      ],
+        { id: 5, title: 'Company', url: '#' },
+        { id: 6, title: 'Product', url: '#' },
+        { id: 7, title: 'Press', url: '#' },
+        { id: 8, title: 'More', url: '#' }
+      ]
     },
     {
-      title: "Resources",
+      title: 'Resources',
       links: [
-        { id: 9, title: "Press", url: "#" },
-        { id: 10, title: "Careers", url: "#" },
-        { id: 11, title: "Newsletters", url: "#" },
-        { id: 12, title: "More", url: "#" },
-      ],
-    },
-  ],
+        { id: 9, title: 'Press', url: '#' },
+        { id: 10, title: 'Careers', url: '#' },
+        { id: 11, title: 'Newsletters', url: '#' },
+        { id: 12, title: 'More', url: '#' }
+      ]
+    }
+  ]
 };
 
 export type SiteConfig = typeof siteConfig;
 
 export const Component = () => {
-  const tablet = useMediaQuery("(max-width: 1024px)");
+  const tablet = useMediaQuery('(max-width: 1024px)');
 
   return (
-    <footer id="footer" className="w-full pb-0">
+    <footer
+      id="footer"
+      className="w-full pb-0"
+    >
       <div className="flex flex-col md:flex-row md:items-center md:justify-between p-10">
         <div className="flex flex-col items-start justify-start gap-y-5 max-w-xs mx-0">
-          <Link href="/" className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+          >
             <Icons.logo className="size-8" />
             <p className="text-xl font-semibold text-primary">Footer</p>
           </Link>
@@ -1149,7 +1397,10 @@ export const Component = () => {
         <div className="pt-5 md:w-1/2">
           <div className="flex flex-col items-start justify-start md:flex-row md:items-center md:justify-between gap-y-5 lg:pl-10">
             {siteConfig.footerLinks.map((column, columnIndex) => (
-              <ul key={columnIndex} className="flex flex-col gap-y-2">
+              <ul
+                key={columnIndex}
+                className="flex flex-col gap-y-2"
+              >
                 <li className="mb-2 text-sm font-semibold text-primary">
                   {column.title}
                 </li>
@@ -1173,7 +1424,7 @@ export const Component = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-transparent to-background z-10 from-40%" />
         <div className="absolute inset-0 mx-6">
           <FlickeringGrid
-            text={tablet ? "Footer" : "Streamline your workflow"}
+            text={tablet ? 'Footer' : 'Streamline your workflow'}
             fontSize={tablet ? 70 : 90}
             className="h-full w-full"
             squareSize={2}

@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
-import { AIPaywallGeneratorHero } from '~/components/sections/ai-paywall-generator-hero';
 import { AIPaywallGeneratorFeatures } from '~/components/sections/ai-paywall-generator-features';
+import { AIPaywallGeneratorHero } from '~/components/sections/ai-paywall-generator-hero';
 import {
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant, useHeroVariant } from '~/lib/debug-context';
 
 // AI Paywall Generator page: Generate paywalls with AI
 export default function AIPaywallGeneratorPage(): React.JSX.Element {

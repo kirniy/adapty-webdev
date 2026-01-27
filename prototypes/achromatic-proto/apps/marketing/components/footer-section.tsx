@@ -1,9 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { useFooterVariant } from '~/lib/debug-context';
+
 import { Footer } from '~/components/footer';
 import { FlickeringFooter } from '~/components/footer-flickering';
+import { useFooterVariant } from '~/lib/debug-context';
 
 export function FooterSection(): React.JSX.Element | null {
   const variant = useFooterVariant();

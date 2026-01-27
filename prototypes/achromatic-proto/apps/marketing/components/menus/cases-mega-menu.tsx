@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRightIcon } from 'lucide-react';
 
 import { CASES_MENU } from '~/lib/menu-data';
@@ -51,9 +51,15 @@ export function CasesMegaMenu(): React.JSX.Element {
 
             {/* Content */}
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm text-muted-foreground">{caseStudy.name}</p>
-              <p className="text-2xl font-bold tracking-tight text-primary">{caseStudy.metric}</p>
-              <p className="truncate text-xs text-muted-foreground">{caseStudy.description}</p>
+              <p className="truncate text-sm text-muted-foreground">
+                {caseStudy.name}
+              </p>
+              <p className="text-2xl font-bold tracking-tight text-primary">
+                {caseStudy.metric}
+              </p>
+              <p className="truncate text-xs text-muted-foreground">
+                {caseStudy.description}
+              </p>
             </div>
 
             {/* Arrow on hover */}

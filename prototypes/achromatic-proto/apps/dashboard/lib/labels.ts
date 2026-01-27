@@ -19,10 +19,7 @@ type Role = 'MEMBER' | 'ADMIN';
 
 type FeedbackCategory = 'SUGGESTION' | 'PROBLEM' | 'QUESTION';
 
-type WebhookTrigger =
-  | 'CONTACT_CREATED'
-  | 'CONTACT_UPDATED'
-  | 'CONTACT_DELETED';
+type WebhookTrigger = 'CONTACT_CREATED' | 'CONTACT_UPDATED' | 'CONTACT_DELETED';
 
 export const contactStageLabel: Record<ContactStage, string> = {
   LEAD: 'Lead',

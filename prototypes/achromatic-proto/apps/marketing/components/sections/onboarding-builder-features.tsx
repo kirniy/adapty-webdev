@@ -3,25 +3,25 @@
 import * as React from 'react';
 import Link from 'next/link';
 import {
-  MousePointer2Icon,
-  UserIcon,
-  FlaskConicalIcon,
+  ArrowRightIcon,
   BarChart3Icon,
-  GlobeIcon,
-  TrendingUpIcon,
   ChevronDownIcon,
-  ArrowRightIcon
+  FlaskConicalIcon,
+  GlobeIcon,
+  MousePointer2Icon,
+  TrendingUpIcon,
+  UserIcon
 } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { cn } from '@workspace/ui/lib/utils';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
-import { BlurFade } from '~/components/fragments/blur-fade';
 import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT content from adapty.io/onboarding-builder (scraped 2026-01-21)
@@ -32,7 +32,8 @@ const FEATURES = [
     icon: MousePointer2Icon,
     title: 'Drag-and-drop',
     subtitle: 'If you can picture it, you can build it',
-    description: "Create exactly what you imagined - from video backgrounds and custom loaders to animated buttons, multi-step quizzes, and anything else you need.",
+    description:
+      'Create exactly what you imagined - from video backgrounds and custom loaders to animated buttons, multi-step quizzes, and anything else you need.',
     category: 'builder'
   },
   {
@@ -40,7 +41,8 @@ const FEATURES = [
     icon: UserIcon,
     title: 'Personalization',
     subtitle: 'Relevance is how you convert',
-    description: "Ask what matters to them, then show it. Build flows that fork and adapt in real-time instead of dragging everyone through the same one-size-fits-nobody journey.",
+    description:
+      'Ask what matters to them, then show it. Build flows that fork and adapt in real-time instead of dragging everyone through the same one-size-fits-nobody journey.',
     category: 'personalization'
   },
   {
@@ -48,7 +50,8 @@ const FEATURES = [
     icon: FlaskConicalIcon,
     title: 'A/B testing',
     subtitle: 'Testing turns hypotheses into revenue',
-    description: "Compare variants, track the impact, and double down on what proves profitable. Keep iterating, because user behavior changes fast.",
+    description:
+      'Compare variants, track the impact, and double down on what proves profitable. Keep iterating, because user behavior changes fast.',
     category: 'testing'
   },
   {
@@ -56,7 +59,8 @@ const FEATURES = [
     icon: BarChart3Icon,
     title: 'Analytics',
     subtitle: 'What gets measured, gets maximized',
-    description: "Track 20+ onboarding metrics: completion rates, revenue, trial and payment conversions, ARPU, and more. Real-time data that show where users fall off and how to fix it.",
+    description:
+      'Track 20+ onboarding metrics: completion rates, revenue, trial and payment conversions, ARPU, and more. Real-time data that show where users fall off and how to fix it.',
     category: 'analytics'
   },
   {
@@ -64,7 +68,8 @@ const FEATURES = [
     icon: GlobeIcon,
     title: 'Localization',
     subtitle: 'Talk to users in their language',
-    description: "Use manual translation when you need precision, and AI localization when you need speed. Give every user a smooth, native experience, wherever they are.",
+    description:
+      'Use manual translation when you need precision, and AI localization when you need speed. Give every user a smooth, native experience, wherever they are.',
     category: 'localization'
   }
 ];
@@ -84,14 +89,14 @@ function DragDropMagic() {
             initial={{ x: 0 }}
             animate={{
               x: i === 1 ? [0, 20, 0] : 0,
-              scale: i === 1 ? [1, 1.05, 1] : 1,
+              scale: i === 1 ? [1, 1.05, 1] : 1
             }}
             transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
             className={cn(
-              "h-3 rounded-sm border",
+              'h-3 rounded-sm border',
               i === 1
-                ? "w-16 bg-primary/20 border-primary/50"
-                : "w-12 bg-muted/50 border-border"
+                ? 'w-16 bg-primary/20 border-primary/50'
+                : 'w-12 bg-muted/50 border-border'
             )}
           />
         ))}
@@ -150,14 +155,14 @@ function ABTestMagic() {
           key={variant}
           initial={{ height: '50%' }}
           animate={{
-            height: i === 0 ? ['50%', '60%', '50%'] : ['50%', '80%', '50%'],
+            height: i === 0 ? ['50%', '60%', '50%'] : ['50%', '80%', '50%']
           }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
           className={cn(
-            "w-10 rounded-t-md border border-b-0 flex items-end justify-center pb-1 text-[10px] font-bold",
+            'w-10 rounded-t-md border border-b-0 flex items-end justify-center pb-1 text-[10px] font-bold',
             i === 1
-              ? "bg-primary/15 border-primary/50 text-primary"
-              : "bg-muted/50 border-border text-muted-foreground"
+              ? 'bg-primary/15 border-primary/50 text-primary'
+              : 'bg-muted/50 border-border text-muted-foreground'
           )}
         >
           {variant}
@@ -178,10 +183,18 @@ function ABTestMagic() {
 function AnalyticsMagic() {
   return (
     <div className="mt-4 grid grid-cols-2 gap-2">
-      {[{ label: 'Conv.', delta: '+12%' }, { label: 'ARPU', delta: '+8%' }].map((metric, i) => (
-        <div key={i} className="bg-background/50 rounded p-2 border">
+      {[
+        { label: 'Conv.', delta: '+12%' },
+        { label: 'ARPU', delta: '+8%' }
+      ].map((metric, i) => (
+        <div
+          key={i}
+          className="bg-background/50 rounded p-2 border"
+        >
           <div className="flex justify-between items-center mb-1">
-            <span className="text-[8px] text-muted-foreground">{metric.label}</span>
+            <span className="text-[8px] text-muted-foreground">
+              {metric.label}
+            </span>
             <motion.span
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
@@ -191,7 +204,7 @@ function AnalyticsMagic() {
             </motion.span>
           </div>
           <motion.div
-            animate={{ width: ["30%", "70%", "50%"] }}
+            animate={{ width: ['30%', '70%', '50%'] }}
             transition={{ duration: 3, repeat: Infinity, delay: i * 0.3 }}
             className="h-1 bg-primary rounded-full"
           />
@@ -206,7 +219,7 @@ function OnboardingLocalizationMagic() {
   const LANGS = [
     { code: 'EN', text: 'Welcome' },
     { code: 'ES', text: 'Bienvenido' },
-    { code: 'DE', text: 'Willkommen' },
+    { code: 'DE', text: 'Willkommen' }
   ];
   const [index, setIndex] = React.useState(0);
 
@@ -228,10 +241,10 @@ function OnboardingLocalizationMagic() {
               opacity: i === index ? 1 : 0.4
             }}
             className={cn(
-              "size-6 rounded-full border flex items-center justify-center text-[8px] font-bold",
+              'size-6 rounded-full border flex items-center justify-center text-[8px] font-bold',
               i === index
-                ? "bg-primary/10 border-primary/50 text-primary"
-                : "bg-muted/30 border-border text-muted-foreground"
+                ? 'bg-primary/10 border-primary/50 text-primary'
+                : 'bg-muted/30 border-border text-muted-foreground'
             )}
           >
             {lang.code}
@@ -255,10 +268,10 @@ function OnboardingLocalizationMagic() {
 
 const MAGIC_MAP: Record<string, React.ComponentType> = {
   'drag-drop': DragDropMagic,
-  'personalization': PersonalizationMagic,
+  personalization: PersonalizationMagic,
   'ab-testing': ABTestMagic,
-  'analytics': AnalyticsMagic,
-  'localization': OnboardingLocalizationMagic,
+  analytics: AnalyticsMagic,
+  localization: OnboardingLocalizationMagic
 };
 
 function MagicArea({ id }: { id: string }) {
@@ -274,13 +287,14 @@ const CATEGORIES = [
   { id: 'personalization', label: 'Personalization' },
   { id: 'testing', label: 'Testing' },
   { id: 'analytics', label: 'Analytics' },
-  { id: 'localization', label: 'Localization' },
+  { id: 'localization', label: 'Localization' }
 ] as const;
 
 // Case study from adapty.io/onboarding-builder
 const CASE_STUDY = {
   title: 'How a new onboarding drove 50% revenue growth',
-  description: 'A travel app rebuilt onboarding in Adapty, tested a variant, and shipped the winner.',
+  description:
+    'A travel app rebuilt onboarding in Adapty, tested a variant, and shipped the winner.',
   results: [
     { label: 'ARPU', value: '+102%' },
     { label: 'Purchase conversion', value: '+30%' },
@@ -291,7 +305,11 @@ const CASE_STUDY = {
 
 export type OnboardingBuilderFeaturesVariant = 'grid' | 'bento' | 'tabs';
 
-export const ONBOARDING_BUILDER_FEATURES_VARIANTS = ['grid', 'bento', 'tabs'] as const;
+export const ONBOARDING_BUILDER_FEATURES_VARIANTS = [
+  'grid',
+  'bento',
+  'tabs'
+] as const;
 
 type Props = {
   variant?: OnboardingBuilderFeaturesVariant;
@@ -317,20 +335,29 @@ function GridFeatures(): React.JSX.Element {
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {FEATURES.map((feature, index) => (
-            <BlurFade key={feature.id || index} delay={0.1 + index * 0.02}>
+            <BlurFade
+              key={feature.id || index}
+              delay={0.1 + index * 0.02}
+            >
               <motion.div
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredIndex === index ? -4 : 0,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: hoveredIndex === index ? -4 : 0
+                      }
+                }
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               >
-                <div className={cn(
-                  "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer group",
-                  hoveredIndex === index && "border-primary/30 "
-                )}>
+                <div
+                  className={cn(
+                    'relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer group',
+                    hoveredIndex === index && 'border-primary/30 '
+                  )}
+                >
                   {hoveredIndex === index && (
                     <BorderBeam
                       size={120}
@@ -347,19 +374,33 @@ function GridFeatures(): React.JSX.Element {
                   <div className="p-6 relative z-10">
                     <div className="flex items-start gap-4">
                       <motion.div
-                        animate={shouldReduceMotion ? undefined : {
-                          scale: hoveredIndex === index ? 1.1 : 1,
-                          rotate: hoveredIndex === index ? 5 : 0,
+                        animate={
+                          shouldReduceMotion
+                            ? undefined
+                            : {
+                                scale: hoveredIndex === index ? 1.1 : 1,
+                                rotate: hoveredIndex === index ? 5 : 0
+                              }
+                        }
+                        transition={{
+                          type: 'spring',
+                          duration: 0.3,
+                          bounce: 0.2
                         }}
-                        transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
                         className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
                       >
                         <feature.icon className="size-6" />
                       </motion.div>
                       <div>
-                        <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">{feature.title}</p>
-                        <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{feature.subtitle}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+                        <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">
+                          {feature.title}
+                        </p>
+                        <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+                          {feature.subtitle}
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {feature.description}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -373,15 +414,21 @@ function GridFeatures(): React.JSX.Element {
             <motion.div
               onMouseEnter={() => setHoveredIndex(99)}
               onMouseLeave={() => setHoveredIndex(null)}
-              animate={shouldReduceMotion ? undefined : {
-                y: hoveredIndex === 99 ? -4 : 0,
-              }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      y: hoveredIndex === 99 ? -4 : 0
+                    }
+              }
               transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
             >
-              <div className={cn(
-                "relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 transition-all duration-150 cursor-pointer group",
-                hoveredIndex === 99 && "border-primary/40 "
-              )}>
+              <div
+                className={cn(
+                  'relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 transition-all duration-150 cursor-pointer group',
+                  hoveredIndex === 99 && 'border-primary/40 '
+                )}
+              >
                 <Spotlight
                   className="from-primary/20 via-primary/10 to-transparent"
                   size={200}
@@ -389,35 +436,57 @@ function GridFeatures(): React.JSX.Element {
                 <div className="p-6 relative z-10">
                   <div className="flex items-start gap-4">
                     <motion.div
-                      animate={shouldReduceMotion ? undefined : {
-                        scale: hoveredIndex === 99 ? 1.1 : 1,
+                      animate={
+                        shouldReduceMotion
+                          ? undefined
+                          : {
+                              scale: hoveredIndex === 99 ? 1.1 : 1
+                            }
+                      }
+                      transition={{
+                        type: 'spring',
+                        duration: 0.2,
+                        bounce: 0.2
                       }}
-                      transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
                       className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
                     >
                       <TrendingUpIcon className="size-6" />
                     </motion.div>
                     <div>
-                      <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">Case Study</p>
-                      <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{CASE_STUDY.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed mb-4">{CASE_STUDY.description}</p>
+                      <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">
+                        Case Study
+                      </p>
+                      <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+                        {CASE_STUDY.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                        {CASE_STUDY.description}
+                      </p>
                       <div className="flex flex-wrap gap-4">
                         {CASE_STUDY.results.map((result, idx) => (
                           <div key={idx}>
                             <motion.p
-                              animate={shouldReduceMotion ? undefined : {
-                                scale: hoveredIndex === 99 ? 1.05 : 1,
-                              }}
+                              animate={
+                                shouldReduceMotion
+                                  ? undefined
+                                  : {
+                                      scale: hoveredIndex === 99 ? 1.05 : 1
+                                    }
+                              }
                               transition={{ delay: idx * 0.05 }}
                               className="text-lg font-bold text-primary"
                             >
                               {result.value}
                             </motion.p>
-                            <p className="text-xs text-muted-foreground">{result.label}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {result.label}
+                            </p>
                           </div>
                         ))}
                       </div>
-                      <p className="text-xs text-muted-foreground mt-3 italic">{CASE_STUDY.note}</p>
+                      <p className="text-xs text-muted-foreground mt-3 italic">
+                        {CASE_STUDY.note}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -455,25 +524,31 @@ function BentoFeatures(): React.JSX.Element {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Featured cards */}
           {featured.map((feature, index) => (
-            <BlurFade key={feature.id || index} delay={0.1 + index * 0.05}>
+            <BlurFade
+              key={feature.id || index}
+              delay={0.1 + index * 0.05}
+            >
               <motion.div
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredIndex === index ? -6 : 0,
-                  scale: hoveredIndex === index ? 1.01 : 1,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: hoveredIndex === index ? -6 : 0,
+                        scale: hoveredIndex === index ? 1.01 : 1
+                      }
+                }
                 transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
-                className={cn(
-                  "lg:col-span-1",
-                  index === 0 && "lg:row-span-2"
-                )}
+                className={cn('lg:col-span-1', index === 0 && 'lg:row-span-2')}
               >
-                <div className={cn(
-                  "relative h-full overflow-hidden rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer group flex flex-col",
-                  hoveredIndex === index && "border-primary/50 ",
-                  index === 0 && "min-h-[300px]"
-                )}>
+                <div
+                  className={cn(
+                    'relative h-full overflow-hidden rounded-xl border bg-gradient-to-br from-primary/5 to-background border-primary/20 transition-all duration-200 cursor-pointer group flex flex-col',
+                    hoveredIndex === index && 'border-primary/50 ',
+                    index === 0 && 'min-h-[300px]'
+                  )}
+                >
                   <Spotlight
                     className="from-primary/20 via-primary/10 to-transparent"
                     size={350}
@@ -481,21 +556,35 @@ function BentoFeatures(): React.JSX.Element {
 
                   <div className="p-8 h-full flex flex-col relative z-10">
                     <motion.div
-                      animate={shouldReduceMotion ? undefined : {
-                        scale: hoveredIndex === index ? 1.15 : 1,
-                        rotate: hoveredIndex === index ? 5 : 0,
+                      animate={
+                        shouldReduceMotion
+                          ? undefined
+                          : {
+                              scale: hoveredIndex === index ? 1.15 : 1,
+                              rotate: hoveredIndex === index ? 5 : 0
+                            }
+                      }
+                      transition={{
+                        type: 'spring',
+                        duration: 0.3,
+                        bounce: 0.2
                       }}
-                      transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
                       className={cn(
-                        "flex size-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6 transition-colors",
-                        hoveredIndex === index && "bg-primary/20"
+                        'flex size-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6 transition-colors',
+                        hoveredIndex === index && 'bg-primary/20'
                       )}
                     >
                       <feature.icon className="size-7" />
                     </motion.div>
-                    <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">{feature.title}</p>
-                    <h3 className="font-bold text-xl mb-3 group-hover:text-primary transition-colors">{feature.subtitle}</h3>
-                    <p className="text-muted-foreground leading-relaxed flex-1">{feature.description}</p>
+                    <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">
+                      {feature.title}
+                    </p>
+                    <h3 className="font-bold text-xl mb-3 group-hover:text-primary transition-colors">
+                      {feature.subtitle}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed flex-1">
+                      {feature.description}
+                    </p>
 
                     {/* Magic Area */}
                     <div className="mt-auto pt-6">
@@ -511,19 +600,28 @@ function BentoFeatures(): React.JSX.Element {
           {regular.map((feature, i) => {
             const index = i + featured.length;
             return (
-              <BlurFade key={feature.id || index} delay={0.15 + i * 0.03}>
+              <BlurFade
+                key={feature.id || index}
+                delay={0.15 + i * 0.03}
+              >
                 <motion.div
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  animate={shouldReduceMotion ? undefined : {
-                    y: hoveredIndex === index ? -4 : 0,
-                  }}
+                  animate={
+                    shouldReduceMotion
+                      ? undefined
+                      : {
+                          y: hoveredIndex === index ? -4 : 0
+                        }
+                  }
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
-                  <div className={cn(
-                    "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer group flex flex-col",
-                    hoveredIndex === index && "border-primary/30 "
-                  )}>
+                  <div
+                    className={cn(
+                      'relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-150 cursor-pointer group flex flex-col',
+                      hoveredIndex === index && 'border-primary/30 '
+                    )}
+                  >
                     <Spotlight
                       className="from-primary/20 via-primary/10 to-transparent"
                       size={200}
@@ -531,19 +629,33 @@ function BentoFeatures(): React.JSX.Element {
                     <div className="p-6 relative z-10 flex-1 flex flex-col">
                       <div className="flex items-start gap-4">
                         <motion.div
-                          animate={shouldReduceMotion ? undefined : {
-                            scale: hoveredIndex === index ? 1.1 : 1,
-                            rotate: hoveredIndex === index ? 3 : 0,
+                          animate={
+                            shouldReduceMotion
+                              ? undefined
+                              : {
+                                  scale: hoveredIndex === index ? 1.1 : 1,
+                                  rotate: hoveredIndex === index ? 3 : 0
+                                }
+                          }
+                          transition={{
+                            type: 'spring',
+                            duration: 0.2,
+                            bounce: 0.2
                           }}
-                          transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
                           className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"
                         >
                           <feature.icon className="size-5" />
                         </motion.div>
                         <div className="flex-1">
-                          <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">{feature.title}</p>
-                          <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{feature.subtitle}</h3>
-                          <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+                          <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">
+                            {feature.title}
+                          </p>
+                          <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+                            {feature.subtitle}
+                          </h3>
+                          <p className="text-sm text-muted-foreground leading-relaxed">
+                            {feature.description}
+                          </p>
                         </div>
                       </div>
 
@@ -563,45 +675,67 @@ function BentoFeatures(): React.JSX.Element {
             <motion.div
               onMouseEnter={() => setHoveredIndex(99)}
               onMouseLeave={() => setHoveredIndex(null)}
-              animate={shouldReduceMotion ? undefined : {
-                y: hoveredIndex === 99 ? -4 : 0,
-              }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      y: hoveredIndex === 99 ? -4 : 0
+                    }
+              }
               transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
             >
-              <div className={cn(
-                "relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 transition-all duration-150 cursor-pointer group",
-                hoveredIndex === 99 && "border-primary/40 "
-              )}>
+              <div
+                className={cn(
+                  'relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 transition-all duration-150 cursor-pointer group',
+                  hoveredIndex === 99 && 'border-primary/40 '
+                )}
+              >
                 <Spotlight
                   className="from-primary/20 via-primary/10 to-transparent"
                   size={180}
                 />
                 <div className="p-6 relative z-10">
                   <motion.div
-                    animate={shouldReduceMotion ? undefined : {
-                      scale: hoveredIndex === 99 ? 1.1 : 1,
-                    }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : {
+                            scale: hoveredIndex === 99 ? 1.1 : 1
+                          }
+                    }
                     transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
                     className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4"
                   >
                     <TrendingUpIcon className="size-5" />
                   </motion.div>
-                  <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">Case Study</p>
-                  <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{CASE_STUDY.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{CASE_STUDY.description}</p>
+                  <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">
+                    Case Study
+                  </p>
+                  <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+                    {CASE_STUDY.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {CASE_STUDY.description}
+                  </p>
                   <div className="flex flex-wrap gap-4">
                     {CASE_STUDY.results.map((result, idx) => (
                       <div key={idx}>
                         <motion.p
-                          animate={shouldReduceMotion ? undefined : {
-                            scale: hoveredIndex === 99 ? 1.05 : 1,
-                          }}
+                          animate={
+                            shouldReduceMotion
+                              ? undefined
+                              : {
+                                  scale: hoveredIndex === 99 ? 1.05 : 1
+                                }
+                          }
                           transition={{ delay: idx * 0.05 }}
                           className="text-lg font-bold text-primary"
                         >
                           {result.value}
                         </motion.p>
-                        <p className="text-xs text-muted-foreground">{result.label}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {result.label}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -620,12 +754,14 @@ function BentoFeatures(): React.JSX.Element {
 // =============================================================================
 function TabsFeatures(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [activeCategory, setActiveCategory] = React.useState<typeof CATEGORIES[number]['id']>('all');
+  const [activeCategory, setActiveCategory] =
+    React.useState<(typeof CATEGORIES)[number]['id']>('all');
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
 
-  const filteredFeatures = activeCategory === 'all'
-    ? FEATURES
-    : FEATURES.filter(f => f.category === activeCategory);
+  const filteredFeatures =
+    activeCategory === 'all'
+      ? FEATURES
+      : FEATURES.filter((f) => f.category === activeCategory);
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -648,10 +784,10 @@ function TabsFeatures(): React.JSX.Element {
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 className={cn(
-                  "relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200",
+                  'relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200',
                   activeCategory === category.id
-                    ? "text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? 'text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
                 {activeCategory === category.id && (
@@ -681,22 +817,32 @@ function TabsFeatures(): React.JSX.Element {
               {filteredFeatures.map((feature, index) => (
                 <motion.div
                   key={feature.title}
-                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                  animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                  initial={
+                    shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }
+                  }
+                  animate={
+                    shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }
+                  }
                   transition={{ delay: index * 0.05, duration: 0.3 }}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <motion.div
-                    animate={shouldReduceMotion ? undefined : {
-                      y: hoveredIndex === index ? -4 : 0,
-                    }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : {
+                            y: hoveredIndex === index ? -4 : 0
+                          }
+                    }
                     transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                   >
-                    <div className={cn(
-                      "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer group",
-                      hoveredIndex === index && "border-primary/30 "
-                    )}>
+                    <div
+                      className={cn(
+                        'relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer group',
+                        hoveredIndex === index && 'border-primary/30 '
+                      )}
+                    >
                       <Spotlight
                         className="from-primary/20 via-primary/10 to-transparent"
                         size={180}
@@ -704,21 +850,35 @@ function TabsFeatures(): React.JSX.Element {
                       <div className="p-6 relative z-10">
                         <div className="flex items-start gap-4 mb-4">
                           <motion.div
-                            animate={shouldReduceMotion ? undefined : {
-                              scale: hoveredIndex === index ? 1.1 : 1,
-                              rotate: hoveredIndex === index ? 3 : 0,
+                            animate={
+                              shouldReduceMotion
+                                ? undefined
+                                : {
+                                    scale: hoveredIndex === index ? 1.1 : 1,
+                                    rotate: hoveredIndex === index ? 3 : 0
+                                  }
+                            }
+                            transition={{
+                              type: 'spring',
+                              duration: 0.2,
+                              bounce: 0.2
                             }}
-                            transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
                             className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
                           >
                             <feature.icon className="size-6" />
                           </motion.div>
                           <div>
-                            <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">{feature.title}</p>
-                            <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{feature.subtitle}</h3>
+                            <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">
+                              {feature.title}
+                            </p>
+                            <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">
+                              {feature.subtitle}
+                            </h3>
                           </div>
                         </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {feature.description}
+                        </p>
                       </div>
                     </div>
                   </motion.div>
@@ -728,22 +888,35 @@ function TabsFeatures(): React.JSX.Element {
               {/* Show case study only on 'all' tab */}
               {activeCategory === 'all' && (
                 <motion.div
-                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                  animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-                  transition={{ delay: filteredFeatures.length * 0.05, duration: 0.3 }}
+                  initial={
+                    shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }
+                  }
+                  animate={
+                    shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }
+                  }
+                  transition={{
+                    delay: filteredFeatures.length * 0.05,
+                    duration: 0.3
+                  }}
                   onMouseEnter={() => setHoveredIndex(99)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <motion.div
-                    animate={shouldReduceMotion ? undefined : {
-                      y: hoveredIndex === 99 ? -4 : 0,
-                    }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : {
+                            y: hoveredIndex === 99 ? -4 : 0
+                          }
+                    }
                     transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                   >
-                    <div className={cn(
-                      "relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 transition-all duration-150 cursor-pointer group",
-                      hoveredIndex === 99 && "border-primary/40 "
-                    )}>
+                    <div
+                      className={cn(
+                        'relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 transition-all duration-150 cursor-pointer group',
+                        hoveredIndex === 99 && 'border-primary/40 '
+                      )}
+                    >
                       <Spotlight
                         className="from-primary/20 via-primary/10 to-transparent"
                         size={180}
@@ -751,33 +924,53 @@ function TabsFeatures(): React.JSX.Element {
                       <div className="p-6 relative z-10">
                         <div className="flex items-start gap-4 mb-4">
                           <motion.div
-                            animate={shouldReduceMotion ? undefined : {
-                              scale: hoveredIndex === 99 ? 1.1 : 1,
+                            animate={
+                              shouldReduceMotion
+                                ? undefined
+                                : {
+                                    scale: hoveredIndex === 99 ? 1.1 : 1
+                                  }
+                            }
+                            transition={{
+                              type: 'spring',
+                              duration: 0.2,
+                              bounce: 0.2
                             }}
-                            transition={{ type: 'spring', duration: 0.2, bounce: 0.2 }}
                             className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
                           >
                             <TrendingUpIcon className="size-6" />
                           </motion.div>
                           <div>
-                            <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">Case Study</p>
-                            <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{CASE_STUDY.title}</h3>
+                            <p className="text-xs font-medium text-primary uppercase tracking-wide mb-1">
+                              Case Study
+                            </p>
+                            <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">
+                              {CASE_STUDY.title}
+                            </h3>
                           </div>
                         </div>
-                        <p className="text-sm text-muted-foreground mb-4">{CASE_STUDY.description}</p>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {CASE_STUDY.description}
+                        </p>
                         <div className="flex flex-wrap gap-4">
                           {CASE_STUDY.results.map((result, idx) => (
                             <div key={idx}>
                               <motion.p
-                                animate={shouldReduceMotion ? undefined : {
-                                  scale: hoveredIndex === 99 ? 1.05 : 1,
-                                }}
+                                animate={
+                                  shouldReduceMotion
+                                    ? undefined
+                                    : {
+                                        scale: hoveredIndex === 99 ? 1.05 : 1
+                                      }
+                                }
                                 transition={{ delay: idx * 0.05 }}
                                 className="text-lg font-bold text-primary"
                               >
                                 {result.value}
                               </motion.p>
-                              <p className="text-xs text-muted-foreground">{result.label}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {result.label}
+                              </p>
                             </div>
                           ))}
                         </div>
@@ -797,7 +990,9 @@ function TabsFeatures(): React.JSX.Element {
 // =============================================================================
 // MAIN EXPORT
 // =============================================================================
-export function OnboardingBuilderFeatures({ variant = 'grid' }: Props): React.JSX.Element {
+export function OnboardingBuilderFeatures({
+  variant = 'grid'
+}: Props): React.JSX.Element {
   switch (variant) {
     case 'bento':
       return <BentoFeatures />;

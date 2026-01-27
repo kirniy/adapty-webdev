@@ -1,10 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRightIcon } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { Separator } from '@workspace/ui/components/separator';
@@ -17,15 +17,15 @@ import {
 import { cn } from '@workspace/ui/lib/utils';
 
 import {
-  PRODUCT_SIDEBAR_ITEMS,
-  PRODUCT_FOOTER,
-  PRODUCT_TABS,
-  SOLUTION_ITEMS,
   COMPARE_ITEMS,
-  SDK_ITEMS,
   INTEGRATIONS_ITEMS,
-  type ProductSidebarKey,
-  type MenuItem
+  PRODUCT_FOOTER,
+  PRODUCT_SIDEBAR_ITEMS,
+  PRODUCT_TABS,
+  SDK_ITEMS,
+  SOLUTION_ITEMS,
+  type MenuItem,
+  type ProductSidebarKey
 } from '~/lib/menu-data';
 
 // ============================================================================
@@ -64,13 +64,18 @@ function MenuItemCard({ item }: { item: MenuItem }) {
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium">{item.title}</span>
           {item.badge && (
-            <Badge variant="secondary" className="h-5 rounded-full px-2 text-[10px] font-semibold uppercase">
+            <Badge
+              variant="secondary"
+              className="h-5 rounded-full px-2 text-[10px] font-semibold uppercase"
+            >
               {item.badge}
             </Badge>
           )}
         </div>
         {item.description && (
-          <p className="mt-0.5 text-xs text-muted-foreground line-clamp-1">{item.description}</p>
+          <p className="mt-0.5 text-xs text-muted-foreground line-clamp-1">
+            {item.description}
+          </p>
         )}
       </div>
     </Link>
@@ -83,13 +88,23 @@ function MenuItemCard({ item }: { item: MenuItem }) {
 
 function ProductPanel() {
   return (
-    <UnderlinedTabs defaultValue="paywalls" className="w-full">
+    <UnderlinedTabs
+      defaultValue="paywalls"
+      className="w-full"
+    >
       <UnderlinedTabsList className="mb-4 w-full border-b">
         {Object.entries(PRODUCT_TABS).map(([key, tab]) => (
-          <UnderlinedTabsTrigger key={key} value={key} className="first:ml-0">
+          <UnderlinedTabsTrigger
+            key={key}
+            value={key}
+            className="first:ml-0"
+          >
             {tab.label}
             {key === 'paywalls' && (
-              <Badge variant="secondary" className="ml-2 h-4 rounded-full px-1.5 text-[9px]">
+              <Badge
+                variant="secondary"
+                className="ml-2 h-4 rounded-full px-1.5 text-[9px]"
+              >
                 {tab.items.length}
               </Badge>
             )}
@@ -98,10 +113,16 @@ function ProductPanel() {
       </UnderlinedTabsList>
 
       {Object.entries(PRODUCT_TABS).map(([key, tab]) => (
-        <UnderlinedTabsContent key={key} value={key}>
+        <UnderlinedTabsContent
+          key={key}
+          value={key}
+        >
           <div className="grid grid-cols-2 gap-1">
             {tab.items.map((item) => (
-              <MenuItemCard key={item.title} item={item} />
+              <MenuItemCard
+                key={item.title}
+                item={item}
+              />
             ))}
           </div>
         </UnderlinedTabsContent>
@@ -110,11 +131,25 @@ function ProductPanel() {
   );
 }
 
-function SimpleItemGrid({ items, columns = 2 }: { items: MenuItem[]; columns?: 1 | 2 }) {
+function SimpleItemGrid({
+  items,
+  columns = 2
+}: {
+  items: MenuItem[];
+  columns?: 1 | 2;
+}) {
   return (
-    <div className={cn('grid gap-1', columns === 2 ? 'grid-cols-2' : 'grid-cols-1')}>
+    <div
+      className={cn(
+        'grid gap-1',
+        columns === 2 ? 'grid-cols-2' : 'grid-cols-1'
+      )}
+    >
       {items.map((item) => (
-        <MenuItemCard key={item.title} item={item} />
+        <MenuItemCard
+          key={item.title}
+          item={item}
+        />
       ))}
     </div>
   );
@@ -127,13 +162,19 @@ function SolutionPanel() {
         <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           By Role
         </h3>
-        <SimpleItemGrid items={SOLUTION_ITEMS} columns={1} />
+        <SimpleItemGrid
+          items={SOLUTION_ITEMS}
+          columns={1}
+        />
       </div>
       <div className="flex-1">
         <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           Compare Adapty
         </h3>
-        <SimpleItemGrid items={COMPARE_ITEMS} columns={1} />
+        <SimpleItemGrid
+          items={COMPARE_ITEMS}
+          columns={1}
+        />
       </div>
     </div>
   );
@@ -145,7 +186,10 @@ function SDKPanel() {
       <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         Mobile SDKs
       </h3>
-      <SimpleItemGrid items={SDK_ITEMS} columns={2} />
+      <SimpleItemGrid
+        items={SDK_ITEMS}
+        columns={2}
+      />
       <Link
         href="https://adapty.io/docs/"
         target="_blank"
@@ -164,7 +208,10 @@ function IntegrationsPanel() {
       <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         Popular integrations
       </h3>
-      <SimpleItemGrid items={INTEGRATIONS_ITEMS} columns={2} />
+      <SimpleItemGrid
+        items={INTEGRATIONS_ITEMS}
+        columns={2}
+      />
       <Link
         href="/integrations"
         className="mt-4 flex items-center gap-1 text-sm font-medium text-primary hover:underline"
@@ -184,11 +231,12 @@ const PANEL_COMPONENTS: Record<ProductSidebarKey, React.ComponentType> = {
   product: ProductPanel,
   solution: SolutionPanel,
   sdk: SDKPanel,
-  integrations: IntegrationsPanel,
+  integrations: IntegrationsPanel
 };
 
 export function ProductMegaMenu(): React.JSX.Element {
-  const [activePanel, setActivePanel] = React.useState<ProductSidebarKey>('product');
+  const [activePanel, setActivePanel] =
+    React.useState<ProductSidebarKey>('product');
 
   const PanelComponent = PANEL_COMPONENTS[activePanel];
 

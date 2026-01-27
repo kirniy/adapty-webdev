@@ -1,69 +1,70 @@
-'use client'
+'use client';
 
-import { motion, AnimatePresence } from 'motion/react'
-import { useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion } from 'motion/react';
+
 import {
-  useDebug,
+  AB_TESTING_FEATURES_VARIANTS,
+  AUTOPILOT_FEATURES_VARIANTS,
+  BLOG_VARIANTS,
   COLOR_ACCENT_VARIANTS,
-  GRID_VARIANTS,
   CORNER_RADIUS_VARIANTS,
-  GRID_THICKNESS_VARIANTS,
+  CTA_VARIANTS,
+  CUSTOMIZATION_VARIANTS,
+  FAQ_VARIANTS,
+  FEATURES_VARIANTS,
+  FOOTER_VARIANTS,
+  FOR_APP_OWNERS_FEATURES_VARIANTS,
+  FOR_DEVELOPERS_FEATURES_VARIANTS,
+  FOR_INDIE_FEATURES_VARIANTS,
+  FOR_MARKETERS_FEATURES_VARIANTS,
   GRID_COLOR_VARIANTS,
   GRID_OPACITY_VARIANTS,
+  GRID_THICKNESS_VARIANTS,
+  GRID_VARIANTS,
   GRID_Z_INDEX_VARIANTS,
   HEADER_VARIANTS,
-  HERO_VARIANTS,
   HERO_LINES_VARIANTS,
+  HERO_VARIANTS,
+  IMAGE_SET_VARIANTS,
   LOGOS_VARIANTS,
-  FEATURES_VARIANTS,
+  LTV_ANALYTICS_FEATURES_VARIANTS,
+  ONBOARDING_BUILDER_FEATURES_VARIANTS,
+  PAYWALL_BUILDER_FEATURES_VARIANTS,
+  REFUND_SAVER_FEATURES_VARIANTS,
   ROLES_VARIANTS,
   SDK_VARIANTS,
   STATS_VARIANTS,
   TESTIMONIALS_VARIANTS,
-  BLOG_VARIANTS,
-  FAQ_VARIANTS,
-  CUSTOMIZATION_VARIANTS,
-  PAYWALL_BUILDER_FEATURES_VARIANTS,
-  AB_TESTING_FEATURES_VARIANTS,
-  ONBOARDING_BUILDER_FEATURES_VARIANTS,
-  AUTOPILOT_FEATURES_VARIANTS,
-  LTV_ANALYTICS_FEATURES_VARIANTS,
-  REFUND_SAVER_FEATURES_VARIANTS,
-  FOR_MARKETERS_FEATURES_VARIANTS,
-  FOR_APP_OWNERS_FEATURES_VARIANTS,
-  FOR_DEVELOPERS_FEATURES_VARIANTS,
-  FOR_INDIE_FEATURES_VARIANTS,
-  CTA_VARIANTS,
-  FOOTER_VARIANTS,
-  IMAGE_SET_VARIANTS,
-  type VariantOption,
-} from '~/lib/debug-context'
+  useDebug,
+  type VariantOption
+} from '~/lib/debug-context';
 
 // Page section configuration - defines which sections show on which pages
 type PageSections = {
-  hero?: boolean
-  logos?: boolean
-  features?: boolean
-  paywallBuilderFeatures?: boolean
-  abTestingFeatures?: boolean
-  onboardingBuilderFeatures?: boolean
-  autopilotFeatures?: boolean
-  ltvAnalyticsFeatures?: boolean
-  refundSaverFeatures?: boolean
-  forMarketersFeatures?: boolean
-  forAppOwnersFeatures?: boolean
-  forDevelopersFeatures?: boolean
-  forIndieFeatures?: boolean
-  customization?: boolean
-  roles?: boolean
-  sdk?: boolean
-  stats?: boolean
-  testimonials?: boolean
-  blog?: boolean
-  faq?: boolean
-  cta?: boolean
-}
+  hero?: boolean;
+  logos?: boolean;
+  features?: boolean;
+  paywallBuilderFeatures?: boolean;
+  abTestingFeatures?: boolean;
+  onboardingBuilderFeatures?: boolean;
+  autopilotFeatures?: boolean;
+  ltvAnalyticsFeatures?: boolean;
+  refundSaverFeatures?: boolean;
+  forMarketersFeatures?: boolean;
+  forAppOwnersFeatures?: boolean;
+  forDevelopersFeatures?: boolean;
+  forIndieFeatures?: boolean;
+  customization?: boolean;
+  roles?: boolean;
+  sdk?: boolean;
+  stats?: boolean;
+  testimonials?: boolean;
+  blog?: boolean;
+  faq?: boolean;
+  cta?: boolean;
+};
 
 // Mapping of pages to their available sections
 const PAGE_SECTIONS: Record<string, PageSections> = {
@@ -80,20 +81,20 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     testimonials: true,
     blog: true,
     faq: true,
-    cta: true,
+    cta: true
   },
   '/pricing': {
     hero: true,
     logos: true,
     faq: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/schedule-demo': {
     hero: true,
     logos: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
 
   // ============================================================================
@@ -105,7 +106,7 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     forMarketersFeatures: true,
     stats: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/for-developers': {
     hero: true,
@@ -113,7 +114,7 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     forDevelopersFeatures: true,
     sdk: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/for-app-owners': {
     hero: true,
@@ -121,14 +122,14 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     forAppOwnersFeatures: true,
     stats: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/for-indie': {
     hero: true,
     logos: true,
     forIndieFeatures: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
 
   // ============================================================================
@@ -140,39 +141,39 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     customization: true,
     testimonials: true,
     faq: true,
-    cta: true,
+    cta: true
   },
   '/paywall-ab-testing': {
     hero: true,
     abTestingFeatures: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/onboarding-builder': {
     hero: true,
     onboardingBuilderFeatures: true,
     testimonials: true,
     faq: true,
-    cta: true,
+    cta: true
   },
   '/autopilot': {
     hero: true,
     autopilotFeatures: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/ltv-analytics': {
     hero: true,
     ltvAnalyticsFeatures: true,
     stats: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/predictive-analytics': {
     hero: true,
     features: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/refund-saver': {
     hero: true,
@@ -180,62 +181,62 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     stats: true,
     faq: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/ai-paywall-generator': {
     hero: true,
     features: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/paywall-library': {
     hero: true,
     features: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/paywall-localization': {
     hero: true,
     features: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/paywall-targeting': {
     hero: true,
     features: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/remote-config': {
     hero: true,
     features: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/fallback-paywalls': {
     hero: true,
     features: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/revenue-growth': {
     hero: true,
     features: true,
     stats: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/apple-fiscal-calendar': {
     hero: true,
     logos: true,
     features: true,
-    cta: true,
+    cta: true
   },
   '/state-of-in-app-subscriptions': {
     hero: true,
     logos: true,
     features: true,
-    cta: true,
+    cta: true
   },
 
   // ============================================================================
@@ -246,13 +247,13 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     logos: true,
     sdk: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/integrations': {
     hero: true,
     logos: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
 
   // ============================================================================
@@ -263,34 +264,34 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     logos: true,
     features: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/story': {
     hero: true,
     stats: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/careers': {
     hero: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/case-studies': {
     hero: true,
     logos: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/blog': {
     hero: true,
     blog: true,
-    cta: true,
+    cta: true
   },
   '/contact': {
     hero: true,
     logos: true,
-    cta: true,
+    cta: true
   },
 
   // ============================================================================
@@ -300,39 +301,39 @@ const PAGE_SECTIONS: Record<string, PageSections> = {
     hero: true,
     logos: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/compare/revenuecat': {
     hero: true,
     logos: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/compare/qonversion': {
     hero: true,
     logos: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/compare/superwall': {
     hero: true,
     logos: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/compare/purchasely': {
     hero: true,
     logos: true,
     testimonials: true,
-    cta: true,
+    cta: true
   },
   '/compare/in-house-development': {
     hero: true,
     logos: true,
     testimonials: true,
-    cta: true,
-  },
-}
+    cta: true
+  }
+};
 
 // Default sections for pages not explicitly mapped
 const DEFAULT_SECTIONS: PageSections = {
@@ -340,23 +341,55 @@ const DEFAULT_SECTIONS: PageSections = {
   logos: true,
   features: true,
   testimonials: true,
-  cta: true,
-}
+  cta: true
+};
 
 // Icons
 const SettingsIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="3" />
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle
+      cx="12"
+      cy="12"
+      r="3"
+    />
     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
   </svg>
-)
+);
 
 const CloseIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18" />
-    <line x1="6" y1="6" x2="18" y2="18" />
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line
+      x1="18"
+      y1="6"
+      x2="6"
+      y2="18"
+    />
+    <line
+      x1="6"
+      y1="6"
+      x2="18"
+      y2="18"
+    />
   </svg>
-)
+);
 
 const ChevronDown = ({ isOpen }: { isOpen: boolean }) => (
   <svg
@@ -372,43 +405,121 @@ const ChevronDown = ({ isOpen }: { isOpen: boolean }) => (
   >
     <polyline points="6 9 12 15 18 9" />
   </svg>
-)
+);
 
 const NavIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="3" y1="6" x2="21" y2="6" />
-    <line x1="3" y1="12" x2="21" y2="12" />
-    <line x1="3" y1="18" x2="21" y2="18" />
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line
+      x1="3"
+      y1="6"
+      x2="21"
+      y2="6"
+    />
+    <line
+      x1="3"
+      y1="12"
+      x2="21"
+      y2="12"
+    />
+    <line
+      x1="3"
+      y1="18"
+      x2="21"
+      y2="18"
+    />
   </svg>
-)
+);
 
 const BlocksIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="3" width="18" height="18" rx="2" />
-    <line x1="3" y1="9" x2="21" y2="9" />
-    <line x1="3" y1="15" x2="21" y2="15" />
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect
+      x="3"
+      y="3"
+      width="18"
+      height="18"
+      rx="2"
+    />
+    <line
+      x1="3"
+      y1="9"
+      x2="21"
+      y2="9"
+    />
+    <line
+      x1="3"
+      y1="15"
+      x2="21"
+      y2="15"
+    />
   </svg>
-)
+);
 
 const PaletteIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="13.5" cy="6.5" r="0.5" fill="currentColor" />
-    <circle cx="17.5" cy="10.5" r="0.5" fill="currentColor" />
-    <circle cx="8.5" cy="7.5" r="0.5" fill="currentColor" />
-    <circle cx="6.5" cy="12.5" r="0.5" fill="currentColor" />
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle
+      cx="13.5"
+      cy="6.5"
+      r="0.5"
+      fill="currentColor"
+    />
+    <circle
+      cx="17.5"
+      cy="10.5"
+      r="0.5"
+      fill="currentColor"
+    />
+    <circle
+      cx="8.5"
+      cy="7.5"
+      r="0.5"
+      fill="currentColor"
+    />
+    <circle
+      cx="6.5"
+      cy="12.5"
+      r="0.5"
+      fill="currentColor"
+    />
     <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z" />
   </svg>
-)
+);
 
 // Generic variant selector
 function VariantSelector<T extends string>({
   variants,
   currentValue,
-  onChange,
+  onChange
 }: {
-  variants: VariantOption<T>[]
-  currentValue: T
-  onChange: (value: T) => void
+  variants: VariantOption<T>[];
+  currentValue: T;
+  onChange: (value: T) => void;
 }) {
   return (
     <div className="flex flex-wrap gap-1.5">
@@ -418,9 +529,10 @@ function VariantSelector<T extends string>({
           onClick={() => onChange(variant.value)}
           className={`
             px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-200
-            ${currentValue === variant.value
-              ? 'bg-primary text-primary-foreground shadow-sm'
-              : 'bg-background/60 text-muted-foreground hover:bg-background hover:text-foreground border border-border/50'
+            ${
+              currentValue === variant.value
+                ? 'bg-primary text-primary-foreground shadow-sm'
+                : 'bg-background/60 text-muted-foreground hover:bg-background hover:text-foreground border border-border/50'
             }
           `}
           title={variant.description}
@@ -429,7 +541,7 @@ function VariantSelector<T extends string>({
         </button>
       ))}
     </div>
-  )
+  );
 }
 
 // Collapsible section
@@ -437,14 +549,14 @@ function CollapsibleSection({
   title,
   icon,
   children,
-  defaultOpen = false,
+  defaultOpen = false
 }: {
-  title: string
-  icon: React.ReactNode
-  children: React.ReactNode
-  defaultOpen?: boolean
+  title: string;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
 }) {
-  const [isOpen, setIsOpen] = useState(defaultOpen)
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
     <div className="border-t border-border/50 pt-3 mt-3 first:border-t-0 first:pt-0 first:mt-0">
@@ -468,62 +580,97 @@ function CollapsibleSection({
             transition={{ duration: 0.2, ease: [0.165, 0.84, 0.44, 1] }} // ease-out-quart
             className="overflow-hidden"
           >
-            <div className="pt-2.5">
-              {children}
-            </div>
+            <div className="pt-2.5">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }
 
 export function DebugMenu() {
-  const pathname = usePathname()
-  const sections = PAGE_SECTIONS[pathname] || DEFAULT_SECTIONS
+  const pathname = usePathname();
+  const sections = PAGE_SECTIONS[pathname] || DEFAULT_SECTIONS;
 
   const {
     isDebugMenuOpen,
     toggleDebugMenu,
     resetToDefaults,
-    colorAccentVariant, setColorAccentVariant,
-    gridVariant, setGridVariant,
-    cornerRadiusVariant, setCornerRadiusVariant,
-    gridThicknessVariant, setGridThicknessVariant,
-    dashedThicknessVariant, setDashedThicknessVariant,
-    gridColorVariant, setGridColorVariant,
-    gridOpacityVariant, setGridOpacityVariant,
-    gridZIndexVariant, setGridZIndexVariant,
-    headerVariant, setHeaderVariant,
-    heroVariant, setHeroVariant,
-    heroLinesVariant, setHeroLinesVariant,
-    logosVariant, setLogosVariant,
-    featuresVariant, setFeaturesVariant,
-    customizationVariant, setCustomizationVariant,
-    paywallBuilderFeaturesVariant, setPaywallBuilderFeaturesVariant,
-    abTestingFeaturesVariant, setAbTestingFeaturesVariant,
-    onboardingBuilderFeaturesVariant, setOnboardingBuilderFeaturesVariant,
-    autopilotFeaturesVariant, setAutopilotFeaturesVariant,
-    ltvAnalyticsFeaturesVariant, setLtvAnalyticsFeaturesVariant,
-    refundSaverFeaturesVariant, setRefundSaverFeaturesVariant,
-    forMarketersFeaturesVariant, setForMarketersFeaturesVariant,
-    forAppOwnersFeaturesVariant, setForAppOwnersFeaturesVariant,
-    forDevelopersFeaturesVariant, setForDevelopersFeaturesVariant,
-    forIndieFeaturesVariant, setForIndieFeaturesVariant,
-    rolesVariant, setRolesVariant,
-    sdkVariant, setSdkVariant,
-    statsVariant, setStatsVariant,
-    testimonialsVariant, setTestimonialsVariant,
-    blogVariant, setBlogVariant,
-    faqVariant, setFaqVariant,
-    ctaVariant, setCtaVariant,
-    footerVariant, setFooterVariant,
-    imageSetVariant, setImageSetVariant,
-    monochromeMode, setMonochromeMode,
-  } = useDebug()
+    colorAccentVariant,
+    setColorAccentVariant,
+    gridVariant,
+    setGridVariant,
+    cornerRadiusVariant,
+    setCornerRadiusVariant,
+    gridThicknessVariant,
+    setGridThicknessVariant,
+    dashedThicknessVariant,
+    setDashedThicknessVariant,
+    gridColorVariant,
+    setGridColorVariant,
+    gridOpacityVariant,
+    setGridOpacityVariant,
+    gridZIndexVariant,
+    setGridZIndexVariant,
+    headerVariant,
+    setHeaderVariant,
+    heroVariant,
+    setHeroVariant,
+    heroLinesVariant,
+    setHeroLinesVariant,
+    logosVariant,
+    setLogosVariant,
+    featuresVariant,
+    setFeaturesVariant,
+    customizationVariant,
+    setCustomizationVariant,
+    paywallBuilderFeaturesVariant,
+    setPaywallBuilderFeaturesVariant,
+    abTestingFeaturesVariant,
+    setAbTestingFeaturesVariant,
+    onboardingBuilderFeaturesVariant,
+    setOnboardingBuilderFeaturesVariant,
+    autopilotFeaturesVariant,
+    setAutopilotFeaturesVariant,
+    ltvAnalyticsFeaturesVariant,
+    setLtvAnalyticsFeaturesVariant,
+    refundSaverFeaturesVariant,
+    setRefundSaverFeaturesVariant,
+    forMarketersFeaturesVariant,
+    setForMarketersFeaturesVariant,
+    forAppOwnersFeaturesVariant,
+    setForAppOwnersFeaturesVariant,
+    forDevelopersFeaturesVariant,
+    setForDevelopersFeaturesVariant,
+    forIndieFeaturesVariant,
+    setForIndieFeaturesVariant,
+    rolesVariant,
+    setRolesVariant,
+    sdkVariant,
+    setSdkVariant,
+    statsVariant,
+    setStatsVariant,
+    testimonialsVariant,
+    setTestimonialsVariant,
+    blogVariant,
+    setBlogVariant,
+    faqVariant,
+    setFaqVariant,
+    ctaVariant,
+    setCtaVariant,
+    footerVariant,
+    setFooterVariant,
+    imageSetVariant,
+    setImageSetVariant,
+    monochromeMode,
+    setMonochromeMode
+  } = useDebug();
 
   // Get page name for display
-  const pageName = pathname === '/' ? 'Home' : pathname.slice(1).split('/')[0].replace(/-/g, ' ')
+  const pageName =
+    pathname === '/'
+      ? 'Home'
+      : pathname.slice(1).split('/')[0].replace(/-/g, ' ');
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
@@ -542,78 +689,169 @@ export function DebugMenu() {
                 <SettingsIcon />
                 <span className="capitalize">{pageName}</span>
               </h3>
-              <button onClick={toggleDebugMenu} className="p-1.5 rounded-lg hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-colors">
+              <button
+                onClick={toggleDebugMenu}
+                className="p-1.5 rounded-lg hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-colors"
+              >
                 <CloseIcon />
               </button>
             </div>
 
             {/* GLOBAL SETTINGS LABEL */}
             <div className="mb-2">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-widest">Global Settings</span>
+              <span className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-widest">
+                Global Settings
+              </span>
             </div>
 
             {/* GLOBAL SECTIONS - Always visible */}
-            <CollapsibleSection title="Color Accent" icon={<PaletteIcon />} defaultOpen>
-              <VariantSelector variants={COLOR_ACCENT_VARIANTS} currentValue={colorAccentVariant} onChange={setColorAccentVariant} />
+            <CollapsibleSection
+              title="Color Accent"
+              icon={<PaletteIcon />}
+              defaultOpen
+            >
+              <VariantSelector
+                variants={COLOR_ACCENT_VARIANTS}
+                currentValue={colorAccentVariant}
+                onChange={setColorAccentVariant}
+              />
             </CollapsibleSection>
 
-            <CollapsibleSection title="Global Style" icon={<SettingsIcon />} defaultOpen>
+            <CollapsibleSection
+              title="Global Style"
+              icon={<SettingsIcon />}
+              defaultOpen
+            >
               <div className="space-y-3">
                 <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Background</span>
-                  <VariantSelector variants={GRID_VARIANTS} currentValue={gridVariant} onChange={setGridVariant} />
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
+                    Background
+                  </span>
+                  <VariantSelector
+                    variants={GRID_VARIANTS}
+                    currentValue={gridVariant}
+                    onChange={setGridVariant}
+                  />
                 </div>
                 <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Corner Radius</span>
-                  <VariantSelector variants={CORNER_RADIUS_VARIANTS} currentValue={cornerRadiusVariant} onChange={setCornerRadiusVariant} />
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
+                    Corner Radius
+                  </span>
+                  <VariantSelector
+                    variants={CORNER_RADIUS_VARIANTS}
+                    currentValue={cornerRadiusVariant}
+                    onChange={setCornerRadiusVariant}
+                  />
                 </div>
                 <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Solid Grid Thickness</span>
-                  <VariantSelector variants={GRID_THICKNESS_VARIANTS} currentValue={gridThicknessVariant} onChange={setGridThicknessVariant} />
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
+                    Solid Grid Thickness
+                  </span>
+                  <VariantSelector
+                    variants={GRID_THICKNESS_VARIANTS}
+                    currentValue={gridThicknessVariant}
+                    onChange={setGridThicknessVariant}
+                  />
                 </div>
                 <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Dashed Grid Thickness</span>
-                  <VariantSelector variants={GRID_THICKNESS_VARIANTS} currentValue={dashedThicknessVariant} onChange={setDashedThicknessVariant} />
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
+                    Dashed Grid Thickness
+                  </span>
+                  <VariantSelector
+                    variants={GRID_THICKNESS_VARIANTS}
+                    currentValue={dashedThicknessVariant}
+                    onChange={setDashedThicknessVariant}
+                  />
                 </div>
                 <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Grid Color</span>
-                  <VariantSelector variants={GRID_COLOR_VARIANTS} currentValue={gridColorVariant} onChange={setGridColorVariant} />
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
+                    Grid Color
+                  </span>
+                  <VariantSelector
+                    variants={GRID_COLOR_VARIANTS}
+                    currentValue={gridColorVariant}
+                    onChange={setGridColorVariant}
+                  />
                 </div>
                 <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Grid Opacity</span>
-                  <VariantSelector variants={GRID_OPACITY_VARIANTS} currentValue={gridOpacityVariant} onChange={setGridOpacityVariant} />
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
+                    Grid Opacity
+                  </span>
+                  <VariantSelector
+                    variants={GRID_OPACITY_VARIANTS}
+                    currentValue={gridOpacityVariant}
+                    onChange={setGridOpacityVariant}
+                  />
                 </div>
                 <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Grid Z-Index</span>
-                  <VariantSelector variants={GRID_Z_INDEX_VARIANTS} currentValue={gridZIndexVariant} onChange={setGridZIndexVariant} />
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
+                    Grid Z-Index
+                  </span>
+                  <VariantSelector
+                    variants={GRID_Z_INDEX_VARIANTS}
+                    currentValue={gridZIndexVariant}
+                    onChange={setGridZIndexVariant}
+                  />
                 </div>
               </div>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Navbar" icon={<NavIcon />} defaultOpen>
-              <VariantSelector variants={HEADER_VARIANTS} currentValue={headerVariant} onChange={setHeaderVariant} />
+            <CollapsibleSection
+              title="Navbar"
+              icon={<NavIcon />}
+              defaultOpen
+            >
+              <VariantSelector
+                variants={HEADER_VARIANTS}
+                currentValue={headerVariant}
+                onChange={setHeaderVariant}
+              />
             </CollapsibleSection>
 
             {/* PAGE SETTINGS LABEL */}
             <div className="mt-4 mb-2 pt-3 border-t border-border/30">
-              <span className="text-[10px] uppercase font-bold text-primary/80 tracking-widest">Page: {pageName}</span>
+              <span className="text-[10px] uppercase font-bold text-primary/80 tracking-widest">
+                Page: {pageName}
+              </span>
             </div>
 
             {/* PAGE-SPECIFIC SECTIONS - Conditional */}
             {sections.hero && (
-              <CollapsibleSection title="Hero" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={HERO_VARIANTS} currentValue={heroVariant} onChange={setHeroVariant} />
+              <CollapsibleSection
+                title="Hero"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={HERO_VARIANTS}
+                  currentValue={heroVariant}
+                  onChange={setHeroVariant}
+                />
                 <div className="mt-3 pt-3 border-t border-border/30">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider mb-1.5 block">Dashed Lines</span>
-                  <VariantSelector variants={HERO_LINES_VARIANTS} currentValue={heroLinesVariant} onChange={setHeroLinesVariant} />
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider mb-1.5 block">
+                    Dashed Lines
+                  </span>
+                  <VariantSelector
+                    variants={HERO_LINES_VARIANTS}
+                    currentValue={heroLinesVariant}
+                    onChange={setHeroLinesVariant}
+                  />
                 </div>
                 <div className="mt-3 pt-3 border-t border-border/30">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider mb-1.5 block">Image Set</span>
-                  <VariantSelector variants={IMAGE_SET_VARIANTS} currentValue={imageSetVariant} onChange={setImageSetVariant} />
+                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider mb-1.5 block">
+                    Image Set
+                  </span>
+                  <VariantSelector
+                    variants={IMAGE_SET_VARIANTS}
+                    currentValue={imageSetVariant}
+                    onChange={setImageSetVariant}
+                  />
                 </div>
                 <div className="mt-3 pt-3 border-t border-border/30">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Monochrome Effect</span>
+                    <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
+                      Monochrome Effect
+                    </span>
                     <button
                       onClick={() => setMonochromeMode(!monochromeMode)}
                       className={`
@@ -637,131 +875,293 @@ export function DebugMenu() {
             )}
 
             {sections.logos && (
-              <CollapsibleSection title="Logos" icon={<BlocksIcon />}>
-                <VariantSelector variants={LOGOS_VARIANTS} currentValue={logosVariant} onChange={setLogosVariant} />
+              <CollapsibleSection
+                title="Logos"
+                icon={<BlocksIcon />}
+              >
+                <VariantSelector
+                  variants={LOGOS_VARIANTS}
+                  currentValue={logosVariant}
+                  onChange={setLogosVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.features && (
-              <CollapsibleSection title="Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={FEATURES_VARIANTS} currentValue={featuresVariant} onChange={setFeaturesVariant} />
+              <CollapsibleSection
+                title="Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={FEATURES_VARIANTS}
+                  currentValue={featuresVariant}
+                  onChange={setFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.paywallBuilderFeatures && (
-              <CollapsibleSection title="Paywall Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={PAYWALL_BUILDER_FEATURES_VARIANTS} currentValue={paywallBuilderFeaturesVariant} onChange={setPaywallBuilderFeaturesVariant} />
+              <CollapsibleSection
+                title="Paywall Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={PAYWALL_BUILDER_FEATURES_VARIANTS}
+                  currentValue={paywallBuilderFeaturesVariant}
+                  onChange={setPaywallBuilderFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.abTestingFeatures && (
-              <CollapsibleSection title="A/B Testing Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={AB_TESTING_FEATURES_VARIANTS} currentValue={abTestingFeaturesVariant} onChange={setAbTestingFeaturesVariant} />
+              <CollapsibleSection
+                title="A/B Testing Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={AB_TESTING_FEATURES_VARIANTS}
+                  currentValue={abTestingFeaturesVariant}
+                  onChange={setAbTestingFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.onboardingBuilderFeatures && (
-              <CollapsibleSection title="Onboarding Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={ONBOARDING_BUILDER_FEATURES_VARIANTS} currentValue={onboardingBuilderFeaturesVariant} onChange={setOnboardingBuilderFeaturesVariant} />
+              <CollapsibleSection
+                title="Onboarding Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={ONBOARDING_BUILDER_FEATURES_VARIANTS}
+                  currentValue={onboardingBuilderFeaturesVariant}
+                  onChange={setOnboardingBuilderFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.autopilotFeatures && (
-              <CollapsibleSection title="Autopilot Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={AUTOPILOT_FEATURES_VARIANTS} currentValue={autopilotFeaturesVariant} onChange={setAutopilotFeaturesVariant} />
+              <CollapsibleSection
+                title="Autopilot Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={AUTOPILOT_FEATURES_VARIANTS}
+                  currentValue={autopilotFeaturesVariant}
+                  onChange={setAutopilotFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.ltvAnalyticsFeatures && (
-              <CollapsibleSection title="LTV Analytics Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={LTV_ANALYTICS_FEATURES_VARIANTS} currentValue={ltvAnalyticsFeaturesVariant} onChange={setLtvAnalyticsFeaturesVariant} />
+              <CollapsibleSection
+                title="LTV Analytics Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={LTV_ANALYTICS_FEATURES_VARIANTS}
+                  currentValue={ltvAnalyticsFeaturesVariant}
+                  onChange={setLtvAnalyticsFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.refundSaverFeatures && (
-              <CollapsibleSection title="Refund Saver Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={REFUND_SAVER_FEATURES_VARIANTS} currentValue={refundSaverFeaturesVariant} onChange={setRefundSaverFeaturesVariant} />
+              <CollapsibleSection
+                title="Refund Saver Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={REFUND_SAVER_FEATURES_VARIANTS}
+                  currentValue={refundSaverFeaturesVariant}
+                  onChange={setRefundSaverFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.forMarketersFeatures && (
-              <CollapsibleSection title="Marketer Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={FOR_MARKETERS_FEATURES_VARIANTS} currentValue={forMarketersFeaturesVariant} onChange={setForMarketersFeaturesVariant} />
+              <CollapsibleSection
+                title="Marketer Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={FOR_MARKETERS_FEATURES_VARIANTS}
+                  currentValue={forMarketersFeaturesVariant}
+                  onChange={setForMarketersFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.forAppOwnersFeatures && (
-              <CollapsibleSection title="App Owner Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={FOR_APP_OWNERS_FEATURES_VARIANTS} currentValue={forAppOwnersFeaturesVariant} onChange={setForAppOwnersFeaturesVariant} />
+              <CollapsibleSection
+                title="App Owner Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={FOR_APP_OWNERS_FEATURES_VARIANTS}
+                  currentValue={forAppOwnersFeaturesVariant}
+                  onChange={setForAppOwnersFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.forDevelopersFeatures && (
-              <CollapsibleSection title="Developer Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={FOR_DEVELOPERS_FEATURES_VARIANTS} currentValue={forDevelopersFeaturesVariant} onChange={setForDevelopersFeaturesVariant} />
+              <CollapsibleSection
+                title="Developer Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={FOR_DEVELOPERS_FEATURES_VARIANTS}
+                  currentValue={forDevelopersFeaturesVariant}
+                  onChange={setForDevelopersFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.forIndieFeatures && (
-              <CollapsibleSection title="Indie Dev Features" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={FOR_INDIE_FEATURES_VARIANTS} currentValue={forIndieFeaturesVariant} onChange={setForIndieFeaturesVariant} />
+              <CollapsibleSection
+                title="Indie Dev Features"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={FOR_INDIE_FEATURES_VARIANTS}
+                  currentValue={forIndieFeaturesVariant}
+                  onChange={setForIndieFeaturesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.customization && (
-              <CollapsibleSection title="Customization" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={CUSTOMIZATION_VARIANTS} currentValue={customizationVariant} onChange={setCustomizationVariant} />
+              <CollapsibleSection
+                title="Customization"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={CUSTOMIZATION_VARIANTS}
+                  currentValue={customizationVariant}
+                  onChange={setCustomizationVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.roles && (
-              <CollapsibleSection title="Roles" icon={<BlocksIcon />} defaultOpen>
-                <VariantSelector variants={ROLES_VARIANTS} currentValue={rolesVariant} onChange={setRolesVariant} />
+              <CollapsibleSection
+                title="Roles"
+                icon={<BlocksIcon />}
+                defaultOpen
+              >
+                <VariantSelector
+                  variants={ROLES_VARIANTS}
+                  currentValue={rolesVariant}
+                  onChange={setRolesVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.sdk && (
-              <CollapsibleSection title="SDK" icon={<BlocksIcon />}>
-                <VariantSelector variants={SDK_VARIANTS} currentValue={sdkVariant} onChange={setSdkVariant} />
+              <CollapsibleSection
+                title="SDK"
+                icon={<BlocksIcon />}
+              >
+                <VariantSelector
+                  variants={SDK_VARIANTS}
+                  currentValue={sdkVariant}
+                  onChange={setSdkVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.stats && (
-              <CollapsibleSection title="Stats" icon={<BlocksIcon />}>
-                <VariantSelector variants={STATS_VARIANTS} currentValue={statsVariant} onChange={setStatsVariant} />
+              <CollapsibleSection
+                title="Stats"
+                icon={<BlocksIcon />}
+              >
+                <VariantSelector
+                  variants={STATS_VARIANTS}
+                  currentValue={statsVariant}
+                  onChange={setStatsVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.testimonials && (
-              <CollapsibleSection title="Testimonials" icon={<BlocksIcon />}>
-                <VariantSelector variants={TESTIMONIALS_VARIANTS} currentValue={testimonialsVariant} onChange={setTestimonialsVariant} />
+              <CollapsibleSection
+                title="Testimonials"
+                icon={<BlocksIcon />}
+              >
+                <VariantSelector
+                  variants={TESTIMONIALS_VARIANTS}
+                  currentValue={testimonialsVariant}
+                  onChange={setTestimonialsVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.blog && (
-              <CollapsibleSection title="Blog" icon={<BlocksIcon />}>
-                <VariantSelector variants={BLOG_VARIANTS} currentValue={blogVariant} onChange={setBlogVariant} />
+              <CollapsibleSection
+                title="Blog"
+                icon={<BlocksIcon />}
+              >
+                <VariantSelector
+                  variants={BLOG_VARIANTS}
+                  currentValue={blogVariant}
+                  onChange={setBlogVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.faq && (
-              <CollapsibleSection title="FAQ" icon={<BlocksIcon />}>
-                <VariantSelector variants={FAQ_VARIANTS} currentValue={faqVariant} onChange={setFaqVariant} />
+              <CollapsibleSection
+                title="FAQ"
+                icon={<BlocksIcon />}
+              >
+                <VariantSelector
+                  variants={FAQ_VARIANTS}
+                  currentValue={faqVariant}
+                  onChange={setFaqVariant}
+                />
               </CollapsibleSection>
             )}
 
             {sections.cta && (
-              <CollapsibleSection title="CTA" icon={<BlocksIcon />}>
-                <VariantSelector variants={CTA_VARIANTS} currentValue={ctaVariant} onChange={setCtaVariant} />
+              <CollapsibleSection
+                title="CTA"
+                icon={<BlocksIcon />}
+              >
+                <VariantSelector
+                  variants={CTA_VARIANTS}
+                  currentValue={ctaVariant}
+                  onChange={setCtaVariant}
+                />
               </CollapsibleSection>
             )}
 
             {/* GLOBAL SETTINGS - Footer */}
             <div className="mt-4 mb-2 pt-3 border-t border-border/30">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-widest">Global Settings</span>
+              <span className="text-[10px] uppercase font-bold text-muted-foreground/60 tracking-widest">
+                Global Settings
+              </span>
             </div>
-            <CollapsibleSection title="Footer" icon={<NavIcon />}>
-              <VariantSelector variants={FOOTER_VARIANTS} currentValue={footerVariant} onChange={setFooterVariant} />
+            <CollapsibleSection
+              title="Footer"
+              icon={<NavIcon />}
+            >
+              <VariantSelector
+                variants={FOOTER_VARIANTS}
+                currentValue={footerVariant}
+                onChange={setFooterVariant}
+              />
             </CollapsibleSection>
 
             <div className="mt-4 pt-3 border-t border-border/50 space-y-2">
@@ -792,5 +1192,5 @@ export function DebugMenu() {
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }

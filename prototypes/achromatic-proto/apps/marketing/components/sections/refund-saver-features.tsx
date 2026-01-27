@@ -4,18 +4,18 @@ import * as React from 'react';
 import Link from 'next/link';
 import {
   ArrowRightIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  DollarSignIcon,
   DownloadIcon,
+  ScissorsIcon,
+  ShieldIcon,
+  SparklesIcon,
   ToggleRightIcon,
   TrendingUpIcon,
-  ScissorsIcon,
-  SparklesIcon,
-  DollarSignIcon,
-  ShieldIcon,
-  ChevronDownIcon,
-  CheckIcon,
-  XIcon,
+  XIcon
 } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { cn } from '@workspace/ui/lib/utils';
@@ -90,7 +90,7 @@ function ToggleMagic() {
       <span className="text-[10px] text-muted-foreground">Refund Saver</span>
       <motion.div
         animate={{
-          backgroundColor: isOn ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
+          backgroundColor: isOn ? 'hsl(var(--primary))' : 'hsl(var(--muted))'
         }}
         className="w-12 h-6 rounded-full p-1 cursor-pointer"
       >
@@ -250,24 +250,35 @@ function ZeroEffortMagic() {
   return (
     <div className="mt-4 h-[50px] rounded-lg bg-muted/30 border border-border/50 p-3 flex items-center justify-center gap-2">
       {steps.map((step, i) => (
-        <div key={i} className="flex items-center gap-1">
+        <div
+          key={i}
+          className="flex items-center gap-1"
+        >
           <motion.div
             animate={{
-              backgroundColor: checks[i] ? 'hsl(var(--primary))' : 'hsl(var(--muted))',
-              scale: checks[i] ? [1, 1.2, 1] : 1,
+              backgroundColor: checks[i]
+                ? 'hsl(var(--primary))'
+                : 'hsl(var(--muted))',
+              scale: checks[i] ? [1, 1.2, 1] : 1
             }}
             transition={{ duration: 0.2 }}
             className="size-4 rounded-full flex items-center justify-center"
           >
-            {checks[i] && <CheckIcon className="size-2.5 text-primary-foreground" />}
+            {checks[i] && (
+              <CheckIcon className="size-2.5 text-primary-foreground" />
+            )}
           </motion.div>
-          <span className={cn(
-            "text-[9px] font-medium",
-            checks[i] ? "text-primary" : "text-muted-foreground"
-          )}>
+          <span
+            className={cn(
+              'text-[9px] font-medium',
+              checks[i] ? 'text-primary' : 'text-muted-foreground'
+            )}
+          >
             {step}
           </span>
-          {i < 2 && <ArrowRightIcon className="size-2.5 text-muted-foreground mx-1" />}
+          {i < 2 && (
+            <ArrowRightIcon className="size-2.5 text-muted-foreground mx-1" />
+          )}
         </div>
       ))}
     </div>
@@ -294,8 +305,13 @@ function CostRecoveryMagic() {
       <div className="flex-1">
         <div className="flex items-center justify-between text-[9px] mb-1">
           <span className="text-muted-foreground">Adapty Cost</span>
-          <span className={cn("font-medium", isPaid ? "text-green-500" : "text-muted-foreground")}>
-            {isPaid ? "Paid off" : "Recovering..."}
+          <span
+            className={cn(
+              'font-medium',
+              isPaid ? 'text-green-500' : 'text-muted-foreground'
+            )}
+          >
+            {isPaid ? 'Paid off' : 'Recovering...'}
           </span>
         </div>
         <div className="h-1.5 bg-muted rounded-full overflow-hidden relative">
@@ -303,8 +319,8 @@ function CostRecoveryMagic() {
             initial={false}
             animate={{ width: `${Math.min(balance, 100)}%` }}
             className={cn(
-              "h-full rounded-full transition-colors",
-              isPaid ? "bg-primary" : "bg-muted"
+              'h-full rounded-full transition-colors',
+              isPaid ? 'bg-primary' : 'bg-muted'
             )}
           />
         </div>
@@ -329,9 +345,13 @@ function LegalShieldMagic() {
   return (
     <div className="mt-4 h-[50px] rounded-lg bg-muted/30 border border-border/50 p-3 flex items-center justify-center gap-3">
       <motion.div
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.1, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.1, 1]
+              }
+        }
         transition={{ duration: 2, repeat: Infinity }}
         className="size-8 rounded-lg bg-primary/10 flex items-center justify-center"
       >
@@ -339,7 +359,9 @@ function LegalShieldMagic() {
       </motion.div>
       <div className="flex flex-col">
         <span className="text-[9px] text-muted-foreground">Apple decides</span>
-        <span className="text-[10px] font-medium text-foreground">You stay protected</span>
+        <span className="text-[10px] font-medium text-foreground">
+          You stay protected
+        </span>
       </div>
     </div>
   );
@@ -350,14 +372,14 @@ const BENEFIT_MAGIC: Record<string, React.ComponentType> = {
   'Cut refunds by 40%': RefundReductionMagic,
   'Zero extra effort': ZeroEffortMagic,
   'Adapty pays for itself': CostRecoveryMagic,
-  'No legal consequences': LegalShieldMagic,
+  'No legal consequences': LegalShieldMagic
 };
 
 // Map steps to magic components
 const STEP_MAGIC: Record<string, React.ComponentType> = {
   'Install the Adapty SDK': SDKInstallMagic,
   'Turn on Refund Saver': ToggleMagic,
-  'Win back up to 5% of MRR': RevenueMagic,
+  'Win back up to 5% of MRR': RevenueMagic
 };
 
 // =============================================================================
@@ -380,7 +402,8 @@ const STEPS = [
     number: '2',
     icon: ToggleRightIcon,
     title: 'Turn on Refund Saver',
-    description: 'Let Adapty handle refund requests by sharing key app usage info with Apple.',
+    description:
+      'Let Adapty handle refund requests by sharing key app usage info with Apple.',
     link: null,
     linkText: null
   },
@@ -399,22 +422,26 @@ const BENEFITS = [
   {
     icon: ScissorsIcon,
     title: 'Cut refunds by 40%',
-    description: 'Keep more of your hard-earned revenue with smarter refund handling.'
+    description:
+      'Keep more of your hard-earned revenue with smarter refund handling.'
   },
   {
     icon: SparklesIcon,
     title: 'Zero extra effort',
-    description: "It's fully automated - sit back and let it do the work for you."
+    description:
+      "It's fully automated - sit back and let it do the work for you."
   },
   {
     icon: DollarSignIcon,
     title: 'Adapty pays for itself',
-    description: "Recover enough revenue, and Adapty can practically cost you nothing."
+    description:
+      'Recover enough revenue, and Adapty can practically cost you nothing.'
   },
   {
     icon: ShieldIcon,
     title: 'No legal consequences',
-    description: "Refund Saver automates everything, while Apple makes the final decision - no legal responsibility on your side."
+    description:
+      'Refund Saver automates everything, while Apple makes the final decision - no legal responsibility on your side.'
   }
 ];
 
@@ -452,7 +479,11 @@ const CASE_STUDIES = [
 
 export type RefundSaverFeaturesVariant = 'grid' | 'bento' | 'tabs';
 
-export const REFUND_SAVER_FEATURES_VARIANTS = ['grid', 'bento', 'tabs'] as const;
+export const REFUND_SAVER_FEATURES_VARIANTS = [
+  'grid',
+  'bento',
+  'tabs'
+] as const;
 
 type Props = {
   variant?: RefundSaverFeaturesVariant;
@@ -463,7 +494,9 @@ type Props = {
 // =============================================================================
 function GridFeatures(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [hoveredBenefitIndex, setHoveredBenefitIndex] = React.useState<number | null>(null);
+  const [hoveredBenefitIndex, setHoveredBenefitIndex] = React.useState<
+    number | null
+  >(null);
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -478,9 +511,14 @@ function GridFeatures(): React.JSX.Element {
           {STEPS.map((step, index) => {
             const MagicComponent = STEP_MAGIC[step.title];
             return (
-              <BlurFade key={index} delay={0.1 + index * 0.05}>
+              <BlurFade
+                key={index}
+                delay={0.1 + index * 0.05}
+              >
                 <motion.div
-                  whileHover={shouldReduceMotion ? undefined : { y: -6, scale: 1.02 }}
+                  whileHover={
+                    shouldReduceMotion ? undefined : { y: -6, scale: 1.02 }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className="relative"
                 >
@@ -504,9 +542,13 @@ function GridFeatures(): React.JSX.Element {
                               <ArrowRightIcon className="size-4" />
                             </Link>
                           ) : (
-                            <h3 className="font-semibold text-lg mb-2">{step.title}</h3>
+                            <h3 className="font-semibold text-lg mb-2">
+                              {step.title}
+                            </h3>
                           )}
-                          <p className="text-sm text-muted-foreground">{step.description}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {step.description}
+                          </p>
                         </div>
                       </div>
 
@@ -527,7 +569,9 @@ function GridFeatures(): React.JSX.Element {
               {SDKS.map((sdk, index) => (
                 <motion.div
                   key={index}
-                  whileHover={shouldReduceMotion ? undefined : { scale: 1.05, y: -2 }}
+                  whileHover={
+                    shouldReduceMotion ? undefined : { scale: 1.05, y: -2 }
+                  }
                   whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -556,20 +600,29 @@ function GridFeatures(): React.JSX.Element {
             const isHovered = hoveredBenefitIndex === index;
 
             return (
-              <BlurFade key={index} delay={0.4 + index * 0.05}>
+              <BlurFade
+                key={index}
+                delay={0.4 + index * 0.05}
+              >
                 <motion.div
                   onMouseEnter={() => setHoveredBenefitIndex(index)}
                   onMouseLeave={() => setHoveredBenefitIndex(null)}
-                  animate={shouldReduceMotion ? undefined : {
-                    y: isHovered ? -6 : 0,
-                    scale: isHovered ? 1.02 : 1,
-                  }}
+                  animate={
+                    shouldReduceMotion
+                      ? undefined
+                      : {
+                          y: isHovered ? -6 : 0,
+                          scale: isHovered ? 1.02 : 1
+                        }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
-                  <div className={cn(
-                    "relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer",
-                    isHovered && "border-primary/30 "
-                  )}>
+                  <div
+                    className={cn(
+                      'relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-200 cursor-pointer',
+                      isHovered && 'border-primary/30 '
+                    )}
+                  >
                     <Spotlight
                       className="from-primary/20 via-primary/10 to-transparent"
                       size={250}
@@ -586,21 +639,33 @@ function GridFeatures(): React.JSX.Element {
                     <div className="p-6 relative z-10">
                       <div className="flex items-start gap-4">
                         <motion.div
-                          animate={shouldReduceMotion ? undefined : {
-                            scale: isHovered ? 1.15 : 1,
-                            rotate: isHovered ? 5 : 0,
+                          animate={
+                            shouldReduceMotion
+                              ? undefined
+                              : {
+                                  scale: isHovered ? 1.15 : 1,
+                                  rotate: isHovered ? 5 : 0
+                                }
+                          }
+                          transition={{
+                            type: 'spring',
+                            duration: 0.3,
+                            bounce: 0.2
                           }}
-                          transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
                           className={cn(
-                            "flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors",
-                            isHovered && "bg-primary/20"
+                            'flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors',
+                            isHovered && 'bg-primary/20'
                           )}
                         >
                           <benefit.icon className="size-6" />
                         </motion.div>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-lg mb-2">{benefit.title}</h3>
-                          <p className="text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
+                          <h3 className="font-semibold text-lg mb-2">
+                            {benefit.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground leading-relaxed">
+                            {benefit.description}
+                          </p>
                         </div>
                       </div>
 
@@ -623,10 +688,18 @@ function GridFeatures(): React.JSX.Element {
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {CASE_STUDIES.map((study, index) => (
-            <BlurFade key={index} delay={0.65 + index * 0.05}>
-              <Link href={study.link} className="group">
+            <BlurFade
+              key={index}
+              delay={0.65 + index * 0.05}
+            >
+              <Link
+                href={study.link}
+                className="group"
+              >
                 <motion.div
-                  whileHover={shouldReduceMotion ? undefined : { y: -6, scale: 1.02 }}
+                  whileHover={
+                    shouldReduceMotion ? undefined : { y: -6, scale: 1.02 }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
                   <div className="relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 p-6 hover:border-primary/40 transition-all duration-200">
@@ -635,12 +708,22 @@ function GridFeatures(): React.JSX.Element {
                       size={250}
                     />
                     <div className="relative z-10">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{study.category}</p>
-                      <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">{study.name}</h3>
-                      <p className="text-2xl font-bold text-primary mb-2">{study.result}</p>
-                      <p className="text-sm text-muted-foreground">{study.description}</p>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                        {study.category}
+                      </p>
+                      <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">
+                        {study.name}
+                      </h3>
+                      <p className="text-2xl font-bold text-primary mb-2">
+                        {study.result}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {study.description}
+                      </p>
                       <motion.p
-                        animate={shouldReduceMotion ? undefined : { x: [0, 4, 0] }}
+                        animate={
+                          shouldReduceMotion ? undefined : { x: [0, 4, 0] }
+                        }
                         transition={{ duration: 1.5, repeat: Infinity }}
                         className="text-sm text-primary mt-3 inline-flex items-center gap-1 group-hover:underline"
                       >
@@ -697,17 +780,26 @@ function BentoFeatures(): React.JSX.Element {
                 {STEPS.map((step, index) => {
                   const MagicComponent = STEP_MAGIC[step.title];
                   return (
-                    <div key={index} className="flex flex-col">
+                    <div
+                      key={index}
+                      className="flex flex-col"
+                    >
                       <div className="flex items-start gap-4">
                         <motion.div
-                          whileHover={shouldReduceMotion ? undefined : { scale: 1.1 }}
+                          whileHover={
+                            shouldReduceMotion ? undefined : { scale: 1.1 }
+                          }
                           className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-lg"
                         >
                           {step.number}
                         </motion.div>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-lg mb-2">{step.title}</h3>
-                          <p className="text-sm text-muted-foreground">{step.description}</p>
+                          <h3 className="font-semibold text-lg mb-2">
+                            {step.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {step.description}
+                          </p>
                         </div>
                       </div>
                       {/* Magic Animation */}
@@ -733,15 +825,20 @@ function BentoFeatures(): React.JSX.Element {
             const isExpanded = expandedIndex === index;
 
             return (
-              <BlurFade key={index} delay={0.25 + index * 0.03}>
+              <BlurFade
+                key={index}
+                delay={0.25 + index * 0.03}
+              >
                 <motion.div
-                  whileHover={shouldReduceMotion ? undefined : { scale: 1.02, y: -2 }}
+                  whileHover={
+                    shouldReduceMotion ? undefined : { scale: 1.02, y: -2 }
+                  }
                   whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                 >
                   <div
                     className={cn(
-                      "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 cursor-pointer transition-all duration-200",
-                      isExpanded && "border-primary/30 "
+                      'relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 cursor-pointer transition-all duration-200',
+                      isExpanded && 'border-primary/30 '
                     )}
                     onClick={() => setExpandedIndex(isExpanded ? null : index)}
                   >
@@ -761,7 +858,9 @@ function BentoFeatures(): React.JSX.Element {
                           <ChevronDownIcon className="size-4" />
                         </motion.div>
                       </div>
-                      <h3 className="font-semibold text-lg mb-2">{benefit.title}</h3>
+                      <h3 className="font-semibold text-lg mb-2">
+                        {benefit.title}
+                      </h3>
                       <AnimatePresence>
                         {isExpanded && (
                           <motion.div
@@ -795,10 +894,18 @@ function BentoFeatures(): React.JSX.Element {
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {CASE_STUDIES.map((study, index) => (
-            <BlurFade key={index} delay={0.45 + index * 0.05}>
-              <Link href={study.link} className="group">
+            <BlurFade
+              key={index}
+              delay={0.45 + index * 0.05}
+            >
+              <Link
+                href={study.link}
+                className="group"
+              >
                 <motion.div
-                  whileHover={shouldReduceMotion ? undefined : { y: -6, scale: 1.02 }}
+                  whileHover={
+                    shouldReduceMotion ? undefined : { y: -6, scale: 1.02 }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                 >
                   <div className="relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 p-6 hover:border-primary/40 transition-all duration-200">
@@ -807,10 +914,18 @@ function BentoFeatures(): React.JSX.Element {
                       size={250}
                     />
                     <div className="relative z-10">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{study.category}</p>
-                      <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">{study.name}</h3>
-                      <p className="text-2xl font-bold text-primary mb-2">{study.result}</p>
-                      <p className="text-sm text-muted-foreground">{study.description}</p>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                        {study.category}
+                      </p>
+                      <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">
+                        {study.name}
+                      </h3>
+                      <p className="text-2xl font-bold text-primary mb-2">
+                        {study.result}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {study.description}
+                      </p>
                     </div>
                   </div>
                 </motion.div>
@@ -828,13 +943,15 @@ function BentoFeatures(): React.JSX.Element {
 // =============================================================================
 function TabsFeatures(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [activeTab, setActiveTab] = React.useState<'steps' | 'benefits' | 'stories'>('steps');
+  const [activeTab, setActiveTab] = React.useState<
+    'steps' | 'benefits' | 'stories'
+  >('steps');
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
 
   const TABS = [
     { id: 'steps', label: 'How it works' },
     { id: 'benefits', label: 'Benefits' },
-    { id: 'stories', label: 'Success Stories' },
+    { id: 'stories', label: 'Success Stories' }
   ] as const;
 
   return (
@@ -858,10 +975,10 @@ function TabsFeatures(): React.JSX.Element {
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 className={cn(
-                  "relative px-5 py-2.5 rounded-full text-sm font-medium transition-colors duration-200",
+                  'relative px-5 py-2.5 rounded-full text-sm font-medium transition-colors duration-200',
                   activeTab === tab.id
-                    ? "text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? 'text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
                 {activeTab === tab.id && (
@@ -894,8 +1011,16 @@ function TabsFeatures(): React.JSX.Element {
                   return (
                     <motion.div
                       key={index}
-                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                      initial={
+                        shouldReduceMotion
+                          ? { opacity: 0 }
+                          : { opacity: 0, y: 20 }
+                      }
+                      animate={
+                        shouldReduceMotion
+                          ? { opacity: 1 }
+                          : { opacity: 1, y: 0 }
+                      }
                       transition={{ delay: index * 0.1, duration: 0.3 }}
                       whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                     >
@@ -908,8 +1033,12 @@ function TabsFeatures(): React.JSX.Element {
                           <div className="flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-lg mb-4">
                             {step.number}
                           </div>
-                          <h3 className="font-semibold text-lg mb-2">{step.title}</h3>
-                          <p className="text-sm text-muted-foreground">{step.description}</p>
+                          <h3 className="font-semibold text-lg mb-2">
+                            {step.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {step.description}
+                          </p>
                           {MagicComponent && <MagicComponent />}
                         </div>
                       </div>
@@ -935,17 +1064,27 @@ function TabsFeatures(): React.JSX.Element {
                   return (
                     <motion.div
                       key={index}
-                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                      initial={
+                        shouldReduceMotion
+                          ? { opacity: 0 }
+                          : { opacity: 0, y: 20 }
+                      }
+                      animate={
+                        shouldReduceMotion
+                          ? { opacity: 1 }
+                          : { opacity: 1, y: 0 }
+                      }
                       transition={{ delay: index * 0.08, duration: 0.3 }}
                       onMouseEnter={() => setHoveredIndex(index)}
                       onMouseLeave={() => setHoveredIndex(null)}
                       whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                     >
-                      <div className={cn(
-                        "relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200",
-                        isHovered && "border-primary/30 "
-                      )}>
+                      <div
+                        className={cn(
+                          'relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200',
+                          isHovered && 'border-primary/30 '
+                        )}
+                      >
                         <Spotlight
                           className="from-primary/20 via-primary/10 to-transparent"
                           size={250}
@@ -962,16 +1101,24 @@ function TabsFeatures(): React.JSX.Element {
                         <div className="p-6 relative z-10">
                           <div className="flex items-start gap-4">
                             <motion.div
-                              animate={shouldReduceMotion ? undefined : {
-                                scale: isHovered ? 1.1 : 1,
-                              }}
+                              animate={
+                                shouldReduceMotion
+                                  ? undefined
+                                  : {
+                                      scale: isHovered ? 1.1 : 1
+                                    }
+                              }
                               className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
                             >
                               <benefit.icon className="size-6" />
                             </motion.div>
                             <div className="flex-1">
-                              <h3 className="font-semibold text-lg mb-2">{benefit.title}</h3>
-                              <p className="text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
+                              <h3 className="font-semibold text-lg mb-2">
+                                {benefit.title}
+                              </h3>
+                              <p className="text-sm text-muted-foreground leading-relaxed">
+                                {benefit.description}
+                              </p>
                             </div>
                           </div>
                           {MagicComponent && <MagicComponent />}
@@ -995,22 +1142,41 @@ function TabsFeatures(): React.JSX.Element {
                 {CASE_STUDIES.map((study, index) => (
                   <motion.div
                     key={index}
-                    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                    initial={
+                      shouldReduceMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, y: 20 }
+                    }
+                    animate={
+                      shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }
+                    }
                     transition={{ delay: index * 0.1, duration: 0.3 }}
                   >
-                    <Link href={study.link} className="group">
-                      <motion.div whileHover={shouldReduceMotion ? undefined : { y: -4 }}>
+                    <Link
+                      href={study.link}
+                      className="group"
+                    >
+                      <motion.div
+                        whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+                      >
                         <div className="relative h-full overflow-hidden rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/20 p-6 hover:border-primary/40 transition-colors duration-150">
                           <Spotlight
                             className="from-primary/20 via-primary/10 to-transparent"
                             size={250}
                           />
                           <div className="relative z-10">
-                            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{study.category}</p>
-                            <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">{study.name}</h3>
-                            <p className="text-2xl font-bold text-primary mb-2">{study.result}</p>
-                            <p className="text-sm text-muted-foreground">{study.description}</p>
+                            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                              {study.category}
+                            </p>
+                            <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">
+                              {study.name}
+                            </h3>
+                            <p className="text-2xl font-bold text-primary mb-2">
+                              {study.result}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              {study.description}
+                            </p>
                           </div>
                         </div>
                       </motion.div>
@@ -1029,7 +1195,9 @@ function TabsFeatures(): React.JSX.Element {
 // =============================================================================
 // MAIN EXPORT
 // =============================================================================
-export function RefundSaverFeatures({ variant = 'bento' }: Props): React.JSX.Element {
+export function RefundSaverFeatures({
+  variant = 'bento'
+}: Props): React.JSX.Element {
   switch (variant) {
     case 'grid':
       return <GridFeatures />;

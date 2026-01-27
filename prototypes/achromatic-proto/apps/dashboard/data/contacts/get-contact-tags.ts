@@ -13,7 +13,10 @@ async function getContactTagsData(organizationId: string): Promise<TagDto[]> {
   'use cache';
   cacheLife('default');
   cacheTag(
-    Caching.createOrganizationTag(OrganizationCacheKey.ContactTags, organizationId)
+    Caching.createOrganizationTag(
+      OrganizationCacheKey.ContactTags,
+      organizationId
+    )
   );
   cacheTag(
     Caching.createOrganizationTag(OrganizationCacheKey.Contacts, organizationId)

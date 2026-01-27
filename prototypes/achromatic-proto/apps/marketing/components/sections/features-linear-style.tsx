@@ -90,7 +90,7 @@ function SquircleButton({
   );
 
   const className = cn(
-    'group inline-flex items-center gap-1.5 px-4 py-2 rounded-full',
+    'group inline-flex items-center gap-1.5 px-4 py-2 rounded-xl',
     'bg-white border border-gray-200',
     'hover:bg-gray-50 hover:border-gray-300 transition-all duration-200'
   );

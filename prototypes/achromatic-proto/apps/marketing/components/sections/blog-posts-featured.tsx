@@ -37,13 +37,17 @@ function ArticleCountMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.2, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.2, 1]
+              }
+        }
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <span>{totalArticles}+ articles</span>
@@ -52,7 +56,7 @@ function ArticleCountMagic() {
 }
 
 // Featured card - larger, more prominent
-function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
+function FeaturedCard({ post }: { post: (typeof allPosts)[0] }) {
   const [isHovered, setIsHovered] = React.useState(false);
   const shouldReduceMotion = useReducedMotion();
 
@@ -75,12 +79,19 @@ function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
               colorTo="hsl(var(--primary)/0)"
             />
           )}
-          <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={300} />
+          <Spotlight
+            className="from-primary/10 via-primary/5 to-transparent"
+            size={300}
+          />
           {/* Image */}
           <div className="relative h-48 lg:h-auto lg:w-2/5 overflow-hidden">
             <motion.div
               className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5"
-              animate={shouldReduceMotion ? undefined : { opacity: isHovered ? 0.8 : 1 }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: isHovered ? 0.8 : 1 }
+              }
               transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
             />
             <div className="absolute inset-0 flex items-center justify-center">
@@ -94,7 +105,10 @@ function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
           <div className="flex flex-col p-6 lg:w-3/5 lg:p-8">
             {/* Meta */}
             <div className="mb-3 flex items-center gap-3">
-              <Badge variant="secondary" className="rounded-full text-xs">
+              <Badge
+                variant="secondary"
+                className="rounded-full text-xs"
+              >
                 {post.category}
               </Badge>
               <span className="text-xs text-muted-foreground flex items-center gap-1">
@@ -117,7 +131,10 @@ function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Avatar className="size-8">
-                  <AvatarImage src={post.author?.avatar} alt={post.author?.name ?? ''} />
+                  <AvatarImage
+                    src={post.author?.avatar}
+                    alt={post.author?.name ?? ''}
+                  />
                   <AvatarFallback className="text-xs">
                     {getInitials(post.author?.name ?? '')}
                   </AvatarFallback>
@@ -129,7 +146,9 @@ function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
 
               <motion.div
                 className="flex items-center gap-2 text-sm font-medium text-primary"
-                animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }}
+                animate={
+                  shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }
+                }
                 transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
               >
                 Read article
@@ -144,7 +163,13 @@ function FeaturedCard({ post }: { post: typeof allPosts[0] }) {
 }
 
 // Smaller card for secondary posts
-function SmallCard({ post, index }: { post: typeof allPosts[0]; index: number }) {
+function SmallCard({
+  post,
+  index
+}: {
+  post: (typeof allPosts)[0];
+  index: number;
+}) {
   const [isHovered, setIsHovered] = React.useState(false);
   const shouldReduceMotion = useReducedMotion();
 
@@ -167,10 +192,15 @@ function SmallCard({ post, index }: { post: typeof allPosts[0]; index: number })
               colorTo="hsl(var(--primary)/0)"
             />
           )}
-          <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={150} />
+          <Spotlight
+            className="from-primary/10 via-primary/5 to-transparent"
+            size={150}
+          />
           {/* Category */}
           <div className="mb-2">
-            <span className="text-xs font-medium text-primary">{post.category}</span>
+            <span className="text-xs font-medium text-primary">
+              {post.category}
+            </span>
           </div>
 
           {/* Title */}
@@ -190,7 +220,11 @@ function SmallCard({ post, index }: { post: typeof allPosts[0]; index: number })
             </time>
             <motion.div
               className="text-muted-foreground"
-              animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0, opacity: isHovered ? 1 : 0.5 }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : { x: isHovered ? 3 : 0, opacity: isHovered ? 1 : 0.5 }
+              }
               transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
             >
               <ArrowRightIcon className="size-4" />
@@ -222,7 +256,10 @@ export function BlogPostsFeatured(): React.JSX.Element {
         <BlurFade className="mb-12">
           <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
             <div>
-              <Badge variant="outline" className="mb-4 rounded-full">
+              <Badge
+                variant="outline"
+                className="mb-4 rounded-full"
+              >
                 Blog
               </Badge>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">
@@ -253,7 +290,11 @@ export function BlogPostsFeatured(): React.JSX.Element {
           {/* Grid of smaller posts */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {otherPosts.map((post, index) => (
-              <SmallCard key={post.slug} post={post} index={index} />
+              <SmallCard
+                key={post.slug}
+                post={post}
+                index={index}
+              />
             ))}
           </div>
         </div>

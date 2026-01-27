@@ -1,7 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { useInView, useMotionValue, useSpring, useReducedMotion } from 'motion/react';
+import {
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useSpring
+} from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
 
@@ -69,7 +74,16 @@ export function NumberTicker({
         timeoutRef.current = null;
       }
     };
-  }, [motionValue, isInView, delay, value, direction, shouldReduceMotion, formatter, decimalPlaces]);
+  }, [
+    motionValue,
+    isInView,
+    delay,
+    value,
+    direction,
+    shouldReduceMotion,
+    formatter,
+    decimalPlaces
+  ]);
 
   React.useEffect(
     () =>
@@ -89,7 +103,11 @@ export function NumberTicker({
       className={cn('inline-block tabular-nums tracking-wider', className)}
       {...other}
     >
-      {shouldReduceMotion ? formatter.format(Number((direction === 'down' ? 0 : value).toFixed(decimalPlaces))) : '0'}
+      {shouldReduceMotion
+        ? formatter.format(
+            Number((direction === 'down' ? 0 : value).toFixed(decimalPlaces))
+          )
+        : '0'}
     </span>
   );
 }

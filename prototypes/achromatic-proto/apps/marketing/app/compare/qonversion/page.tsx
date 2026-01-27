@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useFeaturesVariant } from '~/lib/debug-context';
 import { CompareQonversion } from '~/components/sections/compare-qonversion';
 import {
-  LogosSwitcher,
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  LogosSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant } from '~/lib/debug-context';
 
 // Adapty vs Qonversion comparison page
 export default function CompareQonversionPage(): React.JSX.Element {

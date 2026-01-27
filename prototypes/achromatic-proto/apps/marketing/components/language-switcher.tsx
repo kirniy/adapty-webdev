@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { ChevronDownIcon } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
 
@@ -104,24 +104,28 @@ export function LanguageSwitcher({
             transition={{ duration: 0.15 }}
             className="absolute left-0 top-full z-50 mt-1 w-48 rounded-xl border bg-background p-1 "
           >
-            {LANGUAGES.filter((lang) => lang.code !== currentLang.code).map((lang) => (
-              <button
-                key={lang.code}
-                type="button"
-                onClick={() => handleLanguageSelect(lang)}
-                className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2 text-left transition-colors hover:bg-accent"
-              >
-                <Image
-                  src={lang.flag}
-                  alt=""
-                  width={16}
-                  height={16}
-                  className="size-4 rounded-sm object-cover"
-                />
-                <span className="flex-1 text-sm">{lang.label}</span>
-                <span className="text-xs text-muted-foreground">{lang.code}</span>
-              </button>
-            ))}
+            {LANGUAGES.filter((lang) => lang.code !== currentLang.code).map(
+              (lang) => (
+                <button
+                  key={lang.code}
+                  type="button"
+                  onClick={() => handleLanguageSelect(lang)}
+                  className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2 text-left transition-colors hover:bg-accent"
+                >
+                  <Image
+                    src={lang.flag}
+                    alt=""
+                    width={16}
+                    height={16}
+                    className="size-4 rounded-sm object-cover"
+                  />
+                  <span className="flex-1 text-sm">{lang.label}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {lang.code}
+                  </span>
+                </button>
+              )
+            )}
           </motion.div>
         )}
       </AnimatePresence>

@@ -2,18 +2,24 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, DownloadIcon, FileTextIcon, TrendingUpIcon, BarChart3Icon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowRightIcon,
+  BarChart3Icon,
+  DownloadIcon,
+  FileTextIcon,
+  TrendingUpIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { SectionBackground } from '~/components/fragments/section-background';
-import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { Spotlight } from '~/components/fragments/spotlight';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // Report data highlights magic animation
 function ReportHighlightsMagic() {
@@ -23,7 +29,7 @@ function ReportHighlightsMagic() {
     { label: 'Revenue tracked', value: '$1.9B', trend: '+24%' },
     { label: 'Apps analyzed', value: '15,000+', trend: '+18%' },
     { label: 'Avg. conversion', value: '4.2%', trend: '+12%' },
-    { label: 'Trial-to-paid', value: '68%', trend: '+8%' },
+    { label: 'Trial-to-paid', value: '68%', trend: '+8%' }
   ];
 
   React.useEffect(() => {
@@ -38,7 +44,10 @@ function ReportHighlightsMagic() {
     return (
       <div className="space-y-3">
         {highlights.slice(0, 2).map((h, i) => (
-          <div key={i} className="flex justify-between items-center">
+          <div
+            key={i}
+            className="flex justify-between items-center"
+          >
             <span className="text-xs text-muted-foreground">{h.label}</span>
             <span className="text-sm font-semibold">{h.value}</span>
           </div>
@@ -56,7 +65,7 @@ function ReportHighlightsMagic() {
             key={i}
             animate={{
               height: `${height}%`,
-              opacity: i === 6 ? 1 : 0.4 + (i * 0.08),
+              opacity: i === 6 ? 1 : 0.4 + i * 0.08
             }}
             transition={{ duration: 0.5, delay: i * 0.05 }}
             className={cn(
@@ -78,8 +87,12 @@ function ReportHighlightsMagic() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs text-muted-foreground">{highlights[activeHighlight]?.label}</div>
-              <div className="text-lg font-bold">{highlights[activeHighlight]?.value}</div>
+              <div className="text-xs text-muted-foreground">
+                {highlights[activeHighlight]?.label}
+              </div>
+              <div className="text-lg font-bold">
+                {highlights[activeHighlight]?.value}
+              </div>
             </div>
             <div className="flex items-center gap-1 text-emerald-500 text-sm font-medium">
               <TrendingUpIcon className="size-4" />
@@ -96,7 +109,7 @@ function ReportHighlightsMagic() {
             key={i}
             animate={{
               scale: i === activeHighlight ? 1.2 : 1,
-              opacity: i === activeHighlight ? 1 : 0.4,
+              opacity: i === activeHighlight ? 1 : 0.4
             }}
             className="size-1.5 rounded-full bg-primary"
           />
@@ -119,7 +132,8 @@ function DownloadBadge() {
     >
       <FileTextIcon className="size-4 text-primary" />
       <span className="text-sm font-medium">
-        Includes exclusive <span className="text-primary font-bold">Adapty Pricing Index</span>
+        Includes exclusive{' '}
+        <span className="text-primary font-bold">Adapty Pricing Index</span>
       </span>
     </motion.div>
   );
@@ -154,7 +168,10 @@ export function StateOfSubscriptionsHero(): React.JSX.Element {
               whileHover={shouldReduceMotion ? undefined : { y: -4 }}
               className="p-6 rounded-2xl border bg-background/50 backdrop-blur-sm max-w-xs mx-auto relative overflow-hidden"
             >
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={280}
+              />
               <div className="relative">
                 <div className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">
                   Key insights
@@ -173,7 +190,7 @@ export function StateOfSubscriptionsHero(): React.JSX.Element {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               animate={{
-                y: shouldReduceMotion ? 0 : isHovered ? -2 : 0,
+                y: shouldReduceMotion ? 0 : isHovered ? -2 : 0
               }}
               transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               className="inline-block relative"
@@ -190,7 +207,9 @@ export function StateOfSubscriptionsHero(): React.JSX.Element {
                 <DownloadIcon className="mr-2 size-4" />
                 Download the report
                 <motion.span
-                  animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }}
+                  animate={
+                    shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }
+                  }
                   transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
                 >
                   <ArrowRightIcon className="ml-2 size-4" />

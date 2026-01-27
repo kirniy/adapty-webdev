@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
-import { PaywallTargetingHero } from '~/components/sections/paywall-targeting-hero';
 import { PaywallTargetingFeatures } from '~/components/sections/paywall-targeting-features';
+import { PaywallTargetingHero } from '~/components/sections/paywall-targeting-hero';
 import {
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant, useHeroVariant } from '~/lib/debug-context';
 
 // Paywall Targeting page: Segment-based paywall customization
 export default function PaywallTargetingPage(): React.JSX.Element {

@@ -1,7 +1,8 @@
 'use client';
 
-import { cn } from '@workspace/ui/lib/utils';
 import * as React from 'react';
+
+import { cn } from '@workspace/ui/lib/utils';
 
 interface BorderBeamProps {
   className?: string;
@@ -20,7 +21,11 @@ const ADAPTY_PRIMARY = '#6720FF';
 // Resolve CSS variable references to actual colors
 function resolveColor(color: string): string {
   // Handle transparent/0 opacity cases first (including hsl(var(--primary)/0))
-  if (color.includes('/0)') || color.includes('/0 )') || color.match(/\/\s*0\s*\)/)) {
+  if (
+    color.includes('/0)') ||
+    color.includes('/0 )') ||
+    color.match(/\/\s*0\s*\)/)
+  ) {
     return 'transparent';
   }
   // Handle hsl(var(--primary)) or similar patterns
@@ -45,7 +50,7 @@ export function BorderBeam({
   borderWidth = 1.5,
   colorFrom = '#ffaa40',
   colorTo = '#9c40ff',
-  delay = 0,
+  delay = 0
 }: BorderBeamProps) {
   // Resolve CSS variable references
   const resolvedColorFrom = resolveColor(colorFrom);
@@ -53,7 +58,9 @@ export function BorderBeam({
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{__html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         @keyframes border-beam {
           100% {
             offset-distance: 100%;
@@ -64,7 +71,9 @@ export function BorderBeam({
             animation: none !important;
           }
         }
-      `}} />
+      `
+        }}
+      />
       <div
         style={
           {
@@ -74,7 +83,7 @@ export function BorderBeam({
             '--border-width': borderWidth,
             '--color-from': resolvedColorFrom,
             '--color-to': resolvedColorTo,
-            '--delay': delay,
+            '--delay': delay
           } as React.CSSProperties
         }
         className={cn(

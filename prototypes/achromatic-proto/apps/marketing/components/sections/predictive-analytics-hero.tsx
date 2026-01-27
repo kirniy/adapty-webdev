@@ -3,19 +3,30 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BrainCircuitIcon, TrendingUpIcon, DollarSignIcon, LineChartIcon, SparklesIcon, TargetIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  BrainCircuitIcon,
+  DollarSignIcon,
+  LineChartIcon,
+  SparklesIcon,
+  TargetIcon,
+  TrendingUpIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { SectionBackground } from '~/components/fragments/section-background';
-import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 import { Spotlight } from '~/components/fragments/spotlight';
-import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+import {
+  useImageSetVariant,
+  useMonochromeMode,
+  type ImageSetVariant
+} from '~/lib/debug-context';
 
 // Magic animation: AI prediction accuracy
 function AIPredictionMagic() {
@@ -71,7 +82,7 @@ function LTVPredictionMagic() {
   const predictions = [
     { month: 'M1', actual: '$12', predicted: '$12' },
     { month: 'M6', actual: '$45', predicted: '$48' },
-    { month: 'M12', actual: null, predicted: '$89' },
+    { month: 'M12', actual: null, predicted: '$89' }
   ];
 
   React.useEffect(() => {
@@ -92,22 +103,32 @@ function LTVPredictionMagic() {
       >
         <div className="flex items-center gap-2 mb-1.5">
           <SparklesIcon className="size-3 text-primary" />
-          <span className="text-[10px] font-medium text-muted-foreground">AI LTV Prediction</span>
+          <span className="text-[10px] font-medium text-muted-foreground">
+            AI LTV Prediction
+          </span>
         </div>
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 10 }}
+            initial={
+              shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 10 }
+            }
             animate={{ opacity: 1, x: 0 }}
             exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -10 }}
             transition={{ duration: 0.2 }}
             className="flex items-center gap-3"
           >
-            <span className="text-xs font-medium text-foreground">{predictions[step].month}</span>
+            <span className="text-xs font-medium text-foreground">
+              {predictions[step].month}
+            </span>
             <div className="flex flex-col">
-              <span className="text-xs font-bold text-primary">{predictions[step].predicted}</span>
+              <span className="text-xs font-bold text-primary">
+                {predictions[step].predicted}
+              </span>
               {predictions[step].actual && (
-                <span className="text-[9px] text-muted-foreground">actual: {predictions[step].actual}</span>
+                <span className="text-[9px] text-muted-foreground">
+                  actual: {predictions[step].actual}
+                </span>
               )}
               {!predictions[step].actual && (
                 <span className="text-[9px] text-primary/60">predicted</span>
@@ -130,7 +151,7 @@ const BENEFITS = [
   { icon: BrainCircuitIcon, text: 'AI-powered predictions' },
   { icon: TrendingUpIcon, text: 'Forecast future revenue' },
   { icon: DollarSignIcon, text: 'Optimize UA spending' },
-  { icon: LineChartIcon, text: 'Cohort-based LTV' },
+  { icon: LineChartIcon, text: 'Cohort-based LTV' }
 ];
 
 // Helper to get image path based on selected image set
@@ -142,7 +163,9 @@ export function PredictiveAnalyticsHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -153,7 +176,10 @@ export function PredictiveAnalyticsHero(): React.JSX.Element {
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
             <BlurFade delay={0.05}>
-              <Badge variant="outline" className="w-fit rounded-full px-4 py-1.5">
+              <Badge
+                variant="outline"
+                className="w-fit rounded-full px-4 py-1.5"
+              >
                 <BrainCircuitIcon className="mr-1.5 size-3" />
                 AI LTV Predictions
               </Badge>
@@ -167,7 +193,9 @@ export function PredictiveAnalyticsHero(): React.JSX.Element {
 
             <BlurFade delay={0.15}>
               <p className="max-w-xl text-left text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Unlock the potential of predictive analytics to effectively navigate ROI and ensure maximum revenue generation. Our AI models learn from your data to forecast with precision.
+                Unlock the potential of predictive analytics to effectively
+                navigate ROI and ensure maximum revenue generation. Our AI
+                models learn from your data to forecast with precision.
               </p>
             </BlurFade>
 
@@ -175,7 +203,10 @@ export function PredictiveAnalyticsHero(): React.JSX.Element {
             <BlurFade delay={0.2}>
               <div className="grid grid-cols-2 gap-4">
                 {BENEFITS.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 text-sm text-muted-foreground"
+                  >
                     <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
                       <benefit.icon className="size-4 text-primary" />
                     </div>
@@ -191,7 +222,7 @@ export function PredictiveAnalyticsHero(): React.JSX.Element {
                   onMouseEnter={() => setIsHovered('demo')}
                   onMouseLeave={() => setIsHovered(null)}
                   animate={{
-                    y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0,
+                    y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0
                   }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -210,7 +241,7 @@ export function PredictiveAnalyticsHero(): React.JSX.Element {
                   onMouseEnter={() => setIsHovered('start')}
                   onMouseLeave={() => setIsHovered(null)}
                   animate={{
-                    y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0,
+                    y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0
                   }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -233,15 +264,29 @@ export function PredictiveAnalyticsHero(): React.JSX.Element {
           {/* Right: Analytics dashboard screenshot */}
           <BlurFade delay={0.2}>
             <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-              transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.96 }
+              }
+              animate={
+                shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }
+              }
+              transition={{
+                delay: shouldReduceMotion ? 0 : 0.1,
+                duration: 0.35,
+                ease: [0.32, 0.72, 0, 1]
+              }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background ",
-                monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+                'relative w-full overflow-hidden rounded-xl border bg-background ',
+                monochromeMode &&
+                  'grayscale hover:grayscale-0 transition-[filter] duration-500'
               )}
             >
-              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <Spotlight
+                className="from-primary/10 via-primary/5 to-transparent"
+                size={350}
+              />
               <AIPredictionMagic />
               <LTVPredictionMagic />
               <BorderBeam

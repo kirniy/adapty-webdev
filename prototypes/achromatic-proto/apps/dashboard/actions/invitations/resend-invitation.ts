@@ -1,6 +1,6 @@
 'use server';
-import { updateTag } from 'next/cache';
 
+import { updateTag } from 'next/cache';
 
 import { sendInvitationRequest } from '@workspace/auth/invitations';
 import { NotFoundError, PreConditionError } from '@workspace/common/errors';

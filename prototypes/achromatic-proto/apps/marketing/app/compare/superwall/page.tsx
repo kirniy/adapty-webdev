@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useFeaturesVariant } from '~/lib/debug-context';
 import { CompareSuperwall } from '~/components/sections/compare-superwall';
 import {
-  LogosSwitcher,
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  LogosSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant } from '~/lib/debug-context';
 
 // Adapty vs Superwall comparison page
 export default function CompareSuperwallPage(): React.JSX.Element {

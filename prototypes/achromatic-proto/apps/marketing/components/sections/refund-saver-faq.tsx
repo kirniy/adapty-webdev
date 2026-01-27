@@ -10,10 +10,10 @@ import {
   AccordionTrigger
 } from '@workspace/ui/components/accordion';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
-import { BlurFade } from '~/components/fragments/blur-fade';
 import { Spotlight } from '~/components/fragments/spotlight';
 
 // Magic animation: FAQ help badge
@@ -29,13 +29,17 @@ function RefundFAQMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.3, 1]
+              }
+        }
         transition={{
           duration: 1.5,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <span>Quick answers</span>
@@ -47,15 +51,18 @@ function RefundFAQMagic() {
 const FAQS = [
   {
     question: 'How does Refund Saver help reduce refunds?',
-    answer: "It automatically shares app usage info with Apple when a refund is requested. This way, Apple gets the full picture and fewer refunds get approved when they're not really justified."
+    answer:
+      "It automatically shares app usage info with Apple when a refund is requested. This way, Apple gets the full picture and fewer refunds get approved when they're not really justified."
   },
   {
     question: 'Can Refund Saver actually make Adapty free?',
-    answer: "Yes! Many developers recover enough revenue to cover Adapty's cost. The refunds you save often add up to more than what you pay for Adapty."
+    answer:
+      "Yes! Many developers recover enough revenue to cover Adapty's cost. The refunds you save often add up to more than what you pay for Adapty."
   },
   {
     question: 'What do I need to get started?',
-    answer: "Just install the Adapty SDK and turn on Refund Saver - it's that simple. No extra work or coding required. Once it's on, it runs automatically."
+    answer:
+      "Just install the Adapty SDK and turn on Refund Saver - it's that simple. No extra work or coding required. Once it's on, it runs automatically."
   }
 ];
 
@@ -64,11 +71,12 @@ export function RefundSaverFAQ(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={600} />
       <div className="container py-20 relative z-10">
-        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
+        <Spotlight
+          className="from-primary/15 via-primary/5 to-transparent"
+          size={350}
+        />
         <BlurFade delay={0.05}>
-          <SiteHeading
-            title="Got questions?"
-          />
+          <SiteHeading title="Got questions?" />
           <div className="mt-4 flex justify-center">
             <RefundFAQMagic />
           </div>
@@ -76,9 +84,16 @@ export function RefundSaverFAQ(): React.JSX.Element {
 
         <BlurFade delay={0.1}>
           <div className="mt-12 max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+            >
               {FAQS.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                >
                   <AccordionTrigger className="text-left">
                     {faq.question}
                   </AccordionTrigger>

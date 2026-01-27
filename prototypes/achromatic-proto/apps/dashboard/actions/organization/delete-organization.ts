@@ -1,6 +1,6 @@
 'use server';
-import { updateTag } from 'next/cache';
 
+import { updateTag } from 'next/cache';
 
 import { isOrganizationOwner } from '@workspace/auth/permissions';
 import { BillingProvider } from '@workspace/billing/provider';
@@ -37,9 +37,7 @@ export const deleteOrganization = authOrganizationActionClient
       updateTag(
         Caching.createUserTag(UserCacheKey.Organizations, membership.userId)
       );
-      updateTag(
-        Caching.createUserTag(UserCacheKey.Profile, membership.userId)
-      );
+      updateTag(Caching.createUserTag(UserCacheKey.Profile, membership.userId));
     }
 
     if (ctx.organization.billingCustomerId) {

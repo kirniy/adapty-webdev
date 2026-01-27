@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useHeroVariant } from '~/lib/debug-context';
 import { ScheduleDemoHero } from '~/components/sections/schedule-demo-hero';
 import {
-  LogosSwitcher,
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  LogosSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useHeroVariant } from '~/lib/debug-context';
 
 // Schedule Demo page: Demo booking form with social proof
 export default function ScheduleDemoPage(): React.JSX.Element {

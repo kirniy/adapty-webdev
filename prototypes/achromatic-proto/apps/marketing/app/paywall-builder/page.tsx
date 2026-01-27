@@ -2,33 +2,43 @@
 
 import * as React from 'react';
 
-import {
-  useHeroVariant,
-  usePaywallBuilderFeaturesVariant,
-  useCustomizationVariant,
-} from '~/lib/debug-context';
-
-// Page-specific components
-import { PaywallBuilderHero, type PaywallBuilderHeroVariant } from '~/components/sections/paywall-builder-hero';
-import { PaywallBuilderFeatures, type PaywallBuilderFeaturesVariant } from '~/components/sections/paywall-builder-features';
 import { PaywallBuilderCustomization } from '~/components/sections/paywall-builder-customization';
-
+import {
+  PaywallBuilderFeatures,
+  type PaywallBuilderFeaturesVariant
+} from '~/components/sections/paywall-builder-features';
+// Page-specific components
+import {
+  PaywallBuilderHero,
+  type PaywallBuilderHeroVariant
+} from '~/components/sections/paywall-builder-hero';
 // Shared section switchers
 import {
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import {
+  useCustomizationVariant,
+  useHeroVariant,
+  usePaywallBuilderFeaturesVariant
+} from '~/lib/debug-context';
 
 // Map global hero variants to PaywallBuilderHero variants
 function mapHeroVariant(globalVariant: string): PaywallBuilderHeroVariant {
   switch (globalVariant) {
-    case 'marketing': return 'centered';
-    case 'split': return 'split';
-    case 'pricing': return 'showcase';
-    case 'story': return 'centered';
-    case 'contact': return 'split';
-    default: return 'split';
+    case 'marketing':
+      return 'centered';
+    case 'split':
+      return 'split';
+    case 'pricing':
+      return 'showcase';
+    case 'story':
+      return 'centered';
+    case 'contact':
+      return 'split';
+    default:
+      return 'split';
   }
 }
 
@@ -41,7 +51,9 @@ export default function PaywallBuilderPage(): React.JSX.Element {
   return (
     <>
       {/* Paywall Builder hero */}
-      {heroVariant !== 'off' && <PaywallBuilderHero variant={mapHeroVariant(heroVariant)} />}
+      {heroVariant !== 'off' && (
+        <PaywallBuilderHero variant={mapHeroVariant(heroVariant)} />
+      )}
 
       {/* Features and customization */}
       {featuresVariant !== 'off' && (

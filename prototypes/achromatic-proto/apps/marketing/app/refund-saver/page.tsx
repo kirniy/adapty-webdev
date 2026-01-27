@@ -6,15 +6,17 @@
  * Page structure matches adapty.io/refund-saver (scraped 2026-01-21).
  * Reduces subscription refunds with automated win-back flows.
  */
-
-import { useHeroVariant, useRefundSaverFeaturesVariant } from '~/lib/debug-context';
-import { RefundSaverHero } from '~/components/sections/refund-saver-hero';
-import { RefundSaverFeatures } from '~/components/sections/refund-saver-features';
 import { RefundSaverFAQ } from '~/components/sections/refund-saver-faq';
+import { RefundSaverFeatures } from '~/components/sections/refund-saver-features';
+import { RefundSaverHero } from '~/components/sections/refund-saver-hero';
 import {
-  TestimonialsSwitcher,
   CTASwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import {
+  useHeroVariant,
+  useRefundSaverFeaturesVariant
+} from '~/lib/debug-context';
 
 export default function RefundSaverPage(): React.JSX.Element {
   const heroVariant = useHeroVariant();
@@ -23,7 +25,9 @@ export default function RefundSaverPage(): React.JSX.Element {
   return (
     <>
       {heroVariant !== 'off' && <RefundSaverHero />}
-      {featuresVariant !== 'off' && <RefundSaverFeatures variant={featuresVariant} />}
+      {featuresVariant !== 'off' && (
+        <RefundSaverFeatures variant={featuresVariant} />
+      )}
       <RefundSaverFAQ />
       <TestimonialsSwitcher />
       <CTASwitcher />

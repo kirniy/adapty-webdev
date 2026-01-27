@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useTestimonialsVariant } from '~/lib/debug-context';
 import { CompareHero } from '~/components/sections/compare-hero';
 import { CompareTestimonials } from '~/components/sections/compare-testimonials';
 import {
-  LogosSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  LogosSwitcher
 } from '~/components/sections/section-switchers';
+import { useHeroVariant, useTestimonialsVariant } from '~/lib/debug-context';
 
 // Compare landing page: Overview of Adapty vs competitors
 export default function ComparePage(): React.JSX.Element {

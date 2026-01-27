@@ -146,8 +146,12 @@ async function getContactTimelineEventsData(
   }));
 
   return [...mappedActivities, ...mappedComments].sort((a, b) => {
-    const dateA = (a.type === 'activity' ? a.occurredAt : a.createdAt).getTime();
-    const dateB = (b.type === 'activity' ? b.occurredAt : b.createdAt).getTime();
+    const dateA = (
+      a.type === 'activity' ? a.occurredAt : a.createdAt
+    ).getTime();
+    const dateB = (
+      b.type === 'activity' ? b.occurredAt : b.createdAt
+    ).getTime();
     return dateB - dateA;
   });
 }
@@ -162,5 +166,8 @@ export async function getContactTimelineEvents(
     throw new ValidationError(JSON.stringify(result.error.flatten()));
   }
 
-  return getContactTimelineEventsData(ctx.organization.id, result.data.contactId);
+  return getContactTimelineEventsData(
+    ctx.organization.id,
+    result.data.contactId
+  );
 }

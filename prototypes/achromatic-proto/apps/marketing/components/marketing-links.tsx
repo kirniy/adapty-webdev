@@ -1,26 +1,26 @@
 import * as React from 'react';
 import Image from 'next/image';
 import {
-  BookIcon,
-  LayoutIcon,
-  PlayIcon,
-  SendHorizonalIcon,
-  CodeIcon,
-  UsersIcon,
-  CalendarIcon,
-  BriefcaseIcon,
-  NewspaperIcon,
-  FileTextIcon,
-  CalculatorIcon,
   BarChartIcon,
-  UserIcon,
-  WrenchIcon,
+  BookIcon,
+  BriefcaseIcon,
   BuildingIcon,
+  CalculatorIcon,
+  CalendarIcon,
+  CodeIcon,
+  FileBarChart2Icon,
+  FileTextIcon,
+  HeartHandshakeIcon,
+  LayoutIcon,
+  NewspaperIcon,
+  PlayIcon,
+  PlugIcon,
   RocketIcon,
   ScaleIcon,
-  FileBarChart2Icon,
-  PlugIcon,
-  HeartHandshakeIcon,
+  SendHorizonalIcon,
+  UserIcon,
+  UsersIcon,
+  WrenchIcon
 } from 'lucide-react';
 
 import {
@@ -32,12 +32,12 @@ import {
 
 // Helper to render image icons from Oatmeal menu icons
 const MenuIcon = ({ src }: { src: string }) => (
-  <Image 
-    src={src} 
-    alt="" 
-    width={24} 
-    height={24} 
-    className="size-5 shrink-0 object-contain dark:invert" 
+  <Image
+    src={src}
+    alt=""
+    width={24}
+    height={24}
+    className="size-5 shrink-0 object-contain dark:invert"
   />
 );
 
@@ -75,7 +75,9 @@ export const MENU_LINKS = [
       {
         title: 'Refund saver',
         description: 'Reduce refund rates',
-        icon: <MenuIcon src="/images/menu-icons/icon-20x20-currency-exchange.svg" />,
+        icon: (
+          <MenuIcon src="/images/menu-icons/icon-20x20-currency-exchange.svg" />
+        ),
         href: '/refund-saver',
         external: false
       },
@@ -90,7 +92,9 @@ export const MENU_LINKS = [
       {
         title: 'Onboarding builder',
         description: 'Create engaging onboarding flows',
-        icon: <MenuIcon src="/images/menu-icons/icon-mobile-menu-dp24w4g0.svg" />,
+        icon: (
+          <MenuIcon src="/images/menu-icons/icon-mobile-menu-dp24w4g0.svg" />
+        ),
         href: '/onboarding-builder',
         external: false
       },
@@ -170,10 +174,12 @@ export const MENU_LINKS = [
       {
         title: 'Apple ads manager',
         description: 'Optimize Apple Search Ads',
-        icon: <MenuIcon src="/images/menu-icons/icon-finance-blue-20dp-300w.svg" />,
+        icon: (
+          <MenuIcon src="/images/menu-icons/icon-finance-blue-20dp-300w.svg" />
+        ),
         href: 'https://adapty.io/apple-ads-manager/',
         external: true
-      },
+      }
     ]
   },
   // CASE STUDIES MENU - Top case studies
@@ -183,45 +189,57 @@ export const MENU_LINKS = [
       {
         title: 'Productivity app',
         description: '+50% revenue with Autopilot',
-        icon: <BarChartIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <BarChartIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: 'https://adapty.io/clients/productivity-app/',
         external: true
       },
       {
         title: 'Going Merry',
         description: '5x revenue with Paywall Builder',
-        icon: <BarChartIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <BarChartIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: 'https://adapty.io/clients/going-merry/',
         external: true
       },
       {
         title: 'Shmoody',
         description: 'From $0 to $2M ARR',
-        icon: <BarChartIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <BarChartIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: 'https://adapty.io/clients/shmoody/',
         external: true
       },
       {
         title: 'Glam AI',
         description: 'Tripled revenue, same installs',
-        icon: <BarChartIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <BarChartIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: 'https://adapty.io/clients/glam-ai/',
         external: true
       },
       {
         title: 'Lively',
         description: 'Saved 82% of lost revenue',
-        icon: <BarChartIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <BarChartIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: 'https://adapty.io/clients/lively/',
         external: true
       },
       {
         title: 'View all case studies',
         description: 'See more customer success stories',
-        icon: <FileTextIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <FileTextIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: '/case-studies',
         external: false
-      },
+      }
     ]
   },
   // RESOURCES MENU - From Oatmeal
@@ -268,14 +286,18 @@ export const MENU_LINKS = [
       {
         title: 'Events',
         description: 'Meet us in person',
-        icon: <CalendarIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <CalendarIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: 'https://adapty.io/events/',
         external: true
       },
       {
         title: 'Careers',
         description: 'Join our team',
-        icon: <BriefcaseIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <BriefcaseIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: '/careers',
         external: false
       },
@@ -283,7 +305,9 @@ export const MENU_LINKS = [
       {
         title: 'Paywall newsletter',
         description: 'Weekly paywall insights',
-        icon: <NewspaperIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <NewspaperIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: 'https://adapty.io/paywall-newsletter/',
         external: true,
         badge: 'weekly'
@@ -291,14 +315,18 @@ export const MENU_LINKS = [
       {
         title: 'Apple fiscal calendar',
         description: 'Plan your releases',
-        icon: <CalendarIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <CalendarIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: '/apple-fiscal-calendar',
         external: false
       },
       {
         title: 'Subscription calculator',
         description: 'Calculate your revenue',
-        icon: <CalculatorIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <CalculatorIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: 'https://adapty.io/subscription-calculator/',
         external: true
       },
@@ -312,7 +340,9 @@ export const MENU_LINKS = [
       {
         title: 'State of Subscriptions',
         description: 'Annual industry report',
-        icon: <FileBarChart2Icon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <FileBarChart2Icon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: '/state-of-in-app-subscriptions',
         external: false,
         badge: '2025'
@@ -323,7 +353,7 @@ export const MENU_LINKS = [
         icon: <PlugIcon className="size-5 shrink-0 text-muted-foreground" />,
         href: '/integrations',
         external: false
-      },
+      }
     ]
   },
   // DOCS MENU - SDK documentation
@@ -354,7 +384,9 @@ export const MENU_LINKS = [
       {
         title: 'React Native',
         description: 'Cross-platform for RN',
-        icon: <MenuIcon src="/images/menu-icons/icon-react-native-64x64-1.svg" />,
+        icon: (
+          <MenuIcon src="/images/menu-icons/icon-react-native-64x64-1.svg" />
+        ),
         href: 'https://adapty.io/docs/react-native-installation/',
         external: true
       },
@@ -382,10 +414,12 @@ export const MENU_LINKS = [
       {
         title: 'Migrate to Adapty',
         description: 'Switch from competitors',
-        icon: <SendHorizonalIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <SendHorizonalIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: 'https://adapty.io/docs/migration/',
         external: true
-      },
+      }
     ]
   },
   // SOLUTIONS - Role pages and comparisons
@@ -410,7 +444,9 @@ export const MENU_LINKS = [
       {
         title: 'For App Owners',
         description: 'Grow subscription revenue',
-        icon: <BuildingIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <BuildingIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: '/for-app-owners',
         external: false
       },
@@ -425,7 +461,9 @@ export const MENU_LINKS = [
       {
         title: 'Why Adapty',
         description: 'See how we compare',
-        icon: <HeartHandshakeIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <HeartHandshakeIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: '/why-adapty',
         external: false
       },
@@ -467,10 +505,12 @@ export const MENU_LINKS = [
       {
         title: 'All comparisons',
         description: 'View all competitor comparisons',
-        icon: <FileTextIcon className="size-5 shrink-0 text-muted-foreground" />,
+        icon: (
+          <FileTextIcon className="size-5 shrink-0 text-muted-foreground" />
+        ),
         href: '/compare',
         external: false
-      },
+      }
     ]
   },
   // PRICING - Direct link
@@ -491,18 +531,42 @@ export const FOOTER_LINKS = [
     links: [
       { name: 'Paywall Builder', href: '/paywall-builder', external: false },
       { name: 'A/B Testing', href: '/paywall-ab-testing', external: false },
-      { name: 'Onboarding Builder', href: '/onboarding-builder', external: false },
-      { name: 'AI Paywall Generator', href: '/ai-paywall-generator', external: false },
+      {
+        name: 'Onboarding Builder',
+        href: '/onboarding-builder',
+        external: false
+      },
+      {
+        name: 'AI Paywall Generator',
+        href: '/ai-paywall-generator',
+        external: false
+      },
       { name: 'Autopilot', href: '/autopilot', external: false },
       { name: 'Revenue Analytics', href: '/revenue-growth', external: false },
       { name: 'LTV Analytics', href: '/ltv-analytics', external: false },
-      { name: 'Predictive Analytics', href: '/predictive-analytics', external: false },
+      {
+        name: 'Predictive Analytics',
+        href: '/predictive-analytics',
+        external: false
+      },
       { name: 'Subscriptions SDK', href: '/sdk', external: false },
       { name: 'Refund Saver', href: '/refund-saver', external: false },
       { name: 'Remote Config', href: '/remote-config', external: false },
-      { name: 'Fallback Paywalls', href: '/fallback-paywalls', external: false },
-      { name: 'Paywall Targeting', href: '/paywall-targeting', external: false },
-      { name: 'Paywall Localization', href: '/paywall-localization', external: false },
+      {
+        name: 'Fallback Paywalls',
+        href: '/fallback-paywalls',
+        external: false
+      },
+      {
+        name: 'Paywall Targeting',
+        href: '/paywall-targeting',
+        external: false
+      },
+      {
+        name: 'Paywall Localization',
+        href: '/paywall-localization',
+        external: false
+      },
       { name: 'Integrations', href: '/integrations', external: false },
       { name: 'Pricing', href: '/pricing', external: false }
     ]
@@ -520,7 +584,11 @@ export const FOOTER_LINKS = [
       { name: 'vs Qonversion', href: '/compare/qonversion', external: false },
       { name: 'vs Superwall', href: '/compare/superwall', external: false },
       { name: 'vs Purchasely', href: '/compare/purchasely', external: false },
-      { name: 'vs In-house', href: '/compare/in-house-development', external: false }
+      {
+        name: 'vs In-house',
+        href: '/compare/in-house-development',
+        external: false
+      }
     ]
   },
   {
@@ -530,11 +598,27 @@ export const FOOTER_LINKS = [
       { name: 'Blog', href: '/blog', external: false },
       { name: 'Case Studies', href: '/case-studies', external: false },
       { name: 'Paywall Library', href: '/paywall-library', external: false },
-      { name: 'Apple Fiscal Calendar', href: '/apple-fiscal-calendar', external: false },
-      { name: 'State of Subscriptions', href: '/state-of-in-app-subscriptions', external: false },
-      { name: 'Community', href: 'https://adapty.io/community/', external: true },
+      {
+        name: 'Apple Fiscal Calendar',
+        href: '/apple-fiscal-calendar',
+        external: false
+      },
+      {
+        name: 'State of Subscriptions',
+        href: '/state-of-in-app-subscriptions',
+        external: false
+      },
+      {
+        name: 'Community',
+        href: 'https://adapty.io/community/',
+        external: true
+      },
       { name: 'Webinars', href: 'https://adapty.io/webinars/', external: true },
-      { name: 'Help Center', href: 'https://adapty.io/support/', external: true }
+      {
+        name: 'Help Center',
+        href: 'https://adapty.io/support/',
+        external: true
+      }
     ]
   },
   {
@@ -544,7 +628,11 @@ export const FOOTER_LINKS = [
       { name: 'Careers', href: '/careers', external: false },
       { name: 'Contact', href: '/contact', external: false },
       { name: 'Schedule Demo', href: '/schedule-demo', external: false },
-      { name: 'System Status', href: 'https://status.adapty.io/', external: true }
+      {
+        name: 'System Status',
+        href: 'https://status.adapty.io/',
+        external: true
+      }
     ]
   },
   {

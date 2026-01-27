@@ -2,18 +2,23 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, PlugIcon, RefreshCwIcon, CheckCircleIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowRightIcon,
+  CheckCircleIcon,
+  PlugIcon,
+  RefreshCwIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { SectionBackground } from '~/components/fragments/section-background';
-import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { Spotlight } from '~/components/fragments/spotlight';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // Integration sync magic animation
 function IntegrationSyncMagic() {
@@ -23,7 +28,7 @@ function IntegrationSyncMagic() {
     { name: 'Amplitude', color: 'bg-blue-500' },
     { name: 'AppsFlyer', color: 'bg-primary' },
     { name: 'Mixpanel', color: 'bg-purple-500' },
-    { name: 'Segment', color: 'bg-primary' },
+    { name: 'Segment', color: 'bg-primary' }
   ];
 
   React.useEffect(() => {
@@ -59,7 +64,7 @@ function IntegrationSyncMagic() {
               key={integration.name}
               animate={{
                 scale: isActive ? 1.15 : 0.9,
-                opacity: isActive ? 1 : 0.4,
+                opacity: isActive ? 1 : 0.4
               }}
               transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
               className={cn(
@@ -96,9 +101,13 @@ function IntegrationSyncMagic() {
         >
           <div className="flex items-center justify-center gap-2">
             <CheckCircleIcon className="size-4 text-emerald-500" />
-            <span className="text-sm font-medium">{integrations[activeIntegration]?.name}</span>
+            <span className="text-sm font-medium">
+              {integrations[activeIntegration]?.name}
+            </span>
           </div>
-          <div className="text-xs text-muted-foreground mt-1">Events synced in real-time</div>
+          <div className="text-xs text-muted-foreground mt-1">
+            Events synced in real-time
+          </div>
         </motion.div>
       </AnimatePresence>
     </div>
@@ -141,7 +150,8 @@ function IntegrationCounterMagic() {
     >
       <PlugIcon className="size-4 text-primary" />
       <span className="text-sm font-medium">
-        <span className="text-primary font-bold">{count}+</span> integrations available
+        <span className="text-primary font-bold">{count}+</span> integrations
+        available
       </span>
     </motion.div>
   );
@@ -149,7 +159,9 @@ function IntegrationCounterMagic() {
 
 export function IntegrationsHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -177,7 +189,10 @@ export function IntegrationsHero(): React.JSX.Element {
               whileHover={shouldReduceMotion ? undefined : { y: -4 }}
               className="p-6 rounded-2xl border bg-background/50 backdrop-blur-sm max-w-xs mx-auto relative overflow-hidden"
             >
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={280}
+              />
               <div className="relative">
                 <div className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">
                   Live sync
@@ -197,7 +212,7 @@ export function IntegrationsHero(): React.JSX.Element {
                 onMouseEnter={() => setIsHovered('demo')}
                 onMouseLeave={() => setIsHovered(null)}
                 animate={{
-                  y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0,
+                  y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0
                 }}
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 className="relative"
@@ -211,7 +226,11 @@ export function IntegrationsHero(): React.JSX.Element {
                 >
                   Book a demo
                   <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: isHovered === 'demo' ? 3 : 0 }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : { x: isHovered === 'demo' ? 3 : 0 }
+                    }
                     transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
                   >
                     <ArrowRightIcon className="ml-2 size-4" />
@@ -231,7 +250,7 @@ export function IntegrationsHero(): React.JSX.Element {
                 onMouseEnter={() => setIsHovered('start')}
                 onMouseLeave={() => setIsHovered(null)}
                 animate={{
-                  y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0,
+                  y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0
                 }}
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               >

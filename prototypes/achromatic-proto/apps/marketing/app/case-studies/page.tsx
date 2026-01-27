@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
-import { CaseStudiesHero } from '~/components/sections/case-studies-hero';
 import { CaseStudiesGrid } from '~/components/sections/case-studies-grid';
+import { CaseStudiesHero } from '~/components/sections/case-studies-hero';
 import {
-  LogosSwitcher,
-  TestimonialsSwitcher,
   CTASwitcher,
+  LogosSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant, useHeroVariant } from '~/lib/debug-context';
 
 // Case Studies page: Customer success stories
 export default function CaseStudiesPage(): React.JSX.Element {

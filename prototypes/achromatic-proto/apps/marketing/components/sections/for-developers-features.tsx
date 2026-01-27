@@ -3,28 +3,28 @@
 import * as React from 'react';
 import Link from 'next/link';
 import {
-  CodeIcon,
-  ZapIcon,
-  RefreshCwIcon,
-  ShieldCheckIcon,
-  LayoutGridIcon,
-  SendIcon,
-  SlidersHorizontalIcon,
-  WebhookIcon,
   ArrowRightIcon,
   ChevronDownIcon,
-  StarIcon
+  CodeIcon,
+  LayoutGridIcon,
+  RefreshCwIcon,
+  SendIcon,
+  ShieldCheckIcon,
+  SlidersHorizontalIcon,
+  StarIcon,
+  WebhookIcon,
+  ZapIcon
 } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { cn } from '@workspace/ui/lib/utils';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
-import { BlurFade } from '~/components/fragments/blur-fade';
 import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT content from adapty.io/for-developers (scraped 2026-01-21)
@@ -32,7 +32,8 @@ const FEATURES = [
   {
     icon: CodeIcon,
     title: 'Just 5 SDK methods to integrate monetization',
-    description: "Fetch Paywalls, make purchases, and check the subscription status - that's all you need to get started quickly.",
+    description:
+      "Fetch Paywalls, make purchases, and check the subscription status - that's all you need to get started quickly.",
     link: 'https://adapty.io/docs/quickstart-sdk',
     linkText: 'Get started with SDK',
     category: 'integration'
@@ -40,7 +41,8 @@ const FEATURES = [
   {
     icon: ZapIcon,
     title: 'Quick integration in just a couple of hours',
-    description: "Add products from AppStore Connect, Google Play, or Stripe. Then, create Adapty paywalls, and you're good to go.",
+    description:
+      "Add products from AppStore Connect, Google Play, or Stripe. Then, create Adapty paywalls, and you're good to go.",
     link: null,
     linkText: null,
     category: 'integration'
@@ -48,7 +50,8 @@ const FEATURES = [
   {
     icon: RefreshCwIcon,
     title: 'Cross-platform subscriber sync',
-    description: 'Adapty SDKs automatically sync subscribers across all platforms. Use Adapty as a single source of truth for your customers.',
+    description:
+      'Adapty SDKs automatically sync subscribers across all platforms. Use Adapty as a single source of truth for your customers.',
     link: null,
     linkText: 'Read more about sync',
     category: 'sync'
@@ -56,7 +59,8 @@ const FEATURES = [
   {
     icon: ShieldCheckIcon,
     title: 'Highest SLA in the industry: 99.99% and growing',
-    description: "Adapty SDK and servers are battle-tested by some of the largest apps in the world. Reach 100% fault tolerance with fallback paywalls.",
+    description:
+      'Adapty SDK and servers are battle-tested by some of the largest apps in the world. Reach 100% fault tolerance with fallback paywalls.',
     link: null,
     linkText: null,
     category: 'reliability'
@@ -64,7 +68,8 @@ const FEATURES = [
   {
     icon: LayoutGridIcon,
     title: 'Well-maintained SDK for each platform',
-    description: 'We regularly update our SDKs, consistently releasing new features and optimizing performance.',
+    description:
+      'We regularly update our SDKs, consistently releasing new features and optimizing performance.',
     link: null,
     linkText: 'Learn more',
     category: 'sdk'
@@ -72,7 +77,8 @@ const FEATURES = [
   {
     icon: SendIcon,
     title: 'Simple 3rd-party integrations',
-    description: "Just add an extra line of code, turn on the integration, and Adapty will automatically send data to the 3rd-party service.",
+    description:
+      'Just add an extra line of code, turn on the integration, and Adapty will automatically send data to the 3rd-party service.',
     link: null,
     linkText: 'Learn more',
     category: 'integration'
@@ -80,7 +86,8 @@ const FEATURES = [
   {
     icon: SlidersHorizontalIcon,
     title: 'Flexible paywall management architecture',
-    description: 'Adapty Placements make it easy to change paywalls remotely and run testing with neither coding nor app releases required.',
+    description:
+      'Adapty Placements make it easy to change paywalls remotely and run testing with neither coding nor app releases required.',
     link: null,
     linkText: null,
     category: 'management'
@@ -88,7 +95,8 @@ const FEATURES = [
   {
     icon: WebhookIcon,
     title: 'Raw data export',
-    description: 'Save raw vendor data in real-time to your servers with Raw Webhook or get the processed and enriched data events from Webhook integration.',
+    description:
+      'Save raw vendor data in real-time to your servers with Raw Webhook or get the processed and enriched data events from Webhook integration.',
     link: null,
     linkText: null,
     category: 'data'
@@ -112,7 +120,8 @@ const SDKS = [
 const RELATED_ROLES = [
   {
     title: 'For marketers',
-    description: 'Double subscription revenue with A/B testing paywalls and 3rd party integrations.',
+    description:
+      'Double subscription revenue with A/B testing paywalls and 3rd party integrations.',
     link: '/for-marketers'
   },
   {
@@ -130,7 +139,11 @@ const RELATED_ROLES = [
 function CodeMagic() {
   const shouldReduceMotion = useReducedMotion();
   const [step, setStep] = React.useState(0);
-  const steps = ['Adapty.getPay', 'Adapty.getPaywall()', 'Adapty.getPaywall("premium")'];
+  const steps = [
+    'Adapty.getPay',
+    'Adapty.getPaywall()',
+    'Adapty.getPaywall("premium")'
+  ];
 
   React.useEffect(() => {
     if (shouldReduceMotion) return;
@@ -186,7 +199,9 @@ function IntegrationMagic() {
     return (
       <div className="mt-4 text-center">
         <div className="text-2xl font-bold text-primary">2:00</div>
-        <div className="text-[10px] text-muted-foreground">Minutes to integrate</div>
+        <div className="text-[10px] text-muted-foreground">
+          Minutes to integrate
+        </div>
       </div>
     );
   }
@@ -204,7 +219,9 @@ function IntegrationMagic() {
       >
         {mins}:{secs.toString().padStart(2, '0')}
       </motion.div>
-      <div className="text-[10px] text-muted-foreground">Minutes to integrate</div>
+      <div className="text-[10px] text-muted-foreground">
+        Minutes to integrate
+      </div>
     </div>
   );
 }
@@ -227,7 +244,12 @@ function SyncMagic() {
     return (
       <div className="mt-4 flex justify-center gap-2">
         {platforms.map((p) => (
-          <div key={p} className="px-2 py-1 bg-primary/20 rounded text-[10px] font-medium">{p}</div>
+          <div
+            key={p}
+            className="px-2 py-1 bg-primary/20 rounded text-[10px] font-medium"
+          >
+            {p}
+          </div>
         ))}
       </div>
     );
@@ -240,7 +262,10 @@ function SyncMagic() {
           key={p}
           animate={{
             scale: syncing === i ? 1.1 : 1,
-            backgroundColor: syncing === platforms.length || syncing === i ? 'hsl(var(--primary) / 0.3)' : 'hsl(var(--muted))',
+            backgroundColor:
+              syncing === platforms.length || syncing === i
+                ? 'hsl(var(--primary) / 0.3)'
+                : 'hsl(var(--muted))'
           }}
           className="px-2 py-1 rounded text-[10px] font-medium"
         >
@@ -327,7 +352,7 @@ const FEATURE_MAGIC: Record<string, React.FC> = {
   'Quick integration in just a couple of hours': IntegrationMagic,
   'Cross-platform subscriber sync': SyncMagic,
   'Highest SLA in the industry: 99.99% and growing': UptimeMagic,
-  'Raw data export': WebhookMagic,
+  'Raw data export': WebhookMagic
 };
 
 // =============================================================================
@@ -354,18 +379,25 @@ function GridFeatures() {
             const MagicComponent = FEATURE_MAGIC[feature.title];
 
             return (
-              <BlurFade key={index} delay={0.1 + index * 0.02}>
+              <BlurFade
+                key={index}
+                delay={0.1 + index * 0.02}
+              >
                 <motion.div
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  animate={shouldReduceMotion ? undefined : {
-                    y: hoveredIndex === index ? -8 : 0,
-                    scale: hoveredIndex === index ? 1.02 : 1,
-                  }}
+                  animate={
+                    shouldReduceMotion
+                      ? undefined
+                      : {
+                          y: hoveredIndex === index ? -8 : 0,
+                          scale: hoveredIndex === index ? 1.02 : 1
+                        }
+                  }
                   transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
                   className={cn(
-                    "group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-150 cursor-pointer",
-                    hoveredIndex === index && "border-primary/50  "
+                    'group relative h-full overflow-hidden rounded-xl border bg-background/50 backdrop-blur-sm transition-all duration-150 cursor-pointer',
+                    hoveredIndex === index && 'border-primary/50  '
                   )}
                 >
                   {hoveredIndex === index && (
@@ -377,23 +409,38 @@ function GridFeatures() {
                       colorTo="#6720FF00"
                     />
                   )}
-                  <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={280} />
+                  <Spotlight
+                    className="from-primary/15 via-primary/5 to-transparent"
+                    size={280}
+                  />
 
                   <div className="relative p-6 z-10">
                     <div className="flex items-start gap-4">
                       <motion.div
-                        animate={shouldReduceMotion ? undefined : {
-                          scale: hoveredIndex === index ? 1.15 : 1,
-                          rotate: hoveredIndex === index ? 8 : 0,
+                        animate={
+                          shouldReduceMotion
+                            ? undefined
+                            : {
+                                scale: hoveredIndex === index ? 1.15 : 1,
+                                rotate: hoveredIndex === index ? 8 : 0
+                              }
+                        }
+                        transition={{
+                          type: 'spring',
+                          duration: 0.3,
+                          bounce: 0.2
                         }}
-                        transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
                         className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
                       >
                         <feature.icon className="size-6" />
                       </motion.div>
                       <div>
-                        <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed mb-3">{feature.description}</p>
+                        <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+                          {feature.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                          {feature.description}
+                        </p>
                         {feature.link && feature.linkText && (
                           <Link
                             href={feature.link}
@@ -401,7 +448,11 @@ function GridFeatures() {
                           >
                             {feature.linkText}
                             <motion.span
-                              animate={shouldReduceMotion ? undefined : { x: hoveredIndex === index ? 4 : 0 }}
+                              animate={
+                                shouldReduceMotion
+                                  ? undefined
+                                  : { x: hoveredIndex === index ? 4 : 0 }
+                              }
                             >
                               <ArrowRightIcon className="size-3" />
                             </motion.span>
@@ -434,19 +485,28 @@ function GridFeatures() {
               {SDKS.map((sdk, index) => (
                 <motion.div
                   key={index}
-                  whileHover={shouldReduceMotion ? undefined : { scale: 1.05, y: -4 }}
+                  whileHover={
+                    shouldReduceMotion ? undefined : { scale: 1.05, y: -4 }
+                  }
                   transition={{ type: 'spring', bounce: 0 }}
                   className="group relative p-4 rounded-lg overflow-hidden bg-muted/50 border border-border/50 text-center cursor-pointer hover:border-primary/30 transition-colors"
                 >
-                  <Spotlight className="from-primary/10 via-transparent to-transparent" size={150} />
-                  <p className="relative font-medium text-foreground text-sm group-hover:text-primary transition-colors">{sdk.name}</p>
+                  <Spotlight
+                    className="from-primary/10 via-transparent to-transparent"
+                    size={150}
+                  />
+                  <p className="relative font-medium text-foreground text-sm group-hover:text-primary transition-colors">
+                    {sdk.name}
+                  </p>
                   {sdk.stars && (
                     <p className="relative text-xs text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <StarIcon className="size-3 text-yellow-500 fill-yellow-500" />
                       {sdk.stars}
                     </p>
                   )}
-                  <p className="relative text-xs text-primary mt-1">{sdk.platform}</p>
+                  <p className="relative text-xs text-primary mt-1">
+                    {sdk.platform}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -459,11 +519,19 @@ function GridFeatures() {
             <SiteHeading title="We're here for your team" />
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               {RELATED_ROLES.map((role, index) => (
-                <Link key={index} href={role.link} className="group">
+                <Link
+                  key={index}
+                  href={role.link}
+                  className="group"
+                >
                   <Card className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-colors">
                     <CardContent className="p-6">
-                      <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">{role.title}</h3>
-                      <p className="text-sm text-muted-foreground">{role.description}</p>
+                      <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">
+                        {role.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {role.description}
+                      </p>
                     </CardContent>
                   </Card>
                 </Link>
@@ -498,7 +566,9 @@ function BentoFeatures() {
           {/* Large featured card */}
           <BlurFade delay={0.1}>
             <motion.div
-              whileHover={shouldReduceMotion ? undefined : { scale: 1.02, y: -4 }}
+              whileHover={
+                shouldReduceMotion ? undefined : { scale: 1.02, y: -4 }
+              }
               transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               className="lg:col-span-2 lg:row-span-2 rounded-2xl border bg-gradient-to-br from-primary/10 via-background to-background p-8 cursor-pointer hover:border-primary/50 transition-colors"
             >
@@ -508,7 +578,9 @@ function BentoFeatures() {
                 </div>
                 <h3 className="text-2xl font-bold mb-3">Just 5 SDK methods</h3>
                 <p className="text-muted-foreground mb-6 flex-1">
-                  Fetch Paywalls, make purchases, and check subscription status - that&apos;s all you need to get started quickly. Our SDK handles all the complexity.
+                  Fetch Paywalls, make purchases, and check subscription status
+                  - that&apos;s all you need to get started quickly. Our SDK
+                  handles all the complexity.
                 </p>
                 <div className="mt-auto">
                   <Link
@@ -525,9 +597,14 @@ function BentoFeatures() {
 
           {/* Regular cards */}
           {FEATURES.slice(1, 5).map((feature, index) => (
-            <BlurFade key={index} delay={0.15 + index * 0.03}>
+            <BlurFade
+              key={index}
+              delay={0.15 + index * 0.03}
+            >
               <motion.div
-                whileHover={shouldReduceMotion ? undefined : { scale: 1.02, y: -4 }}
+                whileHover={
+                  shouldReduceMotion ? undefined : { scale: 1.02, y: -4 }
+                }
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 className="rounded-xl border bg-background/50 backdrop-blur-sm p-6 cursor-pointer hover:border-primary/50 transition-colors h-full"
               >
@@ -535,7 +612,9 @@ function BentoFeatures() {
                   <feature.icon className="size-5" />
                 </div>
                 <h3 className="font-semibold mb-2">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
+                <p className="text-sm text-muted-foreground">
+                  {feature.description}
+                </p>
               </motion.div>
             </BlurFade>
           ))}
@@ -543,7 +622,9 @@ function BentoFeatures() {
           {/* Wide card */}
           <BlurFade delay={0.3}>
             <motion.div
-              whileHover={shouldReduceMotion ? undefined : { scale: 1.02, y: -4 }}
+              whileHover={
+                shouldReduceMotion ? undefined : { scale: 1.02, y: -4 }
+              }
               transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               className="lg:col-span-3 rounded-xl border bg-background/50 backdrop-blur-sm p-6 cursor-pointer hover:border-primary/50 transition-colors"
             >
@@ -552,9 +633,13 @@ function BentoFeatures() {
                   <ShieldCheckIcon className="size-6" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">99.99% Uptime SLA</h3>
+                  <h3 className="font-semibold text-lg mb-2">
+                    99.99% Uptime SLA
+                  </h3>
                   <p className="text-muted-foreground">
-                    Adapty SDK and servers are battle-tested by some of the largest apps in the world. Reach 100% fault tolerance with fallback paywalls.
+                    Adapty SDK and servers are battle-tested by some of the
+                    largest apps in the world. Reach 100% fault tolerance with
+                    fallback paywalls.
                   </p>
                 </div>
               </div>
@@ -613,7 +698,8 @@ function AccordionFeatures() {
                   Developer-first features
                 </h2>
                 <p className="text-lg text-muted-foreground">
-                  Everything you need to integrate and manage in-app purchases. Click each feature to learn more.
+                  Everything you need to integrate and manage in-app purchases.
+                  Click each feature to learn more.
                 </p>
               </div>
             </BlurFade>
@@ -627,7 +713,9 @@ function AccordionFeatures() {
                       key={index}
                       className="p-3 rounded-lg bg-background text-center text-sm border"
                     >
-                      <p className="font-medium">{sdk.name.replace(' SDK', '')}</p>
+                      <p className="font-medium">
+                        {sdk.name.replace(' SDK', '')}
+                      </p>
                       {sdk.stars && (
                         <p className="text-xs text-muted-foreground mt-1 flex items-center justify-center gap-1">
                           <StarIcon className="size-3 text-yellow-500 fill-yellow-500" />
@@ -644,33 +732,52 @@ function AccordionFeatures() {
           {/* Right: Accordion */}
           <div className="space-y-3">
             {FEATURES.map((feature, index) => (
-              <BlurFade key={index} delay={0.1 + index * 0.02}>
+              <BlurFade
+                key={index}
+                delay={0.1 + index * 0.02}
+              >
                 <motion.div
                   layout
                   className={cn(
-                    "rounded-xl border bg-background/50 backdrop-blur-sm overflow-hidden transition-colors duration-200",
-                    expandedIndex === index ? "border-primary/50 " : "border-border/50"
+                    'rounded-xl border bg-background/50 backdrop-blur-sm overflow-hidden transition-colors duration-200',
+                    expandedIndex === index
+                      ? 'border-primary/50 '
+                      : 'border-border/50'
                   )}
                 >
                   <motion.button
-                    onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
+                    onClick={() =>
+                      setExpandedIndex(expandedIndex === index ? null : index)
+                    }
                     className="flex w-full items-center gap-4 p-5 text-left"
                   >
                     <motion.div
-                      animate={shouldReduceMotion ? undefined : {
-                        scale: expandedIndex === index ? 1.1 : 1,
-                        rotate: expandedIndex === index ? 5 : 0,
+                      animate={
+                        shouldReduceMotion
+                          ? undefined
+                          : {
+                              scale: expandedIndex === index ? 1.1 : 1,
+                              rotate: expandedIndex === index ? 5 : 0
+                            }
+                      }
+                      transition={{
+                        type: 'spring',
+                        duration: 0.3,
+                        bounce: 0.2
                       }}
-                      transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
                       className={cn(
-                        "flex size-10 shrink-0 items-center justify-center rounded-lg transition-colors",
-                        expandedIndex === index ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary"
+                        'flex size-10 shrink-0 items-center justify-center rounded-lg transition-colors',
+                        expandedIndex === index
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-primary/10 text-primary'
                       )}
                     >
                       <feature.icon className="size-5" />
                     </motion.div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold truncate">{feature.title}</h3>
+                      <h3 className="font-semibold truncate">
+                        {feature.title}
+                      </h3>
                     </div>
                     <motion.div
                       animate={{ rotate: expandedIndex === index ? 180 : 0 }}
@@ -683,10 +790,25 @@ function AccordionFeatures() {
                   <AnimatePresence>
                     {expandedIndex === index && (
                       <motion.div
-                        initial={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
-                        animate={shouldReduceMotion ? { opacity: 1 } : { height: 'auto', opacity: 1 }}
-                        exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+                        initial={
+                          shouldReduceMotion
+                            ? { opacity: 0 }
+                            : { height: 0, opacity: 0 }
+                        }
+                        animate={
+                          shouldReduceMotion
+                            ? { opacity: 1 }
+                            : { height: 'auto', opacity: 1 }
+                        }
+                        exit={
+                          shouldReduceMotion
+                            ? { opacity: 0 }
+                            : { height: 0, opacity: 0 }
+                        }
+                        transition={{
+                          duration: 0.25,
+                          ease: [0.32, 0.72, 0, 1]
+                        }}
                       >
                         <div className="px-5 pb-5 pt-0">
                           <div className="pl-14">
@@ -719,11 +841,19 @@ function AccordionFeatures() {
             <SiteHeading title="We're here for your team" />
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               {RELATED_ROLES.map((role, index) => (
-                <Link key={index} href={role.link} className="group">
+                <Link
+                  key={index}
+                  href={role.link}
+                  className="group"
+                >
                   <Card className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-colors">
                     <CardContent className="p-6">
-                      <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">{role.title}</h3>
-                      <p className="text-sm text-muted-foreground">{role.description}</p>
+                      <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">
+                        {role.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {role.description}
+                      </p>
                     </CardContent>
                   </Card>
                 </Link>
@@ -739,14 +869,21 @@ function AccordionFeatures() {
 // =============================================================================
 // MAIN EXPORT
 // =============================================================================
-export const FOR_DEVELOPERS_FEATURES_VARIANTS = ['grid', 'bento', 'accordion'] as const;
-export type ForDevelopersFeaturesVariant = typeof FOR_DEVELOPERS_FEATURES_VARIANTS[number];
+export const FOR_DEVELOPERS_FEATURES_VARIANTS = [
+  'grid',
+  'bento',
+  'accordion'
+] as const;
+export type ForDevelopersFeaturesVariant =
+  (typeof FOR_DEVELOPERS_FEATURES_VARIANTS)[number];
 
 type Props = {
   variant?: ForDevelopersFeaturesVariant;
 };
 
-export function ForDevelopersFeatures({ variant = 'grid' }: Props): React.JSX.Element {
+export function ForDevelopersFeatures({
+  variant = 'grid'
+}: Props): React.JSX.Element {
   switch (variant) {
     case 'bento':
       return <BentoFeatures />;

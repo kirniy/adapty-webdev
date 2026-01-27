@@ -1,6 +1,6 @@
 'use server';
-import { updateTag } from 'next/cache';
 
+import { updateTag } from 'next/cache';
 
 import {
   isOrganizationAdmin,
@@ -54,9 +54,7 @@ export const transferOwnership = authOrganizationActionClient
       })
     ]);
 
-    updateTag(
-      Caching.createUserTag(UserCacheKey.Profile, ctx.session.user.id)
-    );
+    updateTag(Caching.createUserTag(UserCacheKey.Profile, ctx.session.user.id));
     updateTag(
       Caching.createUserTag(UserCacheKey.Profile, parsedInput.targetId)
     );

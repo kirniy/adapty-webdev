@@ -9,11 +9,11 @@ import { motion, useReducedMotion } from 'motion/react';
 import { Badge } from '@workspace/ui/components/badge';
 import { cn } from '@workspace/ui/lib/utils';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
+import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
-import { BlurFade } from '~/components/fragments/blur-fade';
 import { Spotlight } from '~/components/fragments/spotlight';
-import { BorderBeam } from '~/components/fragments/border-beam';
 
 // Magic animation: Team size counter
 function TeamSizeMagic() {
@@ -28,14 +28,18 @@ function TeamSizeMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-          opacity: [1, 0.7, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.3, 1],
+                opacity: [1, 0.7, 1]
+              }
+        }
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <span>50+ team members</span>
@@ -49,7 +53,8 @@ const TEAM_MEMBERS = [
     name: 'Vitaly Davydov',
     role: 'CEO & Co-founder',
     image: '/images/testimonials/cem.webp', // Placeholder
-    quote: 'We built Adapty to solve the problem we faced ourselves - making subscription monetization simple.',
+    quote:
+      'We built Adapty to solve the problem we faced ourselves - making subscription monetization simple.',
     linkedin: 'https://linkedin.com',
     twitter: 'https://twitter.com',
     highlights: ['Ex-Yandex', 'Forbes 30 Under 30']
@@ -58,7 +63,8 @@ const TEAM_MEMBERS = [
     name: 'Kirill Potekhin',
     role: 'CTO & Co-founder',
     image: '/images/testimonials/roi.webp', // Placeholder
-    quote: 'Our mission is to give every app developer the tools that only the top 1% had access to.',
+    quote:
+      'Our mission is to give every app developer the tools that only the top 1% had access to.',
     linkedin: 'https://linkedin.com',
     twitter: 'https://twitter.com',
     highlights: ['Ex-Spotify', '15+ years in mobile']
@@ -67,14 +73,21 @@ const TEAM_MEMBERS = [
     name: 'Anna Petrova',
     role: 'VP of Engineering',
     image: '/images/testimonials/chris.webp', // Placeholder
-    quote: 'We process billions of events daily with 99.99% uptime because reliability is non-negotiable.',
+    quote:
+      'We process billions of events daily with 99.99% uptime because reliability is non-negotiable.',
     linkedin: 'https://linkedin.com',
     twitter: 'https://twitter.com',
     highlights: ['Ex-Google', 'Systems architect']
   }
 ];
 
-function TeamMemberCard({ member, index }: { member: typeof TEAM_MEMBERS[0]; index: number }) {
+function TeamMemberCard({
+  member,
+  index
+}: {
+  member: (typeof TEAM_MEMBERS)[0];
+  index: number;
+}) {
   const [isHovered, setIsHovered] = React.useState(false);
   const shouldReduceMotion = useReducedMotion();
 
@@ -100,7 +113,9 @@ function TeamMemberCard({ member, index }: { member: typeof TEAM_MEMBERS[0]; ind
         <div className="relative h-64 overflow-hidden">
           <motion.div
             className="absolute inset-0"
-            animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.03 : 1 }}
+            animate={
+              shouldReduceMotion ? undefined : { scale: isHovered ? 1.03 : 1 }
+            }
             transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
           >
             <Image
@@ -116,7 +131,11 @@ function TeamMemberCard({ member, index }: { member: typeof TEAM_MEMBERS[0]; ind
           {/* Social links - appear on hover */}
           <motion.div
             className="absolute top-4 right-4 flex gap-2"
-            animate={shouldReduceMotion ? { opacity: isHovered ? 1 : 0 } : { opacity: isHovered ? 1 : 0, y: isHovered ? 0 : -6 }}
+            animate={
+              shouldReduceMotion
+                ? { opacity: isHovered ? 1 : 0 }
+                : { opacity: isHovered ? 1 : 0, y: isHovered ? 0 : -6 }
+            }
             transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
           >
             <Link
@@ -172,10 +191,16 @@ export function StoryTeam(): React.JSX.Element {
       <SectionBackground height={800} />
       <div className="container py-16 lg:py-24 relative z-10">
         {/* Section Header */}
-        <BlurFade delay={shouldReduceMotion ? 0 : 0.05} className="mb-12">
+        <BlurFade
+          delay={shouldReduceMotion ? 0 : 0.05}
+          className="mb-12"
+        >
           <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
             <div>
-              <Badge variant="outline" className="mb-4 rounded-full">
+              <Badge
+                variant="outline"
+                className="mb-4 rounded-full"
+              >
                 Our Team
               </Badge>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">
@@ -203,16 +228,23 @@ export function StoryTeam(): React.JSX.Element {
         {/* Team Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {TEAM_MEMBERS.map((member, index) => (
-            <TeamMemberCard key={member.name} member={member} index={index} />
+            <TeamMemberCard
+              key={member.name}
+              member={member}
+              index={index}
+            />
           ))}
         </div>
 
         {/* Bottom text */}
-        <BlurFade delay={shouldReduceMotion ? 0 : 0.2} className="mt-12 text-center">
+        <BlurFade
+          delay={shouldReduceMotion ? 0 : 0.2}
+          className="mt-12 text-center"
+        >
           <p className="text-muted-foreground max-w-2xl mx-auto">
             We&apos;re a team of 50+ engineers, designers, and app developers
-            spread across 12 countries, united by our passion for building
-            great developer tools.
+            spread across 12 countries, united by our passion for building great
+            developer tools.
           </p>
         </BlurFade>
       </div>

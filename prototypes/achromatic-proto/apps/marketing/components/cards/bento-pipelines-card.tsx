@@ -88,9 +88,11 @@ export function BentoPipelinesCard({
               <div
                 key={stage.id}
                 className={cn(
-                  "transition-opacity duration-300",
-                  !shouldReduceMotion && activeStage !== index ? "opacity-40 group-hover:opacity-40" : "opacity-100",
-                  "hover:!opacity-100"
+                  'transition-opacity duration-300',
+                  !shouldReduceMotion && activeStage !== index
+                    ? 'opacity-40 group-hover:opacity-40'
+                    : 'opacity-100',
+                  'hover:!opacity-100'
                 )}
               >
                 <motion.div

@@ -2,13 +2,13 @@
 
 import * as React from 'react';
 
-import { useHeroVariant, useFeaturesVariant } from '~/lib/debug-context';
-import { AppleFiscalCalendarHero } from '~/components/sections/apple-fiscal-calendar-hero';
 import { AppleFiscalCalendarFeatures } from '~/components/sections/apple-fiscal-calendar-features';
+import { AppleFiscalCalendarHero } from '~/components/sections/apple-fiscal-calendar-hero';
 import {
-  LogosSwitcher,
   CTASwitcher,
+  LogosSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant, useHeroVariant } from '~/lib/debug-context';
 
 // Apple Fiscal Calendar page: Payment dates and calendar
 export default function AppleFiscalCalendarPage(): React.JSX.Element {

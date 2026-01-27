@@ -3,7 +3,12 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { ArrowRightIcon, SparklesIcon } from 'lucide-react';
-import { motion, useReducedMotion, useMotionValue, useSpring } from 'motion/react';
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring
+} from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
@@ -20,7 +25,7 @@ function MagneticButton({
   href,
   variant = 'default',
   children,
-  className,
+  className
 }: {
   href: string;
   variant?: 'default' | 'outline';
@@ -71,7 +76,7 @@ function MagneticButton({
           className="absolute inset-0 -z-10 rounded-xl bg-primary/20 blur-xl"
           animate={{
             opacity: isHovered ? 0.6 : 0,
-            scale: isHovered ? 1.1 : 1,
+            scale: isHovered ? 1.1 : 1
           }}
           transition={{ duration: 0.2, ease: [0.165, 0.84, 0.44, 1] }}
         />
@@ -83,12 +88,12 @@ function MagneticButton({
           className="absolute inset-0 rounded-xl border-2 border-primary/50"
           animate={{
             scale: [1, 1.04, 1],
-            opacity: [0.6, 0, 0.6],
+            opacity: [0.6, 0, 0.6]
           }}
           transition={{
             duration: 2.5,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'easeInOut'
           }}
         />
       )}
@@ -124,7 +129,7 @@ function ActiveUsersMagic() {
   React.useEffect(() => {
     if (shouldReduceMotion) return;
     const interval = setInterval(() => {
-      setCount(prev => prev + Math.floor(Math.random() * 3) + 1);
+      setCount((prev) => prev + Math.floor(Math.random() * 3) + 1);
     }, 4000);
     return () => clearInterval(interval);
   }, [shouldReduceMotion]);
@@ -138,14 +143,18 @@ function ActiveUsersMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-          opacity: [1, 0.7, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.3, 1],
+                opacity: [1, 0.7, 1]
+              }
+        }
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <motion.span
@@ -178,7 +187,10 @@ export function CTABeam(): React.JSX.Element {
       <SectionBackground height={600} />
 
       <div className="container py-20 lg:py-32 relative z-10">
-        <Spotlight className="from-primary/20 via-primary/5 to-transparent" size={400} />
+        <Spotlight
+          className="from-primary/20 via-primary/5 to-transparent"
+          size={400}
+        />
         <div className="mx-auto max-w-3xl text-center relative">
           {/* Decorative container with BorderBeam */}
           <div className="absolute -inset-8 rounded-3xl border border-border/30 bg-background/30 backdrop-blur-sm overflow-hidden -z-10">
@@ -206,8 +218,7 @@ export function CTABeam(): React.JSX.Element {
           {/* Headline */}
           <BlurFade delay={0.1}>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-              Ready to{' '}
-              <span className="text-primary">transform</span>
+              Ready to <span className="text-primary">transform</span>
               <br />
               your subscription business?
             </h2>
@@ -216,18 +227,25 @@ export function CTABeam(): React.JSX.Element {
           {/* Description */}
           <BlurFade delay={0.2}>
             <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto leading-relaxed">
-              Join thousands of apps that have doubled their revenue with Adapty&apos;s
-              powerful paywall optimization and analytics platform.
+              Join thousands of apps that have doubled their revenue with
+              Adapty&apos;s powerful paywall optimization and analytics
+              platform.
             </p>
           </BlurFade>
 
           {/* CTA Buttons - magnetic effect is interaction-driven */}
           <BlurFade delay={0.3}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <MagneticButton href="https://app.adapty.io/registration" variant="default">
+              <MagneticButton
+                href="https://app.adapty.io/registration"
+                variant="default"
+              >
                 Start free trial
               </MagneticButton>
-              <MagneticButton href="/schedule-demo" variant="outline">
+              <MagneticButton
+                href="/schedule-demo"
+                variant="outline"
+              >
                 Book a demo
               </MagneticButton>
             </div>

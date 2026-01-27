@@ -1,6 +1,6 @@
 'use server';
-import { updateTag } from 'next/cache';
 
+import { updateTag } from 'next/cache';
 
 import { createContactAndCaptureEvent } from '~/actions/contacts/_contact-event-capture';
 import { authOrganizationActionClient } from '~/actions/safe-action';

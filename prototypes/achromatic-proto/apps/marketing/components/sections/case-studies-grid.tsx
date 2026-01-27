@@ -7,11 +7,11 @@ import { motion, useReducedMotion } from 'motion/react';
 
 import { Card, CardContent } from '@workspace/ui/components/card';
 
+import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { SectionBackground } from '~/components/fragments/section-background';
 import { SiteHeading } from '~/components/fragments/site-heading';
-import { BlurFade } from '~/components/fragments/blur-fade';
 import { Spotlight } from '~/components/fragments/spotlight';
 
 // EXACT content from adapty.io/case-studies (scraped 2026-01-21)
@@ -20,7 +20,8 @@ import { Spotlight } from '~/components/fragments/spotlight';
 const FEATURED_TESTIMONIALS = [
   {
     company: 'Impala Studios',
-    quote: "We've been using Adapty's analytics for a long time, but the predictive analytics feature turned out to be our crystal ball for future growth.",
+    quote:
+      "We've been using Adapty's analytics for a long time, but the predictive analytics feature turned out to be our crystal ball for future growth.",
     name: 'Sergey Lagutyonok',
     title: 'Product manager at Impala Studios'
   },
@@ -34,13 +35,15 @@ const FEATURED_TESTIMONIALS = [
   {
     company: 'OctaZone',
     appType: 'Fitness app',
-    quote: "We integrated Adapty within a couple of days and immediately started using it. Now the A/B testing cycle, from the idea to launch, takes much less time and doesn't require any developers involvement.",
+    quote:
+      "We integrated Adapty within a couple of days and immediately started using it. Now the A/B testing cycle, from the idea to launch, takes much less time and doesn't require any developers involvement.",
     name: 'Arsen Ibragimov',
     title: 'Founder & CEO at OctaZone'
   },
   {
     company: 'SocialKit',
-    quote: "With Adapty's A/B testing, we managed to double our monthly revenue. I wasn't sure if one instrument could make such an impact, but I witnessed it myself.",
+    quote:
+      "With Adapty's A/B testing, we managed to double our monthly revenue. I wasn't sure if one instrument could make such an impact, but I witnessed it myself.",
     name: 'Roi Mulia',
     title: 'Founder & CEO at SocialKit'
   }
@@ -197,7 +200,7 @@ function SuccessStoriesMagic() {
       return;
     }
     const interval = setInterval(() => {
-      setCount(prev => {
+      setCount((prev) => {
         if (prev >= totalStories) return totalStories;
         return prev + 1;
       });
@@ -214,13 +217,17 @@ function SuccessStoriesMagic() {
     >
       <motion.div
         className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.2, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.2, 1]
+              }
+        }
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <motion.span
@@ -247,13 +254,17 @@ function G2RatingBadgeMagic() {
       transition={{ duration: 0.3, delay: 0.15 }}
     >
       <motion.span
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.15, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.15, 1]
+              }
+        }
         transition={{
           duration: 0.6,
           repeat: Infinity,
-          repeatDelay: 2.5,
+          repeatDelay: 2.5
         }}
       >
         500+
@@ -264,7 +275,13 @@ function G2RatingBadgeMagic() {
 }
 
 // Featured testimonial card with hover animation
-function TestimonialCard({ testimonial, index }: { testimonial: typeof FEATURED_TESTIMONIALS[0]; index: number }) {
+function TestimonialCard({
+  testimonial,
+  index
+}: {
+  testimonial: (typeof FEATURED_TESTIMONIALS)[0];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
 
@@ -275,9 +292,7 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof FEATURED_
       whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.01 }}
       transition={{ type: 'spring', duration: 0.25, bounce: 0.1 }}
     >
-      <Card
-        className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-150 ease-out motion-reduce:transition-none relative overflow-hidden"
-      >
+      <Card className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-150 ease-out motion-reduce:transition-none relative overflow-hidden">
         {isHovered && (
           <BorderBeam
             size={150}
@@ -287,17 +302,24 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof FEATURED_
             colorTo="hsl(var(--primary)/0)"
           />
         )}
-        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={200} />
+        <Spotlight
+          className="from-primary/15 via-primary/5 to-transparent"
+          size={200}
+        />
         <CardContent className="p-6 relative">
           <motion.p
             className="font-semibold text-primary mb-2"
-            animate={shouldReduceMotion ? undefined : { scale: isHovered ? 1.02 : 1 }}
+            animate={
+              shouldReduceMotion ? undefined : { scale: isHovered ? 1.02 : 1 }
+            }
             transition={{ duration: 0.15 }}
           >
             {testimonial.company}
           </motion.p>
           {testimonial.appType && (
-            <p className="text-xs text-muted-foreground mb-3">{testimonial.appType}</p>
+            <p className="text-xs text-muted-foreground mb-3">
+              {testimonial.appType}
+            </p>
           )}
           <p className="text-foreground italic mb-4">"{testimonial.quote}"</p>
           <p className="font-semibold text-sm">{testimonial.name}</p>
@@ -309,7 +331,13 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof FEATURED_
 }
 
 // Case study card with enhanced hover animation
-function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index: number }) {
+function CaseStudyCard({
+  study,
+  index
+}: {
+  study: (typeof CASE_STUDIES)[0];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
 
@@ -321,8 +349,16 @@ function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index:
       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
       transition={{ type: 'spring', duration: 0.25, bounce: 0.1 }}
     >
-      <Link href={`https://adapty.io${study.link}`} target="_blank" rel="noopener noreferrer" className="block h-full">
-        <Card interactive className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 group cursor-pointer transition-duration-150 relative overflow-hidden">
+      <Link
+        href={`https://adapty.io${study.link}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block h-full"
+      >
+        <Card
+          interactive
+          className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 group cursor-pointer transition-duration-150 relative overflow-hidden"
+        >
           {isHovered && (
             <BorderBeam
               size={120}
@@ -332,27 +368,40 @@ function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index:
               colorTo="hsl(var(--primary)/0)"
             />
           )}
-          <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={180} />
+          <Spotlight
+            className="from-primary/15 via-primary/5 to-transparent"
+            size={180}
+          />
           <CardContent className="p-6 relative">
             <motion.div
-              animate={shouldReduceMotion ? undefined : {
-                scale: isHovered ? 1.1 : 1,
-                rotate: isHovered ? 5 : 0,
-              }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      scale: isHovered ? 1.1 : 1,
+                      rotate: isHovered ? 5 : 0
+                    }
+              }
               transition={{ type: 'spring', duration: 0.25, bounce: 0.2 }}
               className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4"
             >
               <TrendingUpIcon className="size-6" />
             </motion.div>
             <h3 className="font-semibold text-lg mb-1">{study.name}</h3>
-            <p className="text-xs text-muted-foreground mb-3">{study.category}</p>
-            <p className="text-lg font-bold text-primary mb-2">{study.result}</p>
+            <p className="text-xs text-muted-foreground mb-3">
+              {study.category}
+            </p>
+            <p className="text-lg font-bold text-primary mb-2">
+              {study.result}
+            </p>
             <p className="text-sm text-muted-foreground leading-relaxed mb-3">
               {study.description}
             </p>
             <motion.span
               className="text-sm text-primary inline-flex items-center gap-1"
-              animate={shouldReduceMotion ? undefined : { x: isHovered ? 4 : 0 }}
+              animate={
+                shouldReduceMotion ? undefined : { x: isHovered ? 4 : 0 }
+              }
               transition={{ duration: 0.15 }}
             >
               Read more
@@ -388,8 +437,14 @@ export function CaseStudiesGrid(): React.JSX.Element {
         {/* Featured testimonials */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
           {FEATURED_TESTIMONIALS.map((testimonial, index) => (
-            <BlurFade key={index} delay={0.05 + index * 0.05}>
-              <TestimonialCard testimonial={testimonial} index={index} />
+            <BlurFade
+              key={index}
+              delay={0.05 + index * 0.05}
+            >
+              <TestimonialCard
+                testimonial={testimonial}
+                index={index}
+              />
             </BlurFade>
           ))}
         </div>
@@ -407,8 +462,14 @@ export function CaseStudiesGrid(): React.JSX.Element {
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {CASE_STUDIES.map((study, index) => (
-            <BlurFade key={index} delay={0.15 + index * 0.02}>
-              <CaseStudyCard study={study} index={index} />
+            <BlurFade
+              key={index}
+              delay={0.15 + index * 0.02}
+            >
+              <CaseStudyCard
+                study={study}
+                index={index}
+              />
             </BlurFade>
           ))}
         </div>
@@ -416,15 +477,16 @@ export function CaseStudiesGrid(): React.JSX.Element {
         {/* G2 Awards section */}
         <BlurFade delay={0.5}>
           <div className="mt-20 text-center">
-            <SiteHeading
-              title="Trusted for usability and customer service"
-            />
+            <SiteHeading title="Trusted for usability and customer service" />
             <div className="mt-4 flex justify-center">
               <G2RatingBadgeMagic />
             </div>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               {G2_AWARDS.map((award, index) => (
-                <G2AwardBadge key={index} award={award} />
+                <G2AwardBadge
+                  key={index}
+                  award={award}
+                />
               ))}
             </div>
           </div>

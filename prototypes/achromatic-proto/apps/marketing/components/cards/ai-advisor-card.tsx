@@ -86,16 +86,16 @@ export function AiAdvisorCard({
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.3, ease: "easeOut" }
+      transition: { duration: 0.3, ease: 'easeOut' }
     }
   } as const;
 
   return (
     <MotionCard
       className={cn('pb-0', className)}
-      initial={shouldReduceMotion ? { opacity: 1 } : "hidden"}
+      initial={shouldReduceMotion ? { opacity: 1 } : 'hidden'}
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, margin: '-50px' }}
       variants={containerVariants}
       {...props}
     >
@@ -106,20 +106,65 @@ export function AiAdvisorCard({
         </div>
         <div className="space-y-2">
           {[
-            { icon: GlobeIcon, label: 'Domain', content: <Link href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-500">https://vercel.com</Link> },
-            { icon: User2Icon, label: 'CEO', content: <span className="text-sm">Guillermo Rauch</span> },
-            { icon: CalendarIcon, label: 'Founded', content: <span className="text-sm">2015</span> },
-            { icon: LineChartIcon, label: 'Est. ARR', content: <span className="text-sm">$100-120M</span> },
-            { icon: MapPinIcon, label: 'Location', content: <span className="text-sm">California, USA</span> },
             {
-              icon: TagsIcon, label: 'Tags', content: (
+              icon: GlobeIcon,
+              label: 'Domain',
+              content: (
+                <Link
+                  href="https://vercel.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-500"
+                >
+                  https://vercel.com
+                </Link>
+              )
+            },
+            {
+              icon: User2Icon,
+              label: 'CEO',
+              content: <span className="text-sm">Guillermo Rauch</span>
+            },
+            {
+              icon: CalendarIcon,
+              label: 'Founded',
+              content: <span className="text-sm">2015</span>
+            },
+            {
+              icon: LineChartIcon,
+              label: 'Est. ARR',
+              content: <span className="text-sm">$100-120M</span>
+            },
+            {
+              icon: MapPinIcon,
+              label: 'Location',
+              content: <span className="text-sm">California, USA</span>
+            },
+            {
+              icon: TagsIcon,
+              label: 'Tags',
+              content: (
                 <div className="flex gap-1">
-                  <Badge variant="secondary" className="whitespace-nowrap pl-2 text-xs">SaaS</Badge>
-                  <Badge variant="secondary" className="whitespace-nowrap pl-2 text-xs">B2B</Badge>
+                  <Badge
+                    variant="secondary"
+                    className="whitespace-nowrap pl-2 text-xs"
+                  >
+                    SaaS
+                  </Badge>
+                  <Badge
+                    variant="secondary"
+                    className="whitespace-nowrap pl-2 text-xs"
+                  >
+                    B2B
+                  </Badge>
                 </div>
               )
             },
-            { icon: DollarSignIcon, label: 'Funding', content: <span className="text-sm">$250M Series E</span> },
+            {
+              icon: DollarSignIcon,
+              label: 'Funding',
+              content: <span className="text-sm">$250M Series E</span>
+            }
           ].map((item, index) => (
             <motion.div
               key={item.label}
@@ -127,7 +172,9 @@ export function AiAdvisorCard({
               className="flex items-center gap-2"
             >
               <item.icon className="size-4 text-muted-foreground" />
-              <span className="w-20 text-sm text-muted-foreground">{item.label}</span>
+              <span className="w-20 text-sm text-muted-foreground">
+                {item.label}
+              </span>
               {item.content}
             </motion.div>
           ))}
@@ -135,7 +182,11 @@ export function AiAdvisorCard({
       </CardContent>
       <CardFooter className="flex-col items-start space-y-4 rounded-b-xl bg-neutral-50 py-6 dark:bg-neutral-900">
         <motion.div
-          variants={shouldReduceMotion ? undefined : { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+          variants={
+            shouldReduceMotion
+              ? undefined
+              : { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }
+          }
           transition={{ duration: 0.4 }}
         >
           <div className="flex items-center gap-2 mb-1">

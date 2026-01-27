@@ -3,19 +3,19 @@
 import * as React from 'react';
 import Link from 'next/link';
 import {
-  PaletteIcon,
-  SplitIcon,
-  GlobeIcon,
-  BarChart3Icon,
-  UsersIcon,
-  TrendingUpIcon,
   ArrowRightIcon,
-  RocketIcon,
-  DollarSignIcon,
-  TargetIcon,
-  ZapIcon,
-  CheckCircle2Icon,
   ArrowUpRightIcon,
+  BarChart3Icon,
+  CheckCircle2Icon,
+  DollarSignIcon,
+  GlobeIcon,
+  PaletteIcon,
+  RocketIcon,
+  SplitIcon,
+  TargetIcon,
+  TrendingUpIcon,
+  UsersIcon,
+  ZapIcon
 } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 
@@ -54,7 +54,9 @@ function ConversionMagic() {
   return (
     <div className="mt-6 h-[90px] rounded-xl bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50 p-4">
       <div className="flex justify-between items-center mb-2">
-        <span className="text-[9px] font-medium text-muted-foreground">Conversion Rate</span>
+        <span className="text-[9px] font-medium text-muted-foreground">
+          Conversion Rate
+        </span>
         <div className="flex items-center gap-1">
           <motion.span
             key={percentage}
@@ -65,9 +67,13 @@ function ConversionMagic() {
             {percentage}%
           </motion.span>
           <motion.div
-            animate={shouldReduceMotion ? {} : {
-              y: [0, -2, 0],
-            }}
+            animate={
+              shouldReduceMotion
+                ? {}
+                : {
+                    y: [0, -2, 0]
+                  }
+            }
             transition={{ duration: 0.5, repeat: Infinity }}
           >
             <ArrowUpRightIcon className="size-4 text-emerald-500" />
@@ -88,7 +94,9 @@ function ConversionMagic() {
       </div>
       <div className="flex justify-between mt-2">
         <span className="text-[8px] text-muted-foreground">Before: 30%</span>
-        <span className="text-[8px] text-emerald-500 font-medium">+40% improvement</span>
+        <span className="text-[8px] text-emerald-500 font-medium">
+          +40% improvement
+        </span>
       </div>
     </div>
   );
@@ -112,8 +120,12 @@ function RevenueChartMagic() {
     <div className="mt-6 h-[90px] rounded-xl bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50 p-4">
       <div className="flex items-center gap-2 mb-2">
         <TrendingUpIcon className="size-3 text-emerald-500" />
-        <span className="text-[8px] font-medium text-muted-foreground">MRR Growth</span>
-        <span className="text-[8px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-500 font-medium ml-auto">+127%</span>
+        <span className="text-[8px] font-medium text-muted-foreground">
+          MRR Growth
+        </span>
+        <span className="text-[8px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-500 font-medium ml-auto">
+          +127%
+        </span>
       </div>
       <div className="flex items-end gap-1 h-[48px]">
         {bars.map((h, i) => (
@@ -122,17 +134,19 @@ function RevenueChartMagic() {
             initial={{ height: 0 }}
             animate={{
               height: `${h}%`,
-              opacity: i <= activeBar ? 1 : 0.3,
+              opacity: i <= activeBar ? 1 : 0.3
             }}
             transition={{
               height: { duration: 0.5, delay: i * 0.05 },
-              opacity: { duration: 0.2 },
+              opacity: { duration: 0.2 }
             }}
             className={cn(
-              "flex-1 rounded-t-sm relative overflow-hidden transition-colors",
+              'flex-1 rounded-t-sm relative overflow-hidden transition-colors',
               i <= activeBar
-                ? i >= bars.length - 3 ? "bg-emerald-500" : "bg-primary"
-                : "bg-muted-foreground/20"
+                ? i >= bars.length - 3
+                  ? 'bg-emerald-500'
+                  : 'bg-primary'
+                : 'bg-muted-foreground/20'
             )}
           >
             {i === activeBar && (
@@ -171,7 +185,7 @@ function ABTestMagic() {
         <motion.div
           animate={{
             scale: showWinner ? 0.95 : 1,
-            opacity: showWinner ? 0.5 : 1,
+            opacity: showWinner ? 0.5 : 1
           }}
           transition={{ duration: 0.3 }}
           className="flex-1 h-full rounded-lg bg-muted flex flex-col items-center justify-center relative"
@@ -180,11 +194,17 @@ function ABTestMagic() {
           <span className="text-[8px] text-muted-foreground">2.4%</span>
         </motion.div>
         <div className="flex flex-col items-center">
-          <span className="text-[8px] font-medium text-muted-foreground">VS</span>
+          <span className="text-[8px] font-medium text-muted-foreground">
+            VS
+          </span>
           <motion.div
-            animate={shouldReduceMotion ? {} : {
-              scale: [1, 1.2, 1],
-            }}
+            animate={
+              shouldReduceMotion
+                ? {}
+                : {
+                    scale: [1, 1.2, 1]
+                  }
+            }
             transition={{ duration: 1, repeat: Infinity }}
             className="w-1 h-1 rounded-full bg-primary mt-1"
           />
@@ -192,7 +212,9 @@ function ABTestMagic() {
         <motion.div
           animate={{
             scale: showWinner ? 1.05 : 1,
-            borderColor: showWinner ? 'rgb(16 185 129 / 0.5)' : 'hsl(var(--border))',
+            borderColor: showWinner
+              ? 'rgb(16 185 129 / 0.5)'
+              : 'hsl(var(--border))'
           }}
           transition={{ duration: 0.3 }}
           className="flex-1 h-full rounded-lg bg-emerald-500/10 border-2 border-transparent flex flex-col items-center justify-center relative"
@@ -233,7 +255,9 @@ function LTVChartMagic() {
   return (
     <div className="mt-6 h-[90px] rounded-xl bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50 p-4 relative overflow-hidden">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-[8px] font-medium text-muted-foreground">Predicted LTV</span>
+        <span className="text-[8px] font-medium text-muted-foreground">
+          Predicted LTV
+        </span>
         <motion.span
           animate={shouldReduceMotion ? {} : { opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -242,7 +266,11 @@ function LTVChartMagic() {
           $142.50
         </motion.span>
       </div>
-      <svg className="w-full h-[48px]" viewBox="0 0 100 40" preserveAspectRatio="none">
+      <svg
+        className="w-full h-[48px]"
+        viewBox="0 0 100 40"
+        preserveAspectRatio="none"
+      >
         {/* Historical line */}
         <motion.path
           d="M 0 35 Q 15 30 30 25 T 60 15"
@@ -265,7 +293,7 @@ function LTVChartMagic() {
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{
             pathLength: pathProgress > 0.6 ? (pathProgress - 0.6) / 0.4 : 0,
-            opacity: pathProgress > 0.6 ? 1 : 0,
+            opacity: pathProgress > 0.6 ? 1 : 0
           }}
           transition={{ duration: 0 }}
         />
@@ -282,7 +310,13 @@ function LTVChartMagic() {
       <div className="absolute bottom-2 right-2 flex items-center gap-1">
         <div className="w-3 h-0.5 bg-primary rounded" />
         <span className="text-[7px] text-muted-foreground">Actual</span>
-        <div className="w-3 h-0.5 bg-primary rounded ml-2" style={{ backgroundImage: 'repeating-linear-gradient(90deg, hsl(var(--primary)) 0 2px, transparent 2px 4px)' }} />
+        <div
+          className="w-3 h-0.5 bg-primary rounded ml-2"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(90deg, hsl(var(--primary)) 0 2px, transparent 2px 4px)'
+          }}
+        />
         <span className="text-[7px] text-muted-foreground">Predicted</span>
       </div>
     </div>
@@ -305,34 +339,38 @@ function CohortMagic() {
   const retention = [
     [100, 85, 72, 68, 65],
     [100, 82, 70, 64, 60],
-    [100, 88, 75, 70, 67],
+    [100, 88, 75, 70, 67]
   ];
 
   return (
     <div className="mt-6 h-[90px] rounded-xl bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50 p-4">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-[8px] font-medium text-muted-foreground">Cohort Retention</span>
+        <span className="text-[8px] font-medium text-muted-foreground">
+          Cohort Retention
+        </span>
         <span className="text-[8px] text-primary">Week 0-4</span>
       </div>
       <div className="grid grid-cols-5 gap-1 h-[48px]">
-        {retention.map((row, rowIndex) => (
+        {retention.map((row, rowIndex) =>
           row.map((value, colIndex) => (
             <motion.div
               key={`${rowIndex}-${colIndex}`}
               animate={{
                 scale: rowIndex === activeRow ? 1.05 : 1,
-                opacity: value / 100,
+                opacity: value / 100
               }}
               transition={{ duration: 0.3 }}
               className={cn(
-                "rounded-sm flex items-center justify-center text-[7px] font-mono",
-                rowIndex === activeRow ? "bg-primary text-primary-foreground" : "bg-primary/30 text-primary"
+                'rounded-sm flex items-center justify-center text-[7px] font-mono',
+                rowIndex === activeRow
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-primary/30 text-primary'
               )}
             >
               {value}%
             </motion.div>
           ))
-        ))}
+        )}
       </div>
     </div>
   );
@@ -363,10 +401,16 @@ function LocalizationMagic() {
         exit={{ y: -10, opacity: 0 }}
         className="flex items-baseline gap-1"
       >
-        <span className="text-2xl font-bold text-foreground">{currencies[activeIndex]}</span>
-        <span className="text-[10px] text-muted-foreground">{labels[activeIndex]}</span>
+        <span className="text-2xl font-bold text-foreground">
+          {currencies[activeIndex]}
+        </span>
+        <span className="text-[10px] text-muted-foreground">
+          {labels[activeIndex]}
+        </span>
       </motion.div>
-      <span className="text-[8px] text-muted-foreground mt-1">Auto-localized pricing</span>
+      <span className="text-[8px] text-muted-foreground mt-1">
+        Auto-localized pricing
+      </span>
     </div>
   );
 }
@@ -379,73 +423,85 @@ const PAYWALL_FEATURES = [
   {
     id: 'builder',
     title: 'No-code paywall builder',
-    description: 'Create beautiful paywalls without writing a single line of code. Use our visual editor to design, customize, and deploy paywalls that convert.',
+    description:
+      'Create beautiful paywalls without writing a single line of code. Use our visual editor to design, customize, and deploy paywalls that convert.',
     icon: PaletteIcon,
     link: '/paywall-builder',
-    magic: ConversionMagic,
+    magic: ConversionMagic
   },
   {
     id: 'testing',
     title: 'Paywall A/B testing',
-    description: 'Test different paywall designs, pricing, and messaging to find what works best for your audience. Make data-driven decisions to maximize revenue.',
+    description:
+      'Test different paywall designs, pricing, and messaging to find what works best for your audience. Make data-driven decisions to maximize revenue.',
     icon: SplitIcon,
     link: '/paywall-ab-testing',
-    magic: ABTestMagic,
+    magic: ABTestMagic
   },
   {
     id: 'localization',
     title: 'Localization & targeting',
-    description: 'Show personalized paywalls based on user location, behavior, and attributes. Speak to your users in their language and currency.',
+    description:
+      'Show personalized paywalls based on user location, behavior, and attributes. Speak to your users in their language and currency.',
     icon: GlobeIcon,
     link: '/paywall-localization',
-    magic: LocalizationMagic,
-  },
+    magic: LocalizationMagic
+  }
 ];
 
 const ANALYTICS_FEATURES = [
   {
     id: 'revenue',
     title: 'Revenue metrics',
-    description: 'Track MRR, ARR, ARPU, and other key metrics in real-time. Understand your revenue streams and identify growth opportunities.',
+    description:
+      'Track MRR, ARR, ARPU, and other key metrics in real-time. Understand your revenue streams and identify growth opportunities.',
     icon: BarChart3Icon,
     link: '/revenue-analytics',
-    magic: RevenueChartMagic,
+    magic: RevenueChartMagic
   },
   {
     id: 'cohort',
     title: 'Cohort analysis',
-    description: 'See how your subscribers renew, churn, and bring revenue each subscription period. Understand user behavior over time.',
+    description:
+      'See how your subscribers renew, churn, and bring revenue each subscription period. Understand user behavior over time.',
     icon: UsersIcon,
     link: '/ltv-analytics',
-    magic: CohortMagic,
+    magic: CohortMagic
   },
   {
     id: 'ltv',
     title: 'LTV prediction',
-    description: 'Use AI-powered predictions to forecast future revenue and make smarter marketing decisions. Know your ROI before you spend.',
+    description:
+      'Use AI-powered predictions to forecast future revenue and make smarter marketing decisions. Know your ROI before you spend.',
     icon: TrendingUpIcon,
     link: '/predictive-analytics',
-    magic: LTVChartMagic,
-  },
+    magic: LTVChartMagic
+  }
 ];
 
 const STATS = [
   { value: '2x', label: 'Average revenue increase', icon: DollarSignIcon },
   { value: '40%', label: 'Higher conversion rates', icon: TargetIcon },
   { value: '3mo', label: 'Time to see results', icon: ZapIcon },
-  { value: '0', label: 'Lines of code needed', icon: PaletteIcon },
+  { value: '0', label: 'Lines of code needed', icon: PaletteIcon }
 ];
 
 const RELATED_PAGES = [
   { name: 'Analyze revenue performance', href: '/revenue-analytics' },
-  { name: 'Integrate subscriptions', href: '/sdk' },
+  { name: 'Integrate subscriptions', href: '/sdk' }
 ];
 
 // =============================================================================
 // COMPONENTS
 // =============================================================================
 
-function FeatureCard({ feature, index }: { feature: typeof PAYWALL_FEATURES[0]; index: number }) {
+function FeatureCard({
+  feature,
+  index
+}: {
+  feature: (typeof PAYWALL_FEATURES)[0];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
   const MagicComponent = feature.magic;
@@ -458,11 +514,16 @@ function FeatureCard({ feature, index }: { feature: typeof PAYWALL_FEATURES[0]; 
       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
       transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
     >
-      <Link href={feature.link} className="block h-full">
-        <div className={cn(
-          "relative h-full overflow-hidden rounded-2xl border bg-card transition-all duration-300 cursor-pointer group",
-          isHovered && "border-primary/40  "
-        )}>
+      <Link
+        href={feature.link}
+        className="block h-full"
+      >
+        <div
+          className={cn(
+            'relative h-full overflow-hidden rounded-2xl border bg-card transition-all duration-300 cursor-pointer group',
+            isHovered && 'border-primary/40  '
+          )}
+        >
           <Spotlight
             className="from-primary/25 via-primary/10 to-transparent"
             size={280}
@@ -478,14 +539,20 @@ function FeatureCard({ feature, index }: { feature: typeof PAYWALL_FEATURES[0]; 
           )}
           <div className="p-8 relative z-10">
             <motion.div
-              animate={shouldReduceMotion ? undefined : {
-                scale: isHovered ? 1.15 : 1,
-                rotate: isHovered ? 8 : 0,
-              }}
+              animate={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      scale: isHovered ? 1.15 : 1,
+                      rotate: isHovered ? 8 : 0
+                    }
+              }
               transition={{ type: 'spring', duration: 0.35, bounce: 0.3 }}
               className={cn(
-                "flex size-14 items-center justify-center rounded-2xl transition-colors duration-300",
-                isHovered ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary"
+                'flex size-14 items-center justify-center rounded-2xl transition-colors duration-300',
+                isHovered
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-primary/10 text-primary'
               )}
             >
               <feature.icon className="size-7" />
@@ -493,12 +560,16 @@ function FeatureCard({ feature, index }: { feature: typeof PAYWALL_FEATURES[0]; 
             <h3 className="mt-6 text-xl font-semibold group-hover:text-primary transition-colors duration-200">
               {feature.title}
             </h3>
-            <p className="mt-3 text-muted-foreground leading-relaxed">{feature.description}</p>
+            <p className="mt-3 text-muted-foreground leading-relaxed">
+              {feature.description}
+            </p>
 
             {MagicComponent && <MagicComponent />}
 
             <motion.span
-              animate={shouldReduceMotion ? undefined : { x: isHovered ? 4 : 0 }}
+              animate={
+                shouldReduceMotion ? undefined : { x: isHovered ? 4 : 0 }
+              }
               className="mt-5 text-sm font-medium text-primary inline-flex items-center gap-2"
             >
               Learn more
@@ -511,7 +582,7 @@ function FeatureCard({ feature, index }: { feature: typeof PAYWALL_FEATURES[0]; 
   );
 }
 
-function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
+function StatCard({ stat, index }: { stat: (typeof STATS)[0]; index: number }) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
 
@@ -524,19 +595,27 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
       className="text-center relative"
     >
       <motion.div
-        animate={shouldReduceMotion ? undefined : {
-          scale: isHovered ? 1.2 : 1,
-          rotate: isHovered ? 10 : 0,
-        }}
+        animate={
+          shouldReduceMotion
+            ? undefined
+            : {
+                scale: isHovered ? 1.2 : 1,
+                rotate: isHovered ? 10 : 0
+              }
+        }
         transition={{ type: 'spring', duration: 0.3, bounce: 0.3 }}
         className="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary mx-auto mb-4"
       >
         <stat.icon className="size-6" />
       </motion.div>
       <motion.div
-        animate={shouldReduceMotion ? undefined : {
-          scale: isHovered ? 1.1 : 1,
-        }}
+        animate={
+          shouldReduceMotion
+            ? undefined
+            : {
+                scale: isHovered ? 1.1 : 1
+              }
+        }
         className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-primary"
       >
         {stat.value}
@@ -546,7 +625,7 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
   );
 }
 
-function RelatedPageLink({ page }: { page: typeof RELATED_PAGES[0] }) {
+function RelatedPageLink({ page }: { page: (typeof RELATED_PAGES)[0] }) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
 
@@ -561,8 +640,8 @@ function RelatedPageLink({ page }: { page: typeof RELATED_PAGES[0] }) {
       <Link
         href={page.href}
         className={cn(
-          "flex items-center gap-2 rounded-xl border bg-card px-5 py-3.5 text-sm font-medium transition-all duration-200",
-          isHovered && "border-primary/40 text-primary  "
+          'flex items-center gap-2 rounded-xl border bg-card px-5 py-3.5 text-sm font-medium transition-all duration-200',
+          isHovered && 'border-primary/40 text-primary  '
         )}
       >
         {page.name}
@@ -598,8 +677,14 @@ export function RevenueGrowthFeatures(): React.JSX.Element {
 
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           {PAYWALL_FEATURES.map((feature, index) => (
-            <BlurFade key={feature.id} delay={0.1 + index * 0.05}>
-              <FeatureCard feature={feature} index={index} />
+            <BlurFade
+              key={feature.id}
+              delay={0.1 + index * 0.05}
+            >
+              <FeatureCard
+                feature={feature}
+                index={index}
+              />
             </BlurFade>
           ))}
         </div>
@@ -616,8 +701,14 @@ export function RevenueGrowthFeatures(): React.JSX.Element {
 
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           {ANALYTICS_FEATURES.map((feature, index) => (
-            <BlurFade key={feature.id} delay={0.35 + index * 0.05}>
-              <FeatureCard feature={feature} index={index} />
+            <BlurFade
+              key={feature.id}
+              delay={0.35 + index * 0.05}
+            >
+              <FeatureCard
+                feature={feature}
+                index={index}
+              />
             </BlurFade>
           ))}
         </div>
@@ -648,8 +739,14 @@ export function RevenueGrowthFeatures(): React.JSX.Element {
                 </h2>
                 <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
                   {STATS.map((stat, index) => (
-                    <BlurFade key={stat.label} delay={0.6 + index * 0.05}>
-                      <StatCard stat={stat} index={index} />
+                    <BlurFade
+                      key={stat.label}
+                      delay={0.6 + index * 0.05}
+                    >
+                      <StatCard
+                        stat={stat}
+                        index={index}
+                      />
                     </BlurFade>
                   ))}
                 </div>
@@ -681,9 +778,13 @@ export function RevenueGrowthFeatures(): React.JSX.Element {
               <div className="grid gap-10 md:grid-cols-2 items-center relative z-10">
                 <div>
                   <motion.span
-                    animate={shouldReduceMotion ? {} : {
-                      scale: [1, 1.05, 1],
-                    }}
+                    animate={
+                      shouldReduceMotion
+                        ? {}
+                        : {
+                            scale: [1, 1.05, 1]
+                          }
+                    }
                     transition={{ duration: 2, repeat: Infinity }}
                     className="inline-block text-primary text-sm font-medium uppercase tracking-wider px-3 py-1 rounded-full bg-primary/10"
                   >
@@ -693,12 +794,18 @@ export function RevenueGrowthFeatures(): React.JSX.Element {
                     FunnelFox web funnels
                   </h2>
                   <p className="mt-4 text-muted-foreground leading-relaxed">
-                    Extend your revenue beyond the app stores. Create web-based subscription funnels to capture users before they even download your app.
+                    Extend your revenue beyond the app stores. Create web-based
+                    subscription funnels to capture users before they even
+                    download your app.
                   </p>
                   <div className="mt-8">
                     <motion.div
-                      whileHover={shouldReduceMotion ? undefined : { y: -3, scale: 1.03 }}
-                      whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                      whileHover={
+                        shouldReduceMotion ? undefined : { y: -3, scale: 1.03 }
+                      }
+                      whileTap={
+                        shouldReduceMotion ? undefined : { scale: 0.97 }
+                      }
                       className="inline-block"
                     >
                       <Link
@@ -713,25 +820,43 @@ export function RevenueGrowthFeatures(): React.JSX.Element {
                 </div>
                 <div className="flex justify-center">
                   <motion.div
-                    animate={shouldReduceMotion ? {} : {
-                      y: [0, -12, 0],
+                    animate={
+                      shouldReduceMotion
+                        ? {}
+                        : {
+                            y: [0, -12, 0]
+                          }
+                    }
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: 'easeInOut'
                     }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     className="relative h-56 w-full max-w-sm rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center overflow-hidden"
                   >
                     <motion.div
-                      animate={shouldReduceMotion ? {} : { opacity: [0.15, 0.3, 0.15] }}
+                      animate={
+                        shouldReduceMotion ? {} : { opacity: [0.15, 0.3, 0.15] }
+                      }
                       transition={{ duration: 3, repeat: Infinity }}
                       className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary/30"
                     >
                       WEB
                     </motion.div>
                     <motion.div
-                      animate={shouldReduceMotion ? {} : {
-                        y: [0, -5, 0],
-                        rotate: [0, 5, 0],
+                      animate={
+                        shouldReduceMotion
+                          ? {}
+                          : {
+                              y: [0, -5, 0],
+                              rotate: [0, 5, 0]
+                            }
+                      }
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: 'easeInOut'
                       }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                       className="absolute bottom-4 right-4"
                     >
                       <RocketIcon className="size-10 text-primary/30" />
@@ -743,26 +868,38 @@ export function RevenueGrowthFeatures(): React.JSX.Element {
                           animate={{
                             y: [0, -20, 0],
                             x: [0, 10, 0],
-                            opacity: [0.3, 0.6, 0.3],
+                            opacity: [0.3, 0.6, 0.3]
                           }}
-                          transition={{ duration: 3, repeat: Infinity, delay: 0 }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            delay: 0
+                          }}
                           className="absolute top-6 left-8 w-8 h-8 rounded-lg bg-primary/20"
                         />
                         <motion.div
                           animate={{
                             y: [0, -15, 0],
                             x: [0, -8, 0],
-                            opacity: [0.3, 0.5, 0.3],
+                            opacity: [0.3, 0.5, 0.3]
                           }}
-                          transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
+                          transition={{
+                            duration: 3.5,
+                            repeat: Infinity,
+                            delay: 0.5
+                          }}
                           className="absolute top-12 right-12 w-6 h-6 rounded-full bg-primary/20"
                         />
                         <motion.div
                           animate={{
                             y: [0, -10, 0],
-                            opacity: [0.2, 0.4, 0.2],
+                            opacity: [0.2, 0.4, 0.2]
                           }}
-                          transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
+                          transition={{
+                            duration: 2.5,
+                            repeat: Infinity,
+                            delay: 1
+                          }}
                           className="absolute bottom-12 left-12 w-4 h-4 rounded-sm bg-primary/20"
                         />
                       </>
@@ -780,7 +917,10 @@ export function RevenueGrowthFeatures(): React.JSX.Element {
             <h2 className="text-xl font-semibold text-center">Learn more</h2>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               {RELATED_PAGES.map((page, index) => (
-                <BlurFade key={page.href} delay={0.95 + index * 0.05}>
+                <BlurFade
+                  key={page.href}
+                  delay={0.95 + index * 0.05}
+                >
                   <RelatedPageLink page={page} />
                 </BlurFade>
               ))}

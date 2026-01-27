@@ -54,9 +54,7 @@ export function PricingCard({
     >
       {(product.recommended || product.badgeText) && (
         <div className="absolute -top-2.5 left-0 flex w-full justify-center">
-          <Badge variant="default">
-            {product.badgeText || 'Recommended'}
-          </Badge>
+          <Badge variant="default">{product.badgeText || 'Recommended'}</Badge>
         </div>
       )}
       <div className="flex flex-col gap-y-5">
@@ -147,8 +145,15 @@ function PriceInfo({
   priceUnit
 }: PriceInfoProps) {
   // Use custom priceDisplay if provided, otherwise fall back to calculated price
-  const displayPrice = priceDisplay || (primaryPrice ? formatPrice(primaryPrice, selectedInterval) : 'Custom');
-  const displayUnit = priceUnit !== undefined ? priceUnit : (primaryPrice?.type === PriceType.Recurring ? '/ month' : '');
+  const displayPrice =
+    priceDisplay ||
+    (primaryPrice ? formatPrice(primaryPrice, selectedInterval) : 'Custom');
+  const displayUnit =
+    priceUnit !== undefined
+      ? priceUnit
+      : primaryPrice?.type === PriceType.Recurring
+        ? '/ month'
+        : '';
 
   return (
     <div className="mt-2 flex flex-col">

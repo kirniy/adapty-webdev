@@ -2,18 +2,23 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowRightIcon, WifiOffIcon, CheckCircleIcon, ShieldCheckIcon } from 'lucide-react';
+import {
+  ArrowRightIcon,
+  CheckCircleIcon,
+  ShieldCheckIcon,
+  WifiOffIcon
+} from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 
 import { Button, buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { GridSection } from '~/components/fragments/grid-section';
-import { SiteHeading } from '~/components/fragments/site-heading';
-import { SectionBackground } from '~/components/fragments/section-background';
-import { Spotlight } from '~/components/fragments/spotlight';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
+import { SiteHeading } from '~/components/fragments/site-heading';
+import { Spotlight } from '~/components/fragments/spotlight';
 
 // Fallback visualization showing offline -> cached paywall -> success
 function FallbackMagic() {
@@ -52,7 +57,7 @@ function FallbackMagic() {
       <motion.div
         animate={{
           scale: step === 0 ? 1.1 : 1,
-          opacity: step === 0 ? 1 : 0.5,
+          opacity: step === 0 ? 1 : 0.5
         }}
         transition={{ type: 'spring', duration: 0.3 }}
         className="flex size-12 items-center justify-center rounded-lg bg-amber-500/10"
@@ -78,7 +83,7 @@ function FallbackMagic() {
       <motion.div
         animate={{
           scale: step === 1 || step === 2 ? 1.1 : 1,
-          opacity: step >= 1 ? 1 : 0.5,
+          opacity: step >= 1 ? 1 : 0.5
         }}
         transition={{ type: 'spring', duration: 0.3 }}
         className="flex size-12 items-center justify-center rounded-lg bg-primary/10"
@@ -104,7 +109,7 @@ function FallbackMagic() {
       <motion.div
         animate={{
           scale: step === 3 ? 1.15 : 1,
-          opacity: step >= 2 ? 1 : 0.5,
+          opacity: step >= 2 ? 1 : 0.5
         }}
         transition={{ type: 'spring', duration: 0.3 }}
         className="flex size-12 items-center justify-center rounded-lg bg-emerald-500/10"
@@ -155,14 +160,18 @@ function UptimeMagic() {
       >
         {percentage.toFixed(2)}%
       </motion.div>
-      <div className="text-sm text-muted-foreground mt-1">Uptime guaranteed</div>
+      <div className="text-sm text-muted-foreground mt-1">
+        Uptime guaranteed
+      </div>
     </div>
   );
 }
 
 export function FallbackPaywallsHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
-  const [hoveredButton, setHoveredButton] = React.useState<'demo' | 'start' | null>(null);
+  const [hoveredButton, setHoveredButton] = React.useState<
+    'demo' | 'start' | null
+  >(null);
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -191,7 +200,10 @@ export function FallbackPaywallsHero(): React.JSX.Element {
               whileHover={shouldReduceMotion ? undefined : { y: -4 }}
               className="mt-10 p-6 rounded-2xl border bg-background/50 backdrop-blur-sm max-w-md mx-auto relative overflow-hidden"
             >
-              <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={300} />
+              <Spotlight
+                className="from-primary/15 via-primary/5 to-transparent"
+                size={300}
+              />
               <div className="relative">
                 <div className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">
                   Offline recovery flow
@@ -211,8 +223,12 @@ export function FallbackPaywallsHero(): React.JSX.Element {
             <div className="mt-10 flex justify-center gap-12">
               <UptimeMagic />
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">0</div>
-                <div className="text-sm text-muted-foreground mt-1">Lost conversions</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
+                  0
+                </div>
+                <div className="text-sm text-muted-foreground mt-1">
+                  Lost conversions
+                </div>
               </div>
             </div>
           </BlurFade>
@@ -222,9 +238,13 @@ export function FallbackPaywallsHero(): React.JSX.Element {
               <motion.div
                 onMouseEnter={() => setHoveredButton('demo')}
                 onMouseLeave={() => setHoveredButton(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredButton === 'demo' ? -2 : 0,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: hoveredButton === 'demo' ? -2 : 0
+                      }
+                }
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 className="relative"
               >
@@ -237,7 +257,11 @@ export function FallbackPaywallsHero(): React.JSX.Element {
                 >
                   Book a demo
                   <motion.span
-                    animate={shouldReduceMotion ? undefined : { x: hoveredButton === 'demo' ? 3 : 0 }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : { x: hoveredButton === 'demo' ? 3 : 0 }
+                    }
                     transition={{ duration: 0.15 }}
                   >
                     <ArrowRightIcon className="ml-2 size-4" />
@@ -256,9 +280,13 @@ export function FallbackPaywallsHero(): React.JSX.Element {
               <motion.div
                 onMouseEnter={() => setHoveredButton('start')}
                 onMouseLeave={() => setHoveredButton(null)}
-                animate={shouldReduceMotion ? undefined : {
-                  y: hoveredButton === 'start' ? -2 : 0,
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: hoveredButton === 'start' ? -2 : 0
+                      }
+                }
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               >
                 <Link

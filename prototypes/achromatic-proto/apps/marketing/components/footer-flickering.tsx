@@ -4,8 +4,11 @@ import * as React from 'react';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 
+import {
+  FlickeringGrid,
+  useMediaQuery
+} from '@workspace/ui/components/flickering-footer';
 import { Logo } from '@workspace/ui/components/logo';
-import { FlickeringGrid, useMediaQuery } from '@workspace/ui/components/flickering-footer';
 
 import { FOOTER_LINKS, SOCIAL_LINKS } from '~/components/marketing-links';
 
@@ -13,15 +16,22 @@ export function FlickeringFooter(): React.JSX.Element {
   const tablet = useMediaQuery('(max-width: 1024px)');
 
   return (
-    <footer id="footer" className="w-full pb-0">
+    <footer
+      id="footer"
+      className="w-full pb-0"
+    >
       <div className="flex flex-col md:flex-row md:items-start md:justify-between p-10">
         {/* Left side - Logo, description, compliance badges */}
         <div className="flex flex-col items-start justify-start gap-y-5 max-w-xs mx-0">
-          <Link href="/" className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+          >
             <Logo />
           </Link>
           <p className="tracking-tight text-muted-foreground font-medium">
-            Revenue management for in-app purchases. Save months on integrating subscriptions.
+            Revenue management for in-app purchases. Save months on integrating
+            subscriptions.
           </p>
           {/* Social links */}
           <div className="flex items-center gap-3">
@@ -45,7 +55,10 @@ export function FlickeringFooter(): React.JSX.Element {
         <div className="pt-5 md:pt-0 md:w-2/3">
           <div className="flex flex-col items-start justify-start md:flex-row md:items-start md:justify-between gap-y-5 lg:pl-10">
             {FOOTER_LINKS.map((column) => (
-              <ul key={column.title} className="flex flex-col gap-y-2">
+              <ul
+                key={column.title}
+                className="flex flex-col gap-y-2"
+              >
                 <li className="mb-2 text-sm font-semibold text-foreground">
                   {column.title}
                 </li>

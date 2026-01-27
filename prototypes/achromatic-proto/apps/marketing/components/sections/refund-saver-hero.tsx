@@ -3,19 +3,31 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ShieldCheckIcon, DollarSignIcon, TrendingDownIcon, ZapIcon, CheckIcon, ArrowDownIcon, ChevronRightIcon } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import {
+  ArrowDownIcon,
+  CheckIcon,
+  ChevronRightIcon,
+  DollarSignIcon,
+  ShieldCheckIcon,
+  TrendingDownIcon,
+  ZapIcon
+} from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
 import { buttonVariants } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { SectionBackground } from '~/components/fragments/section-background';
-import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { BorderBeam } from '~/components/fragments/border-beam';
+import { GridSection } from '~/components/fragments/grid-section';
+import { SectionBackground } from '~/components/fragments/section-background';
 import { Spotlight } from '~/components/fragments/spotlight';
-import { useImageSetVariant, useMonochromeMode, type ImageSetVariant } from '~/lib/debug-context';
+import {
+  useImageSetVariant,
+  useMonochromeMode,
+  type ImageSetVariant
+} from '~/lib/debug-context';
 
 // Magic animation: Refund reduction counter
 function RefundReductionMagic() {
@@ -117,7 +129,8 @@ function RevenueSavedMagic() {
 const HERO_CONTENT = {
   badge: 'Refund Saver',
   title: 'Reduce refund rate by up to 50% without coding',
-  description: "Cut unnecessary refunds, save more revenue, and let Adapty pay for itself. Refund Saver delivers an instant 3x ROI, covering Adapty's cost and more.",
+  description:
+    "Cut unnecessary refunds, save more revenue, and let Adapty pay for itself. Refund Saver delivers an instant 3x ROI, covering Adapty's cost and more."
 };
 
 // Key benefits for refund saver
@@ -125,14 +138,14 @@ const BENEFITS = [
   { icon: TrendingDownIcon, text: 'Reduce refunds by 50%' },
   { icon: ShieldCheckIcon, text: 'Automated protection' },
   { icon: DollarSignIcon, text: '3x ROI guaranteed' },
-  { icon: ZapIcon, text: 'Zero coding required' },
+  { icon: ZapIcon, text: 'Zero coding required' }
 ];
 
 // Key stats
 const STATS = [
   { value: '$576K', label: 'saved weekly', color: 'text-primary' },
   { value: '50%', label: 'fewer refunds', color: 'text-blue-500' },
-  { value: '3x', label: 'ROI average', color: 'text-purple-500' },
+  { value: '3x', label: 'ROI average', color: 'text-purple-500' }
 ];
 
 // Checklist for centered variant
@@ -140,7 +153,7 @@ const CHECKLIST = [
   'Cut refunds by 40%',
   'Zero extra effort',
   'Adapty pays for itself',
-  'No legal consequences',
+  'No legal consequences'
 ];
 
 // Helper to get image path based on selected image set
@@ -150,7 +163,11 @@ function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
 
 export type RefundSaverHeroVariant = 'split' | 'centered' | 'showcase';
 
-export const REFUND_SAVER_HERO_VARIANTS = ['split', 'centered', 'showcase'] as const;
+export const REFUND_SAVER_HERO_VARIANTS = [
+  'split',
+  'centered',
+  'showcase'
+] as const;
 
 type Props = {
   variant?: RefundSaverHeroVariant;
@@ -163,7 +180,9 @@ function SplitHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -174,7 +193,10 @@ function SplitHero(): React.JSX.Element {
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
             <BlurFade delay={0.05}>
-              <Badge variant="outline" className="relative w-fit overflow-hidden rounded-full px-4 py-1.5">
+              <Badge
+                variant="outline"
+                className="relative w-fit overflow-hidden rounded-full px-4 py-1.5"
+              >
                 <BorderBeam
                   size={40}
                   duration={4}
@@ -202,7 +224,10 @@ function SplitHero(): React.JSX.Element {
             <BlurFade delay={0.2}>
               <div className="grid grid-cols-2 gap-4">
                 {BENEFITS.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 text-sm text-muted-foreground"
+                  >
                     <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
                       <benefit.icon className="size-4 text-primary" />
                     </div>
@@ -218,7 +243,7 @@ function SplitHero(): React.JSX.Element {
                   onMouseEnter={() => setIsHovered('demo')}
                   onMouseLeave={() => setIsHovered(null)}
                   animate={{
-                    y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0,
+                    y: shouldReduceMotion ? 0 : isHovered === 'demo' ? -2 : 0
                   }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -237,7 +262,7 @@ function SplitHero(): React.JSX.Element {
                   onMouseEnter={() => setIsHovered('start')}
                   onMouseLeave={() => setIsHovered(null)}
                   animate={{
-                    y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0,
+                    y: shouldReduceMotion ? 0 : isHovered === 'start' ? -2 : 0
                   }}
                   transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 >
@@ -260,9 +285,16 @@ function SplitHero(): React.JSX.Element {
             <BlurFade delay={0.3}>
               <div className="flex flex-wrap gap-6 pt-4 border-t">
                 {STATS.map((stat, index) => (
-                  <div key={index} className="text-left">
-                    <p className="text-xl font-bold text-foreground">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground">{stat.label}</p>
+                  <div
+                    key={index}
+                    className="text-left"
+                  >
+                    <p className="text-xl font-bold text-foreground">
+                      {stat.value}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {stat.label}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -272,15 +304,29 @@ function SplitHero(): React.JSX.Element {
           {/* Right: Dashboard screenshot */}
           <BlurFade delay={0.2}>
             <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-              transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.96 }
+              }
+              animate={
+                shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }
+              }
+              transition={{
+                delay: shouldReduceMotion ? 0 : 0.1,
+                duration: 0.35,
+                ease: [0.32, 0.72, 0, 1]
+              }}
               className={cn(
-                "relative w-full overflow-hidden rounded-xl border bg-background ",
-                monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+                'relative w-full overflow-hidden rounded-xl border bg-background ',
+                monochromeMode &&
+                  'grayscale hover:grayscale-0 transition-[filter] duration-500'
               )}
             >
-              <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
+              <Spotlight
+                className="from-primary/10 via-primary/5 to-transparent"
+                size={350}
+              />
               <RefundReductionMagic />
               <RevenueSavedMagic />
               <BorderBeam
@@ -324,7 +370,9 @@ function CenteredHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(
+    null
+  );
 
   return (
     <GridSection className="relative overflow-hidden">
@@ -332,7 +380,10 @@ function CenteredHero(): React.JSX.Element {
       <div className="container py-20 sm:py-24 md:py-32 relative z-10">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           <BlurFade delay={0.05}>
-            <Badge variant="outline" className="relative overflow-hidden rounded-full px-4 py-1.5 mb-6">
+            <Badge
+              variant="outline"
+              className="relative overflow-hidden rounded-full px-4 py-1.5 mb-6"
+            >
               <BorderBeam
                 size={40}
                 duration={4}
@@ -362,8 +413,16 @@ function CenteredHero(): React.JSX.Element {
               {CHECKLIST.map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
-                  animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+                  initial={
+                    shouldReduceMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, scale: 0.9 }
+                  }
+                  animate={
+                    shouldReduceMotion
+                      ? { opacity: 1 }
+                      : { opacity: 1, scale: 1 }
+                  }
                   transition={{ delay: 0.3 + index * 0.05 }}
                   whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                   className="flex items-center gap-2 rounded-full bg-primary/5 px-4 py-2 text-sm cursor-default"
@@ -386,7 +445,10 @@ function CenteredHero(): React.JSX.Element {
               >
                 <Link
                   href="/schedule-demo"
-                  className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
+                  className={cn(
+                    buttonVariants({ size: 'lg' }),
+                    'rounded-xl px-8'
+                  )}
                 >
                   Schedule a demo
                 </Link>
@@ -402,7 +464,10 @@ function CenteredHero(): React.JSX.Element {
                   href="https://app.adapty.io/registration"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'rounded-xl px-8')}
+                  className={cn(
+                    buttonVariants({ variant: 'outline', size: 'lg' }),
+                    'rounded-xl px-8'
+                  )}
                 >
                   Get started
                 </Link>
@@ -413,12 +478,21 @@ function CenteredHero(): React.JSX.Element {
           {/* Dashboard image */}
           <BlurFade delay={0.3}>
             <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+              initial={
+                shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }
+              }
+              animate={
+                shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }
+              }
+              transition={{
+                delay: 0.2,
+                duration: 0.6,
+                ease: [0.32, 0.72, 0, 1]
+              }}
               className={cn(
-                "mt-16 relative w-full overflow-hidden rounded-xl border bg-background ",
-                monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+                'mt-16 relative w-full overflow-hidden rounded-xl border bg-background ',
+                monochromeMode &&
+                  'grayscale hover:grayscale-0 transition-[filter] duration-500'
               )}
             >
               <Image
@@ -454,7 +528,9 @@ function ShowcaseHero(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
   const imageSet = useImageSetVariant();
   const monochromeMode = useMonochromeMode();
-  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(null);
+  const [isHovered, setIsHovered] = React.useState<'demo' | 'start' | null>(
+    null
+  );
   const [hoveredStat, setHoveredStat] = React.useState<number | null>(null);
 
   return (
@@ -464,7 +540,10 @@ function ShowcaseHero(): React.JSX.Element {
         {/* Centered heading */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <BlurFade delay={0.05}>
-            <Badge variant="outline" className="relative overflow-hidden rounded-full px-4 py-1.5 mb-6">
+            <Badge
+              variant="outline"
+              className="relative overflow-hidden rounded-full px-4 py-1.5 mb-6"
+            >
               <BorderBeam
                 size={40}
                 duration={4}
@@ -498,7 +577,10 @@ function ShowcaseHero(): React.JSX.Element {
               >
                 <Link
                   href="/schedule-demo"
-                  className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl px-8')}
+                  className={cn(
+                    buttonVariants({ size: 'lg' }),
+                    'rounded-xl px-8'
+                  )}
                 >
                   Schedule a demo
                 </Link>
@@ -513,7 +595,10 @@ function ShowcaseHero(): React.JSX.Element {
                   href="https://app.adapty.io/registration"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'rounded-xl px-8')}
+                  className={cn(
+                    buttonVariants({ variant: 'outline', size: 'lg' }),
+                    'rounded-xl px-8'
+                  )}
                 >
                   Get started
                 </Link>
@@ -528,21 +613,31 @@ function ShowcaseHero(): React.JSX.Element {
             {STATS.map((stat, index) => (
               <motion.div
                 key={index}
-                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                initial={
+                  shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }
+                }
+                animate={
+                  shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }
+                }
                 transition={{ delay: 0.3 + index * 0.08 }}
                 onMouseEnter={() => setHoveredStat(index)}
                 onMouseLeave={() => setHoveredStat(null)}
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                 className={cn(
-                  "px-8 py-4 rounded-2xl border bg-background/80 backdrop-blur-sm cursor-default transition-colors duration-200",
-                  hoveredStat === index ? "border-primary/50 " : "border-border/50"
+                  'px-8 py-4 rounded-2xl border bg-background/80 backdrop-blur-sm cursor-default transition-colors duration-200',
+                  hoveredStat === index
+                    ? 'border-primary/50 '
+                    : 'border-border/50'
                 )}
               >
-                <div className={cn("text-3xl sm:text-4xl font-bold", stat.color)}>
+                <div
+                  className={cn('text-3xl sm:text-4xl font-bold', stat.color)}
+                >
                   {stat.value}
                 </div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -551,12 +646,21 @@ function ShowcaseHero(): React.JSX.Element {
         {/* Large product screenshot */}
         <BlurFade delay={0.3}>
           <motion.div
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30, scale: 0.98 }}
-            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            initial={
+              shouldReduceMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: 30, scale: 0.98 }
+            }
+            animate={
+              shouldReduceMotion
+                ? { opacity: 1 }
+                : { opacity: 1, y: 0, scale: 1 }
+            }
             transition={{ delay: 0.2, duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
             className={cn(
-              "relative w-full max-w-5xl mx-auto overflow-hidden rounded-2xl border-2 bg-background ",
-              monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
+              'relative w-full max-w-5xl mx-auto overflow-hidden rounded-2xl border-2 bg-background ',
+              monochromeMode &&
+                'grayscale hover:grayscale-0 transition-[filter] duration-500'
             )}
           >
             <Image
@@ -587,7 +691,9 @@ function ShowcaseHero(): React.JSX.Element {
 // =============================================================================
 // MAIN EXPORT
 // =============================================================================
-export function RefundSaverHero({ variant = 'split' }: Props): React.JSX.Element {
+export function RefundSaverHero({
+  variant = 'split'
+}: Props): React.JSX.Element {
   switch (variant) {
     case 'centered':
       return <CenteredHero />;

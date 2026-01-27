@@ -22,7 +22,7 @@ function TrustedAppsMagic() {
       return;
     }
     const interval = setInterval(() => {
-      setCount(prev => {
+      setCount((prev) => {
         if (prev >= 15000) return 15000;
         return prev + Math.floor(Math.random() * 5) + 1;
       });
@@ -39,14 +39,18 @@ function TrustedAppsMagic() {
     >
       <motion.span
         className="size-1.5 rounded-full bg-green-500"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.3, 1],
-          opacity: [1, 0.7, 1],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.3, 1],
+                opacity: [1, 0.7, 1]
+              }
+        }
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'easeInOut'
         }}
       />
       <motion.span
@@ -71,10 +75,10 @@ const CUSTOMER_LOGOS = [
   { name: 'Impala Studios', file: '/logos/trusted-by/impala-studios.svg' },
   { name: 'WeWoo', file: '/logos/trusted-by/weewoo.svg' },
   { name: 'Bickster', file: '/logos/trusted-by/bickster.png' },
-  { name: 'SocialKit', file: '/logos/trusted-by/socialkit.svg' },
+  { name: 'SocialKit', file: '/logos/trusted-by/socialkit.svg' }
 ];
 
-function LogoItem({ logo }: { logo: typeof CUSTOMER_LOGOS[0] }) {
+function LogoItem({ logo }: { logo: (typeof CUSTOMER_LOGOS)[0] }) {
   return (
     <div className="flex h-12 w-32 shrink-0 items-center justify-center px-4 md:h-14 md:w-40">
       <Image
@@ -93,11 +97,15 @@ export function LogosMarquee(): React.JSX.Element {
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={250} />
       <div className="container py-12 lg:py-16 relative z-10">
-        <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={300} />
+        <Spotlight
+          className="from-primary/10 via-primary/5 to-transparent"
+          size={300}
+        />
         {/* Header text */}
         <BlurFade className="mb-8 text-center">
           <p className="text-lg font-medium text-foreground">
-            Trusted by <TrustedAppsMagic /> apps and the world&apos;s largest app publishers
+            Trusted by <TrustedAppsMagic /> apps and the world&apos;s largest
+            app publishers
           </p>
         </BlurFade>
 
@@ -121,7 +129,10 @@ export function LogosMarquee(): React.JSX.Element {
             repeat={3}
           >
             {CUSTOMER_LOGOS.map((logo) => (
-              <LogoItem key={logo.name} logo={logo} />
+              <LogoItem
+                key={logo.name}
+                logo={logo}
+              />
             ))}
           </Marquee>
         </div>

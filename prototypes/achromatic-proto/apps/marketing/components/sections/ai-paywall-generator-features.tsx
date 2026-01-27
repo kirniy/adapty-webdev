@@ -3,18 +3,18 @@
 import * as React from 'react';
 import Link from 'next/link';
 import {
-  SparklesIcon,
-  ZapIcon,
-  MousePointerClickIcon,
+  ArrowRightIcon,
+  ChevronDownIcon,
   InfinityIcon,
   LinkIcon,
+  MousePointerClickIcon,
   PaletteIcon,
   RefreshCwIcon,
-  ArrowRightIcon,
+  SparklesIcon,
   WandSparklesIcon,
-  ChevronDownIcon,
+  ZapIcon
 } from 'lucide-react';
-import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Button } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
@@ -37,10 +37,14 @@ function AISparklesMagic() {
     <div className="mt-4 h-[60px] rounded-lg bg-muted/30 border border-border/50 p-3 flex items-center justify-center relative overflow-hidden">
       {/* Central AI icon */}
       <motion.div
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.1, 1],
-          rotate: [0, 5, -5, 0],
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0]
+              }
+        }
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         className="relative z-10"
       >
@@ -48,28 +52,29 @@ function AISparklesMagic() {
       </motion.div>
 
       {/* Orbiting sparkles */}
-      {!shouldReduceMotion && [0, 1, 2, 3].map((i) => (
-        <motion.div
-          key={i}
-          animate={{
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: 3 + i * 0.5,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute inset-0 flex items-center justify-center"
-          style={{ transform: `rotate(${i * 90}deg)` }}
-        >
+      {!shouldReduceMotion &&
+        [0, 1, 2, 3].map((i) => (
           <motion.div
-            animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
-            transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }}
-            className="absolute size-2 rounded-full bg-primary"
-            style={{ left: `${70 + i * 3}%` }}
-          />
-        </motion.div>
-      ))}
+            key={i}
+            animate={{
+              rotate: [0, 360]
+            }}
+            transition={{
+              duration: 3 + i * 0.5,
+              repeat: Infinity,
+              ease: 'linear'
+            }}
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ transform: `rotate(${i * 90}deg)` }}
+          >
+            <motion.div
+              animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
+              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }}
+              className="absolute size-2 rounded-full bg-primary"
+              style={{ left: `${70 + i * 3}%` }}
+            />
+          </motion.div>
+        ))}
 
       {/* Glow effect */}
       <motion.div
@@ -105,17 +110,23 @@ function SpeedMagic() {
       </motion.div>
       <div className="flex flex-col">
         <span className="text-lg font-bold text-foreground">{seconds}s</span>
-        <span className="text-[9px] text-muted-foreground">5 paywalls ready</span>
+        <span className="text-[9px] text-muted-foreground">
+          5 paywalls ready
+        </span>
       </div>
       <div className="flex gap-0.5">
         {[0, 1, 2, 3, 4].map((i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0 }}
-            animate={shouldReduceMotion ? { opacity: 1, scale: 1 } : {
-              opacity: seconds <= 30 - (i + 1) * 6 ? 1 : 0.3,
-              scale: seconds <= 30 - (i + 1) * 6 ? 1 : 0.8,
-            }}
+            animate={
+              shouldReduceMotion
+                ? { opacity: 1, scale: 1 }
+                : {
+                    opacity: seconds <= 30 - (i + 1) * 6 ? 1 : 0.3,
+                    scale: seconds <= 30 - (i + 1) * 6 ? 1 : 0.8
+                  }
+            }
             transition={{ duration: 0.2 }}
             className="size-3 rounded bg-primary/60"
           />
@@ -144,15 +155,23 @@ function OneClickMagic() {
       {/* Input field simulation */}
       <div className="flex-1 flex items-center gap-2 px-2 py-1 rounded bg-background/50 border border-border/50">
         <LinkIcon className="size-3 text-muted-foreground" />
-        <span className="text-[10px] text-muted-foreground truncate">apps.apple.com/app/...</span>
+        <span className="text-[10px] text-muted-foreground truncate">
+          apps.apple.com/app/...
+        </span>
       </div>
 
       {/* Generate button */}
       <motion.div
-        animate={shouldReduceMotion ? {} : {
-          scale: clicked ? [1, 0.9, 1] : 1,
-          backgroundColor: clicked ? 'hsl(var(--primary))' : 'hsl(var(--primary) / 0.1)',
-        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                scale: clicked ? [1, 0.9, 1] : 1,
+                backgroundColor: clicked
+                  ? 'hsl(var(--primary))'
+                  : 'hsl(var(--primary) / 0.1)'
+              }
+        }
         transition={{ duration: 0.2 }}
         className="flex items-center justify-center size-8 rounded-lg text-primary"
       >
@@ -194,15 +213,19 @@ function InfiniteMagic() {
       {[0, 1, 2].map((i) => (
         <motion.div
           key={i}
-          animate={shouldReduceMotion ? {} : {
-            y: i === 1 ? [0, -4, 0] : 0,
-            opacity: i === 1 ? 1 : 0.5,
-            scale: i === 1 ? 1.1 : 0.9,
-          }}
+          animate={
+            shouldReduceMotion
+              ? {}
+              : {
+                  y: i === 1 ? [0, -4, 0] : 0,
+                  opacity: i === 1 ? 1 : 0.5,
+                  scale: i === 1 ? 1.1 : 0.9
+                }
+          }
           transition={{ duration: 0.3 }}
           className={cn(
-            "w-8 h-10 rounded border bg-card flex flex-col items-center justify-center gap-0.5",
-            i === 1 && "border-primary/50"
+            'w-8 h-10 rounded border bg-card flex flex-col items-center justify-center gap-0.5',
+            i === 1 && 'border-primary/50'
           )}
         >
           <div className="w-4 h-0.5 rounded bg-muted" />
@@ -238,7 +261,9 @@ function LinkInputMagic() {
       <div className="flex-1 flex items-center gap-2 px-2 py-1.5 rounded bg-background/50 border border-border/50">
         <LinkIcon className="size-3 text-primary" />
         <motion.span
-          animate={shouldReduceMotion ? {} : { opacity: typing ? [1, 0, 1] : 1 }}
+          animate={
+            shouldReduceMotion ? {} : { opacity: typing ? [1, 0, 1] : 1 }
+          }
           transition={{ duration: 0.5, repeat: typing ? Infinity : 0 }}
           className="text-[9px] text-foreground truncate"
         >
@@ -259,17 +284,21 @@ function BrandExtractionMagic() {
         <motion.div
           key={i}
           initial={{ scale: 0, opacity: 0 }}
-          animate={shouldReduceMotion ? { scale: 1, opacity: 1 } : {
-            scale: [0, 1.2, 1],
-            opacity: [0, 1, 1],
-          }}
+          animate={
+            shouldReduceMotion
+              ? { scale: 1, opacity: 1 }
+              : {
+                  scale: [0, 1.2, 1],
+                  opacity: [0, 1, 1]
+                }
+          }
           transition={{
             duration: 0.4,
             delay: i * 0.2,
             repeat: Infinity,
-            repeatDelay: 2,
+            repeatDelay: 2
           }}
-          className={cn("size-5 rounded", color)}
+          className={cn('size-5 rounded', color)}
         />
       ))}
       <motion.div
@@ -307,11 +336,18 @@ function RegenerateMagic() {
         {[0, 1, 2, 3].map((i) => (
           <motion.div
             key={i}
-            animate={shouldReduceMotion ? {} : {
-              scale: i === iteration ? 1.2 : 1,
-              opacity: i === iteration ? 1 : 0.4,
-              borderColor: i === iteration ? 'hsl(var(--primary))' : 'hsl(var(--border))',
-            }}
+            animate={
+              shouldReduceMotion
+                ? {}
+                : {
+                    scale: i === iteration ? 1.2 : 1,
+                    opacity: i === iteration ? 1 : 0.4,
+                    borderColor:
+                      i === iteration
+                        ? 'hsl(var(--primary))'
+                        : 'hsl(var(--border))'
+                  }
+            }
             transition={{ duration: 0.2 }}
             className="size-4 rounded border-2 bg-card"
           />
@@ -330,30 +366,32 @@ const FEATURES = [
     id: 'personalized',
     icon: SparklesIcon,
     title: 'Hyper personalized',
-    description: "AI uses your design and copy to generate paywalls that match your app's DNA.",
-    magic: AISparklesMagic,
+    description:
+      "AI uses your design and copy to generate paywalls that match your app's DNA.",
+    magic: AISparklesMagic
   },
   {
     id: 'speed',
     icon: ZapIcon,
     title: 'Ready in seconds',
     description: 'Get 5 paywalls in under 30 seconds.',
-    magic: SpeedMagic,
+    magic: SpeedMagic
   },
   {
     id: 'oneclick',
     icon: MousePointerClickIcon,
     title: 'One-click simple',
     description: 'Drop a link. Get full, ready-to-use paywalls.',
-    magic: OneClickMagic,
+    magic: OneClickMagic
   },
   {
     id: 'unlimited',
     icon: InfinityIcon,
     title: 'Unlimited versions',
-    description: 'Keep generating until it fits. Try as many variants as you need.',
-    magic: InfiniteMagic,
-  },
+    description:
+      'Keep generating until it fits. Try as many variants as you need.',
+    magic: InfiniteMagic
+  }
 ];
 
 const PROCESS_STEPS = [
@@ -363,7 +401,7 @@ const PROCESS_STEPS = [
     step: 'Step 1',
     title: 'Paste your app link',
     description: "AI extracts your app's visuals, copy, and metadata.",
-    magic: LinkInputMagic,
+    magic: LinkInputMagic
   },
   {
     id: 'brand',
@@ -371,7 +409,7 @@ const PROCESS_STEPS = [
     step: 'Step 2',
     title: 'Get branded paywalls',
     description: 'AI creates paywalls using your brand assets.',
-    magic: BrandExtractionMagic,
+    magic: BrandExtractionMagic
   },
   {
     id: 'iterate',
@@ -379,38 +417,49 @@ const PROCESS_STEPS = [
     step: 'Step 3',
     title: 'Generate options',
     description: 'Review, regenerate, launch. Repeat until it fits.',
-    magic: RegenerateMagic,
-  },
+    magic: RegenerateMagic
+  }
 ];
 
 const FAQS = [
   {
     question: 'How to paywall apps easily?',
-    answer: 'You can build it manually from scratch, create with Adapty no-code Paywall Builder, or generate it with AI Paywall Generator in seconds.',
+    answer:
+      'You can build it manually from scratch, create with Adapty no-code Paywall Builder, or generate it with AI Paywall Generator in seconds.'
   },
   {
     question: 'Can AI generate an iOS paywall for me?',
-    answer: "Yes, Adapty's AI Paywall Generator can create iOS paywalls. Drop your App Store link, and you'll get a customizable design. It also works for apps built for Android, Flutter, React Native and other cross-platform frameworks.",
+    answer:
+      "Yes, Adapty's AI Paywall Generator can create iOS paywalls. Drop your App Store link, and you'll get a customizable design. It also works for apps built for Android, Flutter, React Native and other cross-platform frameworks."
   },
   {
     question: 'Can AI A/B test different paywalls?',
-    answer: 'You can quickly create a paywall with AI Generator and then run cross-placement A/B tests in your Adapty workspace. Use AI to forecast the winning variant and grow your revenue faster.',
+    answer:
+      'You can quickly create a paywall with AI Generator and then run cross-placement A/B tests in your Adapty workspace. Use AI to forecast the winning variant and grow your revenue faster.'
   },
   {
     question: "What's the best way to implement a paywall in my app?",
-    answer: 'Once your AI paywall is ready, you can add it to your app in your Adapty workspace and go live with no app updates needed. Just make sure the Adapty SDK is installed.',
+    answer:
+      'Once your AI paywall is ready, you can add it to your app in your Adapty workspace and go live with no app updates needed. Just make sure the Adapty SDK is installed.'
   },
   {
     question: "How to create a successful paywall that Apple won't reject?",
-    answer: "The AI Paywall Generator follows Apple's rules, so the paywalls it creates are safe to use in your iOS app.",
-  },
+    answer:
+      "The AI Paywall Generator follows Apple's rules, so the paywalls it creates are safe to use in your iOS app."
+  }
 ];
 
 // =============================================================================
 // COMPONENTS
 // =============================================================================
 
-function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: number }) {
+function FeatureCard({
+  feature,
+  index
+}: {
+  feature: (typeof FEATURES)[0];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
   const MagicComponent = feature.magic;
@@ -419,16 +468,22 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      animate={shouldReduceMotion ? undefined : {
-        y: isHovered ? -6 : 0,
-        scale: isHovered ? 1.02 : 1,
-      }}
+      animate={
+        shouldReduceMotion
+          ? undefined
+          : {
+              y: isHovered ? -6 : 0,
+              scale: isHovered ? 1.02 : 1
+            }
+      }
       transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
     >
-      <div className={cn(
-        "relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group",
-        isHovered && "border-primary/30 "
-      )}>
+      <div
+        className={cn(
+          'relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group',
+          isHovered && 'border-primary/30 '
+        )}
+      >
         <Spotlight
           className="from-primary/20 via-primary/10 to-transparent"
           size={200}
@@ -444,14 +499,18 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
         )}
         <div className="p-6 relative z-10">
           <motion.div
-            animate={shouldReduceMotion ? undefined : {
-              scale: isHovered ? 1.15 : 1,
-              rotate: isHovered ? 10 : 0,
-            }}
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    scale: isHovered ? 1.15 : 1,
+                    rotate: isHovered ? 10 : 0
+                  }
+            }
             transition={{ type: 'spring', duration: 0.3, bounce: 0.3 }}
             className={cn(
-              "flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors",
-              isHovered && "bg-primary/20"
+              'flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors',
+              isHovered && 'bg-primary/20'
             )}
           >
             <feature.icon className="size-6" />
@@ -471,7 +530,13 @@ function FeatureCard({ feature, index }: { feature: typeof FEATURES[0]; index: n
   );
 }
 
-function ProcessStepCard({ step, index }: { step: typeof PROCESS_STEPS[0]; index: number }) {
+function ProcessStepCard({
+  step,
+  index
+}: {
+  step: (typeof PROCESS_STEPS)[0];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
   const MagicComponent = step.magic;
@@ -480,16 +545,22 @@ function ProcessStepCard({ step, index }: { step: typeof PROCESS_STEPS[0]; index
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      animate={shouldReduceMotion ? undefined : {
-        y: isHovered ? -6 : 0,
-        scale: isHovered ? 1.02 : 1,
-      }}
+      animate={
+        shouldReduceMotion
+          ? undefined
+          : {
+              y: isHovered ? -6 : 0,
+              scale: isHovered ? 1.02 : 1
+            }
+      }
       transition={{ type: 'spring', duration: 0.25, bounce: 0 }}
     >
-      <div className={cn(
-        "relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group text-center",
-        isHovered && "border-primary/30 "
-      )}>
+      <div
+        className={cn(
+          'relative h-full overflow-hidden rounded-xl border bg-card transition-all duration-200 cursor-pointer group text-center',
+          isHovered && 'border-primary/30 '
+        )}
+      >
         <Spotlight
           className="from-primary/20 via-primary/10 to-transparent"
           size={250}
@@ -505,14 +576,18 @@ function ProcessStepCard({ step, index }: { step: typeof PROCESS_STEPS[0]; index
         )}
         <div className="p-8 relative z-10">
           <motion.div
-            animate={shouldReduceMotion ? undefined : {
-              scale: isHovered ? 1.1 : 1,
-              rotate: isHovered ? 5 : 0,
-            }}
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    scale: isHovered ? 1.1 : 1,
+                    rotate: isHovered ? 5 : 0
+                  }
+            }
             transition={{ type: 'spring', duration: 0.3, bounce: 0.2 }}
             className={cn(
-              "mx-auto flex size-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors",
-              isHovered && "bg-primary/20"
+              'mx-auto flex size-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors',
+              isHovered && 'bg-primary/20'
             )}
           >
             <step.icon className="size-8" />
@@ -533,7 +608,7 @@ function ProcessStepCard({ step, index }: { step: typeof PROCESS_STEPS[0]; index
   );
 }
 
-function FAQItem({ faq, index }: { faq: typeof FAQS[0]; index: number }) {
+function FAQItem({ faq, index }: { faq: (typeof FAQS)[0]; index: number }) {
   const shouldReduceMotion = useReducedMotion();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
@@ -542,13 +617,17 @@ function FAQItem({ faq, index }: { faq: typeof FAQS[0]; index: number }) {
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      animate={shouldReduceMotion ? undefined : {
-        scale: isHovered ? 1.01 : 1,
-      }}
+      animate={
+        shouldReduceMotion
+          ? undefined
+          : {
+              scale: isHovered ? 1.01 : 1
+            }
+      }
       transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
       className={cn(
-        "relative overflow-hidden rounded-xl border bg-card transition-all duration-200",
-        isHovered && "border-primary/30 "
+        'relative overflow-hidden rounded-xl border bg-card transition-all duration-200',
+        isHovered && 'border-primary/30 '
       )}
     >
       <Spotlight
@@ -606,14 +685,21 @@ export function AIPaywallGeneratorFeatures(): React.JSX.Element {
             No design skills needed. Built from your UI
           </h2>
           <p className="mt-4 text-center text-muted-foreground max-w-xl mx-auto">
-            AI analyzes your app and generates paywalls that match your brand perfectly.
+            AI analyzes your app and generates paywalls that match your brand
+            perfectly.
           </p>
         </BlurFade>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((feature, index) => (
-            <BlurFade key={feature.id} delay={0.1 + index * 0.05}>
-              <FeatureCard feature={feature} index={index} />
+            <BlurFade
+              key={feature.id}
+              delay={0.1 + index * 0.05}
+            >
+              <FeatureCard
+                feature={feature}
+                index={index}
+              />
             </BlurFade>
           ))}
         </div>
@@ -621,7 +707,9 @@ export function AIPaywallGeneratorFeatures(): React.JSX.Element {
         <BlurFade delay={0.3}>
           <div className="mt-10 text-center">
             <motion.div
-              whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }}
+              whileHover={
+                shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }
+              }
               whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
               transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               className="inline-block"
@@ -649,8 +737,14 @@ export function AIPaywallGeneratorFeatures(): React.JSX.Element {
 
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           {PROCESS_STEPS.map((step, index) => (
-            <BlurFade key={step.id} delay={0.4 + index * 0.05}>
-              <ProcessStepCard step={step} index={index} />
+            <BlurFade
+              key={step.id}
+              delay={0.4 + index * 0.05}
+            >
+              <ProcessStepCard
+                step={step}
+                index={index}
+              />
             </BlurFade>
           ))}
         </div>
@@ -658,7 +752,9 @@ export function AIPaywallGeneratorFeatures(): React.JSX.Element {
         <BlurFade delay={0.55}>
           <div className="mt-10 text-center">
             <motion.div
-              whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }}
+              whileHover={
+                shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }
+              }
               whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
               transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
               className="inline-block"
@@ -696,11 +792,19 @@ export function AIPaywallGeneratorFeatures(): React.JSX.Element {
               />
               <div className="relative z-10">
                 <motion.div
-                  animate={shouldReduceMotion ? {} : {
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 5, -5, 0],
+                  animate={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          scale: [1, 1.1, 1],
+                          rotate: [0, 5, -5, 0]
+                        }
+                  }
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'easeInOut'
                   }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                   className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-primary/20 text-primary mb-6"
                 >
                   <WandSparklesIcon className="size-8" />
@@ -714,7 +818,9 @@ export function AIPaywallGeneratorFeatures(): React.JSX.Element {
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-4">
                   <motion.div
-                    whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }}
+                    whileHover={
+                      shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }
+                    }
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                     transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                   >
@@ -727,7 +833,9 @@ export function AIPaywallGeneratorFeatures(): React.JSX.Element {
                     </Link>
                   </motion.div>
                   <motion.div
-                    whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }}
+                    whileHover={
+                      shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }
+                    }
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                     transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                   >
@@ -753,8 +861,14 @@ export function AIPaywallGeneratorFeatures(): React.JSX.Element {
 
         <div className="mx-auto mt-10 max-w-3xl space-y-4">
           {FAQS.map((faq, index) => (
-            <BlurFade key={index} delay={0.7 + index * 0.03}>
-              <FAQItem faq={faq} index={index} />
+            <BlurFade
+              key={index}
+              delay={0.7 + index * 0.03}
+            >
+              <FAQItem
+                faq={faq}
+                index={index}
+              />
             </BlurFade>
           ))}
         </div>
@@ -768,7 +882,9 @@ export function AIPaywallGeneratorFeatures(): React.JSX.Element {
             </p>
             <div className="mt-6">
               <motion.div
-                whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }}
+                whileHover={
+                  shouldReduceMotion ? undefined : { y: -2, scale: 1.02 }
+                }
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
                 transition={{ type: 'spring', duration: 0.2, bounce: 0 }}
                 className="inline-block"

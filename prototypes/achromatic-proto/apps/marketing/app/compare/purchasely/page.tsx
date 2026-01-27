@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { useFeaturesVariant } from '~/lib/debug-context';
 import { ComparePurchasely } from '~/components/sections/compare-purchasely';
 import {
-  LogosSwitcher,
-  TestimonialsSwitcher,
-  FAQSwitcher,
   CTASwitcher,
+  FAQSwitcher,
+  LogosSwitcher,
+  TestimonialsSwitcher
 } from '~/components/sections/section-switchers';
+import { useFeaturesVariant } from '~/lib/debug-context';
 
 // Adapty vs Purchasely comparison page
 export default function ComparePurchaselyPage(): React.JSX.Element {
