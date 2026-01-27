@@ -374,7 +374,7 @@ const defaultState: DebugState = {
   logosVariant: 'linear',
   featuresVariant: 'solution',
   statsVariant: 'default',
-  testimonialsVariant: 'default',
+  testimonialsVariant: 'editorial',
   faqVariant: 'default',
   ctaVariant: 'default',
   blogVariant: 'default',
@@ -393,7 +393,7 @@ const defaultState: DebugState = {
   forDevelopersFeaturesVariant: 'bento',
   forIndieFeaturesVariant: 'bento',
   heroLinesVariant: 'above',
-  imageSetVariant: 'set2',
+  imageSetVariant: 'set3',
   monochromeMode: true,
   isDebugMenuOpen: false,
 }

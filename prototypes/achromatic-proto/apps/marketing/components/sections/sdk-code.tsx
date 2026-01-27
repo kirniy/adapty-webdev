@@ -2,12 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'motion/react';
-import {
-  ArrowRightIcon,
-  CopyIcon,
-  CheckIcon
-} from 'lucide-react';
+import { useReducedMotion } from 'motion/react';
+import { ChevronRightIcon, CopyIcon, CheckIcon } from 'lucide-react';
 
 import { Button } from '@workspace/ui/components/button';
 import {
@@ -20,24 +16,6 @@ import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { GridSection } from '~/components/fragments/grid-section';
-import { SectionBackground } from '~/components/fragments/section-background';
-
-// Magic animation: SDK platforms counter
-function SDKPlatformsMagic() {
-  const shouldReduceMotion = useReducedMotion();
-  const platformCount = Object.keys(SDK_SNIPPETS).length;
-
-  return (
-    <motion.div
-      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, delay: 0.15 }}
-    >
-      <span>{platformCount}+ platforms</span>
-    </motion.div>
-  );
-}
 
 // SDK Languages with their code snippets
 const SDK_SNIPPETS = {
@@ -161,6 +139,16 @@ Debug.Log($"Purchase successful: {result.Profile}");`,
 
 type Language = keyof typeof SDK_SNIPPETS;
 
+// Linear-style tag
+function FeatureTag({ label }: { label: string }) {
+  return (
+    <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+      <span className="size-2 rounded-full bg-primary" />
+      <span>{label}</span>
+    </div>
+  );
+}
+
 function CopyButton({ code }: { code: string }) {
   const [copied, setCopied] = React.useState(false);
 
@@ -175,10 +163,10 @@ function CopyButton({ code }: { code: string }) {
       variant="ghost"
       size="sm"
       onClick={handleCopy}
-      className="absolute right-2 top-2 h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
+      className="absolute right-3 top-3 h-8 w-8 p-0 text-muted-foreground hover:text-foreground hover:bg-muted"
     >
       {copied ? (
-        <CheckIcon className="size-4 text-green-500" />
+        <CheckIcon className="size-4 text-emerald-500" />
       ) : (
         <CopyIcon className="size-4" />
       )}
@@ -186,58 +174,13 @@ function CopyButton({ code }: { code: string }) {
   );
 }
 
-// Typewriter effect for code
-function TypewriterCode({ code, isActive }: { code: string; isActive: boolean }) {
-  const shouldReduceMotion = useReducedMotion();
-  const [displayedCode, setDisplayedCode] = React.useState('');
-  const [isTyping, setIsTyping] = React.useState(false);
-
-  React.useEffect(() => {
-    if (!isActive || shouldReduceMotion) {
-      setDisplayedCode(code);
-      return;
-    }
-
-    setIsTyping(true);
-    setDisplayedCode('');
-    let currentIndex = 0;
-    const typingSpeed = 8; // ms per character
-
-    const interval = setInterval(() => {
-      if (currentIndex < code.length) {
-        setDisplayedCode(code.slice(0, currentIndex + 1));
-        currentIndex++;
-      } else {
-        setIsTyping(false);
-        clearInterval(interval);
-      }
-    }, typingSpeed);
-
-    return () => clearInterval(interval);
-  }, [code, isActive, shouldReduceMotion]);
-
-  return (
-    <span>
-      {displayedCode}
-      {isTyping && !shouldReduceMotion && (
-        <motion.span
-          className="inline-block w-2 h-4 bg-primary ml-0.5"
-          animate={{ opacity: [1, 0, 1] }}
-          transition={{ duration: 0.8, repeat: Infinity }}
-        />
-      )}
-    </span>
-  );
-}
-
-function CodeBlock({ code, language, isActive }: { code: string; language: string; isActive: boolean }) {
+// Light code block
+function CodeBlock({ code }: { code: string }) {
   return (
     <div className="relative">
       <CopyButton code={code} />
-      <pre className="overflow-x-auto rounded-lg bg-zinc-950 p-4 text-sm leading-relaxed text-zinc-100 dark:bg-zinc-900">
-        <code className="font-mono">
-          <TypewriterCode code={code} isActive={isActive} />
-        </code>
+      <pre className="overflow-x-auto rounded-b-xl bg-muted/30 p-5 text-sm leading-relaxed text-foreground border-t border-border/30">
+        <code className="font-mono text-[13px]">{code}</code>
       </pre>
     </div>
   );
@@ -248,18 +191,17 @@ export function SDKCode(): React.JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <GridSection className="relative overflow-hidden">
-      <SectionBackground height={600} />
-      <div className="container py-24 relative z-10">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+    <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
+      <div className="container py-16">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-start">
           {/* Left: Content */}
           <div className="flex flex-col gap-6">
             <BlurFade delay={shouldReduceMotion ? 0 : 0.05}>
-              <SDKPlatformsMagic />
+              <FeatureTag label="SDK" />
             </BlurFade>
 
             <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tight">
                 10 lines of code.
                 <br />
                 <span className="text-muted-foreground">All platforms.</span>
@@ -267,7 +209,7 @@ export function SDKCode(): React.JSX.Element {
             </BlurFade>
 
             <BlurFade delay={shouldReduceMotion ? 0 : 0.15}>
-              <p className="max-w-md text-lg text-muted-foreground">
+              <p className="text-muted-foreground leading-relaxed">
                 Integrate in-app purchases in minutes with our battle-tested SDKs.
                 Works seamlessly across iOS, Android, React Native, Flutter, and Unity.
               </p>
@@ -275,20 +217,20 @@ export function SDKCode(): React.JSX.Element {
 
             <BlurFade delay={shouldReduceMotion ? 0 : 0.2}>
               <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <CheckIcon className="size-4 text-primary" />
+                <li className="flex items-center gap-3">
+                  <span className="size-1.5 rounded-full bg-primary/60" />
                   Server-side receipt validation
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckIcon className="size-4 text-primary" />
+                <li className="flex items-center gap-3">
+                  <span className="size-1.5 rounded-full bg-primary/60" />
                   Automatic subscription status sync
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckIcon className="size-4 text-primary" />
+                <li className="flex items-center gap-3">
+                  <span className="size-1.5 rounded-full bg-primary/60" />
                   Built-in analytics and attribution
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckIcon className="size-4 text-primary" />
+                <li className="flex items-center gap-3">
+                  <span className="size-1.5 rounded-full bg-primary/60" />
                   Remote paywall configuration
                 </li>
               </ul>
@@ -299,16 +241,13 @@ export function SDKCode(): React.JSX.Element {
                 <Link
                   href="https://docs.adapty.io/"
                   className={cn(
-                    'inline-flex h-10 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground transition-all duration-150 ease-out hover:bg-primary/90 motion-reduce:transition-none'
+                    'inline-flex items-center gap-2 px-4 py-2 text-sm font-medium',
+                    'rounded-full border border-border/50 bg-muted/30',
+                    'hover:bg-muted hover:border-border transition-colors'
                   )}
                 >
                   View Documentation
-                </Link>
-                <Link
-                  href={SDK_SNIPPETS[activeTab].docsUrl}
-                  className="inline-flex h-10 items-center gap-2 rounded-lg border px-4 text-sm font-medium transition-all duration-150 ease-out hover:bg-accent motion-reduce:transition-none"
-                >
-                  {SDK_SNIPPETS[activeTab].name} SDK Guide
+                  <ChevronRightIcon className="size-4" />
                 </Link>
               </div>
             </BlurFade>
@@ -316,28 +255,23 @@ export function SDKCode(): React.JSX.Element {
 
           {/* Right: Code */}
           <BlurFade delay={shouldReduceMotion ? 0 : 0.15}>
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={shouldReduceMotion ? undefined : { delay: 0.2, duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-              className="rounded-xl border bg-muted/30 overflow-hidden"
-            >
+            <div className="rounded-xl border border-border/50 bg-background overflow-hidden">
               <Tabs
                 value={activeTab}
                 onValueChange={(value) => setActiveTab(value as Language)}
                 className="w-full"
               >
-                {/* Scrollable tab container for mobile */}
-                <div className="border-b bg-muted/50 overflow-x-auto scrollbar-hide">
-                  <TabsList className="h-12 bg-transparent gap-1 px-4 min-w-max">
+                {/* Tab bar */}
+                <div className="bg-muted/30 overflow-x-auto scrollbar-hide">
+                  <TabsList className="h-11 bg-transparent gap-0 px-2 min-w-max">
                     {(Object.entries(SDK_SNIPPETS) as [Language, typeof SDK_SNIPPETS.swift][]).map(
                       ([key, snippet]) => (
                         <TabsTrigger
                           key={key}
                           value={key}
-                          className="data-[state=active]:bg-background rounded-md px-3 py-1.5 text-xs font-medium shrink-0"
+                          className="data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg px-4 py-2 text-xs font-medium shrink-0 transition-colors"
                         >
-                          <span className="mr-1.5">{snippet.icon}</span>
+                          <span className="mr-1.5 opacity-60">{snippet.icon}</span>
                           {snippet.label}
                         </TabsTrigger>
                       )
@@ -348,18 +282,18 @@ export function SDKCode(): React.JSX.Element {
                 {(Object.entries(SDK_SNIPPETS) as [Language, typeof SDK_SNIPPETS.swift][]).map(
                   ([key, snippet]) => (
                     <TabsContent key={key} value={key} className="m-0">
-                      <CodeBlock code={snippet.code} language={key} isActive={activeTab === key} />
+                      <CodeBlock code={snippet.code} />
                     </TabsContent>
                   )
                 )}
               </Tabs>
-            </motion.div>
+            </div>
           </BlurFade>
         </div>
 
         {/* SDK Platform Links */}
         <BlurFade delay={shouldReduceMotion ? 0 : 0.3}>
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
             <span className="font-medium">Available for:</span>
             {[
               { name: 'iOS', href: 'https://docs.adapty.io/docs/ios-sdk' },
@@ -373,7 +307,7 @@ export function SDKCode(): React.JSX.Element {
                 {i > 0 && <span className="text-border">|</span>}
                 <Link
                   href={platform.href}
-                  className="transition-colors duration-150 ease-out hover:text-foreground motion-reduce:transition-none"
+                  className="hover:text-foreground transition-colors"
                 >
                   {platform.name}
                 </Link>

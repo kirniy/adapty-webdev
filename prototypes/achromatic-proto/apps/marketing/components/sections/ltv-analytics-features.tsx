@@ -213,8 +213,7 @@ function TaxMagic() {
         transition={{ duration: 1, repeat: Infinity }}
         className="text-muted-foreground"
       >
-        <ArrowRightIcon className="size-4" />
-      </motion.div>
+              </motion.div>
 
       <AnimatePresence mode="wait">
         {showNet ? (
@@ -383,7 +382,7 @@ function GridFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1600} />
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         {/* Featured testimonial */}
         <BlurFade delay={0.05}>
           <motion.div
@@ -451,8 +450,7 @@ function GridFeatures() {
                           className="text-sm text-primary hover:underline inline-flex items-center gap-1"
                         >
                           {feature.linkText}
-                          <ArrowRightIcon className="size-3" />
-                        </Link>
+                                                  </Link>
                       )}
 
                       {/* Magic Animation */}
@@ -490,8 +488,7 @@ function GridFeatures() {
                     className="text-primary font-medium hover:underline inline-flex items-center gap-1"
                   >
                     Schedule a call to know more
-                    <ArrowRightIcon className="size-4" />
-                  </Link>
+                                      </Link>
                 </motion.div>
               </div>
             </div>
@@ -515,8 +512,7 @@ function GridFeatures() {
                     className="px-6 py-3 rounded-lg bg-muted/50 border border-border/50 font-medium hover:border-primary/30 hover:text-primary transition-colors duration-150 inline-flex items-center gap-2"
                   >
                     {page.title}
-                    <ArrowRightIcon className="size-4" />
-                  </Link>
+                                      </Link>
                 </motion.div>
               ))}
             </div>
@@ -541,7 +537,7 @@ function BentoFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1400} />
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title="Powerful LTV analytics tools"
@@ -651,8 +647,7 @@ function BentoFeatures() {
                               className="text-sm text-primary hover:underline inline-flex items-center gap-1 mt-2"
                             >
                               {feature.linkText}
-                              <ArrowRightIcon className="size-3" />
-                            </Link>
+                                                          </Link>
                           )}
                         </div>
                       </div>
@@ -713,7 +708,7 @@ function TabsFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1400} />
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title="Powerful LTV analytics tools"
@@ -791,8 +786,7 @@ function TabsFeatures() {
                               className="text-sm text-primary hover:underline inline-flex items-center gap-1 mt-2"
                             >
                               {feature.linkText}
-                              <ArrowRightIcon className="size-3" />
-                            </Link>
+                                                          </Link>
                           )}
                         </div>
 
@@ -843,8 +837,7 @@ function TabsFeatures() {
                     className="px-6 py-3 rounded-lg bg-muted/50 border border-border/50 font-medium hover:border-primary/30 hover:text-primary transition-colors duration-150 inline-flex items-center gap-2"
                   >
                     {page.title}
-                    <ArrowRightIcon className="size-4" />
-                  </Link>
+                                      </Link>
                 </motion.div>
               ))}
             </div>

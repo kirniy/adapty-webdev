@@ -11,10 +11,14 @@ import {
   CTASwitcher,
 } from '~/components/sections/section-switchers';
 
-// Import dedicated feature sections (per Linear analysis - 66% of page should be features)
-import { PaywallBuilderFeatures } from '~/components/sections/paywall-builder-features';
-import { ABTestingFeatures } from '~/components/sections/ab-testing-features';
-import { LTVAnalyticsFeatures } from '~/components/sections/ltv-analytics-features';
+// Import Linear-style feature sections
+import {
+  AdaptyValueProps,
+  PaywallBuilderLinear,
+  ABTestingLinear,
+  AnalyticsLinear,
+  IntegrationsLinear,
+} from '~/components/sections/features-linear-style';
 
 // ============================================================================
 // MAIN PAGE - Restructured per Lera's feedback and Linear analysis
@@ -22,7 +26,17 @@ import { LTVAnalyticsFeatures } from '~/components/sections/ltv-analytics-featur
 // - Blog, Stats, Roles removed
 // - Logos merged into Hero as compact trust bar
 // - Focus on core product value (Paywall Builder, A/B Testing, Analytics)
+// - Thin separator lines between major groups (Linear style)
 // ============================================================================
+
+// Linear-style thin separator line
+function Separator() {
+  return (
+    <div className="container">
+      <div className="h-px bg-border/50" />
+    </div>
+  );
+}
 
 export default function IndexPage(): React.JSX.Element {
   return (
@@ -30,25 +44,47 @@ export default function IndexPage(): React.JSX.Element {
       {/* 1. Hero Section - includes logo trust bar */}
       <HeroSwitcher />
 
-      {/* 2. Paywall Builder Features - dedicated section */}
-      <PaywallBuilderFeatures variant="bento" />
+      <Separator />
 
-      {/* 4. A/B Testing Features - dedicated section */}
-      <ABTestingFeatures variant="bento" />
+      {/* 2. Value Props - 3 column cards (Linear style) */}
+      <AdaptyValueProps />
 
-      {/* 5. Analytics Features - dedicated section */}
-      <LTVAnalyticsFeatures variant="bento" />
+      <Separator />
 
-      {/* 6. SDK Code Section */}
+      {/* 3. Paywall Builder - Interactive selector (Linear style) */}
+      <PaywallBuilderLinear />
+
+      <Separator />
+
+      {/* 4. A/B Testing - Interactive selector (Linear style) */}
+      <ABTestingLinear />
+
+      <Separator />
+
+      {/* 5. Analytics - Feature list (Linear style) */}
+      <AnalyticsLinear />
+
+      <Separator />
+
+      {/* 6. Integrations - Card carousel (Linear style) */}
+      <IntegrationsLinear />
+
+      <Separator />
+
+      {/* 7. SDK Code Section */}
       <SDKSwitcher />
 
-      {/* 7. Testimonials Section */}
+      <Separator />
+
+      {/* 8. Testimonials Section */}
       <TestimonialsSwitcher />
 
-      {/* 8. FAQ Section */}
+      {/* 9. FAQ Section */}
       <FAQSwitcher />
 
-      {/* 9. CTA Section */}
+      <Separator />
+
+      {/* 10. CTA Section */}
       <CTASwitcher />
     </>
   );

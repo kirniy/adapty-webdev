@@ -1,19 +1,16 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import {
   RefreshCwIcon,
   ZapIcon,
   FlaskConicalIcon,
   LayoutGridIcon,
-  LayoutIcon,
   SlidersHorizontalIcon,
   GlobeIcon,
   SmartphoneIcon,
   BoxIcon,
   ChevronRightIcon,
-  ArrowRightIcon
 } from 'lucide-react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 
@@ -170,7 +167,7 @@ function CarouselMagic() {
         <CarouselContent className="pointer-events-none -mt-1 h-[150px] select-none">
           {PAYWALL_SCENARIOS.map((scenario, i) => (
             <CarouselItem key={i} className="pointer-events-none basis-1/3 select-none pt-1">
-              <div className="mx-6 p-3 rounded-lg border bg-background/50 backdrop-blur-sm flex items-center justify-between shadow-sm">
+              <div className="mx-6 p-3 rounded-lg border bg-background/50 backdrop-blur-sm flex items-center justify-between ">
                 <div className="flex items-center gap-3">
                   <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                     <BoxIcon className="size-4" />
@@ -209,14 +206,14 @@ function SyncMagic() {
       {/* Nodes */}
       <div className="flex justify-between w-[80%] relative z-10">
         <div className="flex flex-col items-center gap-2">
-          <div className="size-12 rounded-xl bg-background border shadow-sm flex items-center justify-center">
+          <div className="size-12 rounded-xl bg-background border  flex items-center justify-center">
             <LayoutGridIcon className="size-6 text-muted-foreground" />
           </div>
           <span className="text-[10px] font-mono text-muted-foreground">Config</span>
         </div>
 
         <div className="flex flex-col items-center gap-2">
-          <div className="size-12 rounded-xl bg-primary/10 border border-primary/20 shadow-sm flex items-center justify-center relative">
+          <div className="size-12 rounded-xl bg-primary/10 border border-primary/20  flex items-center justify-center relative">
             <SmartphoneIcon className="size-6 text-primary" />
             <span className="absolute -top-1 -right-1 flex size-2.5">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75"></span>
@@ -322,7 +319,7 @@ function LayoutMagic() {
       <motion.div
         animate={{ scale: [1, 0.9, 1] }}
         transition={{ duration: 2, repeat: Infinity, delay: 0 }}
-        className="w-12 h-16 rounded border bg-background shadow-sm"
+        className="w-12 h-16 rounded border bg-background "
       />
       <div className="space-y-1.5">
         <motion.div
@@ -363,7 +360,7 @@ function GridFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1000} />
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title={features.headline}
@@ -384,21 +381,6 @@ function GridFeatures() {
           ))}
         </div>
 
-        <BlurFade delay={0.3}>
-          <div className="mt-16 text-center">
-            <h3 className="text-2xl font-bold tracking-tight mb-4">Start with a template or from scratch</h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-              Pick one of our pre-made industry-tested templates or start from a blank page.
-            </p>
-            <Link
-              href="/schedule-demo"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              Schedule a demo
-              <ArrowRightIcon className="size-4" />
-            </Link>
-          </div>
-        </BlurFade>
       </div>
     </GridSection>
   );
@@ -421,7 +403,7 @@ function BentoFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1200} />
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title={features.headline}
@@ -552,7 +534,7 @@ function TabsFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1000} />
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title={features.headline}
@@ -653,21 +635,6 @@ function TabsFeatures() {
           </AnimatePresence>
         </div>
 
-        <BlurFade delay={0.3}>
-          <div className="mt-16 text-center">
-            <h3 className="text-2xl font-bold tracking-tight mb-4">Start with a template or from scratch</h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-              Pick one of our pre-made industry-tested templates or start from a blank page.
-            </p>
-            <Link
-              href="/schedule-demo"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              Schedule a demo
-              <ArrowRightIcon className="size-4" />
-            </Link>
-          </div>
-        </BlurFade>
       </div>
     </GridSection>
   );

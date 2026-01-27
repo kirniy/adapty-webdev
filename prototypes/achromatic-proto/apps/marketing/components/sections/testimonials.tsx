@@ -153,7 +153,7 @@ export function Testimonials({ items = DATA }: TestimonialsProps): React.JSX.Ele
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1000} />
 
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         <BlurFade className="mb-16 text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl text-balance">
             Loved by developers worldwide
@@ -323,15 +323,6 @@ export function Testimonials({ items = DATA }: TestimonialsProps): React.JSX.Ele
           </div>
         </div>
 
-        <div className="mt-16 text-center">
-          <Link
-            href="https://adapty.io/customer-stories/"
-            className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            View all customer stories
-            <ArrowRightIcon className="size-4" />
-          </Link>
-        </div>
       </div>
     </GridSection>
   );

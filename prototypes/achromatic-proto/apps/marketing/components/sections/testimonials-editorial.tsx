@@ -3,47 +3,15 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRightIcon, QuoteIcon } from 'lucide-react';
+import { ChevronRightIcon } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 
-import { Badge } from '@workspace/ui/components/badge';
 import { cn } from '@workspace/ui/lib/utils';
 
 import { BlurFade } from '~/components/fragments/blur-fade';
-import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
-import { SectionBackground } from '~/components/fragments/section-background';
-import { Spotlight } from '~/components/fragments/spotlight';
 
-// Magic animation: Customer stories badge
-function CustomerStoriesMagic() {
-  const shouldReduceMotion = useReducedMotion();
-  const totalStories = CASE_STUDIES.length;
-
-  return (
-    <motion.div
-      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, delay: 0.15 }}
-    >
-      <motion.div
-        className="size-2 rounded-full bg-primary"
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-      <span>{totalStories}+ verified stories</span>
-    </motion.div>
-  );
-}
-
-// Case studies with real metrics - logos will be rendered grayscale
+// Case studies with real metrics
 const CASE_STUDIES = [
   {
     id: 'hubx',
@@ -55,7 +23,7 @@ const CASE_STUDIES = [
     person: {
       name: 'Cem Ortabas',
       role: 'Co-founder and CEO',
-      image: '/images/testimonials/cem.webp'
+      image: '/images/testimonials/cem-ortabas.webp'
     },
     link: 'https://adapty.io/customer-stories/'
   },
@@ -69,7 +37,7 @@ const CASE_STUDIES = [
     person: {
       name: 'Roi Mulia',
       role: 'Founder and CEO',
-      image: '/images/testimonials/roi.webp'
+      image: '/images/testimonials/roi-mulia.webp'
     },
     link: 'https://adapty.io/customer-stories/'
   },
@@ -83,7 +51,7 @@ const CASE_STUDIES = [
     person: {
       name: 'Chris Bick',
       role: 'Founder and CEO',
-      image: '/images/testimonials/chris.webp'
+      image: '/images/testimonials/chris-bick.webp'
     },
     link: 'https://adapty.io/customer-stories/'
   }
@@ -92,112 +60,93 @@ const CASE_STUDIES = [
 // Featured testimonial (larger display)
 const FEATURED = CASE_STUDIES[1]; // SocialKit - impressive metric
 
+// Linear-style tag
+function FeatureTag({ label }: { label: string }) {
+  return (
+    <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+      <span className="size-2 rounded-full bg-primary" />
+      <span>{label}</span>
+    </div>
+  );
+}
+
+// Linear-style squircle button
+function SquircleButton({
+  children,
+  href
+}: {
+  children: React.ReactNode;
+  href: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        'inline-flex items-center gap-2 px-4 py-2 text-sm font-medium',
+        'rounded-full border border-border/50 bg-muted/30',
+        'hover:bg-muted hover:border-border transition-colors'
+      )}
+    >
+      {children}
+      <ChevronRightIcon className="size-4" />
+    </Link>
+  );
+}
+
 function FeaturedTestimonial() {
-  const [isHovered, setIsHovered] = React.useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <BlurFade delay={shouldReduceMotion ? 0 : 0.05}>
       <motion.div
-        className="group relative rounded-2xl border bg-card p-8 lg:p-12 cursor-pointer overflow-hidden"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+        className="group relative rounded-[24px] border border-border/50 bg-muted/30 p-8 lg:p-10 hover:border-border transition-colors"
+        whileHover={undefined}
         transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
       >
-        {isHovered && (
-          <BorderBeam
-            size={200}
-            duration={12}
-            borderWidth={1.5}
-            colorFrom="hsl(var(--primary))"
-            colorTo="hsl(var(--primary)/0)"
+        {/* Company logo + Metric */}
+        <div className="mb-6 flex items-center justify-between">
+          <Image
+            src={FEATURED.logo}
+            alt={FEATURED.company}
+            width={100}
+            height={32}
+            className="h-6 w-auto object-contain grayscale opacity-60 group-hover:opacity-80 transition-opacity"
           />
-        )}
-        <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={350} />
-        {/* Subtle gradient border on hover */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl border-2 border-primary/0 pointer-events-none"
-          animate={shouldReduceMotion ? undefined : { borderColor: isHovered ? 'hsl(var(--primary) / 0.2)' : 'hsl(var(--primary) / 0)' }}
-          transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
-        />
-
-        {/* Quote icon with micro-animation */}
-        <motion.div
-          className="absolute right-8 top-8 z-10"
-          animate={shouldReduceMotion ? undefined : {
-            opacity: isHovered ? 0.15 : 0.05,
-            scale: isHovered ? 1.03 : 1
-          }}
-          transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
-        >
-          <QuoteIcon className="size-16 text-muted-foreground" />
-        </motion.div>
-
-        {/* Company logo + Metric - logos are grayscale */}
-        <div className="mb-6 flex items-center justify-between relative z-10">
-          <motion.div
-            animate={shouldReduceMotion ? undefined : { opacity: isHovered ? 1 : 0.7 }}
-            transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
-          >
-            <Image
-              src={FEATURED.logo}
-              alt={FEATURED.company}
-              width={120}
-              height={40}
-              className="h-8 w-auto object-contain grayscale"
-            />
-          </motion.div>
-          <motion.div
-            className="flex items-baseline gap-1.5 rounded-full border bg-muted/50 px-4 py-2"
-            whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
-            transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-          >
-            <span className="text-xl font-bold text-primary">{FEATURED.metric}</span>
-            <span className="text-sm text-muted-foreground">{FEATURED.metricLabel}</span>
-          </motion.div>
+          <div className="flex items-baseline gap-1.5 rounded-full border border-border/50 bg-background px-4 py-2">
+            <span className="text-lg font-bold text-primary">{FEATURED.metric}</span>
+            <span className="text-xs text-muted-foreground">{FEATURED.metricLabel}</span>
+          </div>
         </div>
 
-        {/* Quote with subtle highlight animation */}
-        <blockquote className="mb-8 relative z-10">
-          <p className="text-xl font-medium leading-relaxed text-foreground lg:text-2xl">
+        {/* Quote */}
+        <blockquote className="mb-8">
+          <p className="text-xl font-medium leading-relaxed lg:text-2xl">
             &ldquo;{FEATURED.quote}&rdquo;
           </p>
         </blockquote>
 
-        {/* Author with image */}
-        <div className="flex items-center justify-between relative z-10">
+        {/* Author */}
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <motion.div
-              whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
-              transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-            >
-              <Image
-                src={FEATURED.person.image}
-                alt={FEATURED.person.name}
-                width={56}
-                height={56}
-                className="size-14 rounded-full border-2 border-background shadow-md object-cover"
-              />
-            </motion.div>
+            <Image
+              src={FEATURED.person.image}
+              alt={FEATURED.person.name}
+              width={48}
+              height={48}
+              className="size-12 rounded-full object-cover grayscale"
+            />
             <div>
-              <p className="font-semibold">{FEATURED.person.name}</p>
+              <p className="font-medium">{FEATURED.person.name}</p>
               <p className="text-sm text-muted-foreground">{FEATURED.person.role} at {FEATURED.company}</p>
             </div>
           </div>
 
-          {/* CTA arrow */}
           <Link
             href={FEATURED.link}
-            className="hidden lg:flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            className="hidden lg:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             Read story
-            <motion.span
-              animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0 }}
-              transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
-            >
-              <ArrowRightIcon className="size-4" />
-            </motion.span>
+            <ChevronRightIcon className="size-4" />
           </Link>
         </div>
       </motion.div>
@@ -206,85 +155,62 @@ function FeaturedTestimonial() {
 }
 
 function CaseStudyCard({ study, index }: { study: typeof CASE_STUDIES[0]; index: number }) {
-  const [isHovered, setIsHovered] = React.useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <BlurFade delay={shouldReduceMotion ? 0 : 0.1 + index * 0.05}>
       <Link href={study.link}>
         <motion.div
-          className="group relative flex h-full flex-col rounded-xl border bg-card p-6 cursor-pointer overflow-hidden"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+          className="group relative flex h-full flex-col rounded-[20px] border border-border/50 bg-muted/30 p-6 hover:border-border transition-colors"
+          whileHover={undefined}
           transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
         >
-          {isHovered && (
-            <BorderBeam
-              size={120}
-              duration={8}
-              borderWidth={1.5}
-              colorFrom="hsl(var(--primary))"
-              colorTo="hsl(var(--primary)/0)"
-            />
-          )}
-          <Spotlight className="from-primary/10 via-primary/5 to-transparent" size={180} />
           {/* Top row: Logo + Metric */}
-          <div className="mb-4 flex items-center justify-between relative z-10">
-            {/* Logo - grayscale */}
-            <motion.div
-              animate={shouldReduceMotion ? undefined : { opacity: isHovered ? 1 : 0.6 }}
-              transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
-            >
-              <Image
-                src={study.logo}
-                alt={study.company}
-                width={80}
-                height={28}
-                className="h-5 w-auto object-contain grayscale"
-              />
-            </motion.div>
-            {/* Metric badge */}
+          <div className="mb-4 flex items-center justify-between">
+            <Image
+              src={study.logo}
+              alt={study.company}
+              width={72}
+              height={24}
+              className="h-4 w-auto object-contain grayscale opacity-50 group-hover:opacity-70 transition-opacity"
+            />
             <div className="flex items-baseline gap-1">
-              <span className="text-lg font-bold text-primary">{study.metric}</span>
+              <span className="text-base font-bold text-primary">{study.metric}</span>
               <span className="text-xs text-muted-foreground">{study.metricLabel}</span>
             </div>
           </div>
 
           {/* Quote */}
-          <p className="mb-4 flex-1 text-sm text-muted-foreground line-clamp-3 leading-relaxed relative z-10">
+          <p className="mb-4 flex-1 text-sm text-muted-foreground line-clamp-3 leading-relaxed">
             &ldquo;{study.quote}&rdquo;
           </p>
 
           {/* Author row */}
-          <div className="flex items-center justify-between pt-4 border-t border-border/50 relative z-10">
+          <div className="flex items-center justify-between pt-4 border-t border-border/30">
             <div className="flex items-center gap-3">
-              <motion.div
-                whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
-                transition={{ duration: 0.1, ease: [0.32, 0.72, 0, 1] }}
-              >
-                <Image
-                  src={study.person.image}
-                  alt={study.person.name}
-                  width={32}
-                  height={32}
-                  className="size-8 rounded-full object-cover"
-                />
-              </motion.div>
+              <Image
+                src={study.person.image}
+                alt={study.person.name}
+                width={28}
+                height={28}
+                className="size-7 rounded-full object-cover grayscale"
+              />
               <div className="text-xs">
                 <p className="font-medium">{study.person.name}</p>
                 <p className="text-muted-foreground">{study.person.role}</p>
               </div>
             </div>
 
-            {/* Arrow indicator */}
-            <motion.div
-              className="text-muted-foreground"
-              animate={shouldReduceMotion ? undefined : { x: isHovered ? 3 : 0, opacity: isHovered ? 1 : 0.5 }}
-              transition={{ duration: 0.15, ease: [0.32, 0.72, 0, 1] }}
+            {/* Plus button (Linear style) */}
+            <span
+              className={cn(
+                'flex items-center justify-center size-7 rounded-full',
+                'bg-background border border-border/50',
+                'group-hover:border-border transition-colors'
+              )}
             >
-              <ArrowRightIcon className="size-4" />
-            </motion.div>
+              <ChevronRightIcon className="size-3.5" />
+            </span>
           </div>
         </motion.div>
       </Link>
@@ -296,34 +222,22 @@ export function TestimonialsEditorial(): React.JSX.Element {
   const otherCaseStudies = CASE_STUDIES.filter(s => s.id !== FEATURED.id);
 
   return (
-    <GridSection className="relative overflow-hidden">
-      <SectionBackground height={600} />
-      <div className="container py-16 lg:py-24 relative z-10">
-        <Spotlight className="from-primary/15 via-primary/5 to-transparent" size={350} />
-        {/* Section Header */}
-        <BlurFade className="mb-12">
-          <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
+    <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
+      <div className="container py-16">
+        {/* Section Header - Linear style */}
+        <BlurFade className="mb-10">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <Badge variant="outline" className="mb-4 rounded-full">
-                Customer Stories
-              </Badge>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">
+              <div className="mb-4">
+                <FeatureTag label="Customer Stories" />
+              </div>
+              <h2 className="text-3xl font-bold tracking-tight">
                 Trusted by apps that ship
               </h2>
-              <div className="mt-4 lg:hidden">
-                <CustomerStoriesMagic />
-              </div>
             </div>
-            <div className="hidden lg:block">
-              <CustomerStoriesMagic />
-            </div>
-            <Link
-              href="https://adapty.io/customer-stories/"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground lg:mt-0"
-            >
+            <SquircleButton href="https://adapty.io/customer-stories/">
               View all stories
-              <ArrowRightIcon className="size-4" />
-            </Link>
+            </SquircleButton>
           </div>
         </BlurFade>
 

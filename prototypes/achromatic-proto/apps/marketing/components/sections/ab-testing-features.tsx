@@ -358,8 +358,7 @@ function TargetingMagic() {
         <ChevronRightIcon className="size-4 text-muted-foreground" />
       </motion.div>
       <div className="h-8 px-3 rounded-md border border-primary/30 bg-primary/5 flex items-center gap-2">
-        <span className="size-2 rounded-full bg-primary animate-pulse" />
-        <span className="text-[10px] font-medium">Verified</span>
+        <span className="text-[10px] font-medium text-primary">Verified</span>
       </div>
     </div>
   );
@@ -432,7 +431,7 @@ function LocalizationMagic() {
 function IntegrationMagic() {
   return (
     <div className="mt-4 flex justify-center items-center gap-3 opacity-80">
-      <div className="size-8 rounded-lg bg-background border shadow-sm flex items-center justify-center">
+      <div className="size-8 rounded-lg bg-background border  flex items-center justify-center">
         <div className="size-4 bg-primary/20 rounded-full" />
       </div>
       <div className="flex gap-0.5">
@@ -445,7 +444,7 @@ function IntegrationMagic() {
           />
         ))}
       </div>
-      <div className="size-8 rounded-lg bg-primary/10 border border-primary/20 shadow-sm flex items-center justify-center">
+      <div className="size-8 rounded-lg bg-primary/10 border border-primary/20  flex items-center justify-center">
         <LinkIcon className="size-4 text-primary" />
       </div>
     </div>
@@ -480,7 +479,7 @@ function GridFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1200} />
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title="Everything you need for paywall experiments"
@@ -532,23 +531,6 @@ function GridFeatures() {
           ))}
         </div>
 
-        {/* Related features section */}
-        <BlurFade delay={0.3}>
-          <div className="mt-16 text-center">
-            <h3 className="text-2xl font-bold tracking-tight mb-4">Works seamlessly with</h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-              A/B testing integrates with all Adapty features for a complete monetization solution.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {RELATED_FEATURES.map((feature, index) => (
-                <div key={index} className="p-4 rounded-lg bg-muted/50 border border-border/50 hover:border-primary/30 transition-colors duration-150">
-                  <p className="font-medium text-foreground">{feature.name}</p>
-                  <p className="text-xs text-muted-foreground mt-1">{feature.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </BlurFade>
       </div>
     </GridSection>
   );
@@ -569,7 +551,7 @@ function BentoFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1200} />
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title="Everything you need for paywall experiments"
@@ -698,7 +680,7 @@ function TabsFeatures() {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={1000} />
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         <BlurFade delay={0.05}>
           <SiteHeading
             title="Everything you need for paywall experiments"
@@ -774,23 +756,6 @@ function TabsFeatures() {
           </AnimatePresence>
         </div>
 
-        {/* Related features section */}
-        <BlurFade delay={0.3}>
-          <div className="mt-16 text-center">
-            <h3 className="text-2xl font-bold tracking-tight mb-4">Works seamlessly with</h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-              A/B testing integrates with all Adapty features for a complete monetization solution.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {RELATED_FEATURES.map((feature, index) => (
-                <div key={index} className="p-4 rounded-lg bg-muted/50 border border-border/50 hover:border-primary/30 transition-colors duration-150">
-                  <p className="font-medium text-foreground">{feature.name}</p>
-                  <p className="text-xs text-muted-foreground mt-1">{feature.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </BlurFade>
       </div>
     </GridSection>
   );

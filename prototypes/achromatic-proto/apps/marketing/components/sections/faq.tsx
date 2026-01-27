@@ -100,7 +100,7 @@ export function FAQ({ items = DATA }: FAQProps): React.JSX.Element {
   return (
     <GridSection className="relative overflow-hidden">
       <SectionBackground height={800} />
-      <div className="container py-24 relative z-10">
+      <div className="container py-16 relative z-10">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Left column - Header */}
           <BlurFade delay={shouldReduceMotion ? 0 : 0.05} className="text-center lg:text-left lg:sticky lg:top-24 lg:self-start">

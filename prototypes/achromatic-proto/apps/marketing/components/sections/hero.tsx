@@ -3,16 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  ArrowRightIcon,
-  BarChart3Icon,
-  BoxIcon,
-  CheckIcon,
-  ChevronRightIcon,
-  CircuitBoardIcon,
-  LayoutIcon,
-  PlayIcon
-} from 'lucide-react';
+import { ChevronRightIcon } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { Badge } from '@workspace/ui/components/badge';
@@ -24,104 +15,14 @@ import { BorderBeam } from '~/components/fragments/border-beam';
 import { GridSection } from '~/components/fragments/grid-section';
 import { BlurFade } from '~/components/fragments/blur-fade';
 import { SlideIn } from '~/components/fragments/slide-in';
-import { ScaleOnHover } from '~/components/fragments/scale-on-hover';
 import {
   useDashedThicknessVariant,
   useGridColorVariant,
   useGridOpacityVariant,
   useGridZIndexVariant,
-  useHeroLinesVariant,
   useHeroVariant,
-  useImageSetVariant,
-  useMonochromeMode,
-  type ImageSetVariant
 } from '~/lib/debug-context';
 
-// Helper to get image path based on selected image set
-function getImagePath(basePath: string, imageSet: ImageSetVariant): string {
-  // basePath is like '/assets/hero/light-feature1.webp'
-  // We need to transform it to '/assets/hero/set1/light-feature1.webp'
-  return basePath.replace('/assets/hero/', `/assets/hero/${imageSet}/`);
-}
-
-// Feature tab content data
-const HERO_FEATURES = [
-  {
-    id: 'paywall-builder',
-    icon: LayoutIcon,
-    label: 'Paywall Builder',
-    headline: 'Build paywalls without code',
-    description: 'Create stunning paywalls with our visual builder. No engineering required - designers and product managers can iterate independently.',
-    highlights: [
-      'Drag-and-drop visual editor',
-      'Native iOS & Android rendering',
-      'Real-time preview on device',
-      'Template library included'
-    ],
-    lightImage: '/assets/hero/light-feature1.webp',
-    darkImage: '/assets/hero/dark-feature1.webp',
-  },
-  {
-    id: 'ab-testing',
-    icon: PlayIcon,
-    label: 'A/B Testing',
-    headline: 'Optimize with experiments',
-    description: 'Run A/B tests on paywalls, pricing, and offers. Make data-driven decisions with statistical significance.',
-    highlights: [
-      'Multi-variant experiments',
-      'Statistical significance tracking',
-      'Revenue impact analysis',
-      'Automatic winner selection'
-    ],
-    lightImage: '/assets/hero/light-feature2.webp',
-    darkImage: '/assets/hero/dark-feature2.webp',
-  },
-  {
-    id: 'analytics',
-    icon: BarChart3Icon,
-    label: 'Analytics',
-    headline: 'Understand your revenue',
-    description: 'Real-time subscription analytics with cohort analysis, funnel tracking, and predictive metrics.',
-    highlights: [
-      'Real-time revenue dashboard',
-      'Cohort retention analysis',
-      'Funnel conversion tracking',
-      'LTV predictions'
-    ],
-    lightImage: '/assets/hero/light-feature3.webp',
-    darkImage: '/assets/hero/dark-feature3.webp',
-  },
-  {
-    id: 'sdk',
-    icon: BoxIcon,
-    label: 'SDK',
-    headline: 'Integrate in minutes',
-    description: 'Production-ready SDKs for all major platforms. Handle subscriptions, purchases, and receipt validation automatically.',
-    highlights: [
-      'iOS, Android, React Native, Flutter',
-      'Server-side receipt validation',
-      'Webhook notifications',
-      'Sandbox testing support'
-    ],
-    lightImage: '/assets/hero/light-feature4.webp',
-    darkImage: '/assets/hero/dark-feature4.webp',
-  },
-  {
-    id: 'integrations',
-    icon: CircuitBoardIcon,
-    label: 'Integrations',
-    headline: 'Connect your stack',
-    description: 'Send subscription events to your analytics, marketing, and CRM tools. 30+ integrations available.',
-    highlights: [
-      'Amplitude, Mixpanel, Segment',
-      'AppsFlyer, Adjust, Branch',
-      'Slack, Webhooks, API',
-      'Custom integrations available'
-    ],
-    lightImage: '/assets/hero/light-feature5.webp',
-    darkImage: '/assets/hero/dark-feature5.webp',
-  },
-];
 
 function HeroPill(): React.JSX.Element {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -313,360 +214,8 @@ function MainDashedGridLines(): React.JSX.Element {
   );
 }
 
-// Learn more link - arrow removed per Lera's feedback
-function LearnMoreLink({ href, label }: { href: string; label: string }) {
-  return (
-    <Link
-      href={href}
-      className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
-    >
-      Learn more about {label}
-    </Link>
-  );
-}
 
-// Auto-rotation interval in milliseconds (8 seconds for comfortable reading)
-const AUTO_ROTATE_INTERVAL = 8000;
 
-// Feature tab component with hover state, micro-interactions, and progress indicator
-function FeatureTab({
-  feature,
-  isActive,
-  onClick,
-  progress,
-  isAutoRotating,
-}: {
-  feature: typeof HERO_FEATURES[0];
-  isActive: boolean;
-  onClick: () => void;
-  progress: number; // 0-100 for progress bar
-  isAutoRotating: boolean;
-}) {
-  const Icon = feature.icon;
-  const [isHovered, setIsHovered] = React.useState(false);
-  const shouldReduceMotion = useReducedMotion();
-
-  return (
-    <ScaleOnHover
-      className={cn(
-        'group relative flex shrink-0 sm:shrink sm:flex-1 flex-col items-center gap-2 px-3 sm:px-4 py-3 cursor-pointer',
-        'border-b-2 transition-colors duration-150',
-        isActive
-          ? 'border-b-transparent text-foreground'
-          : 'border-b-transparent text-muted-foreground hover:text-foreground hover:border-b-border'
-      )}
-      onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className={cn(
-        'flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium whitespace-nowrap',
-        isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
-      )}>
-        <motion.div
-          animate={{
-            scale: isActive ? 1.1 : isHovered ? 1.05 : 1,
-            rotate: isActive ? 5 : 0,
-          }}
-          transition={{
-            type: 'spring',
-            duration: 0.25,
-            bounce: isActive ? 0.2 : 0,
-          }}
-        >
-          <Icon className="size-4 shrink-0" />
-        </motion.div>
-        <span>{feature.label}</span>
-      </div>
-      {/* Active indicator - solid when user selected, animated progress when auto-rotating */}
-      {isActive && (
-        <div className="absolute bottom-0 left-0 right-0 h-0.5 overflow-hidden">
-          {/* Background track */}
-          <motion.div
-            layoutId="activeTabTrack"
-            className="absolute inset-0 bg-primary/20"
-            transition={{ type: 'spring', duration: 0.3, bounce: 0.15 }}
-          />
-          {/* Progress fill */}
-          <motion.div
-            layoutId="activeTabIndicator"
-            className="absolute inset-y-0 left-0 bg-primary"
-            initial={false}
-            animate={{
-              width: isAutoRotating ? `${progress}%` : '100%',
-            }}
-            transition={
-              isAutoRotating
-                ? { duration: 0.1, ease: 'linear' }
-                : { type: 'spring', duration: 0.3, bounce: 0.15 }
-            }
-          />
-        </div>
-      )}
-    </ScaleOnHover>
-  );
-}
-
-// Feature content with smooth horizontal slide transitions and alternating layouts
-function FeatureContent({
-  feature,
-  direction,
-  index,
-}: {
-  feature: typeof HERO_FEATURES[0];
-  direction: 'left' | 'right';
-  index: number;
-}) {
-  const imageSet = useImageSetVariant();
-  const monochromeMode = useMonochromeMode();
-  const shouldReduceMotion = useReducedMotion();
-
-  // Slide direction: entering from right when going forward, from left when going backward
-  // Respect reduced motion preference
-  const slideOffset = shouldReduceMotion ? 0 : direction === 'right' ? 40 : -40;
-
-  // Alternate layout: odd indexes (1, 3) have image on left, even (0, 2, 4) have image on right
-  const isReversed = index % 2 === 1;
-
-  return (
-    <motion.div
-      key={feature.id}
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: slideOffset, scale: 0.98 }}
-      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0, scale: 1 }}
-      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -slideOffset, scale: 0.98 }}
-      transition={{
-        duration: shouldReduceMotion ? 0.15 : 0.35,
-        ease: [0.32, 0.72, 0, 1], // ease-out-expo for enter/exit
-      }}
-      className="grid gap-8 lg:grid-cols-5"
-    >
-      {/* Text content - on mobile always first, on desktop alternates */}
-      <div className={cn(
-        "flex flex-col justify-center lg:col-span-2",
-        isReversed && "lg:order-2"
-      )}>
-        <motion.div
-          initial={{ opacity: 0, x: isReversed ? 8 : -8 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ type: 'spring', delay: 0.05, duration: 0.25, bounce: 0 }}
-        >
-          {/* Badge removed per Lera's feedback - "Убрать FEATURE TAB BADGE либо подложку у него" */}
-          <h3 className="mb-3 text-2xl font-bold tracking-tight lg:text-3xl">
-            {feature.headline}
-          </h3>
-          <p className="mb-6 text-muted-foreground leading-relaxed">
-            {feature.description}
-          </p>
-        </motion.div>
-
-        {/* Highlights with stagger animation */}
-        <motion.ul
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ type: 'spring', delay: 0.1, duration: 0.25, bounce: 0 }}
-          className="space-y-3"
-        >
-          {feature.highlights.map((highlight, highlightIndex) => (
-            <motion.li
-              key={highlight}
-              initial={{ opacity: 0, x: isReversed ? 8 : -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                type: 'spring',
-                delay: 0.12 + highlightIndex * 0.04,
-                duration: 0.2,
-                bounce: 0.1
-              }}
-              className="flex items-center gap-3 text-sm group/item cursor-default"
-            >
-              <CheckIcon className="size-4 shrink-0 text-primary" />
-              <span className="text-muted-foreground group-hover/item:text-foreground transition-colors">{highlight}</span>
-            </motion.li>
-          ))}
-        </motion.ul>
-
-        {/* Learn more link with arrow animation */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ type: 'spring', delay: 0.25, duration: 0.25, bounce: 0 }}
-          className="mt-6"
-        >
-          <LearnMoreLink href={`/features/${feature.id}`} label={feature.label} />
-        </motion.div>
-      </div>
-
-      {/* Image with enhanced hover effect - on mobile always second, on desktop alternates */}
-      <motion.div
-        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-        transition={{ type: 'spring', delay: 0.08, duration: 0.3, bounce: 0 }}
-        className={cn(
-          "relative lg:col-span-3",
-          isReversed && "lg:order-1"
-        )}
-        whileHover={shouldReduceMotion ? undefined : { scale: 1.01 }}
-      >
-        <div className={cn(
-          "relative overflow-hidden rounded-xl border bg-gradient-to-b from-muted/30 to-muted/10 transition-all",
-          monochromeMode && "grayscale hover:grayscale-0 transition-[filter] duration-500"
-        )}>
-          <Image
-            priority={feature.id === 'paywall-builder'}
-            quality={100}
-            src={getImagePath(feature.lightImage, imageSet)}
-            width={1328}
-            height={727}
-            alt={`${feature.label} screenshot`}
-            className="block dark:hidden"
-          />
-          <Image
-            priority={feature.id === 'paywall-builder'}
-            quality={100}
-            src={getImagePath(feature.darkImage, imageSet)}
-            width={1328}
-            height={727}
-            alt={`${feature.label} screenshot`}
-            className="hidden dark:block"
-          />
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-function HeroFeatureShowcase(): React.JSX.Element {
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  const [isAutoRotating, setIsAutoRotating] = React.useState(true);
-  const [isPaused, setIsPaused] = React.useState(false);
-  const [progress, setProgress] = React.useState(0);
-  const [direction, setDirection] = React.useState<'left' | 'right'>('right');
-  const heroLinesVariant = useHeroLinesVariant();
-  const linesBelow = heroLinesVariant === 'below';
-  const shouldReduceMotion = useReducedMotion();
-
-  // Use ref to track current index for interval callback
-  const activeIndexRef = React.useRef(activeIndex);
-  activeIndexRef.current = activeIndex;
-
-  const activeFeature = HERO_FEATURES[activeIndex];
-
-  // Handle user click - stop auto-rotation permanently
-  const handleTabClick = React.useCallback((index: number) => {
-    const currentIndex = activeIndexRef.current;
-    setDirection(index > currentIndex ? 'right' : 'left');
-    setActiveIndex(index);
-    setIsAutoRotating(false);
-    setProgress(100); // Fill the bar when user selects
-  }, []);
-
-  // Auto-rotation effect with clean interval logic
-  React.useEffect(() => {
-    if (!isAutoRotating || isPaused || shouldReduceMotion) {
-      return;
-    }
-
-    // Reset progress when starting/resuming
-    setProgress(0);
-
-    const progressInterval = 50; // Update progress every 50ms for smooth animation
-    const progressIncrement = (progressInterval / AUTO_ROTATE_INTERVAL) * 100;
-    let currentProgress = 0;
-
-    const timer = setInterval(() => {
-      currentProgress += progressIncrement;
-
-      if (currentProgress >= 100) {
-        // Move to next tab in sequence
-        const currentIdx = activeIndexRef.current;
-        const nextIdx = (currentIdx + 1) % HERO_FEATURES.length;
-        setDirection('right'); // Always move forward
-        setActiveIndex(nextIdx);
-        currentProgress = 0;
-      }
-
-      setProgress(currentProgress);
-    }, progressInterval);
-
-    return () => clearInterval(timer);
-  }, [isAutoRotating, isPaused, shouldReduceMotion]);
-
-  return (
-    <BlurFade delay={0.5}>
-      <div className="mt-12 lg:mt-16">
-        {/* Full-width tab bar - scrollable on mobile */}
-        <div
-          className={cn(
-            'mb-8 border-b border-border overflow-x-auto scrollbar-hide',
-            linesBelow && 'bg-background'
-          )}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <div className="mx-auto flex w-full max-w-4xl min-w-max sm:min-w-0">
-            {HERO_FEATURES.map((feature, index) => (
-              <FeatureTab
-                key={feature.id}
-                feature={feature}
-                isActive={index === activeIndex}
-                onClick={() => handleTabClick(index)}
-                progress={index === activeIndex ? progress : 0}
-                isAutoRotating={isAutoRotating && !isPaused}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Content area */}
-        <div className={cn(
-          'container pb-16',
-          linesBelow && 'relative z-20 bg-background'
-        )}>
-          <AnimatePresence mode="wait" initial={false}>
-            <FeatureContent
-              key={activeFeature.id}
-              feature={activeFeature}
-              direction={direction}
-              index={activeIndex}
-            />
-          </AnimatePresence>
-        </div>
-      </div>
-    </BlurFade>
-  );
-}
-
-// Trust counter animation - counts up to 15,000+
-function TrustCounterMagic() {
-  const shouldReduceMotion = useReducedMotion();
-  const [count, setCount] = React.useState(0);
-
-  React.useEffect(() => {
-    if (shouldReduceMotion) {
-      setCount(15000);
-      return;
-    }
-    const interval = setInterval(() => {
-      setCount(prev => {
-        if (prev >= 15000) return 15000;
-        return prev + 500;
-      });
-    }, 40);
-    return () => clearInterval(interval);
-  }, [shouldReduceMotion]);
-
-  return (
-    <motion.span
-      key={count}
-      initial={shouldReduceMotion ? {} : { y: -3, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.1 }}
-      className="font-semibold text-foreground"
-    >
-      {count.toLocaleString()}+
-    </motion.span>
-  );
-}
 
 // All 7 logos per Sergey's rule
 const TRUST_LOGOS = [
@@ -688,7 +237,7 @@ function HeroTrustSignal(): React.JSX.Element {
     <SlideIn delay={0.5} duration={0.6} direction="up">
       <div className="mt-12 flex flex-col items-start min-[400px]:items-center gap-6">
         <p className="text-left min-[400px]:text-center text-sm text-muted-foreground">
-          Trusted by <TrustCounterMagic /> apps and the world&apos;s largest app publishers
+          Trusted by 15,000+ apps worldwide
         </p>
 
         {/* Logo grid with hover blur effect */}
@@ -741,10 +290,10 @@ function HeroTrustSignal(): React.JSX.Element {
                   className={cn(
                     'inline-flex items-center gap-2 rounded-xl',
                     'bg-background/95 backdrop-blur-sm',
-                    'border border-border/50 shadow-lg',
+                    'border border-border/50',
                     'px-6 py-3 text-sm font-medium',
                     'transition-all duration-150 ease-out',
-                    'hover:bg-accent hover:shadow-xl',
+                    'hover:bg-accent',
                     'motion-reduce:transition-none'
                   )}
                 >
@@ -764,9 +313,9 @@ function HeroTrustSignal(): React.JSX.Element {
 export function Hero(): React.JSX.Element {
   return (
     <GridSection className="overflow-x-hidden relative">
-      <SectionBackground height={900} />
+      <SectionBackground height={700} />
       <MainDashedGridLines />
-      <div className="relative z-10 pt-20 sm:pt-24 md:pt-28 lg:pt-32">
+      <div className="relative z-10 pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-16 sm:pb-20 md:pb-24">
         <div className="w-full max-w-full px-4 sm:container sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl w-full">
             <HeroPill />
@@ -776,7 +325,6 @@ export function Hero(): React.JSX.Element {
           </div>
           <HeroTrustSignal />
         </div>
-        <HeroFeatureShowcase />
       </div>
     </GridSection>
   );
