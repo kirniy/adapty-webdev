@@ -289,7 +289,7 @@ function RoleCard({ role, index, imageSet, monochromeMode }: RoleCardProps) {
         <p className="mb-6 text-sm text-muted-foreground">{role.description}</p>
 
         {/* Image - using object-contain to prevent cropping */}
-        <div className="relative mb-6 aspect-[16/10] overflow-hidden rounded-xl bg-white">
+        <div className="relative mb-6 aspect-[16/10] overflow-hidden rounded-xl bg-card">
           <Spotlight
             className="from-primary/20 via-purple-500/10 to-transparent"
             size={200}
@@ -418,7 +418,7 @@ function BentoCard({
             />
           )}
           {/* Image - larger on featured */}
-          <div className="relative lg:w-1/2 aspect-[16/10] lg:aspect-auto bg-white">
+          <div className="relative lg:w-1/2 aspect-[16/10] lg:aspect-auto bg-card">
             <Spotlight
               className="from-primary/20 via-purple-500/10 to-transparent"
               size={300}
@@ -505,7 +505,7 @@ function BentoCard({
           />
         )}
         {/* Image */}
-        <div className="relative aspect-[16/10] bg-white">
+        <div className="relative aspect-[16/10] bg-card">
           <Spotlight
             className="from-primary/20 via-purple-500/10 to-transparent"
             size={200}
@@ -680,7 +680,7 @@ function RolesStacked() {
                   )}
                 >
                   {/* Image */}
-                  <div className="relative lg:w-1/2 aspect-[16/10] lg:aspect-[4/3] bg-white overflow-hidden">
+                  <div className="relative lg:w-1/2 aspect-[16/10] lg:aspect-[4/3] bg-card overflow-hidden">
                     <Spotlight
                       className="from-primary/20 via-purple-500/10 to-transparent"
                       size={300}

@@ -45,7 +45,7 @@ function FeatureTag({
   };
 
   const content = (
-    <span className="inline-flex items-center gap-2.5 text-sm text-gray-500 font-medium">
+    <span className="inline-flex items-center gap-2.5 text-sm text-muted-foreground font-medium">
       <span className={cn('w-4 h-1.5 rounded-full', colorClasses[color])} />
       <span>{label}</span>
     </span>
@@ -55,7 +55,7 @@ function FeatureTag({
     return (
       <Link
         href={href}
-        className="inline-flex items-center gap-2.5 text-sm text-gray-500 font-medium hover:text-gray-900 transition-colors group"
+        className="inline-flex items-center gap-2.5 text-sm text-muted-foreground font-medium hover:text-foreground transition-colors group"
       >
         <span className={cn('w-4 h-1.5 rounded-full', colorClasses[color])} />
         <span>{label}</span>
@@ -83,16 +83,16 @@ function SquircleButton({
 }) {
   const content = (
     <>
-      <span className="text-sm font-medium text-gray-700">{children}</span>
-      {variant === 'chevron' && <ChevronRightIcon className="size-3.5 text-gray-400 transition-transform duration-150 group-hover:translate-x-0.5" />}
-      {variant === 'plus' && <span className="text-base leading-none text-gray-400">+</span>}
+      <span className="text-sm font-medium text-foreground">{children}</span>
+      {variant === 'chevron' && <ChevronRightIcon className="size-3.5 text-muted-foreground/70 transition-transform duration-150 group-hover:translate-x-0.5" />}
+      {variant === 'plus' && <span className="text-base leading-none text-muted-foreground/70">+</span>}
     </>
   );
 
   const className = cn(
     'group inline-flex items-center gap-1.5 px-4 py-2 rounded-xl',
-    'bg-white border border-gray-200',
-    'hover:bg-gray-50 hover:border-gray-300 transition-all duration-200'
+    'bg-background border border-border',
+    'hover:bg-muted hover:border-border transition-all duration-200'
   );
 
   if (href) {
@@ -139,9 +139,9 @@ function InteractiveSelector({
   return (
     <div>
       {/* Header */}
-      <h3 className="text-2xl lg:text-3xl font-semibold tracking-tight mb-3 text-gray-900">{title}</h3>
+      <h3 className="text-2xl lg:text-3xl font-semibold tracking-tight mb-3 text-foreground">{title}</h3>
       {subtitle && (
-        <p className="text-gray-500 mb-10 max-w-xl">{subtitle}</p>
+        <p className="text-muted-foreground mb-10 max-w-xl">{subtitle}</p>
       )}
 
       {/* 2-column layout: menu left, image right */}
@@ -159,8 +159,8 @@ function InteractiveSelector({
                 className={cn(
                   'relative block w-full text-left py-3 px-4 -ml-4 rounded-lg transition-all duration-200',
                   selectedIndex === index
-                    ? 'text-gray-900 bg-gray-50'
-                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50/50'
+                    ? 'text-foreground bg-muted'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                 )}
               >
                 {/* Indicator dot */}
@@ -174,7 +174,7 @@ function InteractiveSelector({
                 />
                 <span className="font-medium">{option.title}</span>
                 {option.description && (
-                  <span className="block text-sm text-gray-400 mt-0.5">
+                  <span className="block text-sm text-muted-foreground/70 mt-0.5">
                     {option.description}
                   </span>
                 )}
@@ -184,7 +184,7 @@ function InteractiveSelector({
         </div>
 
         {/* Right: Large image */}
-        <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 bg-gray-50 shadow-sm">
+        <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-border bg-muted shadow-sm">
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedIndex}
@@ -207,16 +207,16 @@ function InteractiveSelector({
 
       {/* Optional: Feature grid below */}
       {features && features.length > 0 && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12 pt-10 border-t border-gray-100">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12 pt-10 border-t border-border/50">
           {features.map((feature, index) => (
             <div key={index}>
               <div className="flex items-center gap-2.5 mb-2">
                 {feature.icon}
-                <span className="font-medium text-sm text-gray-900">
+                <span className="font-medium text-sm text-foreground">
                   {feature.title}
                 </span>
               </div>
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 {feature.description}
               </p>
             </div>
@@ -268,11 +268,11 @@ export function LinearFeatureSection({
 
             {/* LINEAR: Mixed-color title - first words black, rest gray */}
             <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1] mb-6 max-w-3xl">
-              <span className="text-gray-900">{titleBlack}</span>
+              <span className="text-foreground">{titleBlack}</span>
               {titleGray && (
                 <>
                   {' '}
-                  <span className="text-gray-400">{titleGray}</span>
+                  <span className="text-muted-foreground/70">{titleGray}</span>
                 </>
               )}
             </h2>
@@ -280,11 +280,11 @@ export function LinearFeatureSection({
             {/* Description below title */}
             <div className="max-w-2xl">
               {subtitle && (
-                <p className="text-gray-900 font-medium mb-3 text-lg">
+                <p className="text-foreground font-medium mb-3 text-lg">
                   {subtitle}
                 </p>
               )}
-              <p className="text-gray-500 text-lg leading-relaxed">
+              <p className="text-muted-foreground text-lg leading-relaxed">
                 {description}
               </p>
               {learnMoreHref && (
@@ -365,11 +365,11 @@ export function ValuePropsSection({
         <BlurFade>
           {/* LINEAR: Mixed-color heading - first words black, rest gray */}
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight leading-tight text-center mb-12">
-            <span className="text-gray-900">{headingBlack}</span>
+            <span className="text-foreground">{headingBlack}</span>
             {headingGray && (
               <>
                 {' '}
-                <span className="text-gray-400">{headingGray}</span>
+                <span className="text-muted-foreground/70">{headingGray}</span>
               </>
             )}
           </h2>
@@ -385,8 +385,8 @@ export function ValuePropsSection({
                 onClick={() => prop.modal && setActiveModal(index)}
                 className={cn(
                   'group relative rounded-[20px] overflow-hidden',
-                  'bg-white border border-gray-200',
-                  'hover:border-gray-300 hover:shadow-lg',
+                  'bg-card border border-border',
+                  'hover:border-border hover:shadow-lg',
                   'transition-all duration-150 ease-out',
                   prop.modal && 'cursor-pointer'
                 )}
@@ -395,34 +395,34 @@ export function ValuePropsSection({
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 lg:p-8">
                   {/* LEFT: Title + 2 lines description */}
                   <div className="flex flex-col justify-center">
-                    <h3 className="font-semibold text-xl lg:text-2xl mb-3 tracking-tight text-gray-900">
+                    <h3 className="font-semibold text-xl lg:text-2xl mb-3 tracking-tight text-foreground">
                       {prop.title}
                     </h3>
-                    <p className="text-[15px] text-gray-500 leading-relaxed">
+                    <p className="text-[15px] text-muted-foreground leading-relaxed">
                       {prop.description}
                     </p>
                   </div>
 
                   {/* RIGHT: 4 lines explanation + button */}
                   <div className="flex flex-col justify-between">
-                    <p className="text-[15px] text-gray-500 leading-relaxed mb-4">
+                    <p className="text-[15px] text-muted-foreground leading-relaxed mb-4">
                       {prop.explanation || prop.description}
                     </p>
 
                     {/* Button row: text button with chevron on the right */}
                     {prop.modal && (
                       <div className="flex justify-end items-center">
-                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 group-hover:text-gray-600 transition-colors">
+                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground/70 group-hover:text-muted-foreground transition-colors">
                           <span>Learn more</span>
                           <span
                             className={cn(
                               'flex items-center justify-center size-7 rounded-full',
-                              'bg-gray-100 border border-gray-200',
-                              'group-hover:bg-gray-200 group-hover:border-gray-300',
+                              'bg-muted border border-border',
+                              'group-hover:bg-gray-200 group-hover:border-border',
                               'transition-colors duration-150'
                             )}
                           >
-                            <span className="text-sm leading-none text-gray-500">+</span>
+                            <span className="text-sm leading-none text-muted-foreground">+</span>
                           </span>
                         </span>
                       </div>
@@ -596,12 +596,12 @@ export function PaywallBuilderTSeparator() {
             </div>
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
               <div>
-                <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight leading-[1.1] text-gray-900">
+                <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight leading-[1.1] text-foreground">
                   Build paywalls without code
                 </h2>
               </div>
               <div className="lg:pt-1">
-                <p className="text-gray-500 text-[15px] leading-relaxed">
+                <p className="text-muted-foreground text-[15px] leading-relaxed">
                   Create stunning subscription paywalls with our drag-and-drop builder.
                   Designers and product managers can iterate independently without
                   waiting for app store reviews.
@@ -614,10 +614,10 @@ export function PaywallBuilderTSeparator() {
         {/* T-Separator Layout */}
         <BlurFade delay={0.1}>
           <TSeparatorSection
-            borderColor="border-gray-200"
+            borderColor="border-border"
             mainFeature={
               <TSeparatorFeatureCard
-                className="bg-white border border-gray-200"
+                className="bg-card border border-border"
                 visual={
                   <Image
                     src={getImagePath(imageSet, 'light-feature1.webp')}
@@ -630,10 +630,10 @@ export function PaywallBuilderTSeparator() {
               >
                 <div className="flex items-start justify-between gap-8">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-xl mb-3 tracking-tight text-gray-900">
+                    <h3 className="font-semibold text-xl mb-3 tracking-tight text-foreground">
                       Visual drag-and-drop editor
                     </h3>
-                    <p className="text-[15px] text-gray-500 leading-relaxed max-w-xl">
+                    <p className="text-[15px] text-muted-foreground leading-relaxed max-w-xl">
                       Design beautiful paywalls with our intuitive visual editor.
                       No coding required—just drag, drop, and customize every element
                       to match your brand perfectly.
@@ -647,7 +647,7 @@ export function PaywallBuilderTSeparator() {
             }
             leftFeature={
               <TSeparatorFeatureCard
-                className="bg-white border border-gray-200 h-full"
+                className="bg-card border border-border h-full"
                 visual={
                   <Image
                     src={getImagePath(imageSet, 'light-feature2.webp')}
@@ -661,8 +661,8 @@ export function PaywallBuilderTSeparator() {
                 onClick={() => setActiveModal('templates')}
                 action={
                   <div className="flex justify-end">
-                    <span className={cn('flex items-center justify-center size-8 rounded-full bg-gray-100 border border-gray-200')}>
-                      <span className="text-base leading-none text-gray-500">+</span>
+                    <span className={cn('flex items-center justify-center size-8 rounded-full bg-muted border border-border')}>
+                      <span className="text-base leading-none text-muted-foreground">+</span>
                     </span>
                   </div>
                 }
@@ -670,7 +670,7 @@ export function PaywallBuilderTSeparator() {
             }
             rightFeature={
               <TSeparatorFeatureCard
-                className="bg-white border border-gray-200 h-full"
+                className="bg-card border border-border h-full"
                 visual={
                   <Image
                     src={getImagePath(imageSet, 'light-feature3.webp')}
@@ -684,8 +684,8 @@ export function PaywallBuilderTSeparator() {
                 onClick={() => setActiveModal('preview')}
                 action={
                   <div className="flex justify-end">
-                    <span className={cn('flex items-center justify-center size-8 rounded-full bg-gray-100 border border-gray-200')}>
-                      <span className="text-base leading-none text-gray-500">+</span>
+                    <span className={cn('flex items-center justify-center size-8 rounded-full bg-muted border border-border')}>
+                      <span className="text-base leading-none text-muted-foreground">+</span>
                     </span>
                   </div>
                 }
@@ -789,7 +789,7 @@ export function AnalyticsLinear() {
       learnMoreHref="/ltv-analytics"
     >
       <div className="mt-12 grid md:grid-cols-2 gap-12 items-center">
-        <div className="relative aspect-video rounded-[20px] overflow-hidden border border-gray-200 bg-gray-50/50 shadow-sm">
+        <div className="relative aspect-video rounded-[20px] overflow-hidden border border-border bg-muted/50 shadow-sm">
           <Image
             src={getImagePath(imageSet, 'light-feature3.webp')}
             alt="Analytics dashboard"
@@ -799,36 +799,36 @@ export function AnalyticsLinear() {
         </div>
         <div className="space-y-6">
           <div className="flex items-start gap-4">
-            <span className="size-9 rounded-xl bg-gray-100 flex items-center justify-center shrink-0">
+            <span className="size-9 rounded-xl bg-muted flex items-center justify-center shrink-0">
               <span className="size-2.5 rounded-full bg-gray-900" />
             </span>
             <div>
-              <h4 className="font-medium text-base mb-1 text-gray-900">
+              <h4 className="font-medium text-base mb-1 text-foreground">
                 Real-time dashboard
               </h4>
-              <p className="text-sm text-gray-500 leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 See revenue, trials, and conversions as they happen.
               </p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <span className="size-9 rounded-xl bg-gray-100 flex items-center justify-center shrink-0">
+            <span className="size-9 rounded-xl bg-muted flex items-center justify-center shrink-0">
               <span className="size-2.5 rounded-full bg-gray-900" />
             </span>
             <div>
-              <h4 className="font-medium text-base mb-1 text-gray-900">Cohort analysis</h4>
-              <p className="text-sm text-gray-500 leading-relaxed">
+              <h4 className="font-medium text-base mb-1 text-foreground">Cohort analysis</h4>
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 Understand retention patterns across user segments.
               </p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <span className="size-9 rounded-xl bg-gray-100 flex items-center justify-center shrink-0">
+            <span className="size-9 rounded-xl bg-muted flex items-center justify-center shrink-0">
               <span className="size-2.5 rounded-full bg-gray-900" />
             </span>
             <div>
-              <h4 className="font-medium text-base mb-1 text-gray-900">LTV predictions</h4>
-              <p className="text-sm text-gray-500 leading-relaxed">
+              <h4 className="font-medium text-base mb-1 text-foreground">LTV predictions</h4>
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 AI-powered forecasts for up to 12 months.
               </p>
             </div>
@@ -1076,13 +1076,13 @@ function ModalCard({
       transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         'group relative flex flex-col h-full rounded-[20px] overflow-hidden',
-        'bg-white border border-gray-200',
-        'hover:border-gray-300 hover:shadow-lg',
+        'bg-card border border-border',
+        'hover:border-border hover:shadow-lg',
         'transition-all duration-200 ease-out cursor-pointer'
       )}
     >
       {/* Icon area - clean white background with large monochrome icon */}
-      <div className="relative aspect-[16/10] flex items-center justify-center bg-gray-50 px-6 py-8">
+      <div className="relative aspect-[16/10] flex items-center justify-center bg-muted px-6 py-8">
         {data.logo ? (
           <Image
             src={data.logo}
@@ -1093,7 +1093,7 @@ function ModalCard({
           />
         ) : (
           /* Fallback to first letter */
-          <span className="text-5xl font-bold text-gray-900">
+          <span className="text-5xl font-bold text-foreground">
             {data.title.charAt(0)}
           </span>
         )}
@@ -1101,10 +1101,10 @@ function ModalCard({
 
       {/* Content area */}
       <div className="flex-1 p-6 flex flex-col">
-        <h4 className="font-medium text-xl mb-2 tracking-tight text-gray-900">
+        <h4 className="font-medium text-xl mb-2 tracking-tight text-foreground">
           {data.title}
         </h4>
-        <p className="text-sm text-gray-500 leading-relaxed line-clamp-2 h-10">
+        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 h-10">
           {data.subtitle}
         </p>
 
@@ -1113,15 +1113,15 @@ function ModalCard({
           <span
             className={cn(
               'flex items-center justify-center size-8 rounded-full',
-              'bg-gray-100 border border-gray-200',
-              'group-hover:bg-gray-200 group-hover:border-gray-300',
+              'bg-muted border border-border',
+              'group-hover:bg-gray-200 group-hover:border-border',
               'transition-colors duration-150 ease-out active:scale-[0.98]'
             )}
           >
             {isDirectLink ? (
-              <ChevronRightIcon className="size-3.5 text-gray-600" />
+              <ChevronRightIcon className="size-3.5 text-muted-foreground" />
             ) : (
-              <span className="text-base leading-none text-gray-600">+</span>
+              <span className="text-base leading-none text-muted-foreground">+</span>
             )}
           </span>
         </div>
@@ -1204,16 +1204,16 @@ function CardModal({
               animate="animate"
               exit="exit"
               transition={shouldReduceMotion ? { duration: 0 } : modalTransition}
-              className="relative w-full max-w-3xl h-[90vh] bg-white rounded-3xl pointer-events-auto overflow-hidden border border-gray-200 shadow-2xl flex flex-col"
+              className="relative w-full max-w-3xl h-[90vh] bg-card rounded-3xl pointer-events-auto overflow-hidden border border-border shadow-2xl flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button - fixed position */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-10 size-10 rounded-full bg-white/90 hover:bg-gray-100 flex items-center justify-center transition-colors duration-150 active:scale-[0.98] backdrop-blur-sm border border-gray-200"
+                className="absolute top-4 right-4 z-10 size-10 rounded-full bg-card/90 hover:bg-muted flex items-center justify-center transition-colors duration-150 active:scale-[0.98] backdrop-blur-sm border border-border"
                 aria-label="Close modal"
               >
-                <svg className="size-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="size-5 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -1221,7 +1221,7 @@ function CardModal({
               {/* Scrollable content - VERTICAL LAYOUT */}
               <div className="flex-1 overflow-y-auto">
                 {/* Top: Image - fixed height */}
-                <div className="relative w-full h-[300px] sm:h-[350px] bg-gray-50 flex-shrink-0">
+                <div className="relative w-full h-[300px] sm:h-[350px] bg-muted flex-shrink-0">
                   {data.logo ? (
                     <div className="absolute inset-0 flex items-center justify-center px-12">
                       <Image
@@ -1246,31 +1246,31 @@ function CardModal({
                 {/* Bottom: Content - scrollable */}
                 <div className="p-8 sm:p-10">
                   {/* Title */}
-                  <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-gray-900 mb-3">
+                  <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground mb-3">
                     {data.title}
                   </h2>
 
                   {/* Subtitle */}
-                  <p className="text-base sm:text-lg text-gray-500 mb-6">
+                  <p className="text-base sm:text-lg text-muted-foreground mb-6">
                     {data.subtitle}
                   </p>
 
                   {/* Description paragraphs - Linear: exactly 3 paragraphs */}
                   <div className="space-y-4">
                     {data.paragraphs.map((p, i) => (
-                      <p key={i} className="text-[15px] text-gray-600 leading-relaxed">
+                      <p key={i} className="text-[15px] text-muted-foreground leading-relaxed">
                         {p}
                       </p>
                     ))}
                   </div>
 
                   {/* Thin divider */}
-                  <div className="h-px bg-gray-100 my-8" />
+                  <div className="h-px bg-muted my-8" />
 
                   {/* Quote - LINEAR: centered, NO quote symbols */}
                   {data.quote && (
                     <div className="text-center mb-6">
-                      <p className="text-gray-900 text-base leading-relaxed">
+                      <p className="text-foreground text-base leading-relaxed">
                         {data.quote.text}
                       </p>
                     </div>
@@ -1291,7 +1291,7 @@ function CardModal({
 
                   {/* Divider before stats */}
                   {data.stats && data.stats.length > 0 && (
-                    <div className="h-px bg-gray-100 mb-6" />
+                    <div className="h-px bg-muted mb-6" />
                   )}
 
                   {/* Stats - LINEAR: 2x2 grid (4 stats) */}
@@ -1299,10 +1299,10 @@ function CardModal({
                     <div className="grid grid-cols-2 gap-x-8 gap-y-4">
                       {data.stats.slice(0, 4).map((stat, i) => (
                         <div key={i}>
-                          <div className="text-2xl font-semibold tracking-tight text-gray-900">
+                          <div className="text-2xl font-semibold tracking-tight text-foreground">
                             {stat.value}
                           </div>
-                          <div className="text-xs text-gray-400 mt-0.5 font-normal">
+                          <div className="text-xs text-muted-foreground/70 mt-0.5 font-normal">
                             {stat.label}
                           </div>
                         </div>
@@ -1315,7 +1315,7 @@ function CardModal({
                     <div className="pt-8">
                       <Link
                         href={data.link}
-                        className="group inline-flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors duration-150"
+                        className="group inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors duration-150"
                       >
                         Learn more
                         <ChevronRightIcon className="size-4 transition-transform duration-150 group-hover:translate-x-0.5" />
@@ -1399,15 +1399,15 @@ export function CardCarousel({
           </div>
           {/* LINEAR: Mixed-color title - first words black, rest gray */}
           <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1] mb-6 max-w-3xl">
-            <span className="text-gray-900">{titleBlack}</span>
+            <span className="text-foreground">{titleBlack}</span>
             {titleGray && (
               <>
                 {' '}
-                <span className="text-gray-400">{titleGray}</span>
+                <span className="text-muted-foreground/70">{titleGray}</span>
               </>
             )}
           </h2>
-          <p className="text-gray-500 text-lg leading-relaxed max-w-2xl">
+          <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl">
             {description}
           </p>
         </div>
@@ -1418,27 +1418,27 @@ export function CardCarousel({
             onClick={() => scroll('left')}
             disabled={!canScrollLeft}
             className={cn(
-              'size-10 rounded-full border border-gray-200 bg-white flex items-center justify-center transition-all duration-200',
+              'size-10 rounded-full border border-border bg-card flex items-center justify-center transition-all duration-200',
               canScrollLeft
-                ? 'hover:bg-gray-50 hover:border-gray-300 cursor-pointer'
+                ? 'hover:bg-muted hover:border-border cursor-pointer'
                 : 'opacity-40 cursor-not-allowed'
             )}
             aria-label="Scroll left"
           >
-            <ChevronRightIcon className="size-4 text-gray-600 rotate-180" />
+            <ChevronRightIcon className="size-4 text-muted-foreground rotate-180" />
           </button>
           <button
             onClick={() => scroll('right')}
             disabled={!canScrollRight}
             className={cn(
-              'size-10 rounded-full border border-gray-200 bg-white flex items-center justify-center transition-all duration-200',
+              'size-10 rounded-full border border-border bg-card flex items-center justify-center transition-all duration-200',
               canScrollRight
-                ? 'hover:bg-gray-50 hover:border-gray-300 cursor-pointer'
+                ? 'hover:bg-muted hover:border-border cursor-pointer'
                 : 'opacity-40 cursor-not-allowed'
             )}
             aria-label="Scroll right"
           >
-            <ChevronRightIcon className="size-4 text-gray-600" />
+            <ChevronRightIcon className="size-4 text-muted-foreground" />
           </button>
         </div>
       </div>

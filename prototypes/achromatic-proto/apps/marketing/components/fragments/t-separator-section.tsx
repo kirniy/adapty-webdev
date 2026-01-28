@@ -44,7 +44,7 @@ export interface TSeparatorSectionProps {
   leftFeatureClassName?: string;
   /** Optional className for the right feature wrapper */
   rightFeatureClassName?: string;
-  /** Border color - defaults to gray-200 for light theme visibility */
+  /** Border color - defaults to border-border for theme support */
   borderColor?: string;
 }
 
@@ -56,7 +56,7 @@ export function TSeparatorSection({
   mainFeatureClassName,
   leftFeatureClassName,
   rightFeatureClassName,
-  borderColor = 'border-gray-200'
+  borderColor = 'border-border'
 }: TSeparatorSectionProps): React.JSX.Element {
   return (
     <div className={className}>
@@ -126,14 +126,14 @@ export function TSeparatorCard({
   onClick
 }: TSeparatorCardProps): React.JSX.Element {
   const variantClasses = {
-    default: 'bg-white border border-gray-200',
-    ghost: 'bg-transparent border border-gray-100',
-    elevated: 'bg-white border border-gray-200 shadow-sm'
+    default: 'bg-card border border-border',
+    ghost: 'bg-transparent border border-border/50',
+    elevated: 'bg-card border border-border shadow-sm'
   };
 
   const isClickable = hoverable || !!onClick;
   const hoverClasses = isClickable
-    ? 'hover:shadow-lg hover:border-gray-300 transition-all duration-150 cursor-pointer'
+    ? 'hover:shadow-lg hover:border-border transition-all duration-150 cursor-pointer'
     : '';
 
   return (
@@ -196,7 +196,7 @@ export function TSeparatorFeatureCard({
       {visual && (
         <div
           className={cn(
-            'relative aspect-[16/10] bg-gray-50 overflow-hidden',
+            'relative aspect-[16/10] bg-muted overflow-hidden',
             visualClassName
           )}
         >
@@ -211,12 +211,12 @@ export function TSeparatorFeatureCard({
         ) : (
           <>
             {title && (
-              <h3 className="font-semibold text-lg mb-2 tracking-tight text-gray-900">
+              <h3 className="font-semibold text-lg mb-2 tracking-tight text-foreground">
                 {title}
               </h3>
             )}
             {description && (
-              <p className="text-[15px] text-gray-500 leading-relaxed">
+              <p className="text-[15px] text-muted-foreground leading-relaxed">
                 {description}
               </p>
             )}

@@ -118,7 +118,7 @@ function IntegrationCard({
     >
       <Link
         href={integration.link}
-        className="block h-full rounded-2xl bg-white border border-border/50 overflow-hidden transition-all duration-200 hover:shadow-lg hover:border-border active:scale-[0.98]"
+        className="block h-full rounded-2xl bg-card border border-border/50 overflow-hidden transition-all duration-200 hover:shadow-lg hover:border-border active:scale-[0.98]"
       >
         {/* Top colored section with logo */}
         <div
@@ -127,7 +127,7 @@ function IntegrationCard({
             integration.color
           )}
         >
-          <div className="w-14 h-14 rounded-xl bg-white shadow-sm flex items-center justify-center">
+          <div className="w-14 h-14 rounded-xl bg-card shadow-sm flex items-center justify-center">
             <span
               className={cn(
                 'text-xl font-bold',
@@ -181,7 +181,7 @@ function NavButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'w-10 h-10 rounded-full border border-border/50 bg-white flex items-center justify-center transition-all duration-200',
+        'w-10 h-10 rounded-full border border-border/50 bg-card flex items-center justify-center transition-all duration-200',
         disabled
           ? 'opacity-40 cursor-not-allowed'
           : 'hover:border-border hover:shadow-sm cursor-pointer'

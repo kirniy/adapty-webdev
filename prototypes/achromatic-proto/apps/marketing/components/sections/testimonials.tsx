@@ -204,7 +204,7 @@ export function Testimonials({
               }}
             >
               <motion.div
-                className="rounded-full bg-white flex items-center justify-center p-2"
+                className="rounded-full bg-card flex items-center justify-center p-2"
                 animate={{
                   width: isHovered ? 80 : 20,
                   height: isHovered ? 80 : 20,
