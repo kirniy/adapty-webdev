@@ -1104,12 +1104,12 @@ function ModalCard({
         <h4 className="font-medium text-xl mb-2 tracking-tight text-gray-900">
           {data.title}
         </h4>
-        <p className="text-sm text-gray-500 leading-relaxed flex-1">
+        <p className="text-sm text-gray-500 leading-relaxed line-clamp-2 h-10">
           {data.subtitle}
         </p>
 
         {/* Button - chevron for direct links, plus for modals */}
-        <div className="mt-5 flex justify-end">
+        <div className="mt-4 flex justify-end">
           <span
             className={cn(
               'flex items-center justify-center size-8 rounded-full',
