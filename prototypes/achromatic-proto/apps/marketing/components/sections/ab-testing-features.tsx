@@ -879,7 +879,7 @@ function TabsFeatures() {
                 <Card
                   className={cn(
                     'h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-150 cursor-pointer',
-                    hoveredIndex === index && 'border-primary/50 -translate-y-1'
+                    hoveredIndex === index && 'border-primary/50'
                   )}
                 >
                   <CardContent className="p-6">

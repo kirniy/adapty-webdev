@@ -887,7 +887,7 @@ function TabsFeatures() {
                   <div
                     className={cn(
                       'relative h-full overflow-hidden rounded-xl bg-background/50 backdrop-blur-sm border border-border/50 transition-all duration-200 cursor-pointer',
-                      isHovered && 'border-primary/50 -translate-y-1'
+                      isHovered && 'border-primary/50'
                     )}
                   >
                     <div className="p-6 relative z-10">

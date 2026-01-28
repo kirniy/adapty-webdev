@@ -380,14 +380,11 @@ export function ValuePropsSection({
           {props.map((prop, index) => (
             <BlurFade key={index} delay={0.1 + index * 0.05}>
               <motion.div
-                whileHover={shouldReduceMotion ? undefined : { y: -2 }}
-                transition={{ duration: 0.15, ease: 'easeOut' }}
+                whileHover={shouldReduceMotion ? undefined : { y: -3 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => prop.modal && setActiveModal(index)}
                 className={cn(
-                  'group relative rounded-[20px] overflow-hidden',
-                  'bg-card border border-border',
-                  'hover:border-border hover:shadow-lg',
-                  'transition-all duration-150 ease-out',
+                  'group relative rounded-[20px] overflow-hidden card-polish',
                   prop.modal && 'cursor-pointer'
                 )}
               >
@@ -1075,10 +1072,7 @@ function ModalCard({
       whileHover={shouldReduceMotion ? undefined : { y: -4 }}
       transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        'group relative flex flex-col h-full rounded-[20px] overflow-hidden',
-        'bg-card border border-border',
-        'hover:border-border hover:shadow-lg',
-        'transition-all duration-200 ease-out cursor-pointer'
+        'group relative flex flex-col h-full rounded-[20px] overflow-hidden card-polish cursor-pointer'
       )}
     >
       {/* Icon area - clean white background with large monochrome icon */}
@@ -1220,8 +1214,8 @@ function CardModal({
 
               {/* Scrollable content - VERTICAL LAYOUT */}
               <div className="flex-1 overflow-y-auto">
-                {/* Top: Image - fixed height */}
-                <div className="relative w-full h-[300px] sm:h-[350px] bg-muted flex-shrink-0">
+                {/* Top: Image - fixed height with subtle glow */}
+                <div className="relative w-full h-[300px] sm:h-[350px] bg-muted flex-shrink-0 image-glow">
                   {data.logo ? (
                     <div className="absolute inset-0 flex items-center justify-center px-12">
                       <Image

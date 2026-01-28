@@ -212,7 +212,7 @@ export function SDKCode(): React.JSX.Element {
 
   return (
     <GridSection
-      className="relative"
+      className="relative bg-gradient-mesh"
       hideVerticalGridLines
       hideBottomGridLine
     >

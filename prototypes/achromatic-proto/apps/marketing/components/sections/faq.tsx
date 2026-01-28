@@ -138,7 +138,7 @@ export function FAQ({ items = DATA }: FAQProps): React.JSX.Element {
 
           {/* Right column - Accordion */}
           <BlurFade delay={shouldReduceMotion ? 0 : 0.1}>
-            <div className="rounded-[20px] border border-white/10 bg-white/[0.03] p-2">
+            <div className="rounded-[20px] border border-border/50 bg-card/50 p-2">
               <Accordion
                 type="single"
                 collapsible
