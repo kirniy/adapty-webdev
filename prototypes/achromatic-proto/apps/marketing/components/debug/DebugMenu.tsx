@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from 'motion/react';
 import {
   AB_TESTING_FEATURES_VARIANTS,
   AUTOPILOT_FEATURES_VARIANTS,
-  BACKGROUND_VARIANTS,
   BLOG_VARIANTS,
   COLOR_ACCENT_VARIANTS,
   CORNER_RADIUS_VARIANTS,
@@ -646,8 +645,6 @@ export function DebugMenu() {
     setFooterVariant,
     imageSetVariant,
     setImageSetVariant,
-    backgroundVariant,
-    setBackgroundVariant,
     monochromeMode,
     setMonochromeMode
   } = useDebug();
@@ -709,16 +706,6 @@ export function DebugMenu() {
               defaultOpen
             >
               <div className="space-y-3">
-                <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
-                    Page Background
-                  </span>
-                  <VariantSelector
-                    variants={BACKGROUND_VARIANTS}
-                    currentValue={backgroundVariant}
-                    onChange={setBackgroundVariant}
-                  />
-                </div>
                 <div className="space-y-1.5">
                   <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
                     Corner Radius

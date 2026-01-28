@@ -85,7 +85,6 @@ export type ForIndieFeaturesVariant = 'grid' | 'bento' | 'timeline' | 'off';
 export type HeroLinesVariant = 'above' | 'below';
 export type ImageSetVariant = 'set1' | 'set2' | 'set3';
 export type MonochromeMode = boolean;
-export type BackgroundVariant = 'off' | 'on';
 
 // Variant option type for UI
 export interface VariantOption<T> {
@@ -579,19 +578,6 @@ export const IMAGE_SET_VARIANTS: VariantOption<ImageSetVariant>[] = [
   }
 ];
 
-// Background variants for premium background
-export const BACKGROUND_VARIANTS: VariantOption<BackgroundVariant>[] = [
-  {
-    value: 'on',
-    label: 'On',
-    description: 'Animated gradient orbs with film grain'
-  },
-  {
-    value: 'off',
-    label: 'Off',
-    description: 'Plain white background'
-  }
-];
 
 // Debug state interface
 interface DebugState {
@@ -627,7 +613,6 @@ interface DebugState {
   forIndieFeaturesVariant: ForIndieFeaturesVariant;
   heroLinesVariant: HeroLinesVariant;
   imageSetVariant: ImageSetVariant;
-  backgroundVariant: BackgroundVariant;
   monochromeMode: boolean;
   isDebugMenuOpen: boolean;
 }
@@ -678,7 +663,6 @@ interface DebugContextValue extends DebugState {
   setForIndieFeaturesVariant: (variant: ForIndieFeaturesVariant) => void;
   setHeroLinesVariant: (variant: HeroLinesVariant) => void;
   setImageSetVariant: (variant: ImageSetVariant) => void;
-  setBackgroundVariant: (variant: BackgroundVariant) => void;
   setMonochromeMode: (enabled: boolean) => void;
   toggleDebugMenu: () => void;
   resetToDefaults: () => void;
@@ -718,7 +702,6 @@ const defaultState: DebugState = {
   forIndieFeaturesVariant: 'bento',
   heroLinesVariant: 'above',
   imageSetVariant: 'set3',
-  backgroundVariant: 'on',
   monochromeMode: true,
   isDebugMenuOpen: false
 };
@@ -740,7 +723,6 @@ const GLOBAL_KEYS: (keyof DebugState)[] = [
   'footerVariant',
   'heroLinesVariant',
   'imageSetVariant',
-  'backgroundVariant',
   'monochromeMode'
 ];
 
@@ -1012,11 +994,6 @@ export function DebugProvider({ children }: { children: ReactNode }) {
       setState((prev) => ({ ...prev, imageSetVariant: variant })),
     []
   );
-  const setBackgroundVariant = useCallback(
-    (variant: BackgroundVariant) =>
-      setState((prev) => ({ ...prev, backgroundVariant: variant })),
-    []
-  );
   const setMonochromeMode = useCallback(
     (enabled: boolean) =>
       setState((prev) => ({ ...prev, monochromeMode: enabled })),
@@ -1070,7 +1047,6 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     setForIndieFeaturesVariant,
     setHeroLinesVariant,
     setImageSetVariant,
-    setBackgroundVariant,
     setMonochromeMode,
     toggleDebugMenu,
     resetToDefaults
@@ -1241,11 +1217,6 @@ export function useHeroLinesVariant() {
 export function useImageSetVariant() {
   return (
     useContext(DebugContext)?.imageSetVariant ?? defaultState.imageSetVariant
-  );
-}
-export function useBackgroundVariant() {
-  return (
-    useContext(DebugContext)?.backgroundVariant ?? defaultState.backgroundVariant
   );
 }
 export function useMonochromeMode() {

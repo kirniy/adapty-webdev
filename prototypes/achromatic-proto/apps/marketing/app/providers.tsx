@@ -15,7 +15,8 @@ export function Providers({
     <AnalyticsProvider>
       <ThemeProvider
         attribute="class"
-        defaultTheme="light"
+        defaultTheme="system"
+        enableSystem
         disableTransitionOnChange
       >
         <TooltipProvider>
