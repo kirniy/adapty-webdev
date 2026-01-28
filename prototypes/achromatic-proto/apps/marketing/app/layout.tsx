@@ -12,6 +12,7 @@ import { ColorAccentApplier } from '~/components/color-accent-applier';
 import { DebugMenu } from '~/components/debug/DebugMenu';
 import { FooterSection } from '~/components/footer-section';
 import { CookieBanner } from '~/components/fragments/cookie-banner';
+import { PremiumBackground } from '~/components/fragments/premium-background';
 import { Navbar } from '~/components/navbar';
 import { Providers } from './providers';
 
@@ -76,8 +77,9 @@ export default async function RootLayout({
     >
       <body className={`${inter.className} size-full`}>
         <Providers>
+          <PremiumBackground />
           <ColorAccentApplier />
-          <div>
+          <div className="relative z-10">
             <Navbar />
             {children}
             <FooterSection />

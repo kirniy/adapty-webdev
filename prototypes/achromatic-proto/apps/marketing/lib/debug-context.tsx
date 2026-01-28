@@ -21,7 +21,7 @@ export type GridVariant =
 // Corner radius variants
 export type CornerRadiusVariant = 'default' | 'round' | 'sharp';
 
-// Grid thickness variants
+// Grid/line thickness variants (used for dashed lines)
 export type GridThicknessVariant = 'default' | 'thin' | 'thick';
 
 export type GridColorVariant =
@@ -85,6 +85,7 @@ export type ForIndieFeaturesVariant = 'grid' | 'bento' | 'timeline' | 'off';
 export type HeroLinesVariant = 'above' | 'below';
 export type ImageSetVariant = 'set1' | 'set2' | 'set3';
 export type MonochromeMode = boolean;
+export type BackgroundVariant = 'off' | 'on';
 
 // Variant option type for UI
 export interface VariantOption<T> {
@@ -578,12 +579,25 @@ export const IMAGE_SET_VARIANTS: VariantOption<ImageSetVariant>[] = [
   }
 ];
 
+// Background variants for premium background
+export const BACKGROUND_VARIANTS: VariantOption<BackgroundVariant>[] = [
+  {
+    value: 'on',
+    label: 'On',
+    description: 'Animated gradient orbs with film grain'
+  },
+  {
+    value: 'off',
+    label: 'Off',
+    description: 'Plain white background'
+  }
+];
+
 // Debug state interface
 interface DebugState {
   colorAccentVariant: ColorAccentVariant;
   gridVariant: GridVariant;
   cornerRadiusVariant: CornerRadiusVariant;
-  gridThicknessVariant: GridThicknessVariant;
   dashedThicknessVariant: GridThicknessVariant;
   gridColorVariant: GridColorVariant;
   gridOpacityVariant: GridOpacityVariant;
@@ -613,6 +627,7 @@ interface DebugState {
   forIndieFeaturesVariant: ForIndieFeaturesVariant;
   heroLinesVariant: HeroLinesVariant;
   imageSetVariant: ImageSetVariant;
+  backgroundVariant: BackgroundVariant;
   monochromeMode: boolean;
   isDebugMenuOpen: boolean;
 }
@@ -622,7 +637,6 @@ interface DebugContextValue extends DebugState {
   setColorAccentVariant: (variant: ColorAccentVariant) => void;
   setGridVariant: (variant: GridVariant) => void;
   setCornerRadiusVariant: (variant: CornerRadiusVariant) => void;
-  setGridThicknessVariant: (variant: GridThicknessVariant) => void;
   setDashedThicknessVariant: (variant: GridThicknessVariant) => void;
   setGridColorVariant: (variant: GridColorVariant) => void;
   setGridOpacityVariant: (variant: GridOpacityVariant) => void;
@@ -664,6 +678,7 @@ interface DebugContextValue extends DebugState {
   setForIndieFeaturesVariant: (variant: ForIndieFeaturesVariant) => void;
   setHeroLinesVariant: (variant: HeroLinesVariant) => void;
   setImageSetVariant: (variant: ImageSetVariant) => void;
+  setBackgroundVariant: (variant: BackgroundVariant) => void;
   setMonochromeMode: (enabled: boolean) => void;
   toggleDebugMenu: () => void;
   resetToDefaults: () => void;
@@ -674,7 +689,6 @@ const defaultState: DebugState = {
   colorAccentVariant: 'minimal',
   gridVariant: 'default',
   cornerRadiusVariant: 'default',
-  gridThicknessVariant: 'default',
   dashedThicknessVariant: 'thin',
   gridColorVariant: 'muted',
   gridOpacityVariant: 'subtle',
@@ -704,6 +718,7 @@ const defaultState: DebugState = {
   forIndieFeaturesVariant: 'bento',
   heroLinesVariant: 'above',
   imageSetVariant: 'set3',
+  backgroundVariant: 'on',
   monochromeMode: true,
   isDebugMenuOpen: false
 };
@@ -717,7 +732,6 @@ const GLOBAL_KEYS: (keyof DebugState)[] = [
   'colorAccentVariant',
   'gridVariant',
   'cornerRadiusVariant',
-  'gridThicknessVariant',
   'dashedThicknessVariant',
   'gridColorVariant',
   'gridOpacityVariant',
@@ -726,6 +740,7 @@ const GLOBAL_KEYS: (keyof DebugState)[] = [
   'footerVariant',
   'heroLinesVariant',
   'imageSetVariant',
+  'backgroundVariant',
   'monochromeMode'
 ];
 
@@ -847,11 +862,6 @@ export function DebugProvider({ children }: { children: ReactNode }) {
   const setCornerRadiusVariant = useCallback(
     (variant: CornerRadiusVariant) =>
       setState((prev) => ({ ...prev, cornerRadiusVariant: variant })),
-    []
-  );
-  const setGridThicknessVariant = useCallback(
-    (variant: GridThicknessVariant) =>
-      setState((prev) => ({ ...prev, gridThicknessVariant: variant })),
     []
   );
   const setDashedThicknessVariant = useCallback(
@@ -1002,6 +1012,11 @@ export function DebugProvider({ children }: { children: ReactNode }) {
       setState((prev) => ({ ...prev, imageSetVariant: variant })),
     []
   );
+  const setBackgroundVariant = useCallback(
+    (variant: BackgroundVariant) =>
+      setState((prev) => ({ ...prev, backgroundVariant: variant })),
+    []
+  );
   const setMonochromeMode = useCallback(
     (enabled: boolean) =>
       setState((prev) => ({ ...prev, monochromeMode: enabled })),
@@ -1026,7 +1041,6 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     setColorAccentVariant,
     setGridVariant,
     setCornerRadiusVariant,
-    setGridThicknessVariant,
     setDashedThicknessVariant,
     setGridColorVariant,
     setGridOpacityVariant,
@@ -1056,6 +1070,7 @@ export function DebugProvider({ children }: { children: ReactNode }) {
     setForIndieFeaturesVariant,
     setHeroLinesVariant,
     setImageSetVariant,
+    setBackgroundVariant,
     setMonochromeMode,
     toggleDebugMenu,
     resetToDefaults
@@ -1086,12 +1101,6 @@ export function useCornerRadiusVariant() {
   return (
     useContext(DebugContext)?.cornerRadiusVariant ??
     defaultState.cornerRadiusVariant
-  );
-}
-export function useGridThicknessVariant() {
-  return (
-    useContext(DebugContext)?.gridThicknessVariant ??
-    defaultState.gridThicknessVariant
   );
 }
 export function useDashedThicknessVariant() {
@@ -1232,6 +1241,11 @@ export function useHeroLinesVariant() {
 export function useImageSetVariant() {
   return (
     useContext(DebugContext)?.imageSetVariant ?? defaultState.imageSetVariant
+  );
+}
+export function useBackgroundVariant() {
+  return (
+    useContext(DebugContext)?.backgroundVariant ?? defaultState.backgroundVariant
   );
 }
 export function useMonochromeMode() {

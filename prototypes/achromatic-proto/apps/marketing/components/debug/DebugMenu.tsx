@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import {
   AB_TESTING_FEATURES_VARIANTS,
   AUTOPILOT_FEATURES_VARIANTS,
+  BACKGROUND_VARIANTS,
   BLOG_VARIANTS,
   COLOR_ACCENT_VARIANTS,
   CORNER_RADIUS_VARIANTS,
@@ -19,11 +20,6 @@ import {
   FOR_DEVELOPERS_FEATURES_VARIANTS,
   FOR_INDIE_FEATURES_VARIANTS,
   FOR_MARKETERS_FEATURES_VARIANTS,
-  GRID_COLOR_VARIANTS,
-  GRID_OPACITY_VARIANTS,
-  GRID_THICKNESS_VARIANTS,
-  GRID_VARIANTS,
-  GRID_Z_INDEX_VARIANTS,
   HEADER_VARIANTS,
   HERO_LINES_VARIANTS,
   HERO_VARIANTS,
@@ -598,20 +594,8 @@ export function DebugMenu() {
     resetToDefaults,
     colorAccentVariant,
     setColorAccentVariant,
-    gridVariant,
-    setGridVariant,
     cornerRadiusVariant,
     setCornerRadiusVariant,
-    gridThicknessVariant,
-    setGridThicknessVariant,
-    dashedThicknessVariant,
-    setDashedThicknessVariant,
-    gridColorVariant,
-    setGridColorVariant,
-    gridOpacityVariant,
-    setGridOpacityVariant,
-    gridZIndexVariant,
-    setGridZIndexVariant,
     headerVariant,
     setHeaderVariant,
     heroVariant,
@@ -662,6 +646,8 @@ export function DebugMenu() {
     setFooterVariant,
     imageSetVariant,
     setImageSetVariant,
+    backgroundVariant,
+    setBackgroundVariant,
     monochromeMode,
     setMonochromeMode
   } = useDebug();
@@ -725,12 +711,12 @@ export function DebugMenu() {
               <div className="space-y-3">
                 <div className="space-y-1.5">
                   <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
-                    Background
+                    Page Background
                   </span>
                   <VariantSelector
-                    variants={GRID_VARIANTS}
-                    currentValue={gridVariant}
-                    onChange={setGridVariant}
+                    variants={BACKGROUND_VARIANTS}
+                    currentValue={backgroundVariant}
+                    onChange={setBackgroundVariant}
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -741,56 +727,6 @@ export function DebugMenu() {
                     variants={CORNER_RADIUS_VARIANTS}
                     currentValue={cornerRadiusVariant}
                     onChange={setCornerRadiusVariant}
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
-                    Solid Grid Thickness
-                  </span>
-                  <VariantSelector
-                    variants={GRID_THICKNESS_VARIANTS}
-                    currentValue={gridThicknessVariant}
-                    onChange={setGridThicknessVariant}
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
-                    Dashed Grid Thickness
-                  </span>
-                  <VariantSelector
-                    variants={GRID_THICKNESS_VARIANTS}
-                    currentValue={dashedThicknessVariant}
-                    onChange={setDashedThicknessVariant}
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
-                    Grid Color
-                  </span>
-                  <VariantSelector
-                    variants={GRID_COLOR_VARIANTS}
-                    currentValue={gridColorVariant}
-                    onChange={setGridColorVariant}
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
-                    Grid Opacity
-                  </span>
-                  <VariantSelector
-                    variants={GRID_OPACITY_VARIANTS}
-                    currentValue={gridOpacityVariant}
-                    onChange={setGridOpacityVariant}
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">
-                    Grid Z-Index
-                  </span>
-                  <VariantSelector
-                    variants={GRID_Z_INDEX_VARIANTS}
-                    currentValue={gridZIndexVariant}
-                    onChange={setGridZIndexVariant}
                   />
                 </div>
               </div>

@@ -6,7 +6,7 @@
  * Displays 20+ supported integrations for analytics, messaging, and cloud tools.
  * Helps users create convenient workflows with their existing tools.
  */
-import { IntegrationsGrid } from '~/components/sections/integrations-grid';
+import { IntegrationsCarousel } from '~/components/sections/integrations-carousel';
 import { IntegrationsHero } from '~/components/sections/integrations-hero';
 import {
   CTASwitcher,
@@ -18,7 +18,7 @@ export default function IntegrationsPage(): React.JSX.Element {
   return (
     <>
       <IntegrationsHero />
-      <IntegrationsGrid />
+      <IntegrationsCarousel />
       <LogosSwitcher />
       <TestimonialsSwitcher />
       <CTASwitcher />

@@ -7,7 +7,7 @@ export type GridSectionProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
   hideBottomGridLine?: boolean;
   containerProps?: React.HtmlHTMLAttributes<HTMLDivElement>;
   /** Background variant - light theme only */
-  background?: 'white' | 'gray' | 'subtle';
+  background?: 'transparent' | 'white' | 'gray' | 'subtle';
   /** Full width mode - no max-width constraint, no vertical lines */
   fullWidth?: boolean;
 };
@@ -24,12 +24,13 @@ export function GridSection({
   children,
   hideVerticalGridLines = true, // Linear pattern: no vertical lines for "airy" feeling
   hideBottomGridLine,
-  background = 'white',
+  background = 'transparent', // Default to transparent to show PremiumBackground
   fullWidth = false, // Kept for API compatibility but now applies same width
   containerProps: { className = '', ...containerProps } = {},
   ...other
 }: GridSectionProps): React.JSX.Element {
   const bgClasses = {
+    transparent: '',
     white: 'bg-white',
     gray: 'bg-gray-50',
     subtle: 'bg-gray-50/50'

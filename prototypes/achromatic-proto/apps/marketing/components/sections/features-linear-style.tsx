@@ -234,7 +234,8 @@ export function LinearFeatureSection({
   tag,
   tagHref,
   tagColor,
-  title,
+  titleBlack,
+  titleGray,
   subtitle,
   description,
   children,
@@ -243,7 +244,8 @@ export function LinearFeatureSection({
   tag: string;
   tagHref?: string;
   tagColor?: 'primary' | 'cyan' | 'green' | 'amber' | 'purple' | 'pink';
-  title: string;
+  titleBlack: string; // First part of title (black)
+  titleGray?: string; // Second part of title (gray)
   subtitle?: string;
   description: string;
   children?: React.ReactNode;
@@ -264,9 +266,15 @@ export function LinearFeatureSection({
               <FeatureTag label={tag} href={tagHref} color={tagColor} />
             </div>
 
-            {/* Large title */}
-            <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1] text-gray-900 mb-6 max-w-3xl">
-              {title}
+            {/* LINEAR: Mixed-color title - first words black, rest gray */}
+            <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1] mb-6 max-w-3xl">
+              <span className="text-gray-900">{titleBlack}</span>
+              {titleGray && (
+                <>
+                  {' '}
+                  <span className="text-gray-400">{titleGray}</span>
+                </>
+              )}
             </h2>
 
             {/* Description below title */}
@@ -302,20 +310,34 @@ export function LinearFeatureSection({
 // =============================================================================
 type ValueProp = {
   title: string;
-  description: string;
+  description: string; // LEFT side: 2 lines under title
+  explanation?: string; // RIGHT side: 4 lines of explanation
   image?: string;
   modal?: {
-    paragraphs: string[];
-    stats?: { value: string; label: string }[];
+    paragraphs: string[]; // Should be exactly 3 paragraphs
+    stats?: { value: string; label: string }[]; // Should be exactly 4 stats (2x2 grid)
+    quote?: { text: string; author: string; company: string };
+    companyLogo?: string; // Monochrome logo
     link?: string;
   };
 };
 
+/**
+ * LINEAR-STYLE VALUE PROPS SECTION
+ *
+ * Layout per Linear's pattern:
+ * - 3 horizontal cards (not vertical)
+ * - Each card: LEFT (title + 2 lines) | RIGHT (4 lines explanation + button)
+ * - Cards open modals on click
+ * - Heading uses mixed colors: first words black, rest gray
+ */
 export function ValuePropsSection({
-  heading,
+  headingBlack,
+  headingGray,
   props
 }: {
-  heading: string;
+  headingBlack: string; // First part of heading (black)
+  headingGray?: string; // Second part of heading (gray)
   props: ValueProp[];
 }) {
   const [activeModal, setActiveModal] = React.useState<number | null>(null);
@@ -331,70 +353,81 @@ export function ValuePropsSection({
         image: activeProp.image || '',
         paragraphs: activeProp.modal.paragraphs,
         stats: activeProp.modal.stats,
+        quote: activeProp.modal.quote,
+        companyLogo: activeProp.modal.companyLogo,
         link: activeProp.modal.link
       }
     : null;
 
   return (
-    <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <GridSection className="relative" hideBottomGridLine>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-16 lg:py-24">
         <BlurFade>
-          <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight leading-tight text-center mb-16 text-gray-900">
-            {heading}
+          {/* LINEAR: Mixed-color heading - first words black, rest gray */}
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight leading-tight text-center mb-12">
+            <span className="text-gray-900">{headingBlack}</span>
+            {headingGray && (
+              <>
+                {' '}
+                <span className="text-gray-400">{headingGray}</span>
+              </>
+            )}
           </h2>
         </BlurFade>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* 3 horizontal cards - LINEAR PATTERN */}
+        <div className="space-y-4">
           {props.map((prop, index) => (
-            <BlurFade key={index} delay={0.1 + index * 0.08}>
+            <BlurFade key={index} delay={0.1 + index * 0.05}>
               <motion.div
                 whileHover={shouldReduceMotion ? undefined : { y: -2 }}
                 transition={{ duration: 0.15, ease: 'easeOut' }}
                 onClick={() => prop.modal && setActiveModal(index)}
                 className={cn(
-                  'group relative flex flex-col h-full rounded-[20px] overflow-hidden',
+                  'group relative rounded-[20px] overflow-hidden',
                   'bg-white border border-gray-200',
                   'hover:border-gray-300 hover:shadow-lg',
                   'transition-all duration-150 ease-out',
                   prop.modal && 'cursor-pointer'
                 )}
               >
-                {/* Image/illustration area */}
-                {prop.image && (
-                  <div className="relative aspect-[16/10] bg-gray-50">
-                    <Image
-                      src={prop.image}
-                      alt={prop.title}
-                      fill
-                      className="object-cover"
-                    />
+                {/* LINEAR LAYOUT: Left title/desc | Right explanation/button */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 lg:p-8">
+                  {/* LEFT: Title + 2 lines description */}
+                  <div className="flex flex-col justify-center">
+                    <h3 className="font-semibold text-xl lg:text-2xl mb-3 tracking-tight text-gray-900">
+                      {prop.title}
+                    </h3>
+                    <p className="text-[15px] text-gray-500 leading-relaxed">
+                      {prop.description}
+                    </p>
                   </div>
-                )}
 
-                {/* Content */}
-                <div className="flex-1 p-6 flex flex-col">
-                  <h3 className="font-medium text-xl mb-2 tracking-tight text-gray-900">
-                    {prop.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed flex-1">
-                    {prop.description}
-                  </p>
+                  {/* RIGHT: 4 lines explanation + button */}
+                  <div className="flex flex-col justify-between">
+                    <p className="text-[15px] text-gray-500 leading-relaxed mb-4">
+                      {prop.explanation || prop.description}
+                    </p>
 
-                  {/* + button for modals */}
-                  {prop.modal && (
-                    <div className="mt-5 flex justify-end">
-                      <span
-                        className={cn(
-                          'flex items-center justify-center size-8 rounded-full',
-                          'bg-gray-100 border border-gray-200',
-                          'group-hover:bg-gray-200 group-hover:border-gray-300',
-                          'transition-colors duration-150 ease-out active:scale-[0.98]'
-                        )}
-                      >
-                        <span className="text-base leading-none text-gray-600">+</span>
-                      </span>
-                    </div>
-                  )}
+                    {/* Button row: text button with chevron on the right */}
+                    {prop.modal && (
+                      <div className="flex justify-end items-center">
+                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 group-hover:text-gray-600 transition-colors">
+                          <span>Learn more</span>
+                          <span
+                            className={cn(
+                              'flex items-center justify-center size-7 rounded-full',
+                              'bg-gray-100 border border-gray-200',
+                              'group-hover:bg-gray-200 group-hover:border-gray-300',
+                              'transition-colors duration-150'
+                            )}
+                          >
+                            <span className="text-sm leading-none text-gray-500">+</span>
+                          </span>
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             </BlurFade>
@@ -422,16 +455,27 @@ export function AdaptyValueProps() {
       title: 'Purpose-built for subscription apps',
       description:
         'Everything you need to manage, optimize, and grow in-app subscriptions. From paywalls to analytics.',
+      explanation:
+        'Unlike generic tools that try to serve everyone, Adapty focuses exclusively on subscription apps. Our SDK handles receipt validation, entitlement management, and cross-platform sync out of the box.',
       image: getImagePath(imageSet, 'light-feature1.webp'),
       modal: {
         paragraphs: [
           'Adapty is built exclusively for subscription-based mobile apps. Unlike generic analytics tools, we understand the unique challenges of subscription businesses — from trial conversions to churn prediction.',
-          'Our SDK handles the complexity of subscription lifecycle management across iOS, Android, and Web platforms. You get unified data and consistent paywall experiences regardless of platform.'
+          'Our SDK handles the complexity of subscription lifecycle management across iOS, Android, and Web platforms. You get unified data and consistent paywall experiences regardless of platform.',
+          'Every feature is designed around the subscription model: grace periods, billing retry, win-back campaigns, and predictive churn analysis. We handle the edge cases so you can focus on growth.'
         ],
         stats: [
           { value: '3', label: 'Platforms supported' },
-          { value: '10K+', label: 'Apps powered' }
+          { value: '10K+', label: 'Apps powered' },
+          { value: '$2B+', label: 'Revenue tracked' },
+          { value: '99.9%', label: 'Uptime SLA' }
         ],
+        quote: {
+          text: 'Adapty helped us increase trial-to-paid conversion by 40% in the first month. The paywall builder alone saved us weeks of development time.',
+          author: 'Alex Chen',
+          company: 'Mindful Labs'
+        },
+        companyLogo: '/logos/customers/mindful.svg',
         link: '/features'
       }
     },
@@ -439,16 +483,27 @@ export function AdaptyValueProps() {
       title: 'Designed for speed',
       description:
         'Ship paywall changes in minutes, not weeks. No app store reviews, no code deploys required.',
+      explanation:
+        'Your product team can create, deploy, and iterate on paywalls without writing code. Updates go live instantly through our remote configuration system.',
       image: getImagePath(imageSet, 'light-feature2.webp'),
       modal: {
         paragraphs: [
           'Stop waiting for App Store review cycles to test new paywall designs. With Adapty, your product team can create, deploy, and iterate on paywalls without writing a single line of code.',
-          'Our visual editor and remote configuration system means updates go live instantly. Test pricing, designs, and messaging in real-time while your developers focus on building core product features.'
+          'Our visual editor and remote configuration system means updates go live instantly. Test pricing, designs, and messaging in real-time while your developers focus on building core product features.',
+          'Version control, rollback, and gradual rollouts are built in. Launch to 5% of users, monitor metrics, then scale up with confidence.'
         ],
         stats: [
           { value: '<5 min', label: 'To deploy changes' },
-          { value: '0', label: 'Code deploys needed' }
+          { value: '0', label: 'Code deploys needed' },
+          { value: '50+', label: 'Templates available' },
+          { value: '1 day', label: 'Avg integration time' }
         ],
+        quote: {
+          text: 'We shipped 12 paywall experiments in Q4 alone. Before Adapty, we could barely do one per quarter.',
+          author: 'Maria Santos',
+          company: 'FitTrack'
+        },
+        companyLogo: '/logos/customers/fittrack.svg',
         link: '/paywall-builder'
       }
     },
@@ -456,16 +511,27 @@ export function AdaptyValueProps() {
       title: 'Data-driven optimization',
       description:
         'A/B test everything. Get statistical significance fast. Make decisions with confidence.',
+      explanation:
+        'Run experiments on paywalls, pricing, and onboarding flows. Our Bayesian engine tells you when you have enough data to make a decision, no guesswork needed.',
       image: getImagePath(imageSet, 'light-feature3.webp'),
       modal: {
         paragraphs: [
           'Make product decisions based on statistical evidence, not gut feelings. Adapty runs continuous A/B tests on your paywalls, pricing, and onboarding flows to find what actually converts.',
-          'Our analytics engine automatically calculates statistical significance, so you know when you have enough data to make a decision. No more guessing or relying on inconclusive test results.'
+          'Our Bayesian analytics engine automatically calculates statistical significance, so you know when you have enough data to make a decision. No more guessing or relying on inconclusive test results.',
+          'Segment by country, acquisition source, device type, or custom attributes. Find what works for each audience and serve the optimal experience automatically.'
         ],
         stats: [
           { value: '32%', label: 'Avg. revenue uplift' },
-          { value: '10x', label: 'Faster insights' }
+          { value: '10x', label: 'Faster insights' },
+          { value: '20+', label: 'Metrics tracked' },
+          { value: '95%', label: 'Confidence default' }
         ],
+        quote: {
+          text: 'The A/B testing alone paid for Adapty in the first week. We found a pricing structure that doubled our ARPU.',
+          author: 'James Kim',
+          company: 'StudyPro'
+        },
+        companyLogo: '/logos/customers/studypro.svg',
         link: '/ab-testing'
       }
     }
@@ -473,7 +539,8 @@ export function AdaptyValueProps() {
 
   return (
     <ValuePropsSection
-      heading="Made for subscription app teams"
+      headingBlack="Made for"
+      headingGray="subscription app teams"
       props={props}
     />
   );
@@ -692,7 +759,8 @@ export function ABTestingLinear() {
       tag="A/B Testing"
       tagHref="/paywall-ab-testing"
       tagColor="cyan"
-      title="Run experiments that matter"
+      titleBlack="Run experiments"
+      titleGray="that matter"
       subtitle="Data-driven decisions."
       description="Test paywalls, pricing, and offers with statistical rigor. Know what works with confidence, not guesswork."
       learnMoreHref="/paywall-ab-testing"
@@ -714,7 +782,8 @@ export function AnalyticsLinear() {
       tag="Analytics"
       tagHref="/ltv-analytics"
       tagColor="green"
-      title="Understand your revenue"
+      titleBlack="Understand"
+      titleGray="your revenue"
       subtitle="Real-time subscription intelligence."
       description="Track MRR, LTV, churn, and cohort retention. Get the metrics you need to grow your subscription business."
       learnMoreHref="/ltv-analytics"
@@ -771,225 +840,103 @@ export function AnalyticsLinear() {
 }
 
 // =============================================================================
-// 30+ INTEGRATION CARDS
+// 7 KEY INTEGRATION CARDS (LINEAR PATTERN: max 7 cards in carousel)
 // =============================================================================
 const INTEGRATIONS: ModalCardData[] = [
-  // Analytics
+  // Analytics - most popular
   {
     id: 'amplitude',
     title: 'Amplitude',
     subtitle: 'Product analytics integration',
-    logo: '/logos/integrations/amplitude.svg',
-    image: '/assets/hero/light-feature1.webp',
+    logo: '/assets/integrations/amplitude.svg',
+    image: '/assets/hero/set1/light-feature1.webp',
     paragraphs: [
       'Connect Adapty to Amplitude and send all subscription events automatically. Track user behavior alongside revenue data for complete product insights.',
-      'Understand how subscription events correlate with user engagement patterns and feature adoption.'
+      'Understand how subscription events correlate with user engagement patterns and feature adoption.',
+      'Build custom dashboards combining product usage metrics with subscription revenue to identify your most valuable user journeys.'
+    ],
+    stats: [
+      { value: '40+', label: 'Events synced' },
+      { value: '<1s', label: 'Event latency' },
+      { value: '100%', label: 'Data accuracy' },
+      { value: '0', label: 'Code required' }
     ],
     link: '/integrations/amplitude'
   },
-  {
-    id: 'mixpanel',
-    title: 'Mixpanel',
-    subtitle: 'Advanced product analytics',
-    logo: '/logos/integrations/mixpanel.svg',
-    image: '/assets/hero/light-feature2.webp',
-    paragraphs: [
-      'Send subscription lifecycle events to Mixpanel for deeper user behavior analysis.',
-      'Build funnels, cohorts, and retention reports combining subscription data with product usage.'
-    ]
-  },
-  {
-    id: 'firebase',
-    title: 'Firebase Analytics',
-    subtitle: 'Google Analytics for Firebase',
-    logo: '/logos/integrations/firebase.svg',
-    image: '/assets/hero/light-feature3.webp',
-    paragraphs: [
-      'Integrate with Firebase Analytics to get a complete picture of your app performance.',
-      'Track in-app purchase events alongside user engagement metrics.'
-    ]
-  },
-  {
-    id: 'segment',
-    title: 'Segment',
-    subtitle: 'Customer data platform',
-    logo: '/logos/integrations/segment.svg',
-    image: '/assets/hero/light-feature1.webp',
-    paragraphs: [
-      'Send subscription events to Segment and route them to 300+ destinations.',
-      'Unify your customer data across all your tools and platforms.'
-    ]
-  },
-  // Attribution
+  // Attribution - most popular
   {
     id: 'appsflyer',
     title: 'AppsFlyer',
     subtitle: 'Mobile attribution and marketing analytics',
-    logo: '/logos/integrations/appsflyer.svg',
-    image: '/assets/hero/light-feature2.webp',
+    logo: '/assets/integrations/appsflyer.svg',
+    image: '/assets/hero/set1/light-feature2.webp',
     paragraphs: [
       'Send purchase and subscription events to AppsFlyer automatically. Measure true ROI of your user acquisition campaigns.',
-      'Support for SKAN and privacy-first attribution. Track subscriptions back to specific campaigns and creatives.'
+      'Support for SKAN and privacy-first attribution. Track subscriptions back to specific campaigns and creatives.',
+      'Calculate actual LTV by campaign, ad group, and creative to optimize your marketing spend on what truly drives paying users.'
     ],
     stats: [
       { value: '100%', label: 'Event accuracy' },
-      { value: '<1s', label: 'Event latency' }
+      { value: '<1s', label: 'Event latency' },
+      { value: 'SKAN 4', label: 'Support' },
+      { value: 'Real-time', label: 'Attribution' }
     ]
   },
-  {
-    id: 'adjust',
-    title: 'Adjust',
-    subtitle: 'Mobile measurement and fraud prevention',
-    logo: '/logos/integrations/adjust.svg',
-    image: '/assets/hero/light-feature3.webp',
-    paragraphs: [
-      'Connect Adapty to Adjust for accurate attribution of subscription revenue.',
-      'Measure the true LTV of users acquired through different channels.'
-    ]
-  },
-  {
-    id: 'branch',
-    title: 'Branch',
-    subtitle: 'Mobile linking and attribution',
-    logo: '/logos/integrations/branch.svg',
-    image: '/assets/hero/light-feature1.webp',
-    paragraphs: [
-      'Attribute subscription revenue to specific marketing links and campaigns.',
-      'Understand which referral sources drive the highest-value subscribers.'
-    ]
-  },
-  {
-    id: 'singular',
-    title: 'Singular',
-    subtitle: 'Marketing intelligence platform',
-    logo: '/logos/integrations/singular.svg',
-    image: '/assets/hero/light-feature2.webp',
-    paragraphs: [
-      'Unify your marketing data with subscription revenue in Singular.',
-      'Optimize ad spend based on actual subscription LTV, not just installs.'
-    ]
-  },
-  {
-    id: 'posthog',
-    title: 'PostHog',
-    subtitle: 'Product analytics platform',
-    logo: '/logos/integrations/posthog.svg',
-    image: '/assets/hero/light-feature3.webp',
-    paragraphs: [
-      'Send subscription events to PostHog for comprehensive attribution analysis.',
-      'Connect revenue to acquisition sources across all your marketing channels.'
-    ]
-  },
-  {
-    id: 'mparticle',
-    title: 'mParticle',
-    subtitle: 'Customer data infrastructure',
-    logo: '/logos/integrations/mparticle.svg',
-    image: '/assets/hero/light-feature1.webp',
-    paragraphs: [
-      'Integrate subscription data with mParticle for complete ROAS analysis.',
-      'Track user acquisition costs against subscription revenue in real-time.'
-    ]
-  },
-  // Marketing
+  // Marketing automation
   {
     id: 'braze',
     title: 'Braze',
     subtitle: 'Customer engagement platform',
-    logo: '/logos/integrations/braze.svg',
-    image: '/assets/hero/light-feature2.webp',
+    logo: '/assets/integrations/braze.svg',
+    image: '/assets/hero/set1/light-feature3.webp',
     paragraphs: [
-      'Trigger personalized campaigns based on subscription events.',
-      'Send targeted messages to users at risk of churning or ready to upgrade.'
+      'Trigger personalized campaigns based on subscription events. Send targeted messages to users at risk of churning or ready to upgrade.',
+      'Create automated journeys for trial expiration reminders, win-back campaigns, and upsell opportunities.',
+      'Sync subscription status in real-time to personalize every touchpoint in your customer communication.'
+    ],
+    stats: [
+      { value: '12', label: 'Event types' },
+      { value: 'Real-time', label: 'Sync' },
+      { value: '2-way', label: 'Integration' },
+      { value: '5 min', label: 'Setup time' }
     ]
   },
+  // CDP
   {
-    id: 'onesignal',
-    title: 'OneSignal',
-    subtitle: 'Push notification and email platform',
-    logo: '/logos/integrations/onesignal.svg',
-    image: '/assets/hero/light-feature3.webp',
+    id: 'segment',
+    title: 'Segment',
+    subtitle: 'Customer data platform',
+    logo: '/assets/integrations/segment.svg',
+    image: '/assets/hero/set1/light-feature1.webp',
     paragraphs: [
-      'Send targeted push notifications based on subscription status.',
-      'Re-engage lapsed subscribers and promote upgrades with personalized messages.'
-    ]
-  },
-  {
-    id: 'clevertap',
-    title: 'CleverTap',
-    subtitle: 'Mobile marketing platform',
-    logo: '/logos/integrations/clevertap.svg',
-    image: '/assets/hero/light-feature1.webp',
-    paragraphs: [
-      'Create personalized user journeys based on subscription lifecycle events.',
-      'Automate retention campaigns for subscribers at risk of churning.'
-    ]
-  },
-  {
-    id: 'airship',
-    title: 'Airship',
-    subtitle: 'Customer engagement platform',
-    logo: '/logos/integrations/airship.svg',
-    image: '/assets/hero/light-feature2.webp',
-    paragraphs: [
-      'Leverage subscription data to power personalized messaging across channels.',
-      'Orchestrate cross-channel campaigns based on subscription events.'
-    ]
-  },
-  {
-    id: 'pushwoosh',
-    title: 'Pushwoosh',
-    subtitle: 'Push notification platform',
-    logo: '/logos/integrations/pushwoosh.svg',
-    image: '/assets/hero/light-feature3.webp',
-    paragraphs: [
-      'Use subscription events to trigger personalized push notifications.',
-      'Build automated workflows for onboarding, retention, and win-back.'
-    ]
-  },
-  {
-    id: 'customerio',
-    title: 'Customer.io',
-    subtitle: 'Automated messaging platform',
-    logo: '/logos/integrations/customerio.svg',
-    image: '/assets/hero/light-feature1.webp',
-    paragraphs: [
-      'Create data-driven messaging campaigns based on subscription behavior.',
-      'Automate lifecycle marketing with real-time subscription events.'
+      'Send subscription events to Segment and route them to 300+ destinations. Unify your customer data across all your tools and platforms.',
+      'No need to build individual integrations. Connect once to Segment and unlock your entire marketing and analytics stack.',
+      'Subscription data flows automatically to your data warehouse, CRM, email tools, and analytics platforms.'
+    ],
+    stats: [
+      { value: '300+', label: 'Destinations' },
+      { value: '1', label: 'Integration' },
+      { value: 'Real-time', label: 'Streaming' },
+      { value: 'Unlimited', label: 'Scale' }
     ]
   },
   // Communication
   {
     id: 'slack',
     title: 'Slack',
-    subtitle: 'Team communication',
-    logo: '/logos/integrations/slack.svg',
-    image: '/assets/hero/light-feature2.webp',
+    subtitle: 'Team notifications',
+    logo: '/assets/integrations/slack.svg',
+    image: '/assets/hero/set1/light-feature2.webp',
     paragraphs: [
-      'Receive real-time notifications for purchases, trials, and cancellations.',
-      'Customize which events trigger notifications and keep your team informed.'
-    ]
-  },
-  {
-    id: 'facebook',
-    title: 'Facebook Ads',
-    subtitle: 'Ad attribution and optimization',
-    logo: '/logos/integrations/facebook.svg',
-    image: '/assets/hero/light-feature3.webp',
-    paragraphs: [
-      'Send subscription event data to Facebook for ad optimization.',
-      'Improve targeting with subscription-based custom audiences.'
-    ]
-  },
-  {
-    id: 'tiktok',
-    title: 'TikTok Ads',
-    subtitle: 'Ad attribution platform',
-    logo: '/logos/integrations/tiktok.svg',
-    image: '/assets/hero/light-feature1.webp',
-    paragraphs: [
-      'Get instant notifications about important subscription events via TikTok.',
-      'Optimize ad spend based on actual subscription conversions.'
+      'Receive real-time notifications for purchases, trials, and cancellations. Keep your team informed about subscription activity.',
+      'Customize which events trigger notifications. Get alerts for high-value purchases, trial expirations, or cancellation spikes.',
+      'Celebrate wins with your team as they happen. See new subscribers and revenue milestones in your Slack channels.'
+    ],
+    stats: [
+      { value: '15', label: 'Event types' },
+      { value: 'Real-time', label: 'Alerts' },
+      { value: 'Custom', label: 'Channels' },
+      { value: '2 min', label: 'Setup' }
     ]
   },
   // Developer
@@ -997,34 +944,38 @@ const INTEGRATIONS: ModalCardData[] = [
     id: 'webhooks',
     title: 'Webhooks',
     subtitle: 'Real-time event notifications',
-    logo: '/logos/integrations/webhook.svg',
-    image: '/assets/hero/light-feature2.webp',
+    logo: '/assets/integrations/webhook.svg',
+    image: '/assets/hero/set1/light-feature3.webp',
     paragraphs: [
       'Build custom integrations with our webhook system. Receive all subscription lifecycle events in real-time.',
-      'Retry logic and event logging included. Build any custom workflow you need.'
+      'Retry logic and event logging included. Build any custom workflow you need without worrying about reliability.',
+      'Full event payloads with all subscription details. Power your backend systems, data pipelines, or custom tools.'
+    ],
+    stats: [
+      { value: '40+', label: 'Event types' },
+      { value: '3x', label: 'Auto retry' },
+      { value: '7 days', label: 'Event logs' },
+      { value: 'REST', label: 'API' }
     ],
     link: '/integrations/webhooks'
   },
+  // Ad platforms
   {
-    id: 'appmetrica',
-    title: 'AppMetrica',
-    subtitle: 'Mobile analytics by Yandex',
-    logo: '/logos/integrations/appmetrica.svg',
-    image: '/assets/hero/light-feature3.webp',
+    id: 'facebook',
+    title: 'Meta Ads',
+    subtitle: 'Ad attribution and optimization',
+    logo: '/assets/integrations/facebook.svg',
+    image: '/assets/hero/set1/light-feature1.webp',
     paragraphs: [
-      'Export subscription data to AppMetrica for analysis.',
-      'Connect with Yandex analytics tools for custom reporting.'
-    ]
-  },
-  {
-    id: 'split',
-    title: 'Split.io',
-    subtitle: 'Feature flag platform',
-    logo: '/logos/integrations/split.svg',
-    image: '/assets/hero/light-feature1.webp',
-    paragraphs: [
-      'Use Split.io feature flags alongside Adapty experiments.',
-      'Coordinate feature rollouts with subscription-based targeting.'
+      'Send subscription event data to Meta for ad optimization. Improve targeting with subscription-based custom audiences.',
+      'Feed conversion events back to the Meta algorithm. Let machine learning optimize for actual subscribers, not just installs.',
+      'Build lookalike audiences from your best subscribers. Find more users who are likely to convert and stay.'
+    ],
+    stats: [
+      { value: 'CAPI', label: 'Integration' },
+      { value: 'Real-time', label: 'Events' },
+      { value: 'Custom', label: 'Audiences' },
+      { value: 'Dedup', label: 'Built-in' }
     ]
   }
 ];
@@ -1035,8 +986,9 @@ export function IntegrationsLinear() {
     <CardCarousel
       tag="Integrations"
       tagColor="amber"
-      title="Connect your tools"
-      description="Send subscription events to your analytics, marketing, and CRM tools. 30+ integrations available out of the box."
+      titleBlack="Connect"
+      titleGray="your stack"
+      description="Analytics, attribution, marketing automation, and custom webhooks. One-click setup for the tools you already use."
       cards={INTEGRATIONS}
     />
   );
@@ -1050,13 +1002,15 @@ export type ModalCardData = {
   title: string;
   subtitle: string;
   image: string;
-  logo?: string; // Optional logo for integration cards
-  paragraphs: string[];
+  logo?: string; // Optional logo path for integration cards
+  paragraphs: string[]; // Linear: exactly 3 paragraphs, 3 lines each
   quote?: {
     text: string;
+    author?: string;
     company: string;
   };
-  stats?: { value: string; label: string }[];
+  companyLogo?: string; // Monochrome company logo (shown after quote)
+  stats?: { value: string; label: string }[]; // Linear: 2x2 grid (4 stats)
   link?: string;
   directLink?: boolean;
 };
@@ -1127,17 +1081,22 @@ function ModalCard({
         'transition-all duration-200 ease-out cursor-pointer'
       )}
     >
-      {/* Icon area with gradient background */}
-      <div className={cn('relative aspect-[16/10] flex items-center justify-center', bgColors[colorIndex])}>
-        {/* Simple icon based on first letter */}
-        <div className={cn(
-          'size-16 rounded-2xl bg-white/80 backdrop-blur-sm shadow-sm flex items-center justify-center',
-          'border border-gray-100'
-        )}>
-          <span className={cn('text-2xl font-bold', iconColors[colorIndex])}>
+      {/* Icon area - clean white background with large monochrome icon */}
+      <div className="relative aspect-[16/10] flex items-center justify-center bg-gray-50 px-6 py-8">
+        {data.logo ? (
+          <Image
+            src={data.logo}
+            alt={data.title}
+            width={200}
+            height={80}
+            className="object-contain grayscale h-16 w-auto"
+          />
+        ) : (
+          /* Fallback to first letter */
+          <span className="text-5xl font-bold text-gray-900">
             {data.title.charAt(0)}
           </span>
-        </div>
+        )}
       </div>
 
       {/* Content area */}
@@ -1264,13 +1223,13 @@ function CardModal({
                 {/* Top: Image - fixed height */}
                 <div className="relative w-full h-[300px] sm:h-[350px] bg-gray-50 flex-shrink-0">
                   {data.logo ? (
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="absolute inset-0 flex items-center justify-center px-12">
                       <Image
                         src={data.logo}
                         alt={data.title}
-                        width={120}
-                        height={120}
-                        className="object-contain"
+                        width={280}
+                        height={100}
+                        className="object-contain grayscale h-20 w-auto"
                       />
                     </div>
                   ) : (
@@ -1296,24 +1255,54 @@ function CardModal({
                     {data.subtitle}
                   </p>
 
-                  {/* Description paragraphs */}
-                  <div className="space-y-4 mb-8">
+                  {/* Description paragraphs - Linear: exactly 3 paragraphs */}
+                  <div className="space-y-4">
                     {data.paragraphs.map((p, i) => (
-                      <p key={i} className="text-gray-600 leading-relaxed">
+                      <p key={i} className="text-[15px] text-gray-600 leading-relaxed">
                         {p}
                       </p>
                     ))}
                   </div>
 
-                  {/* Stats */}
+                  {/* Thin divider */}
+                  <div className="h-px bg-gray-100 my-8" />
+
+                  {/* Quote - LINEAR: centered, NO quote symbols */}
+                  {data.quote && (
+                    <div className="text-center mb-6">
+                      <p className="text-gray-900 text-base leading-relaxed">
+                        {data.quote.text}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Company Logo - monochrome, centered */}
+                  {data.companyLogo && (
+                    <div className="flex justify-center mb-6">
+                      <Image
+                        src={data.companyLogo}
+                        alt="Company logo"
+                        width={100}
+                        height={32}
+                        className="h-6 w-auto object-contain grayscale opacity-60"
+                      />
+                    </div>
+                  )}
+
+                  {/* Divider before stats */}
                   {data.stats && data.stats.length > 0 && (
-                    <div className="grid grid-cols-2 gap-6 py-6 border-t border-gray-100 mb-6">
-                      {data.stats.map((stat, i) => (
+                    <div className="h-px bg-gray-100 mb-6" />
+                  )}
+
+                  {/* Stats - LINEAR: 2x2 grid (4 stats) */}
+                  {data.stats && data.stats.length > 0 && (
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+                      {data.stats.slice(0, 4).map((stat, i) => (
                         <div key={i}>
-                          <div className="text-2xl sm:text-3xl font-semibold tracking-tight text-gray-900">
+                          <div className="text-2xl font-semibold tracking-tight text-gray-900">
                             {stat.value}
                           </div>
-                          <div className="text-sm text-gray-500 mt-1">
+                          <div className="text-xs text-gray-400 mt-0.5 font-normal">
                             {stat.label}
                           </div>
                         </div>
@@ -1321,24 +1310,12 @@ function CardModal({
                     </div>
                   )}
 
-                  {/* Quote */}
-                  {data.quote && (
-                    <div className="py-6 border-t border-gray-100 mb-6">
-                      <blockquote className="text-gray-600 italic">
-                        &ldquo;{data.quote.text}&rdquo;
-                      </blockquote>
-                      <cite className="text-sm text-gray-500 mt-2 block not-italic">
-                        — {data.quote.company}
-                      </cite>
-                    </div>
-                  )}
-
                   {/* Action button */}
                   {data.link && (
-                    <div className="pt-6 border-t border-gray-100">
+                    <div className="pt-8">
                       <Link
                         href={data.link}
-                        className="group inline-flex items-center gap-2 text-base font-medium text-gray-900 hover:text-gray-600 transition-colors duration-150"
+                        className="group inline-flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors duration-150"
                       >
                         Learn more
                         <ChevronRightIcon className="size-4 transition-transform duration-150 group-hover:translate-x-0.5" />
@@ -1363,13 +1340,15 @@ function CardModal({
 export function CardCarousel({
   tag,
   tagColor,
-  title,
+  titleBlack,
+  titleGray,
   description,
   cards
 }: {
   tag: string;
   tagColor?: 'primary' | 'cyan' | 'green' | 'amber' | 'purple' | 'pink';
-  title: string;
+  titleBlack: string; // First part of title (black)
+  titleGray?: string; // Second part of title (gray)
   description: string;
   cards: ModalCardData[];
 }) {
@@ -1411,22 +1390,29 @@ export function CardCarousel({
   const activeCard = cards.find((c) => c.id === activeModal);
 
   return (
-    <GridSection className="relative" hideVerticalGridLines hideBottomGridLine>
-      <div className="py-16 lg:py-24">
-        {/* Header - Linear pattern: vertical stack */}
+    <section className="relative py-16 lg:py-24">
+      {/* Header - inside container */}
+      <div className="max-w-5xl mx-auto px-6">
         <div className="mb-12">
           <div className="mb-4">
             <FeatureTag label={tag} color={tagColor} />
           </div>
-          <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1] text-gray-900 mb-6 max-w-3xl">
-            {title}
+          {/* LINEAR: Mixed-color title - first words black, rest gray */}
+          <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1] mb-6 max-w-3xl">
+            <span className="text-gray-900">{titleBlack}</span>
+            {titleGray && (
+              <>
+                {' '}
+                <span className="text-gray-400">{titleGray}</span>
+              </>
+            )}
           </h2>
           <p className="text-gray-500 text-lg leading-relaxed max-w-2xl">
             {description}
           </p>
         </div>
 
-        {/* Navigation arrows */}
+        {/* Navigation arrows - inside container */}
         <div className="flex justify-end gap-2 mb-6">
           <button
             onClick={() => scroll('left')}
@@ -1455,25 +1441,25 @@ export function CardCarousel({
             <ChevronRightIcon className="size-4 text-gray-600" />
           </button>
         </div>
+      </div>
 
-        {/* Carousel - within container */}
-        <div
-          ref={scrollRef}
-          className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 -mx-6 px-6"
-          style={{ scrollSnapType: 'x mandatory' }}
-        >
-          {cards.map((card) => (
-            <div
-              key={card.id}
-              className="flex-shrink-0 w-[280px] sm:w-[320px]"
-              style={{ scrollSnapAlign: 'start' }}
-            >
-              <ModalCard data={card} onOpen={() => setActiveModal(card.id)} />
-            </div>
-          ))}
-          {/* Spacer at end to allow last card to scroll fully into view */}
-          <div className="flex-shrink-0 w-6 sm:w-12 lg:w-20 xl:w-32" />
-        </div>
+      {/* Carousel - FULL WIDTH, breaks out of container, no clipping */}
+      <div
+        ref={scrollRef}
+        className="flex gap-4 overflow-x-auto scrollbar-hide py-4 pl-[max(1.5rem,calc((100vw-64rem)/2+1.5rem))]"
+        style={{ scrollSnapType: 'x mandatory' }}
+      >
+        {cards.map((card) => (
+          <div
+            key={card.id}
+            className="flex-shrink-0 w-[280px] sm:w-[320px]"
+            style={{ scrollSnapAlign: 'start' }}
+          >
+            <ModalCard data={card} onOpen={() => setActiveModal(card.id)} />
+          </div>
+        ))}
+        {/* Spacer at end for scroll padding */}
+        <div className="flex-shrink-0 w-6" />
       </div>
 
       {/* Modal */}
@@ -1484,7 +1470,7 @@ export function CardCarousel({
           onClose={() => setActiveModal(null)}
         />
       )}
-    </GridSection>
+    </section>
   );
 }
 
